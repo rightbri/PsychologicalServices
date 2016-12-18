@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Dependency directories
+node_modules
+jspm_packages
+
 # User-specific files
 *.suo
 *.user
@@ -28,7 +32,7 @@ bld/
 # Visual Studio 2015 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
-wwwroot/
+#wwwroot/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

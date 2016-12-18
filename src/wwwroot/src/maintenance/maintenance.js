@@ -1,0 +1,5 @@
+export class Maintenance {
+	constructor() {
+	
+	}
+}

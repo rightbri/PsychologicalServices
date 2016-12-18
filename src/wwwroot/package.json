@@ -1,0 +1,20 @@
+{
+  "jspm": {
+    "dependencies": {
+      "aurelia-auth": "npm:aurelia-auth@^3.0.4",
+      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0",
+      "aurelia-fetch-client": "npm:aurelia-fetch-client@^1.0.1",
+      "aurelia-framework": "npm:aurelia-framework@^1.0.3",
+      "aurelia-validation": "npm:aurelia-validation@^1.0.0-beta.1.0.0",
+      "bootstrap": "github:twbs/bootstrap@^3.3.7",
+      "bootstrap-datepicker": "npm:bootstrap-datepicker@^1.6.4",
+      "font-awesome": "npm:font-awesome@^4.6.3",
+      "moment": "npm:moment@^2.17.1"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
