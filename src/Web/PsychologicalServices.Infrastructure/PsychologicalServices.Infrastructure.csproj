@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{44AEC4BA-BBD9-4292-B4D3-59EE8EB87201}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PsychologicalServices.Infrastructure</RootNamespace>
+    <AssemblyName>PsychologicalServices.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Addresses\AddressRepository.cs" />
+    <Compile Include="Appointments\AppointmentRepository.cs" />
+    <Compile Include="Assessments\AssessmentRepository.cs" />
+    <Compile Include="Claims\ClaimRepository.cs" />
+    <Compile Include="Common\Configuration\ConfigurationService.cs" />
+    <Compile Include="Common\Repository\DataConnectionParameters.cs" />
+    <Compile Include="Common\Repository\DataConnectionParametersFactory.cs" />
+    <Compile Include="Common\Repository\IDataAccessAdapterFactory.cs" />
+    <Compile Include="Common\Repository\IDataConnectionParameters.cs" />
+    <Compile Include="Common\Repository\IDataConnectionParametersFactory.cs" />
+    <Compile Include="Common\Repository\IRepository.cs" />
+    <Compile Include="Common\Repository\MappingExtensions.cs" />
+    <Compile Include="Common\Repository\RepositoryBase.cs" />
+    <Compile Include="Common\Repository\SqlServerAdapterFactory.cs" />
+    <Compile Include="Common\Repository\Transaction.cs" />
+    <Compile Include="Common\Repository\Transaction[TIdentity].cs" />
+    <Compile Include="Common\Utility\CacheService.cs" />
+    <Compile Include="Companies\CompanyRepository.cs" />
+    <Compile Include="Invoices\InvoiceRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Referrals\ReferralRepository.cs" />
+    <Compile Include="Reports\ReportRepository.cs" />
+    <Compile Include="Rights\RightRepository.cs" />
+    <Compile Include="Roles\RoleRepository.cs" />
+    <Compile Include="Tasks\TaskRepository.cs" />
+    <Compile Include="TaskTemplates\TaskTemplateRepository.cs" />
+    <Compile Include="Users\UserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PsychologicalServices.Data\PsychologicalServices.Data.csproj">
+      <Project>{fa7d08d0-6c5c-41c3-badb-7865d6da5c3b}</Project>
+      <Name>PsychologicalServices.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PsychologicalServices.Data\PsychologicalServices.DataDBSpecific.csproj">
+      <Project>{5e18e5d8-e997-4b4b-96cd-825283e25994}</Project>
+      <Name>PsychologicalServices.DataDBSpecific</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PsychologicalServices.Models\PsychologicalServices.Models.csproj">
+      <Project>{cbfe6b2b-3eb2-4c29-a335-b9dff146e0ff}</Project>
+      <Name>PsychologicalServices.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="a0309cd3-f09a-44a8-a8c2-470347e31fcb" ChangeDateTime="09/15/2016 14:52:46">
+    <Property Name="ElementName" Value="[dbo].[Appointments].[Psychometrist]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Appointments]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PsychometristId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="254b20b2-3eb5-4331-bc20-6f25f835e039" ChangeDateTime="09/15/2016 14:52:52">
+    <Property Name="ElementName" Value="[dbo].[Appointments].[Psychologist]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Appointments]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PsychologistId" />
+  </Operation>
+</Operations>

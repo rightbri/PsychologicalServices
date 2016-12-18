@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Models", "PsychologicalServices.Models\PsychologicalServices.Models.csproj", "{CBFE6B2B-3EB2-4C29-A335-B9DFF146E0FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Infrastructure", "PsychologicalServices.Infrastructure\PsychologicalServices.Infrastructure.csproj", "{44AEC4BA-BBD9-4292-B4D3-59EE8EB87201}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PsychologicalServices.DB", "PsychologicalServices.DB\PsychologicalServices.DB.sqlproj", "{02CFBD10-6601-4B68-9580-434EEC1CC5A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Data", "PsychologicalServices.Data\PsychologicalServices.Data.csproj", "{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.DataDBSpecific", "PsychologicalServices.Data\PsychologicalServices.DataDBSpecific.csproj", "{5E18E5D8-E997-4B4B-96CD-825283E25994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Web", "PsychologicalServices.Web\PsychologicalServices.Web.csproj", "{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBFE6B2B-3EB2-4C29-A335-B9DFF146E0FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBFE6B2B-3EB2-4C29-A335-B9DFF146E0FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBFE6B2B-3EB2-4C29-A335-B9DFF146E0FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBFE6B2B-3EB2-4C29-A335-B9DFF146E0FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44AEC4BA-BBD9-4292-B4D3-59EE8EB87201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44AEC4BA-BBD9-4292-B4D3-59EE8EB87201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44AEC4BA-BBD9-4292-B4D3-59EE8EB87201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44AEC4BA-BBD9-4292-B4D3-59EE8EB87201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02CFBD10-6601-4B68-9580-434EEC1CC5A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02CFBD10-6601-4B68-9580-434EEC1CC5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02CFBD10-6601-4B68-9580-434EEC1CC5A8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{02CFBD10-6601-4B68-9580-434EEC1CC5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02CFBD10-6601-4B68-9580-434EEC1CC5A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02CFBD10-6601-4B68-9580-434EEC1CC5A8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
