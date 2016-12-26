@@ -6,6 +6,39 @@ export class DataRepository {
 	constructor(httpFetch, apiRoot) {
 		this.apiRoot = apiRoot;
 		this.httpFetch = httpFetch;
+		
+		this.httpFetch.configure(config => {
+			config
+				.withBaseUrl(this.apiRoot + 'api/')
+				.withDefaults({
+					credentials: 'include',
+					headers: {
+						'Accept': 'application/json',
+						'Authorization': 'Token ' + window.sessionStorage.firebaseAuthToken,
+						'X-Requested-With': 'Fetch'
+					}
+				})
+				.withInterceptor({
+					request(request) {
+						console.log(`Requesting ${request.method} ${request.url}`);
+						
+						/*
+						if (window.sessionStorage.firebaseAuthToken) {
+							request.headers.Authorization = 'Token ' + window.sessionStorage.firebaseAuthToken;
+						}
+						*/
+						return request;
+					},
+					response(response) {
+						console.log(`Received ${response.status} ${response.url}`);
+
+						if (response.status === 401) {
+							
+						}
+						return response;
+					}
+				});
+		});
 	}
 
 	
@@ -76,6 +109,22 @@ export class DataRepository {
 	saveCompany(assessment) {
 		return this.saveBasic(assessment, 'company');
 	}
+	
+	getCalendarNote(id) {
+		return this.getSingleBasic(id, 'calendarNote');
+	}
+	
+	getCalendarNotes(fromDate, toDate) {
+		return this.getManyBasic('calendarNote?fromDate=' + fromDate + '&toDate=' + toDate);
+	}
+	
+	saveCalendarNote(calendarNote) {
+		return this.saveBasic(calendarNote, 'calendarNote');
+	}
+	
+	getTaskStatuses() {
+		return this.getManyBasic('taskStatus');
+	}
 
 	getSingleBasic(id, type) {
 		var promise = new Promise((resolve, reject) => {
@@ -89,7 +138,7 @@ export class DataRepository {
 
 	getManyBasic(type) {
 		var promise = new Promise((resolve, reject) => {
-			this.httpFetch.fetch(this.apiRoot + 'api/' + type)
+			this.httpFetch.fetch(type)
 				.then(response => response.json())
 				.then(data => resolve(data))
 				.catch(err => reject(err));
@@ -99,7 +148,7 @@ export class DataRepository {
 
 	searchBasic(criteria, type) {
 		var promise = new Promise((resolve, reject) => {
-			this.httpFetch.fetch(this.apiRoot + 'api/' + type + '/search', {
+			this.httpFetch.fetch(type + '/search', {
 				method: 'POST',
 				body: json(criteria)
 			})
@@ -112,7 +161,7 @@ export class DataRepository {
 
 	saveBasic(item, type) {
 		var promise = new Promise((resolve, reject) => {
-			this.httpFetch.fetch(this.apiRoot + 'api/' + type + '/save', {
+			this.httpFetch.fetch(type + '/save', {
 				method: 'PUT',
 				body: json(item)
 			})

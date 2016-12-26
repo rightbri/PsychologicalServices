@@ -62,6 +62,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentTypeReportTypeEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.CalendarNoteEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "CalendarNoteEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.ClaimEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "ClaimEntity");
 					break;
@@ -76,6 +79,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.IssueInDisputeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "IssueInDisputeEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.NoteEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "NoteEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.ReferralSourceEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "ReferralSourceEntity");

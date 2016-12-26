@@ -203,7 +203,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
                     if (criteria.AppointmentTimeStart.HasValue)
                     {
-                        appointments = appointments.Where(appointment => appointment.AppointmentTime <= criteria.AppointmentTimeStart.Value);
+                        appointments = appointments.Where(appointment => appointment.AppointmentTime >= criteria.AppointmentTimeStart.Value);
                     }
 
                     if (criteria.LocationId.HasValue)
@@ -276,6 +276,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentEntity.AppointmentStatusId = appointment.AppointmentStatusId;
                 appointmentEntity.AppointmentTime = appointment.AppointmentTime;
                 appointmentEntity.AssessmentId = appointment.AssessmentId;
+                appointmentEntity.PsychometristConfirmed = appointment.PsychometristConfirmed;
 
                 var tasksToUpdate = appointmentEntity.TaskCollectionViaAppointmentTasks.Where(appointmentTask => appointment.AppointmentTasks.Any(task => appointmentTask.TaskId == task.TaskId && appointmentTask.TaskStatusId != task.TaskStatusId));
 

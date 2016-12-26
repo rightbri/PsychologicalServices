@@ -3,16 +3,16 @@ import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import moment from 'moment';
 
-@inject(Router, DataRepository, moment)
+@inject(Router, DataRepository)
 export class Appointments {
-	constructor(router, dataRepository, moment) {
+	constructor(router, dataRepository) {
 		this.router = router;
 		this.dataRepository = dataRepository;
-		this.moment = moment;
-
+		
+		this.showSearch = false;
 		this.searchStatus = null;
-		this.searchStart = "";
-		this.searchEnd = "";
+		this.searchStart = this.shortDateString(this.getMonthBeginDate());
+		this.searchEnd = this.shortDateString(this.getMonthEndDate());
 		this.searchCompany = 1;
 		this.searchPsychometrist = null;
 		this.searchPsychologist = null;
@@ -22,7 +22,8 @@ export class Appointments {
 		this.psychologists = null;
 		this.companies = null;
 		this.appointmentStatuses = null;
-
+		this.calendarNotes = null;
+		
 		this.dataRepository.getCompanies()
 			.then(data => this.companies = data);
 
@@ -35,9 +36,10 @@ export class Appointments {
 		this.dataRepository.getAppointmentStatuses()
 			.then(data => this.appointmentStatuses = data);
 
-		this.searchAppointments({
-			companyId: this.searchCompany
-		});
+		this.dataRepository.getCalendarNotes(this.searchStart, this.searchEnd)
+			.then(data => this.calendarNotes = data);
+			
+		this.search();
 	}
 
 	search() {
@@ -55,11 +57,37 @@ export class Appointments {
 		this.dataRepository.searchAppointments(criteria)
 			.then(data => {
 				this.appointments = data;
+				
+				this.showSearch = !this.hasAppointments(this.appointments);
 			});
 	}
 
+	toggleSearch() {
+		this.showSearch = !this.showSearch;
+	}
+	
+	getAppointments(day) {
+		return (this.appointments || []).filter(function (appointment) {
+			return this.isAppointmentForDay(appointment, day);
+		}, this);
+	}
+	
+	getNotes(day) {
+		return (this.calendarNotes || []).filter(function (calendarNote) {
+			return this.isNoteForDay(calendarNote, day);
+		}, this);
+	}
+	
+	weekday(datetime) {
+		return moment(datetime).format('ddd');
+	}
+	
 	dateString(datetime) {
-		return moment(datetime).format('Do MMM YYYY');
+		return moment(datetime).format('MMM DD');
+	}
+	
+	shortDateString(datetime) {
+		return moment(datetime).format('MM/DD/YYYY');
 	}
 
 	timeString(datetime) {
@@ -80,5 +108,31 @@ export class Appointments {
 
 	edit(id) {
 		this.router.navigateToRoute('editAppointment', { id: id });
+	}
+	
+	getMonthBeginDate() {
+		return moment().startOf('month');
+	}
+	
+	getMonthEndDate() {
+		return moment().endOf('month');
+	}
+	
+	hasNotes(day) {
+		return this.calendarNotes.some(function(calendarNote) {
+			return this.isNoteForDay(calendarNote, day);
+		}, this);
+	}
+	
+	isAppointmentForDay(appointment, day) {
+		return moment(appointment.appointmentTime).isAfter(day.clone().startOf('day')) && moment(appointment.appointmentTime).isBefore(day.clone().endOf('day'));
+	}
+	
+	isNoteForDay(calendarNote, day) {
+		return !moment(calendarNote.fromDate).isAfter(day) && !moment(calendarNote.toDate).isBefore(day);
+	}
+	
+	hasAny(collection) {
+		return collection && collection.length > 0;
 	}
 }

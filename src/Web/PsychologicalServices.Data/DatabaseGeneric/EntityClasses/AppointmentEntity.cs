@@ -694,6 +694,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("AssessmentId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("PsychometristConfirmed", fieldHashtable);
 		}
 		#endregion
 
@@ -1081,6 +1084,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AppointmentFieldIndex.AssessmentId, true); }
 			set	{ SetValue((int)AppointmentFieldIndex.AssessmentId, value); }
+		}
+
+		/// <summary> The PsychometristConfirmed property of the Entity Appointment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Appointments"."PsychometristConfirmed"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean PsychometristConfirmed
+		{
+			get { return (System.Boolean)GetValue((int)AppointmentFieldIndex.PsychometristConfirmed, true); }
+			set	{ SetValue((int)AppointmentFieldIndex.PsychometristConfirmed, value); }
 		}
 
 

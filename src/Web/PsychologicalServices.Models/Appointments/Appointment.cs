@@ -24,6 +24,8 @@ namespace PsychologicalServices.Models.Appointments
         //copied from Assessment
         public int CompanyId { get; set; }
 
+        public bool PsychometristConfirmed { get; set; }
+
         public DateTime AppointmentTime { get; set; }
 
         public Address Location { get; set; }

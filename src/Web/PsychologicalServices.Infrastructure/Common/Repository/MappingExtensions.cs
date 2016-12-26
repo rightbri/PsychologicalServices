@@ -2,9 +2,11 @@
 using PsychologicalServices.Models.Addresses;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.CalendarNotes;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Invoices;
+using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Referrals;
 using PsychologicalServices.Models.Reports;
 using PsychologicalServices.Models.Rights;
@@ -20,6 +22,38 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class MappingExtensions
     {
+        public static CalendarNote ToCalendarNote(this CalendarNoteEntity calendarNote)
+        {
+            return null != calendarNote
+                ? new CalendarNote
+                {
+                    CalendarNoteId = calendarNote.CalendarNoteId,
+                    FromDate = calendarNote.FromDate,
+                    ToDate = calendarNote.ToDate,
+                    NoteId = calendarNote.NoteId,
+                    Note = calendarNote.Note.ToNote(),
+                }
+                : null;
+        }
+
+        public static Note ToNote(this NoteEntity note)
+        {
+            return null != note
+                ? new Note
+                {
+                    NoteId = note.NoteId,
+                    NoteText = note.Note,
+                    CreateUserId = note.CreateUserId,
+                    CreateDate = note.CreateDate,
+                    UpdateUserId = note.UpdateUserId,
+                    UpdateDate = note.UpdateDate,
+                    Deleted = note.Deleted,
+                    CreateUser = note.CreateUser.ToUser(),
+                    UpdateUser = note.UpdateUser.ToUser(),
+                }
+                : null;
+        }
+
         public static InvoiceAmount ToInvoiceAmount(this InvoiceAmountEntity invoiceAmount)
         {
             return null != invoiceAmount
@@ -285,6 +319,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CompanyId = appointment.Assessment.CompanyId,
                     AppointmentTime = appointment.AppointmentTime,
                     AssessmentId = appointment.AssessmentId,
+                    PsychometristConfirmed = appointment.PsychometristConfirmed,
                     Location = appointment.Location.ToAddress(),
                     Psychometrist = appointment.Psychometrist.ToUser(),
                     Psychologist = appointment.Psychologist.ToUser(),

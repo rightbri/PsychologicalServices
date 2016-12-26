@@ -41,6 +41,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		private EntityCollection<NoteEntity> _notes_;
+		private EntityCollection<NoteEntity> _notes;
 		private EntityCollection<UserRoleEntity> _userRoles;
 
 
@@ -79,6 +81,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			/// <summary>Member name Notes_</summary>
+			public static readonly string Notes_ = "Notes_";
+			/// <summary>Member name Notes</summary>
+			public static readonly string Notes = "Notes";
 			/// <summary>Member name UserRoles</summary>
 			public static readonly string UserRoles = "UserRoles";
 
@@ -162,6 +168,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				_notes_ = (EntityCollection<NoteEntity>)info.GetValue("_notes_", typeof(EntityCollection<NoteEntity>));
+				_notes = (EntityCollection<NoteEntity>)info.GetValue("_notes", typeof(EntityCollection<NoteEntity>));
 				_userRoles = (EntityCollection<UserRoleEntity>)info.GetValue("_userRoles", typeof(EntityCollection<UserRoleEntity>));
 
 
@@ -232,6 +240,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Notes_":
+					this.Notes_.Add((NoteEntity)entity);
+					break;
+				case "Notes":
+					this.Notes.Add((NoteEntity)entity);
+					break;
 				case "UserRoles":
 					this.UserRoles.Add((UserRoleEntity)entity);
 					break;
@@ -285,6 +299,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Notes_":
+					toReturn.Add(UserEntity.Relations.NoteEntityUsingUpdateUserId);
+					break;
+				case "Notes":
+					toReturn.Add(UserEntity.Relations.NoteEntityUsingCreateUserId);
+					break;
 				case "UserRoles":
 					toReturn.Add(UserEntity.Relations.UserRoleEntityUsingUserId);
 					break;
@@ -352,6 +372,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Notes_":
+					this.Notes_.Add((NoteEntity)relatedEntity);
+					break;
+				case "Notes":
+					this.Notes.Add((NoteEntity)relatedEntity);
+					break;
 				case "UserRoles":
 					this.UserRoles.Add((UserRoleEntity)relatedEntity);
 					break;
@@ -377,6 +403,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Notes_":
+					base.PerformRelatedEntityRemoval(this.Notes_, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "Notes":
+					base.PerformRelatedEntityRemoval(this.Notes, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "UserRoles":
 					base.PerformRelatedEntityRemoval(this.UserRoles, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -418,6 +450,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			toReturn.Add(this.Notes_);
+			toReturn.Add(this.Notes);
 			toReturn.Add(this.UserRoles);
 
 			return toReturn;
@@ -437,6 +471,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				info.AddValue("_notes_", ((_notes_!=null) && (_notes_.Count>0) && !this.MarkedForDeletion)?_notes_:null);
+				info.AddValue("_notes", ((_notes!=null) && (_notes.Count>0) && !this.MarkedForDeletion)?_notes:null);
 				info.AddValue("_userRoles", ((_userRoles!=null) && (_userRoles.Count>0) && !this.MarkedForDeletion)?_userRoles:null);
 
 
@@ -494,6 +530,26 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Note' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoNotes_()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.UpdateUserId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Note' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoNotes()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.CreateUserId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'UserRole' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
@@ -574,6 +630,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			collectionsQueue.Enqueue(this._notes_);
+			collectionsQueue.Enqueue(this._notes);
 			collectionsQueue.Enqueue(this._userRoles);
 
 
@@ -603,6 +661,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			this._notes_ = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
+			this._notes = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._userRoles = (EntityCollection<UserRoleEntity>) collectionsQueue.Dequeue();
 
 
@@ -631,6 +691,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			if (this._notes_ != null)
+			{
+				return true;
+			}
+			if (this._notes != null)
+			{
+				return true;
+			}
 			if (this._userRoles != null)
 			{
 				return true;
@@ -668,6 +736,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserRoleEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserRoleEntityFactory))) : null);
 
 
@@ -700,6 +770,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			toReturn.Add("Notes_", _notes_);
+			toReturn.Add("Notes", _notes);
 			toReturn.Add("UserRoles", _userRoles);
 
 
@@ -729,6 +801,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			if(_notes_!=null)
+			{
+				_notes_.ActiveContext = base.ActiveContext;
+			}
+			if(_notes!=null)
+			{
+				_notes.ActiveContext = base.ActiveContext;
+			}
 			if(_userRoles!=null)
 			{
 				_userRoles.ActiveContext = base.ActiveContext;
@@ -768,6 +848,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			_notes_ = null;
+			_notes = null;
 			_userRoles = null;
 
 
@@ -890,6 +972,28 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathNotes_
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Notes_")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "Notes_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathNotes
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Notes")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "Notes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'UserRole' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1038,6 +1142,38 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'NoteEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(NoteEntity))]
+		public virtual EntityCollection<NoteEntity> Notes_
+		{
+			get
+			{
+				if(_notes_==null)
+				{
+					_notes_ = new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory)));
+					_notes_.SetContainingEntityInfo(this, "UpdateUser");
+				}
+				return _notes_;
+			}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'NoteEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(NoteEntity))]
+		public virtual EntityCollection<NoteEntity> Notes
+		{
+			get
+			{
+				if(_notes==null)
+				{
+					_notes = new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory)));
+					_notes.SetContainingEntityInfo(this, "CreateUser");
+				}
+				return _notes;
+			}
+		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'UserRoleEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>

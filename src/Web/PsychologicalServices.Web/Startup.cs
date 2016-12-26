@@ -12,7 +12,7 @@ namespace PsychologicalServices.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            //ConfigureAuth(app);
 
             UnityConfig.RegisterComponents();
         }

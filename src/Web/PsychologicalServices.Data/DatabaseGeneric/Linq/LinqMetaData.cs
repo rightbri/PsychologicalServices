@@ -91,6 +91,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity:
 					toReturn = this.AssessmentTypeReportType;
 					break;
+				case PsychologicalServices.Data.EntityType.CalendarNoteEntity:
+					toReturn = this.CalendarNote;
+					break;
 				case PsychologicalServices.Data.EntityType.ClaimEntity:
 					toReturn = this.Claim;
 					break;
@@ -105,6 +108,9 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.IssueInDisputeEntity:
 					toReturn = this.IssueInDispute;
+					break;
+				case PsychologicalServices.Data.EntityType.NoteEntity:
+					toReturn = this.Note;
 					break;
 				case PsychologicalServices.Data.EntityType.ReferralSourceEntity:
 					toReturn = this.ReferralSource;
@@ -215,6 +221,12 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<AssessmentTypeReportTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting CalendarNoteEntity instances in the database.</summary>
+		public DataSource2<CalendarNoteEntity> CalendarNote
+		{
+			get { return new DataSource2<CalendarNoteEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting ClaimEntity instances in the database.</summary>
 		public DataSource2<ClaimEntity> Claim
 		{
@@ -243,6 +255,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<IssueInDisputeEntity> IssueInDispute
 		{
 			get { return new DataSource2<IssueInDisputeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting NoteEntity instances in the database.</summary>
+		public DataSource2<NoteEntity> Note
+		{
+			get { return new DataSource2<NoteEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting ReferralSourceEntity instances in the database.</summary>

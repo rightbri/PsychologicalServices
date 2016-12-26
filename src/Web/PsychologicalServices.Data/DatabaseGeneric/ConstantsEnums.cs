@@ -77,6 +77,8 @@ namespace PsychologicalServices.Data
 		Deleted,
 		///<summary>AssessmentId. </summary>
 		AssessmentId,
+		///<summary>PsychometristConfirmed. </summary>
+		PsychometristConfirmed,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -213,6 +215,24 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CalendarNote.
+	/// </summary>
+	public enum CalendarNoteFieldIndex:int
+	{
+		///<summary>CalendarNoteId. </summary>
+		CalendarNoteId,
+		///<summary>FromDate. </summary>
+		FromDate,
+		///<summary>ToDate. </summary>
+		ToDate,
+		///<summary>NoteId. </summary>
+		NoteId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Claim.
 	/// </summary>
 	public enum ClaimFieldIndex:int
@@ -299,6 +319,30 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>Instructions. </summary>
 		Instructions,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Note.
+	/// </summary>
+	public enum NoteFieldIndex:int
+	{
+		///<summary>NoteId. </summary>
+		NoteId,
+		///<summary>Note. </summary>
+		Note,
+		///<summary>UpdateUserId. </summary>
+		UpdateUserId,
+		///<summary>UpdateDate. </summary>
+		UpdateDate,
+		///<summary>CreateUserId. </summary>
+		CreateUserId,
+		///<summary>CreateDate. </summary>
+		CreateDate,
+		///<summary>Deleted. </summary>
+		Deleted,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -570,6 +614,8 @@ namespace PsychologicalServices.Data
 		AssessmentTypeEntity,
 		///<summary>AssessmentTypeReportType</summary>
 		AssessmentTypeReportTypeEntity,
+		///<summary>CalendarNote</summary>
+		CalendarNoteEntity,
 		///<summary>Claim</summary>
 		ClaimEntity,
 		///<summary>Claimant</summary>
@@ -580,6 +626,8 @@ namespace PsychologicalServices.Data
 		InvoiceAmountEntity,
 		///<summary>IssueInDispute</summary>
 		IssueInDisputeEntity,
+		///<summary>Note</summary>
+		NoteEntity,
 		///<summary>ReferralSource</summary>
 		ReferralSourceEntity,
 		///<summary>ReferralSourceType</summary>

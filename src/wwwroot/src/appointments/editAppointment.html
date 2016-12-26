@@ -9,14 +9,14 @@
                 <label for="date">
                     Date
                 </label>
-                <input id="date" type="text" class="form-control" placeholder="YYYY-MM-DD" value.bind="appointmentDate & validate" />
+                <input id="date" type="text" class="form-control" value.bind="appointmentDate & validate" />
             </div>
 
             <div class="form-group">
                 <label for="time">
                     Time
                 </label>
-                <input id="time" type="text" class="form-control" placeholder="HH:MM" value.bind="appointmentTime & validate" />
+                <input id="time" type="time" class="form-control" value.bind="appointmentTime & validate" />
             </div>
 
             <div class="form-group">
@@ -53,7 +53,16 @@
                     </option>
                 </select>
             </div>
-
+			
+			<div class="form-group" repeat.for="task of appointment.appointmentTasks">
+				<label for="task-${task.taskId}">${task.taskTemplate.name}</label>
+				<select id="task-${task.taskId}" class="form-control">
+					<option repeat.for="taskStatus of taskStatuses" model.bind="task.taskStatusId">
+						${taskStatus.name}
+					</option>
+				</select>
+			</div>
+			
             <button type="button" class="btn btn-primary" click.delegate="save()">Save</button>
             <ul if.bind="validationController.errors">
                 <li repeat.for="error of validationController.errors" style="color: red;">

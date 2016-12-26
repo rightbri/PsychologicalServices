@@ -5,10 +5,22 @@
 	</head>
 	<body aurelia-app="main">
 		<div>Loading...</div>
+		<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyAUMGfIT6-wPR7hSmG-6YcTHkg3_mhG2gg",
+				authDomain: "psychologicalservices-146622.firebaseapp.com",
+				databaseURL: "https://psychologicalservices-146622.firebaseio.com",
+				storageBucket: "psychologicalservices-146622.appspot.com",
+				messagingSenderId: "799270231201"
+			};
+			firebase.initializeApp(config);
+		</script>
 		<script src="jspm_packages/system.js"></script>
 		<script src="config.js"></script>
 		<script>
-			System.import('aurelia-bootstrapper');
+		System.import('aurelia-bootstrapper');
 		</script>
 	</body>
 </html>

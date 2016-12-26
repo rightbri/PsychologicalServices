@@ -68,6 +68,13 @@
     <Compile Include="Assessments\IAssessmentRepository.cs" />
     <Compile Include="Assessments\IAssessmentService.cs" />
     <Compile Include="Assessments\IAssessmentValidator.cs" />
+    <Compile Include="CalendarNotes\CalendarNote.cs" />
+    <Compile Include="CalendarNotes\CalendarNoteNotFoundException.cs" />
+    <Compile Include="CalendarNotes\CalendarNoteService.cs" />
+    <Compile Include="CalendarNotes\CalendarNoteValidator.cs" />
+    <Compile Include="CalendarNotes\ICalendarNoteRepository.cs" />
+    <Compile Include="CalendarNotes\ICalendarNoteService.cs" />
+    <Compile Include="CalendarNotes\ICalendarNoteValidator.cs" />
     <Compile Include="Claims\ClaimantNotFoundException.cs" />
     <Compile Include="Claims\ClaimService.cs" />
     <Compile Include="Claims\ClaimValidator.cs" />
@@ -91,6 +98,7 @@
     <Compile Include="Invoices\IInvoiceRepository.cs" />
     <Compile Include="Invoices\IInvoiceService.cs" />
     <Compile Include="Invoices\InvoiceService.cs" />
+    <Compile Include="Notes\Note.cs" />
     <Compile Include="Referrals\IReferralRepository.cs" />
     <Compile Include="Referrals\ReferralSourceSearchCriteria.cs" />
     <Compile Include="Reports\IReportRepository.cs" />
@@ -98,8 +106,10 @@
     <Compile Include="Rights\StaticRights.cs" />
     <Compile Include="Roles\IRoleRepository.cs" />
     <Compile Include="Tasks\ITaskRepository.cs" />
+    <Compile Include="Tasks\ITaskService.cs" />
     <Compile Include="Tasks\ITaskStatusValidator.cs" />
     <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\TaskService.cs" />
     <Compile Include="Tasks\TaskStatus.cs" />
     <Compile Include="Assessments\Assessment.cs" />
     <Compile Include="Assessments\AssessmentType.cs" />

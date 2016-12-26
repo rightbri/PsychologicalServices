@@ -127,6 +127,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.AssessmentId);}
 		}
+		/// <summary>Creates a new AppointmentEntity.PsychometristConfirmed field instance</summary>
+		public static EntityField2 PsychometristConfirmed
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.PsychometristConfirmed);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AppointmentStatusEntity</summary>
@@ -314,6 +319,31 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity CalendarNoteEntity</summary>
+	public partial class CalendarNoteFields
+	{
+		/// <summary>Creates a new CalendarNoteEntity.CalendarNoteId field instance</summary>
+		public static EntityField2 CalendarNoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CalendarNoteFieldIndex.CalendarNoteId);}
+		}
+		/// <summary>Creates a new CalendarNoteEntity.FromDate field instance</summary>
+		public static EntityField2 FromDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CalendarNoteFieldIndex.FromDate);}
+		}
+		/// <summary>Creates a new CalendarNoteEntity.ToDate field instance</summary>
+		public static EntityField2 ToDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CalendarNoteFieldIndex.ToDate);}
+		}
+		/// <summary>Creates a new CalendarNoteEntity.NoteId field instance</summary>
+		public static EntityField2 NoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CalendarNoteFieldIndex.NoteId);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity ClaimEntity</summary>
 	public partial class ClaimFields
 	{
@@ -441,6 +471,46 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 Instructions
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(IssueInDisputeFieldIndex.Instructions);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity NoteEntity</summary>
+	public partial class NoteFields
+	{
+		/// <summary>Creates a new NoteEntity.NoteId field instance</summary>
+		public static EntityField2 NoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.NoteId);}
+		}
+		/// <summary>Creates a new NoteEntity.Note field instance</summary>
+		public static EntityField2 Note
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.Note);}
+		}
+		/// <summary>Creates a new NoteEntity.UpdateUserId field instance</summary>
+		public static EntityField2 UpdateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.UpdateUserId);}
+		}
+		/// <summary>Creates a new NoteEntity.UpdateDate field instance</summary>
+		public static EntityField2 UpdateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.UpdateDate);}
+		}
+		/// <summary>Creates a new NoteEntity.CreateUserId field instance</summary>
+		public static EntityField2 CreateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.CreateUserId);}
+		}
+		/// <summary>Creates a new NoteEntity.CreateDate field instance</summary>
+		public static EntityField2 CreateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.CreateDate);}
+		}
+		/// <summary>Creates a new NoteEntity.Deleted field instance</summary>
+		public static EntityField2 Deleted
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.Deleted);}
 		}
 	}
 

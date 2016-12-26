@@ -1,6 +1,5 @@
 <template>
 	<require from="bootstrap/css/bootstrap.css"></require>
-	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -10,12 +9,32 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
+				<a class="navbar-brand" href="#">Psychological Services</a>
 			</div>
-			
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="nav navbar-nav">
 					<li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
 						<a data-toggle="collapse" data-target="navbar" href.bind="route.href">${route.title}</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#" click.delegate="login('google')" if.bind="!userLoggedIn">Login</a>
+					</li>
+					<li class="dropdown" if.bind="userLoggedIn && user">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							${user.displayName}
+							<!--
+							<p>${user.email}</p>
+							<img src.bind="user.photoURL" if.bind="user.photoURL">
+							-->
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#" click.delegate="logout()">Logout</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -26,10 +45,5 @@
 			</div>
 		</div>
 	</nav>
-	
-	<div class="fluid-container">
-		<div class="col-xs-12">
-			<router-view></router-view>
-		</div>
-	</div>
+	<router-view if.bind="userLoggedIn"></router-view>
 </template>

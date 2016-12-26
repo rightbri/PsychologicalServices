@@ -19,6 +19,7 @@ export class EditAppointment {
 		this.psychologists = null;
 		this.companies = null;
 		this.appointmentStatuses = null;
+		this.taskStatuses = null;
 
         this.dataRepository.getPsychometrists(this.companyId)
 			.then(data => this.psychometrists = data);
@@ -32,7 +33,8 @@ export class EditAppointment {
 		this.dataRepository.getAppointmentStatuses()
 			.then(data => this.appointmentStatuses = data);
 
-
+		this.dataRepository.getTaskStatuses()
+			.then(data => this.taskStatuses = data);
 
     }
 
@@ -51,7 +53,7 @@ export class EditAppointment {
     }
 
     dateString(datetime) {
-		return moment(datetime).format('YYYY-MM-DD');
+		return moment(datetime).format('MM/DD/YYYY');
 	}
 
 	timeString(datetime) {
@@ -59,7 +61,7 @@ export class EditAppointment {
 	}
 
     parseDateTime(date, time) {
-        return moment(date + time, 'YYYY-MM-DD HH:mm').format();
+        return moment(date + time, 'MM/DD/YYYY HH:mm A').format();
     }
 
     save() {

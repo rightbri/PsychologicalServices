@@ -1,102 +1,161 @@
 <template>
-<h2>Appointment Search</h2>
+	<require from="common/week-view"></require>
+<h2>Appointments</h2>
 
-<form class="search-parameters">
-	<div class="form-group">
-		<label for="searchStartDate">Date Start</label>
-		<input id="searchStartDate" class="form-control" type="text" placeholder="MM/DD/YYYY" value.bind="searchStart" />
-	</div>
-	<div class="form-group">
-		<label for="searchEndDate">Date End</label>
-		<input id="searchEndDate" class="form-control" type="text" placeholder="MM/DD/YYYY" value.bind="searchEnd" />
-	</div>
-	<div class="form-group">
-		<label for="searchPsychometrist">Psychometrist</label>
-		<select id="searchPsychometrist" class="form-control" value.bind="searchPsychometrist">
-			<option model.bind="null"></option>
-			<option repeat.for="psychometrist of psychometrists" model.bind="psychometrist.userId">
-				${psychometrist.firstName} ${psychometrist.lastName}
-			</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="searchPsychologist">Psychologist</label>
-		<select id="searchPsychologist" class="form-control" value.bind="searchPsychologist">
-			<option model.bind="null"></option>
-			<option repeat.for="psychologist of psychologists" model.bind="psychologist.userId">
-				${psychologist.firstName} ${psychologist.lastName}
-			</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="searchStatus">Status</label>
-		<select id="searchStatus" class="form-control" value.bind="searchStatus">
-			<option model.bind="null"></option>
-			<option repeat.for="appointmentStatus of appointmentStatuses" model.bind="appointmentStatus.appointmentStatusId">
-				${appointmentStatus.name}
-			</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="searchCompany">Company</label>
-		<select id="searchCompany" class="form-control" value.bind="searchCompany">
-			<option if.bind="hasMultipleCompanies(companies)" model.bind="null"></option>
-			<option repeat.for="company of companies" model.bind="company.companyId">
-				${company.name}
-			</option>
-		</select>
-	</div>
-	<button class="btn btn-default" type="button" click.delegate="search()">Search</button>
-</form>
+<week-view>
+	<template replace-part="weekHeader">
+		<div class="col-xs-1">
+			<!-- date -->
+		</div>
+		<div class="col-xs-1">
+			<!-- add -->
+		</div>
+		<div class="col-xs-10">
+			<div class="row">
+				<div class="col-xs-1">
+					<!-- edit -->
+				</div>
+				<div class="col-xs-1">
+					Time
+				</div>
+				<div class="col-xs-1">
+					Psychometrist
+				</div>
+				<div class="col-xs-2">
+					Source
+				</div>
+				<div class="col-xs-2">
+					Location
+				</div>
+				<div class="col-xs-1">
+					Type
+				</div>
+				<div class="col-xs-2">
+					Claimant
+				</div>
+				<div class="col-xs-1">
+					Status
+				</div>
+				<div class="col-xs-1">
+					Notes
+				</div>
+			</div>
+		</div>
+	</template>
+	<template replace-part="dayContent">
+		<div class="col-xs-1">
+			${weekday(day)}
+			<br>${dateString(day)}
+		</div>
+		<div class="col-xs-1">
+			<button class="btn btn-default add-appointment" click.delegate="newAppointment(day)"><i class="fa fa-plus"></i></button>
+		</div>
+		<div class="col-xs-10">
+			<div class="row calendar-note" repeat.for="note of getNotes(day)" if.bind="hasNotes(day)">
+				<div class="col-xs-offset-1 col-xs-11">
+					<p class="summary">
+						${note.note.noteText}
+					</p>
+				</div>
+			</div>
+			<div class="row" repeat.for="appointment of getAppointments(day)">
+				<div class="col-xs-1">
+					<button type="button" class="btn btn-default" click.delegate="edit(appointment.appointmentId)"><i class="fa fa-edit"></i></button>
+				</div>
+				<div class="col-xs-1">
+					${timeString(appointment.appointmentTime)}
+				</div>
+				<div class="col-xs-1">
+					${appointment.psychometrist.firstName}
+					<br>${appointment.psychometristConfirmed ? 'Yes' : 'No'}
+				</div>
+				<div class="col-xs-2">
+					${appointment.assessment.referralSource.name}
+				</div>
+				<div class="col-xs-2" with.bind="appointment.location">
+					<span class="street">${street}</span>
+					<br if.bind="hasSuite(appointment.location)"><span class="suite" if.bind="hasSuite(appointment.location)">${suite}</span>
+					<br><span class="city">${city}</span>, <span class="province">${province}</span> <span class="postal-code">${postalCode}</span>
+				</div>
+				<div class="col-xs-1">
+					${appointment.assessment.assessmentType.name}
+				</div>
+				<div class="col-xs-2">
+					<p repeat.for="claim of appointment.assessment.claims">
+						${claim.claimant.firstName} ${claim.claimant.lastName}
+						<br>Age: ${claim.claimant.age}
+					</p>
+					<p>
+						${appointment.assessment.reportStatus.name}
+					</p>
+					<p if.bind="appointment.assessment.medicalFileReceivedDate">
+						(${dateString(appointment.assessment.medicalFileReceivedDate)})
+					</p>
+				</div>
+				<div class="col-xs-1">
+					${appointment.appointmentStatus.name}
+				</div>
+				<div class="col-xs-1">
+					Notes
+				</div>
+			</div>
+		</div>
+	</template>
+</week-view>
 
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th></th>
-			<th>Date</th>
-			<th>Time</th>
-			<th>Status</th>
-			<th>Location</th>
-			<th>Referral Source</th>
-			<th>Psychologist</th>
-			<th>Psychometrist</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr repeat.for="appointment of appointments">
-			<td>
-				<button type="button" class="btn btn-default" click.delegate="edit(appointment.appointmentId)">Edit</button>
-			</td>
-			<td>
-				${dateString(appointment.appointmentTime)}
-			</td>
-			<td>
-				${timeString(appointment.appointmentTime)}
-			</td>
-			<td>
-				${appointment.appointmentStatus.name}
-			</td>
-			<td with.bind="appointment.location">
-				<span class="street">${street}</span>
-				<span class="suite" if.bind="hasSuite(appointment.location)">${suite}</span>
-				<span class="city">${city}</span>, <span class="province">${province}</span> <span class="postal-code">${postalCode}</span>
-			</td>
-			<td with.bind="appointment.assessment.referralSource">
-				${name}
-			</td>
-			<td with.bind="appointment.psychologist">
-				${firstName} ${lastName}
-			</td>
-			<td with.bind="appointment.psychometrist">
-				${firstName} ${lastName}
-			</td>
-		</tr>
-		<tr if.bind="!hasAppointments(appointments)">
-			<td colspan="7">
-				No appointments were found.
-			</td>
-		<tr>
-	</tbody>
-</table>
+<p click.delegate="toggleSearch()">Search</p>
+<div class="container-fluid" show.bind="showSearch">
+	<div class="row">
+		<div class="col-xs-4">
+			<form class="search-parameters">
+				<div class="form-group">
+					<label for="searchStartDate">Date Start</label>
+					<input id="searchStartDate" class="form-control" type="text" placeholder="MM/DD/YYYY" value.bind="searchStart" />
+				</div>
+				<div class="form-group">
+					<label for="searchEndDate">Date End</label>
+					<input id="searchEndDate" class="form-control" type="text" placeholder="MM/DD/YYYY" value.bind="searchEnd" />
+				</div>
+				<div class="form-group">
+					<label for="searchPsychometrist">Psychometrist</label>
+					<select id="searchPsychometrist" class="form-control" value.bind="searchPsychometrist">
+						<option model.bind="null"></option>
+						<option repeat.for="psychometrist of psychometrists" model.bind="psychometrist.userId">
+							${psychometrist.firstName} ${psychometrist.lastName}
+						</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="searchPsychologist">Psychologist</label>
+					<select id="searchPsychologist" class="form-control" value.bind="searchPsychologist">
+						<option model.bind="null"></option>
+						<option repeat.for="psychologist of psychologists" model.bind="psychologist.userId">
+							${psychologist.firstName} ${psychologist.lastName}
+						</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="searchStatus">Status</label>
+					<select id="searchStatus" class="form-control" value.bind="searchStatus">
+						<option model.bind="null"></option>
+						<option repeat.for="appointmentStatus of appointmentStatuses" model.bind="appointmentStatus.appointmentStatusId">
+							${appointmentStatus.name}
+						</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="searchCompany">Company</label>
+					<select id="searchCompany" class="form-control" value.bind="searchCompany">
+						<option if.bind="hasMultipleCompanies(companies)" model.bind="null"></option>
+						<option repeat.for="company of companies" model.bind="company.companyId">
+							${company.name}
+						</option>
+					</select>
+				</div>
+				<button class="btn btn-default" type="button" click.delegate="search()">Search</button>
+			</form>
+		</div>
+	</div>
+</div>
 
 </template>

@@ -56,6 +56,7 @@
     <Compile Include="Addresses\AddressRepository.cs" />
     <Compile Include="Appointments\AppointmentRepository.cs" />
     <Compile Include="Assessments\AssessmentRepository.cs" />
+    <Compile Include="CalendarNotes\CalendarNoteRepository.cs" />
     <Compile Include="Claims\ClaimRepository.cs" />
     <Compile Include="Common\Configuration\ConfigurationService.cs" />
     <Compile Include="Common\Repository\DataConnectionParameters.cs" />
