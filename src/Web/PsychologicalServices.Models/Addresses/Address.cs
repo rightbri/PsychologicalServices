@@ -20,6 +20,10 @@ namespace PsychologicalServices.Models.Addresses
 
         public int AddressTypeId { get; set; }
 
+        public string Name { get; set; }
+
+        public bool IsActive { get; set; }
+
         public AddressType AddressType { get; set; }
 
         public bool IsNew()

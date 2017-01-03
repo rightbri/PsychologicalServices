@@ -40,6 +40,20 @@ namespace PsychologicalServices.Models.Users
             return psychologists;
         }
 
+        public IEnumerable<User> GetDocListWriters(int? companyId = null)
+        {
+            var docListWriters = _userRepository.GetDocListWriters(companyId);
+
+            return docListWriters;
+        }
+
+        public IEnumerable<User> GetNotesWriters(int? companyId = null)
+        {
+            var notesWriters = _userRepository.GetNotesWriters(companyId);
+
+            return notesWriters;
+        }
+
         public SaveResult<User> SaveUser(User user)
         {
             var result = new SaveResult<User>();

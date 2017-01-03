@@ -1,0 +1,173 @@
+<template>
+	<require from="valueConverters/date-format"></require>
+	<require from="valueConverters/gender"></require>
+	
+<h2>Edit Assessment</h2>
+
+<div class="container-fluid">
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="assessmentType">Assessment Type</label>
+				<select id="assessmentType" class="form-control" value.bind="assessment.assessmentTypeId">
+					<option repeat.for="assessmentType of assessmentTypes" value.bind="assessmentType.assessmentTypeId">
+						${assessmentType.name}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="referralType">Referral Type</label>
+				<select id="referralType" class="form-control" value.bind="assessment.referralTypeId">
+					<option repeat.for="referralType of referralTypes" value.bind="referralType.referralTypeId">
+						${referralType.name}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="referralSource">Referral Source</label>
+				<select id="referralSource" class="form-control" value.bind="assessment.referralSourceId">
+					<option repeat.for="referralSource of referralSources" value.bind="referralSource.referralSourceId">
+						${referralSource.name}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="reportStatus">Report Status</label>
+				<select id="reportStatus" class="form-control" value.bind="assessment.reportStatusId">
+					<option repeat.for="reportStatus of reportStatuses" value.bind="reportStatus.reportStatusId">
+						${reportStatus.name}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="medicalFileReceivedDate">Medical File Received Date</label>
+				<input id="medicalFileReceivedDate" type="text" class="form-control" value.bind="assessment.medicalFileReceivedDate" />
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="fileSize">File Size</label>
+				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="referralSourceContactEmail">Referral Source Contact Email</label>
+				<input id="referralSourceContactEmail" type="email" class="form-control" value.bind="assessment.referralSourceContactEmail" />
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<label>Issues in Dispute</label>
+			<div class="checkbox" repeat.for="issueInDispute of issuesInDispute">
+				<label>
+					<input type="checkbox" model.bind="issueInDispute.issueInDisputeId" checked.bind="assessment.issuesInDispute" />&nbsp;${issueInDispute.name}
+				</label>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="docListWriter">Doc List Writer</label>
+				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriterId">
+					<option repeat.for="user of docListWriters" value.bind="user.userId">
+						${user.firstName}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="notesWriter">Notes Writer</label>
+				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriterId">
+					<option repeat.for="user of notesWriters" value.bind="user.userId">
+						${user.firstName}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="company">Company</label>
+				<select id="company" class="form-control" value.bind="assessment.companyId">
+					<option repeat.for="company of companies" value.bind="company.companyId">
+						${company.name}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" checked.bind="assessment.deleted" />&nbsp;Deleted
+				</label>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Claim #</th>
+						<th>Date of Loss</th>
+						<th>Claimant</th>
+						<th>Age</th>
+						<th>Gender</th>
+						<th>Deleted</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr repeat.for="claim of assessment.claims">
+						<td>${claim.claimNumber}</td>
+						<td>${claim.dateOfLoss | dateFormat:'M/D/YYYY'}</td>
+						<td>${claim.claimant.firstName} ${claim.claimant.lastName}</td>
+						<td>${claim.claimant.age}</td>
+						<td>${claim.claimant.gender | gender }</td>
+						<td>
+							<label class="checkbox">
+								<input type="checkbox" checked.bind="claim.deleted" />
+							</label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<button type="button" class="btn btn-default" click.delegate="back()">
+				<i class="fa fa-arrow-left"></i> Back
+			</button>
+			<button type="button" class="btn btn-primary" click.delegate="save()">
+				Save <i class="fa fa-save"></i>
+			</button>
+		</div>
+	</div>
+</div>
+
+</template>

@@ -1,0 +1,105 @@
+<template>
+	
+	<h2>Edit Address</h2>
+	
+	<div class="container-fluid">
+	
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input id="name" type="text" class="form-control" value.bind="address.name" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="street">Street</label>
+					<input id="street" type="text" class="form-control" value.bind="address.street" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="suite">Suite</label>
+					<input id="suite" type="text" class="form-control" value.bind="address.suite" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="city">City</label>
+					<input id="city" type="text" class="form-control" value.bind="address.city" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="province">Province</label>
+					<input id="province" type="text" class="form-control" value.bind="address.province" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="postalCode">Postal Code</label>
+					<input id="postalCode" type="text" class="form-control" value.bind="address.postalCode" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="country">Country</label>
+					<input id="country" type="text" class="form-control" value.bind="address.country" />
+				</div>
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="type">Type</label>
+					<select class="form-control" value.bind="address.addressTypeId">
+						<option repeat.for="addressType of addressTypes" model.bind="addressType.addressTypeId">
+							${addressType.name}
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="checkbox">
+					<label>
+						<input id="active" type="checkbox" checked.bind="address.isActive" />&nbsp;Is Active?
+					</label>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<button type="button" class="btn btn-default" click.delegate="back()">
+					<i class="fa fa-arrow-left"></i> Back
+				</button>
+				<button type="button" class="btn btn-primary" click.delegate="save()">
+					Save <i class="fa fa-save"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+	
+</template>

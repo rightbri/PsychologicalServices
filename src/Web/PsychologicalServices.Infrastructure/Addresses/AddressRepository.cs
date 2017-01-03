@@ -54,7 +54,7 @@ namespace PsychologicalServices.Infrastructure.Addresses
                     .ToAddressType();
             }
         }
-
+        
         public IEnumerable<Address> GetAddresses(AddressSearchCriteria criteria)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -66,6 +66,11 @@ namespace PsychologicalServices.Infrastructure.Addresses
 
                 if (null != criteria)
                 {
+                    if (!string.IsNullOrWhiteSpace(criteria.Name))
+                    {
+                        addresses = addresses.Where(address => address.Name.Contains(criteria.Name));
+                    }
+
                     if (!string.IsNullOrWhiteSpace(criteria.Street))
                     {
                         addresses = addresses.Where(address => address.Street.Contains(criteria.Street));
@@ -76,15 +81,29 @@ namespace PsychologicalServices.Infrastructure.Addresses
                         addresses = addresses.Where(address => address.City.Contains(criteria.City));
                     }
 
-                    if (criteria.AddressTypeId.HasValue)
+                    if (null != criteria.AddressTypeIds && criteria.AddressTypeIds.Any())
                     {
-                        addresses = addresses.Where(address => address.AddressTypeId == criteria.AddressTypeId.Value);
+                        addresses = addresses.Where(address => criteria.AddressTypeIds.Contains(address.AddressTypeId));
+                    }
+
+                    if (criteria.IsActive.HasValue)
+                    {
+                        addresses = addresses.Where(address => address.IsActive == criteria.IsActive.Value);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(criteria.SearchTerm))
+                    {
+                        addresses = addresses
+                            .Where(address => address.Name.Contains(criteria.SearchTerm) ||
+                                address.Street.Contains(criteria.SearchTerm) ||
+                                address.City.Contains(criteria.SearchTerm));
                     }
                 }
 
                 return Execute<AddressEntity>(
                         (ILLBLGenProQuery)
                         addresses
+                        .OrderBy(address => address.Name)
                     )
                     .Select(address => address.ToAddress())
                     .ToList();
@@ -101,6 +120,7 @@ namespace PsychologicalServices.Infrastructure.Addresses
                         (ILLBLGenProQuery)
                         meta.AddressType
                         .Where(addressType => isActive == null || addressType.IsActive == isActive.Value)
+                        .OrderBy(addressType => addressType.Name)
                     )
                     .Select(addressType => addressType.ToAddressType())
                     .ToList();
@@ -131,6 +151,8 @@ namespace PsychologicalServices.Infrastructure.Addresses
                 addressEntity.Province = address.Province;
                 addressEntity.Country = address.Country;
                 addressEntity.AddressTypeId = address.AddressTypeId;
+                addressEntity.Name = address.Name;
+                addressEntity.IsActive = address.IsActive;
 
                 var saved = adapter.SaveEntity(addressEntity, false);
 

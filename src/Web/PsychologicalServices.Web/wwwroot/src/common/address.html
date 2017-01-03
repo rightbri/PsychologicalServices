@@ -1,5 +1,6 @@
 <template>
     <p translate="no">
+		${address.name}<br>
         ${address.street}<br>
         ${address.suite}<br if.bind="hasSuite(address)">
         ${address.city}, ${address.province} ${address.postalCode}<br>

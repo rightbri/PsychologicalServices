@@ -1,5 +1,8 @@
 <template>
 	<require from="common/week-view"></require>
+	<require from="valueConverters/boolean"></require>
+	<require from="valueConverters/date-format"></require>
+	
 <h2>Appointments</h2>
 
 <week-view>
@@ -44,8 +47,8 @@
 	</template>
 	<template replace-part="dayContent">
 		<div class="col-xs-1">
-			${weekday(day)}
-			<br>${dateString(day)}
+			${day | dateFormat:'ddd'}
+			<br>${day | dateFormat:'MMM DD'}
 		</div>
 		<div class="col-xs-1">
 			<button class="btn btn-default add-appointment" click.delegate="newAppointment(day)"><i class="fa fa-plus"></i></button>
@@ -63,11 +66,11 @@
 					<button type="button" class="btn btn-default" click.delegate="edit(appointment.appointmentId)"><i class="fa fa-edit"></i></button>
 				</div>
 				<div class="col-xs-1">
-					${timeString(appointment.appointmentTime)}
+					${appointment.appointmentTime | dateFormat:'h:mmA'}
 				</div>
 				<div class="col-xs-1">
 					${appointment.psychometrist.firstName}
-					<br>${appointment.psychometristConfirmed ? 'Yes' : 'No'}
+					<br>${appointment.psychometristConfirmed | boolean }
 				</div>
 				<div class="col-xs-2">
 					${appointment.assessment.referralSource.name}
@@ -89,7 +92,7 @@
 						${appointment.assessment.reportStatus.name}
 					</p>
 					<p if.bind="appointment.assessment.medicalFileReceivedDate">
-						(${dateString(appointment.assessment.medicalFileReceivedDate)})
+						(${appointment.assessment.medicalFileReceivedDate | dateFormat:'MM/DD/YYYY'})
 					</p>
 				</div>
 				<div class="col-xs-1">

@@ -21,7 +21,10 @@ export class Shell {
 		
 		config.map([
 			{ route: ['', 'appointments'], name: 'appointments', moduleId: 'appointments/appointments', title: 'Appointments', nav: true },
-			{ route: 'appointments/:id/edit', name: 'editAppointment', moduleId: 'appointments/editAppointment', title: 'Edit Appointment', nav: false }/*,
+			{ route: 'appointments/:id/edit', name: 'editAppointment', moduleId: 'appointments/editAppointment', title: 'Edit Appointment', nav: false },
+			{ route: 'assessments/:id/edit', name: 'editAssessment', moduleId: 'assessments/editAssessment', title: 'Edit Assessment', nav: false },
+			{ route: 'addresses', name: 'addresses', moduleId: 'addresses/addresses', title: 'Addresses', nav: true },
+			{ route: 'addresses/:id/edit', name: 'editAddress', moduleId: 'addresses/editAddress', title: 'Edit Address', nav: false }/*,
 			{ route: 'assessments', moduleId: 'assessments/assessments', title: 'Assessments', nav: true },
 			{ route: 'invoices', moduleId: 'invoices/invoices', title: 'Invoices', nav: true },
 			{ route: 'reports', moduleId: 'reports/reports', title: 'Reports', nav: true },

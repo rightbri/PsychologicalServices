@@ -1,0 +1,105 @@
+<template>
+
+<h2>Addresses</h2>
+
+<div class="container-fluid" if.bind="showSearch">
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="searchName">Name</label>
+				<input id="searchName" type="text" class="form-control" value.bind="searchName" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="searchStreet">Street</label>
+				<input id="searchStreet" type="text" class="form-control" value.bind="searchStreet" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="searchCity">City</label>
+				<input id="searchCity" type="text" class="form-control" value.bind="searchCity" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="checkbox" repeat.for="addressType of addressTypes" value.bind="">
+				<label>
+					<input type="checkbox" model.bind="addressType.addressTypeId" checked.bind="searchAddressTypes" />&nbsp;${addressType.name}
+				</label>
+			</div>
+			<!--
+			<select multiple class="form-control" value.bind="searchAddressTypes">
+				<option repeat.for="addressType of addressTypes" model.bind="addressType.addressTypeId">
+					${addressType.name}
+				</option>
+			</select>
+			-->
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<label for="searchActive">Is Active?</label>
+			<select class="form-control" value.bind="searchActive">
+				<option></option>
+				<option value="true">yes</option>
+				<option value="false">no</option>
+			</select>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<button type="button" class="btn btn-default" click.delegate="search()">
+				Search <i class="fa fa-search"></i>
+			</button>
+		</div>
+	</div>
+</div>
+
+<button type="button" class="btn btn-primary" click.delegate="add()">
+	Add <i class="fa fa-plus"></i>
+</button>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>Street</th>
+			<th>Suite</th>
+			<th>City</th>
+			<th>Province</th>
+			<th>Postal Code</th>
+			<th>Country</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr repeat.for="address of addresses">
+			<td>
+				<button type="button" class="btn btn-default" click.delegate="edit(address.addressId)"><i class="fa fa-edit"></i></button>
+			</td>
+			<td>${address.name}</td>
+			<td>${address.street}</td>
+			<td>${address.suite}</td>
+			<td>${address.city}</td>
+			<td>${address.province}</td>
+			<td>${address.postalCode}</td>
+			<td>${address.country}</td>
+			<td>${address.addressType.name}</td>
+		</tr>
+	</tbody>
+</table>
+
+</template>

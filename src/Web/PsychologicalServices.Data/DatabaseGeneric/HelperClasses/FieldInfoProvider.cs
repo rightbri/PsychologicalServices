@@ -104,6 +104,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AddressEntity", "Country", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.Country, 50, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AddressFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "AddressTypeId", typeof(System.Int32), false, true, false, false,  (int)AddressFieldIndex.AddressTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("AddressEntity", "Name", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.Name, 100, 0, 0);
 		}
 		/// <summary>Inits AddressTypeEntity's FieldInfo objects</summary>
 		private void InitAddressTypeEntityInfos()

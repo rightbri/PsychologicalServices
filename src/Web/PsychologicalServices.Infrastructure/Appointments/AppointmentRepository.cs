@@ -265,7 +265,8 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 {
                     var prefetch = new PrefetchPath2(EntityType.AppointmentEntity);
 
-                    prefetch.Add(AppointmentEntity.PrefetchPathTaskCollectionViaAppointmentTasks);
+                    prefetch.Add(AppointmentEntity.PrefetchPathAppointmentTasks)
+                        .SubPath.Add(AppointmentTaskEntity.PrefetchPathTask);
 
                     adapter.FetchEntity(appointmentEntity, prefetch);
                 }
@@ -278,16 +279,17 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentEntity.AssessmentId = appointment.AssessmentId;
                 appointmentEntity.PsychometristConfirmed = appointment.PsychometristConfirmed;
 
-                var tasksToUpdate = appointmentEntity.TaskCollectionViaAppointmentTasks.Where(appointmentTask => appointment.AppointmentTasks.Any(task => appointmentTask.TaskId == task.TaskId && appointmentTask.TaskStatusId != task.TaskStatusId));
 
+                var tasksToUpdate = appointmentEntity.AppointmentTasks.Where(appointmentTask => appointment.AppointmentTasks.Any(task => appointmentTask.TaskId == task.TaskId && appointmentTask.Task.TaskStatusId != task.TaskStatusId));
+                
                 foreach (var appointmentTask in tasksToUpdate)
                 {
                     var task = appointment.AppointmentTasks.First(t => t.TaskId == appointmentTask.TaskId);
 
-                    appointmentTask.TaskStatusId = task.TaskStatusId;
+                    appointmentTask.Task.TaskStatusId = task.TaskStatusId;
                 }
 
-                adapter.SaveEntity(appointmentEntity, false);
+                adapter.SaveEntity(appointmentEntity, false, true);
 
                 return appointmentEntity.AppointmentId;
             }

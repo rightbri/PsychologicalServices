@@ -12,6 +12,10 @@ namespace PsychologicalServices.Models.Users
 
         IEnumerable<User> GetPsychologists(int? companyId = null);
 
+        IEnumerable<User> GetDocListWriters(int? companyId = null);
+
+        IEnumerable<User> GetNotesWriters(int? companyId = null);
+
         SaveResult<User> SaveUser(User user);
     }
 }

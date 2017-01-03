@@ -20,36 +20,30 @@ export class EditAppointment {
 		this.companies = null;
 		this.appointmentStatuses = null;
 		this.taskStatuses = null;
-
-        this.dataRepository.getPsychometrists(this.companyId)
-			.then(data => this.psychometrists = data);
-
-		this.dataRepository.getPsychologists(this.companyId)
-			.then(data => this.psychologists = data);
-
-		this.dataRepository.getCompanies()
-			.then(data => this.companies = data);
-
-		this.dataRepository.getAppointmentStatuses()
-			.then(data => this.appointmentStatuses = data);
-
-		this.dataRepository.getTaskStatuses()
-			.then(data => this.taskStatuses = data);
-
+		this.addresses = null;
     }
 
     activate(params) {
         var id = params.id;
 
-        this.dataRepository.getAppointment(id)
-            .then(data => {
-                this.appointment = data;
+		return Promise.all([
+			this.dataRepository.getPsychometrists(this.companyId).then(data => this.psychometrists = data),
+			this.dataRepository.getPsychologists(this.companyId).then(data => this.psychologists = data),
+			this.dataRepository.getCompanies().then(data => this.companies = data),
+			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
+			this.dataRepository.getTaskStatuses().then(data => this.taskStatuses = data),
+			this.dataRepository.searchAddress().then(data => this.addresses = data),
+			
+			this.dataRepository.getAppointment(id)
+				.then(data => {
+					this.appointment = data;
 
-                this.appointmentDate = this.dateString(this.appointment.appointmentTime);
-                this.appointmentTime = this.timeString(this.appointment.appointmentTime);
+					this.appointmentDate = this.dateString(this.appointment.appointmentTime);
+					this.appointmentTime = this.timeString(this.appointment.appointmentTime);
 
-                this.initValidation();
-            });
+					this.initValidation();
+				})
+		]);
     }
 
     dateString(datetime) {
@@ -63,7 +57,7 @@ export class EditAppointment {
     parseDateTime(date, time) {
         return moment(date + time, 'MM/DD/YYYY HH:mm A').format();
     }
-
+	
     save() {
         this.appointment.appointmentTime = this.parseDateTime(this.appointmentDate, this.appointmentTime);
         
@@ -80,9 +74,18 @@ export class EditAppointment {
 
                 if (data.isSaved) {
                     this.appointment = data.item;
+					alert('saved');
                 }
             });
     }
+	
+	back() {
+		this.router.navigateBack();
+	}
+	
+	editAssessment(id) {
+		this.router.navigateToRoute('editAssessment', { id: id });
+	}
 
     initValidation() {
         

@@ -11,6 +11,7 @@ namespace PsychologicalServices.Web.Controllers
     {
         public ActionResult Index()
         {
+            //return File("~/wwwroot/index.html", "text/html");
             return View();
         }
     }

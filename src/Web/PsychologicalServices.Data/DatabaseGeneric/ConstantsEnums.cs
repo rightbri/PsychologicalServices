@@ -35,6 +35,8 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>AddressTypeId. </summary>
 		AddressTypeId,
+		///<summary>Name. </summary>
+		Name,
 		/// <summary></summary>
 		AmountOfFields
 	}

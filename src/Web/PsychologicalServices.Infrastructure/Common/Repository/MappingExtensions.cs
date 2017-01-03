@@ -355,6 +355,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Province = address.Province,
                     Country = address.Country,
                     AddressTypeId = address.AddressTypeId,
+                    Name = address.Name,
+                    IsActive = address.IsActive,
                     AddressType = address.AddressType.ToAddressType(),
                 }
                 : null;

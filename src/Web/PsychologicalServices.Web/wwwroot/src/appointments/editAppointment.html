@@ -1,0 +1,135 @@
+<template>
+    <require from="common/address"></require>
+
+    <h2>Edit Appointment</h2>
+    <form>
+        <div class="container-fluid">
+		
+			<div class="row">
+				<div class="col-xs-3">
+					<div class="form-group">
+						<label for="date">Date</label>
+						<input id="date" type="text" class="form-control" value.bind="appointmentDate & validate" />
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<div class="form-group">
+						<label for="time">Time</label>
+						<input id="time" type="time" class="form-control" value.bind="appointmentTime & validate" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-3">
+					<div class="form-group">
+						<label for="status">Status</label>
+						<select id="status" class="form-control" value.bind="appointment.appointmentStatusId & validate">
+							<option model.bind="null"></option>
+							<option repeat.for="appointmentStatus of appointmentStatuses" model.bind="appointmentStatus.appointmentStatusId">
+								${appointmentStatus.name}
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<div class="form-group">
+						<label for="location">Location</label>
+						<select id="location" class="form-control" value.bind="appointment.locationId">
+							<option repeat.for="address of addresses" model.bind="address.addressId">
+								${address.name} ${address.street} ${address.city}
+							</option>
+						</select>
+					</div>
+				</div>
+			</div>
+            
+            <div class="row">
+				<div class="col-xs-3">
+					<div class="form-group">
+						<label for="psychometrist">Psychometrist</label>
+						<select id="psychometrist" class="form-control" value.bind="appointment.psychometristId & validate">
+							<option model.bind="null"></option>
+							<option repeat.for="psychometrist of psychometrists" model.bind="psychometrist.userId">
+								${psychometrist.firstName} ${psychometrist.lastName}
+							</option>
+						</select>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked.bind="appointment.psychometristConfirmed" />&nbsp;Psychometrist confirmed
+						</label>
+					</div>	
+				</div>
+				<div class="col-xs-3">
+					<div class="form-group">
+						<label for="psychologist">Psychologist</label>
+						<select id="psychologist" class="form-control" value.bind="appointment.psychologistId & validate">
+							<option model.bind="null"></option>
+							<option repeat.for="psychologist of psychologists" model.bind="psychologist.userId">
+								${psychologist.firstName} ${psychologist.lastName}
+							</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-6">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr repeat.for="task of appointment.appointmentTasks">
+								<td>
+									<label for="task-${task.taskId}">${task.taskTemplate.name}</label>
+								</td>
+								<td>
+									<select id="task-${task.taskId}" class="form-control" value.bind="task.taskStatusId">
+										<option repeat.for="taskStatus of taskStatuses" model.bind="taskStatus.taskStatusId">
+											${taskStatus.name}
+										</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-6">
+					<button type="button" class="btn btn-default" click.delegate="editAssessment(appointment.assessmentId)">
+						Edit Assessment
+					</button>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-6">
+					<button type="button" class="btn btn-default" click.delegate="back()">
+						<i class="fa fa-arrow-left"></i> Back
+					</button>
+					<button type="button" class="btn btn-primary" click.delegate="save()">
+						Save <i class="fa fa-save"></i>
+					</button>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-6">
+					<ul if.bind="validationController.errors">
+						<li repeat.for="error of validationController.errors" style="color: red;">
+							${error.message}
+						</li>
+					</ul>
+				</div>
+			</div>
+        </div>
+    </form>
+
+</template>

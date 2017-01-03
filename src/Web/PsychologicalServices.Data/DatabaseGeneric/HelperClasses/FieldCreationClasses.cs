@@ -62,6 +62,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.AddressTypeId);}
 		}
+		/// <summary>Creates a new AddressEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.Name);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AddressTypeEntity</summary>

@@ -24,26 +24,22 @@ export class Appointments {
 		this.appointmentStatuses = null;
 		this.calendarNotes = null;
 		
-		this.dataRepository.getCompanies()
-			.then(data => this.companies = data);
-
-		this.dataRepository.getPsychometrists(this.searchCompany)
-			.then(data => this.psychometrists = data);
-
-		this.dataRepository.getPsychologists(this.searchCompany)
-			.then(data => this.psychologists = data);
-
-		this.dataRepository.getAppointmentStatuses()
-			.then(data => this.appointmentStatuses = data);
-
-		this.dataRepository.getCalendarNotes(this.searchStart, this.searchEnd)
-			.then(data => this.calendarNotes = data);
-			
-		this.search();
+		
+	}
+	
+	activate(params) {
+		return Promise.all([
+			this.dataRepository.getCompanies().then(data => this.companies = data),
+			this.dataRepository.getPsychometrists(this.searchCompany).then(data => this.psychometrists = data),
+			this.dataRepository.getPsychologists(this.searchCompany).then(data => this.psychologists = data),
+			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
+			this.dataRepository.getCalendarNotes(this.searchStart, this.searchEnd).then(data => this.calendarNotes = data),
+			this.search()
+		]);
 	}
 
 	search() {
-		this.searchAppointments({
+		return this.searchAppointments({
 			appointmentStatusId: this.searchStatus,
 			appointmentTimeStart: this.searchStart,
 			appointmentTimeEnd: this.searchEnd,
@@ -54,7 +50,7 @@ export class Appointments {
 	}
 
 	searchAppointments(criteria) {
-		this.dataRepository.searchAppointments(criteria)
+		return this.dataRepository.searchAppointments(criteria)
 			.then(data => {
 				this.appointments = data;
 				

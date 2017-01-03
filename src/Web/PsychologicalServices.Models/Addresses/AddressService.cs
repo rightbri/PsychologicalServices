@@ -21,6 +21,14 @@ namespace PsychologicalServices.Models.Addresses
 
         public Address GetAddress(int id)
         {
+            if (0 == id)
+            {
+                return new Address
+                {
+                    IsActive = true,
+                };
+            }
+
             var address = _addressRepository.GetAddress(id);
 
             if (null == address)
@@ -72,5 +80,6 @@ namespace PsychologicalServices.Models.Addresses
 
             return result;
         }
+
     }
 }

@@ -69,6 +69,10 @@ export class DataRepository {
 	saveAssessment(assessment) {
 		return this.saveBasic(assessment, 'assessment');
 	}
+	
+	getAssessmentTypes() {
+		return this.getManyBasic('assessmentType');
+	}
 
 	getAddress(id) {
 		return this.getSingleBasic(id, 'address');
@@ -82,6 +86,34 @@ export class DataRepository {
 		return this.saveBasic(address, 'address');
 	}
 
+	getAddressTypes() {
+		return this.getManyBasic('addresstype');
+	}
+	
+	getIssuesInDispute() {
+		return this.getManyBasic('issueindispute');
+	}
+	
+	getReferralSources(criteria) {
+		return this.searchBasic(criteria, 'referralsource');
+	}
+	
+	getReferralSourceTypes() {
+		return this.getManyBasic('referralsourcetype');
+	}
+	
+	getReferralTypes() {
+		return this.getManyBasic('referraltype');
+	}
+	
+	getReportStatuses() {
+		return this.getManyBasic('reportstatus');
+	}
+	
+	getReportTypes() {
+		return this.getManyBasic('reporttype');
+	}
+	
 	getUser(id) {
 		return this.getSingleBasic(id, 'user');
 	}
@@ -98,6 +130,14 @@ export class DataRepository {
 		return this.getManyBasic('user/psychologists/' + companyId);
 	}
 
+	getDocListWriters(companyId) {
+		return this.getManyBasic('user/doclistwriters/' + companyId);
+	}
+	
+	getNotesWriters(companyId) {
+		return this.getManyBasic('user/noteswriters/' + companyId);
+	}
+	
 	getCompany(id) {
 		return this.getSingleBasic(id, 'company');
 	}

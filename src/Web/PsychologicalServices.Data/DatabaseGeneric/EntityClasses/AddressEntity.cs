@@ -532,6 +532,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("AddressTypeId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Name", fieldHashtable);
 		}
 		#endregion
 
@@ -740,6 +743,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AddressFieldIndex.AddressTypeId, true); }
 			set	{ SetValue((int)AddressFieldIndex.AddressTypeId, value); }
+		}
+
+		/// <summary> The Name property of the Entity Address<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Addresses"."Name"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.String Name
+		{
+			get { return (System.String)GetValue((int)AddressFieldIndex.Name, true); }
+			set	{ SetValue((int)AddressFieldIndex.Name, value); }
 		}
 
 

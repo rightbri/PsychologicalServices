@@ -8,7 +8,10 @@
     [Country]       NVARCHAR (50)  NOT NULL,
     [IsActive]      BIT            CONSTRAINT [DF_Addresses_IsActive] DEFAULT ((1)) NOT NULL,
     [AddressTypeId] INT            NOT NULL,
+    [Name]          NVARCHAR (100) NOT NULL,
     CONSTRAINT [PK_Addresses] PRIMARY KEY CLUSTERED ([AddressId] ASC),
     CONSTRAINT [FK_Addresses_AddressTypes] FOREIGN KEY ([AddressTypeId]) REFERENCES [dbo].[AddressTypes] ([AddressTypeId])
 );
+
+
 

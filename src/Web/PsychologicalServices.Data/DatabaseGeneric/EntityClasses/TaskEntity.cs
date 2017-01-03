@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<AppointmentTaskEntity> _appointmentTasks;
 
 		private TaskStatusEntity _taskStatus;
 		private TaskTemplateEntity _taskTemplate;
@@ -58,7 +58,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string TaskStatus = "TaskStatus";
 			/// <summary>Member name TaskTemplate</summary>
 			public static readonly string TaskTemplate = "TaskTemplate";
-
+			/// <summary>Member name AppointmentTasks</summary>
+			public static readonly string AppointmentTasks = "AppointmentTasks";
 
 
 		}
@@ -119,7 +120,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_appointmentTasks = (EntityCollection<AppointmentTaskEntity>)info.GetValue("_appointmentTasks", typeof(EntityCollection<AppointmentTaskEntity>));
 
 				_taskStatus = (TaskStatusEntity)info.GetValue("_taskStatus", typeof(TaskStatusEntity));
 				if(_taskStatus!=null)
@@ -180,7 +181,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "TaskTemplate":
 					this.TaskTemplate = (TaskTemplateEntity)entity;
 					break;
-
+				case "AppointmentTasks":
+					this.AppointmentTasks.Add((AppointmentTaskEntity)entity);
+					break;
 
 
 				default:
@@ -210,7 +213,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "TaskTemplate":
 					toReturn.Add(TaskEntity.Relations.TaskTemplateEntityUsingTaskTemplateId);
 					break;
-
+				case "AppointmentTasks":
+					toReturn.Add(TaskEntity.Relations.AppointmentTaskEntityUsingTaskId);
+					break;
 
 
 				default:
@@ -257,7 +262,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "TaskTemplate":
 					SetupSyncTaskTemplate(relatedEntity);
 					break;
-
+				case "AppointmentTasks":
+					this.AppointmentTasks.Add((AppointmentTaskEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -279,7 +286,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "TaskTemplate":
 					DesetupSyncTaskTemplate(false, true);
 					break;
-
+				case "AppointmentTasks":
+					base.PerformRelatedEntityRemoval(this.AppointmentTasks, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -318,7 +327,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.AppointmentTasks);
 
 			return toReturn;
 		}
@@ -333,7 +342,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_appointmentTasks", ((_appointmentTasks!=null) && (_appointmentTasks.Count>0) && !this.MarkedForDeletion)?_appointmentTasks:null);
 
 				info.AddValue("_taskStatus", (!this.MarkedForDeletion?_taskStatus:null));
 				info.AddValue("_taskTemplate", (!this.MarkedForDeletion?_taskTemplate:null));
@@ -372,6 +381,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'AppointmentTask' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAppointmentTasks()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentTaskFields.TaskId, null, ComparisonOperator.Equal, this.TaskId));
+			return bucket;
+		}
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
@@ -422,7 +440,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._appointmentTasks);
 
 		}
 		
@@ -431,7 +449,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._appointmentTasks = (EntityCollection<AppointmentTaskEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -439,7 +457,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._appointmentTasks != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -450,7 +471,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentTaskEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentTaskEntityFactory))) : null);
 
 		}
 #endif
@@ -463,7 +484,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("TaskStatus", _taskStatus);
 			toReturn.Add("TaskTemplate", _taskTemplate);
-
+			toReturn.Add("AppointmentTasks", _appointmentTasks);
 
 
 			return toReturn;
@@ -472,7 +493,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_appointmentTasks!=null)
+			{
+				_appointmentTasks.ActiveContext = base.ActiveContext;
+			}
 
 			if(_taskStatus!=null)
 			{
@@ -489,7 +513,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_appointmentTasks = null;
 
 			_taskStatus = null;
 			_taskTemplate = null;
@@ -620,6 +644,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AppointmentTask' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAppointmentTasks
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AppointmentTaskEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentTaskEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AppointmentTasks")[0], (int)PsychologicalServices.Data.EntityType.TaskEntity, (int)PsychologicalServices.Data.EntityType.AppointmentTaskEntity, 0, null, null, null, null, "AppointmentTasks", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'TaskStatus' 
@@ -704,6 +739,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)TaskFieldIndex.TaskStatusId, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentTaskEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AppointmentTaskEntity))]
+		public virtual EntityCollection<AppointmentTaskEntity> AppointmentTasks
+		{
+			get
+			{
+				if(_appointmentTasks==null)
+				{
+					_appointmentTasks = new EntityCollection<AppointmentTaskEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentTaskEntityFactory)));
+					_appointmentTasks.SetContainingEntityInfo(this, "Task");
+				}
+				return _appointmentTasks;
+			}
+		}
 
 
 		/// <summary> Gets / sets related entity of type 'TaskStatusEntity' which has to be set using a fetch action earlier. If no related entity

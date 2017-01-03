@@ -232,15 +232,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1+1;
+			int numberOfOneWayRelations = 0;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
-				case "Appointment":
-					return true;
-				case "Task":
-					return true;
+
+
 
 				default:
 					return base.CheckOneWayRelations(propertyName);
@@ -527,7 +525,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAppointment(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _appointment, new PropertyChangedEventHandler( OnAppointmentPropertyChanged ), "Appointment", AppointmentTaskEntity.Relations.AppointmentEntityUsingAppointmentId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AppointmentTaskFieldIndex.AppointmentId } );		
+			base.PerformDesetupSyncRelatedEntity( _appointment, new PropertyChangedEventHandler( OnAppointmentPropertyChanged ), "Appointment", AppointmentTaskEntity.Relations.AppointmentEntityUsingAppointmentId, true, signalRelatedEntity, "AppointmentTasks", resetFKFields, new int[] { (int)AppointmentTaskFieldIndex.AppointmentId } );		
 			_appointment = null;
 		}
 
@@ -560,7 +558,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncTask(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _task, new PropertyChangedEventHandler( OnTaskPropertyChanged ), "Task", AppointmentTaskEntity.Relations.TaskEntityUsingTaskId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AppointmentTaskFieldIndex.TaskId } );		
+			base.PerformDesetupSyncRelatedEntity( _task, new PropertyChangedEventHandler( OnTaskPropertyChanged ), "Task", AppointmentTaskEntity.Relations.TaskEntityUsingTaskId, true, signalRelatedEntity, "AppointmentTasks", resetFKFields, new int[] { (int)AppointmentTaskFieldIndex.TaskId } );		
 			_task = null;
 		}
 
@@ -717,14 +715,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_appointment != null)
 						{
-							UnsetRelatedEntity(_appointment, "Appointment");
+							_appointment.UnsetRelatedEntity(this, "AppointmentTasks");
 						}
 					}
 					else
 					{
 						if(_appointment!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "Appointment");
+							((IEntity2)value).SetRelatedEntity(this, "AppointmentTasks");
 						}
 					}
 				}
@@ -752,14 +750,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_task != null)
 						{
-							UnsetRelatedEntity(_task, "Task");
+							_task.UnsetRelatedEntity(this, "AppointmentTasks");
 						}
 					}
 					else
 					{
 						if(_task!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "Task");
+							((IEntity2)value).SetRelatedEntity(this, "AppointmentTasks");
 						}
 					}
 				}

@@ -200,6 +200,13 @@
     <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\CalendarNoteController.cs" />
+    <Compile Include="Controllers\ClaimsController.cs" />
+    <Compile Include="Controllers\IssueInDisputeController.cs" />
+    <Compile Include="Controllers\ReferralSourceController.cs" />
+    <Compile Include="Controllers\ReferralSourceTypeController.cs" />
+    <Compile Include="Controllers\ReferralTypeController.cs" />
+    <Compile Include="Controllers\ReportStatusController.cs" />
+    <Compile Include="Controllers\ReportTypeController.cs" />
     <Compile Include="Controllers\TaskStatusController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -257,6 +264,35 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="wwwroot\server.js" />
+    <Content Include="wwwroot\src\addresses\addresses.html" />
+    <Content Include="wwwroot\src\addresses\addresses.js" />
+    <Content Include="wwwroot\src\addresses\editAddress.html" />
+    <Content Include="wwwroot\src\addresses\editAddress.js" />
+    <Content Include="wwwroot\src\appointments\appointments.html" />
+    <Content Include="wwwroot\src\appointments\appointments.js" />
+    <Content Include="wwwroot\src\appointments\editAppointment.html" />
+    <Content Include="wwwroot\src\appointments\editAppointment.js" />
+    <Content Include="wwwroot\src\assessments\assessments.html" />
+    <Content Include="wwwroot\src\assessments\assessments.js" />
+    <Content Include="wwwroot\src\assessments\editAssessment.html" />
+    <Content Include="wwwroot\src\assessments\editAssessment.js" />
+    <Content Include="wwwroot\src\common\address.html" />
+    <Content Include="wwwroot\src\common\address.js" />
+    <Content Include="wwwroot\src\common\datepicker.js" />
+    <Content Include="wwwroot\src\common\dateRange.js" />
+    <Content Include="wwwroot\src\common\week-view.html" />
+    <Content Include="wwwroot\src\common\week-view.js" />
+    <Content Include="wwwroot\src\invoices\invoices.html" />
+    <Content Include="wwwroot\src\invoices\invoices.js" />
+    <Content Include="wwwroot\src\main.js" />
+    <Content Include="wwwroot\src\maintenance\maintenance.html" />
+    <Content Include="wwwroot\src\maintenance\maintenance.js" />
+    <Content Include="wwwroot\src\reports\reports.html" />
+    <Content Include="wwwroot\src\reports\reports.js" />
+    <Content Include="wwwroot\src\services\dataRepository.js" />
+    <Content Include="wwwroot\src\shell.html" />
+    <Content Include="wwwroot\src\shell.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -313,6 +349,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="wwwroot\config.js" />
+    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\package.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

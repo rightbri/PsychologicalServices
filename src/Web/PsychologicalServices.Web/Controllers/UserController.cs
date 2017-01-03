@@ -52,6 +52,26 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(psychologists);
         }
 
+        [Route("docListWriters/{companyId}")]
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<User>))]
+        public IHttpActionResult GetDocListWriters(int? companyId)
+        {
+            var docListWriters = _userService.GetDocListWriters(companyId);
+
+            return Ok(docListWriters);
+        }
+
+        [Route("notesWriters/{companyId}")]
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<User>))]
+        public IHttpActionResult GetNotesWriters(int? companyId)
+        {
+            var notesWriters = _userService.GetNotesWriters(companyId);
+
+            return Ok(notesWriters);
+        }
+
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<User>))]
