@@ -65,6 +65,23 @@ namespace PsychologicalServices.Infrastructure.Claims
             }
         }
 
+        public IEnumerable<Claimant> SearchClaimants(string lastName)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return Execute<ClaimantEntity>(
+                    (ILLBLGenProQuery)
+                    meta.Claimant
+                    .Where(claimant => claimant.LastName.Contains(lastName))
+                    .Take(20)
+                )
+                .Select(claimant => claimant.ToClaimant())
+                .ToList();
+            }
+        }
+
         public IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -74,7 +91,10 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return Execute<IssueInDisputeEntity>(
                         (ILLBLGenProQuery)
                         meta.ReferralTypeIssueInDispute
-                        .Where(referralTypeIssueInDispute => referralTypeIssueInDispute.ReferralTypeId == referralTypeId)
+                        .Where(referralTypeIssueInDispute => 
+                            referralTypeIssueInDispute.ReferralTypeId == referralTypeId && 
+                            referralTypeIssueInDispute.IssueInDispute.IsActive
+                        )
                         .Select(referralTypeIssueInDispute => referralTypeIssueInDispute.IssueInDispute)
                     )
                     .Select(issueInDispute => issueInDispute.ToIssueInDispute())

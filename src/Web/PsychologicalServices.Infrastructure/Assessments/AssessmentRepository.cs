@@ -233,6 +233,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var uow = new UnitOfWork2();
+
                 var isNew = assessment.IsNew();
 
                 var assessmentEntity = new AssessmentEntity
@@ -249,8 +251,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     //prefetch.Add(AssessmentEntity.PrefetchPathAppointments);
 
-                    prefetch.Add(AssessmentEntity.PrefetchPathIssueInDisputeCollectionViaAssessmentIssuesInDispute);
-
+                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentIssuesInDispute);
+                    
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
 
@@ -265,10 +267,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.ReferralSourceContactEmail = assessment.ReferralSourceContactEmail;
                 assessmentEntity.CompanyId = assessment.CompanyId;
                 assessmentEntity.Deleted = assessment.Deleted;
-                
-                var issuesInDisputeToAdd = assessment.IssuesInDispute.Where(issueInDispute => !assessmentEntity.AssessmentIssuesInDispute.Any(assessmentIssueInDispute => assessmentIssueInDispute.IssueIsDisputeId == issueInDispute.IssueInDisputeId));
 
-                var issuesInDisputeToRemove = assessmentEntity.AssessmentIssuesInDispute.Where(assessmentIssueInDispute => !assessment.IssuesInDispute.Any(issueInDispute => issueInDispute.IssueInDisputeId == assessmentIssueInDispute.IssueIsDisputeId));
+                var issuesInDisputeToAdd = assessment.IssuesInDispute
+                    .Where(issueInDispute => 
+                        !assessmentEntity.AssessmentIssuesInDispute.Any(assessmentIssueInDispute => assessmentIssueInDispute.IssueIsDisputeId == issueInDispute.IssueInDisputeId)
+                    );
+
+                var issuesInDisputeToRemove = assessmentEntity.AssessmentIssuesInDispute
+                    .Where(assessmentIssueInDispute => 
+                        !assessment.IssuesInDispute.Any(issueInDispute => issueInDispute.IssueInDisputeId == assessmentIssueInDispute.IssueIsDisputeId)
+                    );
 
                 assessmentEntity.AssessmentIssuesInDispute.AddRange(
                     issuesInDisputeToAdd.Select(issueInDispute => new AssessmentIssueInDisputeEntity
@@ -280,8 +288,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                 foreach (var issueInDispute in issuesInDisputeToRemove)
                 {
-                    assessmentEntity.AssessmentIssuesInDispute.Remove(issueInDispute);
+                    uow.AddForDelete(issueInDispute);
                 }
+
+                uow.AddForSave(assessmentEntity);
 
 
                 //var claimsToAdd = assessment.Claims.Where(claim => !assessmentEntity.ClaimCollectionViaAssessmentClaims.Any(assessmentClaim => assessmentClaim.ClaimId == claim.ClaimId));
@@ -305,7 +315,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
         public IEnumerable<Appointment> Appointments { get; set; }
                 */
 
-                adapter.SaveEntity(assessmentEntity, false);
+                
+
+                //adapter.SaveEntity(assessmentEntity, false);
+
+                uow.Commit(adapter);
 
                 return assessmentEntity.AssessmentId;
             }

@@ -312,13 +312,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new Appointment
                 {
                     AppointmentId = appointment.AppointmentId,
-                    LocationId = appointment.LocationId,
-                    PsychometristId = appointment.PsychometristId,
-                    PsychologistId = appointment.PsychologistId,
-                    AppointmentStatusId = appointment.AppointmentStatusId,
+                    //convenience property
                     CompanyId = appointment.Assessment.CompanyId,
                     AppointmentTime = appointment.AppointmentTime,
-                    AssessmentId = appointment.AssessmentId,
                     PsychometristConfirmed = appointment.PsychometristConfirmed,
                     Location = appointment.Location.ToAddress(),
                     Psychometrist = appointment.Psychometrist.ToUser(),

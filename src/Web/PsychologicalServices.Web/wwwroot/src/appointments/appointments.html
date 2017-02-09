@@ -63,7 +63,9 @@
 			</div>
 			<div class="row" repeat.for="appointment of getAppointments(day)">
 				<div class="col-xs-1">
-					<button type="button" class="btn btn-default" click.delegate="edit(appointment.appointmentId)"><i class="fa fa-edit"></i></button>
+					<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="btn btn-default">
+						<i class="fa fa-edit"></i>
+					</a>
 				</div>
 				<div class="col-xs-1">
 					${appointment.appointmentTime | dateFormat:'h:mmA'}

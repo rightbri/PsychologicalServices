@@ -46,6 +46,10 @@ export class DataRepository {
 		return this.getSingleBasic(id, 'appointment');
 	}
 	
+	getNewAppointment(companyId, assessmentId) {
+		return this.getBasic(`appointment/company/${companyId}/assessment/${assessmentId}`);
+	}
+	
 	searchAppointments(criteria) {
 		return this.searchBasic(criteria, 'appointment');
 	}
@@ -90,8 +94,16 @@ export class DataRepository {
 		return this.getManyBasic('addresstype');
 	}
 	
+	getClaimants(lastName) {
+		return this.getManyBasic('claimant/search/' + lastName);
+	}
+	
 	getIssuesInDispute() {
 		return this.getManyBasic('issueindispute');
+	}
+	
+	getReferralTypeIssuesInDispute(referralTypeId) {
+		return this.getManyBasic('issueindispute/referralType/' + referralTypeId);
 	}
 	
 	getReferralSources(criteria) {
@@ -166,6 +178,16 @@ export class DataRepository {
 		return this.getManyBasic('taskStatus');
 	}
 
+	getBasic(route) {
+		var promise = new Promise((resolve, reject) => {
+			this.httpFetch.fetch(this.apiRoot + 'api/' + route)
+				.then(response => response.json())
+				.then(data => resolve(data))
+				.catch(err => reject(err));
+		});
+		return promise;
+	}
+	
 	getSingleBasic(id, type) {
 		var promise = new Promise((resolve, reject) => {
 			this.httpFetch.fetch(this.apiRoot + 'api/' + type + '/' + id)

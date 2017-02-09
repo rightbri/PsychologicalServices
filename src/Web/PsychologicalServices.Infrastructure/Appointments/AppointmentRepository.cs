@@ -139,11 +139,12 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .OrderBy(taskStatus => taskStatus.TaskStatusId)
                     .FirstOrDefault();
 
-                var taskTemplates = meta.TaskTemplate.Where(taskTemplate => taskTemplate.CompanyId == companyId);
+                var taskTemplates = meta.TaskTemplate
+                    .Where(taskTemplate => taskTemplate.CompanyId == companyId)
+                    .ToList();
 
                 return new Appointment
                 {
-                    AssessmentId = assessmentId,
                     AppointmentTime = _now.DateTimeNow,
                     CompanyId = companyId,
                     AppointmentTasks = taskTemplates.Select(taskTemplate => new Task
@@ -152,7 +153,8 @@ namespace PsychologicalServices.Infrastructure.Appointments
                         TaskStatus = taskStatusEntity.ToTaskStatus(),
                         TaskTemplateId = taskTemplate.TaskTemplateId,
                         TaskTemplate = taskTemplate.ToTaskTemplate(),
-                    })
+                    }),
+                    Assessment = assessmentEntity.ToAssessment(),
                 };
             }
         }
@@ -253,6 +255,8 @@ namespace PsychologicalServices.Infrastructure.Appointments
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var uow = new UnitOfWork2();
+
                 var isNew = appointment.IsNew();
 
                 var appointmentEntity = new AppointmentEntity
@@ -271,25 +275,64 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     adapter.FetchEntity(appointmentEntity, prefetch);
                 }
 
-                appointmentEntity.LocationId = appointment.LocationId;
-                appointmentEntity.PsychometristId = appointment.PsychometristId;
-                appointmentEntity.PsychologistId = appointment.PsychologistId;
-                appointmentEntity.AppointmentStatusId = appointment.AppointmentStatusId;
+                appointmentEntity.LocationId = appointment.Location.AddressId;
+                appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
+                appointmentEntity.PsychologistId = appointment.Psychologist.UserId;
+                appointmentEntity.AppointmentStatusId = appointment.AppointmentStatus.AppointmentStatusId;
                 appointmentEntity.AppointmentTime = appointment.AppointmentTime;
-                appointmentEntity.AssessmentId = appointment.AssessmentId;
+                appointmentEntity.AssessmentId = appointment.Assessment.AssessmentId;
                 appointmentEntity.PsychometristConfirmed = appointment.PsychometristConfirmed;
 
+                var tasksToAdd = appointment.AppointmentTasks
+                    .Where(task =>
+                        !appointmentEntity.AppointmentTasks.Any(appointmentTask =>
+                            appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId
+                        )
+                    );
 
-                var tasksToUpdate = appointmentEntity.AppointmentTasks.Where(appointmentTask => appointment.AppointmentTasks.Any(task => appointmentTask.TaskId == task.TaskId && appointmentTask.Task.TaskStatusId != task.TaskStatusId));
-                
-                foreach (var appointmentTask in tasksToUpdate)
+                appointmentEntity.AppointmentTasks.AddRange(
+                    tasksToAdd.Select(task => new AppointmentTaskEntity
+                    {
+                        Task = new TaskEntity
+                        {
+                            TaskTemplateId = task.TaskTemplate.TaskTemplateId,
+                            TaskStatusId = task.TaskStatus.TaskStatusId,
+                        },
+                    })
+                );
+
+                if (!isNew)
                 {
-                    var task = appointment.AppointmentTasks.First(t => t.TaskId == appointmentTask.TaskId);
+                    var tasksToRemove = appointmentEntity.AppointmentTasks
+                        .Where(appointmentTask =>
+                            !appointment.AppointmentTasks.Any(task =>
+                                task.TaskTemplate.TaskTemplateId == appointmentTask.Task.TaskTemplateId)
+                        );
 
-                    appointmentTask.Task.TaskStatusId = task.TaskStatusId;
+                    foreach (var task in tasksToRemove)
+                    {
+                        uow.AddForDelete(task);
+                    }
+
+                    var tasksToUpdate = appointmentEntity.AppointmentTasks
+                        .Where(appointmentTask =>
+                            appointment.AppointmentTasks.Any(task =>
+                                appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId &&
+                                appointmentTask.Task.TaskStatusId != task.TaskStatus.TaskStatusId
+                            )
+                        );
+
+                    foreach (var appointmentTask in tasksToUpdate)
+                    {
+                        var task = appointment.AppointmentTasks.First(t => t.TaskId == appointmentTask.TaskId);
+
+                        appointmentTask.Task.TaskStatusId = task.TaskStatus.TaskStatusId;
+                    }
                 }
+                
+                uow.AddForSave(appointmentEntity);
 
-                adapter.SaveEntity(appointmentEntity, false, true);
+                uow.Commit(adapter);
 
                 return appointmentEntity.AppointmentId;
             }

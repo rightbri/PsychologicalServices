@@ -35,7 +35,7 @@ namespace PsychologicalServices.Web.Controllers
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<ReferralSource>))]
-        public IHttpActionResult Get(ReferralSourceSearchCriteria criteria)
+        public IHttpActionResult Post(ReferralSourceSearchCriteria criteria)
         {
             var referralSources = _referralService.GetReferralSources(criteria);
 

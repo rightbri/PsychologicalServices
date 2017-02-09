@@ -1,0 +1,115 @@
+<template>
+	<ai-dialog>
+		<ai-dialog-header>
+		<h3>Edit Appointment</h3>
+		</ai-dialog-header>
+		<ai-dialog-body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="date">Date</label>
+						<input id="date" type="text" class="form-control" value.bind="appointmentDate" />
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="time">Time</label>
+						<input id="time" type="time" class="form-control" value.bind="appointmentTime" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="status">Status</label>
+						<select id="status" class="form-control" value.bind="appointment.appointmentStatus" matcher.bind="appointmentStatusMatcher">
+							<option></option>
+							<option repeat.for="appointmentStatus of appointmentStatuses" model.bind="appointmentStatus">
+								${appointmentStatus.name}
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="location">Location</label>
+						<select id="location" class="form-control" value.bind="appointment.location" matcher.bind="addressMatcher">
+							<option></option>
+							<option repeat.for="address of addresses" model.bind="address">
+								${address.name} ${address.street} ${address.city}
+							</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="psychometrist">Psychometrist</label>
+						<select id="psychometrist" class="form-control" value.bind="appointment.psychometrist" matcher.bind="psychometristMatcher">
+							<option></option>
+							<option repeat.for="psychometrist of psychometrists" model.bind="psychometrist">
+								${psychometrist.firstName} ${psychometrist.lastName}
+							</option>
+						</select>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked.bind="appointment.psychometristConfirmed" />&nbsp;Psychometrist confirmed
+						</label>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="psychologist">Psychologist</label>
+						<select id="psychologist" class="form-control" value.bind="appointment.psychologist" matcher.bind="psychologistMatcher">
+							<option></option>
+							<option repeat.for="psychologist of psychologists" model.bind="psychologist">
+								${psychologist.firstName} ${psychologist.lastName}
+							</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr repeat.for="task of appointment.appointmentTasks">
+								<td>
+									<label for="task-${task.taskId}">${task.taskTemplate.name}</label>
+								</td>
+								<td>
+									<select id="task-${task.taskId}" class="form-control" value.bind="task.taskStatus" matcher.bind="taskStatusMatcher">
+										<option repeat.for="taskStatus of taskStatuses" model.bind="taskStatus">
+											${taskStatus.name}
+										</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		</ai-dialog-body>
+		<ai-dialog-footer>
+		<button type="button" class="btn btn-primary" click.delegate="save()">
+			Save
+		</button>
+		<button type="button" class="btn btn-default" click.delegate="cancel()">
+			Cancel
+		</button>
+		</ai-dialog-footer>
+	<ai-dialog>
+</template>

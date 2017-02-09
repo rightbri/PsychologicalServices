@@ -1,5 +1,6 @@
 using Microsoft.Practices.Unity;
 using PsychologicalServices.Infrastructure.Common.Repository;
+using PsychologicalServices.Web.Infrastructure.Services;
 using System.Web.Http;
 using Unity.WebApi;
 

@@ -4,7 +4,7 @@ namespace PsychologicalServices.Models.Rights
 {
     public enum StaticRights
     {
-        Psychologist,
+        Psychologist = 1,
         Psychometrist,
         WriteDocList,
         WriteNotes,

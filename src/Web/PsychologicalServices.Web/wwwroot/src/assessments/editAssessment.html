@@ -1,4 +1,5 @@
 <template>
+	<require from="valueConverters/boolean"></require>
 	<require from="valueConverters/date-format"></require>
 	<require from="valueConverters/gender"></require>
 	
@@ -11,7 +12,8 @@
 			<div class="form-group">
 				<label for="assessmentType">Assessment Type</label>
 				<select id="assessmentType" class="form-control" value.bind="assessment.assessmentTypeId">
-					<option repeat.for="assessmentType of assessmentTypes" value.bind="assessmentType.assessmentTypeId">
+					<option></option>
+					<option repeat.for="assessmentType of assessmentTypes" model.bind="assessmentType.assessmentTypeId">
 						${assessmentType.name}
 					</option>
 				</select>
@@ -19,10 +21,11 @@
 		</div>
 		<div class="col-xs-3">
 			<div class="form-group">
-				<label for="referralType">Referral Type</label>
-				<select id="referralType" class="form-control" value.bind="assessment.referralTypeId">
-					<option repeat.for="referralType of referralTypes" value.bind="referralType.referralTypeId">
-						${referralType.name}
+				<label for="reportStatus">Report Status</label>
+				<select id="reportStatus" class="form-control" value.bind="assessment.reportStatusId">
+					<option></option>
+					<option repeat.for="reportStatus of reportStatuses" model.bind="reportStatus.reportStatusId">
+						${reportStatus.name}
 					</option>
 				</select>
 			</div>
@@ -34,7 +37,8 @@
 			<div class="form-group">
 				<label for="referralSource">Referral Source</label>
 				<select id="referralSource" class="form-control" value.bind="assessment.referralSourceId">
-					<option repeat.for="referralSource of referralSources" value.bind="referralSource.referralSourceId">
+					<option></option>
+					<option repeat.for="referralSource of referralSources" model.bind="referralSource.referralSourceId">
 						${referralSource.name}
 					</option>
 				</select>
@@ -42,12 +46,8 @@
 		</div>
 		<div class="col-xs-3">
 			<div class="form-group">
-				<label for="reportStatus">Report Status</label>
-				<select id="reportStatus" class="form-control" value.bind="assessment.reportStatusId">
-					<option repeat.for="reportStatus of reportStatuses" value.bind="reportStatus.reportStatusId">
-						${reportStatus.name}
-					</option>
-				</select>
+				<label for="fileSize">File Size</label>
+				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
 			</div>
 		</div>
 	</div>
@@ -61,8 +61,13 @@
 		</div>
 		<div class="col-xs-3">
 			<div class="form-group">
-				<label for="fileSize">File Size</label>
-				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
+				<label for="referralType">Referral Type</label>
+				<select id="referralType" class="form-control" value.bind="assessment.referralTypeId">
+					<option></option>
+					<option repeat.for="referralType of referralTypes" model.bind="referralType.referralTypeId">
+						${referralType.name}
+					</option>
+				</select>
 			</div>
 		</div>
 	</div>
@@ -78,7 +83,7 @@
 			<label>Issues in Dispute</label>
 			<div class="checkbox" repeat.for="issueInDispute of issuesInDispute">
 				<label>
-					<input type="checkbox" model.bind="issueInDispute.issueInDisputeId" checked.bind="assessment.issuesInDispute" />&nbsp;${issueInDispute.name}
+					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" />&nbsp;${issueInDispute.name}
 				</label>
 			</div>
 		</div>
@@ -89,7 +94,8 @@
 			<div class="form-group">
 				<label for="docListWriter">Doc List Writer</label>
 				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriterId">
-					<option repeat.for="user of docListWriters" value.bind="user.userId">
+					<option></option>
+					<option repeat.for="user of docListWriters" model.bind="user.userId">
 						${user.firstName}
 					</option>
 				</select>
@@ -99,7 +105,8 @@
 			<div class="form-group">
 				<label for="notesWriter">Notes Writer</label>
 				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriterId">
-					<option repeat.for="user of notesWriters" value.bind="user.userId">
+					<option></option>
+					<option repeat.for="user of notesWriters" model.bind="user.userId">
 						${user.firstName}
 					</option>
 				</select>
@@ -111,7 +118,8 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="company">Company</label>
-				<select id="company" class="form-control" value.bind="assessment.companyId">
+				<select id="company" class="form-control" model.bind="assessment.companyId">
+					<option></option>
 					<option repeat.for="company of companies" value.bind="company.companyId">
 						${company.name}
 					</option>
@@ -132,6 +140,7 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
+						<th></th>
 						<th>Claim #</th>
 						<th>Date of Loss</th>
 						<th>Claimant</th>
@@ -142,15 +151,65 @@
 				</thead>
 				<tbody>
 					<tr repeat.for="claim of assessment.claims">
+						<td>
+							<button type="button" class="btn btn-default" click.delegate="editClaim(claim)">
+								<i class="fa fa-edit"></i>
+							</button>
+						</td>
 						<td>${claim.claimNumber}</td>
 						<td>${claim.dateOfLoss | dateFormat:'M/D/YYYY'}</td>
 						<td>${claim.claimant.firstName} ${claim.claimant.lastName}</td>
 						<td>${claim.claimant.age}</td>
-						<td>${claim.claimant.gender | gender }</td>
+						<td>${claim.claimant.gender | gender}</td>
 						<td>
-							<label class="checkbox">
-								<input type="checkbox" checked.bind="claim.deleted" />
-							</label>
+							<input type="checkbox" checked.bind="claim.deleted" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="7">
+							<button type="button" class="btn btn-default" click.delegate="newClaim()">
+								<i class="fa fa-plus"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Date</th>
+						<th>Time</th>
+						<th>Location</th>
+						<th>Status</th>
+						<th>Psychometrist</th>
+						<th>Confirmed</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr repeat.for="appointment of assessment.appointments">
+						<td>
+							<button type="button" class="btn btn-default" click.delegate="editAppointment(appointment)">
+								<i class="fa fa-edit"></i>
+							</button>
+						</td>
+						<td>${appointment.appointmentTime | dateFormat:'M/D/YYYY'}</td>
+						<td>${appointment.appointmentTime | dateFormat:'h:mmA'}</td>
+						<td>${appointment.location.name}</td>
+						<td>${appointment.appointmentStatus.name}</td>
+						<td>${appointment.psychometrist.firstName}</td>
+						<td>${appointment.psychometristConfirmed | boolean }</td>
+					</tr>
+					<tr>
+						<td colspan="7">
+							<button type="button" class="btn btn-default" click.delegate="newAppointment()">
+								<i class="fa fa-plus"></i>
+							</button>
 						</td>
 					</tr>
 				</tbody>

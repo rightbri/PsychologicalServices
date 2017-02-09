@@ -19,6 +19,16 @@ namespace PsychologicalServices.Infrastructure.Referrals
         {
         }
 
+        #region Prefetch Paths
+
+        private static readonly Func<IPathEdgeRootParser<ReferralTypeEntity>, IPathEdgeRootParser<ReferralTypeEntity>>
+            ReferralTypePath =
+                (referralTypePath => referralTypePath
+                    .Prefetch<IssueInDisputeEntity>(referralType => referralType.IssueInDisputeCollectionViaReferralTypeIssuesInDispute)
+                );
+
+        #endregion
+
         public ReferralSource GetReferralSource(int id)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -52,6 +62,7 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 var meta = new LinqMetaData(adapter);
 
                 return meta.ReferralType
+                    .WithPath(ReferralTypePath)
                     .Where(referralType => referralType.ReferralTypeId == id)
                     .SingleOrDefault()
                     .ToReferralType();

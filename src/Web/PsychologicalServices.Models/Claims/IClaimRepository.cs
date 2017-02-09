@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Claims
 
         IEnumerable<Claim> GetAssessmentClaims(int assessmentId);
 
+        IEnumerable<Claimant> SearchClaimants(string lastName);
+
         IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId);
 
         IEnumerable<IssueInDispute> GetIssuesInDispute(bool? isActive = true);

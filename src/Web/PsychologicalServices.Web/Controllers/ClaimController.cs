@@ -11,11 +11,11 @@ using System.Web.Http.Description;
 namespace PsychologicalServices.Web.Controllers
 {
     [RoutePrefix("api/claim")]
-    public class ClaimsController : ApiController
+    public class ClaimController : ApiController
     {
         private readonly IClaimService _claimService = null;
 
-        public ClaimsController(
+        public ClaimController(
             IClaimService claimService
         )
         {

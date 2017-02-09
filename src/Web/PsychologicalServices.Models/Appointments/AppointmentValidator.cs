@@ -32,7 +32,7 @@ namespace PsychologicalServices.Models.Appointments
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            var location = _addressRepository.GetAddress(item.LocationId);
+            var location = _addressRepository.GetAddress(item.Location.AddressId);
 
             if (null == location)
             {
@@ -41,7 +41,7 @@ namespace PsychologicalServices.Models.Appointments
                 );
             }
 
-            var psychometrist = _userRepository.GetUserById(item.PsychometristId);
+            var psychometrist = _userRepository.GetUserById(item.Psychometrist.UserId);
 
             if (null == psychometrist)
             {
@@ -62,7 +62,7 @@ namespace PsychologicalServices.Models.Appointments
                 );
             }
 
-            var psychologist = _userRepository.GetUserById(item.PsychologistId);
+            var psychologist = _userRepository.GetUserById(item.Psychologist.UserId);
 
             if (null == psychologist)
             {
@@ -82,48 +82,8 @@ namespace PsychologicalServices.Models.Appointments
                     new ValidationError { Property = "PsychologistId", Message = "The selected psychologistId is not active" }
                 );
             }
-
-            //var psychometrists = _userRepository.GetUsers(new UserSearchCriteria
-            //    {
-            //        UserId = item.PsychometristId,
-            //        RightId = (int)StaticRights.Psychometrist,
-            //        CompanyId = item.CompanyId,
-            //    });
-
-            //if (!psychometrists.Any())
-            //{
-            //    result.ValidationErrors.Add(
-            //        new ValidationError { Property = "PsychometristId", Message = "Invalid psychometrist" }
-            //    );
-            //}
-            //else if (!psychometrists.First().IsActive)
-            //{
-            //    result.ValidationErrors.Add(
-            //        new ValidationError { Property = "PsychometristId", Message = "The selected psychometrist is not active" }
-            //    );
-            //}
-
-            //var psychologists = _userRepository.GetUsers(new UserSearchCriteria
-            //    {
-            //        UserId = item.PsychologistId,
-            //        RightId = (int)StaticRights.Psychologist,
-            //        CompanyId = item.CompanyId,
-            //    });
-
-            //if (!psychologists.Any())
-            //{
-            //    result.ValidationErrors.Add(
-            //        new ValidationError { Property = "PsychologistId", Message = "Invalid psychologist" }
-            //    );
-            //}
-            //else if (!psychologists.First().IsActive)
-            //{
-            //    result.ValidationErrors.Add(
-            //        new ValidationError { Property = "PsychologistId", Message = "The selected psychologist is not active" }
-            //    );
-            //}
-
-            var appointmentStatus = _appointmentRepository.GetAppointmentStatus(item.AppointmentStatusId);
+            
+            var appointmentStatus = _appointmentRepository.GetAppointmentStatus(item.AppointmentStatus.AppointmentStatusId);
 
             if (null == appointmentStatus)
             {

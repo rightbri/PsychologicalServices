@@ -30,5 +30,15 @@ namespace PsychologicalServices.Web.Controllers
 
             return Ok(issuesInDispute);
         }
+
+        [Route("referraltype/{referralTypeId}")]
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<IssueInDispute>))]
+        public IHttpActionResult Get(int referralTypeId)
+        {
+            var issuesInDispute = _claimService.GetReferralTypeIssuesInDispute(referralTypeId);
+
+            return Ok(issuesInDispute);
+        }
     }
 }
