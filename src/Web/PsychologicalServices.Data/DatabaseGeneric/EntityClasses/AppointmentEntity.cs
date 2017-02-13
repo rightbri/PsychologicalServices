@@ -38,7 +38,7 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentTaskEntity> _appointmentTasks;
-		private EntityCollection<TaskEntity> _taskCollectionViaAppointmentTasks;
+
 		private AddressEntity _location;
 		private AppointmentStatusEntity _appointmentStatus;
 		private AssessmentEntity _assessment;
@@ -69,8 +69,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Psychologist = "Psychologist";
 			/// <summary>Member name AppointmentTasks</summary>
 			public static readonly string AppointmentTasks = "AppointmentTasks";
-			/// <summary>Member name TaskCollectionViaAppointmentTasks</summary>
-			public static readonly string TaskCollectionViaAppointmentTasks = "TaskCollectionViaAppointmentTasks";
+
 
 		}
 		#endregion
@@ -131,7 +130,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointmentTasks = (EntityCollection<AppointmentTaskEntity>)info.GetValue("_appointmentTasks", typeof(EntityCollection<AppointmentTaskEntity>));
-				_taskCollectionViaAppointmentTasks = (EntityCollection<TaskEntity>)info.GetValue("_taskCollectionViaAppointmentTasks", typeof(EntityCollection<TaskEntity>));
+
 				_location = (AddressEntity)info.GetValue("_location", typeof(AddressEntity));
 				if(_location!=null)
 				{
@@ -227,11 +226,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentTasks":
 					this.AppointmentTasks.Add((AppointmentTaskEntity)entity);
 					break;
-				case "TaskCollectionViaAppointmentTasks":
-					this.TaskCollectionViaAppointmentTasks.IsReadOnly = false;
-					this.TaskCollectionViaAppointmentTasks.Add((TaskEntity)entity);
-					this.TaskCollectionViaAppointmentTasks.IsReadOnly = true;
-					break;
+
 
 				default:
 					break;
@@ -272,10 +267,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentTasks":
 					toReturn.Add(AppointmentEntity.Relations.AppointmentTaskEntityUsingAppointmentId);
 					break;
-				case "TaskCollectionViaAppointmentTasks":
-					toReturn.Add(AppointmentEntity.Relations.AppointmentTaskEntityUsingAppointmentId, "AppointmentEntity__", "AppointmentTask_", JoinHint.None);
-					toReturn.Add(AppointmentTaskEntity.Relations.TaskEntityUsingTaskId, "AppointmentTask_", string.Empty, JoinHint.None);
-					break;
+
 
 				default:
 
@@ -437,7 +429,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointmentTasks", ((_appointmentTasks!=null) && (_appointmentTasks.Count>0) && !this.MarkedForDeletion)?_appointmentTasks:null);
-				info.AddValue("_taskCollectionViaAppointmentTasks", ((_taskCollectionViaAppointmentTasks!=null) && (_taskCollectionViaAppointmentTasks.Count>0) && !this.MarkedForDeletion)?_taskCollectionViaAppointmentTasks:null);
+
 				info.AddValue("_location", (!this.MarkedForDeletion?_location:null));
 				info.AddValue("_appointmentStatus", (!this.MarkedForDeletion?_appointmentStatus:null));
 				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
@@ -488,16 +480,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Task' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoTaskCollectionViaAppointmentTasks()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("TaskCollectionViaAppointmentTasks"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentFields.AppointmentId, null, ComparisonOperator.Equal, this.AppointmentId, "AppointmentEntity__"));
-			return bucket;
-		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
@@ -578,7 +560,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointmentTasks);
-			collectionsQueue.Enqueue(this._taskCollectionViaAppointmentTasks);
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -587,7 +569,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointmentTasks = (EntityCollection<AppointmentTaskEntity>) collectionsQueue.Dequeue();
-			this._taskCollectionViaAppointmentTasks = (EntityCollection<TaskEntity>) collectionsQueue.Dequeue();
+
 		}
 		
 		/// <summary>Determines whether the entity has populated member collections</summary>
@@ -598,10 +580,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
-			if (this._taskCollectionViaAppointmentTasks != null)
-			{
-				return true;
-			}
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -612,7 +591,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentTaskEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentTaskEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<TaskEntity>(EntityFactoryCache2.GetEntityFactory(typeof(TaskEntityFactory))) : null);
+
 		}
 #endif
 		/// <summary>
@@ -628,7 +607,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Psychometrist", _psychometrist);
 			toReturn.Add("Psychologist", _psychologist);
 			toReturn.Add("AppointmentTasks", _appointmentTasks);
-			toReturn.Add("TaskCollectionViaAppointmentTasks", _taskCollectionViaAppointmentTasks);
+
 
 			return toReturn;
 		}
@@ -640,10 +619,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointmentTasks.ActiveContext = base.ActiveContext;
 			}
-			if(_taskCollectionViaAppointmentTasks!=null)
-			{
-				_taskCollectionViaAppointmentTasks.ActiveContext = base.ActiveContext;
-			}
+
 			if(_location!=null)
 			{
 				_location.ActiveContext = base.ActiveContext;
@@ -672,7 +648,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointmentTasks = null;
-			_taskCollectionViaAppointmentTasks = null;
+
 			_location = null;
 			_appointmentStatus = null;
 			_assessment = null;
@@ -934,19 +910,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Task' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathTaskCollectionViaAppointmentTasks
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = AppointmentEntity.Relations.AppointmentTaskEntityUsingAppointmentId;
-				intermediateRelation.SetAliases(string.Empty, "AppointmentTask_");
-				return new PrefetchPathElement2(new EntityCollection<TaskEntity>(EntityFactoryCache2.GetEntityFactory(typeof(TaskEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AppointmentEntity, (int)PsychologicalServices.Data.EntityType.TaskEntity, 0, null, null, GetRelationsForField("TaskCollectionViaAppointmentTasks"), null, "TaskCollectionViaAppointmentTasks", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
@@ -1148,21 +1111,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'TaskEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(TaskEntity))]
-		public virtual EntityCollection<TaskEntity> TaskCollectionViaAppointmentTasks
-		{
-			get
-			{
-				if(_taskCollectionViaAppointmentTasks==null)
-				{
-					_taskCollectionViaAppointmentTasks = new EntityCollection<TaskEntity>(EntityFactoryCache2.GetEntityFactory(typeof(TaskEntityFactory)));
-					_taskCollectionViaAppointmentTasks.IsReadOnly=true;
-				}
-				return _taskCollectionViaAppointmentTasks;
-			}
-		}
 
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>

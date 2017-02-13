@@ -39,9 +39,9 @@ export class AppointmentDialog {
 		]);
 	}
 	
-	save() {
+	ok() {
 		this.appointment.appointmentTime = this.parseDateTime(this.appointmentDate, this.appointmentTime);
-        
+        /*
 		this.dataRepository.saveAppointment(this.appointment)
 			.then(data => {
 
@@ -57,6 +57,8 @@ export class AppointmentDialog {
 					this.dialogController.ok(data.item);
 				}
 			});
+		*/
+		this.dialogController.ok(this.appointment);
 	}
 	
 	cancel() {

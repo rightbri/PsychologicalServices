@@ -17,14 +17,14 @@ namespace PsychologicalServices.Models.CalendarNotes
             if (string.IsNullOrWhiteSpace(item.Note.NoteText))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Note.NoteText", Message = "Note text is required" }
+                    new ValidationError { PropertyName = "Note.NoteText", Message = "Note text is required" }
                 );
             }
 
             if (item.FromDate.HasValue && item.ToDate.HasValue && item.FromDate.Value > item.ToDate.Value)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "ToDate", Message = "To-Date must be after From-Date" }
+                    new ValidationError { PropertyName = "ToDate", Message = "To-Date must be after From-Date" }
                 );
             }
 

@@ -20,8 +20,23 @@ using System.Linq;
 
 namespace PsychologicalServices.Infrastructure.Common.Repository
 {
-    public static class MappingExtensions
+    public static class GenProExtensions
     {
+        public static MedRehab ToMedRehab(this AssessmentMedRehabEntity medRehab)
+        {
+            return null != medRehab
+                ? new MedRehab
+                {
+                    MedRehabId = medRehab.MedRehabId,
+                    Date = medRehab.Date,
+                    Amount = medRehab.Amount,
+                    Description = medRehab.Description,
+                    Deleted = medRehab.Deleted,
+                    AssessmentId = medRehab.AssessmentId,
+                }
+                : null;
+        }
+
         public static CalendarNote ToCalendarNote(this CalendarNoteEntity calendarNote)
         {
             return null != calendarNote
@@ -75,6 +90,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     FirstName = claimant.FirstName,
                     LastName = claimant.LastName,
                     Age = claimant.Age,
+                    DateOfBirth = claimant.DateOfBirth,
                     Gender = claimant.Gender,
                     IsActive = claimant.IsActive,
                 }
@@ -89,7 +105,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ClaimId = claim.ClaimId,
                     ClaimNumber = claim.ClaimNumber,
                     DateOfLoss = claim.DateOfLoss,
-                    ClaimantId = claim.ClaimantId,
                     Claimant = claim.Claimant.ToClaimant(),
                     Deleted = claim.Deleted,
                 }
@@ -157,7 +172,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ReferralTypeId = referralType.ReferralTypeId,
                     Name = referralType.Name,
                     IsActive = referralType.IsActive,
-                    IssuesInDispute = referralType.IssueInDisputeCollectionViaReferralTypeIssuesInDispute.Select(issueInDispute => issueInDispute.ToIssueInDispute()),
+                    IssuesInDispute = referralType.ReferralTypeIssuesInDispute.Select(referralTypeIssueInDispute => referralTypeIssueInDispute.IssueInDispute.ToIssueInDispute()),
                 }
                 : null;
         }
@@ -185,7 +200,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Description = assessmentType.Description,
                     Duration = assessmentType.Duration,
                     IsActive = assessmentType.IsActive,
-                    ReportTypes = assessmentType.ReportTypeCollectionViaAssessmentTypeReportTypes.Select(reportType => reportType.ToReportType()),
+                    ReportTypes = assessmentType.AssessmentTypeReportTypes.Select(assessmentTypeReportType => assessmentTypeReportType.ReportType.ToReportType()),
                 }
                 : null;
         }
@@ -196,16 +211,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new Assessment
                 {
                     AssessmentId = assessment.AssessmentId,
-                    AssessmentTypeId = assessment.AssessmentTypeId,
-                    ReferralTypeId = assessment.ReferralTypeId,
-                    ReferralSourceId = assessment.ReferralSourceId,
-                    ReportStatusId = assessment.ReportStatusId,
-                    DocListWriterId = assessment.DocListWriterId,
-                    NotesWriterId = assessment.NotesWriterId,
                     MedicalFileReceivedDate = assessment.MedicalFileReceivedDate,
                     FileSize = assessment.FileSize,
                     ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
-                    CompanyId = assessment.CompanyId,
                     Deleted = assessment.Deleted,
                     AssessmentType = assessment.AssessmentType.ToAssessmentType(),
                     ReferralType = assessment.ReferralType.ToReferralType(),
@@ -214,9 +222,10 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     DocListWriter = assessment.DocListWriter.ToUser(),
                     NotesWriter = assessment.NotesWriter.ToUser(),
                     Company = assessment.Company.ToCompany(),
-                    Claims = assessment.ClaimCollectionViaAssessmentClaims.Select(claim => claim.ToClaim()),
+                    Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
-                    IssuesInDispute = assessment.IssueInDisputeCollectionViaAssessmentIssuesInDispute.Select(issueInDispute => issueInDispute.ToIssueInDispute()),
+                    IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
+                    MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
                 }
                 : null;
         }
@@ -227,16 +236,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new Assessment
                 {
                     AssessmentId = assessment.AssessmentId,
-                    AssessmentTypeId = assessment.AssessmentTypeId,
-                    ReferralTypeId = assessment.ReferralTypeId,
-                    ReferralSourceId = assessment.ReferralSourceId,
-                    ReportStatusId = assessment.ReportStatusId,
-                    DocListWriterId = assessment.DocListWriterId,
-                    NotesWriterId = assessment.NotesWriterId,
                     MedicalFileReceivedDate = assessment.MedicalFileReceivedDate,
                     FileSize = assessment.FileSize,
                     ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
-                    CompanyId = assessment.CompanyId,
                     Deleted = assessment.Deleted,
                     AssessmentType = assessment.AssessmentType.ToAssessmentType(),
                     ReferralType = assessment.ReferralType.ToReferralType(),
@@ -245,9 +247,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     DocListWriter = assessment.DocListWriter.ToUser(),
                     NotesWriter = assessment.NotesWriter.ToUser(),
                     Company = assessment.Company.ToCompany(),
-                    Claims = assessment.ClaimCollectionViaAssessmentClaims.Select(claim => claim.ToClaim()),
+                    Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     //Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
-                    IssuesInDispute = assessment.IssueInDisputeCollectionViaAssessmentIssuesInDispute.Select(issueInDispute => issueInDispute.ToIssueInDispute()),
+                    IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
                 }
                 : null;
         }
@@ -316,11 +318,12 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CompanyId = appointment.Assessment.CompanyId,
                     AppointmentTime = appointment.AppointmentTime,
                     PsychometristConfirmed = appointment.PsychometristConfirmed,
+                    Deleted = appointment.Deleted,
                     Location = appointment.Location.ToAddress(),
                     Psychometrist = appointment.Psychometrist.ToUser(),
                     Psychologist = appointment.Psychologist.ToUser(),
                     AppointmentStatus = appointment.AppointmentStatus.ToAppointmentStatus(),
-                    AppointmentTasks = appointment.TaskCollectionViaAppointmentTasks.Select(task => task.ToTask()),
+                    AppointmentTasks = appointment.AppointmentTasks.Select(appointmentTask => appointmentTask.Task.ToTask()),
                     Assessment = appointment.Assessment.ToAppointmentAssessment(),
                 }
                 : null;
@@ -392,7 +395,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = role.Name,
                     Description = role.Description,
                     IsActive = role.IsActive,
-                    Rights = role.RightCollectionViaRoleRights.Select(right => right.ToRight()).ToList(),
+                    Rights = role.RoleRights.Select(roleRight => roleRight.Right.ToRight()).ToList(),
                 }
                 : null;
         }
@@ -409,7 +412,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CompanyId = user.CompanyId,
                     IsActive = user.IsActive,
                     Company = user.Company.ToCompany(),
-                    Roles = user.RoleCollectionViaUserRoles.Select(role => role.ToRole()).ToList(),
+                    Roles = user.UserRoles.Select(userRole => userRole.Role.ToRole()).ToList(),
                 }
                 : null;
         }

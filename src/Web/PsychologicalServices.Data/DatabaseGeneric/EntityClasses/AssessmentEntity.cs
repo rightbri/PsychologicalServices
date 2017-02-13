@@ -38,12 +38,13 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentEntity> _appointments;
-
+		private EntityCollection<AssessmentClaimEntity> _assessmentClaims;
 		private EntityCollection<AssessmentIssueInDisputeEntity> _assessmentIssuesInDispute;
+		private EntityCollection<AssessmentMedRehabEntity> _assessmentMedRehabs;
 
 
-		private EntityCollection<ClaimEntity> _claimCollectionViaAssessmentClaims;
-		private EntityCollection<IssueInDisputeEntity> _issueInDisputeCollectionViaAssessmentIssuesInDispute;
+
+
 
 
 		private AssessmentTypeEntity _assessmentType;
@@ -82,15 +83,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string DocListWriter = "DocListWriter";
 			/// <summary>Member name Appointments</summary>
 			public static readonly string Appointments = "Appointments";
-
+			/// <summary>Member name AssessmentClaims</summary>
+			public static readonly string AssessmentClaims = "AssessmentClaims";
 			/// <summary>Member name AssessmentIssuesInDispute</summary>
 			public static readonly string AssessmentIssuesInDispute = "AssessmentIssuesInDispute";
+			/// <summary>Member name AssessmentMedRehabs</summary>
+			public static readonly string AssessmentMedRehabs = "AssessmentMedRehabs";
 
 
-			/// <summary>Member name ClaimCollectionViaAssessmentClaims</summary>
-			public static readonly string ClaimCollectionViaAssessmentClaims = "ClaimCollectionViaAssessmentClaims";
-			/// <summary>Member name IssueInDisputeCollectionViaAssessmentIssuesInDispute</summary>
-			public static readonly string IssueInDisputeCollectionViaAssessmentIssuesInDispute = "IssueInDisputeCollectionViaAssessmentIssuesInDispute";
+
+
 
 
 
@@ -153,12 +155,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointments = (EntityCollection<AppointmentEntity>)info.GetValue("_appointments", typeof(EntityCollection<AppointmentEntity>));
-
+				_assessmentClaims = (EntityCollection<AssessmentClaimEntity>)info.GetValue("_assessmentClaims", typeof(EntityCollection<AssessmentClaimEntity>));
 				_assessmentIssuesInDispute = (EntityCollection<AssessmentIssueInDisputeEntity>)info.GetValue("_assessmentIssuesInDispute", typeof(EntityCollection<AssessmentIssueInDisputeEntity>));
+				_assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>)info.GetValue("_assessmentMedRehabs", typeof(EntityCollection<AssessmentMedRehabEntity>));
 
 
-				_claimCollectionViaAssessmentClaims = (EntityCollection<ClaimEntity>)info.GetValue("_claimCollectionViaAssessmentClaims", typeof(EntityCollection<ClaimEntity>));
-				_issueInDisputeCollectionViaAssessmentIssuesInDispute = (EntityCollection<IssueInDisputeEntity>)info.GetValue("_issueInDisputeCollectionViaAssessmentIssuesInDispute", typeof(EntityCollection<IssueInDisputeEntity>));
+
+
 
 
 				_assessmentType = (AssessmentTypeEntity)info.GetValue("_assessmentType", typeof(AssessmentTypeEntity));
@@ -278,22 +281,19 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)entity);
 					break;
-
+				case "AssessmentClaims":
+					this.AssessmentClaims.Add((AssessmentClaimEntity)entity);
+					break;
 				case "AssessmentIssuesInDispute":
 					this.AssessmentIssuesInDispute.Add((AssessmentIssueInDisputeEntity)entity);
 					break;
+				case "AssessmentMedRehabs":
+					this.AssessmentMedRehabs.Add((AssessmentMedRehabEntity)entity);
+					break;
 
 
-				case "ClaimCollectionViaAssessmentClaims":
-					this.ClaimCollectionViaAssessmentClaims.IsReadOnly = false;
-					this.ClaimCollectionViaAssessmentClaims.Add((ClaimEntity)entity);
-					this.ClaimCollectionViaAssessmentClaims.IsReadOnly = true;
-					break;
-				case "IssueInDisputeCollectionViaAssessmentIssuesInDispute":
-					this.IssueInDisputeCollectionViaAssessmentIssuesInDispute.IsReadOnly = false;
-					this.IssueInDisputeCollectionViaAssessmentIssuesInDispute.Add((IssueInDisputeEntity)entity);
-					this.IssueInDisputeCollectionViaAssessmentIssuesInDispute.IsReadOnly = true;
-					break;
+
+
 
 
 
@@ -342,20 +342,19 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					toReturn.Add(AssessmentEntity.Relations.AppointmentEntityUsingAssessmentId);
 					break;
-
+				case "AssessmentClaims":
+					toReturn.Add(AssessmentEntity.Relations.AssessmentClaimEntityUsingAssessmentId);
+					break;
 				case "AssessmentIssuesInDispute":
 					toReturn.Add(AssessmentEntity.Relations.AssessmentIssueInDisputeEntityUsingAssessmentId);
 					break;
+				case "AssessmentMedRehabs":
+					toReturn.Add(AssessmentEntity.Relations.AssessmentMedRehabEntityUsingAssessmentId);
+					break;
 
 
-				case "ClaimCollectionViaAssessmentClaims":
-					toReturn.Add(AssessmentEntity.Relations.AssessmentClaimEntityUsingAssessmentId, "AssessmentEntity__", "AssessmentClaim_", JoinHint.None);
-					toReturn.Add(AssessmentClaimEntity.Relations.ClaimEntityUsingClaimId, "AssessmentClaim_", string.Empty, JoinHint.None);
-					break;
-				case "IssueInDisputeCollectionViaAssessmentIssuesInDispute":
-					toReturn.Add(AssessmentEntity.Relations.AssessmentIssueInDisputeEntityUsingAssessmentId, "AssessmentEntity__", "AssessmentIssueInDispute_", JoinHint.None);
-					toReturn.Add(AssessmentIssueInDisputeEntity.Relations.IssueInDisputeEntityUsingIssueIsDisputeId, "AssessmentIssueInDispute_", string.Empty, JoinHint.None);
-					break;
+
+
 
 
 
@@ -431,9 +430,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)relatedEntity);
 					break;
-
+				case "AssessmentClaims":
+					this.AssessmentClaims.Add((AssessmentClaimEntity)relatedEntity);
+					break;
 				case "AssessmentIssuesInDispute":
 					this.AssessmentIssuesInDispute.Add((AssessmentIssueInDisputeEntity)relatedEntity);
+					break;
+				case "AssessmentMedRehabs":
+					this.AssessmentMedRehabs.Add((AssessmentMedRehabEntity)relatedEntity);
 					break;
 
 				default:
@@ -474,9 +478,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-
+				case "AssessmentClaims":
+					base.PerformRelatedEntityRemoval(this.AssessmentClaims, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "AssessmentIssuesInDispute":
 					base.PerformRelatedEntityRemoval(this.AssessmentIssuesInDispute, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "AssessmentMedRehabs":
+					base.PerformRelatedEntityRemoval(this.AssessmentMedRehabs, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -537,8 +546,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Appointments);
-
+			toReturn.Add(this.AssessmentClaims);
 			toReturn.Add(this.AssessmentIssuesInDispute);
+			toReturn.Add(this.AssessmentMedRehabs);
 
 			return toReturn;
 		}
@@ -554,12 +564,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointments", ((_appointments!=null) && (_appointments.Count>0) && !this.MarkedForDeletion)?_appointments:null);
-
+				info.AddValue("_assessmentClaims", ((_assessmentClaims!=null) && (_assessmentClaims.Count>0) && !this.MarkedForDeletion)?_assessmentClaims:null);
 				info.AddValue("_assessmentIssuesInDispute", ((_assessmentIssuesInDispute!=null) && (_assessmentIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_assessmentIssuesInDispute:null);
+				info.AddValue("_assessmentMedRehabs", ((_assessmentMedRehabs!=null) && (_assessmentMedRehabs.Count>0) && !this.MarkedForDeletion)?_assessmentMedRehabs:null);
 
 
-				info.AddValue("_claimCollectionViaAssessmentClaims", ((_claimCollectionViaAssessmentClaims!=null) && (_claimCollectionViaAssessmentClaims.Count>0) && !this.MarkedForDeletion)?_claimCollectionViaAssessmentClaims:null);
-				info.AddValue("_issueInDisputeCollectionViaAssessmentIssuesInDispute", ((_issueInDisputeCollectionViaAssessmentIssuesInDispute!=null) && (_issueInDisputeCollectionViaAssessmentIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_issueInDisputeCollectionViaAssessmentIssuesInDispute:null);
+
+
 
 
 				info.AddValue("_assessmentType", (!this.MarkedForDeletion?_assessmentType:null));
@@ -614,6 +625,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'AssessmentClaim' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentClaims()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentClaimFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'AssessmentIssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
@@ -625,29 +645,19 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
-
-
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Claim' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// the related entities of type 'AssessmentMedRehab' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoClaimCollectionViaAssessmentClaims()
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentMedRehabs()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("ClaimCollectionViaAssessmentClaims"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId, "AssessmentEntity__"));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentMedRehabFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'IssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoIssueInDisputeCollectionViaAssessmentIssuesInDispute()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("IssueInDisputeCollectionViaAssessmentIssuesInDispute"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId, "AssessmentEntity__"));
-			return bucket;
-		}
+
+
+
 
 
 
@@ -750,12 +760,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointments);
-
+			collectionsQueue.Enqueue(this._assessmentClaims);
 			collectionsQueue.Enqueue(this._assessmentIssuesInDispute);
+			collectionsQueue.Enqueue(this._assessmentMedRehabs);
 
 
-			collectionsQueue.Enqueue(this._claimCollectionViaAssessmentClaims);
-			collectionsQueue.Enqueue(this._issueInDisputeCollectionViaAssessmentIssuesInDispute);
+
+
 
 
 		}
@@ -766,12 +777,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
-
+			this._assessmentClaims = (EntityCollection<AssessmentClaimEntity>) collectionsQueue.Dequeue();
 			this._assessmentIssuesInDispute = (EntityCollection<AssessmentIssueInDisputeEntity>) collectionsQueue.Dequeue();
+			this._assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>) collectionsQueue.Dequeue();
 
 
-			this._claimCollectionViaAssessmentClaims = (EntityCollection<ClaimEntity>) collectionsQueue.Dequeue();
-			this._issueInDisputeCollectionViaAssessmentIssuesInDispute = (EntityCollection<IssueInDisputeEntity>) collectionsQueue.Dequeue();
+
+
 
 
 		}
@@ -784,21 +796,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
-
+			if (this._assessmentClaims != null)
+			{
+				return true;
+			}
 			if (this._assessmentIssuesInDispute != null)
 			{
 				return true;
 			}
-
-
-			if (this._claimCollectionViaAssessmentClaims != null)
+			if (this._assessmentMedRehabs != null)
 			{
 				return true;
 			}
-			if (this._issueInDisputeCollectionViaAssessmentIssuesInDispute != null)
-			{
-				return true;
-			}
+
+
+
+
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -811,12 +824,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentClaimEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentIssueInDisputeEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentMedRehabEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentMedRehabEntityFactory))) : null);
 
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ClaimEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<IssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeEntityFactory))) : null);
+
+
 
 
 		}
@@ -836,12 +850,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("NotesWriter", _notesWriter);
 			toReturn.Add("DocListWriter", _docListWriter);
 			toReturn.Add("Appointments", _appointments);
-
+			toReturn.Add("AssessmentClaims", _assessmentClaims);
 			toReturn.Add("AssessmentIssuesInDispute", _assessmentIssuesInDispute);
+			toReturn.Add("AssessmentMedRehabs", _assessmentMedRehabs);
 
 
-			toReturn.Add("ClaimCollectionViaAssessmentClaims", _claimCollectionViaAssessmentClaims);
-			toReturn.Add("IssueInDisputeCollectionViaAssessmentIssuesInDispute", _issueInDisputeCollectionViaAssessmentIssuesInDispute);
+
+
 
 
 
@@ -855,21 +870,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointments.ActiveContext = base.ActiveContext;
 			}
-
+			if(_assessmentClaims!=null)
+			{
+				_assessmentClaims.ActiveContext = base.ActiveContext;
+			}
 			if(_assessmentIssuesInDispute!=null)
 			{
 				_assessmentIssuesInDispute.ActiveContext = base.ActiveContext;
 			}
+			if(_assessmentMedRehabs!=null)
+			{
+				_assessmentMedRehabs.ActiveContext = base.ActiveContext;
+			}
 
 
-			if(_claimCollectionViaAssessmentClaims!=null)
-			{
-				_claimCollectionViaAssessmentClaims.ActiveContext = base.ActiveContext;
-			}
-			if(_issueInDisputeCollectionViaAssessmentIssuesInDispute!=null)
-			{
-				_issueInDisputeCollectionViaAssessmentIssuesInDispute.ActiveContext = base.ActiveContext;
-			}
+
+
 
 
 			if(_assessmentType!=null)
@@ -908,12 +924,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointments = null;
-
+			_assessmentClaims = null;
 			_assessmentIssuesInDispute = null;
+			_assessmentMedRehabs = null;
 
 
-			_claimCollectionViaAssessmentClaims = null;
-			_issueInDisputeCollectionViaAssessmentIssuesInDispute = null;
+
+
 
 
 			_assessmentType = null;
@@ -1253,6 +1270,17 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("Appointments")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "Appointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentClaim' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessmentClaims
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AssessmentClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentClaimEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AssessmentClaims")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentClaimEntity, 0, null, null, null, null, "AssessmentClaims", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentIssueInDispute' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1264,36 +1292,21 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("AssessmentIssuesInDispute")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentIssueInDisputeEntity, 0, null, null, null, null, "AssessmentIssuesInDispute", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
-
-
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Claim' 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentMedRehab' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathClaimCollectionViaAssessmentClaims
+		public static IPrefetchPathElement2 PrefetchPathAssessmentMedRehabs
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = AssessmentEntity.Relations.AssessmentClaimEntityUsingAssessmentId;
-				intermediateRelation.SetAliases(string.Empty, "AssessmentClaim_");
-				return new PrefetchPathElement2(new EntityCollection<ClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ClaimEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.ClaimEntity, 0, null, null, GetRelationsForField("ClaimCollectionViaAssessmentClaims"), null, "ClaimCollectionViaAssessmentClaims", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+				return new PrefetchPathElement2( new EntityCollection<AssessmentMedRehabEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentMedRehabEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AssessmentMedRehabs")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentMedRehabEntity, 0, null, null, null, null, "AssessmentMedRehabs", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'IssueInDispute' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathIssueInDisputeCollectionViaAssessmentIssuesInDispute
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = AssessmentEntity.Relations.AssessmentIssueInDisputeEntityUsingAssessmentId;
-				intermediateRelation.SetAliases(string.Empty, "AssessmentIssueInDispute_");
-				return new PrefetchPathElement2(new EntityCollection<IssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.IssueInDisputeEntity, 0, null, null, GetRelationsForField("IssueInDisputeCollectionViaAssessmentIssuesInDispute"), null, "IssueInDisputeCollectionViaAssessmentIssuesInDispute", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
+
+
+
 
 
 
@@ -1554,6 +1567,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentClaimEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AssessmentClaimEntity))]
+		public virtual EntityCollection<AssessmentClaimEntity> AssessmentClaims
+		{
+			get
+			{
+				if(_assessmentClaims==null)
+				{
+					_assessmentClaims = new EntityCollection<AssessmentClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentClaimEntityFactory)));
+					_assessmentClaims.SetContainingEntityInfo(this, "Assessment");
+				}
+				return _assessmentClaims;
+			}
+		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentIssueInDisputeEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
@@ -1571,39 +1599,25 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'ClaimEntity' which are related to this entity via a relation of type 'm:n'.
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentMedRehabEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(ClaimEntity))]
-		public virtual EntityCollection<ClaimEntity> ClaimCollectionViaAssessmentClaims
+		[TypeContainedAttribute(typeof(AssessmentMedRehabEntity))]
+		public virtual EntityCollection<AssessmentMedRehabEntity> AssessmentMedRehabs
 		{
 			get
 			{
-				if(_claimCollectionViaAssessmentClaims==null)
+				if(_assessmentMedRehabs==null)
 				{
-					_claimCollectionViaAssessmentClaims = new EntityCollection<ClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ClaimEntityFactory)));
-					_claimCollectionViaAssessmentClaims.IsReadOnly=true;
+					_assessmentMedRehabs = new EntityCollection<AssessmentMedRehabEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentMedRehabEntityFactory)));
+					_assessmentMedRehabs.SetContainingEntityInfo(this, "Assessment");
 				}
-				return _claimCollectionViaAssessmentClaims;
+				return _assessmentMedRehabs;
 			}
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'IssueInDisputeEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(IssueInDisputeEntity))]
-		public virtual EntityCollection<IssueInDisputeEntity> IssueInDisputeCollectionViaAssessmentIssuesInDispute
-		{
-			get
-			{
-				if(_issueInDisputeCollectionViaAssessmentIssuesInDispute==null)
-				{
-					_issueInDisputeCollectionViaAssessmentIssuesInDispute = new EntityCollection<IssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeEntityFactory)));
-					_issueInDisputeCollectionViaAssessmentIssuesInDispute.IsReadOnly=true;
-				}
-				return _issueInDisputeCollectionViaAssessmentIssuesInDispute;
-			}
-		}
+
+
+
 
 
 

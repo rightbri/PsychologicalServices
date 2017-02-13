@@ -27,7 +27,7 @@ namespace PsychologicalServices.Models.Referrals
             if (string.IsNullOrWhiteSpace(item.Name))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Name", Message = "Name is required" }
+                    new ValidationError { PropertyName = "Name", Message = "Name is required" }
                 );
             }
 
@@ -38,7 +38,7 @@ namespace PsychologicalServices.Models.Referrals
                 if (!issuesInDispute.Any(iid => iid.IssueInDisputeId == issueInDispute.IssueInDisputeId))
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { Property = "IssuesInDispute", Message = string.Format("Issue in dispute '{0}' is not valid", issueInDispute.Name) }
+                        new ValidationError { PropertyName = "IssuesInDispute", Message = string.Format("Issue in dispute '{0}' is not valid", issueInDispute.Name) }
                     );
                 }
             }

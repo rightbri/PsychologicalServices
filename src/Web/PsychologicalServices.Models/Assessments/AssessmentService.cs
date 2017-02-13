@@ -20,14 +20,23 @@ namespace PsychologicalServices.Models.Assessments
 
         public Assessment GetAssessment(int id)
         {
-            var assessment = _assessmentRepository.GetAssessment(id);
-
-            if (null == assessment)
+            try
             {
-                throw new AssessmentNotFoundException(id);
+                var assessment = _assessmentRepository.GetAssessment(id);
+
+                if (null == assessment)
+                {
+                    throw new AssessmentNotFoundException(id);
+                }
+
+                return assessment;
+            }
+            catch (Exception ex)
+            {
+
             }
 
-            return assessment;
+            return null;
         }
 
         public AssessmentType GetAssessmentType(int id)

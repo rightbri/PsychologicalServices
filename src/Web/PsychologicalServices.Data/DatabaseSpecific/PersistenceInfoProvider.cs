@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((31 + 0));
+			base.InitClass((32 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
@@ -64,6 +64,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAssessmentEntityMappings();
 			InitAssessmentClaimEntityMappings();
 			InitAssessmentIssueInDisputeEntityMappings();
+			InitAssessmentMedRehabEntityMappings();
 			InitAssessmentTypeEntityMappings();
 			InitAssessmentTypeReportTypeEntityMappings();
 			InitCalendarNoteEntityMappings();
@@ -176,6 +177,17 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AssessmentIssueInDisputeEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentIssueInDisputeEntity", "IssueIsDisputeId", "IssueIsDisputeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
+		/// <summary>Inits AssessmentMedRehabEntity's mappings</summary>
+		private void InitAssessmentMedRehabEntityMappings()
+		{
+			base.AddElementMapping( "AssessmentMedRehabEntity", "PsychologicalServices", @"dbo", "AssessmentMedRehabs", 6 );
+			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "MedRehabId", "MedRehabId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Date", "Date", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Amount", "Amount", false, (int)SqlDbType.Decimal, 0, 0, 18, false, "", null, typeof(System.Decimal), 3 );
+			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 4 );
+			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Deleted", "Deleted", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 5 );
+		}
 		/// <summary>Inits AssessmentTypeEntity's mappings</summary>
 		private void InitAssessmentTypeEntityMappings()
 		{
@@ -215,13 +227,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits ClaimantEntity's mappings</summary>
 		private void InitClaimantEntityMappings()
 		{
-			base.AddElementMapping( "ClaimantEntity", "PsychologicalServices", @"dbo", "Claimants", 6 );
+			base.AddElementMapping( "ClaimantEntity", "PsychologicalServices", @"dbo", "Claimants", 7 );
 			base.AddElementFieldMapping( "ClaimantEntity", "ClaimantId", "ClaimantId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ClaimantEntity", "FirstName", "FirstName", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "ClaimantEntity", "LastName", "LastName", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 2 );
-			base.AddElementFieldMapping( "ClaimantEntity", "Age", "Age", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
+			base.AddElementFieldMapping( "ClaimantEntity", "Age", "Age", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
 			base.AddElementFieldMapping( "ClaimantEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
 			base.AddElementFieldMapping( "ClaimantEntity", "Gender", "Gender", false, (int)SqlDbType.NChar, 1, 0, 0, false, "", null, typeof(System.String), 5 );
+			base.AddElementFieldMapping( "ClaimantEntity", "DateOfBirth", "DateOfBirth", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 6 );
 		}
 		/// <summary>Inits CompanyEntity's mappings</summary>
 		private void InitCompanyEntityMappings()

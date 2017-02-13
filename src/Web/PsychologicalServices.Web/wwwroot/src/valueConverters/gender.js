@@ -9,6 +9,9 @@ export class GenderValueConverter {
 		else if (value === 'F') {
 			val = 'Female';
 		}
+		else if (value === 'U') {
+			val = 'Unknown';
+		}
 		
 		return val;
 	}
@@ -21,6 +24,9 @@ export class GenderValueConverter {
 		}
 		else if (value === 'Female') {
 			val = 'F';
+		}
+		else if (value === 'Unknown') {
+			val = 'U';
 		}
 		
 		return val;

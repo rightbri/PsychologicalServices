@@ -22,8 +22,11 @@ namespace PsychologicalServices.Infrastructure.Roles
         private static readonly Func<IPathEdgeRootParser<RoleEntity>, IPathEdgeRootParser<RoleEntity>>
             RolePath =
                 (rolePath => rolePath
-                    .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
-                    .FilterOn(right => right.IsActive)
+                    .Prefetch<RoleRightEntity>(role => role.RoleRights)
+                        .SubPath(roleRightPath => roleRightPath
+                            .Prefetch<RightEntity>(roleRight => roleRight.Right)
+                            .FilterOn(right => right.IsActive)
+                        )
                 );
 
         #endregion

@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (31 + 0));
+			base.InitClass( (32 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -65,6 +65,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAssessmentEntityInfos();
 			InitAssessmentClaimEntityInfos();
 			InitAssessmentIssueInDisputeEntityInfos();
+			InitAssessmentMedRehabEntityInfos();
 			InitAssessmentTypeEntityInfos();
 			InitAssessmentTypeReportTypeEntityInfos();
 			InitCalendarNoteEntityInfos();
@@ -169,6 +170,16 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentIssueInDisputeEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentIssueInDisputeFieldIndex.AssessmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentIssueInDisputeEntity", "IssueIsDisputeId", typeof(System.Int32), true, true, false, false,  (int)AssessmentIssueInDisputeFieldIndex.IssueIsDisputeId, 0, 0, 10);
 		}
+		/// <summary>Inits AssessmentMedRehabEntity's FieldInfo objects</summary>
+		private void InitAssessmentMedRehabEntityInfos()
+		{
+			base.AddElementFieldInfo("AssessmentMedRehabEntity", "MedRehabId", typeof(System.Int32), true, false, true, false,  (int)AssessmentMedRehabFieldIndex.MedRehabId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentMedRehabEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)AssessmentMedRehabFieldIndex.AssessmentId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentMedRehabEntity", "Date", typeof(System.DateTime), false, false, false, false,  (int)AssessmentMedRehabFieldIndex.Date, 0, 0, 0);
+			base.AddElementFieldInfo("AssessmentMedRehabEntity", "Amount", typeof(System.Decimal), false, false, false, false,  (int)AssessmentMedRehabFieldIndex.Amount, 0, 0, 18);
+			base.AddElementFieldInfo("AssessmentMedRehabEntity", "Description", typeof(System.String), false, false, false, false,  (int)AssessmentMedRehabFieldIndex.Description, 100, 0, 0);
+			base.AddElementFieldInfo("AssessmentMedRehabEntity", "Deleted", typeof(System.Boolean), false, false, false, false,  (int)AssessmentMedRehabFieldIndex.Deleted, 0, 0, 0);
+		}
 		/// <summary>Inits AssessmentTypeEntity's FieldInfo objects</summary>
 		private void InitAssessmentTypeEntityInfos()
 		{
@@ -207,9 +218,10 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ClaimantEntity", "ClaimantId", typeof(System.Int32), true, false, true, false,  (int)ClaimantFieldIndex.ClaimantId, 0, 0, 10);
 			base.AddElementFieldInfo("ClaimantEntity", "FirstName", typeof(System.String), false, false, false, false,  (int)ClaimantFieldIndex.FirstName, 50, 0, 0);
 			base.AddElementFieldInfo("ClaimantEntity", "LastName", typeof(System.String), false, false, false, false,  (int)ClaimantFieldIndex.LastName, 50, 0, 0);
-			base.AddElementFieldInfo("ClaimantEntity", "Age", typeof(System.Int32), false, false, false, false,  (int)ClaimantFieldIndex.Age, 0, 0, 10);
+			base.AddElementFieldInfo("ClaimantEntity", "Age", typeof(Nullable<System.Int32>), false, false, false, true,  (int)ClaimantFieldIndex.Age, 0, 0, 10);
 			base.AddElementFieldInfo("ClaimantEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ClaimantFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("ClaimantEntity", "Gender", typeof(System.String), false, false, false, false,  (int)ClaimantFieldIndex.Gender, 1, 0, 0);
+			base.AddElementFieldInfo("ClaimantEntity", "DateOfBirth", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)ClaimantFieldIndex.DateOfBirth, 0, 0, 0);
 		}
 		/// <summary>Inits CompanyEntity's FieldInfo objects</summary>
 		private void InitCompanyEntityInfos()

@@ -2,8 +2,10 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {DialogService} from 'aurelia-dialog';
+import {ClaimantSearchDialog} from '../claimants/ClaimantSearchDialog';
 import {ClaimDialog} from '../claims/ClaimDialog';
 import {AppointmentDialog} from '../appointments/AppointmentDialog';
+import {MessageDialog} from '../common/MessageDialog';
 
 @inject(Router, DataRepository, DialogService)
 export class EditAssessment {
@@ -26,45 +28,66 @@ export class EditAssessment {
 		this.issuesInDispute = null;
 		this.claims = null;
 		
+		this.claimant = null;
+		
+		this.assessmentTypeMatcher = (a, b) => a.assessmentTypeId === b.assessmentTypeId;
+		this.reportStatusMatcher = (a, b) => a.reportStatusId === b.reportStatusId;
+		this.referralSourceMatcher = (a, b) => a.referralSourceId === b.referralSourceId;
+		this.referralTypeMatcher = (a, b) => a.referralTypeId === b.referralTypeId;
 		this.issueInDisputeMatcher = (a, b) => a.issueInDisputeId === b.issueInDisputeId;
+		this.userMatcher = (a, b) => a.userId === b.userId;
+		this.companyMatcher = (a, b) => a.companyId === b.companyId;
+		
+		this.error = null;
+		this.validationErrors = null;
 	}
 	
 	activate(params) {
 		var id = params.id;
 		
-		var assessmentPromise = this.dataRepository.getAssessment(id).then(data => this.assessment = data);
-		
-		return assessmentPromise.then(data => 
-			Promise.all([
-				this.dataRepository.getAssessmentTypes().then(data => this.assessmentTypes = data),
-				this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
-				this.dataRepository.getReferralSources().then(data => this.referralSources = data),
-				this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
-				this.dataRepository.getDocListWriters(this.companyId).then(data => this.docListWriters = data),
-				this.dataRepository.getNotesWriters(this.companyId).then(data => this.notesWriters = data),
-				this.dataRepository.getCompanies().then(data => this.companies = data),
-				this.dataRepository.getReferralTypeIssuesInDispute(data.referralTypeId).then(data => this.issuesInDispute = data)
-			])
-		);
-		
+		return this.dataRepository.getAssessment(id)
+			.then(data => {
+				this.assessment = data;
+				
+				this.checkMedRehab();
+				
+				if (this.assessment.referralType) {
+					this.issuesInDispute = this.assessment.referralType.issuesInDispute;
+				}
+				
+				if (this.assessment.claims && this.assessment.claims.length > 0) {
+					this.claimant = this.assessment.claims[0].claimant;
+				}
+				
+				return Promise.all([
+					this.dataRepository.getAssessmentTypes().then(data => this.assessmentTypes = data),
+					this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
+					this.dataRepository.getReferralSources().then(data => this.referralSources = data),
+					this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
+					this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
+					this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
+					this.dataRepository.getCompanies().then(data => this.companies = data)
+				]);
+			});
 	}
 	
 	save() {
 		this.dataRepository.saveAssessment(this.assessment)
             .then(data => {
 
-                if (data.isError) {
-                    alert(data.errorDetails);
-                }
-
-                if (data.validationResult && data.validationResult.validationErrors && data.validationResult.validationErrors.length > 0) {
-                    alert('validation errors: ' + data.validationResult.validationErrors.length);
-                }
-
+				this.validationErrors = (data.validationResult && data.validationResult.validationErrors && data.validationResult.validationErrors.length > 0)
+					? data.validationResult.validationErrors
+					: null;
+					
                 if (data.isSaved) {
                     this.assessment = data.item;
-					alert('saved');
+					
+					this.dialogService.open({viewModel: MessageDialog, model: { heading: 'Saved', message: 'Assessment saved' } });
                 }
+				
+				if (data.isError) {
+					this.dialogService.open({viewModel: MessageDialog, model: { heading: 'Error', message: data.errorDetails } });
+				}
             });
 	}
 	
@@ -72,8 +95,42 @@ export class EditAssessment {
 		this.router.navigateBack();
 	}
 	
+	referralTypeChanged() {
+		this.issuesInDispute = this.assessment.referralType.issuesInDispute;
+	}
+	
+	checkMedRehab() {
+		//this.medRehabSelected = this.assessment.issuesInDispute.some(issueInDispute => issueInDispute && issueInDispute.name === 'Med Rehab');
+	}
+	
+	searchClaimant() {
+		var original = JSON.parse(JSON.stringify(this.claimant));
+		
+		return this.dialogService.open({viewModel: ClaimantSearchDialog, model: this.claimant})
+			.then(result => {
+				var source = original;
+
+				if (!result.wasCancelled) {
+					source = result.output;
+				}
+				
+				this.claimant = source;
+				
+				return { wasCancelled: result.wasCancelled, claimant: this.claimant };
+			})
+			.then(result => {
+				if (!result.wasCancelled) {
+					if (this.assessment.claims && this.assessment.claims.length > 0) {
+						for (var claim of this.assessment.claims) {
+							claim.claimant = result.claimant;
+						}
+					}
+				}
+			});
+	}
+	
 	newClaim() {
-		return this.editClaim({})
+		return this.editClaim({ claimant: this.claimant })
 			.then(data => {
 				if (!data.wasCancelled) {
 					this.assessment.claims.push(data.claim);

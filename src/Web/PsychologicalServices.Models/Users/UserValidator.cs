@@ -31,21 +31,21 @@ namespace PsychologicalServices.Models.Users
             if (string.IsNullOrWhiteSpace(item.FirstName))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "FirstName", Message = "First name is required" }
+                    new ValidationError { PropertyName = "FirstName", Message = "First name is required" }
                 );
             }
 
             if (string.IsNullOrWhiteSpace(item.LastName))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "LastName", Message = "Last name is required" }
+                    new ValidationError { PropertyName = "LastName", Message = "Last name is required" }
                 );
             }
 
             if (string.IsNullOrWhiteSpace(item.Email))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Email", Message = "Email is required" }
+                    new ValidationError { PropertyName = "Email", Message = "Email is required" }
                 );
             }
 
@@ -53,7 +53,7 @@ namespace PsychologicalServices.Models.Users
             if (null == company)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "CompanyId", Message = "Invalid company" }
+                    new ValidationError { PropertyName = "CompanyId", Message = "Invalid company" }
                 );
             }
 
@@ -64,7 +64,7 @@ namespace PsychologicalServices.Models.Users
                 if (null == role)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { Property = "RoleId", Message = string.Format("Invalid role '{0}: {1}'", userRole.RoleId, userRole.Name) }
+                        new ValidationError { PropertyName = "RoleId", Message = string.Format("Invalid role '{0}: {1}'", userRole.RoleId, userRole.Name) }
                     );
                 }
             }

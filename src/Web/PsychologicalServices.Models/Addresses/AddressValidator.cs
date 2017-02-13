@@ -31,21 +31,21 @@ namespace PsychologicalServices.Models.Addresses
             if (string.IsNullOrWhiteSpace(address.Street))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Street", Message = "Street is required" }
+                    new ValidationError { PropertyName = "Street", Message = "Street is required" }
                 );
             }
 
             if (string.IsNullOrWhiteSpace(address.City))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "City", Message = "City is required" }
+                    new ValidationError { PropertyName = "City", Message = "City is required" }
                 );
             }
 
             if (string.IsNullOrWhiteSpace(address.Province) || !Regex.IsMatch(address.Province, ProvincePattern))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Province", Message = "Province is required" }
+                    new ValidationError { PropertyName = "Province", Message = "Province is required" }
                 );
             }
 
@@ -58,13 +58,13 @@ namespace PsychologicalServices.Models.Addresses
                 if (address.Country.Equals("Canada", StringComparison.OrdinalIgnoreCase) && !Regex.IsMatch(address.PostalCode, PostalCodePatternCanada))
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { Property = "PostalCode", Message = "Postal Code is not in a valid format" }
+                        new ValidationError { PropertyName = "PostalCode", Message = "Postal Code is not in a valid format" }
                     );
                 }
                 else if (address.Country.Equals("USA", StringComparison.OrdinalIgnoreCase) && !Regex.IsMatch(address.PostalCode, PostalCodePatternUsa))
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { Property = "PostalCode", Message = "Postal Code is not in a valid format" }
+                        new ValidationError { PropertyName = "PostalCode", Message = "Postal Code is not in a valid format" }
                     );
                 }
             }
@@ -72,14 +72,14 @@ namespace PsychologicalServices.Models.Addresses
             if (string.IsNullOrWhiteSpace(address.Country))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Country", Message = "Country is required" }
+                    new ValidationError { PropertyName = "Country", Message = "Country is required" }
                 );
             }
 
             if (string.IsNullOrWhiteSpace(address.Name))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Name", Message = "Name is required" }
+                    new ValidationError { PropertyName = "Name", Message = "Name is required" }
                 );
             }
 
@@ -90,13 +90,13 @@ namespace PsychologicalServices.Models.Addresses
             if (null == addressType)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "AddressTypeId", Message = "Invalid address type" }
+                    new ValidationError { PropertyName = "AddressTypeId", Message = "Invalid address type" }
                 );
             }
             else if (!addressType.IsActive)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "AddressTypeId", Message = "The selected address type is not active." }
+                    new ValidationError { PropertyName = "AddressTypeId", Message = "The selected address type is not active." }
                 );
             }
 

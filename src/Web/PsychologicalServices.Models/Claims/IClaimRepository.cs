@@ -5,6 +5,8 @@ namespace PsychologicalServices.Models.Claims
 {
     public interface IClaimRepository
     {
+        Claim GetClaim(int id);
+
         Claimant GetClaimant(int id);
 
         IssueInDispute GetIssueInDispute(int id);
@@ -16,6 +18,10 @@ namespace PsychologicalServices.Models.Claims
         IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId);
 
         IEnumerable<IssueInDispute> GetIssuesInDispute(bool? isActive = true);
+
+        IEnumerable<Gender> GetGenders();
+        
+        int SaveClaim(Claim claim);
 
         int SaveClaimant(Claimant claimant);
 

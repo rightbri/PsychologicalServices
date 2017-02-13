@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Common.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,21 @@ namespace PsychologicalServices.Models.Claims
     public class ClaimService : IClaimService
     {
         private readonly IClaimRepository _claimRepository = null;
+        private readonly IClaimValidator _claimValidator = null;
+        private readonly IClaimantValidator _claimantValidator = null;
+        private readonly IDate _date = null;
 
         public ClaimService(
-            IClaimRepository claimRepository
+            IClaimRepository claimRepository,
+            IClaimValidator claimValidator,
+            IClaimantValidator claimantValidator,
+            IDate date
         )
         {
             _claimRepository = claimRepository;
+            _claimValidator = claimValidator;
+            _claimantValidator = claimantValidator;
+            _date = date;
         }
 
         public Claimant GetClaimant(int id)
@@ -24,6 +34,8 @@ namespace PsychologicalServices.Models.Claims
             {
                 throw new ClaimantNotFoundException(id);
             }
+
+            CalculateClaimantAge(claimant);
 
             return claimant;
         }
@@ -38,6 +50,11 @@ namespace PsychologicalServices.Models.Claims
         public IEnumerable<Claimant> SearchClaimants(string lastName)
         {
             var claimants = _claimRepository.SearchClaimants(lastName);
+
+            foreach (var claimant in claimants)
+            {
+                CalculateClaimantAge(claimant);
+            }
 
             return claimants;
         }
@@ -56,16 +73,60 @@ namespace PsychologicalServices.Models.Claims
             return issuesInDispute;
         }
 
+        public IEnumerable<Gender> GetGenders()
+        {
+            var genders = _claimRepository.GetGenders();
+
+            return genders;
+        }
+
+        public SaveResult<Claim> SaveClaim(Claim claim)
+        {
+            var result = new SaveResult<Claim>();
+
+            try
+            {
+                var validation = _claimValidator.Validate(claim);
+
+                result.ValidationResult = validation;
+
+                if (result.ValidationResult.IsValid)
+                {
+                    var id = _claimRepository.SaveClaim(claim);
+
+                    result.Item = _claimRepository.GetClaim(id);
+                    result.IsSaved = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                //TODO: log error
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
+
         public SaveResult<Claimant> SaveClaimant(Claimant claimant)
         {
             var result = new SaveResult<Claimant>();
 
             try
             {
-                var id = _claimRepository.SaveClaimant(claimant);
+                CalculateClaimantAge(claimant);
 
-                result.Item = _claimRepository.GetClaimant(id);
-                result.IsSaved = true;
+                var validation = _claimantValidator.Validate(claimant);
+
+                result.ValidationResult = validation;
+
+                if (result.ValidationResult.IsValid)
+                {
+                    var id = _claimRepository.SaveClaimant(claimant);
+
+                    result.Item = _claimRepository.GetClaimant(id);
+                    result.IsSaved = true;
+                }
             }
             catch (Exception ex)
             {
@@ -96,6 +157,21 @@ namespace PsychologicalServices.Models.Claims
             }
 
             return result;
+        }
+
+        private void CalculateClaimantAge(Claimant claimant)
+        {
+            //recalculate age/date of birth
+            if (claimant.DateOfBirth.HasValue)
+            {
+                claimant.Age = _date.Today.YearsFrom(claimant.DateOfBirth.Value);
+            }
+            else if (claimant.Age.HasValue)
+            {
+                //when calculating date of birth from age, always set claimant date of birth to 1/1/{birth year}
+                claimant.DateOfBirth = new DateTime(_date.Today.AddYears(-claimant.Age.Value).Year, 1, 1);
+
+            }
         }
     }
 }

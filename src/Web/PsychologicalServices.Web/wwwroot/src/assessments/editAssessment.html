@@ -2,6 +2,8 @@
 	<require from="valueConverters/boolean"></require>
 	<require from="valueConverters/date-format"></require>
 	<require from="valueConverters/gender"></require>
+	<require from="valueConverters/filter"></require>
+	<require from="common/validation-summary.html"></require>
 	
 <h2>Edit Assessment</h2>
 
@@ -11,9 +13,9 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="assessmentType">Assessment Type</label>
-				<select id="assessmentType" class="form-control" value.bind="assessment.assessmentTypeId">
+				<select id="assessmentType" class="form-control" value.bind="assessment.assessmentType" matcher.bind="assessmentTypeMatcher">
 					<option></option>
-					<option repeat.for="assessmentType of assessmentTypes" model.bind="assessmentType.assessmentTypeId">
+					<option repeat.for="assessmentType of assessmentTypes" model.bind="assessmentType">
 						${assessmentType.name}
 					</option>
 				</select>
@@ -22,9 +24,9 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="reportStatus">Report Status</label>
-				<select id="reportStatus" class="form-control" value.bind="assessment.reportStatusId">
+				<select id="reportStatus" class="form-control" value.bind="assessment.reportStatus" matcher.bind="reportStatusMatcher">
 					<option></option>
-					<option repeat.for="reportStatus of reportStatuses" model.bind="reportStatus.reportStatusId">
+					<option repeat.for="reportStatus of reportStatuses" model.bind="reportStatus">
 						${reportStatus.name}
 					</option>
 				</select>
@@ -36,9 +38,9 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="referralSource">Referral Source</label>
-				<select id="referralSource" class="form-control" value.bind="assessment.referralSourceId">
+				<select id="referralSource" class="form-control" value.bind="assessment.referralSource" matcher.bind="referralSourceMatcher">
 					<option></option>
-					<option repeat.for="referralSource of referralSources" model.bind="referralSource.referralSourceId">
+					<option repeat.for="referralSource of referralSources" model.bind="referralSource">
 						${referralSource.name}
 					</option>
 				</select>
@@ -62,9 +64,9 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="referralType">Referral Type</label>
-				<select id="referralType" class="form-control" value.bind="assessment.referralTypeId">
+				<select id="referralType" class="form-control" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher" change.delegate="referralTypeChanged()">
 					<option></option>
-					<option repeat.for="referralType of referralTypes" model.bind="referralType.referralTypeId">
+					<option repeat.for="referralType of referralTypes" model.bind="referralType">
 						${referralType.name}
 					</option>
 				</select>
@@ -83,9 +85,44 @@
 			<label>Issues in Dispute</label>
 			<div class="checkbox" repeat.for="issueInDispute of issuesInDispute">
 				<label>
-					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" />&nbsp;${issueInDispute.name}
+					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" click.delegate="checkMedRehab()" />&nbsp;${issueInDispute.name}
 				</label>
 			</div>
+		</div>
+	</div>
+	
+	<div class="row" if.bind="medRehabSelected">
+		<div class="col-xs-6">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>
+							<button type="button" class="btn btn-default" click.delegate="newMedRehab()">
+								<i class="fa fa-plus"></i>
+							</button>
+						</th>
+						<th>Date</th>
+						<th>Amount</th>
+						<th>Description</th>
+						<th>Deleted</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr repeat.for="medRehab of assessment.medRehabs">
+						<td>
+							<button type="button" class="btn btn-default" click.delegate="editMedRehab(medRehab)">
+								<i class="fa fa-edit"></i>
+							</button>
+						</td>
+						<td>${medRehab.date | dateFormat:'MM/DD/YYYY'}</td>
+						<td>${medRehab.amount}</td>
+						<td>${medRehab.description}</td>
+						<td>
+							<input type="checkbox" checked.bind="medRehab.deleted" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	
@@ -93,9 +130,9 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="docListWriter">Doc List Writer</label>
-				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriterId">
+				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
 					<option></option>
-					<option repeat.for="user of docListWriters" model.bind="user.userId">
+					<option repeat.for="user of docListWriters" model.bind="user">
 						${user.firstName}
 					</option>
 				</select>
@@ -104,9 +141,9 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="notesWriter">Notes Writer</label>
-				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriterId">
+				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
 					<option></option>
-					<option repeat.for="user of notesWriters" model.bind="user.userId">
+					<option repeat.for="user of notesWriters" model.bind="user">
 						${user.firstName}
 					</option>
 				</select>
@@ -118,9 +155,9 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="company">Company</label>
-				<select id="company" class="form-control" model.bind="assessment.companyId">
+				<select id="company" class="form-control" value.bind="assessment.company" matcher.bind="companyMatcher">
 					<option></option>
-					<option repeat.for="company of companies" value.bind="company.companyId">
+					<option repeat.for="company of companies" model.bind="company">
 						${company.name}
 					</option>
 				</select>
@@ -137,15 +174,29 @@
 	
 	<div class="row">
 		<div class="col-xs-6">
+			<label>Claimant</label>
+			<button type="button" class="btn btn-default" click.delegate="searchClaimant()">
+				Search <i class="fa fa-search"></i>
+			</button>
+			<p if.bind="claimant">
+				<br>${claimant.firstName} ${claimant.lastName}
+				<br>${claimant.age} - ${claimant.gender | gender}
+			</p>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th></th>
+						<th>
+							<button type="button" class="btn btn-default" click.delegate="newClaim()" disabled.bind="!claimant">
+								<i class="fa fa-plus"></i>
+							</button>
+						</th>
 						<th>Claim #</th>
 						<th>Date of Loss</th>
-						<th>Claimant</th>
-						<th>Age</th>
-						<th>Gender</th>
 						<th>Deleted</th>
 					</tr>
 				</thead>
@@ -158,18 +209,8 @@
 						</td>
 						<td>${claim.claimNumber}</td>
 						<td>${claim.dateOfLoss | dateFormat:'M/D/YYYY'}</td>
-						<td>${claim.claimant.firstName} ${claim.claimant.lastName}</td>
-						<td>${claim.claimant.age}</td>
-						<td>${claim.claimant.gender | gender}</td>
 						<td>
 							<input type="checkbox" checked.bind="claim.deleted" />
-						</td>
-					</tr>
-					<tr>
-						<td colspan="7">
-							<button type="button" class="btn btn-default" click.delegate="newClaim()">
-								<i class="fa fa-plus"></i>
-							</button>
 						</td>
 					</tr>
 				</tbody>
@@ -182,13 +223,18 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th></th>
+						<th>
+							<button type="button" class="btn btn-default" click.delegate="newAppointment()">
+								<i class="fa fa-plus"></i>
+							</button>
+						</th>
 						<th>Date</th>
 						<th>Time</th>
 						<th>Location</th>
 						<th>Status</th>
 						<th>Psychometrist</th>
 						<th>Confirmed</th>
+						<th>Deleted</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -198,22 +244,24 @@
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
-						<td>${appointment.appointmentTime | dateFormat:'M/D/YYYY'}</td>
+						<td>${appointment.appointmentTime | dateFormat:'MM/DD/YYYY'}</td>
 						<td>${appointment.appointmentTime | dateFormat:'h:mmA'}</td>
 						<td>${appointment.location.name}</td>
 						<td>${appointment.appointmentStatus.name}</td>
 						<td>${appointment.psychometrist.firstName}</td>
 						<td>${appointment.psychometristConfirmed | boolean }</td>
-					</tr>
-					<tr>
-						<td colspan="7">
-							<button type="button" class="btn btn-default" click.delegate="newAppointment()">
-								<i class="fa fa-plus"></i>
-							</button>
+						<td>
+							<input type="checkbox" checked.bind="appointment.deleted" />
 						</td>
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+	
+	<div class="row" if.bind="validationErrors">
+		<div class="col-xs-6">
+			<validation-summary errors.bind="validationErrors"></validation-summary>
 		</div>
 	</div>
 	
@@ -227,6 +275,7 @@
 			</button>
 		</div>
 	</div>
+
 </div>
 
 </template>

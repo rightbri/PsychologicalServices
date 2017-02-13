@@ -42,7 +42,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<ReferralTypeIssueInDisputeEntity> _referralTypeIssuesInDispute;
 
 
-		private EntityCollection<IssueInDisputeEntity> _issueInDisputeCollectionViaReferralTypeIssuesInDispute;
+
 
 
 
@@ -69,8 +69,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ReferralTypeIssuesInDispute = "ReferralTypeIssuesInDispute";
 
 
-			/// <summary>Member name IssueInDisputeCollectionViaReferralTypeIssuesInDispute</summary>
-			public static readonly string IssueInDisputeCollectionViaReferralTypeIssuesInDispute = "IssueInDisputeCollectionViaReferralTypeIssuesInDispute";
+
 
 
 
@@ -140,7 +139,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>)info.GetValue("_referralTypeIssuesInDispute", typeof(EntityCollection<ReferralTypeIssueInDisputeEntity>));
 
 
-				_issueInDisputeCollectionViaReferralTypeIssuesInDispute = (EntityCollection<IssueInDisputeEntity>)info.GetValue("_issueInDisputeCollectionViaReferralTypeIssuesInDispute", typeof(EntityCollection<IssueInDisputeEntity>));
+
 
 
 
@@ -192,11 +191,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 
 
-				case "IssueInDisputeCollectionViaReferralTypeIssuesInDispute":
-					this.IssueInDisputeCollectionViaReferralTypeIssuesInDispute.IsReadOnly = false;
-					this.IssueInDisputeCollectionViaReferralTypeIssuesInDispute.Add((IssueInDisputeEntity)entity);
-					this.IssueInDisputeCollectionViaReferralTypeIssuesInDispute.IsReadOnly = true;
-					break;
+
 
 
 
@@ -232,10 +227,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 
 
-				case "IssueInDisputeCollectionViaReferralTypeIssuesInDispute":
-					toReturn.Add(ReferralTypeEntity.Relations.ReferralTypeIssueInDisputeEntityUsingReferralTypeId, "ReferralTypeEntity__", "ReferralTypeIssueInDispute_", JoinHint.None);
-					toReturn.Add(ReferralTypeIssueInDisputeEntity.Relations.IssueInDisputeEntityUsingIssueInDisputeId, "ReferralTypeIssueInDispute_", string.Empty, JoinHint.None);
-					break;
+
 
 
 
@@ -357,7 +349,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_referralTypeIssuesInDispute", ((_referralTypeIssuesInDispute!=null) && (_referralTypeIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_referralTypeIssuesInDispute:null);
 
 
-				info.AddValue("_issueInDisputeCollectionViaReferralTypeIssuesInDispute", ((_issueInDisputeCollectionViaReferralTypeIssuesInDispute!=null) && (_issueInDisputeCollectionViaReferralTypeIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_issueInDisputeCollectionViaReferralTypeIssuesInDispute:null);
+
 
 
 
@@ -413,16 +405,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'IssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoIssueInDisputeCollectionViaReferralTypeIssuesInDispute()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("IssueInDisputeCollectionViaReferralTypeIssuesInDispute"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralTypeFields.ReferralTypeId, null, ComparisonOperator.Equal, this.ReferralTypeId, "ReferralTypeEntity__"));
-			return bucket;
-		}
 
 
 
@@ -463,7 +445,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._referralTypeIssuesInDispute);
 
 
-			collectionsQueue.Enqueue(this._issueInDisputeCollectionViaReferralTypeIssuesInDispute);
+
 
 
 
@@ -481,7 +463,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>) collectionsQueue.Dequeue();
 
 
-			this._issueInDisputeCollectionViaReferralTypeIssuesInDispute = (EntityCollection<IssueInDisputeEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -501,10 +483,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 
 
-			if (this._issueInDisputeCollectionViaReferralTypeIssuesInDispute != null)
-			{
-				return true;
-			}
+
 
 
 
@@ -524,7 +503,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory))) : null);
 
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<IssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeEntityFactory))) : null);
+
 
 
 
@@ -545,7 +524,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("ReferralTypeIssuesInDispute", _referralTypeIssuesInDispute);
 
 
-			toReturn.Add("IssueInDisputeCollectionViaReferralTypeIssuesInDispute", _issueInDisputeCollectionViaReferralTypeIssuesInDispute);
+
 
 
 
@@ -566,10 +545,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 
 
-			if(_issueInDisputeCollectionViaReferralTypeIssuesInDispute!=null)
-			{
-				_issueInDisputeCollectionViaReferralTypeIssuesInDispute.ActiveContext = base.ActiveContext;
-			}
+
 
 
 
@@ -588,7 +564,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_referralTypeIssuesInDispute = null;
 
 
-			_issueInDisputeCollectionViaReferralTypeIssuesInDispute = null;
+
 
 
 
@@ -671,19 +647,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'IssueInDispute' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathIssueInDisputeCollectionViaReferralTypeIssuesInDispute
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = ReferralTypeEntity.Relations.ReferralTypeIssueInDisputeEntityUsingReferralTypeId;
-				intermediateRelation.SetAliases(string.Empty, "ReferralTypeIssueInDispute_");
-				return new PrefetchPathElement2(new EntityCollection<IssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.ReferralTypeEntity, (int)PsychologicalServices.Data.EntityType.IssueInDisputeEntity, 0, null, null, GetRelationsForField("IssueInDisputeCollectionViaReferralTypeIssuesInDispute"), null, "IssueInDisputeCollectionViaReferralTypeIssuesInDispute", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
 
 
 
@@ -769,21 +732,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'IssueInDisputeEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(IssueInDisputeEntity))]
-		public virtual EntityCollection<IssueInDisputeEntity> IssueInDisputeCollectionViaReferralTypeIssuesInDispute
-		{
-			get
-			{
-				if(_issueInDisputeCollectionViaReferralTypeIssuesInDispute==null)
-				{
-					_issueInDisputeCollectionViaReferralTypeIssuesInDispute = new EntityCollection<IssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeEntityFactory)));
-					_issueInDisputeCollectionViaReferralTypeIssuesInDispute.IsReadOnly=true;
-				}
-				return _issueInDisputeCollectionViaReferralTypeIssuesInDispute;
-			}
-		}
 
 
 

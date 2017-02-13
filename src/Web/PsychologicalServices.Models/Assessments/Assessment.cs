@@ -13,25 +13,11 @@ namespace PsychologicalServices.Models.Assessments
     {
         public int AssessmentId { get; set; }
 
-        public int AssessmentTypeId { get; set; }
-
-        public int ReferralTypeId { get; set; }
-
-        public int ReferralSourceId { get; set; }
-
-        public int ReportStatusId { get; set; }
-
-        public int? DocListWriterId { get; set; }
-
-        public int? NotesWriterId { get; set; }
-
         public DateTime? MedicalFileReceivedDate { get; set; }
 
         public int? FileSize { get; set; }
 
         public string ReferralSourceContactEmail { get; set; }
-
-        public int CompanyId { get; set; }
 
         public bool Deleted { get; set; }
 
@@ -54,6 +40,8 @@ namespace PsychologicalServices.Models.Assessments
         public IEnumerable<Appointment> Appointments { get; set; }
 
         public IEnumerable<IssueInDispute> IssuesInDispute { get; set; }
+
+        public IEnumerable<MedRehab> MedRehabs { get; set; }
 
         public bool IsNew()
         {

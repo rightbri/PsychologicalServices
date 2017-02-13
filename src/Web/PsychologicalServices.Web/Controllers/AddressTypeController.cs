@@ -13,7 +13,7 @@ namespace PsychologicalServices.Web.Controllers
     [RoutePrefix("api/addresstype")]
     public class AddressTypeController : ApiController
     {
-        private IAddressService _addressService = null;
+        private readonly IAddressService _addressService = null;
 
         public AddressTypeController(
             IAddressService addressService

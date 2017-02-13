@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EmailAddress, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmailAddress.4.0.0\lib\EmailAddress.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -76,15 +80,26 @@
     <Compile Include="CalendarNotes\ICalendarNoteService.cs" />
     <Compile Include="CalendarNotes\ICalendarNoteValidator.cs" />
     <Compile Include="Claims\ClaimantNotFoundException.cs" />
+    <Compile Include="Claims\ClaimantParameters.cs" />
+    <Compile Include="Claims\ClaimantValidator.cs" />
     <Compile Include="Claims\ClaimService.cs" />
     <Compile Include="Claims\ClaimValidator.cs" />
+    <Compile Include="Claims\Gender.cs" />
+    <Compile Include="Claims\IClaimantParameters.cs" />
+    <Compile Include="Claims\IClaimantValidator.cs" />
     <Compile Include="Claims\IClaimRepository.cs" />
     <Compile Include="Claims\IClaimService.cs" />
     <Compile Include="Claims\IClaimValidator.cs" />
+    <Compile Include="Claims\IMedRehabValidator.cs" />
+    <Compile Include="Claims\MedRehab.cs" />
+    <Compile Include="Claims\MedRehabValidator.cs" />
     <Compile Include="Common\Configuration\IConfigurationService.cs" />
+    <Compile Include="Common\Utility\EmailAddressValidator.cs" />
     <Compile Include="Common\Utility\ICacheService.cs" />
-    <Compile Include="Common\Utility\INow.cs" />
-    <Compile Include="Common\Utility\Now.cs" />
+    <Compile Include="Common\Utility\IDate.cs" />
+    <Compile Include="Common\Utility\IEmailAddressValidator.cs" />
+    <Compile Include="Common\Utility\ModelExtensions.cs" />
+    <Compile Include="Common\Utility\Date.cs" />
     <Compile Include="Common\Validation\IValidationError.cs" />
     <Compile Include="Common\Validation\IValidationResult.cs" />
     <Compile Include="Common\Validation\IValidator.cs" />
@@ -152,7 +167,9 @@
     <Compile Include="Users\UserService.cs" />
     <Compile Include="Users\UserValidator.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

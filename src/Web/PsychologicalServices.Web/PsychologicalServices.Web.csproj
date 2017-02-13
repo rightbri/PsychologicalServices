@@ -214,6 +214,7 @@
     <Compile Include="Controllers\CalendarNoteController.cs" />
     <Compile Include="Controllers\ClaimantController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
+    <Compile Include="Controllers\GenderController.cs" />
     <Compile Include="Controllers\IssueInDisputeController.cs" />
     <Compile Include="Controllers\ReferralSourceController.cs" />
     <Compile Include="Controllers\ReferralSourceTypeController.cs" />

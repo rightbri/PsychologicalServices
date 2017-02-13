@@ -18,6 +18,19 @@ namespace PsychologicalServices.Infrastructure.Claims
         {
         }
 
+        public Claim GetClaim(int id)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return meta.Claim
+                    .Where(claim => claim.ClaimId == id)
+                    .SingleOrDefault()
+                    .ToClaim();
+            }
+        }
+
         public Claimant GetClaimant(int id)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -57,7 +70,8 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return null != assessmentEntity
                     ? Execute<ClaimEntity>(
                             (ILLBLGenProQuery)
-                            assessmentEntity.ClaimCollectionViaAssessmentClaims
+                            assessmentEntity.AssessmentClaims
+                                .Select(assessmentClaim => assessmentClaim.Claim)
                         )
                         .Select(claim => claim.ToClaim())
                         .ToList()
@@ -118,6 +132,51 @@ namespace PsychologicalServices.Infrastructure.Claims
             }
         }
 
+        public IEnumerable<Gender> GetGenders()
+        {
+            //TODO: fetch from database
+            return new Dictionary<string, string>
+            {
+                { "M", "Male" },
+                { "F", "Female" },
+                { "U", "Unknown" },
+            }.Select(keyValuePair =>
+                new Gender
+                {
+                    Abbreviation = keyValuePair.Key,
+                    Description = keyValuePair.Value
+                }
+            );
+        }
+
+        public int SaveClaim(Claim claim)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var isNew = claim.IsNew();
+
+                var entity = new ClaimEntity
+                {
+                    IsNew = isNew,
+                    ClaimId = claim.ClaimId,
+                };
+
+                if (!isNew)
+                {
+                    adapter.FetchEntity(entity);
+                }
+
+                entity.ClaimantId = claim.Claimant.ClaimantId;
+                entity.ClaimNumber = claim.ClaimNumber;
+                entity.DateOfLoss = claim.DateOfLoss;
+                entity.Deleted = claim.Deleted;
+                
+                adapter.SaveEntity(entity, false);
+
+                return entity.ClaimId;
+            }
+        }
+
         public int SaveClaimant(Claimant claimant)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -138,6 +197,7 @@ namespace PsychologicalServices.Infrastructure.Claims
                 entity.FirstName = claimant.FirstName;
                 entity.LastName = claimant.LastName;
                 entity.Age = claimant.Age;
+                entity.DateOfBirth = claimant.DateOfBirth;
                 entity.Gender = claimant.Gender;
                 entity.IsActive = claimant.IsActive;
 
@@ -173,5 +233,6 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return entity.IssueInDisputeId;
             }
         }
+
     }
 }

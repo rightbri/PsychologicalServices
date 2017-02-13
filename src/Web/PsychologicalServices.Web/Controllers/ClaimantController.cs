@@ -31,5 +31,15 @@ namespace PsychologicalServices.Web.Controllers
             
             return Ok(claimants);
         }
+
+        [Route("save")]
+        [HttpPut]
+        [ResponseType(typeof(SaveResult<Claimant>))]
+        public IHttpActionResult Save(Claimant claimant)
+        {
+            var result = _claimService.SaveClaimant(claimant);
+
+            return Ok(result);
+        }
     }
 }

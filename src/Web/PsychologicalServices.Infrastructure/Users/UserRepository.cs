@@ -23,13 +23,13 @@ namespace PsychologicalServices.Infrastructure.Users
     {
         //private readonly ICacheService _cache = null;
         private readonly IConfigurationService _configuration = null;
-        private readonly INow _now = null;
+        private readonly IDate _now = null;
 
         public UserRepository(
             IDataAccessAdapterFactory adapterFactory,
             //ICacheService cache,
             IConfigurationService configuration,
-            INow now
+            IDate now
         ) : base(adapterFactory)
         {
             //_cache = cache;
@@ -42,12 +42,19 @@ namespace PsychologicalServices.Infrastructure.Users
         private static readonly Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>>
             UserPath =
                 (uPath => uPath
-                    .Prefetch<RoleEntity>(user => user.RoleCollectionViaUserRoles)
-                    .FilterOn(role => role.IsActive)
-                    .SubPath(rPath => rPath
-                        .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
-                        .FilterOn(right => right.IsActive)
-                    )
+                    .Prefetch<UserRoleEntity>(user => user.UserRoles)
+                        .SubPath(userRolePath => userRolePath
+                            .Prefetch<RoleEntity>(userRole => userRole.Role)
+                            .FilterOn(role => role.IsActive)
+                            .SubPath(rolePath => rolePath
+                                .Prefetch<RoleRightEntity>(role => role.RoleRights)
+                                .SubPath(roleRightPath => roleRightPath
+                                    .Prefetch<RightEntity>(roleRight => roleRight.Right)
+                                    .FilterOn(right => right.IsActive)
+                                )
+                            )    
+                        )
+                    
                     .Prefetch<CompanyEntity>(user => user.Company)
                 );
 
@@ -121,7 +128,14 @@ namespace PsychologicalServices.Infrastructure.Users
 
                     if (criteria.RightId.HasValue)
                     {
-                        users = users.Where(user => user.RoleCollectionViaUserRoles.Any(role => role.RoleRights.Any(roleRight => roleRight.RightId == criteria.RightId.Value)));
+                        users = users
+                            .Where(user =>
+                                user.UserRoles.Any(userRole =>
+                                    userRole.Role.RoleRights.Any(roleRight =>
+                                        roleRight.RightId == criteria.RightId.Value
+                                    )
+                                )
+                            );
                     }
 
                     if (criteria.RoleId.HasValue)
@@ -158,9 +172,9 @@ namespace PsychologicalServices.Infrastructure.Users
                 var users = meta.User
                     .WithPath(UserPath)
                     .Where(u =>
-                        u.RoleCollectionViaUserRoles.Any(role =>
-                            role.RightCollectionViaRoleRights.Any(right =>
-                                right.Name == StaticRights.WriteDocList.ToString()
+                        u.UserRoles.Any(userRole =>
+                            userRole.Role.RoleRights.Any(roleRight =>
+                                roleRight.Right.Name == StaticRights.WriteDocList.ToString()
                             )
                         ) &&
                         (companyId == null || companyId.Value == u.CompanyId)
@@ -194,9 +208,9 @@ namespace PsychologicalServices.Infrastructure.Users
                 var users = meta.User
                     .WithPath(UserPath)
                     .Where(u =>
-                        u.RoleCollectionViaUserRoles.Any(role =>
-                            role.RightCollectionViaRoleRights.Any(right =>
-                                right.Name == StaticRights.WriteNotes.ToString()
+                        u.UserRoles.Any(userRole =>
+                            userRole.Role.RoleRights.Any(roleRight =>
+                                roleRight.Right.Name == StaticRights.WriteNotes.ToString()
                             )
                         ) &&
                         (companyId == null || companyId.Value == u.CompanyId)
@@ -230,9 +244,9 @@ namespace PsychologicalServices.Infrastructure.Users
                 var users = meta.User
                     .WithPath(UserPath)
                     .Where(u =>
-                        u.RoleCollectionViaUserRoles.Any(role =>
-                            role.RightCollectionViaRoleRights.Any(right =>
-                                right.Name == StaticRights.Psychometrist.ToString()
+                        u.UserRoles.Any(userRole =>
+                            userRole.Role.RoleRights.Any(roleRight =>
+                                roleRight.Right.Name == StaticRights.Psychometrist.ToString()
                             )
                         ) &&
                         (companyId == null || companyId.Value == u.CompanyId)
@@ -267,9 +281,9 @@ namespace PsychologicalServices.Infrastructure.Users
                 var users = meta.User
                     .WithPath(UserPath)
                     .Where(u =>
-                        u.RoleCollectionViaUserRoles.Any(role =>
-                            role.RightCollectionViaRoleRights.Any(right =>
-                                right.Name == StaticRights.Psychologist.ToString()
+                        u.UserRoles.Any(userRole =>
+                            userRole.Role.RoleRights.Any(roleRight =>
+                                roleRight.Right.Name == StaticRights.Psychologist.ToString()
                             )
                         ) &&
                         (companyId == null || companyId.Value == u.CompanyId)

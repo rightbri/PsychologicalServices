@@ -37,7 +37,7 @@ namespace PsychologicalServices.Models.Appointments
             if (null == location)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "LocationId", Message = "Invalid location" }
+                    new ValidationError { PropertyName = "LocationId", Message = "Invalid location" }
                 );
             }
 
@@ -46,19 +46,19 @@ namespace PsychologicalServices.Models.Appointments
             if (null == psychometrist)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "PsychometristId", Message = "Invalid psychometrist" }
+                    new ValidationError { PropertyName = "PsychometristId", Message = "Invalid psychometrist" }
                 );
             }
             else if (!psychometrist.HasRight(StaticRights.Psychometrist))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "PsychometristId", Message = "The selected user is not a psychometrist" }
+                    new ValidationError { PropertyName = "PsychometristId", Message = "The selected user is not a psychometrist" }
                 );
             }
             else if (!psychometrist.IsActive)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "PsychometristId", Message = "The selected psychometrist is not active" }
+                    new ValidationError { PropertyName = "PsychometristId", Message = "The selected psychometrist is not active" }
                 );
             }
 
@@ -67,19 +67,19 @@ namespace PsychologicalServices.Models.Appointments
             if (null == psychologist)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "PsychologistId", Message = "Invalid psychologistId" }
+                    new ValidationError { PropertyName = "PsychologistId", Message = "Invalid psychologistId" }
                 );
             }
             else if (!psychologist.HasRight(StaticRights.Psychologist))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "PsychologistId", Message = "The selected user is not a psychologistId" }
+                    new ValidationError { PropertyName = "PsychologistId", Message = "The selected user is not a psychologistId" }
                 );
             }
             else if (!psychologist.IsActive)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "PsychologistId", Message = "The selected psychologistId is not active" }
+                    new ValidationError { PropertyName = "PsychologistId", Message = "The selected psychologistId is not active" }
                 );
             }
             
@@ -88,7 +88,7 @@ namespace PsychologicalServices.Models.Appointments
             if (null == appointmentStatus)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "AppointmentStatusId", Message = "Invalid appointment status" }
+                    new ValidationError { PropertyName = "AppointmentStatusId", Message = "Invalid appointment status" }
                 );
             }
 

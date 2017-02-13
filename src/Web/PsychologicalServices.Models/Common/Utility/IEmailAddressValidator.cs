@@ -2,8 +2,8 @@
 
 namespace PsychologicalServices.Models.Common.Utility
 {
-    public interface INow
+    public interface IEmailAddressValidator
     {
-        DateTime DateTimeNow { get; }
+        bool IsValid(string emailAddress);
     }
 }

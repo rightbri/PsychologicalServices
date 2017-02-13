@@ -24,7 +24,10 @@ namespace PsychologicalServices.Infrastructure.Referrals
         private static readonly Func<IPathEdgeRootParser<ReferralTypeEntity>, IPathEdgeRootParser<ReferralTypeEntity>>
             ReferralTypePath =
                 (referralTypePath => referralTypePath
-                    .Prefetch<IssueInDisputeEntity>(referralType => referralType.IssueInDisputeCollectionViaReferralTypeIssuesInDispute)
+                    .Prefetch<ReferralTypeIssueInDisputeEntity>(referralType => referralType.ReferralTypeIssuesInDispute)
+                        .SubPath(referralTypeIssueInDisputePath => referralTypeIssueInDisputePath
+                            .Prefetch<IssueInDisputeEntity>(referralTypeIssueInDispute => referralTypeIssueInDispute.IssueInDispute)
+                        )
                 );
 
         #endregion
@@ -132,6 +135,7 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 return Execute<ReferralTypeEntity>(
                         (ILLBLGenProQuery)
                         meta.ReferralType
+                        .WithPath(ReferralTypePath)
                         .Where(referralType => isActive == null || referralType.IsActive == isActive.Value)
                     )
                     .Select(referralType => referralType.ToReferralType())

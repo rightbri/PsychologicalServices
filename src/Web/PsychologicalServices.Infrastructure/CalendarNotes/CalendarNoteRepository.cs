@@ -16,11 +16,11 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
 {
     public class CalendarNoteRepository : RepositoryBase, ICalendarNoteRepository
     {
-        private readonly INow _now = null;
+        private readonly IDate _now = null;
 
         public CalendarNoteRepository(
             IDataAccessAdapterFactory dataAccessAdapterFactory,
-            INow now
+            IDate now
         ) : base(dataAccessAdapterFactory)
         {
             _now = now;
@@ -111,7 +111,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                     calendarNoteEntity.Note = new NoteEntity
                         {
                             CreateUserId = calendarNote.Note.CreateUserId,
-                            CreateDate = _now.DateTimeNow,
+                            CreateDate = _now.Now,
                         };
                 }
 
@@ -119,7 +119,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                 calendarNoteEntity.ToDate = calendarNote.ToDate;
                 calendarNoteEntity.Note.Note = calendarNote.Note.NoteText;
                 calendarNoteEntity.Note.UpdateUserId = calendarNote.Note.UpdateUserId;
-                calendarNoteEntity.Note.UpdateDate = _now.DateTimeNow;
+                calendarNoteEntity.Note.UpdateDate = _now.Now;
 
                 adapter.SaveEntity(calendarNoteEntity, false);
 

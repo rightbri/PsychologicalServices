@@ -1,0 +1,70 @@
+<template>
+	<require from="valueConverters/gender"></require>
+	
+	<ai-dialog>
+		<ai-dialog-header>
+		<h3>Search Claimants</h3>
+		</ai-dialog-header>
+		<ai-dialog-body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-9">
+					<div class="input-group">
+						<input id="claimantSearch" type="text" class="form-control" placeholder="Claimant Last Name" value.bind="claimantSearch" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" click.delegate="searchClaimant(claimantSearch)" disabled.bind="claimantSearch.length < claimantSearchMinLength">
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row" if.bind="claimants">
+				<div class="col-xs-12">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>First</th>
+								<th>Last</th>
+								<th>Age</th>
+								<th>Gender</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr repeat.for="claimant of claimants" class.bind="claimant.selected ? 'active' : ''">
+								<td>${claimant.firstName}</td>
+								<td>${claimant.lastName}</td>
+								<td>${claimant.age}</td>
+								<td>${claimant.gender | gender}</td>
+								<td>
+									<button type="button" class="btn btn-default" click.delegate="selectClaimant(claimant)">
+										Select
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-default" click.delegate="addClaimant()">
+						Add <i class="fa fa-plus"></i>
+					</button>
+				</div>
+			</div>
+			
+		</div>
+		</ai-dialog-body>
+		<ai-dialog-footer>
+		<button type="button" class="btn btn-primary" click.delegate="ok()">
+			Ok
+		</button>
+		<button type="button" class="btn btn-default" click.delegate="cancel()">
+			Cancel
+		</button>
+		</ai-dialog-footer>
+	</ai-dialog>
+</template>

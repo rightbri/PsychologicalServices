@@ -65,7 +65,7 @@
     <Compile Include="Common\Repository\IDataConnectionParameters.cs" />
     <Compile Include="Common\Repository\IDataConnectionParametersFactory.cs" />
     <Compile Include="Common\Repository\IRepository.cs" />
-    <Compile Include="Common\Repository\MappingExtensions.cs" />
+    <Compile Include="Common\Repository\GenProExtensions.cs" />
     <Compile Include="Common\Repository\RepositoryBase.cs" />
     <Compile Include="Common\Repository\SqlServerAdapterFactory.cs" />
     <Compile Include="Common\Repository\Transaction.cs" />

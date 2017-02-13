@@ -20,9 +20,10 @@ namespace PsychologicalServices.Models.Assessments
         private readonly IReportRepository _reportRepository = null;
         private readonly IUserRepository _userRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
-        private readonly INow _now = null;
+        private readonly IDate _now = null;
         private readonly IClaimValidator _claimValidator = null;
         private readonly IAppointmentValidator _appointmentValidator = null;
+        private readonly IEmailAddressValidator _emailAddressValidator = null;
 
         public AssessmentValidator(
             IAssessmentRepository assessmentRepository,
@@ -30,9 +31,10 @@ namespace PsychologicalServices.Models.Assessments
             IReportRepository reportRepository,
             IUserRepository userRepository,
             ICompanyRepository companyRepository,
-            INow now,
+            IDate now,
             IClaimValidator claimValidator,
-            IAppointmentValidator appointmentValidator
+            IAppointmentValidator appointmentValidator,
+            IEmailAddressValidator emailAddressValidator
         )
         {
             _assessmentRepository = assessmentRepository;
@@ -43,6 +45,7 @@ namespace PsychologicalServices.Models.Assessments
             _now = now;
             _claimValidator = claimValidator;
             _appointmentValidator = appointmentValidator;
+            _emailAddressValidator = emailAddressValidator;
         }
 
         public IValidationResult Validate(Assessment item)
@@ -52,149 +55,214 @@ namespace PsychologicalServices.Models.Assessments
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            var assessmentType = _assessmentRepository.GetAssessmentType(item.AssessmentTypeId);
-
-            if (null == assessmentType)
+            if (null == item.AssessmentType)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "AssessmentTypeId", Message = "Invalid assessment type" }
-                );
-            }
-            else if (!assessmentType.IsActive)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "AssessmentTypeId", Message = "The selected assessment type is not active." }
-                );
-            }
-
-            var referralType = _referralRepository.GetReferralType(item.ReferralTypeId);
-
-            if (null == referralType)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "ReferralTypeId", Message = "Invalid referral type" }
-                );
-            }
-            else if (!referralType.IsActive)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "ReferralTypeId", Message = "The selected referral type is not active." }
+                    new ValidationError { PropertyName = "AssessmentTypeId", Message = "Please select an assessment type" }
                 );
             }
             else
             {
-                if (null != item.IssuesInDispute)
+                var assessmentType = _assessmentRepository.GetAssessmentType(item.AssessmentType.AssessmentTypeId);
+
+                if (null == assessmentType)
                 {
-                    result.ValidationErrors.AddRange(
-                        item.IssuesInDispute
-                            .Where(issueInDispute => !referralType.IssuesInDispute.Any(referralTypeIssuesInDispute => referralTypeIssuesInDispute.IssueInDisputeId == issueInDispute.IssueInDisputeId))
-                            .Select(issueInDispute => new ValidationError { Property = "IssuesInDispute", Message = string.Format("{0} is not a valid issue in dispute for referral type {1}", issueInDispute.Name, referralType.Name) })
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "AssessmentTypeId", Message = "Invalid assessment type" }
+                    );
+                }
+                else if (!assessmentType.IsActive)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "AssessmentTypeId", Message = "The selected assessment type is not active." }
                     );
                 }
             }
-
-            var referralSource = _referralRepository.GetReferralSource(item.ReferralSourceId);
-
-            if (null == referralSource)
+            
+            if (null == item.ReferralType)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "ReferralSourceId", Message = "Invalid referral source" }
+                    new ValidationError { PropertyName = "ReferralTypeId", Message = "Please select a referral type" }
                 );
             }
-            else if (!referralSource.IsActive)
+            else
+            {
+                var referralType = _referralRepository.GetReferralType(item.ReferralType.ReferralTypeId);
+
+                if (null == referralType)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ReferralTypeId", Message = "Invalid referral type" }
+                    );
+                }
+                else if (!referralType.IsActive)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ReferralTypeId", Message = "The selected referral type is not active." }
+                    );
+                }
+                else
+                {
+                    if (null != item.IssuesInDispute)
+                    {
+                        result.ValidationErrors.AddRange(
+                            item.IssuesInDispute
+                                .Where(issueInDispute => !referralType.IssuesInDispute.Any(referralTypeIssuesInDispute => referralTypeIssuesInDispute.IssueInDisputeId == issueInDispute.IssueInDisputeId))
+                                .Select(issueInDispute => new ValidationError { PropertyName = "IssuesInDispute", Message = string.Format("{0} is not a valid issue in dispute for referral type {1}", issueInDispute.Name, referralType.Name) })
+                        );
+                    }
+                }
+            }
+            
+            if (null == item.ReferralSource)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "ReferralSourceId", Message = "The selected referral source is not active." }
+                    new ValidationError { PropertyName = "ReferralSourceId", Message = "Please select a referral source" }
                 );
             }
+            else
+            {
+                var referralSource = _referralRepository.GetReferralSource(item.ReferralSource.ReferralSourceId);
 
-            var reportStatus = _reportRepository.GetReportStatus(item.ReportStatusId);
-
-            if (null == reportStatus)
+                if (null == referralSource)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ReferralSourceId", Message = "Invalid referral source" }
+                    );
+                }
+                else if (!referralSource.IsActive)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ReferralSourceId", Message = "The selected referral source is not active." }
+                    );
+                }
+            }
+            
+            if (null == item.ReportStatus)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "ReportStatusId", Message = "Invalid report status" }
+                    new ValidationError { PropertyName = "ReportStatusId", Message = "Please select a report status" }
                 );
             }
-            else if (!reportStatus.IsActive)
+            else
+            {
+                var reportStatus = _reportRepository.GetReportStatus(item.ReportStatus.ReportStatusId);
+
+                if (null == reportStatus)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ReportStatusId", Message = "Invalid report status" }
+                    );
+                }
+                else if (!reportStatus.IsActive)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ReportStatusId", Message = "The selected report status is not active." }
+                    );
+                }
+            }
+            
+            if (null != item.DocListWriter)
+            {
+                var docListWriters = _userRepository.GetUsers(new UserSearchCriteria
+                {
+                    UserId = item.DocListWriter.UserId,
+                    RightId = (int)StaticRights.WriteDocList,
+                    CompanyId = item.Company.CompanyId,
+                });
+
+                if (!docListWriters.Any())
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "DocListWriterId", Message = "Invalid doc list writer" }
+                    );
+                }
+                else if (!docListWriters.First().IsActive)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "DocListWriterId", Message = "The selected doc list writer is not active." }
+                    );
+                }
+            }
+            
+            if (null != item.NotesWriter)
+            {
+                var notesWriters = _userRepository.GetUsers(new UserSearchCriteria
+                {
+                    UserId = item.NotesWriter.UserId,
+                    RightId = (int)StaticRights.WriteNotes,
+                    CompanyId = item.Company.CompanyId,
+                });
+
+                if (!notesWriters.Any())
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "NotesWriterId", Message = "Invalid notes writer" }
+                    );
+                }
+                else if (!notesWriters.First().IsActive)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "NotesWriterId", Message = "The selected notes writer is not active." }
+                    );
+                }
+            }
+            
+            if (item.MedicalFileReceivedDate.HasValue)
+            {
+                var arbitraryMinimumDate = new DateTime(2015, 1, 1);
+                if (item.MedicalFileReceivedDate < arbitraryMinimumDate)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "MedicalFileReceivedDate", Message = string.Format("The medical file received date cannot be before {0}.", arbitraryMinimumDate.ToShortDateString()) }
+                    );
+                }
+
+                if (item.MedicalFileReceivedDate > _now.Now)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "MedicalFileReceivedDate", Message = "The medical file received date cannot be in the future." }
+                    );
+                }
+            }
+            
+            if (item.FileSize.HasValue)
+            {
+                if (item.FileSize < 0)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "FileSize", Message = "The file size cannot be less than zero." }
+                    );
+                }
+            }
+            
+            if (null == item.Company)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "ReportStatusId", Message = "The selected report status is not active." }
+                    new ValidationError { PropertyName = "CompanyId", Message = "Please select a company" }
                 );
             }
-
-            var docListWriters = _userRepository.GetUsers(new UserSearchCriteria
+            else
             {
-                UserId = item.DocListWriterId,
-                RightId = (int) StaticRights.WriteDocList,
-                CompanyId = item.CompanyId,
-            });
+                var company = _companyRepository.GetCompany(item.Company.CompanyId);
 
-            if (!docListWriters.Any())
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "DocListWriterId", Message = "Invalid doc list writer" }
-                );
+                if (null == company)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "CompanyId", Message = "Invalid company" }
+                    );
+                }
             }
-            else if (!docListWriters.First().IsActive)
+            
+            if (!string.IsNullOrEmpty(item.ReferralSourceContactEmail))
             {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "DocListWriterId", Message = "The selected doc list writer is not active." }
-                );
+                if (!_emailAddressValidator.IsValid(item.ReferralSourceContactEmail))
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ReferralSourceContactEmail", Message = string.Format("'{0}' is not a valid email address", item.ReferralSourceContactEmail) }
+                    );
+                }
             }
-
-            var notesWriters = _userRepository.GetUsers(new UserSearchCriteria
-            {
-                UserId = item.NotesWriterId,
-                RightId = (int)StaticRights.WriteNotes,
-                CompanyId = item.CompanyId,
-            });
-
-            if (!notesWriters.Any())
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "NotesWriterId", Message = "Invalid notes writer" }
-                );
-            }
-            else if (!notesWriters.First().IsActive)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "NotesWriterId", Message = "The selected notes writer is not active." }
-                );
-            }
-
-            var arbitraryMinimumDate = new DateTime(2015, 1, 1);
-            if (item.MedicalFileReceivedDate < arbitraryMinimumDate)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "MedicalFileReceivedDate", Message = string.Format("The medical file received date cannot be before {0}.", arbitraryMinimumDate.ToShortDateString()) }
-                );
-            }
-
-            if (item.MedicalFileReceivedDate > _now.DateTimeNow)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "MedicalFileReceivedDate", Message = "The medical file received date cannot be in the future." }
-                );
-            }
-
-            if (item.FileSize < 0)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "FileSize", Message = "The file size cannot be less than zero." }
-                );
-            }
-
-            var company = _companyRepository.GetCompany(item.CompanyId);
-
-            if (null == company)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { Property = "CompanyId", Message = "Invalid company" }
-                );
-            }
-
-            //public string ReferralSourceContactEmail { get; set; }
 
             if (null != item.Claims)
             {

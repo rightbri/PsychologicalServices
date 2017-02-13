@@ -473,6 +473,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Gender", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("DateOfBirth", fieldHashtable);
 		}
 		#endregion
 
@@ -586,10 +589,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Claimants"."Age"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 Age
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> Age
 		{
-			get { return (System.Int32)GetValue((int)ClaimantFieldIndex.Age, true); }
+			get { return (Nullable<System.Int32>)GetValue((int)ClaimantFieldIndex.Age, false); }
 			set	{ SetValue((int)ClaimantFieldIndex.Age, value); }
 		}
 
@@ -613,6 +616,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.String)GetValue((int)ClaimantFieldIndex.Gender, true); }
 			set	{ SetValue((int)ClaimantFieldIndex.Gender, value); }
+		}
+
+		/// <summary> The DateOfBirth property of the Entity Claimant<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Claimants"."DateOfBirth"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.DateTime> DateOfBirth
+		{
+			get { return (Nullable<System.DateTime>)GetValue((int)ClaimantFieldIndex.DateOfBirth, false); }
+			set	{ SetValue((int)ClaimantFieldIndex.DateOfBirth, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'ClaimEntity' which are related to this entity via a relation of type '1:n'.

@@ -26,7 +26,7 @@ namespace PsychologicalServices.Models.Referrals
             if (string.IsNullOrWhiteSpace(item.Name))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Name", Message = "Name is required" }
+                    new ValidationError { PropertyName = "Name", Message = "Name is required" }
                 );
             }
 
@@ -35,21 +35,21 @@ namespace PsychologicalServices.Models.Referrals
             if (!referralSourceTypes.Any(rst => rst.ReferralSourceTypeId == item.ReferralSourceTypeId))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "ReferralSourceTypeId", Message = string.Format("Referral source type '{0}' is not valid", item.ReferralSourceTypeId) }
+                    new ValidationError { PropertyName = "ReferralSourceTypeId", Message = string.Format("Referral source type '{0}' is not valid", item.ReferralSourceTypeId) }
                 );
             }
 
             if (item.LargeFileSize <= 0)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "LargeFileSize", Message = "Large file size must be greater than zero" }
+                    new ValidationError { PropertyName = "LargeFileSize", Message = "Large file size must be greater than zero" }
                 );
             }
 
             if (item.LargeFileFeeAmount < 0)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "LargeFileFeeAmount", Message = "Large file fee amount must be greater than or equal to zero" }
+                    new ValidationError { PropertyName = "LargeFileFeeAmount", Message = "Large file fee amount must be greater than or equal to zero" }
                 );
             }
 

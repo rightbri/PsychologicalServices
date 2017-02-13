@@ -9,11 +9,11 @@ namespace PsychologicalServices.Models.Claims
     public class ClaimValidator : IClaimValidator
     {
         private readonly IClaimRepository _claimRepository = null;
-        private readonly INow _now = null;
+        private readonly IDate _now = null;
 
         public ClaimValidator(
             IClaimRepository claimRepository,
-            INow now
+            IDate now
         )
         {
             _claimRepository = claimRepository;
@@ -27,19 +27,19 @@ namespace PsychologicalServices.Models.Claims
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            var claimant = _claimRepository.GetClaimant(item.ClaimantId);
+            var claimant = _claimRepository.GetClaimant(item.Claimant.ClaimantId);
 
             if (null == claimant)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "ClaimantId", Message = "Invalid claimant" }
+                    new ValidationError { PropertyName = "ClaimantId", Message = "Invalid claimant" }
                 );
             }
 
-            if (item.DateOfLoss > _now.DateTimeNow)
+            if (item.DateOfLoss > _now.Now)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "DateOfLoss", Message = "Date of loss cannot be in the future" }
+                    new ValidationError { PropertyName = "DateOfLoss", Message = "Date of loss cannot be in the future" }
                 );
             }
 

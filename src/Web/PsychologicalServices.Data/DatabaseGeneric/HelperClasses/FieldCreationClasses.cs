@@ -279,6 +279,41 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AssessmentMedRehabEntity</summary>
+	public partial class AssessmentMedRehabFields
+	{
+		/// <summary>Creates a new AssessmentMedRehabEntity.MedRehabId field instance</summary>
+		public static EntityField2 MedRehabId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentMedRehabFieldIndex.MedRehabId);}
+		}
+		/// <summary>Creates a new AssessmentMedRehabEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentMedRehabFieldIndex.AssessmentId);}
+		}
+		/// <summary>Creates a new AssessmentMedRehabEntity.Date field instance</summary>
+		public static EntityField2 Date
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentMedRehabFieldIndex.Date);}
+		}
+		/// <summary>Creates a new AssessmentMedRehabEntity.Amount field instance</summary>
+		public static EntityField2 Amount
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentMedRehabFieldIndex.Amount);}
+		}
+		/// <summary>Creates a new AssessmentMedRehabEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentMedRehabFieldIndex.Description);}
+		}
+		/// <summary>Creates a new AssessmentMedRehabEntity.Deleted field instance</summary>
+		public static EntityField2 Deleted
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentMedRehabFieldIndex.Deleted);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AssessmentTypeEntity</summary>
 	public partial class AssessmentTypeFields
 	{
@@ -411,6 +446,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 Gender
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ClaimantFieldIndex.Gender);}
+		}
+		/// <summary>Creates a new ClaimantEntity.DateOfBirth field instance</summary>
+		public static EntityField2 DateOfBirth
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ClaimantFieldIndex.DateOfBirth);}
 		}
 	}
 

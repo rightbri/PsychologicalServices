@@ -17,7 +17,7 @@ namespace PsychologicalServices.Models.Reports
             if (string.IsNullOrWhiteSpace(item.Name))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { Property = "Name", Message = "Name is required" }
+                    new ValidationError { PropertyName = "Name", Message = "Name is required" }
                 );
             }
 

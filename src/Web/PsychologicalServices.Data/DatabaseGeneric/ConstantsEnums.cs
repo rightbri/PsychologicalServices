@@ -183,6 +183,28 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentMedRehab.
+	/// </summary>
+	public enum AssessmentMedRehabFieldIndex:int
+	{
+		///<summary>MedRehabId. </summary>
+		MedRehabId,
+		///<summary>AssessmentId. </summary>
+		AssessmentId,
+		///<summary>Date. </summary>
+		Date,
+		///<summary>Amount. </summary>
+		Amount,
+		///<summary>Description. </summary>
+		Description,
+		///<summary>Deleted. </summary>
+		Deleted,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentType.
 	/// </summary>
 	public enum AssessmentTypeFieldIndex:int
@@ -271,6 +293,8 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>Gender. </summary>
 		Gender,
+		///<summary>DateOfBirth. </summary>
+		DateOfBirth,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -612,6 +636,8 @@ namespace PsychologicalServices.Data
 		AssessmentClaimEntity,
 		///<summary>AssessmentIssueInDispute</summary>
 		AssessmentIssueInDisputeEntity,
+		///<summary>AssessmentMedRehab</summary>
+		AssessmentMedRehabEntity,
 		///<summary>AssessmentType</summary>
 		AssessmentTypeEntity,
 		///<summary>AssessmentTypeReportType</summary>

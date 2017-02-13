@@ -43,7 +43,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		private EntityCollection<ReportTypeEntity> _reportTypeCollectionViaAssessmentTypeReportTypes;
+
 
 
 
@@ -68,8 +68,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			/// <summary>Member name ReportTypeCollectionViaAssessmentTypeReportTypes</summary>
-			public static readonly string ReportTypeCollectionViaAssessmentTypeReportTypes = "ReportTypeCollectionViaAssessmentTypeReportTypes";
+
 
 
 
@@ -137,7 +136,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				_reportTypeCollectionViaAssessmentTypeReportTypes = (EntityCollection<ReportTypeEntity>)info.GetValue("_reportTypeCollectionViaAssessmentTypeReportTypes", typeof(EntityCollection<ReportTypeEntity>));
+
 
 
 
@@ -187,11 +186,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				case "ReportTypeCollectionViaAssessmentTypeReportTypes":
-					this.ReportTypeCollectionViaAssessmentTypeReportTypes.IsReadOnly = false;
-					this.ReportTypeCollectionViaAssessmentTypeReportTypes.Add((ReportTypeEntity)entity);
-					this.ReportTypeCollectionViaAssessmentTypeReportTypes.IsReadOnly = true;
-					break;
+
 
 
 
@@ -225,10 +220,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				case "ReportTypeCollectionViaAssessmentTypeReportTypes":
-					toReturn.Add(AssessmentTypeEntity.Relations.AssessmentTypeReportTypeEntityUsingAssessmentTypeId, "AssessmentTypeEntity__", "AssessmentTypeReportType_", JoinHint.None);
-					toReturn.Add(AssessmentTypeReportTypeEntity.Relations.ReportTypeEntityUsingReportTypeId, "AssessmentTypeReportType_", string.Empty, JoinHint.None);
-					break;
+
 
 
 
@@ -345,7 +337,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				info.AddValue("_reportTypeCollectionViaAssessmentTypeReportTypes", ((_reportTypeCollectionViaAssessmentTypeReportTypes!=null) && (_reportTypeCollectionViaAssessmentTypeReportTypes.Count>0) && !this.MarkedForDeletion)?_reportTypeCollectionViaAssessmentTypeReportTypes:null);
+
 
 
 
@@ -399,16 +391,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'ReportType' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoReportTypeCollectionViaAssessmentTypeReportTypes()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("ReportTypeCollectionViaAssessmentTypeReportTypes"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTypeFields.AssessmentTypeId, null, ComparisonOperator.Equal, this.AssessmentTypeId, "AssessmentTypeEntity__"));
-			return bucket;
-		}
 
 
 
@@ -447,7 +429,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			collectionsQueue.Enqueue(this._reportTypeCollectionViaAssessmentTypeReportTypes);
+
 
 
 		}
@@ -463,7 +445,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			this._reportTypeCollectionViaAssessmentTypeReportTypes = (EntityCollection<ReportTypeEntity>) collectionsQueue.Dequeue();
+
 
 
 		}
@@ -481,10 +463,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			if (this._reportTypeCollectionViaAssessmentTypeReportTypes != null)
-			{
-				return true;
-			}
+
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -502,7 +481,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeEntityFactory))) : null);
+
 
 
 		}
@@ -521,7 +500,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			toReturn.Add("ReportTypeCollectionViaAssessmentTypeReportTypes", _reportTypeCollectionViaAssessmentTypeReportTypes);
+
 
 
 
@@ -540,10 +519,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			if(_reportTypeCollectionViaAssessmentTypeReportTypes!=null)
-			{
-				_reportTypeCollectionViaAssessmentTypeReportTypes.ActiveContext = base.ActiveContext;
-			}
+
 
 
 
@@ -560,7 +536,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			_reportTypeCollectionViaAssessmentTypeReportTypes = null;
+
 
 
 
@@ -648,19 +624,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReportType' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathReportTypeCollectionViaAssessmentTypeReportTypes
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = AssessmentTypeEntity.Relations.AssessmentTypeReportTypeEntityUsingAssessmentTypeId;
-				intermediateRelation.SetAliases(string.Empty, "AssessmentTypeReportType_");
-				return new PrefetchPathElement2(new EntityCollection<ReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, 0, null, null, GetRelationsForField("ReportTypeCollectionViaAssessmentTypeReportTypes"), null, "ReportTypeCollectionViaAssessmentTypeReportTypes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
 
 
 
@@ -766,21 +729,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'ReportTypeEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(ReportTypeEntity))]
-		public virtual EntityCollection<ReportTypeEntity> ReportTypeCollectionViaAssessmentTypeReportTypes
-		{
-			get
-			{
-				if(_reportTypeCollectionViaAssessmentTypeReportTypes==null)
-				{
-					_reportTypeCollectionViaAssessmentTypeReportTypes = new EntityCollection<ReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeEntityFactory)));
-					_reportTypeCollectionViaAssessmentTypeReportTypes.IsReadOnly=true;
-				}
-				return _reportTypeCollectionViaAssessmentTypeReportTypes;
-			}
-		}
 
 
 

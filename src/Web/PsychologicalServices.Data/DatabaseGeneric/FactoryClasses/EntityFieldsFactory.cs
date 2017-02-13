@@ -56,6 +56,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AssessmentIssueInDisputeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentIssueInDisputeEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.AssessmentMedRehabEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentMedRehabEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentTypeEntity");
 					break;

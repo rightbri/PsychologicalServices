@@ -15,11 +15,11 @@ namespace PsychologicalServices.Infrastructure.Appointments
 {
     public class AppointmentRepository : RepositoryBase, IAppointmentRepository
     {
-        private readonly INow _now = null;
+        private readonly IDate _now = null;
 
         public AppointmentRepository(
             IDataAccessAdapterFactory adapterFactory,
-            INow now
+            IDate now
         ) : base(adapterFactory)
         {
             _now = now;
@@ -35,46 +35,34 @@ namespace PsychologicalServices.Infrastructure.Appointments
                             .Prefetch<AddressTypeEntity>(address => address.AddressType)
                         )
                     .Prefetch<UserEntity>(appointment => appointment.Psychologist)
-                        .SubPath(userPath => userPath
-                            .Prefetch<CompanyEntity>(user => user.Company)
-                            .Prefetch<RoleEntity>(user => user.RoleCollectionViaUserRoles)
-                                .SubPath(rolePath => rolePath
-                                    .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
-                                )
-                        )
                     .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
-                        .SubPath(userPath => userPath
-                            .Prefetch<CompanyEntity>(user => user.Company)
-                            .Prefetch<RoleEntity>(user => user.RoleCollectionViaUserRoles)
-                                .SubPath(rolePath => rolePath
-                                    .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
-                                )
-                        )
                     .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                    .Prefetch<TaskEntity>(appointment => appointment.TaskCollectionViaAppointmentTasks)
-                        .SubPath(taskPath => taskPath
-                            .Prefetch<TaskStatusEntity>(task => task.TaskStatus)
-                            .Prefetch<TaskTemplateEntity>(task => task.TaskTemplate)
-                                .SubPath(taskTemplatePath => taskTemplatePath
-                                    .Prefetch<CompanyEntity>(taskTemplate => taskTemplate.Company)
-                                )
+                    .Prefetch<AppointmentTaskEntity>(appointment => appointment.AppointmentTasks)
+                        .SubPath(appointmentTaskPath => appointmentTaskPath
+                            .Prefetch<TaskEntity>(appointmentTask => appointmentTask.Task)
+                                .SubPath(taskPath => taskPath
+                                    .Prefetch<TaskStatusEntity>(task => task.TaskStatus)
+                                    .Prefetch<TaskTemplateEntity>(task => task.TaskTemplate)
+                                        .SubPath(taskTemplatePath => taskTemplatePath
+                                            .Prefetch<CompanyEntity>(taskTemplate => taskTemplate.Company)
+                                        )
+                            )
                         )
                     .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
                         .SubPath(assessmentPath => assessmentPath
                             .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
                                 .SubPath(assessmentTypePath => assessmentTypePath
-                                    .Prefetch<ReportTypeEntity>(assessmentType => assessmentType.ReportTypeCollectionViaAssessmentTypeReportTypes)
-                                )
-                            .Prefetch<ReferralTypeEntity>(assessment => assessment.ReferralType)
-                                .SubPath(referralTypePath => referralTypePath
-                                    .Prefetch<IssueInDisputeEntity>(referralType => referralType.IssueInDisputeCollectionViaReferralTypeIssuesInDispute)
+                                    .Prefetch<AssessmentTypeReportTypeEntity>(assessmentType => assessmentType.AssessmentTypeReportTypes)
+                                        .SubPath(assessmentTypeReportTypePath => assessmentTypeReportTypePath
+                                            .Prefetch<ReportTypeEntity>(assessmentTypeReportType => assessmentTypeReportType.ReportType)
+                                        )
                                 )
                             .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
                                 .SubPath(referralSourcePath => referralSourcePath
                                     .Prefetch<ReferralSourceTypeEntity>(referralSource => referralSource.ReferralSourceType)
                                 )
                             .Prefetch<ReportStatusEntity>(assessment => assessment.ReportStatus)
-                            .Prefetch<UserEntity>(assessment => assessment.DocListWriter)
+                            //.Prefetch<UserEntity>(assessment => assessment.DocListWriter)
                                     //.SubPath(userPath => userPath
                                     //    .Prefetch<CompanyEntity>(user => user.Company)
                                     //    .Prefetch<RoleEntity>(user => user.RoleCollectionViaUserRoles)
@@ -82,7 +70,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                     //            .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
                                     //        )
                                     //)
-                            .Prefetch<UserEntity>(assessment => assessment.NotesWriter)
+                            //.Prefetch<UserEntity>(assessment => assessment.NotesWriter)
                                     //.SubPath(userPath => userPath
                                     //    .Prefetch<CompanyEntity>(user => user.Company)
                                     //    .Prefetch<RoleEntity>(user => user.RoleCollectionViaUserRoles)
@@ -90,12 +78,12 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                     //            .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
                                     //        )
                                     //)
-                            .Prefetch<CompanyEntity>(assessment => assessment.Company)
-                            .Prefetch<ClaimEntity>(assessment => assessment.ClaimCollectionViaAssessmentClaims)
-                                .SubPath(claimPath => claimPath
-                                    .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                )
-                            .Prefetch<IssueInDisputeEntity>(assessment => assessment.IssueInDisputeCollectionViaAssessmentIssuesInDispute)
+                            //.Prefetch<CompanyEntity>(assessment => assessment.Company)
+                            //.Prefetch<ClaimEntity>(assessment => assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim))
+                            //    .SubPath(claimPath => claimPath
+                            //        .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                            //    )
+                            //.Prefetch<IssueInDisputeEntity>(assessment => assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute))
                         )
                 );
 
@@ -145,7 +133,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
                 return new Appointment
                 {
-                    AppointmentTime = _now.DateTimeNow,
+                    AppointmentTime = _now.Now,
                     CompanyId = companyId,
                     AppointmentTasks = taskTemplates.Select(taskTemplate => new Task
                     {

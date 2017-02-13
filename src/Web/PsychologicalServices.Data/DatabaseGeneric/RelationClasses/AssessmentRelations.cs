@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AppointmentEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentClaimEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentIssueInDisputeEntityUsingAssessmentId);
+			toReturn.Add(this.AssessmentMedRehabEntityUsingAssessmentId);
 
 			toReturn.Add(this.AssessmentTypeEntityUsingAssessmentTypeId);
 			toReturn.Add(this.CompanyEntityUsingCompanyId);
@@ -68,7 +69,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentClaims" , true);
 				relation.AddEntityFieldPair(AssessmentFields.AssessmentId, AssessmentClaimFields.AssessmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentClaimEntity", false);
@@ -87,6 +88,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(AssessmentFields.AssessmentId, AssessmentIssueInDisputeFields.AssessmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentIssueInDisputeEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AssessmentEntity and AssessmentMedRehabEntity over the 1:n relation they have, using the relation between the fields:
+		/// Assessment.AssessmentId - AssessmentMedRehab.AssessmentId
+		/// </summary>
+		public virtual IEntityRelation AssessmentMedRehabEntityUsingAssessmentId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentMedRehabs" , true);
+				relation.AddEntityFieldPair(AssessmentFields.AssessmentId, AssessmentMedRehabFields.AssessmentId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentMedRehabEntity", false);
 				return relation;
 			}
 		}

@@ -560,7 +560,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncUpdateUser(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", NoteEntity.Relations.UserEntityUsingUpdateUserId, true, signalRelatedEntity, "Notes_", resetFKFields, new int[] { (int)NoteFieldIndex.UpdateUserId } );		
+			base.PerformDesetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", NoteEntity.Relations.UserEntityUsingUpdateUserId, true, signalRelatedEntity, "NoteUpdater", resetFKFields, new int[] { (int)NoteFieldIndex.UpdateUserId } );		
 			_updateUser = null;
 		}
 
@@ -593,7 +593,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncCreateUser(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", NoteEntity.Relations.UserEntityUsingCreateUserId, true, signalRelatedEntity, "Notes", resetFKFields, new int[] { (int)NoteFieldIndex.CreateUserId } );		
+			base.PerformDesetupSyncRelatedEntity( _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", NoteEntity.Relations.UserEntityUsingCreateUserId, true, signalRelatedEntity, "NoteCreator", resetFKFields, new int[] { (int)NoteFieldIndex.CreateUserId } );		
 			_createUser = null;
 		}
 
@@ -831,14 +831,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_updateUser != null)
 						{
-							_updateUser.UnsetRelatedEntity(this, "Notes_");
+							_updateUser.UnsetRelatedEntity(this, "NoteUpdater");
 						}
 					}
 					else
 					{
 						if(_updateUser!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "Notes_");
+							((IEntity2)value).SetRelatedEntity(this, "NoteUpdater");
 						}
 					}
 				}
@@ -866,14 +866,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_createUser != null)
 						{
-							_createUser.UnsetRelatedEntity(this, "Notes");
+							_createUser.UnsetRelatedEntity(this, "NoteCreator");
 						}
 					}
 					else
 					{
 						if(_createUser!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "Notes");
+							((IEntity2)value).SetRelatedEntity(this, "NoteCreator");
 						}
 					}
 				}

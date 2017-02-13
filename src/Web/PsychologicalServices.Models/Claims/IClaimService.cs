@@ -16,6 +16,10 @@ namespace PsychologicalServices.Models.Claims
 
         IEnumerable<IssueInDispute> GetIssuesInDispute(bool? isActive = true);
 
+        IEnumerable<Gender> GetGenders();
+
+        SaveResult<Claim> SaveClaim(Claim claim);
+
         SaveResult<Claimant> SaveClaimant(Claimant claimant);
 
         SaveResult<IssueInDispute> SaveIssueInDispute(IssueInDispute issueInDispute);

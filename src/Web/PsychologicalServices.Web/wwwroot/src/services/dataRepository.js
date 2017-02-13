@@ -6,6 +6,7 @@ export class DataRepository {
 	constructor(httpFetch, apiRoot) {
 		this.apiRoot = apiRoot;
 		this.httpFetch = httpFetch;
+		this.cache = {};
 		
 		this.httpFetch.configure(config => {
 			config
@@ -59,7 +60,7 @@ export class DataRepository {
 	}
 
 	getAppointmentStatuses() {
-		return this.getManyBasic('appointmentstatus');
+		return this.getManyBasic('appointmentstatus', true);
 	}
 	
 	getAssessment(id) {
@@ -75,7 +76,7 @@ export class DataRepository {
 	}
 	
 	getAssessmentTypes() {
-		return this.getManyBasic('assessmentType');
+		return this.getManyBasic('assessmenttype', true);
 	}
 
 	getAddress(id) {
@@ -91,19 +92,31 @@ export class DataRepository {
 	}
 
 	getAddressTypes() {
-		return this.getManyBasic('addresstype');
+		return this.getManyBasic('addresstype', true);
+	}
+	
+	getGenders() {
+		return this.getManyBasic('gender', true);
 	}
 	
 	getClaimants(lastName) {
 		return this.getManyBasic('claimant/search/' + lastName);
 	}
 	
+	saveClaimant(claimant) {
+		return this.saveBasic(claimant, 'claimant');
+	}
+	
+	saveClaim(claim) {
+		return this.saveBasic(claim, 'claim');
+	}
+	
 	getIssuesInDispute() {
-		return this.getManyBasic('issueindispute');
+		return this.getManyBasic('issueindispute', true);
 	}
 	
 	getReferralTypeIssuesInDispute(referralTypeId) {
-		return this.getManyBasic('issueindispute/referralType/' + referralTypeId);
+		return this.getManyBasic('issueindispute/referralType/' + referralTypeId, true);
 	}
 	
 	getReferralSources(criteria) {
@@ -111,19 +124,19 @@ export class DataRepository {
 	}
 	
 	getReferralSourceTypes() {
-		return this.getManyBasic('referralsourcetype');
+		return this.getManyBasic('referralsourcetype', true);
 	}
 	
 	getReferralTypes() {
-		return this.getManyBasic('referraltype');
+		return this.getManyBasic('referraltype', true);
 	}
 	
 	getReportStatuses() {
-		return this.getManyBasic('reportstatus');
+		return this.getManyBasic('reportstatus', true);
 	}
 	
 	getReportTypes() {
-		return this.getManyBasic('reporttype');
+		return this.getManyBasic('reporttype', true);
 	}
 	
 	getUser(id) {
@@ -135,19 +148,19 @@ export class DataRepository {
 	}
 
 	getPsychometrists(companyId) {
-		return this.getManyBasic('user/psychometrists/' + companyId);
+		return this.getManyBasic('user/psychometrists/' + companyId, true);
 	}
 
 	getPsychologists(companyId) {
-		return this.getManyBasic('user/psychologists/' + companyId);
+		return this.getManyBasic('user/psychologists/' + companyId, true);
 	}
 
 	getDocListWriters(companyId) {
-		return this.getManyBasic('user/doclistwriters/' + companyId);
+		return this.getManyBasic('user/doclistwriters/' + companyId, true);
 	}
 	
 	getNotesWriters(companyId) {
-		return this.getManyBasic('user/noteswriters/' + companyId);
+		return this.getManyBasic('user/noteswriters/' + companyId, true);
 	}
 	
 	getCompany(id) {
@@ -175,7 +188,7 @@ export class DataRepository {
 	}
 	
 	getTaskStatuses() {
-		return this.getManyBasic('taskStatus');
+		return this.getManyBasic('taskStatus', true);
 	}
 
 	getBasic(route) {
@@ -198,12 +211,20 @@ export class DataRepository {
 		return promise;
 	}
 
-	getManyBasic(type) {
+	getManyBasic(type, cache) {
 		var promise = new Promise((resolve, reject) => {
-			this.httpFetch.fetch(type)
-				.then(response => response.json())
-				.then(data => resolve(data))
-				.catch(err => reject(err));
+			if (cache && this.cache[type]) {
+				resolve(this.cache[type]);
+			}
+			else {
+				this.httpFetch.fetch(type)
+					.then(response => response.json())
+					.then(data => {
+						this.cache[type] = data;
+						resolve(data);
+					})
+					.catch(err => reject(err));
+			}
 		});
 		return promise;
 	}

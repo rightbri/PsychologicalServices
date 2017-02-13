@@ -4,8 +4,8 @@ namespace PsychologicalServices.Models.Common.Validation
 {
     public interface IValidationError
     {
-        string Property { get; }
-
+        string PropertyName { get; }
+        
         string Message { get; }
     }
 }
