@@ -1,13 +1,15 @@
 import {DialogController} from 'aurelia-dialog';
 import {DataRepository} from 'services/dataRepository';
+import {Config} from '../common/config';
 import {inject} from 'aurelia-framework';
 import moment from 'moment';
 
-@inject(DialogController, DataRepository)
+@inject(DialogController, DataRepository, Config)
 export class AppointmentDialog {
-	constructor(dialogController, dataRepository) {
+	constructor(dialogController, dataRepository, config) {
 		this.dialogController = dialogController;
 		this.dataRepository = dataRepository;
+		this.config = config;
 		
 		this.psychometrists = null;
 		this.psychologists = null;
@@ -41,28 +43,16 @@ export class AppointmentDialog {
 	
 	ok() {
 		this.appointment.appointmentTime = this.parseDateTime(this.appointmentDate, this.appointmentTime);
-        /*
-		this.dataRepository.saveAppointment(this.appointment)
-			.then(data => {
-
-				if (data.isError) {
-					alert(data.errorDetails);
-				}
-
-				if (data.validationResult && data.validationResult.validationErrors && data.validationResult.validationErrors.length > 0) {
-					alert('validation errors: ' + data.validationResult.validationErrors.length);
-				}
-
-				if (data.isSaved) {
-					this.dialogController.ok(data.item);
-				}
-			});
-		*/
+        
 		this.dialogController.ok(this.appointment);
 	}
 	
 	cancel() {
 		this.dialogController.cancel();
+	}
+	
+	appointmentDateChanged(e) {
+		this.appointmentDate = e.detail.event.date;
 	}
 	
 	dateString(datetime) {

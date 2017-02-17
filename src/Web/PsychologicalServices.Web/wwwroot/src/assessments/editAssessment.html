@@ -58,7 +58,7 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="medicalFileReceivedDate">Medical File Received Date</label>
-				<input id="medicalFileReceivedDate" type="text" class="form-control" value.bind="assessment.medicalFileReceivedDate" />
+				<bootstrap-datepicker value.bind="assessment.medicalFileReceivedDate | dateFormat:'MM/DD/YYYY'" dp-options.bind="dpOptions" changedate.delegate="medicalFileReceivedDateChanged($event)"></bootstrap-datepicker>
 			</div>
 		</div>
 		<div class="col-xs-3">
@@ -85,7 +85,7 @@
 			<label>Issues in Dispute</label>
 			<div class="checkbox" repeat.for="issueInDispute of issuesInDispute">
 				<label>
-					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" click.delegate="checkMedRehab()" />&nbsp;${issueInDispute.name}
+					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" change.delegate="checkMedRehab()" />&nbsp;${issueInDispute.name}
 				</label>
 			</div>
 		</div>
@@ -94,6 +94,7 @@
 	<div class="row" if.bind="medRehabSelected">
 		<div class="col-xs-6">
 			<table class="table table-striped">
+				<caption>Med Rehabs</caption>
 				<thead>
 					<tr>
 						<th>
@@ -163,31 +164,30 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-xs-3">
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" checked.bind="assessment.deleted" />&nbsp;Deleted
-				</label>
+		<div class="col-xs-2">
+			<div class="form-group">
+				<label>Claimant</label>
+				<p class="form-control-static" if.bind="claimant">
+					${claimant.firstName} ${claimant.lastName}
+					<br>${claimant.age} - ${claimant.gender | gender}
+				</p>
+				<button type="button" class="btn btn-default" click.delegate="searchClaimant()">
+					Search <i class="fa fa-search"></i>
+				</button>
 			</div>
 		</div>
 	</div>
 	
 	<div class="row">
 		<div class="col-xs-6">
-			<label>Claimant</label>
-			<button type="button" class="btn btn-default" click.delegate="searchClaimant()">
-				Search <i class="fa fa-search"></i>
-			</button>
-			<p if.bind="claimant">
-				<br>${claimant.firstName} ${claimant.lastName}
-				<br>${claimant.age} - ${claimant.gender | gender}
-			</p>
+			
 		</div>
 	</div>
 	
 	<div class="row">
 		<div class="col-xs-6">
 			<table class="table table-striped">
+				<caption>Claims</caption>
 				<thead>
 					<tr>
 						<th>
@@ -221,6 +221,7 @@
 	<div class="row">
 		<div class="col-xs-6">
 			<table class="table table-striped">
+				<caption>Appointments</caption>
 				<thead>
 					<tr>
 						<th>

@@ -24,6 +24,7 @@ namespace PsychologicalServices.Models.Assessments
         private readonly IClaimValidator _claimValidator = null;
         private readonly IAppointmentValidator _appointmentValidator = null;
         private readonly IEmailAddressValidator _emailAddressValidator = null;
+        private readonly IMedRehabValidator _medRehabValidator = null;
 
         public AssessmentValidator(
             IAssessmentRepository assessmentRepository,
@@ -34,7 +35,8 @@ namespace PsychologicalServices.Models.Assessments
             IDate now,
             IClaimValidator claimValidator,
             IAppointmentValidator appointmentValidator,
-            IEmailAddressValidator emailAddressValidator
+            IEmailAddressValidator emailAddressValidator,
+            IMedRehabValidator medRehabValidator
         )
         {
             _assessmentRepository = assessmentRepository;
@@ -46,6 +48,7 @@ namespace PsychologicalServices.Models.Assessments
             _claimValidator = claimValidator;
             _appointmentValidator = appointmentValidator;
             _emailAddressValidator = emailAddressValidator;
+            _medRehabValidator = medRehabValidator;
         }
 
         public IValidationResult Validate(Assessment item)
@@ -280,6 +283,16 @@ namespace PsychologicalServices.Models.Assessments
                 {
                     result.ValidationErrors.AddRange(
                         _appointmentValidator.Validate(appointment).ValidationErrors
+                    );
+                }
+            }
+
+            if (null != item.MedRehabs)
+            {
+                foreach (var medRehab in item.MedRehabs)
+                {
+                    result.ValidationErrors.AddRange(
+                        _medRehabValidator.Validate(medRehab).ValidationErrors
                     );
                 }
             }

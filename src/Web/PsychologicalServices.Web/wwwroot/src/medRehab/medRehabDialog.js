@@ -3,25 +3,25 @@ import {Config} from '../common/config';
 import {inject} from 'aurelia-framework';
 
 @inject(DialogController, Config)
-export class ClaimDialog {
+export class MedRehabDialog {
 	constructor(dialogController, config) {
 		this.dialogController = dialogController;
 		this.config = config;
 	}
 	
-	activate(claim) {
-		this.claim = claim;
+	activate(medRehab) {
+		this.medRehab = medRehab;
 	}
 	
 	ok() {
-		this.dialogController.ok(this.claim);
+		this.dialogController.ok(this.medRehab);
 	}
 	
 	cancel() {
 		this.dialogController.cancel();
 	}
 	
-	dateOfLossChanged(e) {
-		this.claim.dateOfLoss = e.detail.event.date;
+	medRehabDateChanged(e) {
+		this.medRehab.date = e.detail.event.date;
 	}
 }

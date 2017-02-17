@@ -1,18 +1,22 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
+import {Config} from '../common/config';
 import {DialogService} from 'aurelia-dialog';
 import {ClaimantSearchDialog} from '../claimants/ClaimantSearchDialog';
 import {ClaimDialog} from '../claims/ClaimDialog';
 import {AppointmentDialog} from '../appointments/AppointmentDialog';
+import {MedRehabDialog} from '../medRehab/MedRehabDialog';
 import {MessageDialog} from '../common/MessageDialog';
+import moment from 'moment';
 
-@inject(Router, DataRepository, DialogService)
+@inject(Router, DataRepository, DialogService, Config)
 export class EditAssessment {
-	constructor(router, dataRepository, dialogService) {
+	constructor(router, dataRepository, dialogService, config) {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.dialogService = dialogService;
+		this.dpOptions = config.dpOptions;
 		
 		this.companyId = 1;
 		
@@ -95,12 +99,46 @@ export class EditAssessment {
 		this.router.navigateBack();
 	}
 	
+	medicalFileReceivedDateChanged(e) {
+		this.assessment.medicalFileReceivedDate = e.detail.event.date;
+	}
+	
 	referralTypeChanged() {
 		this.issuesInDispute = this.assessment.referralType.issuesInDispute;
 	}
 	
 	checkMedRehab() {
-		//this.medRehabSelected = this.assessment.issuesInDispute.some(issueInDispute => issueInDispute && issueInDispute.name === 'Med Rehab');
+		this.medRehabSelected = this.assessment.issuesInDispute.some(issueInDispute => issueInDispute && issueInDispute.name === 'Med Rehab');
+	}
+	
+	newMedRehab() {
+		return this.editMedRehab({ assessmentId: this.assessment.assessmentId, date: moment().format('MM/DD/YYYY'), amount: 0 })
+			.then(data => {
+				if (!data.wasCancelled) {
+					this.assessment.medRehabs.push(data.medRehab);
+				}
+			});
+	}
+	
+	editMedRehab(medRehab) {
+		var original = JSON.parse(JSON.stringify(medRehab));
+		
+		return this.dialogService.open({viewModel: MedRehabDialog, model: medRehab})
+			.then(result => {
+				var copyFrom = original;
+				
+				if (!result.wasCancelled) {
+					copyFrom = result.output;
+				}
+				
+				for (var prop in copyFrom) {
+					if (copyFrom.hasOwnProperty(prop)) {
+						medRehab[prop] = copyFrom[prop];
+					}
+				}
+				
+				return { wasCancelled: result.wasCancelled, medRehab: medRehab };
+			})
 	}
 	
 	searchClaimant() {
