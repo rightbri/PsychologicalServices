@@ -1,5 +1,6 @@
 <template>
 	<require from="bootstrap/css/bootstrap.css"></require>
+	<require from="bootstrap-datepicker/dist/css/bootstrap-datepicker3.css"></require>
 	<require from="../content/css/styles.css"></require>
 	
 	<nav class="navbar navbar-default">
@@ -14,7 +15,7 @@
 				<a class="navbar-brand" href="#">Psychological Services</a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar">
-				<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav" if.bind="userLoggedIn">
 					<li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
 						<a data-toggle="collapse" data-target="navbar" href.bind="route.href">${route.title}</a>
 					</li>

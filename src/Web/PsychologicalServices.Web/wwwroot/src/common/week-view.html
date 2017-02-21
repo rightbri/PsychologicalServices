@@ -1,16 +1,26 @@
 <template>
-
+	<require from="valueConverters/date-format"></require>
 <div class="container-fluid week">
-	<div class="row">
-		<template replaceable part="weekHeader"></template>
+	<div class="row week-header">
+		<div class="col-xs-12">
+			<button type="button" class="btn btn-default btn-xs pull-left" click.delegate="previousWeek()">
+				<i class="fa fa-sm fa-arrow-left"></i>
+			</button>
+			<button type="button" class="btn btn-default btn-xs pull-left" click.delegate="nextWeek()">
+				<i class="fa fa-sm fa-arrow-right"></i>
+			</button>
+			<p class="text-center">
+			${weekStart | dateFormat:'MMM DD, YYYY'} - ${weekEnd | dateFormat:'MMM DD, YYYY'}
+			</p>
+		</div>
 	</div>
 	<div class="row day" repeat.for="day of days">
-		<template replaceable part="dayContent"></template>
-	</div>
-	<div class="row">
 		<div class="col-xs-12">
-			<button class="btn btn-default" title="previous" click.delegate="prev()"><i class="fa fa-sm fa-arrow-left"></i></button>
-			<button class="btn btn-default" title="next" click.delegate="next()"><i class="fa fa-sm fa-arrow-right"></i></button>
+			<div class="row day-header">
+				<template replaceable part="dayHeader"></template>
+			</div>
+			<template replaceable part="dayNotes"></template>
+			<template replaceable part="dayContent"></template>
 		</div>
 	</div>
 </div>

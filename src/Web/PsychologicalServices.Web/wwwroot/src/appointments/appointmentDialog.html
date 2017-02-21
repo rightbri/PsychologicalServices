@@ -1,4 +1,6 @@
 <template>
+	<require from="common/datepicker"></require>
+	
 	<ai-dialog>
 		<ai-dialog-header>
 		<h3>Edit Appointment</h3>
@@ -8,8 +10,8 @@
 			<div class="row">
 				<div class="col-xs-6">
 					<div class="form-group">
-						<label for="date">Date</label>
-						<bootstrap-datepicker value.bind="appointmentDate" dp-options.bind="config.dpOptions" changedate.delegate="appointmentDateChanged($event)"></bootstrap-datepicker>
+						<label for="appointmentDate">Date</label>
+						<input id="appointmentDate" type="text" class="form-control" datepicker.bind="config.dpOptions" value.bind="appointmentDate"/>
 					</div>
 				</div>
 				<div class="col-xs-6">

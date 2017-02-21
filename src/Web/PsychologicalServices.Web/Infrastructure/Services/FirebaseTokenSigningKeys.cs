@@ -24,8 +24,8 @@ namespace PsychologicalServices.Web.Infrastructure.Services
         {
             if (!_keysFetched)
             {
-                //GetKeyData().Wait();
-                GetRawData();
+                GetKeyData().Wait();
+                //GetRawData();
             }
 
             return _keys.ToArray();

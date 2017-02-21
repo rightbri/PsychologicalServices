@@ -4,6 +4,7 @@
 	<require from="valueConverters/gender"></require>
 	<require from="valueConverters/filter"></require>
 	<require from="common/validation-summary.html"></require>
+	<require from="common/datepicker"></require>
 	
 <h2>Edit Assessment</h2>
 
@@ -58,7 +59,7 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="medicalFileReceivedDate">Medical File Received Date</label>
-				<bootstrap-datepicker value.bind="assessment.medicalFileReceivedDate | dateFormat:'MM/DD/YYYY'" dp-options.bind="dpOptions" changedate.delegate="medicalFileReceivedDateChanged($event)"></bootstrap-datepicker>
+				<input id="medicalFileReceivedDate" type="text" class="form-control" datepicker.bind="config.dpOptions" value.bind="assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat"/>
 			</div>
 		</div>
 		<div class="col-xs-3">
@@ -115,7 +116,7 @@
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
-						<td>${medRehab.date | dateFormat:'MM/DD/YYYY'}</td>
+						<td>${medRehab.date | dateFormat:config.shortDateFormat}</td>
 						<td>${medRehab.amount}</td>
 						<td>${medRehab.description}</td>
 						<td>
@@ -208,7 +209,7 @@
 							</button>
 						</td>
 						<td>${claim.claimNumber}</td>
-						<td>${claim.dateOfLoss | dateFormat:'M/D/YYYY'}</td>
+						<td>${claim.dateOfLoss | dateFormat:config.shortDateFormat}</td>
 						<td>
 							<input type="checkbox" checked.bind="claim.deleted" />
 						</td>
@@ -229,8 +230,7 @@
 								<i class="fa fa-plus"></i>
 							</button>
 						</th>
-						<th>Date</th>
-						<th>Time</th>
+						<th>Date/Time</th>
 						<th>Location</th>
 						<th>Status</th>
 						<th>Psychometrist</th>
@@ -245,12 +245,14 @@
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
-						<td>${appointment.appointmentTime | dateFormat:'MM/DD/YYYY'}</td>
-						<td>${appointment.appointmentTime | dateFormat:'h:mmA'}</td>
+						<td>
+							${appointment.appointmentTime | dateFormat:config.shortDateFormat}
+							<br>${appointment.appointmentTime | dateFormat:config.shortTimeFormat}
+						</td>
 						<td>${appointment.location.name}</td>
 						<td>${appointment.appointmentStatus.name}</td>
 						<td>${appointment.psychometrist.firstName}</td>
-						<td>${appointment.psychometristConfirmed | boolean }</td>
+						<td>${appointment.psychometristConfirmed | boolean}</td>
 						<td>
 							<input type="checkbox" checked.bind="appointment.deleted" />
 						</td>

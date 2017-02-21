@@ -6,8 +6,8 @@ export function configure(aurelia) {
 		.standardConfiguration()
 		.developmentLogging()
 		.plugin('aurelia-dialog')
-		.plugin('aurelia-validation')
-		.plugin('aurelia-bootstrap-datepicker');
+		.plugin('aurelia-validation');
+		//.plugin('aurelia-bootstrap-datepicker');
 		
 	aurelia.start().then(a => a.setRoot("shell"));
 }

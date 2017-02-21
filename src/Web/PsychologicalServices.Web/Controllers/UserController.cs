@@ -32,6 +32,16 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(user);
         }
 
+        [Route("byUsername")]
+        [HttpPost]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult Post([FromBody]string username)
+        {
+            var user = _userService.GetUserByEmail(username);
+
+            return Ok(user);
+        }
+
         [Route("psychometrists/{companyId}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]

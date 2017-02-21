@@ -1,21 +1,25 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
+import {Context} from 'common/context';
+import {Config} from 'common/config';
 import moment from 'moment';
 
-@inject(Router, DataRepository)
+@inject(Router, DataRepository, Config, Context)
 export class Appointments {
-	constructor(router, dataRepository) {
+	constructor(router, dataRepository, config, context) {
 		this.router = router;
 		this.dataRepository = dataRepository;
+		this.config = config;
+		this.context = context;
 		
 		this.showSearch = false;
 		this.searchStatus = null;
 		this.searchStart = this.shortDateString(this.getMonthBeginDate());
 		this.searchEnd = this.shortDateString(this.getMonthEndDate());
-		this.searchCompany = 1;
 		this.searchPsychometrist = null;
 		this.searchPsychologist = null;
+		this.searchCompany = 0;
 		
 		this.appointments = null;
 		this.psychometrists = null;
@@ -24,10 +28,24 @@ export class Appointments {
 		this.appointmentStatuses = null;
 		this.calendarNotes = null;
 		
+	}
+	
+	newAssessment(day) {
+		var company = this.companies.filter(company => company.companyId === this.searchCompany)[0];
 		
+		return { 'company': company };
 	}
 	
 	activate(params) {
+		return this.context.getUser()
+			.then(user => {
+				this.searchCompany = user.company.companyId;
+				
+				return this.getData();		
+			});
+	}
+	
+	getData() {
 		return Promise.all([
 			this.dataRepository.getCompanies().then(data => this.companies = data),
 			this.dataRepository.getPsychometrists(this.searchCompany).then(data => this.psychometrists = data),
@@ -35,7 +53,7 @@ export class Appointments {
 			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
 			this.dataRepository.getCalendarNotes(this.searchStart, this.searchEnd).then(data => this.calendarNotes = data),
 			this.search()
-		]);
+		]);	
 	}
 
 	search() {
@@ -62,32 +80,14 @@ export class Appointments {
 		this.showSearch = !this.showSearch;
 	}
 	
-	getAppointments(day) {
-		return (this.appointments || []).filter(function (appointment) {
-			return this.isAppointmentForDay(appointment, day);
-		}, this);
-	}
-	
 	getNotes(day) {
 		return (this.calendarNotes || []).filter(function (calendarNote) {
 			return this.isNoteForDay(calendarNote, day);
 		}, this);
 	}
 	
-	weekday(datetime) {
-		return moment(datetime).format('ddd');
-	}
-	
-	dateString(datetime) {
-		return moment(datetime).format('MMM DD');
-	}
-	
 	shortDateString(datetime) {
 		return moment(datetime).format('MM/DD/YYYY');
-	}
-
-	timeString(datetime) {
-		return moment(datetime).format('h:mmA');
 	}
 
 	hasMultipleCompanies(companies) {
@@ -96,14 +96,6 @@ export class Appointments {
 
 	hasAppointments(appointments) {
 		return appointments && appointments.length > 0;
-	}
-
-	hasSuite(address) {
-		return address && address.suite && address.suite.length > 0;
-	}
-
-	edit(id) {
-		this.router.navigateToRoute('editAppointment', { id: id });
 	}
 	
 	getMonthBeginDate() {
@@ -120,15 +112,7 @@ export class Appointments {
 		}, this);
 	}
 	
-	isAppointmentForDay(appointment, day) {
-		return moment(appointment.appointmentTime).isAfter(day.clone().startOf('day')) && moment(appointment.appointmentTime).isBefore(day.clone().endOf('day'));
-	}
-	
 	isNoteForDay(calendarNote, day) {
 		return !moment(calendarNote.fromDate).isAfter(day) && !moment(calendarNote.toDate).isBefore(day);
-	}
-	
-	hasAny(collection) {
-		return collection && collection.length > 0;
 	}
 }

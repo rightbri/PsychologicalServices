@@ -1,6 +1,7 @@
 <template>
 	<require from="valueConverters/date-format"></require>
 	<require from="valueConverters/gender"></require>
+	<require from="common/datepicker"></require>
 	
 	<ai-dialog>
 		<ai-dialog-header>
@@ -25,7 +26,7 @@
 				<div class="col-xs-12">
 					<div class="form-group">
 						<label for="dateOfLoss">Date of loss</label>
-						<bootstrap-datepicker value.bind="claim.dateOfLoss | dateFormat:config.shortDateFormat" dp-options.bind="config.dpOptions" changedate.delegate="dateOfLossChanged($event)"></bootstrap-datepicker>
+						<input id="dateOfLoss" type="text" class="form-control" datepicker.bind="config.dpOptions" value.bind="claim.dateOfLoss | dateFormat:config.shortDateFormat"/>
 					</div>
 				</div>
 			</div>

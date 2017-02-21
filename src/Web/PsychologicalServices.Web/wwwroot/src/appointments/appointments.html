@@ -2,107 +2,74 @@
 	<require from="common/week-view"></require>
 	<require from="valueConverters/boolean"></require>
 	<require from="valueConverters/date-format"></require>
+	<require from="valueConverters/appointment-for-day"></require>
 	
 <h2>Appointments</h2>
 
 <week-view>
-	<template replace-part="weekHeader">
-		<div class="col-xs-1">
-			<!-- date -->
+	<template replace-part="dayHeader">
+		<div class="col-xs-12">
+			<a route-href="route: editAssessment; params.bind: { id: 0, assessment: newAssessment(day) }" class="btn btn-default btn-xs pull-left">
+				<i class="fa fa-plus"></i>
+			</a>
+			<p class="pull-left">
+				${day | dateFormat:'dddd'}
+			</p>
+			<p class="pull-right">
+				${day | dateFormat:'MMMM DD, YYYY'}
+			</p>
 		</div>
-		<div class="col-xs-1">
-			<!-- add -->
-		</div>
-		<div class="col-xs-10">
-			<div class="row">
-				<div class="col-xs-1">
-					<!-- edit -->
-				</div>
-				<div class="col-xs-1">
-					Time
-				</div>
-				<div class="col-xs-1">
-					Psychometrist
-				</div>
-				<div class="col-xs-2">
-					Source
-				</div>
-				<div class="col-xs-2">
-					Location
-				</div>
-				<div class="col-xs-1">
-					Type
-				</div>
-				<div class="col-xs-2">
-					Claimant
-				</div>
-				<div class="col-xs-1">
-					Status
-				</div>
-				<div class="col-xs-1">
-					Notes
-				</div>
+	</template>
+	<template replace-part="dayNotes">
+		<div class="row calendar-note" repeat.for="note of getNotes(day)" if.bind="hasNotes(day)">
+			<div class="col-xs-offset-1 col-xs-11">
+				<p class="summary">
+					${note.note.noteText}
+				</p>
 			</div>
 		</div>
 	</template>
 	<template replace-part="dayContent">
-		<div class="col-xs-1">
-			${day | dateFormat:'ddd'}
-			<br>${day | dateFormat:'MMM DD'}
-		</div>
-		<div class="col-xs-1">
-			<button class="btn btn-default add-appointment" click.delegate="newAppointment(day)"><i class="fa fa-plus"></i></button>
-		</div>
-		<div class="col-xs-10">
-			<div class="row calendar-note" repeat.for="note of getNotes(day)" if.bind="hasNotes(day)">
-				<div class="col-xs-offset-1 col-xs-11">
-					<p class="summary">
-						${note.note.noteText}
-					</p>
-				</div>
+		<div class="row" repeat.for="appointment of appointments | appointmentForDay:day">
+			<div class="col-xs-1">
+				<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="btn btn-default btn-xs">
+					<i class="fa fa-edit"></i>
+				</a>
 			</div>
-			<div class="row" repeat.for="appointment of getAppointments(day)">
-				<div class="col-xs-1">
-					<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="btn btn-default">
-						<i class="fa fa-edit"></i>
-					</a>
-				</div>
-				<div class="col-xs-1">
-					${appointment.appointmentTime | dateFormat:'h:mmA'}
-				</div>
-				<div class="col-xs-1">
-					${appointment.psychometrist.firstName}
-					<br>${appointment.psychometristConfirmed | boolean }
-				</div>
-				<div class="col-xs-2">
-					${appointment.assessment.referralSource.name}
-				</div>
-				<div class="col-xs-2" with.bind="appointment.location">
-					<span class="street">${street}</span>
-					<br if.bind="hasSuite(appointment.location)"><span class="suite" if.bind="hasSuite(appointment.location)">${suite}</span>
-					<br><span class="city">${city}</span>, <span class="province">${province}</span> <span class="postal-code">${postalCode}</span>
-				</div>
-				<div class="col-xs-1">
-					${appointment.assessment.assessmentType.name}
-				</div>
-				<div class="col-xs-2">
-					<p repeat.for="claim of appointment.assessment.claims">
-						${claim.claimant.firstName} ${claim.claimant.lastName}
-						<br>Age: ${claim.claimant.age}
-					</p>
-					<p>
-						${appointment.assessment.reportStatus.name}
-					</p>
-					<p if.bind="appointment.assessment.medicalFileReceivedDate">
-						(${appointment.assessment.medicalFileReceivedDate | dateFormat:'MM/DD/YYYY'})
-					</p>
-				</div>
-				<div class="col-xs-1">
-					${appointment.appointmentStatus.name}
-				</div>
-				<div class="col-xs-1">
-					Notes
-				</div>
+			<div class="col-xs-1" title="Time">
+				${appointment.appointmentTime | dateFormat:config.shortTimeFormat}
+			</div>
+			<div class="col-xs-1" title="Psychometrist">
+				${appointment.psychometrist.firstName}
+				<br>${appointment.psychometristConfirmed | boolean }
+			</div>
+			<div class="col-xs-2" title="Referral Source">
+				${appointment.assessment.referralSource.name}
+			</div>
+			<div class="col-xs-2" title="Location" with.bind="appointment.location">
+				<p class="address">
+					${street}
+					<br if.bind="suite"><span if.bind="suite">${suite}</span>
+					<br>${city}, ${province} ${postalCode}
+				</p>
+			</div>
+			<div class="col-xs-1" title="Assessment Type">
+				${appointment.assessment.assessmentType.name}
+			</div>
+			<div class="col-xs-2">
+				<p repeat.for="claim of appointment.assessment.claims" title="Claimant">
+					${claim.claimant.firstName} ${claim.claimant.lastName}
+					<br>Age: ${claim.claimant.age}
+				</p>
+				<p class="Report Status">
+					${appointment.assessment.reportStatus.name}
+				</p>
+				<p if.bind="appointment.assessment.medicalFileReceivedDate">
+					(${appointment.assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat})
+				</p>
+			</div>
+			<div class="col-xs-1" title="Appointment Status">
+				${appointment.appointmentStatus.name}
 			</div>
 		</div>
 	</template>

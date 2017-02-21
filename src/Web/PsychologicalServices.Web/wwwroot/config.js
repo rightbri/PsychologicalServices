@@ -18,7 +18,6 @@ System.config({
 
   map: {
     "aurelia-auth": "npm:aurelia-auth@3.0.4",
-    "aurelia-bootstrap-datepicker": "npm:aurelia-bootstrap-datepicker@0.0.8",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0",
     "aurelia-dialog": "npm:aurelia-dialog@1.0.0-beta.3.0.1",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.1",
@@ -69,9 +68,6 @@ System.config({
       "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
       "aurelia-pal": "npm:aurelia-pal@1.2.0",
       "aurelia-task-queue": "npm:aurelia-task-queue@1.1.0"
-    },
-    "npm:aurelia-bootstrap-datepicker@0.0.8": {
-      "bootstrap-datepicker": "npm:bootstrap-datepicker@1.6.4"
     },
     "npm:aurelia-bootstrapper@1.0.0": {
       "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0",

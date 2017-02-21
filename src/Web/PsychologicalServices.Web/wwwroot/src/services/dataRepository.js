@@ -48,7 +48,12 @@ export class DataRepository {
 	}
 	
 	getNewAppointment(companyId, assessmentId) {
-		return this.getBasic(`appointment/company/${companyId}/assessment/${assessmentId}`);
+		if (assessmentId) {
+			return this.getBasic(`appointment/company/${companyId}/assessment/${assessmentId}`);
+		}
+		else {
+			return this.getBasic(`appointment/company/${companyId}`);
+		}
 	}
 	
 	searchAppointments(criteria) {
@@ -139,6 +144,10 @@ export class DataRepository {
 		return this.getManyBasic('reporttype', true);
 	}
 	
+	getUserByUsername(username) {
+		return this.postBasic('user/byUsername', username);
+	}
+	
 	getUser(id) {
 		return this.getSingleBasic(id, 'user');
 	}
@@ -168,7 +177,7 @@ export class DataRepository {
 	}
 	
 	getCompanies() {
-		return this.getManyBasic('company');
+		return this.getManyBasic('company', true);
 	}
 	
 	saveCompany(assessment) {
@@ -230,6 +239,8 @@ export class DataRepository {
 	}
 
 	searchBasic(criteria, type) {
+		var promise = this.postBasic(type + '/search', criteria, 'POST');
+		/*
 		var promise = new Promise((resolve, reject) => {
 			this.httpFetch.fetch(type + '/search', {
 				method: 'POST',
@@ -239,9 +250,23 @@ export class DataRepository {
 			.then(data => resolve(data))
 			.catch(err => reject(err));
 		});
+		*/
 		return promise;
 	}
 
+	postBasic(url, data, method) {
+		var promise = new Promise((resolve, reject) => {
+			this.httpFetch.fetch(url, {
+				method: method || 'POST',
+				body: json(data || {})
+			})
+			.then(response => response.json())
+			.then(data => resolve(data))
+			.catch(err => reject(err));
+		});
+		return promise;
+	}
+	
 	saveBasic(item, type) {
 		var promise = new Promise((resolve, reject) => {
 			this.httpFetch.fetch(type + '/save', {

@@ -6,7 +6,7 @@ export class FilterValueConverter {
 		this.parser = parser;
 	}
 
-	toView(array, property, exp) {    
+	toView(array, property, exp) {
 		let expression = this.parser.parse(property);
 		return array.filter((item) => expression.evaluate({bindingContext:item}) === exp);
 	}

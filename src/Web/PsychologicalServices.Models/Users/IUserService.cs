@@ -6,6 +6,8 @@ namespace PsychologicalServices.Models.Users
 {
     public interface IUserService
     {
+        User GetUserByEmail(string email);
+
         User GetUserById(int id);
 
         IEnumerable<User> GetPsychometrists(int? companyId = null);

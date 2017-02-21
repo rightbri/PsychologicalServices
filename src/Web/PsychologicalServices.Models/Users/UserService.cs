@@ -19,6 +19,13 @@ namespace PsychologicalServices.Models.Users
             _userValidator = userValidator;
         }
 
+        public User GetUserByEmail(string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+
+            return user;
+        }
+
         public User GetUserById(int id)
         {
             var user = _userRepository.GetUserById(id);

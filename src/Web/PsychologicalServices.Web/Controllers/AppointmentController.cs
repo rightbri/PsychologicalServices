@@ -32,10 +32,20 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(appointment);
         }
 
+        [Route("company/{companyId}")]
+        [HttpGet]
+        [ResponseType(typeof(Appointment))]
+        public IHttpActionResult GetNewAppointment(int companyId)
+        {
+            var appointment = _appointmentService.GetNewAppointment(companyId);
+
+            return Ok(appointment);
+        }
+
         [Route("company/{companyId}/assessment/{assessmentId}")]
         [HttpGet]
         [ResponseType(typeof(Appointment))]
-        public IHttpActionResult Get(int assessmentId, int companyId)
+        public IHttpActionResult GetNewAppointment(int assessmentId, int companyId)
         {
             var appointment = _appointmentService.GetNewAppointment(assessmentId, companyId);
 

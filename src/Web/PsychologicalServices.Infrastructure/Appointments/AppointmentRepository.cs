@@ -103,6 +103,42 @@ namespace PsychologicalServices.Infrastructure.Appointments
             }
         }
 
+        public Appointment NewAppointment(int companyId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var companyEntity = meta.Company.Where(company => company.CompanyId == companyId).SingleOrDefault();
+
+                if (null == companyEntity)
+                {
+                    throw new ArgumentOutOfRangeException("companyId");
+                }
+
+                var taskStatusEntity = meta.TaskStatus
+                    .OrderBy(taskStatus => taskStatus.TaskStatusId)
+                    .FirstOrDefault();
+
+                var taskTemplates = meta.TaskTemplate
+                    .Where(taskTemplate => taskTemplate.CompanyId == companyId)
+                    .ToList();
+
+                return new Appointment
+                {
+                    AppointmentTime = _now.Now,
+                    CompanyId = companyId,
+                    AppointmentTasks = taskTemplates.Select(taskTemplate => new Task
+                    {
+                        TaskStatusId = null != taskStatusEntity ? taskStatusEntity.TaskStatusId : 0,
+                        TaskStatus = taskStatusEntity.ToTaskStatus(),
+                        TaskTemplateId = taskTemplate.TaskTemplateId,
+                        TaskTemplate = taskTemplate.ToTaskTemplate(),
+                    }),
+                };
+            }
+        }
+
         public Appointment NewAppointment(int assessmentId, int companyId)
         {
             using (var adapter = AdapterFactory.CreateAdapter())

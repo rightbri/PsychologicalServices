@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
+using PsychologicalServices.Models.Users;
 using PsychologicalServices.Web.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,11 @@ namespace PsychologicalServices.Web.Infrastructure.Filters
     {
         private const string FirebaseProjectId = "psychologicalservices-146622";
 
-        private FirebaseTokenSigningKeys SigningKeys { get; set; }
+        [Dependency]
+        public IFirebaseTokenSigningKeys SigningKeys { private get; set; }
+
+        [Dependency]
+        public IUserService UserService { private get; set; }
 
         public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
@@ -38,50 +43,49 @@ namespace PsychologicalServices.Web.Infrastructure.Filters
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Unauthorized");
             }
 
-            //var secretKey = WebConfigurationManager.AppSettings["FirebaseSecret"];
-            //try
-            //{
-            //    var tokenHandler = new JwtSecurityTokenHandler();
+            var secretKey = WebConfigurationManager.AppSettings["FirebaseSecret"];
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
 
-            //    if (tokenHandler.CanReadToken(firebaseAuthToken))
-            //    {
+                if (tokenHandler.CanReadToken(firebaseAuthToken))
+                {
+                    var s = tokenHandler.ReadJwtToken(firebaseAuthToken);
 
-            //        var s = tokenHandler.ReadJwtToken(firebaseAuthToken);
+                    //SecurityToken securityToken;
 
-            //        SecurityToken securityToken;
+                    //var principal = tokenHandler.ValidateToken(firebaseAuthToken, new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    //    {
+                    //        ValidAudience = FirebaseProjectId,
+                    //        ValidIssuer = string.Format("https://securetoken.google.com/{0}", FirebaseProjectId),
 
-            //        var principal = tokenHandler.ValidateToken(firebaseAuthToken, new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            //            {
-            //                ValidAudience = FirebaseProjectId,
-            //                ValidIssuer = string.Format("https://securetoken.google.com/{0}", FirebaseProjectId),
-                            
-            //                IssuerSigningKeys = SigningKeys.GetSecurityKeys(),
-            //            }, out securityToken);
+                    //        IssuerSigningKeys = SigningKeys.GetSecurityKeys(),
+                    //    }, out securityToken);
 
-            //        var jwt = (JwtSecurityToken)securityToken;
+                    //var jwt = (JwtSecurityToken)securityToken;
 
-            //        if (jwt.Header.Alg != SecurityAlgorithms.RsaSha256)
-            //        {
-            //            throw new SecurityTokenInvalidSignatureException(
-            //              "The token is not signed with the expected algorithm.");
-            //        }
-            //    }
+                    //if (jwt.Header.Alg != SecurityAlgorithms.RsaSha256)
+                    //{
+                    //    throw new SecurityTokenInvalidSignatureException(
+                    //      "The token is not signed with the expected algorithm.");
+                    //}
+                }
 
 
-            //    //var jsonPayload = new X509Certificate2()
+                //var jsonPayload = new X509Certificate2()
 
-            //    //var jsonPayload = JWT.JsonWebToken.Decode(firebaseAuthToken, secretKey);
-            //    //var decodedToken = JsonConvert.DeserializeObject<DecodedToken>(jsonPayload);
-            //    // TODO: Check expiry of decoded token
-            //}
-            ////catch (JWT.SignatureVerificationException jwtEx)
-            ////{
-            ////    throw new HttpException((int)HttpStatusCode.Unauthorized, "Unauthorized");
-            ////}
-            //catch (Exception ex)
+                //var jsonPayload = JWT.JsonWebToken.Decode(firebaseAuthToken, secretKey);
+                //var decodedToken = JsonConvert.DeserializeObject<DecodedToken>(jsonPayload);
+                // TODO: Check expiry of decoded token
+            }
+            //catch (JWT.SignatureVerificationException jwtEx)
             //{
             //    throw new HttpException((int)HttpStatusCode.Unauthorized, "Unauthorized");
             //}
+            catch (Exception ex)
+            {
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Unauthorized");
+            }
 
             base.OnActionExecuting(actionContext);
         }

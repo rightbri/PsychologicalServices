@@ -7,6 +7,8 @@ namespace PsychologicalServices.Models.Appointments
     {
         Appointment GetAppointment(int id);
 
+        Appointment NewAppointment(int companyId);
+
         Appointment NewAppointment(int assessmentId, int companyId);
 
         AppointmentStatus GetAppointmentStatus(int id);

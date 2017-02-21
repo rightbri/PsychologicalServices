@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Owin;
 using Owin;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(PsychologicalServices.Web.Startup))]
 
@@ -14,7 +15,8 @@ namespace PsychologicalServices.Web
         {
             //ConfigureAuth(app);
 
-            UnityConfig.RegisterComponents();
+            //UnityConfig.RegisterComponents();
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
 }

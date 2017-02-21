@@ -1,36 +1,37 @@
-import {DateRange} from 'common/DateRange';
 import moment from 'moment';
 
 export class WeekView {
+
 	constructor() {
 		this.today = moment();
 		
-		this.week = new DateRange(this.today.clone().startOf('week'), this.today.clone().endOf('week'));
+		this.days = this.getWeekDays(this.today);
+	}
+
+	previousWeek() {
+		this.days =  this.getWeekDays(this.weekStart.clone().weekday(-7));
+	}
+	
+	nextWeek() {
+		this.days = this.getWeekDays(this.weekStart.clone().weekday(7));
+	}
+	
+	getWeekDays(today) {
+		var t = this.momentDate(today);
 		
-		this.days = this.getDays();
-	}
+		this.weekStart = t.clone().weekday(0);
+		this.weekEnd = t.clone().weekday(7);
 	
-	changed() {
-		this.days = this.getDays();
-	}
-	
-	next() {
-		this.week.shift(7);
-		this.changed();
-	}
-	
-	prev() {
-		this.week.shift(-7);
-		this.changed();
-	}
-	
-	getDays() {
 		var days = [];
 		
-		for (var day = this.week.startDate.clone(); !day.isAfter(this.week.endDate); day.add(1, 'days')) {
-			days.push(day.clone());
+		for (var i = 0; i < 7; i++) {
+			days.push(t.clone().weekday(i));
 		}
 		
 		return days;
+	}
+	
+	momentDate(date) {
+		return moment.isMoment(date) ? date : moment(date);
 	}
 }

@@ -31,6 +31,13 @@ namespace PsychologicalServices.Models.Appointments
             return appointment;
         }
 
+        public Appointment GetNewAppointment(int companyId)
+        {
+            var newAppointment = _appointmentRepository.NewAppointment(companyId);
+
+            return newAppointment;
+        }
+
         public Appointment GetNewAppointment(int assessmentId, int companyId)
         {
             var newAppointment = _appointmentRepository.NewAppointment(assessmentId, companyId);

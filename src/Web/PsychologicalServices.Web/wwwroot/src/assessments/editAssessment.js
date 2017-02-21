@@ -16,7 +16,7 @@ export class EditAssessment {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.dialogService = dialogService;
-		this.dpOptions = config.dpOptions;
+		this.config = config;
 		
 		this.companyId = 1;
 		
@@ -49,30 +49,48 @@ export class EditAssessment {
 	activate(params) {
 		var id = params.id;
 		
-		return this.dataRepository.getAssessment(id)
-			.then(data => {
-				this.assessment = data;
-				
-				this.checkMedRehab();
-				
-				if (this.assessment.referralType) {
-					this.issuesInDispute = this.assessment.referralType.issuesInDispute;
-				}
-				
-				if (this.assessment.claims && this.assessment.claims.length > 0) {
-					this.claimant = this.assessment.claims[0].claimant;
-				}
-				
-				return Promise.all([
-					this.dataRepository.getAssessmentTypes().then(data => this.assessmentTypes = data),
-					this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
-					this.dataRepository.getReferralSources().then(data => this.referralSources = data),
-					this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
-					this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
-					this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
-					this.dataRepository.getCompanies().then(data => this.companies = data)
-				]);
-			});
+		if (id > 0) {
+			return this.dataRepository.getAssessment(id)
+				.then(data => {
+					this.assessment = data;
+					
+					this.checkMedRehab();
+					
+					if (this.assessment.referralType) {
+						this.issuesInDispute = this.assessment.referralType.issuesInDispute;
+					}
+					
+					if (this.assessment.claims && this.assessment.claims.length > 0) {
+						this.claimant = this.assessment.claims[0].claimant;
+					}
+					
+					return this.getData(this.assessment);
+				});
+		}
+		else {
+			//new assessment
+			
+			this.assessment = params.assessment;
+			
+			return this.dataRepository.getNewAppointment(this.assessment.company.companyId)
+				.then(data => {
+					this.assessment.appointments = [ data ];
+					
+					return this.getData();
+				});
+		}
+	}
+	
+	getData() {
+		return Promise.all([
+			this.dataRepository.getAssessmentTypes().then(data => this.assessmentTypes = data),
+			this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
+			this.dataRepository.getReferralSources().then(data => this.referralSources = data),
+			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
+			this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
+			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
+			this.dataRepository.getCompanies().then(data => this.companies = data)
+		]);
 	}
 	
 	save() {
@@ -198,7 +216,7 @@ export class EditAssessment {
 	}
 	
 	newAppointment() {
-		this.dataRepository.getNewAppointment(this.assessment.company.companyId, this.assessment.assessmentId)
+		this.dataRepository.getNewAppointment(this.assessment.company.companyId)//, this.assessment.assessmentId)
 			.then(data => this.editAppointment(data))
 			.then(data => {
 				if (!data.wasCancelled) {

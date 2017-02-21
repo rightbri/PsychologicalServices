@@ -2,6 +2,10 @@ ai-dialog-overlay.active {
   background-color: black;
   opacity: .5;
 }
-.datepicker > div {
-	display: block;
+.day-header {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ccc;
+	background-color: #eee;
+	margin-bottom: 1px;
 }
