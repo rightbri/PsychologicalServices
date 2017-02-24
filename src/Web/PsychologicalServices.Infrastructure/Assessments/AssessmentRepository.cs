@@ -252,11 +252,35 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.ReferralTypeId = assessment.ReferralType.ReferralTypeId;
                 assessmentEntity.ReferralSourceId = assessment.ReferralSource.ReferralSourceId;
                 assessmentEntity.ReportStatusId = assessment.ReportStatus.ReportStatusId;
-                assessmentEntity.MedicalFileReceivedDate = assessment.MedicalFileReceivedDate;
-                assessmentEntity.FileSize = assessment.FileSize;
-                assessmentEntity.ReferralSourceContactEmail = assessment.ReferralSourceContactEmail;
                 assessmentEntity.CompanyId = assessment.Company.CompanyId;
                 assessmentEntity.Deleted = assessment.Deleted;
+
+                if (null == assessment.MedicalFileReceivedDate)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.MedicalFileReceivedDate, null);
+                }
+                else
+                {
+                    assessmentEntity.MedicalFileReceivedDate = assessment.MedicalFileReceivedDate;
+                }
+
+                if (null == assessment.FileSize)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.FileSize, null);
+                }
+                else
+                {
+                    assessmentEntity.FileSize = assessment.FileSize;
+                }
+
+                if (string.IsNullOrWhiteSpace(assessment.ReferralSourceContactEmail))
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.ReferralSourceContactEmail, null);
+                }
+                else
+                {
+                    assessmentEntity.ReferralSourceContactEmail = assessment.ReferralSourceContactEmail;
+                }
 
                 if (null == assessment.DocListWriter)
                 {

@@ -3,15 +3,20 @@
 	<require from="valueConverters/boolean"></require>
 	<require from="valueConverters/date-format"></require>
 	<require from="valueConverters/appointment-for-day"></require>
+	<require from="common/date-picker"></require>
+	<require from="common/date-range-picker"></require>
+	<require from="bootstrap-daterangepicker/daterangepicker.css"></require>
 	
 <h2>Appointments</h2>
 
 <week-view>
+	<template replace-part="weekHeader">
+		<a route-href="route: addAssessment;" class="btn btn-default btn-xs pull-right">
+			<i class="fa fa-plus"></i> Add Assessment
+		</a>
+	</template>
 	<template replace-part="dayHeader">
 		<div class="col-xs-12">
-			<a route-href="route: editAssessment; params.bind: { id: 0, assessment: newAssessment(day) }" class="btn btn-default btn-xs pull-left">
-				<i class="fa fa-plus"></i>
-			</a>
 			<p class="pull-left">
 				${day | dateFormat:'dddd'}
 			</p>
@@ -81,12 +86,16 @@
 		<div class="col-xs-4">
 			<form class="search-parameters">
 				<div class="form-group">
+					<label for="searchDateRange">Date Range</label>
+					<input id="searchDateRange" date-range-picker="options.bind: config.dateRangePickerOptions; range-start.bind: searchStart; range-end.bind: searchEnd; date-range-changed-callback.call: dateRangeChanged($event)" class="form-control" type="text" />
+				</div>
+				<div class="form-group">
 					<label for="searchStartDate">Date Start</label>
-					<input id="searchStartDate" class="form-control" type="text" placeholder="MM/DD/YYYY" value.bind="searchStart" />
+					<input id="searchStartDate" class="form-control" type="text" date-picker.bind="config.datepickerOptions" value.bind="searchStart" />
 				</div>
 				<div class="form-group">
 					<label for="searchEndDate">Date End</label>
-					<input id="searchEndDate" class="form-control" type="text" placeholder="MM/DD/YYYY" value.bind="searchEnd" />
+					<input id="searchEndDate" class="form-control" type="text" date-picker.bind="config.datepickerOptions" value.bind="searchEnd" />
 				</div>
 				<div class="form-group">
 					<label for="searchPsychometrist">Psychometrist</label>

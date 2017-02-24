@@ -53,6 +53,11 @@ namespace PsychologicalServices.Models.Assessments
 
         public IValidationResult Validate(Assessment item)
         {
+            if (null == item)
+            {
+                throw new ArgumentNullException("item");
+            }
+
             var result = new ValidationResult
             {
                 ValidationErrors = new List<IValidationError>(),

@@ -27,6 +27,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "bootstrap-datepicker": "npm:bootstrap-datepicker@1.6.4",
+    "bootstrap-daterangepicker": "npm:bootstrap-daterangepicker@2.1.25",
     "core-js": "npm:core-js@1.2.7",
     "font-awesome": "npm:font-awesome@4.6.3",
     "moment": "npm:moment@2.17.1",
@@ -198,6 +199,10 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "jquery": "npm:jquery@3.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:bootstrap-daterangepicker@2.1.25": {
+      "jquery": "npm:jquery@3.1.1",
+      "moment": "npm:moment@2.17.1"
     },
     "npm:buffer@3.6.0": {
       "base64-js": "npm:base64-js@0.0.8",

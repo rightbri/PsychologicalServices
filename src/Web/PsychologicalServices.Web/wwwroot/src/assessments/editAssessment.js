@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from '../common/config';
+import {Context} from '../common/context';
 import {DialogService} from 'aurelia-dialog';
 import {ClaimantSearchDialog} from '../claimants/ClaimantSearchDialog';
 import {ClaimDialog} from '../claims/ClaimDialog';
@@ -10,13 +11,14 @@ import {MedRehabDialog} from '../medRehab/MedRehabDialog';
 import {MessageDialog} from '../common/MessageDialog';
 import moment from 'moment';
 
-@inject(Router, DataRepository, DialogService, Config)
+@inject(Router, DataRepository, DialogService, Config, Context)
 export class EditAssessment {
-	constructor(router, dataRepository, dialogService, config) {
+	constructor(router, dataRepository, dialogService, config, context) {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.dialogService = dialogService;
 		this.config = config;
+		this.context = context;
 		
 		this.companyId = 1;
 		
@@ -49,7 +51,7 @@ export class EditAssessment {
 	activate(params) {
 		var id = params.id;
 		
-		if (id > 0) {
+		if (id) {
 			return this.dataRepository.getAssessment(id)
 				.then(data => {
 					this.assessment = data;
@@ -69,14 +71,21 @@ export class EditAssessment {
 		}
 		else {
 			//new assessment
-			
-			this.assessment = params.assessment;
-			
-			return this.dataRepository.getNewAppointment(this.assessment.company.companyId)
-				.then(data => {
-					this.assessment.appointments = [ data ];
-					
-					return this.getData();
+			return this.context.getUser()
+				.then(user => {
+					return this.dataRepository.getNewAppointment(user.company.companyId)
+						.then(appointment => {
+							
+							this.assessment = {
+								company: user.company,
+								appointments: [ appointment ],
+								claims: [],
+								issuesInDispute: [],
+								medRehabs: []
+							};
+							
+							return this.getData();
+						});
 				});
 		}
 	}

@@ -2,6 +2,9 @@ ai-dialog-overlay.active {
   background-color: black;
   opacity: .5;
 }
+.week-header .week-range-display {
+
+}
 .day-header {
 	border-width: 1px;
 	border-style: solid;

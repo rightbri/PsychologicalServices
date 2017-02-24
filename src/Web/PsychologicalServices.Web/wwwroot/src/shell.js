@@ -35,6 +35,7 @@ export class Shell {
 			{ route: 'schedule', name: 'schedule', moduleId: 'schedule/schedule', title: 'Schedule', nav: true },
 			{ route: 'appointments/:id/edit', name: 'editAppointment', moduleId: 'appointments/editAppointment', title: 'Edit Appointment', nav: false },
 			{ route: 'assessments/:id/edit', name: 'editAssessment', moduleId: 'assessments/editAssessment', title: 'Edit Assessment', nav: false },
+			{ route: 'assessments/add', name: 'addAssessment', moduleId: 'assessments/editAssessment', title: 'Add Assessment', nav: false },
 			{ route: 'addresses', name: 'addresses', moduleId: 'addresses/addresses', title: 'Addresses', nav: true },
 			{ route: 'addresses/:id/edit', name: 'editAddress', moduleId: 'addresses/editAddress', title: 'Edit Address', nav: false }
 		]);

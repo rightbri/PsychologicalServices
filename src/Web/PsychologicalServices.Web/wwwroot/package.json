@@ -9,6 +9,7 @@
       "aurelia-validation": "npm:aurelia-validation@^1.0.0-beta.1.0.0",
       "bootstrap": "github:twbs/bootstrap@^3.3.7",
       "bootstrap-datepicker": "npm:bootstrap-datepicker@^1.6.4",
+      "bootstrap-daterangepicker": "npm:bootstrap-daterangepicker@^2.1.25",
       "font-awesome": "npm:font-awesome@^4.6.3",
       "moment": "npm:moment@^2.17.1"
     },

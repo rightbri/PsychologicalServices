@@ -30,12 +30,6 @@ export class Appointments {
 		
 	}
 	
-	newAssessment(day) {
-		var company = this.companies.filter(company => company.companyId === this.searchCompany)[0];
-		
-		return { 'company': company };
-	}
-	
 	activate(params) {
 		return this.context.getUser()
 			.then(user => {
@@ -65,6 +59,11 @@ export class Appointments {
 			psychologistId: this.searchPsychologist,
 			companyId: this.searchCompany
 		});
+	}
+	
+	dateRangeChanged(startDate, endDate) {
+		this.searchStart = startDate;
+		this.searchEnd = endDate;
 	}
 
 	searchAppointments(criteria) {
