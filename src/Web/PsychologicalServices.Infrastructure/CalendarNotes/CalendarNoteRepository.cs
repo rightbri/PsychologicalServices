@@ -100,7 +100,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
 
                 if (!isNew)
                 {
-                    var prefetch = new PrefetchPath2(EntityType.NoteEntity);
+                    var prefetch = new PrefetchPath2(EntityType.CalendarNoteEntity);
 
                     prefetch.Add(CalendarNoteEntity.PrefetchPathNote);
 
@@ -110,7 +110,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                 {
                     calendarNoteEntity.Note = new NoteEntity
                         {
-                            CreateUserId = calendarNote.Note.CreateUserId,
+                            CreateUserId = calendarNote.Note.CreateUser.UserId,
                             CreateDate = _now.Now,
                         };
                 }
@@ -118,8 +118,9 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                 calendarNoteEntity.FromDate = calendarNote.FromDate;
                 calendarNoteEntity.ToDate = calendarNote.ToDate;
                 calendarNoteEntity.Note.Note = calendarNote.Note.NoteText;
-                calendarNoteEntity.Note.UpdateUserId = calendarNote.Note.UpdateUserId;
+                calendarNoteEntity.Note.UpdateUserId = calendarNote.Note.UpdateUser.UserId;
                 calendarNoteEntity.Note.UpdateDate = _now.Now;
+                calendarNoteEntity.Note.Deleted = calendarNote.Note.Deleted;
 
                 adapter.SaveEntity(calendarNoteEntity, false);
 

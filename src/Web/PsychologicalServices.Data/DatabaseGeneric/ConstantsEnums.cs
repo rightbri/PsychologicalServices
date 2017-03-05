@@ -205,6 +205,20 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentNote.
+	/// </summary>
+	public enum AssessmentNoteFieldIndex:int
+	{
+		///<summary>AssessmentId. </summary>
+		AssessmentId,
+		///<summary>NoteId. </summary>
+		NoteId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentType.
 	/// </summary>
 	public enum AssessmentTypeFieldIndex:int
@@ -638,6 +652,8 @@ namespace PsychologicalServices.Data
 		AssessmentIssueInDisputeEntity,
 		///<summary>AssessmentMedRehab</summary>
 		AssessmentMedRehabEntity,
+		///<summary>AssessmentNote</summary>
+		AssessmentNoteEntity,
 		///<summary>AssessmentType</summary>
 		AssessmentTypeEntity,
 		///<summary>AssessmentTypeReportType</summary>

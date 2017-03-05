@@ -1,6 +1,6 @@
 <template>
 	<require from="valueConverters/date-format"></require>
-	<require from="common/datepicker"></require>
+	<require from="common/date-picker"></require>
 	
 	<ai-dialog>
 		<ai-dialog-header>
@@ -12,7 +12,7 @@
 				<div class="col-xs-12">
 					<div class="form-group">
 						<label for="medRehabDate">Date</label>
-						<input id="medRehabDate" type="text" class="form-control" datepicker.bind="config.datepickerOptions" value.bind="medRehab.date | dateFormat:config.shortDateFormat"/>
+						<input id="medRehabDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="medRehab.date | dateFormat:config.shortDateFormat"/>
 					</div>
 				</div>
 			</div>

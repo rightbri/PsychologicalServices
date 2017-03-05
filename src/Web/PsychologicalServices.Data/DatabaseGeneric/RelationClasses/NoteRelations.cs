@@ -30,6 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.AssessmentNoteEntityUsingNoteId);
 			toReturn.Add(this.CalendarNoteEntityUsingNoteId);
 
 			toReturn.Add(this.UserEntityUsingUpdateUserId);
@@ -38,6 +39,21 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between NoteEntity and AssessmentNoteEntity over the 1:n relation they have, using the relation between the fields:
+		/// Note.NoteId - AssessmentNote.NoteId
+		/// </summary>
+		public virtual IEntityRelation AssessmentNoteEntityUsingNoteId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentNotes" , true);
+				relation.AddEntityFieldPair(NoteFields.NoteId, AssessmentNoteFields.NoteId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentNoteEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between NoteEntity and CalendarNoteEntity over the 1:n relation they have, using the relation between the fields:
 		/// Note.NoteId - CalendarNote.NoteId

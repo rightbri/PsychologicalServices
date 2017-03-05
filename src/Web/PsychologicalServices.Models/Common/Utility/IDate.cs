@@ -6,5 +6,6 @@ namespace PsychologicalServices.Models.Common.Utility
     {
         DateTime Today { get; }
         DateTime Now { get; }
+        DateTime UtcNow { get; }
     }
 }

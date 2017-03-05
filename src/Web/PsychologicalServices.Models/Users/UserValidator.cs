@@ -13,12 +13,12 @@ namespace PsychologicalServices.Models.Users
         private readonly IRoleRepository _roleRepository = null;
 
         public UserValidator(
-            ICompanyRepository companyRepository,
-            IRoleRepository roleRepository
+            //ICompanyRepository companyRepository,
+            //IRoleRepository roleRepository
         )
         {
-            _companyRepository = companyRepository;
-            _roleRepository = roleRepository;
+            //_companyRepository = companyRepository;
+            //_roleRepository = roleRepository;
         }
 
         public IValidationResult Validate(User item)

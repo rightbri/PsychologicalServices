@@ -1,0 +1,36 @@
+<template>
+	<ai-dialog>
+		<ai-dialog-header>
+		<h3>Edit Note</h3>
+		</ai-dialog-header>
+		<ai-dialog-body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="noteText">Note</label>
+						<textarea id="noteText" class="form-control" value.bind="note.noteText"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked.bind="calendarNote.note.deleted" />&nbsp;Deleted
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		</ai-dialog-body>
+		<ai-dialog-footer>
+		<button type="button" class="btn btn-primary" click.delegate="ok()">
+			Ok
+		</button>
+		<button type="button" class="btn btn-default" click.delegate="cancel()">
+			Cancel
+		</button>
+		</ai-dialog-footer>
+	</ai-dialog>
+</template>

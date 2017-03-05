@@ -1,6 +1,7 @@
 ﻿using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Referrals;
 using PsychologicalServices.Models.Reports;
 using PsychologicalServices.Models.Users;
@@ -42,6 +43,8 @@ namespace PsychologicalServices.Models.Assessments
         public IEnumerable<IssueInDispute> IssuesInDispute { get; set; }
 
         public IEnumerable<MedRehab> MedRehabs { get; set; }
+
+        public IEnumerable<Note> Notes { get; set; }
 
         public bool IsNew()
         {

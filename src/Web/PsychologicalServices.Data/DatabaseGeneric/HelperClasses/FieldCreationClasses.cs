@@ -314,6 +314,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AssessmentNoteEntity</summary>
+	public partial class AssessmentNoteFields
+	{
+		/// <summary>Creates a new AssessmentNoteEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentNoteFieldIndex.AssessmentId);}
+		}
+		/// <summary>Creates a new AssessmentNoteEntity.NoteId field instance</summary>
+		public static EntityField2 NoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentNoteFieldIndex.NoteId);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AssessmentTypeEntity</summary>
 	public partial class AssessmentTypeFields
 	{

@@ -29,8 +29,11 @@ namespace PsychologicalServices.Web.Models
         public bool IsInRole(string role)
         {
             return _user.Roles.Any(rl => rl.Name.Equals(role, StringComparison.OrdinalIgnoreCase));
+        }
 
-            throw new NotImplementedException();
+        public User Info
+        {
+            get { return _user; }
         }
     }
 }

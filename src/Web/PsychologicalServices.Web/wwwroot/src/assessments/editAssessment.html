@@ -1,12 +1,13 @@
 <template>
 	<require from="valueConverters/boolean"></require>
 	<require from="valueConverters/date-format"></require>
+	<require from="valueConverters/time-ago"></require>
 	<require from="valueConverters/gender"></require>
 	<require from="valueConverters/filter"></require>
 	<require from="common/validation-summary.html"></require>
-	<require from="common/datepicker"></require>
+	<require from="common/date-picker"></require>
 	
-<h2>Edit Assessment</h2>
+<h2>${editType} Assessment</h2>
 
 <div class="container-fluid">
 	
@@ -94,7 +95,7 @@
 	
 	<div class="row" if.bind="medRehabSelected">
 		<div class="col-xs-6">
-			<table class="table table-striped">
+			<table class="table table-striped table-condensed">
 				<caption>Med Rehabs</caption>
 				<thead>
 					<tr>
@@ -131,42 +132,6 @@
 	<div class="row">
 		<div class="col-xs-3">
 			<div class="form-group">
-				<label for="docListWriter">Doc List Writer</label>
-				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
-					<option></option>
-					<option repeat.for="user of docListWriters" model.bind="user">
-						${user.firstName}
-					</option>
-				</select>
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="notesWriter">Notes Writer</label>
-				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
-					<option></option>
-					<option repeat.for="user of notesWriters" model.bind="user">
-						${user.firstName}
-					</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="company">Company</label>
-				<select id="company" class="form-control" value.bind="assessment.company" matcher.bind="companyMatcher">
-					<option></option>
-					<option repeat.for="company of companies" model.bind="company">
-						${company.name}
-					</option>
-				</select>
-			</div>
-		</div>
-		<div class="col-xs-2">
-			<div class="form-group">
 				<label>Claimant</label>
 				<p class="form-control-static" if.bind="claimant">
 					${claimant.firstName} ${claimant.lastName}
@@ -178,16 +143,10 @@
 			</div>
 		</div>
 	</div>
-	
+		
 	<div class="row">
 		<div class="col-xs-6">
-			
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-6">
-			<table class="table table-striped">
+			<table class="table table-striped table-condensed">
 				<caption>Claims</caption>
 				<thead>
 					<tr>
@@ -221,7 +180,7 @@
 	
 	<div class="row">
 		<div class="col-xs-6">
-			<table class="table table-striped">
+			<table class="table table-striped table-condensed">
 				<caption>Appointments</caption>
 				<thead>
 					<tr>
@@ -259,6 +218,63 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<table class="table table-striped table-condensed">
+				<caption>Notes</caption>
+				<thead>
+					<tr>
+						<th>
+							<button type="button" class="btn btn-default" click.delegate="newNote()">
+								<i class="fa fa-plus"></i>
+							</button>
+						</th>
+						<th>Note</th>
+						<th>Update Date</th>
+						<th>Updated By</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr repeat.for="note of assessment.notes">
+						<td>
+							<button type="button" class="btn btn-default" click.delegate="editNote(note)">
+								<i class="fa fa-edit"></i>
+							</button>
+						</td>
+						<td>${note.noteText}</td>
+						<td>${note.updateDate | timeAgo}</td>
+						<td>${note.updateUser.firstName} ${note.updateUser.lastName}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="docListWriter">Doc List Writer</label>
+				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
+					<option></option>
+					<option repeat.for="user of docListWriters" model.bind="user">
+						${user.firstName}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="notesWriter">Notes Writer</label>
+				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
+					<option></option>
+					<option repeat.for="user of notesWriters" model.bind="user">
+						${user.firstName}
+					</option>
+				</select>
+			</div>
 		</div>
 	</div>
 	

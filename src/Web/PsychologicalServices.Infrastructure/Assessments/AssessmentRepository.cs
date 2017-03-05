@@ -4,6 +4,7 @@ using PsychologicalServices.Data.HelperClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.Common.Utility;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
@@ -14,10 +15,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
 {
     public class AssessmentRepository : RepositoryBase, IAssessmentRepository
     {
+        private readonly IDate _date = null;
+
         public AssessmentRepository(
-            IDataAccessAdapterFactory adapterFactory
+            IDataAccessAdapterFactory adapterFactory,
+            IDate date
         ) : base(adapterFactory)
         {
+            _date = date;
         }
 
         #region Prefetch Paths
@@ -80,6 +85,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .Prefetch<IssueInDisputeEntity>(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute)
                         )
                     .Prefetch<AssessmentMedRehabEntity>(assessment => assessment.AssessmentMedRehabs)
+                    .Prefetch<AssessmentNoteEntity>(assessment => assessment.AssessmentNotes)
+                        .SubPath(assessmentNotePath => assessmentNotePath
+                            .Prefetch<NoteEntity>(assessmentNote => assessmentNote.Note)
+                        )
                 );
 
         #endregion
@@ -244,6 +253,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentIssuesInDispute);
 
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentMedRehabs);
+
+                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentNotes)
+                        .SubPath.Add(AssessmentNoteEntity.PrefetchPathNote);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
@@ -600,6 +612,61 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         Date = medRehab.Date,
                         Deleted = medRehab.Deleted,
                         Description = medRehab.Description,
+                    })
+                );
+
+                #endregion
+
+                #region notes
+
+                var notesToAdd = assessment.Notes
+                    .Where(note =>
+                        !assessmentEntity.AssessmentNotes.Any(assessmentNote => assessmentNote.NoteId == note.NoteId)
+                    );
+
+                var notesToRemove = assessmentEntity.AssessmentNotes
+                    .Where(assessmentNote =>
+                        !assessment.Notes.Any(note => note.NoteId == assessmentNote.NoteId)
+                    );
+
+                var notesToUpdate = assessment.Notes
+                    .Where(note => assessmentEntity.AssessmentNotes
+                        .Any(assessmentNote =>
+                            assessmentNote.NoteId == note.NoteId &&
+                            assessmentNote.Note.Note != note.NoteText
+                        )
+                    );
+
+                foreach (var assessmentNote in notesToRemove)
+                {
+                    uow.AddForDelete(assessmentNote);
+                    uow.AddForDelete(assessmentNote.Note);
+                }
+
+                foreach (var note in notesToUpdate)
+                {
+                    var noteEntity = assessmentEntity.AssessmentNotes
+                        .Where(assessmentNote => assessmentNote.NoteId == note.NoteId)
+                        .Select(assessmentNote => assessmentNote.Note)
+                        .SingleOrDefault();
+
+                    if (null != noteEntity)
+                    {
+                        noteEntity.Note = note.NoteText;
+                        noteEntity.UpdateUserId = note.UpdateUser.UserId;
+                        noteEntity.UpdateDate = _date.Now;
+                    }
+                }
+
+                assessmentEntity.AssessmentNotes.AddRange(
+                    notesToAdd.Select(note => new AssessmentNoteEntity
+                    {
+                        Note = new NoteEntity
+                        {
+                            CreateUserId = note.CreateUser.UserId,
+                            Note = note.NoteText,
+                            UpdateUserId = note.UpdateUser.UserId,
+                        }
                     })
                 );
 

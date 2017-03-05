@@ -1,11 +1,35 @@
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {DataRepository} from 'services/dataRepository';
+import {AuthContext} from 'common/authContext';
 import {inject} from 'aurelia-framework';
 
-@inject(DataRepository)
+@inject(EventAggregator, DataRepository, AuthContext)
 export class Context {
-	constructor(dataRepository) {
+	constructor(eventAggregator, dataRepository, authContext) {
+		this.ea = eventAggregator;
 		this.dataRepository = dataRepository;
+		this.authContext = authContext;
 		this.username = null;
+		this.user = null;
+		this.loggedIn = false;
+		
+		this.subscriber = this.ea.subscribe('authStateChanged', response => {
+			this.username = response.user.email;
+			this.getUser().then(user => {
+				this.loggedIn = user && user.email;
+			});
+        });
+	}
+/*
+    detached() {
+        this.subscriber.dispose();
+    }
+*/
+	clear() {
+		this.username = null;
+		this.user = null;
+		this.loggedIn = false;
+		this.authContext.clear();
 	}
 	
 	getUser() {
@@ -23,5 +47,45 @@ export class Context {
 			}
 		});
 		return promise;
+	}
+	
+	login() {
+		this.authContext.login()
+			/*
+			.then(result => {
+				this.username = result.user.email;
+				return getUser();
+			})
+			*/
+			.catch(err => {
+				/*
+				//let email = err.email;
+				//let credential = err.credential;
+				
+				this.dialogService.open({
+					viewModel: MessageDialog,
+					model: {
+						heading: 'Sign In Error',
+						message: err.code + ': ' + err.message
+					}
+				});
+				*/
+			});
+    }
+	
+	logout() {
+		this.authContext.logout()
+			.then(() => this.clear())
+			.catch(err => {
+				/*
+				this.dialogService.open({
+					viewModel: MessageDialog,
+					model: {
+						heading: 'Sign Out Error',
+						message: err.code + ': ' + err.message
+					}
+				});
+				*/
+			});
 	}
 }

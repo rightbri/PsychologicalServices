@@ -3,11 +3,13 @@ using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using PsychologicalServices.Models.Users;
 using PsychologicalServices.Web.Infrastructure.Services;
+using PsychologicalServices.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Configuration;
@@ -15,7 +17,7 @@ using System.Web.Http.Filters;
 
 namespace PsychologicalServices.Web.Infrastructure.Filters
 {
-    public class DecodeJWT : ActionFilterAttribute
+    public class DecodeJWT : AuthorizationFilterAttribute
     {
         private const string FirebaseProjectId = "psychologicalservices-146622";
 
@@ -25,12 +27,12 @@ namespace PsychologicalServices.Web.Infrastructure.Filters
         [Dependency]
         public IUserService UserService { private get; set; }
 
-        public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext actionContext)
+        public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
-            if (null == SigningKeys)
-            {
-                SigningKeys = new FirebaseTokenSigningKeys();
-            }
+            //if (null == SigningKeys)
+            //{
+            //    SigningKeys = new FirebaseTokenSigningKeys();
+            //}
 
             var firebaseAuthToken = "";
 
@@ -51,7 +53,21 @@ namespace PsychologicalServices.Web.Infrastructure.Filters
                 if (tokenHandler.CanReadToken(firebaseAuthToken))
                 {
                     var s = tokenHandler.ReadJwtToken(firebaseAuthToken);
+                    var emailClaim = s.Claims.FirstOrDefault(c => c.Type == "email");
 
+                    if (null != emailClaim &&
+                        !string.IsNullOrWhiteSpace(emailClaim.Value))
+                    {
+                        var user = UserService.GetUserByEmail(emailClaim.Value);
+                        if (null != user && user.IsActive)
+                        {
+                            actionContext.RequestContext.Principal = new UserPrincipal(user);
+                        }
+                        else
+                        {
+                            throw new HttpException((int)HttpStatusCode.Unauthorized, "Unauthorized");
+                        }
+                    }
                     //SecurityToken securityToken;
 
                     //var principal = tokenHandler.ValidateToken(firebaseAuthToken, new Microsoft.IdentityModel.Tokens.TokenValidationParameters
@@ -87,7 +103,7 @@ namespace PsychologicalServices.Web.Infrastructure.Filters
                 throw new HttpException((int)HttpStatusCode.Unauthorized, "Unauthorized");
             }
 
-            base.OnActionExecuting(actionContext);
+            base.OnAuthorization(actionContext);
         }
     }
 }

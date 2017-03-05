@@ -15,27 +15,23 @@
 				<a class="navbar-brand" href="#">Psychological Services</a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar">
-				<ul class="nav navbar-nav" if.bind="userLoggedIn">
+				<ul class="nav navbar-nav" if.bind="context.loggedIn">
 					<li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
 						<a data-toggle="collapse" data-target="navbar" href.bind="route.href">${route.title}</a>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="#" click.delegate="login('google')" if.bind="!userLoggedIn">Login</a>
+						<a href="#" click.delegate="context.login()" if.bind="!context.loggedIn">Login</a>
 					</li>
-					<li class="dropdown" if.bind="userLoggedIn && user">
+					<li class="dropdown" if.bind="context.loggedIn">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-							${user.displayName}
-							<!--
-							<p>${user.email}</p>
-							<img src.bind="user.photoURL" if.bind="user.photoURL">
-							-->
+							${context.username}
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="#" click.delegate="logout()">Logout</a>
+								<a href="#" click.delegate="context.logout()">Logout</a>
 							</li>
 						</ul>
 					</li>
@@ -48,5 +44,5 @@
 			</div>
 		</div>
 	</nav>
-	<router-view if.bind="userLoggedIn"></router-view>
+	<router-view if.bind="context.loggedIn"></router-view>
 </template>

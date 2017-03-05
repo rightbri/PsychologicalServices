@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Notes;
+using PsychologicalServices.Models.Users;
 using System;
 
 namespace PsychologicalServices.Models.CalendarNotes
@@ -10,8 +11,6 @@ namespace PsychologicalServices.Models.CalendarNotes
         public DateTime? FromDate { get; set; }
 
         public DateTime? ToDate { get; set; }
-
-        public int NoteId { get; set; }
 
         public Note Note { get; set; }
 

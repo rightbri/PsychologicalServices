@@ -17,7 +17,7 @@ export class Address {
 		this.searchAddressTypes = [];
 		this.searchActive = true;
 		
-		this.showSearch = false;
+		this.showSearch = true;//false;
 	}
 	
 	activate(params) {
@@ -43,7 +43,7 @@ export class Address {
 			.then(data => {
 				this.addresses = data;
 				
-				this.showSearch = !this.hasAddresses(this.addresses);
+				//this.showSearch = this.addresses.length === 0;
 			});
 	}
 	
@@ -53,9 +53,5 @@ export class Address {
 	
 	edit(id) {
 		this.router.navigateToRoute('editAddress', { id: id });
-	}
-	
-	hasAddresses(addresses) {
-		return addresses && addresses.length > 0;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.CalendarNotes;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Web.Infrastructure.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Web.Http.Description;
 
 namespace PsychologicalServices.Web.Controllers
 {
+    [DecodeJWT]
     [RoutePrefix("api/calendarNote")]
     public class CalendarNoteController : ApiController
     {

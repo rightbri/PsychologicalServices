@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((32 + 0));
+			base.InitClass((33 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
@@ -65,6 +65,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAssessmentClaimEntityMappings();
 			InitAssessmentIssueInDisputeEntityMappings();
 			InitAssessmentMedRehabEntityMappings();
+			InitAssessmentNoteEntityMappings();
 			InitAssessmentTypeEntityMappings();
 			InitAssessmentTypeReportTypeEntityMappings();
 			InitCalendarNoteEntityMappings();
@@ -187,6 +188,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Amount", "Amount", false, (int)SqlDbType.Decimal, 0, 0, 18, false, "", null, typeof(System.Decimal), 3 );
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 4 );
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Deleted", "Deleted", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 5 );
+		}
+		/// <summary>Inits AssessmentNoteEntity's mappings</summary>
+		private void InitAssessmentNoteEntityMappings()
+		{
+			base.AddElementMapping( "AssessmentNoteEntity", "PsychologicalServices", @"dbo", "AssessmentNotes", 2 );
+			base.AddElementFieldMapping( "AssessmentNoteEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AssessmentNoteEntity", "NoteId", "NoteId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
 		/// <summary>Inits AssessmentTypeEntity's mappings</summary>
 		private void InitAssessmentTypeEntityMappings()

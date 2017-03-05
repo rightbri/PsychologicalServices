@@ -8,6 +8,7 @@ import {ClaimantSearchDialog} from '../claimants/ClaimantSearchDialog';
 import {ClaimDialog} from '../claims/ClaimDialog';
 import {AppointmentDialog} from '../appointments/AppointmentDialog';
 import {MedRehabDialog} from '../medRehab/MedRehabDialog';
+import {NoteDialog} from '../notes/NoteDialog';
 import {MessageDialog} from '../common/MessageDialog';
 import moment from 'moment';
 
@@ -20,8 +21,6 @@ export class EditAssessment {
 		this.config = config;
 		this.context = context;
 		
-		this.companyId = 1;
-		
 		this.assessment = null;
 		
 		this.assessmentTypes = null;
@@ -30,10 +29,8 @@ export class EditAssessment {
 		this.reportStatuses = null;
 		this.docListWriters = null;
 		this.notesWriters = null;
-		this.companies = null;
 		this.issuesInDispute = null;
 		this.claims = null;
-		
 		this.claimant = null;
 		
 		this.assessmentTypeMatcher = (a, b) => a.assessmentTypeId === b.assessmentTypeId;
@@ -41,8 +38,8 @@ export class EditAssessment {
 		this.referralSourceMatcher = (a, b) => a.referralSourceId === b.referralSourceId;
 		this.referralTypeMatcher = (a, b) => a.referralTypeId === b.referralTypeId;
 		this.issueInDisputeMatcher = (a, b) => a.issueInDisputeId === b.issueInDisputeId;
-		this.userMatcher = (a, b) => a.userId === b.userId;
-		this.companyMatcher = (a, b) => a.companyId === b.companyId;
+		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
+		//this.companyMatcher = (a, b) => a.companyId === b.companyId;
 		
 		this.error = null;
 		this.validationErrors = null;
@@ -50,6 +47,8 @@ export class EditAssessment {
 	
 	activate(params) {
 		var id = params.id;
+		
+		this.editType = id ? 'Edit' : 'Add';
 		
 		if (id) {
 			return this.dataRepository.getAssessment(id)
@@ -81,7 +80,8 @@ export class EditAssessment {
 								appointments: [ appointment ],
 								claims: [],
 								issuesInDispute: [],
-								medRehabs: []
+								medRehabs: [],
+								notes: []
 							};
 							
 							return this.getData();
@@ -97,12 +97,15 @@ export class EditAssessment {
 			this.dataRepository.getReferralSources().then(data => this.referralSources = data),
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
 			this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
-			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
-			this.dataRepository.getCompanies().then(data => this.companies = data)
+			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data)//,
+			//this.dataRepository.getCompanies().then(data => this.companies = data)
 		]);
 	}
 	
 	save() {
+		
+		var isNew = this.assessment.assessmentId === 0;
+		
 		this.dataRepository.saveAssessment(this.assessment)
             .then(data => {
 
@@ -112,6 +115,16 @@ export class EditAssessment {
 					
                 if (data.isSaved) {
                     this.assessment = data.item;
+					
+					if (isNew) {
+						this.router.navigateToRoute(
+							'editAssessment',
+							{ 'id': this.assessment.assessmentId },
+							{ 'trigger': false, replace: true }
+						);
+						
+						this.editType = 'Edit';
+					}
 					
 					this.dialogService.open({viewModel: MessageDialog, model: { heading: 'Saved', message: 'Assessment saved' } });
                 }
@@ -125,11 +138,7 @@ export class EditAssessment {
 	back() {
 		this.router.navigateBack();
 	}
-	
-	medicalFileReceivedDateChanged(e) {
-		this.assessment.medicalFileReceivedDate = e.detail.event.date;
-	}
-	
+
 	referralTypeChanged() {
 		this.issuesInDispute = this.assessment.referralType.issuesInDispute;
 	}
@@ -252,6 +261,36 @@ export class EditAssessment {
 				}
 				
 				return { wasCancelled: result.wasCancelled, appointment: appointment };
+			});
+	}
+	
+	newNote() {
+		return this.editNote({ createUser: this.context.user, createDate: new Date(), updateUser: this.context.user, updateDate: new Date() })
+			.then(data => {
+				if (!data.wasCancelled) {
+					this.assessment.notes.push(data.note);
+				}
+			});
+	}
+	
+	editNote(note) {
+		var original = JSON.parse(JSON.stringify(note));
+		
+		return this.dialogService.open({viewModel: NoteDialog, model: note})
+			.then(result => {
+				var copyFrom = original;
+				
+				if (!result.wasCancelled) {
+					copyFrom = result.output;
+				}
+				
+				for (var prop in copyFrom) {
+					if (copyFrom.hasOwnProperty(prop)) {
+						note[prop] = copyFrom[prop];
+					}
+				}
+				
+				return { wasCancelled: result.wasCancelled, note: note };
 			});
 	}
 }

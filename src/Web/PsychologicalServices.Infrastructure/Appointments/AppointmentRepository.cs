@@ -79,10 +79,13 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                     //        )
                                     //)
                             //.Prefetch<CompanyEntity>(assessment => assessment.Company)
-                            //.Prefetch<ClaimEntity>(assessment => assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim))
-                            //    .SubPath(claimPath => claimPath
-                            //        .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                            //    )
+                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                .SubPath(assessmentClaimPath => assessmentClaimPath
+                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                        .SubPath(claimPath => claimPath
+                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                        )
+                                )
                             //.Prefetch<IssueInDisputeEntity>(assessment => assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute))
                         )
                 );

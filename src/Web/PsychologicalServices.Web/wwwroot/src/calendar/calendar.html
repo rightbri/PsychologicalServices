@@ -1,0 +1,109 @@
+<template>
+	<require from="valueConverters/boolean"></require>
+	<require from="valueConverters/date-format"></require>
+	<require from="valueConverters/day-class"></require>
+	<require from="valueConverters/note-for-day"></require>
+	<require from="valueConverters/appointment-for-day"></require>
+	<require from="common/date-picker"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	
+<h2>Calendar</h2>
+
+<div class="container-fluid week">
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-inline">
+				<div class="form-group">
+					<input type="text" class="form-control" date-picker.bind="config.monthPickerOptions" monthchanged.delegate="monthChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<table class="table" fixed-header>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Time</th>
+			<th>Type</th>
+			<th>Claimant</th>
+			<th>Location</th>
+			<th>Source</th>
+			<th>Psychometrist</th>
+			<th>Status</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<template repeat.for="day of days">
+		<tr class="day-header ${day | dayClass}">
+			<td>
+				<p class="date-display text-primary">
+					${day | dateFormat:'ddd Do'}
+				</p>
+				<a route-href="route: addAssessment;" class="btn btn-default btn-xs">
+					<i class="fa fa-plus"></i>
+				</a>
+				<button type="button" class="btn btn-default btn-xs" click.delegate="addCalendarNote(day)">
+					<i class="fa fa-sticky-note"></i>
+				</button>
+			</td>
+			<td colspan="7"></td>
+			<td>
+				<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day & signal: newCalendarNoteSignalName">
+					<button type="button" class="btn btn-default btn-xs" click.delegate="editCalendarNote(calendarNote)">
+						<i class="fa fa-sticky-note-o"></i>
+					</button>
+					<small>${calendarNote.note.noteText}</small>
+				</p>
+			</td>
+		</tr>
+		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
+			<td>
+				<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="btn btn-default btn-xs">
+					<i class="fa fa-pencil"></i>
+				</a>
+			</td>
+			<td title="Time">
+				${appointment.appointmentTime | dateFormat:config.shortTimeFormat}
+			</td>
+			<td title="Assessment Type">
+				${appointment.assessment.assessmentType.name}
+			</td>
+			<td>
+				<p repeat.for="claim of appointment.assessment.claims" title="Claimant">
+					${claim.claimant.firstName} ${claim.claimant.lastName}
+					<br>Age: ${claim.claimant.age}
+				</p>
+				<p class="Report Status">
+					${appointment.assessment.reportStatus.name}
+				</p>
+				<p if.bind="appointment.assessment.medicalFileReceivedDate">
+					(${appointment.assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat})
+				</p>
+			</td>
+			<td title="Location" with.bind="appointment.location">
+				<p class="address">
+					<span if.bind="street">${street}</span>
+					<br if.bind="suite"><span if.bind="suite">${suite}</span>
+					<br if.bind="street || suite">${city}, ${province} ${postalCode}
+				</p>
+			</td>
+			<td title="Referral Source">
+				${appointment.assessment.referralSource.name}
+			</td>
+			<td title="Psychometrist">
+				${appointment.psychometrist.firstName}
+				<br>${appointment.psychometristConfirmed | boolean }
+			</td>
+			<td title="Appointment Status">
+				${appointment.appointmentStatus.name}
+			</td>
+			<td></td>
+		</tr>
+		</template>
+	</tbody>
+</table>
+</template>

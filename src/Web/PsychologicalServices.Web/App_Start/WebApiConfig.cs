@@ -6,6 +6,8 @@ using System.Web.Http;
 //using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using PsychologicalServices.Web.Infrastructure.Filters;
+using Owin;
+using PsychologicalServices.Web.Infrastructure;
 
 namespace PsychologicalServices.Web
 {
@@ -17,7 +19,7 @@ namespace PsychologicalServices.Web
             // Configure Web API to use only bearer token authentication.
             //config.SuppressDefaultHostAuthentication();
             //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-            config.Filters.Add(new DecodeJWT());
+
             //config.Filters.Add(
             //    (UserContext)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(UserContext))
             //);

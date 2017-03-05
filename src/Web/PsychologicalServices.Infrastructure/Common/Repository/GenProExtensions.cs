@@ -45,7 +45,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CalendarNoteId = calendarNote.CalendarNoteId,
                     FromDate = calendarNote.FromDate,
                     ToDate = calendarNote.ToDate,
-                    NoteId = calendarNote.NoteId,
                     Note = calendarNote.Note.ToNote(),
                 }
                 : null;
@@ -58,9 +57,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     NoteId = note.NoteId,
                     NoteText = note.Note,
-                    CreateUserId = note.CreateUserId,
                     CreateDate = note.CreateDate,
-                    UpdateUserId = note.UpdateUserId,
                     UpdateDate = note.UpdateDate,
                     Deleted = note.Deleted,
                     CreateUser = note.CreateUser.ToUser(),
@@ -226,6 +223,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
                     IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
                     MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
+                    Notes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.Note.ToNote()),
                 }
                 : null;
         }

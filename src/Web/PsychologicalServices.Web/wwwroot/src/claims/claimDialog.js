@@ -20,8 +20,4 @@ export class ClaimDialog {
 	cancel() {
 		this.dialogController.cancel();
 	}
-	
-	dateOfLossChanged(e) {
-		this.claim.dateOfLoss = e.detail.event.date;
-	}
 }

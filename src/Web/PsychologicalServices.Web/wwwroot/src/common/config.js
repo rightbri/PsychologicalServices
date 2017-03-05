@@ -2,6 +2,8 @@
 export class Config {
 	constructor() {
 		
+		this.longDateFormat = 'MM-DD-YYYY h:mmA';
+		
 		this.isoShortDateFormat = 'YYYY-MM-DD';
 		this.isoShortTimeFormat = 'HH:mm';
 		this.shortDateFormat = 'MM-DD-YYYY';
@@ -17,6 +19,16 @@ export class Config {
 			'autoclose': true,
 			'clearBtn': true,
 			'format': 'mm-dd-yyyy',
+			'showOnFocus': true,
+			'toggleActive': true
+		};
+		
+		this.monthPickerOptions = {
+			'autoclose': true,
+			'clearBtn': true,
+			'format': 'MM, yyyy',
+			'startView': 'months',
+			'minViewMode': 'months',//1,
 			'showOnFocus': true,
 			'toggleActive': true
 		};

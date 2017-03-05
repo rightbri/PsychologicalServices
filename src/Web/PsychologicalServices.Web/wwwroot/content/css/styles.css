@@ -2,13 +2,21 @@ ai-dialog-overlay.active {
   background-color: black;
   opacity: .5;
 }
-.week-header .week-range-display {
-
+.day-display,
+.date-display {
+	font-weight: bold;
+}
+.day-display {
 }
 .day-header {
-	border-width: 1px;
+	border-width: 1px 0 0 0;
 	border-style: solid;
 	border-color: #ccc;
-	background-color: #eee;
-	margin-bottom: 1px;
+	padding: 2px 0 0 0;
+}
+.appointment {
+	border-width: 1px 0 0 0;
+	border-style: dashed;
+	border-color: #ddd;
+	padding: 2px 0 0 0;
 }

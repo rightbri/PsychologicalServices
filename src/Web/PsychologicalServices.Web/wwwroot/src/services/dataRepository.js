@@ -1,12 +1,21 @@
 import {HttpClient as HttpFetch, json} from 'aurelia-fetch-client';
+import {AuthContext} from 'common/authContext';
 import {inject} from 'aurelia-framework';
 
-@inject(HttpFetch, 'apiRoot')
+@inject(HttpFetch, AuthContext, 'apiRoot')
 export class DataRepository {
-	constructor(httpFetch, apiRoot) {
+	constructor(httpFetch, authContext, apiRoot) {
 		this.apiRoot = apiRoot;
 		this.httpFetch = httpFetch;
+		this.authContext = authContext;
 		this.cache = {};
+		
+		var self = this;
+		
+		var defaultHeaders = {
+			'Accept': 'application/json',
+			'X-Requested-With': 'Fetch'
+		};
 		
 		this.httpFetch.configure(config => {
 			config
@@ -15,21 +24,21 @@ export class DataRepository {
 					credentials: 'include',
 					headers: {
 						'Accept': 'application/json',
-						'Authorization': 'Token ' + window.sessionStorage.firebaseAuthToken,
 						'X-Requested-With': 'Fetch'
 					}
 				})
 				.withInterceptor({
 					request(request) {
-						console.log(`Requesting ${request.method} ${request.url}`);
+						//console.log(`Requesting ${request.method} ${request.url}`);
 						
-						/*
-						if (window.sessionStorage.firebaseAuthToken) {
-							request.headers.Authorization = 'Token ' + window.sessionStorage.firebaseAuthToken;
+						if (!request.headers.has('Authorization')) {
+							if (self.authContext.authToken) {
+								request.headers.append('Authorization','Token ' + self.authContext.authToken);
+							}
 						}
-						*/
+						
 						return request;
-					},
+					}/*,
 					response(response) {
 						console.log(`Received ${response.status} ${response.url}`);
 
@@ -37,7 +46,7 @@ export class DataRepository {
 							
 						}
 						return response;
-					}
+					}*/
 				});
 		});
 	}

@@ -414,7 +414,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentMedRehab
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -426,7 +425,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentMedRehabUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -435,6 +433,47 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntityCollection2 CreateEntityCollection()
 		{
 			return new EntityCollection<AssessmentMedRehabEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
+	/// <summary>Factory to create new, empty AssessmentNoteEntity objects.</summary>
+	[Serializable]
+	public partial class AssessmentNoteEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AssessmentNoteEntityFactory() : base("AssessmentNoteEntity", PsychologicalServices.Data.EntityType.AssessmentNoteEntity) { }
+
+		/// <summary>Creates a new, empty AssessmentNoteEntity object.</summary>
+		/// <returns>A new, empty AssessmentNoteEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AssessmentNoteEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentNote
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AssessmentNoteEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AssessmentNoteEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentNoteUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AssessmentNoteEntity>(this);
 		}
 		
 
@@ -1378,6 +1417,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentMedRehabEntity:
 					factoryToUse = new AssessmentMedRehabEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentNoteEntity:
+					factoryToUse = new AssessmentNoteEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeEntity:
 					factoryToUse = new AssessmentTypeEntityFactory();

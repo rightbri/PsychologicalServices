@@ -1,5 +1,5 @@
 <template>
-	<require from="common/datepicker"></require>
+	<require from="common/date-picker"></require>
 	
 	<ai-dialog>
 		<ai-dialog-header>
@@ -11,7 +11,7 @@
 				<div class="col-xs-6">
 					<div class="form-group">
 						<label for="appointmentDate">Date</label>
-						<input id="appointmentDate" type="text" class="form-control" datepicker.bind="config.datepickerOptions" value.bind="appointmentDate"/>
+						<input id="appointmentDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="appointmentDate"/>
 					</div>
 				</div>
 				<div class="col-xs-6">

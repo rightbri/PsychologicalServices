@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (32 + 0));
+			base.InitClass( (33 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -66,6 +66,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAssessmentClaimEntityInfos();
 			InitAssessmentIssueInDisputeEntityInfos();
 			InitAssessmentMedRehabEntityInfos();
+			InitAssessmentNoteEntityInfos();
 			InitAssessmentTypeEntityInfos();
 			InitAssessmentTypeReportTypeEntityInfos();
 			InitCalendarNoteEntityInfos();
@@ -179,6 +180,12 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentMedRehabEntity", "Amount", typeof(System.Decimal), false, false, false, false,  (int)AssessmentMedRehabFieldIndex.Amount, 0, 0, 18);
 			base.AddElementFieldInfo("AssessmentMedRehabEntity", "Description", typeof(System.String), false, false, false, false,  (int)AssessmentMedRehabFieldIndex.Description, 100, 0, 0);
 			base.AddElementFieldInfo("AssessmentMedRehabEntity", "Deleted", typeof(System.Boolean), false, false, false, false,  (int)AssessmentMedRehabFieldIndex.Deleted, 0, 0, 0);
+		}
+		/// <summary>Inits AssessmentNoteEntity's FieldInfo objects</summary>
+		private void InitAssessmentNoteEntityInfos()
+		{
+			base.AddElementFieldInfo("AssessmentNoteEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentNoteFieldIndex.AssessmentId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentNoteEntity", "NoteId", typeof(System.Int32), true, true, false, false,  (int)AssessmentNoteFieldIndex.NoteId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentTypeEntity's FieldInfo objects</summary>
 		private void InitAssessmentTypeEntityInfos()

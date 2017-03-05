@@ -13,5 +13,10 @@ namespace PsychologicalServices.Models.Common.Utility
         {
             get { return DateTime.Now; }
         }
+
+        public DateTime UtcNow
+        {
+            get { return DateTime.UtcNow; }
+        }
     }
 }

@@ -37,6 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private EntityCollection<AssessmentNoteEntity> _assessmentNotes;
 		private EntityCollection<CalendarNoteEntity> _calendarNote;
 
 		private UserEntity _updateUser;
@@ -58,6 +59,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string UpdateUser = "UpdateUser";
 			/// <summary>Member name CreateUser</summary>
 			public static readonly string CreateUser = "CreateUser";
+			/// <summary>Member name AssessmentNotes</summary>
+			public static readonly string AssessmentNotes = "AssessmentNotes";
 			/// <summary>Member name CalendarNote</summary>
 			public static readonly string CalendarNote = "CalendarNote";
 
@@ -120,6 +123,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_assessmentNotes = (EntityCollection<AssessmentNoteEntity>)info.GetValue("_assessmentNotes", typeof(EntityCollection<AssessmentNoteEntity>));
 				_calendarNote = (EntityCollection<CalendarNoteEntity>)info.GetValue("_calendarNote", typeof(EntityCollection<CalendarNoteEntity>));
 
 				_updateUser = (UserEntity)info.GetValue("_updateUser", typeof(UserEntity));
@@ -181,6 +185,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CreateUser":
 					this.CreateUser = (UserEntity)entity;
 					break;
+				case "AssessmentNotes":
+					this.AssessmentNotes.Add((AssessmentNoteEntity)entity);
+					break;
 				case "CalendarNote":
 					this.CalendarNote.Add((CalendarNoteEntity)entity);
 					break;
@@ -212,6 +219,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "CreateUser":
 					toReturn.Add(NoteEntity.Relations.UserEntityUsingCreateUserId);
+					break;
+				case "AssessmentNotes":
+					toReturn.Add(NoteEntity.Relations.AssessmentNoteEntityUsingNoteId);
 					break;
 				case "CalendarNote":
 					toReturn.Add(NoteEntity.Relations.CalendarNoteEntityUsingNoteId);
@@ -260,6 +270,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CreateUser":
 					SetupSyncCreateUser(relatedEntity);
 					break;
+				case "AssessmentNotes":
+					this.AssessmentNotes.Add((AssessmentNoteEntity)relatedEntity);
+					break;
 				case "CalendarNote":
 					this.CalendarNote.Add((CalendarNoteEntity)relatedEntity);
 					break;
@@ -283,6 +296,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "CreateUser":
 					DesetupSyncCreateUser(false, true);
+					break;
+				case "AssessmentNotes":
+					base.PerformRelatedEntityRemoval(this.AssessmentNotes, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "CalendarNote":
 					base.PerformRelatedEntityRemoval(this.CalendarNote, relatedEntity, signalRelatedEntityManyToOne);
@@ -325,6 +341,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+			toReturn.Add(this.AssessmentNotes);
 			toReturn.Add(this.CalendarNote);
 
 			return toReturn;
@@ -340,6 +357,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_assessmentNotes", ((_assessmentNotes!=null) && (_assessmentNotes.Count>0) && !this.MarkedForDeletion)?_assessmentNotes:null);
 				info.AddValue("_calendarNote", ((_calendarNote!=null) && (_calendarNote.Count>0) && !this.MarkedForDeletion)?_calendarNote:null);
 
 				info.AddValue("_updateUser", (!this.MarkedForDeletion?_updateUser:null));
@@ -378,6 +396,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			return new NoteRelations().GetAllRelations();
 		}
 		
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'AssessmentNote' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentNotes()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentNoteFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'CalendarNote' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
@@ -438,6 +466,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
+			collectionsQueue.Enqueue(this._assessmentNotes);
 			collectionsQueue.Enqueue(this._calendarNote);
 
 		}
@@ -447,6 +476,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+			this._assessmentNotes = (EntityCollection<AssessmentNoteEntity>) collectionsQueue.Dequeue();
 			this._calendarNote = (EntityCollection<CalendarNoteEntity>) collectionsQueue.Dequeue();
 
 		}
@@ -455,6 +485,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
+			if (this._assessmentNotes != null)
+			{
+				return true;
+			}
 			if (this._calendarNote != null)
 			{
 				return true;
@@ -469,6 +503,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CalendarNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CalendarNoteEntityFactory))) : null);
 
 		}
@@ -482,6 +517,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("UpdateUser", _updateUser);
 			toReturn.Add("CreateUser", _createUser);
+			toReturn.Add("AssessmentNotes", _assessmentNotes);
 			toReturn.Add("CalendarNote", _calendarNote);
 
 
@@ -491,6 +527,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+			if(_assessmentNotes!=null)
+			{
+				_assessmentNotes.ActiveContext = base.ActiveContext;
+			}
 			if(_calendarNote!=null)
 			{
 				_calendarNote.ActiveContext = base.ActiveContext;
@@ -511,6 +551,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+			_assessmentNotes = null;
 			_calendarNote = null;
 
 			_updateUser = null;
@@ -654,6 +695,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentNote' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessmentNotes
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AssessmentNotes")[0], (int)PsychologicalServices.Data.EntityType.NoteEntity, (int)PsychologicalServices.Data.EntityType.AssessmentNoteEntity, 0, null, null, null, null, "AssessmentNotes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'CalendarNote' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -791,6 +843,22 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)NoteFieldIndex.Deleted, true); }
 			set	{ SetValue((int)NoteFieldIndex.Deleted, value); }
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentNoteEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AssessmentNoteEntity))]
+		public virtual EntityCollection<AssessmentNoteEntity> AssessmentNotes
+		{
+			get
+			{
+				if(_assessmentNotes==null)
+				{
+					_assessmentNotes = new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory)));
+					_assessmentNotes.SetContainingEntityInfo(this, "Note");
+				}
+				return _assessmentNotes;
+			}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'CalendarNoteEntity' which are related to this entity via a relation of type '1:n'.
