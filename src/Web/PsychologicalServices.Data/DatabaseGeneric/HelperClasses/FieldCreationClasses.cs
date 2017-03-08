@@ -264,6 +264,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AssessmentColorEntity</summary>
+	public partial class AssessmentColorFields
+	{
+		/// <summary>Creates a new AssessmentColorEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentColorFieldIndex.AssessmentId);}
+		}
+		/// <summary>Creates a new AssessmentColorEntity.ColorId field instance</summary>
+		public static EntityField2 ColorId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentColorFieldIndex.ColorId);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AssessmentIssueInDisputeEntity</summary>
 	public partial class AssessmentIssueInDisputeFields
 	{
@@ -466,6 +481,31 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 DateOfBirth
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ClaimantFieldIndex.DateOfBirth);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ColorEntity</summary>
+	public partial class ColorFields
+	{
+		/// <summary>Creates a new ColorEntity.ColorId field instance</summary>
+		public static EntityField2 ColorId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ColorFieldIndex.ColorId);}
+		}
+		/// <summary>Creates a new ColorEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ColorFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ColorEntity.HexCode field instance</summary>
+		public static EntityField2 HexCode
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ColorFieldIndex.HexCode);}
+		}
+		/// <summary>Creates a new ColorEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ColorFieldIndex.IsActive);}
 		}
 	}
 

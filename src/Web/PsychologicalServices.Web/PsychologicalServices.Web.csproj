@@ -218,6 +218,7 @@
     <Compile Include="Controllers\GenderController.cs" />
     <Compile Include="Controllers\IssueInDisputeController.cs" />
     <Compile Include="Controllers\ReferralSourceController.cs" />
+    <Compile Include="Controllers\ColorController.cs" />
     <Compile Include="Controllers\ReferralSourceTypeController.cs" />
     <Compile Include="Controllers\ReferralTypeController.cs" />
     <Compile Include="Controllers\ReportStatusController.cs" />

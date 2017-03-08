@@ -97,6 +97,10 @@
     <None Include="dbo\Scripts\PostDeployment\SeedData.sql" />
     <Build Include="dbo\Tables\Notes.sql" />
     <Build Include="dbo\Tables\CalendarNotes.sql" />
+    <Build Include="dbo\Tables\Colors.sql" />
+    <Build Include="dbo\Tables\AssessmentNotes.sql" />
+    <Build Include="dbo\Tables\AssessmentMedRehabs.sql" />
+    <Build Include="dbo\Tables\AssessmentColors.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

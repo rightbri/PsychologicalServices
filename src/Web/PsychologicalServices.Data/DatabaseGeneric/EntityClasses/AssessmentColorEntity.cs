@@ -26,25 +26,28 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'AssessmentNote'.<br/><br/>
+	/// Entity class which represents the entity 'AssessmentColor'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class AssessmentNoteEntity : CommonEntityBase, ISerializable
+	public partial class AssessmentColorEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
 
 
 		private AssessmentEntity _assessment;
-		private NoteEntity _note;
+		private ColorEntity _color;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -56,8 +59,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			/// <summary>Member name Assessment</summary>
 			public static readonly string Assessment = "Assessment";
-			/// <summary>Member name Note</summary>
-			public static readonly string Note = "Note";
+			/// <summary>Member name Color</summary>
+			public static readonly string Color = "Color";
 
 
 
@@ -65,13 +68,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static AssessmentNoteEntity()
+		static AssessmentColorEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public AssessmentNoteEntity():base("AssessmentNoteEntity")
+		public AssessmentColorEntity():base("AssessmentColorEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -79,47 +82,47 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public AssessmentNoteEntity(IEntityFields2 fields):base("AssessmentNoteEntity")
+		public AssessmentColorEntity(IEntityFields2 fields):base("AssessmentColorEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this AssessmentNoteEntity</param>
-		public AssessmentNoteEntity(IValidator validator):base("AssessmentNoteEntity")
+		/// <param name="validator">The custom validator object for this AssessmentColorEntity</param>
+		public AssessmentColorEntity(IValidator validator):base("AssessmentColorEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="assessmentId">PK value for AssessmentNote which data should be fetched into this AssessmentNote object</param>
-		/// <param name="noteId">PK value for AssessmentNote which data should be fetched into this AssessmentNote object</param>
+		/// <param name="assessmentId">PK value for AssessmentColor which data should be fetched into this AssessmentColor object</param>
+		/// <param name="colorId">PK value for AssessmentColor which data should be fetched into this AssessmentColor object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AssessmentNoteEntity(System.Int32 assessmentId, System.Int32 noteId):base("AssessmentNoteEntity")
+		public AssessmentColorEntity(System.Int32 assessmentId, System.Int32 colorId):base("AssessmentColorEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 			this.AssessmentId = assessmentId;
-			this.NoteId = noteId;
+			this.ColorId = colorId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="assessmentId">PK value for AssessmentNote which data should be fetched into this AssessmentNote object</param>
-		/// <param name="noteId">PK value for AssessmentNote which data should be fetched into this AssessmentNote object</param>
-		/// <param name="validator">The custom validator object for this AssessmentNoteEntity</param>
+		/// <param name="assessmentId">PK value for AssessmentColor which data should be fetched into this AssessmentColor object</param>
+		/// <param name="colorId">PK value for AssessmentColor which data should be fetched into this AssessmentColor object</param>
+		/// <param name="validator">The custom validator object for this AssessmentColorEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AssessmentNoteEntity(System.Int32 assessmentId, System.Int32 noteId, IValidator validator):base("AssessmentNoteEntity")
+		public AssessmentColorEntity(System.Int32 assessmentId, System.Int32 colorId, IValidator validator):base("AssessmentColorEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 			this.AssessmentId = assessmentId;
-			this.NoteId = noteId;
+			this.ColorId = colorId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected AssessmentNoteEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected AssessmentColorEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
@@ -130,10 +133,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_assessment.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_note = (NoteEntity)info.GetValue("_note", typeof(NoteEntity));
-				if(_note!=null)
+				_color = (ColorEntity)info.GetValue("_color", typeof(ColorEntity));
+				if(_color!=null)
 				{
-					_note.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_color.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -141,6 +144,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -148,13 +152,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((AssessmentNoteFieldIndex)fieldIndex)
+			switch((AssessmentColorFieldIndex)fieldIndex)
 			{
-				case AssessmentNoteFieldIndex.AssessmentId:
+				case AssessmentColorFieldIndex.AssessmentId:
 					DesetupSyncAssessment(true, false);
 					break;
-				case AssessmentNoteFieldIndex.NoteId:
-					DesetupSyncNote(true, false);
+				case AssessmentColorFieldIndex.ColorId:
+					DesetupSyncColor(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -181,8 +185,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessment":
 					this.Assessment = (AssessmentEntity)entity;
 					break;
-				case "Note":
-					this.Note = (NoteEntity)entity;
+				case "Color":
+					this.Color = (ColorEntity)entity;
 					break;
 
 
@@ -197,7 +201,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return AssessmentNoteEntity.GetRelationsForField(fieldName);
+			return AssessmentColorEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -209,10 +213,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 				case "Assessment":
-					toReturn.Add(AssessmentNoteEntity.Relations.AssessmentEntityUsingAssessmentId);
+					toReturn.Add(AssessmentColorEntity.Relations.AssessmentEntityUsingAssessmentId);
 					break;
-				case "Note":
-					toReturn.Add(AssessmentNoteEntity.Relations.NoteEntityUsingNoteId);
+				case "Color":
+					toReturn.Add(AssessmentColorEntity.Relations.ColorEntityUsingColorId);
 					break;
 
 
@@ -232,13 +236,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0;
+			int numberOfOneWayRelations = 0+1;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
-
+				case "Color":
+					return true;
 
 				default:
 					return base.CheckOneWayRelations(propertyName);
@@ -256,8 +261,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessment":
 					SetupSyncAssessment(relatedEntity);
 					break;
-				case "Note":
-					SetupSyncNote(relatedEntity);
+				case "Color":
+					SetupSyncColor(relatedEntity);
 					break;
 
 
@@ -278,8 +283,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessment":
 					DesetupSyncAssessment(false, true);
 					break;
-				case "Note":
-					DesetupSyncNote(false, true);
+				case "Color":
+					DesetupSyncColor(false, true);
 					break;
 
 
@@ -307,9 +312,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_assessment);
 			}
-			if(_note!=null)
+			if(_color!=null)
 			{
-				toReturn.Add(_note);
+				toReturn.Add(_color);
 			}
 
 			return toReturn;
@@ -338,12 +343,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
-				info.AddValue("_note", (!this.MarkedForDeletion?_note:null));
+				info.AddValue("_color", (!this.MarkedForDeletion?_color:null));
 
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -351,7 +357,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(AssessmentNoteFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(AssessmentColorFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -360,7 +366,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(AssessmentNoteFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(AssessmentColorFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -370,7 +376,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new AssessmentNoteRelations().GetAllRelations();
+			return new AssessmentColorRelations().GetAllRelations();
 		}
 		
 
@@ -387,12 +393,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Note' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// the related entity of type 'Color' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoNote()
+		public virtual IRelationPredicateBucket GetRelationInfoColor()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ColorFields.ColorId, null, ComparisonOperator.Equal, this.ColorId));
 			return bucket;
 		}
 
@@ -401,7 +407,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.AssessmentNoteEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.AssessmentColorEntity);
 		}
 
 		/// <summary>
@@ -416,7 +422,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(AssessmentColorEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -464,7 +470,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Assessment", _assessment);
-			toReturn.Add("Note", _note);
+			toReturn.Add("Color", _color);
 
 
 
@@ -480,9 +486,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_assessment.ActiveContext = base.ActiveContext;
 			}
-			if(_note!=null)
+			if(_color!=null)
 			{
-				_note.ActiveContext = base.ActiveContext;
+				_color.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -494,12 +500,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 			_assessment = null;
-			_note = null;
+			_color = null;
 
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -516,7 +523,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("AssessmentId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("NoteId", fieldHashtable);
+			_fieldsCustomProperties.Add("ColorId", fieldHashtable);
 		}
 		#endregion
 
@@ -525,7 +532,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAssessment(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentNoteEntity.Relations.AssessmentEntityUsingAssessmentId, true, signalRelatedEntity, "AssessmentNotes", resetFKFields, new int[] { (int)AssessmentNoteFieldIndex.AssessmentId } );		
+			base.PerformDesetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentColorEntity.Relations.AssessmentEntityUsingAssessmentId, true, signalRelatedEntity, "AssessmentColors", resetFKFields, new int[] { (int)AssessmentColorFieldIndex.AssessmentId } );		
 			_assessment = null;
 		}
 
@@ -537,7 +544,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				DesetupSyncAssessment(true, true);
 				_assessment = (AssessmentEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentNoteEntity.Relations.AssessmentEntityUsingAssessmentId, true, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentColorEntity.Relations.AssessmentEntityUsingAssessmentId, true, new string[] {  } );
 			}
 		}
 		
@@ -553,31 +560,31 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _note</summary>
+		/// <summary> Removes the sync logic for member _color</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncNote(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncColor(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", AssessmentNoteEntity.Relations.NoteEntityUsingNoteId, true, signalRelatedEntity, "AssessmentNotes", resetFKFields, new int[] { (int)AssessmentNoteFieldIndex.NoteId } );		
-			_note = null;
+			base.PerformDesetupSyncRelatedEntity( _color, new PropertyChangedEventHandler( OnColorPropertyChanged ), "Color", AssessmentColorEntity.Relations.ColorEntityUsingColorId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentColorFieldIndex.ColorId } );		
+			_color = null;
 		}
 
-		/// <summary> setups the sync logic for member _note</summary>
+		/// <summary> setups the sync logic for member _color</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncNote(IEntity2 relatedEntity)
+		private void SetupSyncColor(IEntity2 relatedEntity)
 		{
-			if(_note!=relatedEntity)
+			if(_color!=relatedEntity)
 			{
-				DesetupSyncNote(true, true);
-				_note = (NoteEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", AssessmentNoteEntity.Relations.NoteEntityUsingNoteId, true, new string[] {  } );
+				DesetupSyncColor(true, true);
+				_color = (ColorEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _color, new PropertyChangedEventHandler( OnColorPropertyChanged ), "Color", AssessmentColorEntity.Relations.ColorEntityUsingColorId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnNotePropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnColorPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -588,7 +595,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this AssessmentNoteEntity</param>
+		/// <param name="validator">The validator object for this AssessmentColorEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -601,15 +608,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static AssessmentNoteRelations Relations
+		public  static AssessmentColorRelations Relations
 		{
-			get	{ return new AssessmentNoteRelations(); }
+			get	{ return new AssessmentColorRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -629,19 +637,19 @@ namespace PsychologicalServices.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Assessment")[0], (int)PsychologicalServices.Data.EntityType.AssessmentNoteEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessment", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("Assessment")[0], (int)PsychologicalServices.Data.EntityType.AssessmentColorEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessment", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Color' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathNote
+		public static IPrefetchPathElement2 PrefetchPathColor
 		{
 			get
 			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Note")[0], (int)PsychologicalServices.Data.EntityType.AssessmentNoteEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "Note", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ColorEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Color")[0], (int)PsychologicalServices.Data.EntityType.AssessmentColorEntity, (int)PsychologicalServices.Data.EntityType.ColorEntity, 0, null, null, null, null, "Color", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -651,7 +659,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return AssessmentNoteEntity.CustomProperties;}
+			get { return AssessmentColorEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -667,29 +675,29 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return AssessmentNoteEntity.FieldsCustomProperties;}
+			get { return AssessmentColorEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The AssessmentId property of the Entity AssessmentNote<br/><br/>
+		/// <summary> The AssessmentId property of the Entity AssessmentColor<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentNotes"."AssessmentId"<br/>
+		/// <remarks>Mapped on  table field: "AssessmentColors"."AssessmentId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
 		public virtual System.Int32 AssessmentId
 		{
-			get { return (System.Int32)GetValue((int)AssessmentNoteFieldIndex.AssessmentId, true); }
-			set	{ SetValue((int)AssessmentNoteFieldIndex.AssessmentId, value); }
+			get { return (System.Int32)GetValue((int)AssessmentColorFieldIndex.AssessmentId, true); }
+			set	{ SetValue((int)AssessmentColorFieldIndex.AssessmentId, value); }
 		}
 
-		/// <summary> The NoteId property of the Entity AssessmentNote<br/><br/>
+		/// <summary> The ColorId property of the Entity AssessmentColor<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentNotes"."NoteId"<br/>
+		/// <remarks>Mapped on  table field: "AssessmentColors"."ColorId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 NoteId
+		public virtual System.Int32 ColorId
 		{
-			get { return (System.Int32)GetValue((int)AssessmentNoteFieldIndex.NoteId, true); }
-			set	{ SetValue((int)AssessmentNoteFieldIndex.NoteId, value); }
+			get { return (System.Int32)GetValue((int)AssessmentColorFieldIndex.ColorId, true); }
+			set	{ SetValue((int)AssessmentColorFieldIndex.ColorId, value); }
 		}
 
 
@@ -715,49 +723,49 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_assessment != null)
 						{
-							_assessment.UnsetRelatedEntity(this, "AssessmentNotes");
+							_assessment.UnsetRelatedEntity(this, "AssessmentColors");
 						}
 					}
 					else
 					{
 						if(_assessment!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "AssessmentNotes");
+							((IEntity2)value).SetRelatedEntity(this, "AssessmentColors");
 						}
 					}
 				}
 			}
 		}
 
-		/// <summary> Gets / sets related entity of type 'NoteEntity' which has to be set using a fetch action earlier. If no related entity
+		/// <summary> Gets / sets related entity of type 'ColorEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual NoteEntity Note
+		public virtual ColorEntity Color
 		{
 			get
 			{
-				return _note;
+				return _color;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncNote(value);
+					SetupSyncColor(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_note != null)
+						if(_color != null)
 						{
-							_note.UnsetRelatedEntity(this, "AssessmentNotes");
+							UnsetRelatedEntity(_color, "Color");
 						}
 					}
 					else
 					{
-						if(_note!=value)
+						if(_color!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "AssessmentNotes");
+							SetRelatedEntity((IEntity2)value, "Color");
 						}
 					}
 				}
@@ -782,7 +790,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.AssessmentNoteEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.AssessmentColorEntity; }
 		}
 		#endregion
 
@@ -791,6 +799,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

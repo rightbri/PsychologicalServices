@@ -6,7 +6,7 @@ import {inject} from 'aurelia-framework';
 
 @inject(DialogController, DataRepository, Config, Context)
 export class CalendarNoteDialog {
-	constructor(dialogController, dataRepository, config) {
+	constructor(dialogController, dataRepository, config, context) {
 		this.dialogController = dialogController;
 		this.dataRepository = dataRepository;
 		this.config = config;

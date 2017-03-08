@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((33 + 0));
+			base.InitClass((35 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
@@ -63,6 +63,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAppointmentTaskEntityMappings();
 			InitAssessmentEntityMappings();
 			InitAssessmentClaimEntityMappings();
+			InitAssessmentColorEntityMappings();
 			InitAssessmentIssueInDisputeEntityMappings();
 			InitAssessmentMedRehabEntityMappings();
 			InitAssessmentNoteEntityMappings();
@@ -71,6 +72,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitCalendarNoteEntityMappings();
 			InitClaimEntityMappings();
 			InitClaimantEntityMappings();
+			InitColorEntityMappings();
 			InitCompanyEntityMappings();
 			InitInvoiceAmountEntityMappings();
 			InitIssueInDisputeEntityMappings();
@@ -171,6 +173,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AssessmentClaimEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentClaimEntity", "ClaimId", "ClaimId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
+		/// <summary>Inits AssessmentColorEntity's mappings</summary>
+		private void InitAssessmentColorEntityMappings()
+		{
+			base.AddElementMapping( "AssessmentColorEntity", "PsychologicalServices", @"dbo", "AssessmentColors", 2 );
+			base.AddElementFieldMapping( "AssessmentColorEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AssessmentColorEntity", "ColorId", "ColorId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+		}
 		/// <summary>Inits AssessmentIssueInDisputeEntity's mappings</summary>
 		private void InitAssessmentIssueInDisputeEntityMappings()
 		{
@@ -243,6 +252,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "ClaimantEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
 			base.AddElementFieldMapping( "ClaimantEntity", "Gender", "Gender", false, (int)SqlDbType.NChar, 1, 0, 0, false, "", null, typeof(System.String), 5 );
 			base.AddElementFieldMapping( "ClaimantEntity", "DateOfBirth", "DateOfBirth", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 6 );
+		}
+		/// <summary>Inits ColorEntity's mappings</summary>
+		private void InitColorEntityMappings()
+		{
+			base.AddElementMapping( "ColorEntity", "PsychologicalServices", @"dbo", "Colors", 4 );
+			base.AddElementFieldMapping( "ColorEntity", "ColorId", "ColorId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "ColorEntity", "Name", "Name", false, (int)SqlDbType.VarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "ColorEntity", "HexCode", "HexCode", false, (int)SqlDbType.VarChar, 10, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "ColorEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
 		}
 		/// <summary>Inits CompanyEntity's mappings</summary>
 		private void InitCompanyEntityMappings()

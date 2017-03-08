@@ -169,6 +169,20 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentColor.
+	/// </summary>
+	public enum AssessmentColorFieldIndex:int
+	{
+		///<summary>AssessmentId. </summary>
+		AssessmentId,
+		///<summary>ColorId. </summary>
+		ColorId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentIssueInDispute.
 	/// </summary>
 	public enum AssessmentIssueInDisputeFieldIndex:int
@@ -309,6 +323,24 @@ namespace PsychologicalServices.Data
 		Gender,
 		///<summary>DateOfBirth. </summary>
 		DateOfBirth,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Color.
+	/// </summary>
+	public enum ColorFieldIndex:int
+	{
+		///<summary>ColorId. </summary>
+		ColorId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>HexCode. </summary>
+		HexCode,
+		///<summary>IsActive. </summary>
+		IsActive,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -648,6 +680,8 @@ namespace PsychologicalServices.Data
 		AssessmentEntity,
 		///<summary>AssessmentClaim</summary>
 		AssessmentClaimEntity,
+		///<summary>AssessmentColor</summary>
+		AssessmentColorEntity,
 		///<summary>AssessmentIssueInDispute</summary>
 		AssessmentIssueInDisputeEntity,
 		///<summary>AssessmentMedRehab</summary>
@@ -664,6 +698,8 @@ namespace PsychologicalServices.Data
 		ClaimEntity,
 		///<summary>Claimant</summary>
 		ClaimantEntity,
+		///<summary>Color</summary>
+		ColorEntity,
 		///<summary>Company</summary>
 		CompanyEntity,
 		///<summary>InvoiceAmount</summary>

@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Claims;
+using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Referrals;
@@ -45,6 +46,8 @@ namespace PsychologicalServices.Models.Assessments
         public IEnumerable<MedRehab> MedRehabs { get; set; }
 
         public IEnumerable<Note> Notes { get; set; }
+
+        public IEnumerable<Color> Colors { get; set; }
 
         public bool IsNew()
         {

@@ -32,12 +32,16 @@ export class EditAssessment {
 		this.issuesInDispute = null;
 		this.claims = null;
 		this.claimant = null;
+		this.notes = null;
+		this.medRehabs = null;
+		this.colors = null;
 		
 		this.assessmentTypeMatcher = (a, b) => a.assessmentTypeId === b.assessmentTypeId;
 		this.reportStatusMatcher = (a, b) => a.reportStatusId === b.reportStatusId;
 		this.referralSourceMatcher = (a, b) => a.referralSourceId === b.referralSourceId;
 		this.referralTypeMatcher = (a, b) => a.referralTypeId === b.referralTypeId;
 		this.issueInDisputeMatcher = (a, b) => a.issueInDisputeId === b.issueInDisputeId;
+		this.colorMatcher = (a, b) => a.colorId === b.colorId;
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
 		//this.companyMatcher = (a, b) => a.companyId === b.companyId;
 		
@@ -81,7 +85,8 @@ export class EditAssessment {
 								claims: [],
 								issuesInDispute: [],
 								medRehabs: [],
-								notes: []
+								notes: [],
+								colors: []
 							};
 							
 							return this.getData();
@@ -97,7 +102,8 @@ export class EditAssessment {
 			this.dataRepository.getReferralSources().then(data => this.referralSources = data),
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
 			this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
-			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data)//,
+			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
+			this.dataRepository.getColors().then(data => this.colors = data)//,
 			//this.dataRepository.getCompanies().then(data => this.companies = data)
 		]);
 	}

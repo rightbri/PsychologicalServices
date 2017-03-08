@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Common.Validation;
+using PsychologicalServices.Models.Notes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +8,21 @@ namespace PsychologicalServices.Models.CalendarNotes
 {
     public class CalendarNoteValidator : ICalendarNoteValidator
     {
+        private readonly INoteValidator _noteValidator = null;
+
+        public CalendarNoteValidator(
+            INoteValidator noteValidator
+        )
+        {
+            _noteValidator = noteValidator;
+        }
+
         public IValidationResult Validate(CalendarNote item)
         {
             var result = new ValidationResult
             {
                 ValidationErrors = new List<IValidationError>(),
             };
-
-            if (string.IsNullOrWhiteSpace(item.Note.NoteText))
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "Note.NoteText", Message = "Note text is required" }
-                );
-            }
 
             if (item.FromDate.HasValue && item.ToDate.HasValue && item.FromDate.Value > item.ToDate.Value)
             {
@@ -28,6 +31,10 @@ namespace PsychologicalServices.Models.CalendarNotes
                 );
             }
 
+            result.ValidationErrors.AddRange(
+                _noteValidator.Validate(item.Note).ValidationErrors
+            );
+            
             result.IsValid = !result.ValidationErrors.Any();
 
             return result;

@@ -88,6 +88,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<AssessmentNoteEntity>(assessment => assessment.AssessmentNotes)
                         .SubPath(assessmentNotePath => assessmentNotePath
                             .Prefetch<NoteEntity>(assessmentNote => assessmentNote.Note)
+                                .SubPath(notePath => notePath
+                                    .Prefetch<UserEntity>(note => note.CreateUser)
+                                    .Prefetch<UserEntity>(note => note.UpdateUser)
+                                )
+                        )
+                    .Prefetch<AssessmentColorEntity>(assessment => assessment.AssessmentColors)
+                        .SubPath(assessmentColorPath => assessmentColorPath
+                            .Prefetch<ColorEntity>(assessmentColor => assessmentColor.Color)
                         )
                 );
 
@@ -245,7 +253,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 {
                     var prefetch = new PrefetchPath2(EntityType.AssessmentEntity);
 
-                    prefetch.Add(AssessmentEntity.PrefetchPathAppointments);
+                    prefetch.Add(AssessmentEntity.PrefetchPathAppointments)
+                        .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentTasks)
+                        .SubPath.Add(AppointmentTaskEntity.PrefetchPathTask);
                     
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentClaims)
                         .SubPath.Add(AssessmentClaimEntity.PrefetchPathClaim);
@@ -256,6 +266,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentNotes)
                         .SubPath.Add(AssessmentNoteEntity.PrefetchPathNote);
+
+                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentColors)
+                        .SubPath.Add(AssessmentColorEntity.PrefetchPathColor);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
@@ -669,6 +682,33 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         }
                     })
                 );
+
+                #endregion
+
+                #region colors
+
+                var colorsToAdd = assessment.Colors
+                    .Where(color =>
+                        !assessmentEntity.AssessmentColors.Any(assessmentColor => assessmentColor.ColorId == color.ColorId)
+                    );
+
+                var colorsToRemove = assessmentEntity.AssessmentColors
+                    .Where(assessmentColor =>
+                        !assessment.Colors.Any(color => color.ColorId == assessmentColor.ColorId)
+                    );
+
+                assessmentEntity.AssessmentColors.AddRange(
+                    colorsToAdd.Select(color => new AssessmentColorEntity
+                    {
+                        AssessmentId = assessment.AssessmentId,
+                        ColorId = color.ColorId,
+                    })
+                );
+
+                foreach (var color in colorsToRemove)
+                {
+                    uow.AddForDelete(color);
+                }
 
                 #endregion
 

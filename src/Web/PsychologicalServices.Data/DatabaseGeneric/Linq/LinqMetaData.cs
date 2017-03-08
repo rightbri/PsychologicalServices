@@ -82,6 +82,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.AssessmentClaimEntity:
 					toReturn = this.AssessmentClaim;
 					break;
+				case PsychologicalServices.Data.EntityType.AssessmentColorEntity:
+					toReturn = this.AssessmentColor;
+					break;
 				case PsychologicalServices.Data.EntityType.AssessmentIssueInDisputeEntity:
 					toReturn = this.AssessmentIssueInDispute;
 					break;
@@ -105,6 +108,9 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.ClaimantEntity:
 					toReturn = this.Claimant;
+					break;
+				case PsychologicalServices.Data.EntityType.ColorEntity:
+					toReturn = this.Color;
 					break;
 				case PsychologicalServices.Data.EntityType.CompanyEntity:
 					toReturn = this.Company;
@@ -209,6 +215,12 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<AssessmentClaimEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting AssessmentColorEntity instances in the database.</summary>
+		public DataSource2<AssessmentColorEntity> AssessmentColor
+		{
+			get { return new DataSource2<AssessmentColorEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting AssessmentIssueInDisputeEntity instances in the database.</summary>
 		public DataSource2<AssessmentIssueInDisputeEntity> AssessmentIssueInDispute
 		{
@@ -255,6 +267,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<ClaimantEntity> Claimant
 		{
 			get { return new DataSource2<ClaimantEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting ColorEntity instances in the database.</summary>
+		public DataSource2<ColorEntity> Color
+		{
+			get { return new DataSource2<ColorEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting CompanyEntity instances in the database.</summary>

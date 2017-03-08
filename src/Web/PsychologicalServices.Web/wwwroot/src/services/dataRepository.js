@@ -153,6 +153,18 @@ export class DataRepository {
 		return this.getManyBasic('reporttype', true);
 	}
 	
+	getColor(id) {
+		return this.getSingleBasic(id, 'color');
+	}
+	
+	getColors() {
+		return this.getManyBasic('color', true);
+	}
+	
+	saveColor(color) {
+		return this.saveBasic(color, 'color');
+	}
+	
 	getUserByUsername(username) {
 		return this.postBasic('user/byUsername', username);
 	}

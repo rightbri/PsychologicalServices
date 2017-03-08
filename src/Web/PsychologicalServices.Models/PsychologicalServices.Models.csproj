@@ -93,6 +93,12 @@
     <Compile Include="Claims\IMedRehabValidator.cs" />
     <Compile Include="Claims\MedRehab.cs" />
     <Compile Include="Claims\MedRehabValidator.cs" />
+    <Compile Include="Colors\Color.cs" />
+    <Compile Include="Colors\ColorService.cs" />
+    <Compile Include="Colors\ColorValidator.cs" />
+    <Compile Include="Colors\IColorRepository.cs" />
+    <Compile Include="Colors\IColorService.cs" />
+    <Compile Include="Colors\IColorValidator.cs" />
     <Compile Include="Common\Configuration\IConfigurationService.cs" />
     <Compile Include="Common\Utility\EmailAddressValidator.cs" />
     <Compile Include="Common\Utility\ICacheService.cs" />
@@ -113,7 +119,9 @@
     <Compile Include="Invoices\IInvoiceRepository.cs" />
     <Compile Include="Invoices\IInvoiceService.cs" />
     <Compile Include="Invoices\InvoiceService.cs" />
+    <Compile Include="Notes\INoteValidator.cs" />
     <Compile Include="Notes\Note.cs" />
+    <Compile Include="Notes\NoteValidator.cs" />
     <Compile Include="Referrals\IReferralRepository.cs" />
     <Compile Include="Referrals\IReferralService.cs" />
     <Compile Include="Referrals\IReferralSourceTypeValidator.cs" />

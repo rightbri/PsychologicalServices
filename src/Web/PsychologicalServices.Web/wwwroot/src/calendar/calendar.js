@@ -118,7 +118,7 @@ export class Calendar {
 				if (!data.wasCancelled) {
 					this.calendarNotes.push(data.calendarNote);
 					
-					this.days = this.getDays(this.searchStart, this.searchEnd);
+					//this.days = this.getDays(this.searchStart, this.searchEnd);
 				}
 			});
 	}

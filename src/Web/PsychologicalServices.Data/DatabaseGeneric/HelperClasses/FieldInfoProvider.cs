@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (33 + 0));
+			base.InitClass( (35 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -64,6 +64,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAppointmentTaskEntityInfos();
 			InitAssessmentEntityInfos();
 			InitAssessmentClaimEntityInfos();
+			InitAssessmentColorEntityInfos();
 			InitAssessmentIssueInDisputeEntityInfos();
 			InitAssessmentMedRehabEntityInfos();
 			InitAssessmentNoteEntityInfos();
@@ -72,6 +73,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitCalendarNoteEntityInfos();
 			InitClaimEntityInfos();
 			InitClaimantEntityInfos();
+			InitColorEntityInfos();
 			InitCompanyEntityInfos();
 			InitInvoiceAmountEntityInfos();
 			InitIssueInDisputeEntityInfos();
@@ -165,6 +167,12 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentClaimEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentClaimFieldIndex.AssessmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentClaimEntity", "ClaimId", typeof(System.Int32), true, true, false, false,  (int)AssessmentClaimFieldIndex.ClaimId, 0, 0, 10);
 		}
+		/// <summary>Inits AssessmentColorEntity's FieldInfo objects</summary>
+		private void InitAssessmentColorEntityInfos()
+		{
+			base.AddElementFieldInfo("AssessmentColorEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentColorFieldIndex.AssessmentId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentColorEntity", "ColorId", typeof(System.Int32), true, true, false, false,  (int)AssessmentColorFieldIndex.ColorId, 0, 0, 10);
+		}
 		/// <summary>Inits AssessmentIssueInDisputeEntity's FieldInfo objects</summary>
 		private void InitAssessmentIssueInDisputeEntityInfos()
 		{
@@ -229,6 +237,14 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ClaimantEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ClaimantFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("ClaimantEntity", "Gender", typeof(System.String), false, false, false, false,  (int)ClaimantFieldIndex.Gender, 1, 0, 0);
 			base.AddElementFieldInfo("ClaimantEntity", "DateOfBirth", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)ClaimantFieldIndex.DateOfBirth, 0, 0, 0);
+		}
+		/// <summary>Inits ColorEntity's FieldInfo objects</summary>
+		private void InitColorEntityInfos()
+		{
+			base.AddElementFieldInfo("ColorEntity", "ColorId", typeof(System.Int32), true, false, true, false,  (int)ColorFieldIndex.ColorId, 0, 0, 10);
+			base.AddElementFieldInfo("ColorEntity", "Name", typeof(System.String), false, false, false, false,  (int)ColorFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("ColorEntity", "HexCode", typeof(System.String), false, false, false, false,  (int)ColorFieldIndex.HexCode, 10, 0, 0);
+			base.AddElementFieldInfo("ColorEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ColorFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits CompanyEntity's FieldInfo objects</summary>
 		private void InitCompanyEntityInfos()

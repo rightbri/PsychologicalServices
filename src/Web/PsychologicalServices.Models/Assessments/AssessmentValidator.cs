@@ -1,8 +1,10 @@
 ﻿using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Claims;
+using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Common.Validation;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Referrals;
 using PsychologicalServices.Models.Reports;
 using PsychologicalServices.Models.Rights;
@@ -25,6 +27,8 @@ namespace PsychologicalServices.Models.Assessments
         private readonly IAppointmentValidator _appointmentValidator = null;
         private readonly IEmailAddressValidator _emailAddressValidator = null;
         private readonly IMedRehabValidator _medRehabValidator = null;
+        private readonly INoteValidator _noteValidator = null;
+        private readonly IColorValidator _colorValidator = null;
 
         public AssessmentValidator(
             IAssessmentRepository assessmentRepository,
@@ -36,7 +40,9 @@ namespace PsychologicalServices.Models.Assessments
             IClaimValidator claimValidator,
             IAppointmentValidator appointmentValidator,
             IEmailAddressValidator emailAddressValidator,
-            IMedRehabValidator medRehabValidator
+            IMedRehabValidator medRehabValidator,
+            INoteValidator noteValidator,
+            IColorValidator colorValidator
         )
         {
             _assessmentRepository = assessmentRepository;
@@ -49,6 +55,8 @@ namespace PsychologicalServices.Models.Assessments
             _appointmentValidator = appointmentValidator;
             _emailAddressValidator = emailAddressValidator;
             _medRehabValidator = medRehabValidator;
+            _noteValidator = noteValidator;
+            _colorValidator = colorValidator;
         }
 
         public IValidationResult Validate(Assessment item)
@@ -298,6 +306,26 @@ namespace PsychologicalServices.Models.Assessments
                 {
                     result.ValidationErrors.AddRange(
                         _medRehabValidator.Validate(medRehab).ValidationErrors
+                    );
+                }
+            }
+
+            if (null != item.Notes)
+            {
+                foreach (var note in item.Notes)
+                {
+                    result.ValidationErrors.AddRange(
+                        _noteValidator.Validate(note).ValidationErrors
+                    );
+                }
+            }
+
+            if (null != item.Colors)
+            {
+                foreach (var color in item.Colors)
+                {
+                    result.ValidationErrors.AddRange(
+                        _colorValidator.Validate(color).ValidationErrors
                     );
                 }
             }

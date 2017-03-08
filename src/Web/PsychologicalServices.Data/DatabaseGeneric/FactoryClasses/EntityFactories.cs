@@ -362,6 +362,47 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty AssessmentColorEntity objects.</summary>
+	[Serializable]
+	public partial class AssessmentColorEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AssessmentColorEntityFactory() : base("AssessmentColorEntity", PsychologicalServices.Data.EntityType.AssessmentColorEntity) { }
+
+		/// <summary>Creates a new, empty AssessmentColorEntity object.</summary>
+		/// <returns>A new, empty AssessmentColorEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AssessmentColorEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentColor
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AssessmentColorEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AssessmentColorEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentColorUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AssessmentColorEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty AssessmentIssueInDisputeEntity objects.</summary>
 	[Serializable]
 	public partial class AssessmentIssueInDisputeEntityFactory : EntityFactoryBase2 {
@@ -453,7 +494,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentNote
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -465,7 +505,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentNoteUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -669,6 +708,47 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntityCollection2 CreateEntityCollection()
 		{
 			return new EntityCollection<ClaimantEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
+	/// <summary>Factory to create new, empty ColorEntity objects.</summary>
+	[Serializable]
+	public partial class ColorEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public ColorEntityFactory() : base("ColorEntity", PsychologicalServices.Data.EntityType.ColorEntity) { }
+
+		/// <summary>Creates a new, empty ColorEntity object.</summary>
+		/// <returns>A new, empty ColorEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new ColorEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewColor
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new ColorEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new ColorEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewColorUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<ColorEntity>(this);
 		}
 		
 
@@ -1412,6 +1492,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AssessmentClaimEntity:
 					factoryToUse = new AssessmentClaimEntityFactory();
 					break;
+				case PsychologicalServices.Data.EntityType.AssessmentColorEntity:
+					factoryToUse = new AssessmentColorEntityFactory();
+					break;
 				case PsychologicalServices.Data.EntityType.AssessmentIssueInDisputeEntity:
 					factoryToUse = new AssessmentIssueInDisputeEntityFactory();
 					break;
@@ -1435,6 +1518,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.ClaimantEntity:
 					factoryToUse = new ClaimantEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.ColorEntity:
+					factoryToUse = new ColorEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.CompanyEntity:
 					factoryToUse = new CompanyEntityFactory();

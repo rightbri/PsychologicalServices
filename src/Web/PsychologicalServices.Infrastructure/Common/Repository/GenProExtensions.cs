@@ -4,6 +4,7 @@ using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.CalendarNotes;
 using PsychologicalServices.Models.Claims;
+using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Invoices;
 using PsychologicalServices.Models.Notes;
@@ -22,6 +23,19 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Color ToColor(this ColorEntity color)
+        {
+            return null != color
+                ? new Color
+                {
+                    ColorId = color.ColorId,
+                    Name = color.Name,
+                    HexCode = color.HexCode,
+                    IsActive = color.IsActive,
+                }
+                : null;
+        }
+
         public static MedRehab ToMedRehab(this AssessmentMedRehabEntity medRehab)
         {
             return null != medRehab
@@ -224,6 +238,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
                     MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
                     Notes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.Note.ToNote()),
+                    Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                 }
                 : null;
         }
