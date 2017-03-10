@@ -14,7 +14,7 @@ namespace PsychologicalServices.Models.Referrals
 
         public int LargeFileSize { get; set; }
 
-        public decimal LargeFileFeeAmount { get; set; }
+        public int LargeFileFeeAmount { get; set; }
 
         public bool IsActive { get; set; }
 

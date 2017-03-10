@@ -27,6 +27,8 @@ export class Calendar {
 		this.searchPsychologist = null;
 		this.searchCompany = 0;
 		
+		this.scheduleView = true;
+		
 		this.appointments = null;
 		this.calendarNotes = null;
 		
@@ -43,6 +45,10 @@ export class Calendar {
 				
 				return this.getData();		
 			});
+	}
+	
+	setView(viewType) {
+		this.scheduleView = viewType === 'schedule';
 	}
 	
 	getData() {
@@ -118,7 +124,7 @@ export class Calendar {
 				if (!data.wasCancelled) {
 					this.calendarNotes.push(data.calendarNote);
 					
-					//this.days = this.getDays(this.searchStart, this.searchEnd);
+					this.days = this.getDays(this.searchStart, this.searchEnd);
 				}
 			});
 	}

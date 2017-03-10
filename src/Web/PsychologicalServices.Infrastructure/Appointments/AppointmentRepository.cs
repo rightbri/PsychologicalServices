@@ -62,22 +62,8 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                     .Prefetch<ReferralSourceTypeEntity>(referralSource => referralSource.ReferralSourceType)
                                 )
                             .Prefetch<ReportStatusEntity>(assessment => assessment.ReportStatus)
-                            //.Prefetch<UserEntity>(assessment => assessment.DocListWriter)
-                                    //.SubPath(userPath => userPath
-                                    //    .Prefetch<CompanyEntity>(user => user.Company)
-                                    //    .Prefetch<RoleEntity>(user => user.RoleCollectionViaUserRoles)
-                                    //        .SubPath(rolePath => rolePath
-                                    //            .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
-                                    //        )
-                                    //)
-                            //.Prefetch<UserEntity>(assessment => assessment.NotesWriter)
-                                    //.SubPath(userPath => userPath
-                                    //    .Prefetch<CompanyEntity>(user => user.Company)
-                                    //    .Prefetch<RoleEntity>(user => user.RoleCollectionViaUserRoles)
-                                    //        .SubPath(rolePath => rolePath
-                                    //            .Prefetch<RightEntity>(role => role.RightCollectionViaRoleRights)
-                                    //        )
-                                    //)
+                            .Prefetch<UserEntity>(assessment => assessment.DocListWriter)
+                            .Prefetch<UserEntity>(assessment => assessment.NotesWriter)
                             //.Prefetch<CompanyEntity>(assessment => assessment.Company)
                             .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                                 .SubPath(assessmentClaimPath => assessmentClaimPath

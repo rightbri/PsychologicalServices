@@ -9,6 +9,8 @@ export class Config {
 		this.shortDateFormat = 'MM-DD-YYYY';
 		this.shortTimeFormat = 'h:mmA';
 		
+		this.defaultNewAppointmentHour = 9;
+		
 		this.dateRangePickerOptions = {
 			'autoApply': true,
 			'showDropdowns': true,

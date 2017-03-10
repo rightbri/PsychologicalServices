@@ -279,6 +279,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.ReportStatusId = assessment.ReportStatus.ReportStatusId;
                 assessmentEntity.CompanyId = assessment.Company.CompanyId;
                 assessmentEntity.Deleted = assessment.Deleted;
+                assessmentEntity.Psychiatrist = assessment.Psychiatrist;
+                assessmentEntity.TypicalDay = assessment.TypicalDay;
+                assessmentEntity.WorkHistory = assessment.WorkHistory;
 
                 if (null == assessment.MedicalFileReceivedDate)
                 {

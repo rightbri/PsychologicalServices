@@ -149,6 +149,12 @@ namespace PsychologicalServices.Data
 		NotesWriterId,
 		///<summary>MedicalFileReceivedDate. </summary>
 		MedicalFileReceivedDate,
+		///<summary>Psychiatrist. </summary>
+		Psychiatrist,
+		///<summary>TypicalDay. </summary>
+		TypicalDay,
+		///<summary>WorkHistory. </summary>
+		WorkHistory,
 		/// <summary></summary>
 		AmountOfFields
 	}

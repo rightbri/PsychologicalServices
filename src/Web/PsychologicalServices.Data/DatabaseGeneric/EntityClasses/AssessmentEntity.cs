@@ -1102,6 +1102,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("MedicalFileReceivedDate", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Psychiatrist", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("TypicalDay", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("WorkHistory", fieldHashtable);
 		}
 		#endregion
 
@@ -1683,6 +1692,39 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.DateTime>)GetValue((int)AssessmentFieldIndex.MedicalFileReceivedDate, false); }
 			set	{ SetValue((int)AssessmentFieldIndex.MedicalFileReceivedDate, value); }
+		}
+
+		/// <summary> The Psychiatrist property of the Entity Assessment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Assessments"."Psychiatrist"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean Psychiatrist
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentFieldIndex.Psychiatrist, true); }
+			set	{ SetValue((int)AssessmentFieldIndex.Psychiatrist, value); }
+		}
+
+		/// <summary> The TypicalDay property of the Entity Assessment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Assessments"."TypicalDay"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean TypicalDay
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentFieldIndex.TypicalDay, true); }
+			set	{ SetValue((int)AssessmentFieldIndex.TypicalDay, value); }
+		}
+
+		/// <summary> The WorkHistory property of the Entity Assessment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Assessments"."WorkHistory"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean WorkHistory
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentFieldIndex.WorkHistory, true); }
+			set	{ SetValue((int)AssessmentFieldIndex.WorkHistory, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.

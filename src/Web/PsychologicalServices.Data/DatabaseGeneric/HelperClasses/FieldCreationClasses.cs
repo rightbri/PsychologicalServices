@@ -247,6 +247,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.MedicalFileReceivedDate);}
 		}
+		/// <summary>Creates a new AssessmentEntity.Psychiatrist field instance</summary>
+		public static EntityField2 Psychiatrist
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.Psychiatrist);}
+		}
+		/// <summary>Creates a new AssessmentEntity.TypicalDay field instance</summary>
+		public static EntityField2 TypicalDay
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.TypicalDay);}
+		}
+		/// <summary>Creates a new AssessmentEntity.WorkHistory field instance</summary>
+		public static EntityField2 WorkHistory
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.WorkHistory);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentClaimEntity</summary>

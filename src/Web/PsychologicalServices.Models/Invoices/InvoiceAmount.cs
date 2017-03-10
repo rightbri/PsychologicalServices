@@ -8,6 +8,6 @@ namespace PsychologicalServices.Models.Invoices
 
         public int ReportTypeId { get; set; }
 
-        public decimal Amount { get; set; }
+        public int Amount { get; set; }
     }
 }

@@ -36,12 +36,12 @@ export class EditAssessment {
 		this.medRehabs = null;
 		this.colors = null;
 		
-		this.assessmentTypeMatcher = (a, b) => a.assessmentTypeId === b.assessmentTypeId;
-		this.reportStatusMatcher = (a, b) => a.reportStatusId === b.reportStatusId;
-		this.referralSourceMatcher = (a, b) => a.referralSourceId === b.referralSourceId;
-		this.referralTypeMatcher = (a, b) => a.referralTypeId === b.referralTypeId;
-		this.issueInDisputeMatcher = (a, b) => a.issueInDisputeId === b.issueInDisputeId;
-		this.colorMatcher = (a, b) => a.colorId === b.colorId;
+		this.assessmentTypeMatcher = (a, b) => a != null && b != null && a.assessmentTypeId === b.assessmentTypeId;
+		this.reportStatusMatcher = (a, b) => a != null && b != null && a.reportStatusId === b.reportStatusId;
+		this.referralSourceMatcher = (a, b) => a != null && b != null && a.referralSourceId === b.referralSourceId;
+		this.referralTypeMatcher = (a, b) => a != null && b != null && a.referralTypeId === b.referralTypeId;
+		this.issueInDisputeMatcher = (a, b) => a != null && b != null && a.issueInDisputeId === b.issueInDisputeId;
+		this.colorMatcher = (a, b) => a != null && b != null && a.colorId === b.colorId;
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
 		//this.companyMatcher = (a, b) => a.companyId === b.companyId;
 		
@@ -73,11 +73,16 @@ export class EditAssessment {
 				});
 		}
 		else {
+			let appointmentDate = new Date(params.year, params.month - 1, params.day);
+			appointmentDate.setHours(this.config.defaultNewAppointmentHour);
+			
 			//new assessment
 			return this.context.getUser()
 				.then(user => {
 					return this.dataRepository.getNewAppointment(user.company.companyId)
 						.then(appointment => {
+							
+							appointment.appointmentTime = appointmentDate;
 							
 							this.assessment = {
 								company: user.company,
@@ -240,7 +245,7 @@ export class EditAssessment {
 	}
 	
 	newAppointment() {
-		this.dataRepository.getNewAppointment(this.assessment.company.companyId)//, this.assessment.assessmentId)
+		this.dataRepository.getNewAppointment(this.assessment.company.companyId)
 			.then(data => this.editAppointment(data))
 			.then(data => {
 				if (!data.wasCancelled) {

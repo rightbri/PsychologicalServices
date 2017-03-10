@@ -699,11 +699,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The InvoiceAmount property of the Entity InvoiceAmount<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "InvoiceAmounts"."InvoiceAmount"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Decimal, 19, 4, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Decimal InvoiceAmount
+		public virtual System.Int32 InvoiceAmount
 		{
-			get { return (System.Decimal)GetValue((int)InvoiceAmountFieldIndex.InvoiceAmount, true); }
+			get { return (System.Int32)GetValue((int)InvoiceAmountFieldIndex.InvoiceAmount, true); }
 			set	{ SetValue((int)InvoiceAmountFieldIndex.InvoiceAmount, value); }
 		}
 

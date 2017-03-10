@@ -160,6 +160,9 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentEntity", "DocListWriterId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.DocListWriterId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "NotesWriterId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.NotesWriterId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "MedicalFileReceivedDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)AssessmentFieldIndex.MedicalFileReceivedDate, 0, 0, 0);
+			base.AddElementFieldInfo("AssessmentEntity", "Psychiatrist", typeof(System.Boolean), false, false, false, false,  (int)AssessmentFieldIndex.Psychiatrist, 0, 0, 0);
+			base.AddElementFieldInfo("AssessmentEntity", "TypicalDay", typeof(System.Boolean), false, false, false, false,  (int)AssessmentFieldIndex.TypicalDay, 0, 0, 0);
+			base.AddElementFieldInfo("AssessmentEntity", "WorkHistory", typeof(System.Boolean), false, false, false, false,  (int)AssessmentFieldIndex.WorkHistory, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentClaimEntity's FieldInfo objects</summary>
 		private void InitAssessmentClaimEntityInfos()
@@ -258,7 +261,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("InvoiceAmountEntity", "ReferralSourceId", typeof(System.Int32), true, true, false, false,  (int)InvoiceAmountFieldIndex.ReferralSourceId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceAmountEntity", "ReportTypeId", typeof(System.Int32), true, true, false, false,  (int)InvoiceAmountFieldIndex.ReportTypeId, 0, 0, 10);
-			base.AddElementFieldInfo("InvoiceAmountEntity", "InvoiceAmount", typeof(System.Decimal), false, false, false, false,  (int)InvoiceAmountFieldIndex.InvoiceAmount, 0, 4, 19);
+			base.AddElementFieldInfo("InvoiceAmountEntity", "InvoiceAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceAmountFieldIndex.InvoiceAmount, 0, 0, 10);
 		}
 		/// <summary>Inits IssueInDisputeEntity's FieldInfo objects</summary>
 		private void InitIssueInDisputeEntityInfos()
@@ -287,7 +290,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ReferralSourceEntity", "ReferralSourceTypeId", typeof(System.Int32), false, true, false, false,  (int)ReferralSourceFieldIndex.ReferralSourceTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("ReferralSourceEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ReferralSourceFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("ReferralSourceEntity", "LargeFileSize", typeof(System.Int32), false, false, false, false,  (int)ReferralSourceFieldIndex.LargeFileSize, 0, 0, 10);
-			base.AddElementFieldInfo("ReferralSourceEntity", "LargeFileFeeAmount", typeof(System.Decimal), false, false, false, false,  (int)ReferralSourceFieldIndex.LargeFileFeeAmount, 0, 4, 19);
+			base.AddElementFieldInfo("ReferralSourceEntity", "LargeFileFeeAmount", typeof(System.Int32), false, false, false, false,  (int)ReferralSourceFieldIndex.LargeFileFeeAmount, 0, 0, 10);
 		}
 		/// <summary>Inits ReferralSourceTypeEntity's FieldInfo objects</summary>
 		private void InitReferralSourceTypeEntityInfos()

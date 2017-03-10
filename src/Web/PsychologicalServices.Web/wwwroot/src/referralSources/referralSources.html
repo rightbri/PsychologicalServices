@@ -1,0 +1,31 @@
+<template>
+	<require from="valueConverters/boolean"></require>
+	
+<h3>Referral Sources</h3>
+
+<table class="table table-condensed" fixed-header>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>Type</th>
+			<th>Large File Size</th>
+			<th>Large File Fee</th>
+			<th>Active?</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr repeat.for="referralSource of referralSources">
+			<td>
+			
+			</td>
+			<td>${referralSource.name}</td>
+			<td>${referralSource.referralSourceType.name}</td>
+			<td>${referralSource.largeFileSize}</td>
+			<td>${referralSource.largeFileFeeAmount}</td>
+			<td>${referralSource.isActive | boolean}</td>
+		</tr>
+	</tbody>
+</table>
+
+</template>

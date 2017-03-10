@@ -23,6 +23,12 @@ namespace PsychologicalServices.Models.Assessments
 
         public bool Deleted { get; set; }
 
+        public bool Psychiatrist { get; set; }
+
+        public bool TypicalDay { get; set; }
+
+        public bool WorkHistory { get; set; }
+
         public AssessmentType AssessmentType { get; set; }
 
         public ReferralType ReferralType { get; set; }
