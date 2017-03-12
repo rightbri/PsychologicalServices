@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Invoices;
+using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Referrals
 {
@@ -8,8 +10,6 @@ namespace PsychologicalServices.Models.Referrals
 
         public string Name { get; set; }
 
-        public int ReferralSourceTypeId { get; set; }
-
         public ReferralSourceType ReferralSourceType { get; set; }
 
         public int LargeFileSize { get; set; }
@@ -17,6 +17,8 @@ namespace PsychologicalServices.Models.Referrals
         public int LargeFileFeeAmount { get; set; }
 
         public bool IsActive { get; set; }
+
+        public IEnumerable<InvoiceAmount> InvoiceAmounts { get; set; }
 
         public bool IsNew()
         {

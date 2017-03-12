@@ -137,6 +137,14 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'referralsource');
 	}
 	
+	getReferralSource(id) {
+		return this.getSingleBasic(id, 'referralSource');
+	}
+	
+	saveReferralSource(referralSource) {
+		return this.saveBasic(referralSource, 'referralSource');
+	}
+	
 	getReferralSourceTypes() {
 		return this.getManyBasic('referralsourcetype', true);
 	}
@@ -224,7 +232,12 @@ export class DataRepository {
 	getBasic(route) {
 		var promise = new Promise((resolve, reject) => {
 			this.httpFetch.fetch(this.apiRoot + 'api/' + route)
-				.then(response => response.json())
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					}
+					throw new Error({ status: response.status, statusText: response.statusText });
+				})
 				.then(data => resolve(data))
 				.catch(err => reject(err));
 		});
@@ -234,9 +247,16 @@ export class DataRepository {
 	getSingleBasic(id, type) {
 		var promise = new Promise((resolve, reject) => {
 			this.httpFetch.fetch(this.apiRoot + 'api/' + type + '/' + id)
-				.then(response => response.json())
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					}
+					throw new Error({ status: response.status, statusText: response.statusText });
+				})
 				.then(data => resolve(data))
-				.catch(err => reject(err));
+				.catch(err => {
+					reject(err);
+				});
 		});
 		return promise;
 	}
@@ -248,7 +268,12 @@ export class DataRepository {
 			}
 			else {
 				this.httpFetch.fetch(type)
-					.then(response => response.json())
+					.then(response => {
+						if (response.ok) {
+							return response.json();
+						}
+						throw new Error({ status: response.status, statusText: response.statusText });
+					})
 					.then(data => {
 						this.cache[type] = data;
 						resolve(data);
@@ -261,17 +286,6 @@ export class DataRepository {
 
 	searchBasic(criteria, type) {
 		var promise = this.postBasic(type + '/search', criteria, 'POST');
-		/*
-		var promise = new Promise((resolve, reject) => {
-			this.httpFetch.fetch(type + '/search', {
-				method: 'POST',
-				body: json(criteria)
-			})
-			.then(response => response.json())
-			.then(data => resolve(data))
-			.catch(err => reject(err));
-		});
-		*/
 		return promise;
 	}
 
@@ -281,7 +295,12 @@ export class DataRepository {
 				method: method || 'POST',
 				body: json(data || {})
 			})
-			.then(response => response.json())
+			.then(response => {
+				if (response.ok) {
+					return response.json();
+				}
+				throw new Error({ status: response.status, statusText: response.statusText });
+			})
 			.then(data => resolve(data))
 			.catch(err => reject(err));
 		});
@@ -294,7 +313,12 @@ export class DataRepository {
 				method: 'PUT',
 				body: json(item)
 			})
-			.then(response => response.json())
+			.then(response => {
+				if (response.ok) {
+					return response.json();
+				}
+				throw new Error({ status: response.status, statusText: response.statusText });
+			})
 			.then(data => resolve(data))
 			.catch(err => reject(err));
 		});

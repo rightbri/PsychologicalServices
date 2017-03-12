@@ -85,8 +85,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
             return null != invoiceAmount
                 ? new InvoiceAmount
                 {
-                    ReferralSourceId = invoiceAmount.ReferralSourceId,
-                    ReportTypeId = invoiceAmount.ReportTypeId,
+                    ReportType = invoiceAmount.ReportType.ToReportType(),
                     Amount = invoiceAmount.InvoiceAmount,
                 }
                 : null;
@@ -153,11 +152,11 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     ReferralSourceId = referralSource.ReferralSourceId,
                     Name = referralSource.Name,
-                    ReferralSourceTypeId = referralSource.ReferralSourceTypeId,
                     LargeFileSize = referralSource.LargeFileSize,
                     LargeFileFeeAmount = referralSource.LargeFileFeeAmount,
                     IsActive = referralSource.IsActive,
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
+                    InvoiceAmounts = referralSource.InvoiceAmounts.Select(invoiceAmount => invoiceAmount.ToInvoiceAmount()),
                 }
                 : null;
         }

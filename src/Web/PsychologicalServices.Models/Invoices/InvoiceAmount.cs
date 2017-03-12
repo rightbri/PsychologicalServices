@@ -1,12 +1,12 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Referrals;
+using PsychologicalServices.Models.Reports;
+using System;
 
 namespace PsychologicalServices.Models.Invoices
 {
     public class InvoiceAmount
     {
-        public int ReferralSourceId { get; set; }
-
-        public int ReportTypeId { get; set; }
+        public ReportType ReportType { get; set; }
 
         public int Amount { get; set; }
     }

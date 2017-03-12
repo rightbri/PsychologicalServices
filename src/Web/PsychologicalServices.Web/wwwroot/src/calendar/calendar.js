@@ -3,18 +3,16 @@ import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {DialogService} from 'aurelia-dialog';
 import {CalendarNoteDialog} from '../calendarNotes/CalendarNoteDialog';
-import {BindingSignaler} from 'aurelia-templating-resources';
 import {Context} from 'common/context';
 import {Config} from 'common/config';
 import moment from 'moment';
 
-@inject(Router, DataRepository, DialogService, BindingSignaler, Config, Context)
+@inject(Router, DataRepository, DialogService, Config, Context)
 export class Calendar {
-	constructor(router, dataRepository, dialogService, bindingSignaler, config, context) {
+	constructor(router, dataRepository, dialogService, config, context) {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.dialogService = dialogService;
-		this.bindingSignaler = bindingSignaler;
 		this.config = config;
 		this.context = context;
 		

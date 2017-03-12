@@ -34,5 +34,15 @@ export class Config {
 			'showOnFocus': true,
 			'toggleActive': true
 		};
+		
+		this.referralSourceDefaults = {
+			largeFileSize: 1000,
+			largeFileFeeAmount: 25000
+		};
+		
+		this.addressDefaults = {
+			'province': 'ON',
+			'country': 'Canada'
+		};
 	}
 }

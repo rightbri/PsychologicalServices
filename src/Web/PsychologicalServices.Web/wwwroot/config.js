@@ -29,10 +29,12 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "bootstrap-datepicker": "npm:bootstrap-datepicker@1.6.4",
+    "bootstrap-notify": "npm:bootstrap-notify@3.1.3",
     "core-js": "npm:core-js@1.2.7",
     "font-awesome": "npm:font-awesome@4.6.3",
     "jquery": "npm:jquery@3.1.1",
     "moment": "npm:moment@2.17.1",
+    "smoothscroll": "npm:smoothscroll@0.3.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },

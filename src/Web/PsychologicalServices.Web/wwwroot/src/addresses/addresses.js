@@ -1,11 +1,9 @@
 import {inject} from 'aurelia-framework';
-import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 
-@inject(Router, DataRepository)
+@inject(DataRepository)
 export class Address {
-	constructor(router, dataRepository) {
-		this.router = router;
+	constructor(dataRepository) {
 		this.dataRepository = dataRepository;
 		
 		this.addresses = [];
@@ -16,11 +14,9 @@ export class Address {
 		this.searchCity = null;
 		this.searchAddressTypes = [];
 		this.searchActive = true;
-		
-		this.showSearch = true;//false;
 	}
 	
-	activate(params) {
+	activate() {
 		
 		return Promise.all([
 			this.dataRepository.getAddressTypes().then(data => this.addressTypes = data),
@@ -40,18 +36,6 @@ export class Address {
 
 	searchAddresses(criteria) {
 		return this.dataRepository.searchAddress(criteria)
-			.then(data => {
-				this.addresses = data;
-				
-				//this.showSearch = this.addresses.length === 0;
-			});
-	}
-	
-	add() {
-		this.router.navigateToRoute('editAddress', { id: 0 });
-	}
-	
-	edit(id) {
-		this.router.navigateToRoute('editAddress', { id: id });
+			.then(data => this.addresses = data);
 	}
 }

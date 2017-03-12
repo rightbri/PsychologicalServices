@@ -55,6 +55,16 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
             return _Cache.Remove(key);
         }
 
+        public bool Contains(string key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException("key");
+            }
+
+            return _Cache.Contains(key);
+        }
+
         public IDictionary<string, object> GetCachedItemsList()
         {
             var dict = new Dictionary<string, object>();

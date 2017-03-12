@@ -9,6 +9,7 @@ export class Context {
 		this.ea = eventAggregator;
 		this.dataRepository = dataRepository;
 		this.authContext = authContext;
+		
 		this.username = null;
 		this.user = null;
 		this.loggedIn = false;
@@ -17,6 +18,8 @@ export class Context {
 			this.username = response.user.email;
 			this.getUser().then(user => {
 				this.loggedIn = user && user.email;
+			}).catch(err => {
+				this.logout();
 			});
         });
 	}
@@ -43,7 +46,9 @@ export class Context {
 						this.user = data;
 						resolve(data);
 					})
-					.catch(err => reject(err));
+					.catch(err => {
+						reject(err);
+					});
 			}
 		});
 		return promise;

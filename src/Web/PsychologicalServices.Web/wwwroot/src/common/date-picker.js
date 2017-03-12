@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import {datepicker} from 'bootstrap-datepicker';
+import datepicker from 'bootstrap-datepicker';
 
 @inject(Element)
 export class DatePickerCustomAttribute {

@@ -611,12 +611,17 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                 foreach (var medRehab in medRehabsToUpdate)
                 {
-                    var medRehabEntity = assessment.MedRehabs.Single(assessmentMedRehab => assessmentMedRehab.MedRehabId == medRehab.MedRehabId);
+                    var medRehabEntity = assessmentEntity.AssessmentMedRehabs
+                        .Where(assessmentMedRehab => assessmentMedRehab.MedRehabId == medRehab.MedRehabId)
+                        .SingleOrDefault();
 
-                    medRehabEntity.Amount = medRehab.Amount;
-                    medRehabEntity.Date = medRehab.Date;
-                    medRehabEntity.Deleted = medRehab.Deleted;
-                    medRehabEntity.Description = medRehab.Description;
+                    if (null != medRehabEntity)
+                    {
+                        medRehabEntity.Amount = medRehab.Amount;
+                        medRehabEntity.Date = medRehab.Date;
+                        medRehabEntity.Deleted = medRehab.Deleted;
+                        medRehabEntity.Description = medRehab.Description;
+                    }
                 }
 
                 assessmentEntity.AssessmentMedRehabs.AddRange(

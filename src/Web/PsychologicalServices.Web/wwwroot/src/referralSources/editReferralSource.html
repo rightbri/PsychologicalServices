@@ -1,0 +1,98 @@
+<template>
+	<require from="common/validation-summary.html"></require>
+	
+	<h3>${editType} Referral Source</h3>
+
+	<div class="container-fluid">
+		<div class="row" if.bind="validationErrors">
+			<div class="col-xs-6">
+				<validation-summary errors.bind="validationErrors"></validation-summary>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="referralSourceName">Name</label>
+					<input id="referralSourceName" type="text" class="form-control" value.bind="referralSource.name" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="referralSourceType">Type</label>
+					<select id="referralSourceType" class="form-control" value.bind="referralSource.referralSourceType" matcher.bind="referralSourceTypeMatcher">
+						<option></option>
+						<option repeat.for="referralSourceType of referralSourceTypes" model.bind="referralSourceType">
+							${referralSourceType.name}
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="largeFileSize">Large File Size</label>
+					<input id="largeFileSize" type="text" class="form-control" value.bind="referralSource.largeFileSize" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="largeFileFee">Large File Fee</label>
+					<input id="largeFileFee" type="text" class="form-control" value.bind="referralSource.largeFileFeeAmount" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" checked.bind="referralSource.isActive" />&nbsp;Is Active?
+					</label>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<table class="table table-condensed">
+					<caption>Invoice Amounts</caption>
+					<thead>
+						<tr>
+							<th>Report Type</th>
+							<th>Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr repeat.for="invoiceAmount of referralSource.invoiceAmounts">
+							<td>${invoiceAmount.reportType.name}</td>
+							<td>
+								<input type="text" class="form-control" value.bind="invoiceAmount.amount" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<button type="button" class="btn btn-default" click.delegate="back()">
+					<i class="fa fa-arrow-left"></i>&nbsp;Back
+				</button>
+				<button type="button" class="btn btn-primary" click.delegate="save()">
+					<i class="fa fa-save"></i>&nbsp;Save
+				</button>
+			</div>
+		</div>
+		
+	</div>
+</template>

@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
-//using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using PsychologicalServices.Web.Infrastructure.Filters;
-using Owin;
-using PsychologicalServices.Web.Infrastructure;
+using System.Web.Http.Filters;
 
 namespace PsychologicalServices.Web
 {
@@ -19,10 +17,10 @@ namespace PsychologicalServices.Web
             // Configure Web API to use only bearer token authentication.
             //config.SuppressDefaultHostAuthentication();
             //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-
-            //config.Filters.Add(
-            //    (UserContext)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(UserContext))
-            //);
+            
+            config.Filters.Add(
+                (IFilter)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(VerifyAuthToken))
+            );
 
             // Use camel case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

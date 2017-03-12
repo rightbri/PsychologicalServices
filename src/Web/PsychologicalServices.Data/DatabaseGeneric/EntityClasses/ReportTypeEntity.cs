@@ -38,6 +38,8 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 
+		private EntityCollection<InvoiceAmountEntity> _invoiceAmount;
+
 
 
 
@@ -54,6 +56,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
+
+			/// <summary>Member name InvoiceAmount</summary>
+			public static readonly string InvoiceAmount = "InvoiceAmount";
 
 
 
@@ -116,6 +121,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 
+				_invoiceAmount = (EntityCollection<InvoiceAmountEntity>)info.GetValue("_invoiceAmount", typeof(EntityCollection<InvoiceAmountEntity>));
+
 
 
 
@@ -157,6 +164,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
+				case "InvoiceAmount":
+					this.InvoiceAmount.Add((InvoiceAmountEntity)entity);
+					break;
+
 
 
 				default:
@@ -181,6 +192,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
+
+				case "InvoiceAmount":
+					toReturn.Add(ReportTypeEntity.Relations.InvoiceAmountEntityUsingReportTypeId);
+					break;
 
 
 
@@ -221,6 +236,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
+				case "InvoiceAmount":
+					this.InvoiceAmount.Add((InvoiceAmountEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -238,6 +256,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
+				case "InvoiceAmount":
+					base.PerformRelatedEntityRemoval(this.InvoiceAmount, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -270,6 +291,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 
+			toReturn.Add(this.InvoiceAmount);
 
 			return toReturn;
 		}
@@ -284,6 +306,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+
+				info.AddValue("_invoiceAmount", ((_invoiceAmount!=null) && (_invoiceAmount.Count>0) && !this.MarkedForDeletion)?_invoiceAmount:null);
 
 
 
@@ -323,6 +347,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'InvoiceAmount' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceAmount()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceAmountFields.ReportTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
+			return bucket;
+		}
+
+
 
 
 	
@@ -354,6 +389,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 
+			collectionsQueue.Enqueue(this._invoiceAmount);
+
 
 		}
 		
@@ -363,6 +400,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 
+			this._invoiceAmount = (EntityCollection<InvoiceAmountEntity>) collectionsQueue.Dequeue();
+
 
 		}
 		
@@ -370,6 +409,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
+
+			if (this._invoiceAmount != null)
+			{
+				return true;
+			}
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -381,6 +425,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAmountEntityFactory))) : null);
 
 
 		}
@@ -394,6 +440,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
 
+			toReturn.Add("InvoiceAmount", _invoiceAmount);
+
 
 
 			return toReturn;
@@ -402,6 +450,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+
+			if(_invoiceAmount!=null)
+			{
+				_invoiceAmount.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -412,6 +465,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+
+			_invoiceAmount = null;
 
 
 
@@ -478,6 +533,18 @@ namespace PsychologicalServices.Data.EntityClasses
 		public  static Dictionary<string, string> CustomProperties
 		{
 			get { return _customProperties;}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceAmount' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceAmount
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<InvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAmountEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceAmount")[0], (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, (int)PsychologicalServices.Data.EntityType.InvoiceAmountEntity, 0, null, null, null, null, "InvoiceAmount", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
 		}
 
 
@@ -550,6 +617,23 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)ReportTypeFieldIndex.NumberOfReports, true); }
 			set	{ SetValue((int)ReportTypeFieldIndex.NumberOfReports, value); }
+		}
+
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceAmountEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceAmountEntity))]
+		public virtual EntityCollection<InvoiceAmountEntity> InvoiceAmount
+		{
+			get
+			{
+				if(_invoiceAmount==null)
+				{
+					_invoiceAmount = new EntityCollection<InvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAmountEntityFactory)));
+					_invoiceAmount.SetContainingEntityInfo(this, "ReportType");
+				}
+				return _invoiceAmount;
+			}
 		}
 
 

@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Common.Utility
 
         object Remove(string key);
 
+        bool Contains(string key);
+
         IDictionary<string, object> GetCachedItemsList();
     }
 }

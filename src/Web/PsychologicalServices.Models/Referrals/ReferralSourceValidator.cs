@@ -32,10 +32,10 @@ namespace PsychologicalServices.Models.Referrals
 
             var referralSourceTypes = _referralRepository.GetReferralSourceTypes(null);
 
-            if (!referralSourceTypes.Any(rst => rst.ReferralSourceTypeId == item.ReferralSourceTypeId))
+            if (!referralSourceTypes.Any(rst => rst.ReferralSourceTypeId == item.ReferralSourceType.ReferralSourceTypeId))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "ReferralSourceTypeId", Message = string.Format("Referral source type '{0}' is not valid", item.ReferralSourceTypeId) }
+                    new ValidationError { PropertyName = "ReferralSourceTypeId", Message = string.Format("Referral source type '{0}' is not valid", item.ReferralSourceType.ReferralSourceTypeId) }
                 );
             }
 

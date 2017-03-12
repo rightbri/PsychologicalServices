@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AssessmentTypeReportTypeEntityUsingReportTypeId);
+			toReturn.Add(this.InvoiceAmountEntityUsingReportTypeId);
 
 
 			return toReturn;
@@ -49,6 +50,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(ReportTypeFields.ReportTypeId, AssessmentTypeReportTypeFields.ReportTypeId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReportTypeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeReportTypeEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ReportTypeEntity and InvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
+		/// ReportType.ReportTypeId - InvoiceAmount.ReportTypeId
+		/// </summary>
+		public virtual IEntityRelation InvoiceAmountEntityUsingReportTypeId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceAmount" , true);
+				relation.AddEntityFieldPair(ReportTypeFields.ReportTypeId, InvoiceAmountFields.ReportTypeId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReportTypeEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceAmountEntity", false);
 				return relation;
 			}
 		}

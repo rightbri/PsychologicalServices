@@ -38,9 +38,7 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 
-
 		private EntityCollection<ReferralTypeIssueInDisputeEntity> _referralTypeIssuesInDispute;
-
 
 
 
@@ -64,10 +62,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 
-
 			/// <summary>Member name ReferralTypeIssuesInDispute</summary>
 			public static readonly string ReferralTypeIssuesInDispute = "ReferralTypeIssuesInDispute";
-
 
 
 
@@ -135,9 +131,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 
-
 				_referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>)info.GetValue("_referralTypeIssuesInDispute", typeof(EntityCollection<ReferralTypeIssueInDisputeEntity>));
-
 
 
 
@@ -185,11 +179,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-
 				case "ReferralTypeIssuesInDispute":
 					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)entity);
 					break;
-
 
 
 
@@ -221,11 +213,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-
 				case "ReferralTypeIssuesInDispute":
 					toReturn.Add(ReferralTypeEntity.Relations.ReferralTypeIssueInDisputeEntityUsingReferralTypeId);
 					break;
-
 
 
 
@@ -271,7 +261,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-
 				case "ReferralTypeIssuesInDispute":
 					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)relatedEntity);
 					break;
@@ -290,7 +279,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
 
 
 				case "ReferralTypeIssuesInDispute":
@@ -328,7 +316,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 
-
 			toReturn.Add(this.ReferralTypeIssuesInDispute);
 
 			return toReturn;
@@ -345,9 +332,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 
-
 				info.AddValue("_referralTypeIssuesInDispute", ((_referralTypeIssuesInDispute!=null) && (_referralTypeIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_referralTypeIssuesInDispute:null);
-
 
 
 
@@ -392,7 +377,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 
 
-
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'ReferralTypeIssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
@@ -402,7 +386,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralTypeIssueInDisputeFields.ReferralTypeId, null, ComparisonOperator.Equal, this.ReferralTypeId));
 			return bucket;
 		}
-
 
 
 
@@ -441,9 +424,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 
-
 			collectionsQueue.Enqueue(this._referralTypeIssuesInDispute);
-
 
 
 
@@ -459,9 +440,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 
-
 			this._referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>) collectionsQueue.Dequeue();
-
 
 
 
@@ -476,12 +455,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
 
-
 			if (this._referralTypeIssuesInDispute != null)
 			{
 				return true;
 			}
-
 
 
 
@@ -499,9 +476,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 
-
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory))) : null);
-
 
 
 
@@ -520,9 +495,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
 
-
 			toReturn.Add("ReferralTypeIssuesInDispute", _referralTypeIssuesInDispute);
-
 
 
 
@@ -538,12 +511,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddInternalsToContext()
 		{
 
-
 			if(_referralTypeIssuesInDispute!=null)
 			{
 				_referralTypeIssuesInDispute.ActiveContext = base.ActiveContext;
 			}
-
 
 
 
@@ -560,9 +531,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 
-
 			_referralTypeIssuesInDispute = null;
-
 
 
 
@@ -654,7 +623,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
@@ -713,7 +681,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 
-
 		/// <summary> Gets the EntityCollection with the related entities of type 'ReferralTypeIssueInDisputeEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(ReferralTypeIssueInDisputeEntity))]
@@ -729,7 +696,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _referralTypeIssuesInDispute;
 			}
 		}
-
 
 
 

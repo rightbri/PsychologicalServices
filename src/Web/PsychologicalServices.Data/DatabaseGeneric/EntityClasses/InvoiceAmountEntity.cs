@@ -40,7 +40,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		private ReferralSourceEntity _referralSource;
-		private ReferralTypeEntity _referralType;
+		private ReportTypeEntity _reportType;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -56,8 +56,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			/// <summary>Member name ReferralSource</summary>
 			public static readonly string ReferralSource = "ReferralSource";
-			/// <summary>Member name ReferralType</summary>
-			public static readonly string ReferralType = "ReferralType";
+			/// <summary>Member name ReportType</summary>
+			public static readonly string ReportType = "ReportType";
 
 
 
@@ -130,10 +130,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_referralSource.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_referralType = (ReferralTypeEntity)info.GetValue("_referralType", typeof(ReferralTypeEntity));
-				if(_referralType!=null)
+				_reportType = (ReportTypeEntity)info.GetValue("_reportType", typeof(ReportTypeEntity));
+				if(_reportType!=null)
 				{
-					_referralType.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_reportType.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -154,7 +154,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					DesetupSyncReferralSource(true, false);
 					break;
 				case InvoiceAmountFieldIndex.ReportTypeId:
-					DesetupSyncReferralType(true, false);
+					DesetupSyncReportType(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -181,8 +181,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReferralSource":
 					this.ReferralSource = (ReferralSourceEntity)entity;
 					break;
-				case "ReferralType":
-					this.ReferralType = (ReferralTypeEntity)entity;
+				case "ReportType":
+					this.ReportType = (ReportTypeEntity)entity;
 					break;
 
 
@@ -211,8 +211,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReferralSource":
 					toReturn.Add(InvoiceAmountEntity.Relations.ReferralSourceEntityUsingReferralSourceId);
 					break;
-				case "ReferralType":
-					toReturn.Add(InvoiceAmountEntity.Relations.ReferralTypeEntityUsingReportTypeId);
+				case "ReportType":
+					toReturn.Add(InvoiceAmountEntity.Relations.ReportTypeEntityUsingReportTypeId);
 					break;
 
 
@@ -232,14 +232,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1;
+			int numberOfOneWayRelations = 0;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
-				case "ReferralType":
-					return true;
+
 
 				default:
 					return base.CheckOneWayRelations(propertyName);
@@ -257,8 +256,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReferralSource":
 					SetupSyncReferralSource(relatedEntity);
 					break;
-				case "ReferralType":
-					SetupSyncReferralType(relatedEntity);
+				case "ReportType":
+					SetupSyncReportType(relatedEntity);
 					break;
 
 
@@ -279,8 +278,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReferralSource":
 					DesetupSyncReferralSource(false, true);
 					break;
-				case "ReferralType":
-					DesetupSyncReferralType(false, true);
+				case "ReportType":
+					DesetupSyncReportType(false, true);
 					break;
 
 
@@ -308,9 +307,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_referralSource);
 			}
-			if(_referralType!=null)
+			if(_reportType!=null)
 			{
-				toReturn.Add(_referralType);
+				toReturn.Add(_reportType);
 			}
 
 			return toReturn;
@@ -339,7 +338,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 				info.AddValue("_referralSource", (!this.MarkedForDeletion?_referralSource:null));
-				info.AddValue("_referralType", (!this.MarkedForDeletion?_referralType:null));
+				info.AddValue("_reportType", (!this.MarkedForDeletion?_reportType:null));
 
 			}
 			
@@ -388,12 +387,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'ReferralType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// the related entity of type 'ReportType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoReferralType()
+		public virtual IRelationPredicateBucket GetRelationInfoReportType()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralTypeFields.ReferralTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReportTypeFields.ReportTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
 			return bucket;
 		}
 
@@ -465,7 +464,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("ReferralSource", _referralSource);
-			toReturn.Add("ReferralType", _referralType);
+			toReturn.Add("ReportType", _reportType);
 
 
 
@@ -481,9 +480,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_referralSource.ActiveContext = base.ActiveContext;
 			}
-			if(_referralType!=null)
+			if(_reportType!=null)
 			{
-				_referralType.ActiveContext = base.ActiveContext;
+				_reportType.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -495,7 +494,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 			_referralSource = null;
-			_referralType = null;
+			_reportType = null;
 
 			PerformDependencyInjection();
 			
@@ -557,31 +556,31 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _referralType</summary>
+		/// <summary> Removes the sync logic for member _reportType</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncReferralType(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncReportType(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _referralType, new PropertyChangedEventHandler( OnReferralTypePropertyChanged ), "ReferralType", InvoiceAmountEntity.Relations.ReferralTypeEntityUsingReportTypeId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)InvoiceAmountFieldIndex.ReportTypeId } );		
-			_referralType = null;
+			base.PerformDesetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", InvoiceAmountEntity.Relations.ReportTypeEntityUsingReportTypeId, true, signalRelatedEntity, "InvoiceAmount", resetFKFields, new int[] { (int)InvoiceAmountFieldIndex.ReportTypeId } );		
+			_reportType = null;
 		}
 
-		/// <summary> setups the sync logic for member _referralType</summary>
+		/// <summary> setups the sync logic for member _reportType</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncReferralType(IEntity2 relatedEntity)
+		private void SetupSyncReportType(IEntity2 relatedEntity)
 		{
-			if(_referralType!=relatedEntity)
+			if(_reportType!=relatedEntity)
 			{
-				DesetupSyncReferralType(true, true);
-				_referralType = (ReferralTypeEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _referralType, new PropertyChangedEventHandler( OnReferralTypePropertyChanged ), "ReferralType", InvoiceAmountEntity.Relations.ReferralTypeEntityUsingReportTypeId, true, new string[] {  } );
+				DesetupSyncReportType(true, true);
+				_reportType = (ReportTypeEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", InvoiceAmountEntity.Relations.ReportTypeEntityUsingReportTypeId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnReferralTypePropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnReportTypePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -637,15 +636,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReferralType' 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReportType' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathReferralType
+		public static IPrefetchPathElement2 PrefetchPathReportType
 		{
 			get
 			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("ReferralType")[0], (int)PsychologicalServices.Data.EntityType.InvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.ReferralTypeEntity, 0, null, null, null, null, "ReferralType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("ReportType")[0], (int)PsychologicalServices.Data.EntityType.InvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, 0, null, null, null, null, "ReportType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -744,35 +743,35 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Gets / sets related entity of type 'ReferralTypeEntity' which has to be set using a fetch action earlier. If no related entity
+		/// <summary> Gets / sets related entity of type 'ReportTypeEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual ReferralTypeEntity ReferralType
+		public virtual ReportTypeEntity ReportType
 		{
 			get
 			{
-				return _referralType;
+				return _reportType;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncReferralType(value);
+					SetupSyncReportType(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_referralType != null)
+						if(_reportType != null)
 						{
-							UnsetRelatedEntity(_referralType, "ReferralType");
+							_reportType.UnsetRelatedEntity(this, "InvoiceAmount");
 						}
 					}
 					else
 					{
-						if(_referralType!=value)
+						if(_reportType!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "ReferralType");
+							((IEntity2)value).SetRelatedEntity(this, "InvoiceAmount");
 						}
 					}
 				}

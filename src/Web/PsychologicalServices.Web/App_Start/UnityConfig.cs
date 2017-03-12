@@ -11,6 +11,8 @@ using PsychologicalServices.Web.Infrastructure.Filters;
 using PsychologicalServices.Web.Infrastructure;
 using Owin;
 using Microsoft.Practices.ServiceLocation;
+using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Infrastructure.Common.Utility;
 
 namespace PsychologicalServices.Web
 {
@@ -39,7 +41,10 @@ namespace PsychologicalServices.Web
                 WithName.Default
             );
 
-            container.RegisterType<IDataAccessAdapterFactory, SqlServerAdapterFactory>();
+            container
+                .RegisterType<IDataAccessAdapterFactory, SqlServerAdapterFactory>()
+                .RegisterType<ICacheService, CacheService>(new InjectionConstructor(System.Runtime.Caching.MemoryCache.Default))
+                ;
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers

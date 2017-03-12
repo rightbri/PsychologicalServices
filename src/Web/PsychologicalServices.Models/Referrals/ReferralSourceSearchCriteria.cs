@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Referrals
 {
@@ -8,7 +9,7 @@ namespace PsychologicalServices.Models.Referrals
 
         public string Name { get; set; }
 
-        public int? ReferralSourceTypeId { get; set; }
+        public IEnumerable<int> ReferralSourceTypeIds { get; set; }
 
         public bool? IsActive { get; set; }
     }

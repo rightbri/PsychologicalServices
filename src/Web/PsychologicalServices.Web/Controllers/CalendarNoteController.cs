@@ -11,7 +11,6 @@ using System.Web.Http.Description;
 
 namespace PsychologicalServices.Web.Controllers
 {
-    [DecodeJWT]
     [RoutePrefix("api/calendarNote")]
     public class CalendarNoteController : ApiController
     {

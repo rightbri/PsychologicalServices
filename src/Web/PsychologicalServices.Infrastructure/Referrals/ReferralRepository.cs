@@ -21,6 +21,16 @@ namespace PsychologicalServices.Infrastructure.Referrals
 
         #region Prefetch Paths
 
+        private static readonly Func<IPathEdgeRootParser<ReferralSourceEntity>, IPathEdgeRootParser<ReferralSourceEntity>>
+            ReferralSourcePath =
+                (referralSourcePath => referralSourcePath
+                    .Prefetch<ReferralSourceTypeEntity>(referralSource => referralSource.ReferralSourceType)
+                    .Prefetch<InvoiceAmountEntity>(referralSource => referralSource.InvoiceAmounts)
+                        .SubPath(invoiceAmountPath => invoiceAmountPath
+                            .Prefetch<ReportTypeEntity>(invoiceAmount => invoiceAmount.ReportType)
+                        )
+                );
+
         private static readonly Func<IPathEdgeRootParser<ReferralTypeEntity>, IPathEdgeRootParser<ReferralTypeEntity>>
             ReferralTypePath =
                 (referralTypePath => referralTypePath
@@ -39,6 +49,7 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 var meta = new LinqMetaData(adapter);
 
                 return meta.ReferralSource
+                    .WithPath(ReferralSourcePath)
                     .Where(referralSource => referralSource.ReferralSourceId == id)
                     .SingleOrDefault()
                     .ToReferralSource();
@@ -78,14 +89,15 @@ namespace PsychologicalServices.Infrastructure.Referrals
             {
                 var meta = new LinqMetaData(adapter);
 
-                var sources = meta.ReferralSource.AsQueryable();
+                var sources = meta.ReferralSource
+                    .WithPath(ReferralSourcePath);
 
                 if (null != criteria)
                 {
                     if (!string.IsNullOrWhiteSpace(criteria.Name))
                     {
                         sources = sources
-                            .Where(source => source.Name == criteria.Name);
+                            .Where(source => source.Name.Contains(criteria.Name));
                     }
 
                     if (criteria.ReferralSourceId.HasValue)
@@ -94,10 +106,16 @@ namespace PsychologicalServices.Infrastructure.Referrals
                             .Where(source => source.ReferralSourceId == criteria.ReferralSourceId.Value);
                     }
 
-                    if (criteria.ReferralSourceTypeId.HasValue)
+                    if (null != criteria.ReferralSourceTypeIds && criteria.ReferralSourceTypeIds.Any())
                     {
                         sources = sources
-                            .Where(source => source.ReferralSourceTypeId == criteria.ReferralSourceTypeId.Value);
+                            .Where(source => criteria.ReferralSourceTypeIds.Contains(source.ReferralSourceTypeId));
+                    }
+
+                    if (criteria.IsActive.HasValue)
+                    {
+                        sources = sources
+                            .Where(source => source.IsActive == criteria.IsActive.Value);
                     }
                 }
 
@@ -119,7 +137,7 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 return Execute<ReferralSourceTypeEntity>(
                         (ILLBLGenProQuery)
                         meta.ReferralSourceType
-                        .Where(referralSourceType => isActive == null || referralSourceType.IsActive == isActive.Value)
+                        .Where(referralSourceType => isActive == null || referralSourceType.IsActive == isActive)
                     )
                     .Select(referralSourceType => referralSourceType.ToReferralSourceType())
                     .ToList();
@@ -147,6 +165,8 @@ namespace PsychologicalServices.Infrastructure.Referrals
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var uow = new UnitOfWork2();
+
                 var isNew = referralSource.IsNew();
 
                 var entity = new ReferralSourceEntity
@@ -157,16 +177,74 @@ namespace PsychologicalServices.Infrastructure.Referrals
 
                 if (!isNew)
                 {
-                    adapter.FetchEntity(entity);
+                    var prefetch = new PrefetchPath2(EntityType.ReferralSourceEntity);
+
+                    prefetch.Add(ReferralSourceEntity.PrefetchPathInvoiceAmounts);
+                    
+                    adapter.FetchEntity(entity, prefetch);
                 }
 
                 entity.Name = referralSource.Name;
-                entity.ReferralSourceTypeId = referralSource.ReferralSourceTypeId;
+                entity.ReferralSourceTypeId = referralSource.ReferralSourceType.ReferralSourceTypeId;
                 entity.LargeFileSize = referralSource.LargeFileSize;
                 entity.LargeFileFeeAmount = referralSource.LargeFileFeeAmount;
                 entity.IsActive = referralSource.IsActive;
 
-                adapter.SaveEntity(entity, false);
+                #region invoice amounts
+
+                var invoiceAmountsToAdd = referralSource.InvoiceAmounts
+                    .Where(invoiceAmount =>
+                        !entity.InvoiceAmounts.Any(invoiceAmountEntity =>
+                            invoiceAmountEntity.ReportTypeId == invoiceAmount.ReportType.ReportTypeId
+                        )
+                    );
+
+                var invoiceAmountsToRemove = entity.InvoiceAmounts
+                    .Where(invoiceAmountEntity =>
+                        !referralSource.InvoiceAmounts.Any(invoiceAmount =>
+                            invoiceAmount.ReportType.ReportTypeId == invoiceAmountEntity.ReportTypeId
+                        )
+                    );
+
+                var invoiceAmountsToUpdate = referralSource.InvoiceAmounts
+                    .Where(invoiceAmount =>
+                        entity.InvoiceAmounts.Any(invoiceAmountEntity =>
+                            invoiceAmountEntity.ReportTypeId == invoiceAmount.ReportType.ReportTypeId &&
+                            invoiceAmountEntity.InvoiceAmount != invoiceAmount.Amount
+                        )
+                    );
+
+                foreach (var invoiceAmount in invoiceAmountsToRemove)
+                {
+                    uow.AddForDelete(invoiceAmount);
+                }
+
+                foreach (var invoiceAmount in invoiceAmountsToUpdate)
+                {
+                    var invoiceAmountEntity = entity.InvoiceAmounts
+                        .Where(referralSourceInvoiceAmount => referralSourceInvoiceAmount.ReportTypeId == invoiceAmount.ReportType.ReportTypeId)
+                        .SingleOrDefault();
+
+                    if (null != invoiceAmountEntity)
+                    {
+                        invoiceAmountEntity.InvoiceAmount = invoiceAmount.Amount;
+                    }
+                }
+
+                entity.InvoiceAmounts.AddRange(
+                    invoiceAmountsToAdd.Select(invoiceAmount =>
+                    new InvoiceAmountEntity
+                    {
+                        InvoiceAmount = invoiceAmount.Amount,
+                        ReportTypeId = invoiceAmount.ReportType.ReportTypeId,
+                    })
+                );
+                
+                #endregion
+
+                uow.AddForSave(entity);
+
+                uow.Commit(adapter);
 
                 return entity.ReferralSourceId;
             }
