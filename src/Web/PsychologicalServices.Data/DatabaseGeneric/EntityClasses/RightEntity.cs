@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<RoleRightEntity> _roleRights;
 
 
 
@@ -54,7 +54,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
-
+			/// <summary>Member name RoleRights</summary>
+			public static readonly string RoleRights = "RoleRights";
 
 
 		}
@@ -115,7 +116,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_roleRights = (EntityCollection<RoleRightEntity>)info.GetValue("_roleRights", typeof(EntityCollection<RoleRightEntity>));
 
 
 
@@ -156,7 +157,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
-
+				case "RoleRights":
+					this.RoleRights.Add((RoleRightEntity)entity);
+					break;
 
 
 				default:
@@ -181,7 +184,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "RoleRights":
+					toReturn.Add(RightEntity.Relations.RoleRightEntityUsingRightId);
+					break;
 
 
 				default:
@@ -220,7 +225,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "RoleRights":
+					this.RoleRights.Add((RoleRightEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -237,7 +244,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "RoleRights":
+					base.PerformRelatedEntityRemoval(this.RoleRights, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -269,7 +278,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.RoleRights);
 
 			return toReturn;
 		}
@@ -284,7 +293,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_roleRights", ((_roleRights!=null) && (_roleRights.Count>0) && !this.MarkedForDeletion)?_roleRights:null);
 
 
 
@@ -322,6 +331,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'RoleRight' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoRoleRights()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(RoleRightFields.RightId, null, ComparisonOperator.Equal, this.RightId));
+			return bucket;
+		}
 
 
 
@@ -353,7 +371,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._roleRights);
 
 		}
 		
@@ -362,7 +380,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._roleRights = (EntityCollection<RoleRightEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -370,7 +388,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._roleRights != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -381,7 +402,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<RoleRightEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RoleRightEntityFactory))) : null);
 
 		}
 #endif
@@ -393,7 +414,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-
+			toReturn.Add("RoleRights", _roleRights);
 
 
 			return toReturn;
@@ -402,7 +423,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_roleRights!=null)
+			{
+				_roleRights.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -412,7 +436,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_roleRights = null;
 
 
 
@@ -480,6 +504,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'RoleRight' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathRoleRights
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<RoleRightEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RoleRightEntityFactory))),
+					(IEntityRelation)GetRelationsForField("RoleRights")[0], (int)PsychologicalServices.Data.EntityType.RightEntity, (int)PsychologicalServices.Data.EntityType.RoleRightEntity, 0, null, null, null, null, "RoleRights", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 
@@ -552,6 +587,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)RightFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'RoleRightEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(RoleRightEntity))]
+		public virtual EntityCollection<RoleRightEntity> RoleRights
+		{
+			get
+			{
+				if(_roleRights==null)
+				{
+					_roleRights = new EntityCollection<RoleRightEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RoleRightEntityFactory)));
+					_roleRights.SetContainingEntityInfo(this, "Right");
+				}
+				return _roleRights;
+			}
+		}
 
 
 

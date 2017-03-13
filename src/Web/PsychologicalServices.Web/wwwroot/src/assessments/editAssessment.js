@@ -3,23 +3,26 @@ import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from '../common/config';
 import {Context} from '../common/context';
+import {Scroller} from 'services/scroller';
+import {Notifier} from 'services/notifier';
 import {DialogService} from 'aurelia-dialog';
 import {ClaimantSearchDialog} from '../claimants/ClaimantSearchDialog';
 import {ClaimDialog} from '../claims/ClaimDialog';
 import {AppointmentDialog} from '../appointments/AppointmentDialog';
 import {MedRehabDialog} from '../medRehab/MedRehabDialog';
 import {NoteDialog} from '../notes/NoteDialog';
-import {MessageDialog} from '../common/MessageDialog';
 import moment from 'moment';
 
-@inject(Router, DataRepository, DialogService, Config, Context)
+@inject(Router, DataRepository, DialogService, Config, Context, Scroller, Notifier)
 export class EditAssessment {
-	constructor(router, dataRepository, dialogService, config, context) {
+	constructor(router, dataRepository, dialogService, config, context, scroller, notifier) {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.dialogService = dialogService;
 		this.config = config;
 		this.context = context;
+		this.scroller = scroller;
+		this.notifier = notifier;
 		
 		this.assessment = null;
 		
@@ -35,6 +38,7 @@ export class EditAssessment {
 		this.notes = null;
 		this.medRehabs = null;
 		this.colors = null;
+		this.attributes = null;
 		
 		this.assessmentTypeMatcher = (a, b) => a != null && b != null && a.assessmentTypeId === b.assessmentTypeId;
 		this.reportStatusMatcher = (a, b) => a != null && b != null && a.reportStatusId === b.reportStatusId;
@@ -43,7 +47,7 @@ export class EditAssessment {
 		this.issueInDisputeMatcher = (a, b) => a != null && b != null && a.issueInDisputeId === b.issueInDisputeId;
 		this.colorMatcher = (a, b) => a != null && b != null && a.colorId === b.colorId;
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
-		//this.companyMatcher = (a, b) => a.companyId === b.companyId;
+		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
 		
 		this.error = null;
 		this.validationErrors = null;
@@ -91,7 +95,8 @@ export class EditAssessment {
 								issuesInDispute: [],
 								medRehabs: [],
 								notes: [],
-								colors: []
+								colors: [],
+								attributes: []
 							};
 							
 							return this.getData();
@@ -108,8 +113,12 @@ export class EditAssessment {
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
 			this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
 			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
-			this.dataRepository.getColors().then(data => this.colors = data)//,
-			//this.dataRepository.getCompanies().then(data => this.companies = data)
+			this.dataRepository.getColors().then(data => this.colors = data),
+			this.dataRepository.searchAttributes({
+				companyIds: [this.context.user.company.companyId],
+				attributeTypeIds: [this.config.assessmentDefaults.attributeTypeId],
+				isActive: true
+			}).then(data => this.attributes = data)
 		]);
 	}
 	
@@ -124,6 +133,10 @@ export class EditAssessment {
 					? data.validationResult.validationErrors
 					: null;
 					
+                if (this.validationErrors) {
+					this.scroller.scrollTo(0);
+				}
+				
                 if (data.isSaved) {
                     this.assessment = data.item;
 					
@@ -137,11 +150,11 @@ export class EditAssessment {
 						this.editType = 'Edit';
 					}
 					
-					this.dialogService.open({viewModel: MessageDialog, model: { heading: 'Saved', message: 'Assessment saved' } });
+					this.notifier.info('Saved');
                 }
 				
 				if (data.isError) {
-					this.dialogService.open({viewModel: MessageDialog, model: { heading: 'Error', message: data.errorDetails } });
+					this.notifier.error(data.errorDetails);
 				}
             });
 	}

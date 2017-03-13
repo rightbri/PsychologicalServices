@@ -50,6 +50,14 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AppointmentEntity", (int)fieldIndex));
 		}
 
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AppointmentAttributeEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(AppointmentAttributeFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AppointmentAttributeEntity", (int)fieldIndex));
+		}
+
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AppointmentStatusEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
@@ -58,20 +66,20 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AppointmentStatusEntity", (int)fieldIndex));
 		}
 
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AppointmentTaskEntity. Which EntityField is created is specified by fieldIndex</summary>
-		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
-		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(AppointmentTaskFieldIndex fieldIndex)
-		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AppointmentTaskEntity", (int)fieldIndex));
-		}
-
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AssessmentEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
 		public static IEntityField2 Create(AssessmentFieldIndex fieldIndex)
 		{
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AssessmentEntity", (int)fieldIndex));
+		}
+
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AssessmentAttributeEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(AssessmentAttributeFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AssessmentAttributeEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AssessmentClaimEntity. Which EntityField is created is specified by fieldIndex</summary>
@@ -130,6 +138,22 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AssessmentTypeReportTypeEntity", (int)fieldIndex));
 		}
 
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AttributeEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(AttributeFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AttributeEntity", (int)fieldIndex));
+		}
+
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AttributeTypeEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(AttributeTypeFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AttributeTypeEntity", (int)fieldIndex));
+		}
+
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the CalendarNoteEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
@@ -168,6 +192,14 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public static IEntityField2 Create(CompanyFieldIndex fieldIndex)
 		{
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("CompanyEntity", (int)fieldIndex));
+		}
+
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the CompanyAttributeEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(CompanyAttributeFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("CompanyAttributeEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceAmountEntity. Which EntityField is created is specified by fieldIndex</summary>
@@ -264,30 +296,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public static IEntityField2 Create(RoleRightFieldIndex fieldIndex)
 		{
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("RoleRightEntity", (int)fieldIndex));
-		}
-
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the TaskEntity. Which EntityField is created is specified by fieldIndex</summary>
-		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
-		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(TaskFieldIndex fieldIndex)
-		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("TaskEntity", (int)fieldIndex));
-		}
-
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the TaskStatusEntity. Which EntityField is created is specified by fieldIndex</summary>
-		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
-		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(TaskStatusFieldIndex fieldIndex)
-		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("TaskStatusEntity", (int)fieldIndex));
-		}
-
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the TaskTemplateEntity. Which EntityField is created is specified by fieldIndex</summary>
-		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
-		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(TaskTemplateFieldIndex fieldIndex)
-		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("TaskTemplateEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the UserEntity. Which EntityField is created is specified by fieldIndex</summary>

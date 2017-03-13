@@ -31,7 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AssessmentEntityUsingCompanyId);
-			toReturn.Add(this.TaskTemplateEntityUsingCompanyId);
+			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
 			toReturn.Add(this.UserEntityUsingCompanyId);
 
 
@@ -47,7 +47,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Assessments" , true);
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, AssessmentFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
@@ -55,17 +55,17 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and TaskTemplateEntity over the 1:n relation they have, using the relation between the fields:
-		/// Company.CompanyId - TaskTemplate.CompanyId
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and CompanyAttributeEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - CompanyAttribute.CompanyId
 		/// </summary>
-		public virtual IEntityRelation TaskTemplateEntityUsingCompanyId
+		public virtual IEntityRelation CompanyAttributeEntityUsingCompanyId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
-				relation.AddEntityFieldPair(CompanyFields.CompanyId, TaskTemplateFields.CompanyId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CompanyAttributes" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, CompanyAttributeFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("TaskTemplateEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyAttributeEntity", false);
 				return relation;
 			}
 		}
@@ -77,7 +77,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Users" , true);
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, UserFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);

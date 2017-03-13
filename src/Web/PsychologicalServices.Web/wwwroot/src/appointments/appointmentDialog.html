@@ -58,11 +58,6 @@
 							</option>
 						</select>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" checked.bind="appointment.psychometristConfirmed" />&nbsp;Psychometrist confirmed
-						</label>
-					</div>
 				</div>
 				<div class="col-xs-6">
 					<div class="form-group">
@@ -78,31 +73,22 @@
 			</div>
 
 			<div class="row">
-				<div class="col-xs-12">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>Task</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr repeat.for="task of appointment.appointmentTasks">
-								<td>
-									<label for="task-${task.taskId}">${task.taskTemplate.name}</label>
-								</td>
-								<td>
-									<select id="task-${task.taskId}" class="form-control" value.bind="task.taskStatus" matcher.bind="taskStatusMatcher">
-										<option repeat.for="taskStatus of taskStatuses" model.bind="taskStatus">
-											${taskStatus.name}
-										</option>
-									</select>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				<div class="col-xs-6">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked.bind="appointment.psychometristConfirmed" />&nbsp;Psychometrist confirmed
+						</label>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="checkbox" repeat.for="attribute of attributes">
+						<label>
+							<input type="checkbox" model.bind="attribute" checked.bind="appointment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
+						</label>
+					</div>
 				</div>
 			</div>
+
 		</div>
 		</ai-dialog-body>
 		<ai-dialog-footer>

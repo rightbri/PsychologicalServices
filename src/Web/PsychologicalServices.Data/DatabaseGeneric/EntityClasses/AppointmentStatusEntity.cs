@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<AppointmentEntity> _appointments;
 
 
 
@@ -57,7 +57,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
-
+			/// <summary>Member name Appointments</summary>
+			public static readonly string Appointments = "Appointments";
 
 
 
@@ -121,7 +122,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_appointments = (EntityCollection<AppointmentEntity>)info.GetValue("_appointments", typeof(EntityCollection<AppointmentEntity>));
 
 
 
@@ -165,7 +166,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
-
+				case "Appointments":
+					this.Appointments.Add((AppointmentEntity)entity);
+					break;
 
 
 
@@ -193,7 +196,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Appointments":
+					toReturn.Add(AppointmentStatusEntity.Relations.AppointmentEntityUsingAppointmentStatusId);
+					break;
 
 
 
@@ -235,7 +240,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Appointments":
+					this.Appointments.Add((AppointmentEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -252,7 +259,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Appointments":
+					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -284,7 +293,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.Appointments);
 
 			return toReturn;
 		}
@@ -299,7 +308,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_appointments", ((_appointments!=null) && (_appointments.Count>0) && !this.MarkedForDeletion)?_appointments:null);
 
 
 
@@ -340,6 +349,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Appointment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAppointments()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentFields.AppointmentStatusId, null, ComparisonOperator.Equal, this.AppointmentStatusId));
+			return bucket;
+		}
 
 
 
@@ -374,7 +392,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._appointments);
 
 
 
@@ -386,7 +404,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._appointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
 
 
 
@@ -397,7 +415,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._appointments != null)
+			{
+				return true;
+			}
 
 
 
@@ -411,7 +432,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
 
 
 
@@ -426,7 +447,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-
+			toReturn.Add("Appointments", _appointments);
 
 
 
@@ -438,7 +459,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_appointments!=null)
+			{
+				_appointments.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -451,7 +475,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_appointments = null;
 
 
 
@@ -525,6 +549,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Appointment' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAppointments
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Appointments")[0], (int)PsychologicalServices.Data.EntityType.AppointmentStatusEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "Appointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 
@@ -611,6 +646,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AppointmentStatusFieldIndex.NotifyReferralSource, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AppointmentEntity))]
+		public virtual EntityCollection<AppointmentEntity> Appointments
+		{
+			get
+			{
+				if(_appointments==null)
+				{
+					_appointments = new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory)));
+					_appointments.SetContainingEntityInfo(this, "AppointmentStatus");
+				}
+				return _appointments;
+			}
+		}
 
 
 

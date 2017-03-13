@@ -1,6 +1,5 @@
 ﻿using PsychologicalServices.Models.Addresses;
 using PsychologicalServices.Models.Assessments;
-using PsychologicalServices.Models.Tasks;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -10,10 +9,7 @@ namespace PsychologicalServices.Models.Appointments
     public class Appointment
     {
         public int AppointmentId { get; set; }
-
-        //copied from Assessment
-        public int CompanyId { get; set; }
-
+        
         public bool PsychometristConfirmed { get; set; }
 
         public DateTime AppointmentTime { get; set; }
@@ -28,7 +24,7 @@ namespace PsychologicalServices.Models.Appointments
 
         public bool Deleted { get; set; }
 
-        public IEnumerable<Task> AppointmentTasks { get; set; }
+        public IEnumerable<Models.Attributes.Attribute> Attributes { get; set; }
 
         public Assessment Assessment { get; set; }
 

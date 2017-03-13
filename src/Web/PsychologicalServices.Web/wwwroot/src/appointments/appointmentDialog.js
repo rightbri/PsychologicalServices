@@ -1,29 +1,30 @@
 import {DialogController} from 'aurelia-dialog';
 import {DataRepository} from 'services/dataRepository';
-import {Config} from '../common/config';
+import {Context} from 'common/context';
+import {Config} from 'common/config';
 import {inject} from 'aurelia-framework';
 import moment from 'moment';
 
-@inject(DialogController, DataRepository, Config)
+@inject(DialogController, DataRepository, Config, Context)
 export class AppointmentDialog {
-	constructor(dialogController, dataRepository, config) {
+	constructor(dialogController, dataRepository, config, context) {
 		this.dialogController = dialogController;
 		this.dataRepository = dataRepository;
 		this.config = config;
+		this.context = context;
 		
 		this.psychometrists = null;
 		this.psychologists = null;
-		this.companies = null;
 		this.appointmentStatuses = null;
 		this.taskStatuses = null;
 		this.addresses = null;
+		this.attributes = [];
 		
-		this.psychometristMatcher = (a, b) => a.userId === b.userId;
-		this.psychologistMatcher = (a, b) => a.userId === b.userId;
-		this.companyMatcher = (a, b) => a.companyId === b.companyId;
-		this.appointmentStatusMatcher = (a, b) => a.appointmentStatusId === b.appointmentStatusId;
-		this.addressMatcher = (a, b) => a.addressId === b.addressId;
-		this.taskStatusMatcher = (a, b) => a.taskStatusId === b.taskStatusId;
+		this.psychometristMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
+		this.psychologistMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
+		this.appointmentStatusMatcher = (a, b) => a !== null && b !== null && a.appointmentStatusId === b.appointmentStatusId;
+		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
+		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
 	}
 	
 	activate(appointment) {
@@ -32,12 +33,15 @@ export class AppointmentDialog {
 		this.appointmentTime = this.timeString(this.appointment.appointmentTime);
 
 		return Promise.all([
-			this.dataRepository.getPsychometrists(this.appointment.companyId).then(data => this.psychometrists = data),
-			this.dataRepository.getPsychologists(this.appointment.companyId).then(data => this.psychologists = data),
-			this.dataRepository.getCompanies().then(data => this.companies = data),
+			this.dataRepository.getPsychometrists(this.context.user.company.companyId).then(data => this.psychometrists = data),
+			this.dataRepository.getPsychologists(this.context.user.company.companyId).then(data => this.psychologists = data),
 			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
-			this.dataRepository.getTaskStatuses().then(data => this.taskStatuses = data),
-			this.dataRepository.searchAddress().then(data => this.addresses = data)
+			this.dataRepository.searchAddress().then(data => this.addresses = data),
+			this.dataRepository.searchAttributes({
+				companyIds: [this.context.user.company.companyId],
+				attributeTypeIds: [this.config.appointmentDefaults.attributeTypeId],
+				isActive: true
+			}).then(data => this.attributes = data)
 		]);
 	}
 	

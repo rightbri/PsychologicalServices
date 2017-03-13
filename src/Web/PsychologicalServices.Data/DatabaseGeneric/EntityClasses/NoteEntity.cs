@@ -782,7 +782,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The Note property of the Entity Note<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Notes"."Note"<br/>
-		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 1000<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 1000<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Note
 		{

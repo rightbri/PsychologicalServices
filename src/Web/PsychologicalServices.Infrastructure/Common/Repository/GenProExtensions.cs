@@ -2,6 +2,7 @@
 using PsychologicalServices.Models.Addresses;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.Attributes;
 using PsychologicalServices.Models.CalendarNotes;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
@@ -12,8 +13,6 @@ using PsychologicalServices.Models.Referrals;
 using PsychologicalServices.Models.Reports;
 using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Roles;
-using PsychologicalServices.Models.Tasks;
-using PsychologicalServices.Models.TaskTemplates;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -23,6 +22,32 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Models.Attributes.Attribute ToAttribute(this AttributeEntity attribute)
+        {
+            return null != attribute
+                ? new Models.Attributes.Attribute
+                {
+                    AttributeId = attribute.AttributeId,
+                    Name = attribute.Name,
+                    AttributeType = attribute.AttributeType.ToAttributeType(),
+                    IsActive = attribute.IsActive,
+                    Companies = attribute.CompanyAttributes.Select(companyAttribute => companyAttribute.Company.ToCompany()),
+                }
+                : null;
+        }
+
+        public static AttributeType ToAttributeType(this AttributeTypeEntity attributeType)
+        {
+            return null != attributeType
+                ? new AttributeType
+                {
+                    AttributeTypeId = attributeType.AttributeTypeId,
+                    Name = attributeType.Name,
+                    IsActive = attributeType.IsActive,
+                }
+                : null;
+        }
+
         public static Color ToColor(this ColorEntity color)
         {
             return null != color
@@ -225,9 +250,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     FileSize = assessment.FileSize,
                     ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
                     Deleted = assessment.Deleted,
-                    Psychiatrist = assessment.Psychiatrist,
-                    TypicalDay = assessment.TypicalDay,
-                    WorkHistory = assessment.WorkHistory,
+                    IsLargeFile = assessment.IsLargeFile,
                     AssessmentType = assessment.AssessmentType.ToAssessmentType(),
                     ReferralType = assessment.ReferralType.ToReferralType(),
                     ReferralSource = assessment.ReferralSource.ToReferralSource(),
@@ -241,6 +264,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
                     Notes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.Note.ToNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
+                    Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
                 }
                 : null;
         }
@@ -269,46 +293,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
-        public static TaskTemplate ToTaskTemplate(this TaskTemplateEntity taskTemplate)
-        {
-            return null != taskTemplate
-                ? new TaskTemplate
-                {
-                    TaskTemplateId = taskTemplate.TaskTemplateId,
-                    Name = taskTemplate.Name,
-                    CompanyId = taskTemplate.CompanyId,
-                    IsActive = taskTemplate.IsActive,
-                    Company = taskTemplate.Company.ToCompany(),
-                }
-                : null;
-        }
-
-        public static TaskStatus ToTaskStatus(this TaskStatusEntity taskStatus)
-        {
-            return null != taskStatus
-                ? new TaskStatus
-                {
-                    TaskStatusId = taskStatus.TaskStatusId,
-                    Name = taskStatus.Name,
-                    IsActive = taskStatus.IsActive,
-                }
-                : null;
-        }
-
-        public static Task ToTask(this TaskEntity task)
-        {
-            return null != task
-                ? new Task
-                {
-                    TaskId = task.TaskId,
-                    TaskTemplateId = task.TaskTemplateId,
-                    TaskStatusId = task.TaskStatusId,
-                    TaskStatus = task.TaskStatus.ToTaskStatus(),
-                    TaskTemplate = task.TaskTemplate.ToTaskTemplate(),
-                }
-                : null;
-        }
-
         public static AppointmentStatus ToAppointmentStatus(this AppointmentStatusEntity appointmentStatus)
         {
             return null != appointmentStatus
@@ -329,8 +313,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new Appointment
                 {
                     AppointmentId = appointment.AppointmentId,
-                    //convenience property
-                    CompanyId = appointment.Assessment.CompanyId,
                     AppointmentTime = appointment.AppointmentTime,
                     PsychometristConfirmed = appointment.PsychometristConfirmed,
                     Deleted = appointment.Deleted,
@@ -338,8 +320,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Psychometrist = appointment.Psychometrist.ToUser(),
                     Psychologist = appointment.Psychologist.ToUser(),
                     AppointmentStatus = appointment.AppointmentStatus.ToAppointmentStatus(),
-                    AppointmentTasks = appointment.AppointmentTasks.Select(appointmentTask => appointmentTask.Task.ToTask()),
                     Assessment = appointment.Assessment.ToAppointmentAssessment(),
+                    Attributes = appointment.AppointmentAttributes.Select(appointmentAttribute => appointmentAttribute.Attribute.ToAttribute()),
                 }
                 : null;
         }

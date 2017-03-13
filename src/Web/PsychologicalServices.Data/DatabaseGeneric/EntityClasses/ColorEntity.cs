@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<AssessmentColorEntity> _assessmentColors;
 
 
 
@@ -54,7 +54,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
-
+			/// <summary>Member name AssessmentColors</summary>
+			public static readonly string AssessmentColors = "AssessmentColors";
 
 
 		}
@@ -115,7 +116,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_assessmentColors = (EntityCollection<AssessmentColorEntity>)info.GetValue("_assessmentColors", typeof(EntityCollection<AssessmentColorEntity>));
 
 
 
@@ -156,7 +157,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
-
+				case "AssessmentColors":
+					this.AssessmentColors.Add((AssessmentColorEntity)entity);
+					break;
 
 
 				default:
@@ -181,7 +184,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "AssessmentColors":
+					toReturn.Add(ColorEntity.Relations.AssessmentColorEntityUsingColorId);
+					break;
 
 
 				default:
@@ -220,7 +225,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "AssessmentColors":
+					this.AssessmentColors.Add((AssessmentColorEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -237,7 +244,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "AssessmentColors":
+					base.PerformRelatedEntityRemoval(this.AssessmentColors, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -269,7 +278,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.AssessmentColors);
 
 			return toReturn;
 		}
@@ -284,7 +293,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_assessmentColors", ((_assessmentColors!=null) && (_assessmentColors.Count>0) && !this.MarkedForDeletion)?_assessmentColors:null);
 
 
 
@@ -322,6 +331,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'AssessmentColor' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentColors()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentColorFields.ColorId, null, ComparisonOperator.Equal, this.ColorId));
+			return bucket;
+		}
 
 
 
@@ -353,7 +371,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._assessmentColors);
 
 		}
 		
@@ -362,7 +380,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._assessmentColors = (EntityCollection<AssessmentColorEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -370,7 +388,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._assessmentColors != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -381,7 +402,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentColorEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentColorEntityFactory))) : null);
 
 		}
 #endif
@@ -393,7 +414,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-
+			toReturn.Add("AssessmentColors", _assessmentColors);
 
 
 			return toReturn;
@@ -402,7 +423,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_assessmentColors!=null)
+			{
+				_assessmentColors.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -412,7 +436,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_assessmentColors = null;
 
 
 
@@ -480,6 +504,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentColor' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessmentColors
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AssessmentColorEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentColorEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AssessmentColors")[0], (int)PsychologicalServices.Data.EntityType.ColorEntity, (int)PsychologicalServices.Data.EntityType.AssessmentColorEntity, 0, null, null, null, null, "AssessmentColors", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 
@@ -522,7 +557,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The Name property of the Entity Color<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Colors"."Name"<br/>
-		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 50<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Name
 		{
@@ -533,7 +568,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The HexCode property of the Entity Color<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Colors"."HexCode"<br/>
-		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 10<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String HexCode
 		{
@@ -552,6 +587,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ColorFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentColorEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AssessmentColorEntity))]
+		public virtual EntityCollection<AssessmentColorEntity> AssessmentColors
+		{
+			get
+			{
+				if(_assessmentColors==null)
+				{
+					_assessmentColors = new EntityCollection<AssessmentColorEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentColorEntityFactory)));
+					_assessmentColors.SetContainingEntityInfo(this, "Color");
+				}
+				return _assessmentColors;
+			}
+		}
 
 
 

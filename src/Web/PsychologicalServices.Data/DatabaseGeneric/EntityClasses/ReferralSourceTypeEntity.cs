@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<ReferralSourceEntity> _referralSources;
 
 
 
@@ -54,7 +54,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
-
+			/// <summary>Member name ReferralSources</summary>
+			public static readonly string ReferralSources = "ReferralSources";
 
 
 		}
@@ -115,7 +116,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_referralSources = (EntityCollection<ReferralSourceEntity>)info.GetValue("_referralSources", typeof(EntityCollection<ReferralSourceEntity>));
 
 
 
@@ -156,7 +157,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
-
+				case "ReferralSources":
+					this.ReferralSources.Add((ReferralSourceEntity)entity);
+					break;
 
 
 				default:
@@ -181,7 +184,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "ReferralSources":
+					toReturn.Add(ReferralSourceTypeEntity.Relations.ReferralSourceEntityUsingReferralSourceTypeId);
+					break;
 
 
 				default:
@@ -220,7 +225,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "ReferralSources":
+					this.ReferralSources.Add((ReferralSourceEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -237,7 +244,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "ReferralSources":
+					base.PerformRelatedEntityRemoval(this.ReferralSources, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -269,7 +278,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.ReferralSources);
 
 			return toReturn;
 		}
@@ -284,7 +293,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_referralSources", ((_referralSources!=null) && (_referralSources.Count>0) && !this.MarkedForDeletion)?_referralSources:null);
 
 
 
@@ -322,6 +331,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'ReferralSource' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoReferralSources()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralSourceFields.ReferralSourceTypeId, null, ComparisonOperator.Equal, this.ReferralSourceTypeId));
+			return bucket;
+		}
 
 
 
@@ -353,7 +371,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._referralSources);
 
 		}
 		
@@ -362,7 +380,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._referralSources = (EntityCollection<ReferralSourceEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -370,7 +388,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._referralSources != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -381,7 +402,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceEntityFactory))) : null);
 
 		}
 #endif
@@ -393,7 +414,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-
+			toReturn.Add("ReferralSources", _referralSources);
 
 
 			return toReturn;
@@ -402,7 +423,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_referralSources!=null)
+			{
+				_referralSources.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -412,7 +436,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_referralSources = null;
 
 
 
@@ -477,6 +501,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReferralSource' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathReferralSources
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<ReferralSourceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceEntityFactory))),
+					(IEntityRelation)GetRelationsForField("ReferralSources")[0], (int)PsychologicalServices.Data.EntityType.ReferralSourceTypeEntity, (int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, 0, null, null, null, null, "ReferralSources", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 
@@ -538,6 +573,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ReferralSourceTypeFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'ReferralSourceEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(ReferralSourceEntity))]
+		public virtual EntityCollection<ReferralSourceEntity> ReferralSources
+		{
+			get
+			{
+				if(_referralSources==null)
+				{
+					_referralSources = new EntityCollection<ReferralSourceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceEntityFactory)));
+					_referralSources.SetContainingEntityInfo(this, "ReferralSourceType");
+				}
+				return _referralSources;
+			}
+		}
 
 
 

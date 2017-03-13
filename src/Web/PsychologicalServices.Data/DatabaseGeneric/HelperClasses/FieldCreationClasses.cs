@@ -139,6 +139,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AppointmentAttributeEntity</summary>
+	public partial class AppointmentAttributeFields
+	{
+		/// <summary>Creates a new AppointmentAttributeEntity.AppointmentId field instance</summary>
+		public static EntityField2 AppointmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentAttributeFieldIndex.AppointmentId);}
+		}
+		/// <summary>Creates a new AppointmentAttributeEntity.AttributeId field instance</summary>
+		public static EntityField2 AttributeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentAttributeFieldIndex.AttributeId);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AppointmentStatusEntity</summary>
 	public partial class AppointmentStatusFields
 	{
@@ -166,21 +181,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 NotifyReferralSource
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentStatusFieldIndex.NotifyReferralSource);}
-		}
-	}
-
-	/// <summary>Field Creation Class for entity AppointmentTaskEntity</summary>
-	public partial class AppointmentTaskFields
-	{
-		/// <summary>Creates a new AppointmentTaskEntity.AppointmentId field instance</summary>
-		public static EntityField2 AppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AppointmentTaskFieldIndex.AppointmentId);}
-		}
-		/// <summary>Creates a new AppointmentTaskEntity.TaskId field instance</summary>
-		public static EntityField2 TaskId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AppointmentTaskFieldIndex.TaskId);}
 		}
 	}
 
@@ -247,20 +247,25 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.MedicalFileReceivedDate);}
 		}
-		/// <summary>Creates a new AssessmentEntity.Psychiatrist field instance</summary>
-		public static EntityField2 Psychiatrist
+		/// <summary>Creates a new AssessmentEntity.IsLargeFile field instance</summary>
+		public static EntityField2 IsLargeFile
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.Psychiatrist);}
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.IsLargeFile);}
 		}
-		/// <summary>Creates a new AssessmentEntity.TypicalDay field instance</summary>
-		public static EntityField2 TypicalDay
+	}
+
+	/// <summary>Field Creation Class for entity AssessmentAttributeEntity</summary>
+	public partial class AssessmentAttributeFields
+	{
+		/// <summary>Creates a new AssessmentAttributeEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.TypicalDay);}
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentAttributeFieldIndex.AssessmentId);}
 		}
-		/// <summary>Creates a new AssessmentEntity.WorkHistory field instance</summary>
-		public static EntityField2 WorkHistory
+		/// <summary>Creates a new AssessmentAttributeEntity.AttributeId field instance</summary>
+		public static EntityField2 AttributeId
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.WorkHistory);}
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentAttributeFieldIndex.AttributeId);}
 		}
 	}
 
@@ -404,6 +409,51 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AttributeEntity</summary>
+	public partial class AttributeFields
+	{
+		/// <summary>Creates a new AttributeEntity.AttributeId field instance</summary>
+		public static EntityField2 AttributeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeFieldIndex.AttributeId);}
+		}
+		/// <summary>Creates a new AttributeEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeFieldIndex.Name);}
+		}
+		/// <summary>Creates a new AttributeEntity.AttributeTypeId field instance</summary>
+		public static EntityField2 AttributeTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeFieldIndex.AttributeTypeId);}
+		}
+		/// <summary>Creates a new AttributeEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity AttributeTypeEntity</summary>
+	public partial class AttributeTypeFields
+	{
+		/// <summary>Creates a new AttributeTypeEntity.AttributeTypeId field instance</summary>
+		public static EntityField2 AttributeTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeTypeFieldIndex.AttributeTypeId);}
+		}
+		/// <summary>Creates a new AttributeTypeEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeTypeFieldIndex.Name);}
+		}
+		/// <summary>Creates a new AttributeTypeEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeTypeFieldIndex.IsActive);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity CalendarNoteEntity</summary>
 	public partial class CalendarNoteFields
 	{
@@ -541,6 +591,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 IsActive
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity CompanyAttributeEntity</summary>
+	public partial class CompanyAttributeFields
+	{
+		/// <summary>Creates a new CompanyAttributeEntity.CompanyId field instance</summary>
+		public static EntityField2 CompanyId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyAttributeFieldIndex.CompanyId);}
+		}
+		/// <summary>Creates a new CompanyAttributeEntity.AttributeId field instance</summary>
+		public static EntityField2 AttributeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyAttributeFieldIndex.AttributeId);}
 		}
 	}
 
@@ -826,71 +891,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 RightId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(RoleRightFieldIndex.RightId);}
-		}
-	}
-
-	/// <summary>Field Creation Class for entity TaskEntity</summary>
-	public partial class TaskFields
-	{
-		/// <summary>Creates a new TaskEntity.TaskId field instance</summary>
-		public static EntityField2 TaskId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskFieldIndex.TaskId);}
-		}
-		/// <summary>Creates a new TaskEntity.TaskTemplateId field instance</summary>
-		public static EntityField2 TaskTemplateId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskFieldIndex.TaskTemplateId);}
-		}
-		/// <summary>Creates a new TaskEntity.TaskStatusId field instance</summary>
-		public static EntityField2 TaskStatusId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskFieldIndex.TaskStatusId);}
-		}
-	}
-
-	/// <summary>Field Creation Class for entity TaskStatusEntity</summary>
-	public partial class TaskStatusFields
-	{
-		/// <summary>Creates a new TaskStatusEntity.TaskStatusId field instance</summary>
-		public static EntityField2 TaskStatusId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskStatusFieldIndex.TaskStatusId);}
-		}
-		/// <summary>Creates a new TaskStatusEntity.Name field instance</summary>
-		public static EntityField2 Name
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskStatusFieldIndex.Name);}
-		}
-		/// <summary>Creates a new TaskStatusEntity.IsActive field instance</summary>
-		public static EntityField2 IsActive
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskStatusFieldIndex.IsActive);}
-		}
-	}
-
-	/// <summary>Field Creation Class for entity TaskTemplateEntity</summary>
-	public partial class TaskTemplateFields
-	{
-		/// <summary>Creates a new TaskTemplateEntity.TaskTemplateId field instance</summary>
-		public static EntityField2 TaskTemplateId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskTemplateFieldIndex.TaskTemplateId);}
-		}
-		/// <summary>Creates a new TaskTemplateEntity.Name field instance</summary>
-		public static EntityField2 Name
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskTemplateFieldIndex.Name);}
-		}
-		/// <summary>Creates a new TaskTemplateEntity.IsActive field instance</summary>
-		public static EntityField2 IsActive
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskTemplateFieldIndex.IsActive);}
-		}
-		/// <summary>Creates a new TaskTemplateEntity.CompanyId field instance</summary>
-		public static EntityField2 CompanyId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(TaskTemplateFieldIndex.CompanyId);}
 		}
 	}
 

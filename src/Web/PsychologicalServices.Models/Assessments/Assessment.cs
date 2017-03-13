@@ -23,12 +23,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public bool Deleted { get; set; }
 
-        public bool Psychiatrist { get; set; }
-
-        public bool TypicalDay { get; set; }
-
-        public bool WorkHistory { get; set; }
-
+        public bool IsLargeFile { get; set; }
+        
         public AssessmentType AssessmentType { get; set; }
 
         public ReferralType ReferralType { get; set; }
@@ -54,6 +50,8 @@ namespace PsychologicalServices.Models.Assessments
         public IEnumerable<Note> Notes { get; set; }
 
         public IEnumerable<Color> Colors { get; set; }
+
+        public IEnumerable<Models.Attributes.Attribute> Attributes { get; set; }
 
         public bool IsNew()
         {

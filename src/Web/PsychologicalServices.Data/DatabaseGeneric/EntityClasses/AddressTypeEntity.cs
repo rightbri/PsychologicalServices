@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<AddressEntity> _addresses;
 
 
 
@@ -54,7 +54,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
-
+			/// <summary>Member name Addresses</summary>
+			public static readonly string Addresses = "Addresses";
 
 
 		}
@@ -115,7 +116,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_addresses = (EntityCollection<AddressEntity>)info.GetValue("_addresses", typeof(EntityCollection<AddressEntity>));
 
 
 
@@ -156,7 +157,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
-
+				case "Addresses":
+					this.Addresses.Add((AddressEntity)entity);
+					break;
 
 
 				default:
@@ -181,7 +184,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Addresses":
+					toReturn.Add(AddressTypeEntity.Relations.AddressEntityUsingAddressTypeId);
+					break;
 
 
 				default:
@@ -220,7 +225,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Addresses":
+					this.Addresses.Add((AddressEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -237,7 +244,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Addresses":
+					base.PerformRelatedEntityRemoval(this.Addresses, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -269,7 +278,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.Addresses);
 
 			return toReturn;
 		}
@@ -284,7 +293,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_addresses", ((_addresses!=null) && (_addresses.Count>0) && !this.MarkedForDeletion)?_addresses:null);
 
 
 
@@ -322,6 +331,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Address' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAddresses()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressTypeId, null, ComparisonOperator.Equal, this.AddressTypeId));
+			return bucket;
+		}
 
 
 
@@ -353,7 +371,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._addresses);
 
 		}
 		
@@ -362,7 +380,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._addresses = (EntityCollection<AddressEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -370,7 +388,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._addresses != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -381,7 +402,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))) : null);
 
 		}
 #endif
@@ -393,7 +414,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-
+			toReturn.Add("Addresses", _addresses);
 
 
 			return toReturn;
@@ -402,7 +423,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_addresses!=null)
+			{
+				_addresses.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -412,7 +436,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_addresses = null;
 
 
 
@@ -477,6 +501,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAddresses
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Addresses")[0], (int)PsychologicalServices.Data.EntityType.AddressTypeEntity, (int)PsychologicalServices.Data.EntityType.AddressEntity, 0, null, null, null, null, "Addresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 
@@ -538,6 +573,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AddressTypeFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AddressEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AddressEntity))]
+		public virtual EntityCollection<AddressEntity> Addresses
+		{
+			get
+			{
+				if(_addresses==null)
+				{
+					_addresses = new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory)));
+					_addresses.SetContainingEntityInfo(this, "AddressType");
+				}
+				return _addresses;
+			}
+		}
 
 
 

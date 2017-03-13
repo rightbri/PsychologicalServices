@@ -11,6 +11,12 @@
 
 <div class="container-fluid">
 	
+	<div class="row" if.bind="validationErrors">
+		<div class="col-xs-6">
+			<validation-summary errors.bind="validationErrors"></validation-summary>
+		</div>
+	</div>
+	
 	<div class="row">
 		<div class="col-xs-3">
 			<div class="form-group">
@@ -39,6 +45,17 @@
 	<div class="row">
 		<div class="col-xs-3">
 			<div class="form-group">
+				<label for="referralType">Referral Type</label>
+				<select id="referralType" class="form-control" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher" change.delegate="referralTypeChanged()">
+					<option></option>
+					<option repeat.for="referralType of referralTypes" model.bind="referralType">
+						${referralType.name}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
 				<label for="referralSource">Referral Source</label>
 				<select id="referralSource" class="form-control" value.bind="assessment.referralSource" matcher.bind="referralSourceMatcher">
 					<option></option>
@@ -50,8 +67,38 @@
 		</div>
 		<div class="col-xs-3">
 			<div class="form-group">
-				<label for="fileSize">File Size</label>
-				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
+				<label for="referralSourceContactEmail">Referral Source Contact Email</label>
+				<input id="referralSourceContactEmail" type="email" class="form-control" value.bind="assessment.referralSourceContactEmail" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<label>Issues in Dispute</label>
+			<p class="form-control-static" if.bind="!(issuesInDispute && issuesInDispute.length > 0)">
+				N/A
+			</p>
+			<div class="checkbox" repeat.for="issueInDispute of issuesInDispute">
+				<label>
+					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" change.delegate="checkMedRehab()" />&nbsp;${issueInDispute.name}
+				</label>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<label>Attributes</label>
+			<div class="checkbox" repeat.for="attribute of attributes">
+				<label>
+					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
+				</label>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<label>Colors</label>
+			<div class="checkbox" repeat.for="color of colors">
+				<label>
+					<input type="checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span css="color: ${color.hexCode};">${color.name}</span>
+				</label>
 			</div>
 		</div>
 	</div>
@@ -65,58 +112,21 @@
 		</div>
 		<div class="col-xs-3">
 			<div class="form-group">
-				<label for="referralType">Referral Type</label>
-				<select id="referralType" class="form-control" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher" change.delegate="referralTypeChanged()">
-					<option></option>
-					<option repeat.for="referralType of referralTypes" model.bind="referralType">
-						${referralType.name}
-					</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="referralSourceContactEmail">Referral Source Contact Email</label>
-				<input id="referralSourceContactEmail" type="email" class="form-control" value.bind="assessment.referralSourceContactEmail" />
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<label>Issues in Dispute</label>
-			<div class="checkbox" repeat.for="issueInDispute of issuesInDispute">
-				<label>
-					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" change.delegate="checkMedRehab()" />&nbsp;${issueInDispute.name}
-				</label>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" checked.bind="assessment.psychiatrist" />&nbsp;Psychiatrist?
-				</label>
+				<label for="fileSize">File Size</label>
+				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
 			</div>
 		</div>
 		<div class="col-xs-3">
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" checked.bind="assessment.typicalDay" />&nbsp;Typical Day
-				</label>
-			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" checked.bind="assessment.workHistory" />&nbsp;Work History
+					<input type="checkbox" checked.bind="assessment.isLargeFile" />&nbsp;Is Large File?
 				</label>
 			</div>
 		</div>
 	</div>
 	
 	<div class="row" if.bind="medRehabSelected">
-		<div class="col-xs-6">
+		<div class="col-xs-9">
 			<table class="table table-striped table-condensed">
 				<caption>Med Rehabs</caption>
 				<thead>
@@ -165,17 +175,31 @@
 			</div>
 		</div>
 		<div class="col-xs-3">
-			<label>Colors</label>
-			<div class="checkbox" repeat.for="color of colors">
-				<label>
-					<input type="checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span css="color: ${color.hexCode};">${color.name}</span>
-				</label>
+			<div class="form-group">
+				<label for="docListWriter">Doc List Writer</label>
+				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
+					<option></option>
+					<option repeat.for="user of docListWriters" model.bind="user">
+						${user.firstName}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="notesWriter">Notes Writer</label>
+				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
+					<option></option>
+					<option repeat.for="user of notesWriters" model.bind="user">
+						${user.firstName}
+					</option>
+				</select>
 			</div>
 		</div>
 	</div>
 		
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-xs-9">
 			<table class="table table-striped table-condensed">
 				<caption>Claims</caption>
 				<thead>
@@ -209,7 +233,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-xs-9">
 			<table class="table table-striped table-condensed">
 				<caption>Appointments</caption>
 				<thead>
@@ -252,7 +276,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-xs-9">
 			<table class="table table-striped table-condensed">
 				<caption>Notes</caption>
 				<thead>
@@ -280,37 +304,6 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="docListWriter">Doc List Writer</label>
-				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
-					<option></option>
-					<option repeat.for="user of docListWriters" model.bind="user">
-						${user.firstName}
-					</option>
-				</select>
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="notesWriter">Notes Writer</label>
-				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
-					<option></option>
-					<option repeat.for="user of notesWriters" model.bind="user">
-						${user.firstName}
-					</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row" if.bind="validationErrors">
-		<div class="col-xs-6">
-			<validation-summary errors.bind="validationErrors"></validation-summary>
 		</div>
 	</div>
 	

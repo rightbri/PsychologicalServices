@@ -206,6 +206,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty AppointmentAttributeEntity objects.</summary>
+	[Serializable]
+	public partial class AppointmentAttributeEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AppointmentAttributeEntityFactory() : base("AppointmentAttributeEntity", PsychologicalServices.Data.EntityType.AppointmentAttributeEntity) { }
+
+		/// <summary>Creates a new, empty AppointmentAttributeEntity object.</summary>
+		/// <returns>A new, empty AppointmentAttributeEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AppointmentAttributeEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentAttribute
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AppointmentAttributeEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AppointmentAttributeEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentAttributeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AppointmentAttributeEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty AppointmentStatusEntity objects.</summary>
 	[Serializable]
 	public partial class AppointmentStatusEntityFactory : EntityFactoryBase2 {
@@ -245,45 +284,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
-	/// <summary>Factory to create new, empty AppointmentTaskEntity objects.</summary>
-	[Serializable]
-	public partial class AppointmentTaskEntityFactory : EntityFactoryBase2 {
-		/// <summary>CTor</summary>
-		public AppointmentTaskEntityFactory() : base("AppointmentTaskEntity", PsychologicalServices.Data.EntityType.AppointmentTaskEntity) { }
-
-		/// <summary>Creates a new, empty AppointmentTaskEntity object.</summary>
-		/// <returns>A new, empty AppointmentTaskEntity object.</returns>
-		public override IEntity2 Create() {
-			IEntity2 toReturn = new AppointmentTaskEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentTask
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new AppointmentTaskEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
-		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
-		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
-		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new AppointmentTaskEntity(fields);
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentTaskUsingFields
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
-		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
-		public override IEntityCollection2 CreateEntityCollection()
-		{
-			return new EntityCollection<AppointmentTaskEntity>(this);
-		}
-		
-
-		#region Included Code
-
-		#endregion
-	}	
 	/// <summary>Factory to create new, empty AssessmentEntity objects.</summary>
 	[Serializable]
 	public partial class AssessmentEntityFactory : EntityFactoryBase2 {
@@ -316,6 +316,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntityCollection2 CreateEntityCollection()
 		{
 			return new EntityCollection<AssessmentEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
+	/// <summary>Factory to create new, empty AssessmentAttributeEntity objects.</summary>
+	[Serializable]
+	public partial class AssessmentAttributeEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AssessmentAttributeEntityFactory() : base("AssessmentAttributeEntity", PsychologicalServices.Data.EntityType.AssessmentAttributeEntity) { }
+
+		/// <summary>Creates a new, empty AssessmentAttributeEntity object.</summary>
+		/// <returns>A new, empty AssessmentAttributeEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AssessmentAttributeEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentAttribute
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AssessmentAttributeEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AssessmentAttributeEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentAttributeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AssessmentAttributeEntity>(this);
 		}
 		
 
@@ -596,6 +635,84 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty AttributeEntity objects.</summary>
+	[Serializable]
+	public partial class AttributeEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AttributeEntityFactory() : base("AttributeEntity", PsychologicalServices.Data.EntityType.AttributeEntity) { }
+
+		/// <summary>Creates a new, empty AttributeEntity object.</summary>
+		/// <returns>A new, empty AttributeEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AttributeEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAttribute
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AttributeEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AttributeEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAttributeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AttributeEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
+	/// <summary>Factory to create new, empty AttributeTypeEntity objects.</summary>
+	[Serializable]
+	public partial class AttributeTypeEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AttributeTypeEntityFactory() : base("AttributeTypeEntity", PsychologicalServices.Data.EntityType.AttributeTypeEntity) { }
+
+		/// <summary>Creates a new, empty AttributeTypeEntity object.</summary>
+		/// <returns>A new, empty AttributeTypeEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AttributeTypeEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAttributeType
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AttributeTypeEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AttributeTypeEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAttributeTypeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AttributeTypeEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty CalendarNoteEntity objects.</summary>
 	[Serializable]
 	public partial class CalendarNoteEntityFactory : EntityFactoryBase2 {
@@ -784,6 +901,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntityCollection2 CreateEntityCollection()
 		{
 			return new EntityCollection<CompanyEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
+	/// <summary>Factory to create new, empty CompanyAttributeEntity objects.</summary>
+	[Serializable]
+	public partial class CompanyAttributeEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public CompanyAttributeEntityFactory() : base("CompanyAttributeEntity", PsychologicalServices.Data.EntityType.CompanyAttributeEntity) { }
+
+		/// <summary>Creates a new, empty CompanyAttributeEntity object.</summary>
+		/// <returns>A new, empty CompanyAttributeEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new CompanyAttributeEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCompanyAttribute
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new CompanyAttributeEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new CompanyAttributeEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCompanyAttributeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<CompanyAttributeEntity>(this);
 		}
 		
 
@@ -1259,123 +1415,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
-	/// <summary>Factory to create new, empty TaskEntity objects.</summary>
-	[Serializable]
-	public partial class TaskEntityFactory : EntityFactoryBase2 {
-		/// <summary>CTor</summary>
-		public TaskEntityFactory() : base("TaskEntity", PsychologicalServices.Data.EntityType.TaskEntity) { }
-
-		/// <summary>Creates a new, empty TaskEntity object.</summary>
-		/// <returns>A new, empty TaskEntity object.</returns>
-		public override IEntity2 Create() {
-			IEntity2 toReturn = new TaskEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewTask
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new TaskEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
-		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
-		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
-		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new TaskEntity(fields);
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewTaskUsingFields
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
-		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
-		public override IEntityCollection2 CreateEntityCollection()
-		{
-			return new EntityCollection<TaskEntity>(this);
-		}
-		
-
-		#region Included Code
-
-		#endregion
-	}	
-	/// <summary>Factory to create new, empty TaskStatusEntity objects.</summary>
-	[Serializable]
-	public partial class TaskStatusEntityFactory : EntityFactoryBase2 {
-		/// <summary>CTor</summary>
-		public TaskStatusEntityFactory() : base("TaskStatusEntity", PsychologicalServices.Data.EntityType.TaskStatusEntity) { }
-
-		/// <summary>Creates a new, empty TaskStatusEntity object.</summary>
-		/// <returns>A new, empty TaskStatusEntity object.</returns>
-		public override IEntity2 Create() {
-			IEntity2 toReturn = new TaskStatusEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewTaskStatus
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new TaskStatusEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
-		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
-		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
-		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new TaskStatusEntity(fields);
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewTaskStatusUsingFields
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
-		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
-		public override IEntityCollection2 CreateEntityCollection()
-		{
-			return new EntityCollection<TaskStatusEntity>(this);
-		}
-		
-
-		#region Included Code
-
-		#endregion
-	}	
-	/// <summary>Factory to create new, empty TaskTemplateEntity objects.</summary>
-	[Serializable]
-	public partial class TaskTemplateEntityFactory : EntityFactoryBase2 {
-		/// <summary>CTor</summary>
-		public TaskTemplateEntityFactory() : base("TaskTemplateEntity", PsychologicalServices.Data.EntityType.TaskTemplateEntity) { }
-
-		/// <summary>Creates a new, empty TaskTemplateEntity object.</summary>
-		/// <returns>A new, empty TaskTemplateEntity object.</returns>
-		public override IEntity2 Create() {
-			IEntity2 toReturn = new TaskTemplateEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewTaskTemplate
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new TaskTemplateEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
-		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
-		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
-		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new TaskTemplateEntity(fields);
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewTaskTemplateUsingFields
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
-		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
-		public override IEntityCollection2 CreateEntityCollection()
-		{
-			return new EntityCollection<TaskTemplateEntity>(this);
-		}
-		
-
-		#region Included Code
-
-		#endregion
-	}	
 	/// <summary>Factory to create new, empty UserEntity objects.</summary>
 	[Serializable]
 	public partial class UserEntityFactory : EntityFactoryBase2 {
@@ -1476,14 +1515,17 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AppointmentEntity:
 					factoryToUse = new AppointmentEntityFactory();
 					break;
+				case PsychologicalServices.Data.EntityType.AppointmentAttributeEntity:
+					factoryToUse = new AppointmentAttributeEntityFactory();
+					break;
 				case PsychologicalServices.Data.EntityType.AppointmentStatusEntity:
 					factoryToUse = new AppointmentStatusEntityFactory();
 					break;
-				case PsychologicalServices.Data.EntityType.AppointmentTaskEntity:
-					factoryToUse = new AppointmentTaskEntityFactory();
-					break;
 				case PsychologicalServices.Data.EntityType.AssessmentEntity:
 					factoryToUse = new AssessmentEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentAttributeEntity:
+					factoryToUse = new AssessmentAttributeEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentClaimEntity:
 					factoryToUse = new AssessmentClaimEntityFactory();
@@ -1506,6 +1548,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity:
 					factoryToUse = new AssessmentTypeReportTypeEntityFactory();
 					break;
+				case PsychologicalServices.Data.EntityType.AttributeEntity:
+					factoryToUse = new AttributeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AttributeTypeEntity:
+					factoryToUse = new AttributeTypeEntityFactory();
+					break;
 				case PsychologicalServices.Data.EntityType.CalendarNoteEntity:
 					factoryToUse = new CalendarNoteEntityFactory();
 					break;
@@ -1520,6 +1568,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.CompanyEntity:
 					factoryToUse = new CompanyEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.CompanyAttributeEntity:
+					factoryToUse = new CompanyAttributeEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceAmountEntity:
 					factoryToUse = new InvoiceAmountEntityFactory();
@@ -1556,15 +1607,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.RoleRightEntity:
 					factoryToUse = new RoleRightEntityFactory();
-					break;
-				case PsychologicalServices.Data.EntityType.TaskEntity:
-					factoryToUse = new TaskEntityFactory();
-					break;
-				case PsychologicalServices.Data.EntityType.TaskStatusEntity:
-					factoryToUse = new TaskStatusEntityFactory();
-					break;
-				case PsychologicalServices.Data.EntityType.TaskTemplateEntity:
-					factoryToUse = new TaskTemplateEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.UserEntity:
 					factoryToUse = new UserEntityFactory();

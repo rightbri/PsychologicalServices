@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<AssessmentClaimEntity> _assessmentClaims;
 
 		private ClaimantEntity _claimant;
 
@@ -55,7 +55,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			/// <summary>Member name Claimant</summary>
 			public static readonly string Claimant = "Claimant";
-
+			/// <summary>Member name AssessmentClaims</summary>
+			public static readonly string AssessmentClaims = "AssessmentClaims";
 
 
 		}
@@ -116,7 +117,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_assessmentClaims = (EntityCollection<AssessmentClaimEntity>)info.GetValue("_assessmentClaims", typeof(EntityCollection<AssessmentClaimEntity>));
 
 				_claimant = (ClaimantEntity)info.GetValue("_claimant", typeof(ClaimantEntity));
 				if(_claimant!=null)
@@ -166,7 +167,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Claimant":
 					this.Claimant = (ClaimantEntity)entity;
 					break;
-
+				case "AssessmentClaims":
+					this.AssessmentClaims.Add((AssessmentClaimEntity)entity);
+					break;
 
 
 				default:
@@ -193,7 +196,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Claimant":
 					toReturn.Add(ClaimEntity.Relations.ClaimantEntityUsingClaimantId);
 					break;
-
+				case "AssessmentClaims":
+					toReturn.Add(ClaimEntity.Relations.AssessmentClaimEntityUsingClaimId);
+					break;
 
 
 				default:
@@ -234,7 +239,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Claimant":
 					SetupSyncClaimant(relatedEntity);
 					break;
-
+				case "AssessmentClaims":
+					this.AssessmentClaims.Add((AssessmentClaimEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -253,7 +260,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Claimant":
 					DesetupSyncClaimant(false, true);
 					break;
-
+				case "AssessmentClaims":
+					base.PerformRelatedEntityRemoval(this.AssessmentClaims, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -288,7 +297,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.AssessmentClaims);
 
 			return toReturn;
 		}
@@ -303,7 +312,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_assessmentClaims", ((_assessmentClaims!=null) && (_assessmentClaims.Count>0) && !this.MarkedForDeletion)?_assessmentClaims:null);
 
 				info.AddValue("_claimant", (!this.MarkedForDeletion?_claimant:null));
 
@@ -341,6 +350,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'AssessmentClaim' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentClaims()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentClaimFields.ClaimId, null, ComparisonOperator.Equal, this.ClaimId));
+			return bucket;
+		}
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
@@ -381,7 +399,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._assessmentClaims);
 
 		}
 		
@@ -390,7 +408,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._assessmentClaims = (EntityCollection<AssessmentClaimEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -398,7 +416,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._assessmentClaims != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -409,7 +430,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentClaimEntityFactory))) : null);
 
 		}
 #endif
@@ -421,7 +442,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Claimant", _claimant);
-
+			toReturn.Add("AssessmentClaims", _assessmentClaims);
 
 
 			return toReturn;
@@ -430,7 +451,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_assessmentClaims!=null)
+			{
+				_assessmentClaims.ActiveContext = base.ActiveContext;
+			}
 
 			if(_claimant!=null)
 			{
@@ -443,7 +467,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_assessmentClaims = null;
 
 			_claimant = null;
 
@@ -546,6 +570,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentClaim' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessmentClaims
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AssessmentClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentClaimEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AssessmentClaims")[0], (int)PsychologicalServices.Data.EntityType.ClaimEntity, (int)PsychologicalServices.Data.EntityType.AssessmentClaimEntity, 0, null, null, null, null, "AssessmentClaims", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Claimant' 
@@ -640,6 +675,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ClaimFieldIndex.Deleted, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentClaimEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AssessmentClaimEntity))]
+		public virtual EntityCollection<AssessmentClaimEntity> AssessmentClaims
+		{
+			get
+			{
+				if(_assessmentClaims==null)
+				{
+					_assessmentClaims = new EntityCollection<AssessmentClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentClaimEntityFactory)));
+					_assessmentClaims.SetContainingEntityInfo(this, "Claim");
+				}
+				return _assessmentClaims;
+			}
+		}
 
 
 		/// <summary> Gets / sets related entity of type 'ClaimantEntity' which has to be set using a fetch action earlier. If no related entity

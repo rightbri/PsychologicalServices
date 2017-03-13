@@ -336,13 +336,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1;
+			int numberOfOneWayRelations = 0;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
-				case "Company":
-					return true;
+
 
 				default:
 					return base.CheckOneWayRelations(propertyName);
@@ -887,7 +886,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncCompany(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", UserEntity.Relations.CompanyEntityUsingCompanyId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)UserFieldIndex.CompanyId } );		
+			base.PerformDesetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", UserEntity.Relations.CompanyEntityUsingCompanyId, true, signalRelatedEntity, "Users", resetFKFields, new int[] { (int)UserFieldIndex.CompanyId } );		
 			_company = null;
 		}
 
@@ -1192,14 +1191,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_company != null)
 						{
-							UnsetRelatedEntity(_company, "Company");
+							_company.UnsetRelatedEntity(this, "Users");
 						}
 					}
 					else
 					{
 						if(_company!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "Company");
+							((IEntity2)value).SetRelatedEntity(this, "Users");
 						}
 					}
 				}

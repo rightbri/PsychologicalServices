@@ -137,22 +137,37 @@ SET IDENTITY_INSERT [dbo].[ReferralSources] OFF;
 
 
 
-SET IDENTITY_INSERT [dbo].[TaskStatuses] ON;
+SET IDENTITY_INSERT [dbo].[AttributeTypes] ON;
 
-INSERT INTO [dbo].[TaskStatuses] ([TaskStatusId],[Name],[IsActive]) VALUES
-	 (1,'Pending',1)
-	,(2,'Not Applicable',1)
-	,(3,'Completed',1)
+INSERT INTO [dbo].[AttributeTypes] ([AttributeTypeId],[Name],[IsActive]) VALUES
+	 (1,'Appointment',1)
+	,(2,'Assessment',1)
 
-SET IDENTITY_INSERT [dbo].[TaskStatuses] OFF;
+SET IDENTITY_INSERT [dbo].[AttributeTypes] OFF;
 
 
-INSERT INTO [dbo].[TaskTemplates] ([Name],[IsActive],[CompanyId]) VALUES
-	 ('Room Rental Arranged',1,1)
-	,('Consent Form Printed',1,1)
-	,('Reader Booked',1,1)
-	,('Translator Booked',1,1)
 
+SET IDENTITY_INSERT [dbo].[Attributes] ON;
+
+INSERT INTO [dbo].[Attributes] ([AttributeId],[Name],[AttributeTypeId],[IsActive]) VALUES
+--	 ('Room Rental Arranged',1,1)
+--	,('Consent Form Printed',1,1)
+	 (1,'Reader Booked',1,1)
+	,(2,'Translator Booked',1,1)
+	,(3,'Psychiatrist',2,1)
+	,(4,'Typical Day',2,1)
+	,(5,'Work History',2,1)
+
+SET IDENTITY_INSERT [dbo].[Attributes] OFF;
+
+
+INSERT INTO [dbo].[CompanyAttributes] ([CompanyId],[AttributeId]) VALUES
+	 (1,1)
+	,(1,2)
+	,(1,3)
+	,(1,4)
+	,(1,5)
+	
 
 SET IDENTITY_INSERT [dbo].[Users] ON;
 

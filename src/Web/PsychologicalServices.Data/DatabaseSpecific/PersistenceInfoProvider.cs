@@ -55,13 +55,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((35 + 0));
+			base.InitClass((36 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
+			InitAppointmentAttributeEntityMappings();
 			InitAppointmentStatusEntityMappings();
-			InitAppointmentTaskEntityMappings();
 			InitAssessmentEntityMappings();
+			InitAssessmentAttributeEntityMappings();
 			InitAssessmentClaimEntityMappings();
 			InitAssessmentColorEntityMappings();
 			InitAssessmentIssueInDisputeEntityMappings();
@@ -69,11 +70,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAssessmentNoteEntityMappings();
 			InitAssessmentTypeEntityMappings();
 			InitAssessmentTypeReportTypeEntityMappings();
+			InitAttributeEntityMappings();
+			InitAttributeTypeEntityMappings();
 			InitCalendarNoteEntityMappings();
 			InitClaimEntityMappings();
 			InitClaimantEntityMappings();
 			InitColorEntityMappings();
 			InitCompanyEntityMappings();
+			InitCompanyAttributeEntityMappings();
 			InitInvoiceAmountEntityMappings();
 			InitIssueInDisputeEntityMappings();
 			InitNoteEntityMappings();
@@ -86,9 +90,6 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitRightEntityMappings();
 			InitRoleEntityMappings();
 			InitRoleRightEntityMappings();
-			InitTaskEntityMappings();
-			InitTaskStatusEntityMappings();
-			InitTaskTemplateEntityMappings();
 			InitUserEntityMappings();
 			InitUserRoleEntityMappings();
 
@@ -132,6 +133,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AppointmentEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 7 );
 			base.AddElementFieldMapping( "AppointmentEntity", "PsychometristConfirmed", "PsychometristConfirmed", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 8 );
 		}
+		/// <summary>Inits AppointmentAttributeEntity's mappings</summary>
+		private void InitAppointmentAttributeEntityMappings()
+		{
+			base.AddElementMapping( "AppointmentAttributeEntity", "PsychologicalServices", @"dbo", "AppointmentAttributes", 2 );
+			base.AddElementFieldMapping( "AppointmentAttributeEntity", "AppointmentId", "AppointmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AppointmentAttributeEntity", "AttributeId", "AttributeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+		}
 		/// <summary>Inits AppointmentStatusEntity's mappings</summary>
 		private void InitAppointmentStatusEntityMappings()
 		{
@@ -142,17 +150,10 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AppointmentStatusEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
 			base.AddElementFieldMapping( "AppointmentStatusEntity", "NotifyReferralSource", "NotifyReferralSource", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
 		}
-		/// <summary>Inits AppointmentTaskEntity's mappings</summary>
-		private void InitAppointmentTaskEntityMappings()
-		{
-			base.AddElementMapping( "AppointmentTaskEntity", "PsychologicalServices", @"dbo", "AppointmentTasks", 2 );
-			base.AddElementFieldMapping( "AppointmentTaskEntity", "AppointmentId", "AppointmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "AppointmentTaskEntity", "TaskId", "TaskId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-		}
 		/// <summary>Inits AssessmentEntity's mappings</summary>
 		private void InitAssessmentEntityMappings()
 		{
-			base.AddElementMapping( "AssessmentEntity", "PsychologicalServices", @"dbo", "Assessments", 15 );
+			base.AddElementMapping( "AssessmentEntity", "PsychologicalServices", @"dbo", "Assessments", 13 );
 			base.AddElementFieldMapping( "AssessmentEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentEntity", "ReferralTypeId", "ReferralTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "AssessmentEntity", "ReferralSourceId", "ReferralSourceId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
@@ -165,9 +166,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AssessmentEntity", "DocListWriterId", "DocListWriterId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 9 );
 			base.AddElementFieldMapping( "AssessmentEntity", "NotesWriterId", "NotesWriterId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 10 );
 			base.AddElementFieldMapping( "AssessmentEntity", "MedicalFileReceivedDate", "MedicalFileReceivedDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 11 );
-			base.AddElementFieldMapping( "AssessmentEntity", "Psychiatrist", "Psychiatrist", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 12 );
-			base.AddElementFieldMapping( "AssessmentEntity", "TypicalDay", "TypicalDay", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 13 );
-			base.AddElementFieldMapping( "AssessmentEntity", "WorkHistory", "WorkHistory", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 14 );
+			base.AddElementFieldMapping( "AssessmentEntity", "IsLargeFile", "IsLargeFile", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 12 );
+		}
+		/// <summary>Inits AssessmentAttributeEntity's mappings</summary>
+		private void InitAssessmentAttributeEntityMappings()
+		{
+			base.AddElementMapping( "AssessmentAttributeEntity", "PsychologicalServices", @"dbo", "AssessmentAttributes", 2 );
+			base.AddElementFieldMapping( "AssessmentAttributeEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AssessmentAttributeEntity", "AttributeId", "AttributeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
 		/// <summary>Inits AssessmentClaimEntity's mappings</summary>
 		private void InitAssessmentClaimEntityMappings()
@@ -225,6 +231,23 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AssessmentTypeReportTypeEntity", "AssessmentTypeId", "AssessmentTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentTypeReportTypeEntity", "ReportTypeId", "ReportTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
+		/// <summary>Inits AttributeEntity's mappings</summary>
+		private void InitAttributeEntityMappings()
+		{
+			base.AddElementMapping( "AttributeEntity", "PsychologicalServices", @"dbo", "Attributes", 4 );
+			base.AddElementFieldMapping( "AttributeEntity", "AttributeId", "AttributeId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AttributeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "AttributeEntity", "AttributeTypeId", "AttributeTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
+			base.AddElementFieldMapping( "AttributeEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
+		}
+		/// <summary>Inits AttributeTypeEntity's mappings</summary>
+		private void InitAttributeTypeEntityMappings()
+		{
+			base.AddElementMapping( "AttributeTypeEntity", "PsychologicalServices", @"dbo", "AttributeTypes", 3 );
+			base.AddElementFieldMapping( "AttributeTypeEntity", "AttributeTypeId", "AttributeTypeId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AttributeTypeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "AttributeTypeEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
+		}
 		/// <summary>Inits CalendarNoteEntity's mappings</summary>
 		private void InitCalendarNoteEntityMappings()
 		{
@@ -261,8 +284,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		{
 			base.AddElementMapping( "ColorEntity", "PsychologicalServices", @"dbo", "Colors", 4 );
 			base.AddElementFieldMapping( "ColorEntity", "ColorId", "ColorId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "ColorEntity", "Name", "Name", false, (int)SqlDbType.VarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
-			base.AddElementFieldMapping( "ColorEntity", "HexCode", "HexCode", false, (int)SqlDbType.VarChar, 10, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "ColorEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "ColorEntity", "HexCode", "HexCode", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "ColorEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
 		}
 		/// <summary>Inits CompanyEntity's mappings</summary>
@@ -272,6 +295,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "CompanyEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "CompanyEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "CompanyEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
+		}
+		/// <summary>Inits CompanyAttributeEntity's mappings</summary>
+		private void InitCompanyAttributeEntityMappings()
+		{
+			base.AddElementMapping( "CompanyAttributeEntity", "PsychologicalServices", @"dbo", "CompanyAttributes", 2 );
+			base.AddElementFieldMapping( "CompanyAttributeEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CompanyAttributeEntity", "AttributeId", "AttributeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
 		/// <summary>Inits InvoiceAmountEntity's mappings</summary>
 		private void InitInvoiceAmountEntityMappings()
@@ -295,7 +325,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		{
 			base.AddElementMapping( "NoteEntity", "PsychologicalServices", @"dbo", "Notes", 7 );
 			base.AddElementFieldMapping( "NoteEntity", "NoteId", "NoteId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "NoteEntity", "Note", "Note", false, (int)SqlDbType.VarChar, 1000, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "NoteEntity", "Note", "Note", false, (int)SqlDbType.NVarChar, 1000, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "NoteEntity", "UpdateUserId", "UpdateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
 			base.AddElementFieldMapping( "NoteEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
 			base.AddElementFieldMapping( "NoteEntity", "CreateUserId", "CreateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
@@ -377,31 +407,6 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "RoleRightEntity", "PsychologicalServices", @"dbo", "RoleRights", 2 );
 			base.AddElementFieldMapping( "RoleRightEntity", "RoleId", "RoleId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "RoleRightEntity", "RightId", "RightId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-		}
-		/// <summary>Inits TaskEntity's mappings</summary>
-		private void InitTaskEntityMappings()
-		{
-			base.AddElementMapping( "TaskEntity", "PsychologicalServices", @"dbo", "Tasks", 3 );
-			base.AddElementFieldMapping( "TaskEntity", "TaskId", "TaskId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "TaskEntity", "TaskTemplateId", "TaskTemplateId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-			base.AddElementFieldMapping( "TaskEntity", "TaskStatusId", "TaskStatusId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
-		}
-		/// <summary>Inits TaskStatusEntity's mappings</summary>
-		private void InitTaskStatusEntityMappings()
-		{
-			base.AddElementMapping( "TaskStatusEntity", "PsychologicalServices", @"dbo", "TaskStatuses", 3 );
-			base.AddElementFieldMapping( "TaskStatusEntity", "TaskStatusId", "TaskStatusId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "TaskStatusEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
-			base.AddElementFieldMapping( "TaskStatusEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
-		}
-		/// <summary>Inits TaskTemplateEntity's mappings</summary>
-		private void InitTaskTemplateEntityMappings()
-		{
-			base.AddElementMapping( "TaskTemplateEntity", "PsychologicalServices", @"dbo", "TaskTemplates", 4 );
-			base.AddElementFieldMapping( "TaskTemplateEntity", "TaskTemplateId", "TaskTemplateId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "TaskTemplateEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
-			base.AddElementFieldMapping( "TaskTemplateEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
-			base.AddElementFieldMapping( "TaskTemplateEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
 		}
 		/// <summary>Inits UserEntity's mappings</summary>
 		private void InitUserEntityMappings()

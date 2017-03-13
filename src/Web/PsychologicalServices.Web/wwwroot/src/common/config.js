@@ -44,5 +44,13 @@ export class Config {
 			'province': 'ON',
 			'country': 'Canada'
 		};
+		
+		this.appointmentDefaults = {
+			'attributeTypeId': 1
+		};
+		
+		this.assessmentDefaults = {
+			'attributeTypeId': 2
+		};
 	}
 }

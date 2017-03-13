@@ -41,14 +41,17 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AppointmentEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AppointmentEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.AppointmentAttributeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AppointmentAttributeEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.AppointmentStatusEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AppointmentStatusEntity");
 					break;
-				case PsychologicalServices.Data.EntityType.AppointmentTaskEntity:
-					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AppointmentTaskEntity");
-					break;
 				case PsychologicalServices.Data.EntityType.AssessmentEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentAttributeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentAttributeEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentClaimEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentClaimEntity");
@@ -71,6 +74,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentTypeReportTypeEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.AttributeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AttributeEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.AttributeTypeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AttributeTypeEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.CalendarNoteEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "CalendarNoteEntity");
 					break;
@@ -85,6 +94,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.CompanyEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "CompanyEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.CompanyAttributeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "CompanyAttributeEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceAmountEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceAmountEntity");
@@ -121,15 +133,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.RoleRightEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "RoleRightEntity");
-					break;
-				case PsychologicalServices.Data.EntityType.TaskEntity:
-					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "TaskEntity");
-					break;
-				case PsychologicalServices.Data.EntityType.TaskStatusEntity:
-					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "TaskStatusEntity");
-					break;
-				case PsychologicalServices.Data.EntityType.TaskTemplateEntity:
-					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "TaskTemplateEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.UserEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "UserEntity");

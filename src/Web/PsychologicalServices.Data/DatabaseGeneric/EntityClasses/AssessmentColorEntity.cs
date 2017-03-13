@@ -232,14 +232,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1;
+			int numberOfOneWayRelations = 0;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
-				case "Color":
-					return true;
+
 
 				default:
 					return base.CheckOneWayRelations(propertyName);
@@ -559,7 +558,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncColor(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _color, new PropertyChangedEventHandler( OnColorPropertyChanged ), "Color", AssessmentColorEntity.Relations.ColorEntityUsingColorId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentColorFieldIndex.ColorId } );		
+			base.PerformDesetupSyncRelatedEntity( _color, new PropertyChangedEventHandler( OnColorPropertyChanged ), "Color", AssessmentColorEntity.Relations.ColorEntityUsingColorId, true, signalRelatedEntity, "AssessmentColors", resetFKFields, new int[] { (int)AssessmentColorFieldIndex.ColorId } );		
 			_color = null;
 		}
 
@@ -751,14 +750,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_color != null)
 						{
-							UnsetRelatedEntity(_color, "Color");
+							_color.UnsetRelatedEntity(this, "AssessmentColors");
 						}
 					}
 					else
 					{
 						if(_color!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "Color");
+							((IEntity2)value).SetRelatedEntity(this, "AssessmentColors");
 						}
 					}
 				}

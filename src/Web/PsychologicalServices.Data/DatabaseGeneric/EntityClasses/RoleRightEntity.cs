@@ -232,13 +232,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1;
+			int numberOfOneWayRelations = 0;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
-				case "Right":
-					return true;
+
 
 
 				default:
@@ -526,7 +525,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncRight(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _right, new PropertyChangedEventHandler( OnRightPropertyChanged ), "Right", RoleRightEntity.Relations.RightEntityUsingRightId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)RoleRightFieldIndex.RightId } );		
+			base.PerformDesetupSyncRelatedEntity( _right, new PropertyChangedEventHandler( OnRightPropertyChanged ), "Right", RoleRightEntity.Relations.RightEntityUsingRightId, true, signalRelatedEntity, "RoleRights", resetFKFields, new int[] { (int)RoleRightFieldIndex.RightId } );		
 			_right = null;
 		}
 
@@ -716,14 +715,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_right != null)
 						{
-							UnsetRelatedEntity(_right, "Right");
+							_right.UnsetRelatedEntity(this, "RoleRights");
 						}
 					}
 					else
 					{
 						if(_right!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "Right");
+							((IEntity2)value).SetRelatedEntity(this, "RoleRights");
 						}
 					}
 				}

@@ -1,13 +1,15 @@
 import {HttpClient as HttpFetch, json} from 'aurelia-fetch-client';
 import {AuthContext} from 'common/authContext';
+import {Notifier} from 'services/notifier';
 import {inject} from 'aurelia-framework';
 
-@inject(HttpFetch, AuthContext, 'apiRoot')
+@inject(HttpFetch, AuthContext, Notifier, 'apiRoot')
 export class DataRepository {
-	constructor(httpFetch, authContext, apiRoot) {
+	constructor(httpFetch, authContext, notifier, apiRoot) {
 		this.apiRoot = apiRoot;
 		this.httpFetch = httpFetch;
 		this.authContext = authContext;
+		this.notifier = notifier;
 		this.cache = {};
 		
 		var self = this;
@@ -29,8 +31,6 @@ export class DataRepository {
 				})
 				.withInterceptor({
 					request(request) {
-						//console.log(`Requesting ${request.method} ${request.url}`);
-						
 						if (!request.headers.has('Authorization')) {
 							if (self.authContext.authToken) {
 								request.headers.append('Authorization','Token ' + self.authContext.authToken);
@@ -38,15 +38,13 @@ export class DataRepository {
 						}
 						
 						return request;
-					}/*,
+					},
 					response(response) {
-						console.log(`Received ${response.status} ${response.url}`);
-
-						if (response.status === 401) {
-							
+						if (!response.ok) {
+							self.notifier.error('Error: ' + response.status + ' - ' + response.statusText);
 						}
 						return response;
-					}*/
+					}
 				});
 		});
 	}
@@ -107,6 +105,22 @@ export class DataRepository {
 
 	getAddressTypes() {
 		return this.getManyBasic('addresstype', true);
+	}
+	
+	searchAttributes(criteria) {
+		return this.searchBasic(criteria, 'attribute');
+	}
+	
+	saveAttribute(attribute) {
+		return this.saveBasic(attribute, 'attribute');
+	}
+	
+	getAttributeTypes() {
+		return this.getManyBasic('attributetype', true);
+	}
+	
+	saveAttributeType(attributeType) {
+		return this.saveBasic(attributeType, 'attributetype');
 	}
 	
 	getGenders() {
@@ -223,10 +237,6 @@ export class DataRepository {
 	
 	saveCalendarNote(calendarNote) {
 		return this.saveBasic(calendarNote, 'calendarNote');
-	}
-	
-	getTaskStatuses() {
-		return this.getManyBasic('taskStatus', true);
 	}
 
 	getBasic(route) {

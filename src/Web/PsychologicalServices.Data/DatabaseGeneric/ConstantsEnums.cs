@@ -87,6 +87,20 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentAttribute.
+	/// </summary>
+	public enum AppointmentAttributeFieldIndex:int
+	{
+		///<summary>AppointmentId. </summary>
+		AppointmentId,
+		///<summary>AttributeId. </summary>
+		AttributeId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentStatus.
 	/// </summary>
 	public enum AppointmentStatusFieldIndex:int
@@ -101,20 +115,6 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>NotifyReferralSource. </summary>
 		NotifyReferralSource,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentTask.
-	/// </summary>
-	public enum AppointmentTaskFieldIndex:int
-	{
-		///<summary>AppointmentId. </summary>
-		AppointmentId,
-		///<summary>TaskId. </summary>
-		TaskId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -149,12 +149,22 @@ namespace PsychologicalServices.Data
 		NotesWriterId,
 		///<summary>MedicalFileReceivedDate. </summary>
 		MedicalFileReceivedDate,
-		///<summary>Psychiatrist. </summary>
-		Psychiatrist,
-		///<summary>TypicalDay. </summary>
-		TypicalDay,
-		///<summary>WorkHistory. </summary>
-		WorkHistory,
+		///<summary>IsLargeFile. </summary>
+		IsLargeFile,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentAttribute.
+	/// </summary>
+	public enum AssessmentAttributeFieldIndex:int
+	{
+		///<summary>AssessmentId. </summary>
+		AssessmentId,
+		///<summary>AttributeId. </summary>
+		AttributeId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -273,6 +283,40 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Attribute.
+	/// </summary>
+	public enum AttributeFieldIndex:int
+	{
+		///<summary>AttributeId. </summary>
+		AttributeId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>AttributeTypeId. </summary>
+		AttributeTypeId,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AttributeType.
+	/// </summary>
+	public enum AttributeTypeFieldIndex:int
+	{
+		///<summary>AttributeTypeId. </summary>
+		AttributeTypeId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CalendarNote.
 	/// </summary>
 	public enum CalendarNoteFieldIndex:int
@@ -363,6 +407,20 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CompanyAttribute.
+	/// </summary>
+	public enum CompanyAttributeFieldIndex:int
+	{
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>AttributeId. </summary>
+		AttributeId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -579,56 +637,6 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Task.
-	/// </summary>
-	public enum TaskFieldIndex:int
-	{
-		///<summary>TaskId. </summary>
-		TaskId,
-		///<summary>TaskTemplateId. </summary>
-		TaskTemplateId,
-		///<summary>TaskStatusId. </summary>
-		TaskStatusId,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: TaskStatus.
-	/// </summary>
-	public enum TaskStatusFieldIndex:int
-	{
-		///<summary>TaskStatusId. </summary>
-		TaskStatusId,
-		///<summary>Name. </summary>
-		Name,
-		///<summary>IsActive. </summary>
-		IsActive,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: TaskTemplate.
-	/// </summary>
-	public enum TaskTemplateFieldIndex:int
-	{
-		///<summary>TaskTemplateId. </summary>
-		TaskTemplateId,
-		///<summary>Name. </summary>
-		Name,
-		///<summary>IsActive. </summary>
-		IsActive,
-		///<summary>CompanyId. </summary>
-		CompanyId,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: User.
 	/// </summary>
 	public enum UserFieldIndex:int
@@ -678,12 +686,14 @@ namespace PsychologicalServices.Data
 		AddressTypeEntity,
 		///<summary>Appointment</summary>
 		AppointmentEntity,
+		///<summary>AppointmentAttribute</summary>
+		AppointmentAttributeEntity,
 		///<summary>AppointmentStatus</summary>
 		AppointmentStatusEntity,
-		///<summary>AppointmentTask</summary>
-		AppointmentTaskEntity,
 		///<summary>Assessment</summary>
 		AssessmentEntity,
+		///<summary>AssessmentAttribute</summary>
+		AssessmentAttributeEntity,
 		///<summary>AssessmentClaim</summary>
 		AssessmentClaimEntity,
 		///<summary>AssessmentColor</summary>
@@ -698,6 +708,10 @@ namespace PsychologicalServices.Data
 		AssessmentTypeEntity,
 		///<summary>AssessmentTypeReportType</summary>
 		AssessmentTypeReportTypeEntity,
+		///<summary>Attribute</summary>
+		AttributeEntity,
+		///<summary>AttributeType</summary>
+		AttributeTypeEntity,
 		///<summary>CalendarNote</summary>
 		CalendarNoteEntity,
 		///<summary>Claim</summary>
@@ -708,6 +722,8 @@ namespace PsychologicalServices.Data
 		ColorEntity,
 		///<summary>Company</summary>
 		CompanyEntity,
+		///<summary>CompanyAttribute</summary>
+		CompanyAttributeEntity,
 		///<summary>InvoiceAmount</summary>
 		InvoiceAmountEntity,
 		///<summary>IssueInDispute</summary>
@@ -732,12 +748,6 @@ namespace PsychologicalServices.Data
 		RoleEntity,
 		///<summary>RoleRight</summary>
 		RoleRightEntity,
-		///<summary>Task</summary>
-		TaskEntity,
-		///<summary>TaskStatus</summary>
-		TaskStatusEntity,
-		///<summary>TaskTemplate</summary>
-		TaskTemplateEntity,
 		///<summary>User</summary>
 		UserEntity,
 		///<summary>UserRole</summary>

@@ -55,42 +55,11 @@ export class Context {
 	}
 	
 	login() {
-		this.authContext.login()
-			/*
-			.then(result => {
-				this.username = result.user.email;
-				return getUser();
-			})
-			*/
-			.catch(err => {
-				/*
-				//let email = err.email;
-				//let credential = err.credential;
-				
-				this.dialogService.open({
-					viewModel: MessageDialog,
-					model: {
-						heading: 'Sign In Error',
-						message: err.code + ': ' + err.message
-					}
-				});
-				*/
-			});
+		return this.authContext.login();
     }
 	
 	logout() {
-		this.authContext.logout()
-			.then(() => this.clear())
-			.catch(err => {
-				/*
-				this.dialogService.open({
-					viewModel: MessageDialog,
-					model: {
-						heading: 'Sign Out Error',
-						message: err.code + ': ' + err.message
-					}
-				});
-				*/
-			});
+		return this.authContext.logout()
+			.then(() => this.clear());
 	}
 }

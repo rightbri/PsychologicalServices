@@ -4,7 +4,6 @@ using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Common.Utility;
-using PsychologicalServices.Models.Tasks;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
@@ -37,16 +36,9 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                     .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                     .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                    .Prefetch<AppointmentTaskEntity>(appointment => appointment.AppointmentTasks)
-                        .SubPath(appointmentTaskPath => appointmentTaskPath
-                            .Prefetch<TaskEntity>(appointmentTask => appointmentTask.Task)
-                                .SubPath(taskPath => taskPath
-                                    .Prefetch<TaskStatusEntity>(task => task.TaskStatus)
-                                    .Prefetch<TaskTemplateEntity>(task => task.TaskTemplate)
-                                        .SubPath(taskTemplatePath => taskTemplatePath
-                                            .Prefetch<CompanyEntity>(taskTemplate => taskTemplate.Company)
-                                        )
-                            )
+                    .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
+                        .SubPath(appointmentAttributePath => appointmentAttributePath
+                            .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
                         )
                     .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
                         .SubPath(assessmentPath => assessmentPath
@@ -105,25 +97,9 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     throw new ArgumentOutOfRangeException("companyId");
                 }
 
-                var taskStatusEntity = meta.TaskStatus
-                    .OrderBy(taskStatus => taskStatus.TaskStatusId)
-                    .FirstOrDefault();
-
-                var taskTemplates = meta.TaskTemplate
-                    .Where(taskTemplate => taskTemplate.CompanyId == companyId)
-                    .ToList();
-
                 return new Appointment
                 {
                     AppointmentTime = _now.Now,
-                    CompanyId = companyId,
-                    AppointmentTasks = taskTemplates.Select(taskTemplate => new Task
-                    {
-                        TaskStatusId = null != taskStatusEntity ? taskStatusEntity.TaskStatusId : 0,
-                        TaskStatus = taskStatusEntity.ToTaskStatus(),
-                        TaskTemplateId = taskTemplate.TaskTemplateId,
-                        TaskTemplate = taskTemplate.ToTaskTemplate(),
-                    }),
                 };
             }
         }
@@ -141,32 +117,16 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     throw new ArgumentOutOfRangeException("assessmentId");
                 }
 
-                var companyEntity = meta.Company.Where(company => company.CompanyId == companyId).SingleOrDefault();
+                //var companyEntity = meta.Company.Where(company => company.CompanyId == companyId).SingleOrDefault();
 
-                if (null == companyEntity)
-                {
-                    throw new ArgumentOutOfRangeException("companyId");
-                }
-
-                var taskStatusEntity = meta.TaskStatus
-                    .OrderBy(taskStatus => taskStatus.TaskStatusId)
-                    .FirstOrDefault();
-
-                var taskTemplates = meta.TaskTemplate
-                    .Where(taskTemplate => taskTemplate.CompanyId == companyId)
-                    .ToList();
+                //if (null == companyEntity)
+                //{
+                //    throw new ArgumentOutOfRangeException("companyId");
+                //}
 
                 return new Appointment
                 {
                     AppointmentTime = _now.Now,
-                    CompanyId = companyId,
-                    AppointmentTasks = taskTemplates.Select(taskTemplate => new Task
-                    {
-                        TaskStatusId = null != taskStatusEntity ? taskStatusEntity.TaskStatusId : 0,
-                        TaskStatus = taskStatusEntity.ToTaskStatus(),
-                        TaskTemplateId = taskTemplate.TaskTemplateId,
-                        TaskTemplate = taskTemplate.ToTaskTemplate(),
-                    }),
                     Assessment = assessmentEntity.ToAssessment(),
                 };
             }
@@ -282,8 +242,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 {
                     var prefetch = new PrefetchPath2(EntityType.AppointmentEntity);
 
-                    prefetch.Add(AppointmentEntity.PrefetchPathAppointmentTasks)
-                        .SubPath.Add(AppointmentTaskEntity.PrefetchPathTask);
+                    prefetch.Add(AppointmentEntity.PrefetchPathAppointmentAttributes);
 
                     adapter.FetchEntity(appointmentEntity, prefetch);
                 }
@@ -296,53 +255,34 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentEntity.AssessmentId = appointment.Assessment.AssessmentId;
                 appointmentEntity.PsychometristConfirmed = appointment.PsychometristConfirmed;
 
-                var tasksToAdd = appointment.AppointmentTasks
-                    .Where(task =>
-                        !appointmentEntity.AppointmentTasks.Any(appointmentTask =>
-                            appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId
+                if (!isNew)
+                {
+                    var attributesToRemove = appointmentEntity.AppointmentAttributes
+                        .Where(appointmentAttribute =>
+                            !appointment.Attributes.Any(attribute => attribute.AttributeId == appointmentAttribute.AttributeId
                         )
                     );
 
-                appointmentEntity.AppointmentTasks.AddRange(
-                    tasksToAdd.Select(task => new AppointmentTaskEntity
+                    foreach (var attribute in attributesToRemove)
                     {
-                        Task = new TaskEntity
-                        {
-                            TaskTemplateId = task.TaskTemplate.TaskTemplateId,
-                            TaskStatusId = task.TaskStatus.TaskStatusId,
-                        },
+                        uow.AddForDelete(attribute);
+                    }
+                }
+
+                var attributesToAdd = appointment.Attributes
+                    .Where(attribute =>
+                        !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
+                            appointmentAttribute.AttributeId == attribute.AttributeId
+                        )
+                    );
+
+                appointmentEntity.AppointmentAttributes.AddRange(
+                    attributesToAdd.Select(attribute => new AppointmentAttributeEntity
+                    {
+                        AttributeId = attribute.AttributeId,
                     })
                 );
 
-                if (!isNew)
-                {
-                    var tasksToRemove = appointmentEntity.AppointmentTasks
-                        .Where(appointmentTask =>
-                            !appointment.AppointmentTasks.Any(task =>
-                                task.TaskTemplate.TaskTemplateId == appointmentTask.Task.TaskTemplateId)
-                        );
-
-                    foreach (var task in tasksToRemove)
-                    {
-                        uow.AddForDelete(task);
-                    }
-
-                    var tasksToUpdate = appointmentEntity.AppointmentTasks
-                        .Where(appointmentTask =>
-                            appointment.AppointmentTasks.Any(task =>
-                                appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId &&
-                                appointmentTask.Task.TaskStatusId != task.TaskStatus.TaskStatusId
-                            )
-                        );
-
-                    foreach (var appointmentTask in tasksToUpdate)
-                    {
-                        var task = appointment.AppointmentTasks.First(t => t.TaskId == appointmentTask.TaskId);
-
-                        appointmentTask.Task.TaskStatusId = task.TaskStatus.TaskStatusId;
-                    }
-                }
-                
                 uow.AddForSave(appointmentEntity);
 
                 uow.Commit(adapter);

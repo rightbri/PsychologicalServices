@@ -70,14 +70,17 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.AppointmentEntity:
 					toReturn = this.Appointment;
 					break;
+				case PsychologicalServices.Data.EntityType.AppointmentAttributeEntity:
+					toReturn = this.AppointmentAttribute;
+					break;
 				case PsychologicalServices.Data.EntityType.AppointmentStatusEntity:
 					toReturn = this.AppointmentStatus;
 					break;
-				case PsychologicalServices.Data.EntityType.AppointmentTaskEntity:
-					toReturn = this.AppointmentTask;
-					break;
 				case PsychologicalServices.Data.EntityType.AssessmentEntity:
 					toReturn = this.Assessment;
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentAttributeEntity:
+					toReturn = this.AssessmentAttribute;
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentClaimEntity:
 					toReturn = this.AssessmentClaim;
@@ -100,6 +103,12 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity:
 					toReturn = this.AssessmentTypeReportType;
 					break;
+				case PsychologicalServices.Data.EntityType.AttributeEntity:
+					toReturn = this.Attribute;
+					break;
+				case PsychologicalServices.Data.EntityType.AttributeTypeEntity:
+					toReturn = this.AttributeType;
+					break;
 				case PsychologicalServices.Data.EntityType.CalendarNoteEntity:
 					toReturn = this.CalendarNote;
 					break;
@@ -114,6 +123,9 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.CompanyEntity:
 					toReturn = this.Company;
+					break;
+				case PsychologicalServices.Data.EntityType.CompanyAttributeEntity:
+					toReturn = this.CompanyAttribute;
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceAmountEntity:
 					toReturn = this.InvoiceAmount;
@@ -151,15 +163,6 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.RoleRightEntity:
 					toReturn = this.RoleRight;
 					break;
-				case PsychologicalServices.Data.EntityType.TaskEntity:
-					toReturn = this.Task;
-					break;
-				case PsychologicalServices.Data.EntityType.TaskStatusEntity:
-					toReturn = this.TaskStatus;
-					break;
-				case PsychologicalServices.Data.EntityType.TaskTemplateEntity:
-					toReturn = this.TaskTemplate;
-					break;
 				case PsychologicalServices.Data.EntityType.UserEntity:
 					toReturn = this.User;
 					break;
@@ -191,22 +194,28 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<AppointmentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting AppointmentAttributeEntity instances in the database.</summary>
+		public DataSource2<AppointmentAttributeEntity> AppointmentAttribute
+		{
+			get { return new DataSource2<AppointmentAttributeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting AppointmentStatusEntity instances in the database.</summary>
 		public DataSource2<AppointmentStatusEntity> AppointmentStatus
 		{
 			get { return new DataSource2<AppointmentStatusEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
-		/// <summary>returns the datasource to use in a Linq query when targeting AppointmentTaskEntity instances in the database.</summary>
-		public DataSource2<AppointmentTaskEntity> AppointmentTask
-		{
-			get { return new DataSource2<AppointmentTaskEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
-		}
-		
 		/// <summary>returns the datasource to use in a Linq query when targeting AssessmentEntity instances in the database.</summary>
 		public DataSource2<AssessmentEntity> Assessment
 		{
 			get { return new DataSource2<AssessmentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting AssessmentAttributeEntity instances in the database.</summary>
+		public DataSource2<AssessmentAttributeEntity> AssessmentAttribute
+		{
+			get { return new DataSource2<AssessmentAttributeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting AssessmentClaimEntity instances in the database.</summary>
@@ -251,6 +260,18 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<AssessmentTypeReportTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting AttributeEntity instances in the database.</summary>
+		public DataSource2<AttributeEntity> Attribute
+		{
+			get { return new DataSource2<AttributeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting AttributeTypeEntity instances in the database.</summary>
+		public DataSource2<AttributeTypeEntity> AttributeType
+		{
+			get { return new DataSource2<AttributeTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting CalendarNoteEntity instances in the database.</summary>
 		public DataSource2<CalendarNoteEntity> CalendarNote
 		{
@@ -279,6 +300,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<CompanyEntity> Company
 		{
 			get { return new DataSource2<CompanyEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting CompanyAttributeEntity instances in the database.</summary>
+		public DataSource2<CompanyAttributeEntity> CompanyAttribute
+		{
+			get { return new DataSource2<CompanyAttributeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceAmountEntity instances in the database.</summary>
@@ -351,24 +378,6 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<RoleRightEntity> RoleRight
 		{
 			get { return new DataSource2<RoleRightEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
-		}
-		
-		/// <summary>returns the datasource to use in a Linq query when targeting TaskEntity instances in the database.</summary>
-		public DataSource2<TaskEntity> Task
-		{
-			get { return new DataSource2<TaskEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
-		}
-		
-		/// <summary>returns the datasource to use in a Linq query when targeting TaskStatusEntity instances in the database.</summary>
-		public DataSource2<TaskStatusEntity> TaskStatus
-		{
-			get { return new DataSource2<TaskStatusEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
-		}
-		
-		/// <summary>returns the datasource to use in a Linq query when targeting TaskTemplateEntity instances in the database.</summary>
-		public DataSource2<TaskTemplateEntity> TaskTemplate
-		{
-			get { return new DataSource2<TaskTemplateEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting UserEntity instances in the database.</summary>

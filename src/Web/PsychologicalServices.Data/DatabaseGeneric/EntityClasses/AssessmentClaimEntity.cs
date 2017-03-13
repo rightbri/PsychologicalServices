@@ -232,14 +232,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1;
+			int numberOfOneWayRelations = 0;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
-				case "Claim":
-					return true;
+
 
 				default:
 					return base.CheckOneWayRelations(propertyName);
@@ -559,7 +558,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncClaim(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _claim, new PropertyChangedEventHandler( OnClaimPropertyChanged ), "Claim", AssessmentClaimEntity.Relations.ClaimEntityUsingClaimId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentClaimFieldIndex.ClaimId } );		
+			base.PerformDesetupSyncRelatedEntity( _claim, new PropertyChangedEventHandler( OnClaimPropertyChanged ), "Claim", AssessmentClaimEntity.Relations.ClaimEntityUsingClaimId, true, signalRelatedEntity, "AssessmentClaims", resetFKFields, new int[] { (int)AssessmentClaimFieldIndex.ClaimId } );		
 			_claim = null;
 		}
 
@@ -751,14 +750,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_claim != null)
 						{
-							UnsetRelatedEntity(_claim, "Claim");
+							_claim.UnsetRelatedEntity(this, "AssessmentClaims");
 						}
 					}
 					else
 					{
 						if(_claim!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "Claim");
+							((IEntity2)value).SetRelatedEntity(this, "AssessmentClaims");
 						}
 					}
 				}

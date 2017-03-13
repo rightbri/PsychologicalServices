@@ -30,7 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.AppointmentTaskEntityUsingAppointmentId);
+			toReturn.Add(this.AppointmentAttributeEntityUsingAppointmentId);
 
 			toReturn.Add(this.AddressEntityUsingLocationId);
 			toReturn.Add(this.AppointmentStatusEntityUsingAppointmentStatusId);
@@ -42,17 +42,17 @@ namespace PsychologicalServices.Data.RelationClasses
 
 		#region Class Property Declarations
 
-		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and AppointmentTaskEntity over the 1:n relation they have, using the relation between the fields:
-		/// Appointment.AppointmentId - AppointmentTask.AppointmentId
+		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and AppointmentAttributeEntity over the 1:n relation they have, using the relation between the fields:
+		/// Appointment.AppointmentId - AppointmentAttribute.AppointmentId
 		/// </summary>
-		public virtual IEntityRelation AppointmentTaskEntityUsingAppointmentId
+		public virtual IEntityRelation AppointmentAttributeEntityUsingAppointmentId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AppointmentTasks" , true);
-				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, AppointmentTaskFields.AppointmentId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AppointmentAttributes" , true);
+				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, AppointmentAttributeFields.AppointmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentTaskEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentAttributeEntity", false);
 				return relation;
 			}
 		}

@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<AssessmentEntity> _assessments;
 		private EntityCollection<ReferralTypeIssueInDisputeEntity> _referralTypeIssuesInDispute;
 
 
@@ -61,7 +61,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
-
+			/// <summary>Member name Assessments</summary>
+			public static readonly string Assessments = "Assessments";
 			/// <summary>Member name ReferralTypeIssuesInDispute</summary>
 			public static readonly string ReferralTypeIssuesInDispute = "ReferralTypeIssuesInDispute";
 
@@ -130,7 +131,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
 				_referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>)info.GetValue("_referralTypeIssuesInDispute", typeof(EntityCollection<ReferralTypeIssueInDisputeEntity>));
 
 
@@ -178,7 +179,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
-
+				case "Assessments":
+					this.Assessments.Add((AssessmentEntity)entity);
+					break;
 				case "ReferralTypeIssuesInDispute":
 					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)entity);
 					break;
@@ -212,7 +215,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Assessments":
+					toReturn.Add(ReferralTypeEntity.Relations.AssessmentEntityUsingReferralTypeId);
+					break;
 				case "ReferralTypeIssuesInDispute":
 					toReturn.Add(ReferralTypeEntity.Relations.ReferralTypeIssueInDisputeEntityUsingReferralTypeId);
 					break;
@@ -260,7 +265,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Assessments":
+					this.Assessments.Add((AssessmentEntity)relatedEntity);
+					break;
 				case "ReferralTypeIssuesInDispute":
 					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)relatedEntity);
 					break;
@@ -280,7 +287,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-
+				case "Assessments":
+					base.PerformRelatedEntityRemoval(this.Assessments, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "ReferralTypeIssuesInDispute":
 					base.PerformRelatedEntityRemoval(this.ReferralTypeIssuesInDispute, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -315,7 +324,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.Assessments);
 			toReturn.Add(this.ReferralTypeIssuesInDispute);
 
 			return toReturn;
@@ -331,7 +340,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_assessments", ((_assessments!=null) && (_assessments.Count>0) && !this.MarkedForDeletion)?_assessments:null);
 				info.AddValue("_referralTypeIssuesInDispute", ((_referralTypeIssuesInDispute!=null) && (_referralTypeIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_referralTypeIssuesInDispute:null);
 
 
@@ -376,6 +385,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Assessment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessments()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.ReferralTypeId, null, ComparisonOperator.Equal, this.ReferralTypeId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'ReferralTypeIssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
@@ -423,7 +441,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._assessments);
 			collectionsQueue.Enqueue(this._referralTypeIssuesInDispute);
 
 
@@ -439,7 +457,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>) collectionsQueue.Dequeue();
 
 
@@ -454,7 +472,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._assessments != null)
+			{
+				return true;
+			}
 			if (this._referralTypeIssuesInDispute != null)
 			{
 				return true;
@@ -475,7 +496,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory))) : null);
 
 
@@ -494,7 +515,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-
+			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("ReferralTypeIssuesInDispute", _referralTypeIssuesInDispute);
 
 
@@ -510,7 +531,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_assessments!=null)
+			{
+				_assessments.ActiveContext = base.ActiveContext;
+			}
 			if(_referralTypeIssuesInDispute!=null)
 			{
 				_referralTypeIssuesInDispute.ActiveContext = base.ActiveContext;
@@ -530,7 +554,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_assessments = null;
 			_referralTypeIssuesInDispute = null;
 
 
@@ -602,6 +626,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessments
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Assessments")[0], (int)PsychologicalServices.Data.EntityType.ReferralTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReferralTypeIssueInDispute' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -680,6 +715,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ReferralTypeFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AssessmentEntity))]
+		public virtual EntityCollection<AssessmentEntity> Assessments
+		{
+			get
+			{
+				if(_assessments==null)
+				{
+					_assessments = new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory)));
+					_assessments.SetContainingEntityInfo(this, "ReferralType");
+				}
+				return _assessments;
+			}
+		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'ReferralTypeIssueInDisputeEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>

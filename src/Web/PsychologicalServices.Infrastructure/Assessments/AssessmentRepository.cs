@@ -68,16 +68,12 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                             .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                            .Prefetch<AppointmentTaskEntity>(appointment => appointment.AppointmentTasks)
-                                .SubPath(appointmentTaskPath => appointmentTaskPath
-                                    .Prefetch<TaskEntity>(appointmentTask => appointmentTask.Task)
-                                        .SubPath(taskPath => taskPath
-                                            .Prefetch<TaskStatusEntity>(task => task.TaskStatus)
-                                            .Prefetch<TaskTemplateEntity>(task => task.TaskTemplate)
-                                                .SubPath(taskTemplatePath => taskTemplatePath
-                                                    .Prefetch<CompanyEntity>(taskTemplate => taskTemplate.Company)
-                                                )
-                                    )
+                            .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
+                                .SubPath(appointmentAttributePath => appointmentAttributePath
+                                    .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
+                                        .SubPath(attributePath => attributePath
+                                            .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                                        )
                                 )
                         )
                     .Prefetch<AssessmentIssueInDisputeEntity>(assessment => assessment.AssessmentIssuesInDispute)
@@ -96,6 +92,13 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<AssessmentColorEntity>(assessment => assessment.AssessmentColors)
                         .SubPath(assessmentColorPath => assessmentColorPath
                             .Prefetch<ColorEntity>(assessmentColor => assessmentColor.Color)
+                        )
+                    .Prefetch<AssessmentAttributeEntity>(assessment => assessment.AssessmentAttributes)
+                        .SubPath(assessmentAttributePath => assessmentAttributePath
+                            .Prefetch<AttributeEntity>(assessmentAttribute => assessmentAttribute.Attribute)
+                                .SubPath(attributePath => attributePath
+                                    .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                                )
                         )
                 );
 
@@ -254,8 +257,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     var prefetch = new PrefetchPath2(EntityType.AssessmentEntity);
 
                     prefetch.Add(AssessmentEntity.PrefetchPathAppointments)
-                        .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentTasks)
-                        .SubPath.Add(AppointmentTaskEntity.PrefetchPathTask);
+                        .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentAttributes);
                     
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentClaims)
                         .SubPath.Add(AssessmentClaimEntity.PrefetchPathClaim);
@@ -267,8 +269,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentNotes)
                         .SubPath.Add(AssessmentNoteEntity.PrefetchPathNote);
 
-                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentColors)
-                        .SubPath.Add(AssessmentColorEntity.PrefetchPathColor);
+                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentColors);
+
+                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentAttributes);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
@@ -279,9 +282,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.ReportStatusId = assessment.ReportStatus.ReportStatusId;
                 assessmentEntity.CompanyId = assessment.Company.CompanyId;
                 assessmentEntity.Deleted = assessment.Deleted;
-                assessmentEntity.Psychiatrist = assessment.Psychiatrist;
-                assessmentEntity.TypicalDay = assessment.TypicalDay;
-                assessmentEntity.WorkHistory = assessment.WorkHistory;
+                assessmentEntity.IsLargeFile = assessment.IsLargeFile;
 
                 if (null == assessment.MedicalFileReceivedDate)
                 {
@@ -357,23 +358,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 appointmentEntity.PsychologistId != appointment.Psychologist.UserId ||
                                 appointmentEntity.PsychometristId != appointment.Psychometrist.UserId ||
                                 appointmentEntity.PsychometristConfirmed != appointment.PsychometristConfirmed ||
-                                //appointment tasks removed
-                                appointmentEntity.AppointmentTasks.Any(appointmentTask =>
-                                    !appointment.AppointmentTasks.Any(task =>
-                                        task.TaskTemplate.TaskTemplateId == appointmentTask.Task.TaskTemplateId
+                                //appointment attributes removed
+                                appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
+                                    !appointment.Attributes.Any(attribute =>
+                                        attribute.AttributeId == appointmentAttribute.AttributeId
                                     )
                                 ) ||
-                                //appointment tasks added
-                                appointment.AppointmentTasks.Any(task =>
-                                    !appointmentEntity.AppointmentTasks.Any(appointmentTask =>
-                                        appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId
-                                    )
-                                ) ||
-                                //appointment tasks updated
-                                appointmentEntity.AppointmentTasks.Any(appointmentTask =>
-                                    appointment.AppointmentTasks.Any(task =>
-                                        appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId &&
-                                        appointmentTask.Task.TaskStatusId != task.TaskStatus.TaskStatusId
+                                //appointment attributes added
+                                appointment.Attributes.Any(attribute =>
+                                    !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
+                                        appointmentAttribute.AttributeId == attribute.AttributeId
                                     )
                                 )
                             )
@@ -382,6 +376,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                 foreach (var appointment in appointmentsToRemove)
                 {
+                    foreach (var appointmentAttribute in appointment.AppointmentAttributes)
+                    {
+                        uow.AddForDelete(appointmentAttribute);
+                    }
+
                     uow.AddForDelete(appointment);
                 }
 
@@ -398,15 +397,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         PsychometristConfirmed = appointment.PsychometristConfirmed,
                     };
 
-                    appointmentEntity.AppointmentTasks.AddRange(
-                        appointment.AppointmentTasks.Select(task =>
-                            new AppointmentTaskEntity
+                    appointmentEntity.AppointmentAttributes.AddRange(
+                        appointment.Attributes.Select(attribute =>
+                            new AppointmentAttributeEntity
                             {
-                                Task = new TaskEntity
-                                {
-                                    TaskStatusId = task.TaskStatus.TaskStatusId,
-                                    TaskTemplateId = task.TaskTemplate.TaskTemplateId,
-                                }
+                                AttributeId = attribute.AttributeId,
                             }
                         )
                     );
@@ -426,44 +421,26 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
                     appointmentEntity.PsychometristConfirmed = appointment.PsychometristConfirmed;
 
-                    var tasksToAdd = appointment.AppointmentTasks.Where(task =>
-                        !appointmentEntity.AppointmentTasks.Any(appointmentTask =>
-                            appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId
+                    var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
+                        !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
+                            appointmentAttribute.AttributeId == attribute.AttributeId
                         )
                     );
 
-                    var tasksToRemove = appointmentEntity.AppointmentTasks.Where(appointmentTask =>
-                        !appointment.AppointmentTasks.Any(task =>
-                            task.TaskTemplate.TaskTemplateId == appointmentTask.Task.TaskTemplateId)
+                    var appointmentAttributesToRemove = appointmentEntity.AppointmentAttributes.Where(appointmentAttribute =>
+                        !appointment.Attributes.Any(attribute =>
+                            attribute.AttributeId == appointmentAttribute.AttributeId)
                     );
 
-                    var tasksToUpdate = appointmentEntity.AppointmentTasks.Where(appointmentTask =>
-                        appointment.AppointmentTasks.Any(task =>
-                            appointmentTask.Task.TaskTemplateId == task.TaskTemplate.TaskTemplateId &&
-                            appointmentTask.Task.TaskStatusId != task.TaskStatus.TaskStatusId
-                        )
-                    );
-
-                    foreach (var task in tasksToRemove)
+                    foreach (var attribute in appointmentAttributesToRemove)
                     {
-                        uow.AddForDelete(task);
+                        uow.AddForDelete(attribute);
                     }
 
-                    foreach (var appointmentTask in tasksToUpdate)
-                    {
-                        var task = appointment.AppointmentTasks.Single(t => t.TaskTemplate.TaskTemplateId == appointmentTask.Task.TaskTemplateId);
-
-                        appointmentTask.Task.TaskStatusId = task.TaskStatus.TaskStatusId;
-                    }
-
-                    appointmentEntity.AppointmentTasks.AddRange(
-                        tasksToAdd.Select(task => new AppointmentTaskEntity
+                    appointmentEntity.AppointmentAttributes.AddRange(
+                        appointmentAttributesToAdd.Select(attribute => new AppointmentAttributeEntity
                         {
-                            Task = new TaskEntity
-                            {
-                                TaskTemplateId = task.TaskTemplate.TaskTemplateId,
-                                TaskStatusId = task.TaskStatus.TaskStatusId,
-                            },
+                            AttributeId = attribute.AttributeId,
                         })
                     );
                 }
@@ -717,6 +694,33 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 {
                     uow.AddForDelete(color);
                 }
+
+                #endregion
+
+                #region attributes
+
+                var assessmentAttributesToAdd = assessment.Attributes.Where(attribute =>
+                        !assessmentEntity.AssessmentAttributes.Any(assessmentAttribute =>
+                            assessmentAttribute.AttributeId == attribute.AttributeId
+                        )
+                    );
+
+                var assessmentAttributesToRemove = assessmentEntity.AssessmentAttributes.Where(assessmentAttribute =>
+                    !assessment.Attributes.Any(attribute =>
+                        attribute.AttributeId == assessmentAttribute.AttributeId)
+                );
+
+                foreach (var attribute in assessmentAttributesToRemove)
+                {
+                    uow.AddForDelete(attribute);
+                }
+
+                assessmentEntity.AssessmentAttributes.AddRange(
+                    assessmentAttributesToAdd.Select(attribute => new AssessmentAttributeEntity
+                    {
+                        AttributeId = attribute.AttributeId,
+                    })
+                );
 
                 #endregion
 
