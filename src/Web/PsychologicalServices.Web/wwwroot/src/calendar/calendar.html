@@ -152,8 +152,11 @@
 		<template repeat.for="day of days">
 		<tr class="day-header ${day | dayClass}">
 			<td>
-				<p class="date-display text-primary">
-					${day | dateFormat:'ddd Do'}
+				<p class="text-primary date-display">
+					<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="btn btn-default btn-xs">
+						<i class="fa fa-plus" title="New Assessment"></i>
+					</a>
+					&nbsp;${day | dateFormat:'ddd Do'}
 				</p>
 			</td>
 			<td colspan="11"></td>
