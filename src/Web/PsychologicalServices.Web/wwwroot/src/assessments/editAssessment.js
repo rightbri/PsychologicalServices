@@ -47,7 +47,9 @@ export class EditAssessment {
 		this.issueInDisputeMatcher = (a, b) => a != null && b != null && a.issueInDisputeId === b.issueInDisputeId;
 		this.colorMatcher = (a, b) => a != null && b != null && a.colorId === b.colorId;
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
-		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
+		this.attributeMatcher = (a, b) => {
+			return a !== null && b !== null && a.attributeId === b.attributeId;
+		};
 		
 		this.error = null;
 		this.validationErrors = null;
@@ -116,7 +118,7 @@ export class EditAssessment {
 			this.dataRepository.getColors().then(data => this.colors = data),
 			this.dataRepository.searchAttributes({
 				companyIds: [this.context.user.company.companyId],
-				attributeTypeIds: [this.config.assessmentDefaults.attributeTypeId],
+				attributeTypeIds: this.config.assessmentDefaults.attributeTypeIds,
 				isActive: true
 			}).then(data => this.attributes = data)
 		]);

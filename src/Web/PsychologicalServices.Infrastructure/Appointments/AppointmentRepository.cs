@@ -39,6 +39,9 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
                         .SubPath(appointmentAttributePath => appointmentAttributePath
                             .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
+                                .SubPath(attributePath => attributePath
+                                    .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                                )
                         )
                     .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
                         .SubPath(assessmentPath => assessmentPath
@@ -56,7 +59,6 @@ namespace PsychologicalServices.Infrastructure.Appointments
                             .Prefetch<ReportStatusEntity>(assessment => assessment.ReportStatus)
                             .Prefetch<UserEntity>(assessment => assessment.DocListWriter)
                             .Prefetch<UserEntity>(assessment => assessment.NotesWriter)
-                            //.Prefetch<CompanyEntity>(assessment => assessment.Company)
                             .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                                 .SubPath(assessmentClaimPath => assessmentClaimPath
                                     .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
@@ -64,7 +66,17 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                             .Prefetch<ClaimantEntity>(claim => claim.Claimant)
                                         )
                                 )
-                            //.Prefetch<IssueInDisputeEntity>(assessment => assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute))
+                            .Prefetch<AssessmentAttributeEntity>(assessment => assessment.AssessmentAttributes)
+                                .SubPath(assessmentAttributePath => assessmentAttributePath
+                                    .Prefetch<AttributeEntity>(assessmentAttribute => assessmentAttribute.Attribute)
+                                        .SubPath(attributePath => attributePath
+                                            .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                                        )
+                                )
+                            .Prefetch<AssessmentIssueInDisputeEntity>(assessment => assessment.AssessmentIssuesInDispute)
+                                .SubPath(assessmentIssueInDisputePath => assessmentIssueInDisputePath
+                                    .Prefetch<IssueInDisputeEntity>(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute)
+                                )
                         )
                 );
 
@@ -100,6 +112,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 return new Appointment
                 {
                     AppointmentTime = _now.Now,
+                    Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
                 };
             }
         }
@@ -127,6 +140,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 return new Appointment
                 {
                     AppointmentTime = _now.Now,
+                    Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
                     Assessment = assessmentEntity.ToAssessment(),
                 };
             }

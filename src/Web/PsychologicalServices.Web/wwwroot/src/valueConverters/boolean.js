@@ -1,10 +1,10 @@
 
 export class BooleanValueConverter {
 	toView(value) {
-		return value ? 'yes' : 'no';
+		return value ? 'Yes' : 'No';
 	}
 	
 	fromView(value) {
-		return value === 'yes' ? true : false;
+		return value === 'Yes' ? true : false;
 	}
 }

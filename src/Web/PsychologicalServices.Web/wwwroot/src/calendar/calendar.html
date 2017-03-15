@@ -4,6 +4,7 @@
 	<require from="valueConverters/day-class"></require>
 	<require from="valueConverters/note-for-day"></require>
 	<require from="valueConverters/appointment-for-day"></require>
+	<require from="valueConverters/attributeTypes"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
@@ -21,47 +22,40 @@
 		</div>
 		<div class="col-xs-3">
 			<div class="btn-group" role="group" aria-label="view type selectors">
-			  <button type="button" class="btn ${scheduleView ? 'btn-primary' : 'btn-default'}" click.delegate="setView('schedule')">Schedule</button>
-			  <button type="button" class="btn ${scheduleView ? 'btn-default' : 'btn-primary'}" click.delegate="setView('up-to-date')">Keeping up to date</button>
+			  <button type="button" class="btn ${currentView === 'schedule' ? 'btn-primary' : 'btn-default'}" click.delegate="setView('schedule')">Schedule</button>
+			  <button type="button" class="btn ${currentView === 'schedule' ? 'btn-default' : 'btn-primary'}" click.delegate="setView('up to date')">Up to date</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<table class="table table-condensed" fixed-header>
+<table class="table table-condensed" show.bind="currentView === 'schedule'" fixed-header>
 	<thead>
 		<tr>
 			<th></th>
 			<th>Time</th>
 			<th>Type</th>
-			<th>Claimant</th>
-			<th>Location</th>
 			<th>Source</th>
+			<th>Location</th>
+			<th>Claimant</th>
 			<th>Psychometrist</th>
-			<th>Status</th>
-			<th>Notes</th>
+			<th>Info</th>
 		</tr>
 	</thead>
 	<tbody>
 		<template repeat.for="day of days">
 		<tr class="day-header ${day | dayClass}">
 			<td>
-				<p class="date-display text-primary">
-					${day | dateFormat:'ddd Do'}
+				<p class="text-primary date-display">
+					<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="btn btn-default btn-xs">
+						<i class="fa fa-plus" title="New Assessment"></i>
+					</a>
+					&nbsp;${day | dateFormat:'ddd Do'}
 				</p>
-				<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="btn btn-default btn-xs" title="Add Assessment">
-					<i class="fa fa-plus"></i>
-				</a>
-				<button type="button" class="btn btn-default btn-xs" click.delegate="addCalendarNote(day)" title="Add Calendar Note">
-					<i class="fa fa-sticky-note-o"></i>
-				</button>
 			</td>
-			<td colspan="7"></td>
+			<td colspan="6"></td>
 			<td>
 				<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day & signal: newCalendarNoteSignalName">
-					<button type="button" class="btn btn-default btn-xs" click.delegate="editCalendarNote(calendarNote)">
-						<i class="fa fa-sticky-note-o"></i>
-					</button>
 					<small>${calendarNote.note.noteText}</small>
 				</p>
 			</td>
@@ -72,44 +66,141 @@
 					<i class="fa fa-pencil"></i>
 				</a>
 			</td>
-			<td title="Time">
-				${appointment.appointmentTime | dateFormat:config.shortTimeFormat}
-			</td>
-			<td title="Assessment Type">
-				${appointment.assessment.assessmentType.name}
+			<td>
+				<ul class="list-unstyled">
+					<li title="Appointment Time" class="smaller-siblings">${appointment.appointmentTime | dateFormat:config.shortTimeFormat}</li>
+					<li title="Appointment Status">${appointment.appointmentStatus.name}</li>
+				</ul>
 			</td>
 			<td>
-				<p repeat.for="claim of appointment.assessment.claims" title="Claimant">
-					${claim.claimant.firstName} ${claim.claimant.lastName}
-					<br>Age: ${claim.claimant.age}
-				</p>
-				<p class="Report Status">
-					${appointment.assessment.reportStatus.name}
-				</p>
-				<p if.bind="appointment.assessment.medicalFileReceivedDate">
-					(${appointment.assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat})
-				</p>
+				<ul class="list-unstyled">
+					<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6]">
+						${attribute.name}
+					</li>
+				</ul>
 			</td>
-			<td title="Location" with.bind="appointment.location">
-				<p class="address">
-					<span if.bind="street">${street}</span>
-					<br if.bind="suite"><span if.bind="suite">${suite}</span>
-					<br if.bind="street || suite">${city}, ${province} ${postalCode}
-				</p>
+			<td>
+				<ul class="list-unstyled">
+					<li title="Referral Source" class="smaller-siblings">${appointment.assessment.referralSource.name}</li>
+					<li title="Report Status">${appointment.assessment.reportStatus.name}</li>
+					<li title="Medical File Received Date" if.bind="appointment.assessment.medicalFileReceivedDate">Received: ${appointment.assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat}</li>
+					<li title="Medical File Number" if.bind="appointment.assessment.referralSourceFileNumber">File No: ${appointment.assessment.referralSourceFileNumber}</li>
+				</ul>
 			</td>
-			<td title="Referral Source">
-				${appointment.assessment.referralSource.name}
+			<td with.bind="appointment.location">
+				<ul class="list-unstyled">
+					<li title="Location Name" class="smaller-siblings" if.bind="name">${name}</li>
+					<li title="Street" if.bind="street">${street}</li>
+					<li title="Suite" if.bind="suite">${suite}</li>
+					<li title="City, Province, Postal Code" if.bind="street || suite">${city}, ${province} ${postalCode}</li>
+				</ul>
 			</td>
-			<td title="Psychometrist">
-				${appointment.psychometrist.firstName}
-				<br>${appointment.psychometristConfirmed | boolean }
+			<td>
+				<ul class="list-unstyled" repeat.for="claim of appointment.assessment.claims">
+					<li title="Claimant Name" class="smaller-siblings" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
+					<li title="Claimant Age, Gender" if.bind="claim.claimant">${claim.claimant.age} ${claim.claimant.gender}</li>
+					<li title="Date of Loss">DOL: ${claim.dateOfLoss | dateFormat:config.shortDateFormat}</li>
+					<li title="Claim Number">Claim No: ${claim.claimNumber}</li>
+				</ul>
 			</td>
-			<td title="Appointment Status">
-				${appointment.appointmentStatus.name}
+			<td>
+				<ul class="list-unstyled">
+					<li title="Psychometrist" class="smaller-siblings">${appointment.psychometrist.firstName}</li>
+					<li repeat.for="attribute of appointment.attributes | attributeTypes:[1]">
+						${attribute.name}
+					</li>
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5]">
+						${attribute.name}
+					</li>
+				</ul>
 			</td>
-			<td></td>
+			<td>
+				<ul class="list-unstyled smaller-children">
+					<li repeat.for="attribute of appointment.attributes | attributeTypes:[3]">
+						${attribute.name}
+					</li>
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4]">
+						${attribute.name}
+					</li>
+				</ul>
+			</td>
 		</tr>
 		</template>
 	</tbody>
 </table>
+
+<table class="table table-condensed" show.bind="currentView === 'up to date'" fixed-header>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Location</th>
+			<th>Claimant</th>
+			<th>Source</th>
+			<th>Psychiatrist</th>
+			<th>Psychometrist</th>
+			<th>Doc List Writer</th>
+			<th>Notes Writer</th>
+			<th>Report Status</th>
+			<th>File Size</th>
+			<th>Num Reports</th>
+			<th>Issues In Dispute</th>
+			<th>Info</th>
+		</tr>
+	</thead>
+	<tbody>
+		<template repeat.for="day of days">
+		<tr class="day-header ${day | dayClass}">
+			<td>
+				<p class="date-display text-primary">
+					${day | dateFormat:'ddd Do'}
+				</p>
+			</td>
+			<td colspan="11"></td>
+			<td>
+			</td>
+		</tr>
+		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
+			<td>
+				<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="btn btn-default btn-xs" title="Edit Assessment">
+					<i class="fa fa-pencil"></i>
+				</a>
+			</td>
+			<td>${appointment.location.name}</td>
+			<td>
+				<ul class="list-unstyled" repeat.for="claim of appointment.assessment.claims">
+					<li if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
+				</ul>
+			</td>
+			<td>${appointment.assessment.referralSource.name}</td>
+			<td>
+				<ul class="list-unstyled">
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[6]">
+						${attribute.name === 'Psychiatrist' | boolean}
+					</li>
+				</ul>
+			</td>
+			<td>${appointment.psychometrist.firstName}</td>
+			<td>${appointment.assessment.docListWriter.firstName}</td>
+			<td>${appointment.assessment.notesWriter.firstName}</td>
+			<td>${appointment.assessment.reportStatus.name}</td>
+			<td>${appointment.assessment.fileSize}<span if.bind="appointment.assessment.isLargeFile">(L)</span></td>
+			<td># reports</td>
+			<td>
+				<ul class="list-unstyled smaller-children">
+					<li repeat.for="issueInDispute of appointment.assessment.issuesInDispute">${issueInDispute.name}</li>
+				</ul>
+			</td>
+			<td>
+				<ul class="list-unstyled smaller-children">
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5]">
+						${attribute.name}
+					</li>
+				</ul>
+			</td>
+		</tr>
+		</template>
+	</tbody>
+</table>
+
 </template>

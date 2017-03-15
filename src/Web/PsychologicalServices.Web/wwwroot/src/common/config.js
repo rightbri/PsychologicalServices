@@ -46,11 +46,11 @@ export class Config {
 		};
 		
 		this.appointmentDefaults = {
-			'attributeTypeId': 1
+			'attributeTypeIds': [1,3]
 		};
 		
 		this.assessmentDefaults = {
-			'attributeTypeId': 2
+			'attributeTypeIds': [2,4,5,6]
 		};
 	}
 }

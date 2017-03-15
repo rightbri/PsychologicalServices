@@ -68,14 +68,18 @@
 					<thead>
 						<tr>
 							<th>Report Type</th>
-							<th>Amount</th>
+							<th>First Report Amount</th>
+							<th>Additional Report Amount</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr repeat.for="invoiceAmount of referralSource.invoiceAmounts">
 							<td>${invoiceAmount.reportType.name}</td>
 							<td>
-								<input type="text" class="form-control" value.bind="invoiceAmount.amount" />
+								<input type="text" class="form-control" value.bind="invoiceAmount.firstReportAmount" />
+							</td>
+							<td>
+								<input type="text" class="form-control" value.bind="invoiceAmount.additionalReportAmount" />
 							</td>
 						</tr>
 					</tbody>

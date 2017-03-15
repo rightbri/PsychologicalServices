@@ -1,5 +1,6 @@
 <template>
 	<require from="common/date-picker"></require>
+	<require from="valueConverters/attributeTypes"></require>
 	
 	<ai-dialog>
 		<ai-dialog-header>
@@ -74,14 +75,14 @@
 
 			<div class="row">
 				<div class="col-xs-6">
-					<div class="checkbox">
+					<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[3]">
 						<label>
-							<input type="checkbox" checked.bind="appointment.psychometristConfirmed" />&nbsp;Psychometrist confirmed
+							<input type="checkbox" model.bind="attribute" checked.bind="appointment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
 						</label>
 					</div>
 				</div>
 				<div class="col-xs-6">
-					<div class="checkbox" repeat.for="attribute of attributes">
+					<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[1]">
 						<label>
 							<input type="checkbox" model.bind="attribute" checked.bind="appointment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
 						</label>

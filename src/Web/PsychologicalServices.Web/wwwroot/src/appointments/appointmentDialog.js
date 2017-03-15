@@ -18,13 +18,15 @@ export class AppointmentDialog {
 		this.appointmentStatuses = null;
 		this.taskStatuses = null;
 		this.addresses = null;
-		this.attributes = [];
+		this.attributes = null;
 		
 		this.psychometristMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.psychologistMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.appointmentStatusMatcher = (a, b) => a !== null && b !== null && a.appointmentStatusId === b.appointmentStatusId;
 		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
-		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
+		this.attributeMatcher = (a, b) => {
+			return a !== null && b !== null && a.attributeId === b.attributeId;
+		};
 	}
 	
 	activate(appointment) {
@@ -39,7 +41,7 @@ export class AppointmentDialog {
 			this.dataRepository.searchAddress().then(data => this.addresses = data),
 			this.dataRepository.searchAttributes({
 				companyIds: [this.context.user.company.companyId],
-				attributeTypeIds: [this.config.appointmentDefaults.attributeTypeId],
+				attributeTypeIds: this.config.appointmentDefaults.attributeTypeIds,
 				isActive: true
 			}).then(data => this.attributes = data)
 		]);

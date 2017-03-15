@@ -252,6 +252,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.IsLargeFile);}
 		}
+		/// <summary>Creates a new AssessmentEntity.ReferralSourceFileNumber field instance</summary>
+		public static EntityField2 ReferralSourceFileNumber
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.ReferralSourceFileNumber);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentAttributeEntity</summary>
@@ -622,10 +627,15 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAmountFieldIndex.ReportTypeId);}
 		}
-		/// <summary>Creates a new InvoiceAmountEntity.InvoiceAmount field instance</summary>
-		public static EntityField2 InvoiceAmount
+		/// <summary>Creates a new InvoiceAmountEntity.FirstReportAmount field instance</summary>
+		public static EntityField2 FirstReportAmount
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAmountFieldIndex.InvoiceAmount);}
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAmountFieldIndex.FirstReportAmount);}
+		}
+		/// <summary>Creates a new InvoiceAmountEntity.AdditionalReportAmount field instance</summary>
+		public static EntityField2 AdditionalReportAmount
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAmountFieldIndex.AdditionalReportAmount);}
 		}
 	}
 

@@ -151,6 +151,8 @@ namespace PsychologicalServices.Data
 		MedicalFileReceivedDate,
 		///<summary>IsLargeFile. </summary>
 		IsLargeFile,
+		///<summary>ReferralSourceFileNumber. </summary>
+		ReferralSourceFileNumber,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -435,8 +437,10 @@ namespace PsychologicalServices.Data
 		ReferralSourceId,
 		///<summary>ReportTypeId. </summary>
 		ReportTypeId,
-		///<summary>InvoiceAmount. </summary>
-		InvoiceAmount,
+		///<summary>FirstReportAmount. </summary>
+		FirstReportAmount,
+		///<summary>AdditionalReportAmount. </summary>
+		AdditionalReportAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}

@@ -162,6 +162,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentEntity", "NotesWriterId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.NotesWriterId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "MedicalFileReceivedDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)AssessmentFieldIndex.MedicalFileReceivedDate, 0, 0, 0);
 			base.AddElementFieldInfo("AssessmentEntity", "IsLargeFile", typeof(System.Boolean), false, false, false, false,  (int)AssessmentFieldIndex.IsLargeFile, 0, 0, 0);
+			base.AddElementFieldInfo("AssessmentEntity", "ReferralSourceFileNumber", typeof(System.String), false, false, false, true,  (int)AssessmentFieldIndex.ReferralSourceFileNumber, 50, 0, 0);
 		}
 		/// <summary>Inits AssessmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAssessmentAttributeEntityInfos()
@@ -287,7 +288,8 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("InvoiceAmountEntity", "ReferralSourceId", typeof(System.Int32), true, true, false, false,  (int)InvoiceAmountFieldIndex.ReferralSourceId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceAmountEntity", "ReportTypeId", typeof(System.Int32), true, true, false, false,  (int)InvoiceAmountFieldIndex.ReportTypeId, 0, 0, 10);
-			base.AddElementFieldInfo("InvoiceAmountEntity", "InvoiceAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceAmountFieldIndex.InvoiceAmount, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceAmountEntity", "FirstReportAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceAmountFieldIndex.FirstReportAmount, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceAmountEntity", "AdditionalReportAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceAmountFieldIndex.AdditionalReportAmount, 0, 0, 10);
 		}
 		/// <summary>Inits IssueInDisputeEntity's FieldInfo objects</summary>
 		private void InitIssueInDisputeEntityInfos()

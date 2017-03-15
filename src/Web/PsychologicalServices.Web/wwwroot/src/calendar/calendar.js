@@ -25,12 +25,11 @@ export class Calendar {
 		this.searchPsychologist = null;
 		this.searchCompany = 0;
 		
-		this.scheduleView = true;
+		//this.setView('up to date');
+		this.setView('schedule');
 		
 		this.appointments = null;
 		this.calendarNotes = null;
-		
-		this.newCalendarNoteSignalName = 'new-calendar-note';
 		
 		this.days = this.getDays(this.searchStart, this.searchEnd);
 	}
@@ -46,7 +45,7 @@ export class Calendar {
 	}
 	
 	setView(viewType) {
-		this.scheduleView = viewType === 'schedule';
+		this.currentView = viewType;
 	}
 	
 	getData() {

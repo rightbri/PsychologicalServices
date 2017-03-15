@@ -6,6 +6,7 @@
 	<require from="valueConverters/filter"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-picker"></require>
+	<require from="valueConverters/attributeTypes"></require>
 	
 <h2>${editType} Assessment</h2>
 
@@ -75,6 +76,34 @@
 	
 	<div class="row">
 		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="medicalFileReceivedDate">Medical File Received Date</label>
+				<input id="medicalFileReceivedDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat"/>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="fileNumber">File Number</label>
+				<input id="fileNumber" type="text" class="form-control" value.bind="assessment.referralSourceFileNumber" />
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<div class="form-group">
+				<label for="fileSize">File Size</label>
+				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
+			</div>
+		</div>
+		<div class="col-xs-1">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" checked.bind="assessment.isLargeFile" />&nbsp;Large?
+				</label>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
 			<label>Issues in Dispute</label>
 			<p class="form-control-static" if.bind="!(issuesInDispute && issuesInDispute.length > 0)">
 				N/A
@@ -87,7 +116,13 @@
 		</div>
 		<div class="col-xs-3">
 			<label>Attributes</label>
-			<div class="checkbox" repeat.for="attribute of attributes">
+			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[2]">
+				<label>
+					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
+				</label>
+			</div>
+			
+			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[4,5]">
 				<label>
 					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
 				</label>
@@ -98,28 +133,6 @@
 			<div class="checkbox" repeat.for="color of colors">
 				<label>
 					<input type="checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span css="color: ${color.hexCode};">${color.name}</span>
-				</label>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="medicalFileReceivedDate">Medical File Received Date</label>
-				<input id="medicalFileReceivedDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat"/>
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="fileSize">File Size</label>
-				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" checked.bind="assessment.isLargeFile" />&nbsp;Is Large File?
 				</label>
 			</div>
 		</div>

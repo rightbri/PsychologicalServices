@@ -302,6 +302,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     assessmentEntity.FileSize = assessment.FileSize;
                 }
 
+                if (string.IsNullOrWhiteSpace(assessment.ReferralSourceFileNumber))
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.ReferralSourceFileNumber, null);
+                }
+                else
+                {
+                    assessmentEntity.ReferralSourceFileNumber = assessment.ReferralSourceFileNumber;
+                }
+
                 if (string.IsNullOrWhiteSpace(assessment.ReferralSourceContactEmail))
                 {
                     assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.ReferralSourceContactEmail, null);

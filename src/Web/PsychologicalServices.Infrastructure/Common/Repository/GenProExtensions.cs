@@ -111,7 +111,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new InvoiceAmount
                 {
                     ReportType = invoiceAmount.ReportType.ToReportType(),
-                    Amount = invoiceAmount.InvoiceAmount,
+                    FirstReportAmount = invoiceAmount.FirstReportAmount,
+                    AdditionalReportAmount = invoiceAmount.AdditionalReportAmount,
                 }
                 : null;
         }
@@ -248,6 +249,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     AssessmentId = assessment.AssessmentId,
                     MedicalFileReceivedDate = assessment.MedicalFileReceivedDate,
                     FileSize = assessment.FileSize,
+                    ReferralSourceFileNumber = assessment.ReferralSourceFileNumber,
                     ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
                     Deleted = assessment.Deleted,
                     IsLargeFile = assessment.IsLargeFile,
@@ -277,8 +279,10 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     AssessmentId = assessment.AssessmentId,
                     MedicalFileReceivedDate = assessment.MedicalFileReceivedDate,
                     FileSize = assessment.FileSize,
+                    ReferralSourceFileNumber = assessment.ReferralSourceFileNumber,
                     ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
                     Deleted = assessment.Deleted,
+                    IsLargeFile = assessment.IsLargeFile,
                     AssessmentType = assessment.AssessmentType.ToAssessmentType(),
                     ReferralType = assessment.ReferralType.ToReferralType(),
                     ReferralSource = assessment.ReferralSource.ToReferralSource(),
@@ -286,9 +290,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     DocListWriter = assessment.DocListWriter.ToUser(),
                     NotesWriter = assessment.NotesWriter.ToUser(),
                     Company = assessment.Company.ToCompany(),
-                    Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
-                    //Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
                     IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
+                    Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
+                    Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
                 }
                 : null;
         }

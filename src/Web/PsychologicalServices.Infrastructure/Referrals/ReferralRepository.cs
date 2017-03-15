@@ -210,7 +210,10 @@ namespace PsychologicalServices.Infrastructure.Referrals
                     .Where(invoiceAmount =>
                         entity.InvoiceAmounts.Any(invoiceAmountEntity =>
                             invoiceAmountEntity.ReportTypeId == invoiceAmount.ReportType.ReportTypeId &&
-                            invoiceAmountEntity.InvoiceAmount != invoiceAmount.Amount
+                            (
+                                invoiceAmountEntity.FirstReportAmount != invoiceAmount.FirstReportAmount ||
+                                invoiceAmountEntity.AdditionalReportAmount != invoiceAmount.AdditionalReportAmount
+                            )
                         )
                     );
 
@@ -227,7 +230,8 @@ namespace PsychologicalServices.Infrastructure.Referrals
 
                     if (null != invoiceAmountEntity)
                     {
-                        invoiceAmountEntity.InvoiceAmount = invoiceAmount.Amount;
+                        invoiceAmountEntity.FirstReportAmount = invoiceAmount.FirstReportAmount;
+                        invoiceAmountEntity.AdditionalReportAmount = invoiceAmountEntity.AdditionalReportAmount;
                     }
                 }
 
@@ -235,7 +239,8 @@ namespace PsychologicalServices.Infrastructure.Referrals
                     invoiceAmountsToAdd.Select(invoiceAmount =>
                     new InvoiceAmountEntity
                     {
-                        InvoiceAmount = invoiceAmount.Amount,
+                        FirstReportAmount = invoiceAmount.FirstReportAmount,
+                        AdditionalReportAmount = invoiceAmount.AdditionalReportAmount,
                         ReportTypeId = invoiceAmount.ReportType.ReportTypeId,
                     })
                 );

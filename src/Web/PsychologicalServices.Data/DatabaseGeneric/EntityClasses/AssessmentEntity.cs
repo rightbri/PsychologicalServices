@@ -1155,6 +1155,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsLargeFile", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("ReferralSourceFileNumber", fieldHashtable);
 		}
 		#endregion
 
@@ -1759,6 +1762,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AssessmentFieldIndex.IsLargeFile, true); }
 			set	{ SetValue((int)AssessmentFieldIndex.IsLargeFile, value); }
+		}
+
+		/// <summary> The ReferralSourceFileNumber property of the Entity Assessment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Assessments"."ReferralSourceFileNumber"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String ReferralSourceFileNumber
+		{
+			get { return (System.String)GetValue((int)AssessmentFieldIndex.ReferralSourceFileNumber, true); }
+			set	{ SetValue((int)AssessmentFieldIndex.ReferralSourceFileNumber, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.

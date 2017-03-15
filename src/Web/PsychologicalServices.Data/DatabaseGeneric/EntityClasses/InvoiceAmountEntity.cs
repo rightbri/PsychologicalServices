@@ -519,7 +519,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("ReportTypeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("InvoiceAmount", fieldHashtable);
+			_fieldsCustomProperties.Add("FirstReportAmount", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("AdditionalReportAmount", fieldHashtable);
 		}
 		#endregion
 
@@ -695,15 +698,26 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)InvoiceAmountFieldIndex.ReportTypeId, value); }
 		}
 
-		/// <summary> The InvoiceAmount property of the Entity InvoiceAmount<br/><br/>
+		/// <summary> The FirstReportAmount property of the Entity InvoiceAmount<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceAmounts"."InvoiceAmount"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceAmounts"."FirstReportAmount"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 InvoiceAmount
+		public virtual System.Int32 FirstReportAmount
 		{
-			get { return (System.Int32)GetValue((int)InvoiceAmountFieldIndex.InvoiceAmount, true); }
-			set	{ SetValue((int)InvoiceAmountFieldIndex.InvoiceAmount, value); }
+			get { return (System.Int32)GetValue((int)InvoiceAmountFieldIndex.FirstReportAmount, true); }
+			set	{ SetValue((int)InvoiceAmountFieldIndex.FirstReportAmount, value); }
+		}
+
+		/// <summary> The AdditionalReportAmount property of the Entity InvoiceAmount<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceAmounts"."AdditionalReportAmount"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 AdditionalReportAmount
+		{
+			get { return (System.Int32)GetValue((int)InvoiceAmountFieldIndex.AdditionalReportAmount, true); }
+			set	{ SetValue((int)InvoiceAmountFieldIndex.AdditionalReportAmount, value); }
 		}
 
 

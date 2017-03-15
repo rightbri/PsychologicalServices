@@ -19,6 +19,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public int? FileSize { get; set; }
 
+        public string ReferralSourceFileNumber { get; set; }
+
         public string ReferralSourceContactEmail { get; set; }
 
         public bool Deleted { get; set; }
