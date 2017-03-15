@@ -79,8 +79,6 @@ namespace PsychologicalServices.Data
 		Deleted,
 		///<summary>AssessmentId. </summary>
 		AssessmentId,
-		///<summary>PsychometristConfirmed. </summary>
-		PsychometristConfirmed,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -245,6 +243,22 @@ namespace PsychologicalServices.Data
 		AssessmentId,
 		///<summary>NoteId. </summary>
 		NoteId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentReport.
+	/// </summary>
+	public enum AssessmentReportFieldIndex:int
+	{
+		///<summary>ReportId. </summary>
+		ReportId,
+		///<summary>AssessmentId. </summary>
+		AssessmentId,
+		///<summary>ReportTypeId. </summary>
+		ReportTypeId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -708,6 +722,8 @@ namespace PsychologicalServices.Data
 		AssessmentMedRehabEntity,
 		///<summary>AssessmentNote</summary>
 		AssessmentNoteEntity,
+		///<summary>AssessmentReport</summary>
+		AssessmentReportEntity,
 		///<summary>AssessmentType</summary>
 		AssessmentTypeEntity,
 		///<summary>AssessmentTypeReportType</summary>

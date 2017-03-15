@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (36 + 0));
+			base.InitClass( (37 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -69,6 +69,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAssessmentIssueInDisputeEntityInfos();
 			InitAssessmentMedRehabEntityInfos();
 			InitAssessmentNoteEntityInfos();
+			InitAssessmentReportEntityInfos();
 			InitAssessmentTypeEntityInfos();
 			InitAssessmentTypeReportTypeEntityInfos();
 			InitAttributeEntityInfos();
@@ -129,7 +130,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AppointmentEntity", "AppointmentStatusId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.AppointmentStatusId, 0, 0, 10);
 			base.AddElementFieldInfo("AppointmentEntity", "Deleted", typeof(System.Boolean), false, false, false, false,  (int)AppointmentFieldIndex.Deleted, 0, 0, 0);
 			base.AddElementFieldInfo("AppointmentEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.AssessmentId, 0, 0, 10);
-			base.AddElementFieldInfo("AppointmentEntity", "PsychometristConfirmed", typeof(System.Boolean), false, false, false, false,  (int)AppointmentFieldIndex.PsychometristConfirmed, 0, 0, 0);
 		}
 		/// <summary>Inits AppointmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAppointmentAttributeEntityInfos()
@@ -203,6 +203,13 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("AssessmentNoteEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentNoteFieldIndex.AssessmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentNoteEntity", "NoteId", typeof(System.Int32), true, true, false, false,  (int)AssessmentNoteFieldIndex.NoteId, 0, 0, 10);
+		}
+		/// <summary>Inits AssessmentReportEntity's FieldInfo objects</summary>
+		private void InitAssessmentReportEntityInfos()
+		{
+			base.AddElementFieldInfo("AssessmentReportEntity", "ReportId", typeof(System.Int32), true, false, true, false,  (int)AssessmentReportFieldIndex.ReportId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentReportEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)AssessmentReportFieldIndex.AssessmentId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentReportEntity", "ReportTypeId", typeof(System.Int32), false, true, false, false,  (int)AssessmentReportFieldIndex.ReportTypeId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentTypeEntity's FieldInfo objects</summary>
 		private void InitAssessmentTypeEntityInfos()

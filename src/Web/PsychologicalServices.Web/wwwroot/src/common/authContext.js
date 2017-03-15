@@ -1,10 +1,12 @@
-import { EventAggregator } from 'aurelia-event-aggregator';
-import { inject } from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {Notifier} from 'services/notifier';
+import {inject} from 'aurelia-framework';
 
-@inject(EventAggregator)
+@inject(EventAggregator, Notifier)
 export class AuthContext {
-	constructor(eventAggregator) {
+	constructor(eventAggregator, notifier) {
 		this.ea = eventAggregator;
+		this.notifier = notifier;
 		this.authToken = window.sessionStorage.getItem('firebaseAuthToken');
 		this.signinUser;
 		
@@ -19,7 +21,7 @@ export class AuthContext {
 			else {
 				this.logout();
 			}
-        });
+        }, (code, message) => this.notifier.error(code + ': ' + message));
 	}
 	
 	clear() {

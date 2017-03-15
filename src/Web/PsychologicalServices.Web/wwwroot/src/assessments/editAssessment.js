@@ -39,6 +39,7 @@ export class EditAssessment {
 		this.medRehabs = null;
 		this.colors = null;
 		this.attributes = null;
+		this.reportTypes = null;
 		
 		this.assessmentTypeMatcher = (a, b) => a != null && b != null && a.assessmentTypeId === b.assessmentTypeId;
 		this.reportStatusMatcher = (a, b) => a != null && b != null && a.reportStatusId === b.reportStatusId;
@@ -47,9 +48,7 @@ export class EditAssessment {
 		this.issueInDisputeMatcher = (a, b) => a != null && b != null && a.issueInDisputeId === b.issueInDisputeId;
 		this.colorMatcher = (a, b) => a != null && b != null && a.colorId === b.colorId;
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
-		this.attributeMatcher = (a, b) => {
-			return a !== null && b !== null && a.attributeId === b.attributeId;
-		};
+		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
 		
 		this.error = null;
 		this.validationErrors = null;
@@ -98,7 +97,8 @@ export class EditAssessment {
 								medRehabs: [],
 								notes: [],
 								colors: [],
-								attributes: []
+								attributes: [],
+								reports: []
 							};
 							
 							return this.getData();
@@ -113,6 +113,7 @@ export class EditAssessment {
 			this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
 			this.dataRepository.getReferralSources().then(data => this.referralSources = data),
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
+			this.dataRepository.getReportTypes().then(data => this.reportTypes = data),
 			this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
 			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
 			this.dataRepository.getColors().then(data => this.colors = data),
@@ -318,5 +319,13 @@ export class EditAssessment {
 				
 				return { wasCancelled: result.wasCancelled, note: note };
 			});
+	}
+	
+	addReport(reportType) {
+		this.assessment.reports.push({ 'reportType': reportType });
+	}
+	
+	removeReport(report) {
+		this.assessment.reports.splice(this.assessment.reports.indexOf(report), 1);
 	}
 }

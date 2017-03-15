@@ -232,14 +232,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1;
+			int numberOfOneWayRelations = 0;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
-				case "ReportType":
-					return true;
+
 
 				default:
 					return base.CheckOneWayRelations(propertyName);
@@ -559,7 +558,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncReportType(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", AssessmentTypeReportTypeEntity.Relations.ReportTypeEntityUsingReportTypeId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentTypeReportTypeFieldIndex.ReportTypeId } );		
+			base.PerformDesetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", AssessmentTypeReportTypeEntity.Relations.ReportTypeEntityUsingReportTypeId, true, signalRelatedEntity, "AssessmentTypeReportTypes", resetFKFields, new int[] { (int)AssessmentTypeReportTypeFieldIndex.ReportTypeId } );		
 			_reportType = null;
 		}
 
@@ -751,14 +750,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_reportType != null)
 						{
-							UnsetRelatedEntity(_reportType, "ReportType");
+							_reportType.UnsetRelatedEntity(this, "AssessmentTypeReportTypes");
 						}
 					}
 					else
 					{
 						if(_reportType!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "ReportType");
+							((IEntity2)value).SetRelatedEntity(this, "AssessmentTypeReportTypes");
 						}
 					}
 				}

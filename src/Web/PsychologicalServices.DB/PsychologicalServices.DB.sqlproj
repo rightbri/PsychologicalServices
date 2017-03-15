@@ -102,6 +102,7 @@
     <Build Include="dbo\Tables\Attributes.sql" />
     <Build Include="dbo\Tables\AssessmentAttributes.sql" />
     <Build Include="dbo\Tables\AppointmentAttributes.sql" />
+    <Build Include="dbo\Tables\AssessmentReports.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

@@ -146,6 +146,7 @@
     <Compile Include="Reports\IReportService.cs" />
     <Compile Include="Reports\IReportStatusValidator.cs" />
     <Compile Include="Reports\IReportTypeValidator.cs" />
+    <Compile Include="Reports\Report.cs" />
     <Compile Include="Reports\ReportService.cs" />
     <Compile Include="Reports\ReportStatusValidator.cs" />
     <Compile Include="Reports\ReportTypeValidator.cs" />

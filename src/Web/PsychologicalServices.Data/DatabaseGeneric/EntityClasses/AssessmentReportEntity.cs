@@ -26,28 +26,28 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'ReportType'.<br/><br/>
+	/// Entity class which represents the entity 'AssessmentReport'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class ReportTypeEntity : CommonEntityBase, ISerializable
+	public partial class AssessmentReportEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
-		private EntityCollection<AssessmentReportEntity> _assessmentReports;
-		private EntityCollection<AssessmentTypeReportTypeEntity> _assessmentTypeReportTypes;
-		private EntityCollection<InvoiceAmountEntity> _invoiceAmount;
 
 
-
-
+		private AssessmentEntity _assessment;
+		private ReportTypeEntity _reportType;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -57,14 +57,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-
-			/// <summary>Member name AssessmentReports</summary>
-			public static readonly string AssessmentReports = "AssessmentReports";
-			/// <summary>Member name AssessmentTypeReportTypes</summary>
-			public static readonly string AssessmentTypeReportTypes = "AssessmentTypeReportTypes";
-			/// <summary>Member name InvoiceAmount</summary>
-			public static readonly string InvoiceAmount = "InvoiceAmount";
-
+			/// <summary>Member name Assessment</summary>
+			public static readonly string Assessment = "Assessment";
+			/// <summary>Member name ReportType</summary>
+			public static readonly string ReportType = "ReportType";
 
 
 
@@ -72,13 +68,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static ReportTypeEntity()
+		static AssessmentReportEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public ReportTypeEntity():base("ReportTypeEntity")
+		public AssessmentReportEntity():base("AssessmentReportEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -86,59 +82,65 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public ReportTypeEntity(IEntityFields2 fields):base("ReportTypeEntity")
+		public AssessmentReportEntity(IEntityFields2 fields):base("AssessmentReportEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this ReportTypeEntity</param>
-		public ReportTypeEntity(IValidator validator):base("ReportTypeEntity")
+		/// <param name="validator">The custom validator object for this AssessmentReportEntity</param>
+		public AssessmentReportEntity(IValidator validator):base("AssessmentReportEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="reportTypeId">PK value for ReportType which data should be fetched into this ReportType object</param>
+		/// <param name="reportId">PK value for AssessmentReport which data should be fetched into this AssessmentReport object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReportTypeEntity(System.Int32 reportTypeId):base("ReportTypeEntity")
+		public AssessmentReportEntity(System.Int32 reportId):base("AssessmentReportEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.ReportTypeId = reportTypeId;
+			this.ReportId = reportId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="reportTypeId">PK value for ReportType which data should be fetched into this ReportType object</param>
-		/// <param name="validator">The custom validator object for this ReportTypeEntity</param>
+		/// <param name="reportId">PK value for AssessmentReport which data should be fetched into this AssessmentReport object</param>
+		/// <param name="validator">The custom validator object for this AssessmentReportEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReportTypeEntity(System.Int32 reportTypeId, IValidator validator):base("ReportTypeEntity")
+		public AssessmentReportEntity(System.Int32 reportId, IValidator validator):base("AssessmentReportEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.ReportTypeId = reportTypeId;
+			this.ReportId = reportId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected ReportTypeEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected AssessmentReportEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_assessmentReports = (EntityCollection<AssessmentReportEntity>)info.GetValue("_assessmentReports", typeof(EntityCollection<AssessmentReportEntity>));
-				_assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>)info.GetValue("_assessmentTypeReportTypes", typeof(EntityCollection<AssessmentTypeReportTypeEntity>));
-				_invoiceAmount = (EntityCollection<InvoiceAmountEntity>)info.GetValue("_invoiceAmount", typeof(EntityCollection<InvoiceAmountEntity>));
 
 
-
-
+				_assessment = (AssessmentEntity)info.GetValue("_assessment", typeof(AssessmentEntity));
+				if(_assessment!=null)
+				{
+					_assessment.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_reportType = (ReportTypeEntity)info.GetValue("_reportType", typeof(ReportTypeEntity));
+				if(_reportType!=null)
+				{
+					_reportType.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -146,8 +148,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((ReportTypeFieldIndex)fieldIndex)
+			switch((AssessmentReportFieldIndex)fieldIndex)
 			{
+				case AssessmentReportFieldIndex.AssessmentId:
+					DesetupSyncAssessment(true, false);
+					break;
+				case AssessmentReportFieldIndex.ReportTypeId:
+					DesetupSyncReportType(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -170,17 +178,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-
-				case "AssessmentReports":
-					this.AssessmentReports.Add((AssessmentReportEntity)entity);
+				case "Assessment":
+					this.Assessment = (AssessmentEntity)entity;
 					break;
-				case "AssessmentTypeReportTypes":
-					this.AssessmentTypeReportTypes.Add((AssessmentTypeReportTypeEntity)entity);
+				case "ReportType":
+					this.ReportType = (ReportTypeEntity)entity;
 					break;
-				case "InvoiceAmount":
-					this.InvoiceAmount.Add((InvoiceAmountEntity)entity);
-					break;
-
 
 
 
@@ -194,7 +197,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return ReportTypeEntity.GetRelationsForField(fieldName);
+			return AssessmentReportEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -205,17 +208,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-
-				case "AssessmentReports":
-					toReturn.Add(ReportTypeEntity.Relations.AssessmentReportEntityUsingReportTypeId);
+				case "Assessment":
+					toReturn.Add(AssessmentReportEntity.Relations.AssessmentEntityUsingAssessmentId);
 					break;
-				case "AssessmentTypeReportTypes":
-					toReturn.Add(ReportTypeEntity.Relations.AssessmentTypeReportTypeEntityUsingReportTypeId);
+				case "ReportType":
+					toReturn.Add(AssessmentReportEntity.Relations.ReportTypeEntityUsingReportTypeId);
 					break;
-				case "InvoiceAmount":
-					toReturn.Add(ReportTypeEntity.Relations.InvoiceAmountEntityUsingReportTypeId);
-					break;
-
 
 
 
@@ -241,6 +239,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -254,16 +253,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Assessment":
+					SetupSyncAssessment(relatedEntity);
+					break;
+				case "ReportType":
+					SetupSyncReportType(relatedEntity);
+					break;
 
-				case "AssessmentReports":
-					this.AssessmentReports.Add((AssessmentReportEntity)relatedEntity);
-					break;
-				case "AssessmentTypeReportTypes":
-					this.AssessmentTypeReportTypes.Add((AssessmentTypeReportTypeEntity)relatedEntity);
-					break;
-				case "InvoiceAmount":
-					this.InvoiceAmount.Add((InvoiceAmountEntity)relatedEntity);
-					break;
 
 				default:
 					break;
@@ -279,16 +275,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Assessment":
+					DesetupSyncAssessment(false, true);
+					break;
+				case "ReportType":
+					DesetupSyncReportType(false, true);
+					break;
 
-				case "AssessmentReports":
-					base.PerformRelatedEntityRemoval(this.AssessmentReports, relatedEntity, signalRelatedEntityManyToOne);
-					break;
-				case "AssessmentTypeReportTypes":
-					base.PerformRelatedEntityRemoval(this.AssessmentTypeReportTypes, relatedEntity, signalRelatedEntityManyToOne);
-					break;
-				case "InvoiceAmount":
-					base.PerformRelatedEntityRemoval(this.InvoiceAmount, relatedEntity, signalRelatedEntityManyToOne);
-					break;
 
 				default:
 					break;
@@ -310,7 +303,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-
+			if(_assessment!=null)
+			{
+				toReturn.Add(_assessment);
+			}
+			if(_reportType!=null)
+			{
+				toReturn.Add(_reportType);
+			}
 
 			return toReturn;
 		}
@@ -320,9 +320,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.AssessmentReports);
-			toReturn.Add(this.AssessmentTypeReportTypes);
-			toReturn.Add(this.InvoiceAmount);
+
 
 			return toReturn;
 		}
@@ -337,18 +335,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_assessmentReports", ((_assessmentReports!=null) && (_assessmentReports.Count>0) && !this.MarkedForDeletion)?_assessmentReports:null);
-				info.AddValue("_assessmentTypeReportTypes", ((_assessmentTypeReportTypes!=null) && (_assessmentTypeReportTypes.Count>0) && !this.MarkedForDeletion)?_assessmentTypeReportTypes:null);
-				info.AddValue("_invoiceAmount", ((_invoiceAmount!=null) && (_invoiceAmount.Count>0) && !this.MarkedForDeletion)?_invoiceAmount:null);
 
 
-
-
+				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
+				info.AddValue("_reportType", (!this.MarkedForDeletion?_reportType:null));
 
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -356,7 +352,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(ReportTypeFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(AssessmentReportFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -365,7 +361,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(ReportTypeFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(AssessmentReportFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -375,50 +371,38 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new ReportTypeRelations().GetAllRelations();
+			return new AssessmentReportRelations().GetAllRelations();
 		}
 		
 
+
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'AssessmentReport' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// the related entity of type 'Assessment' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAssessmentReports()
+		public virtual IRelationPredicateBucket GetRelationInfoAssessment()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentReportFields.ReportTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
 			return bucket;
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'AssessmentTypeReportType' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// the related entity of type 'ReportType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAssessmentTypeReportTypes()
+		public virtual IRelationPredicateBucket GetRelationInfoReportType()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTypeReportTypeFields.ReportTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReportTypeFields.ReportTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
 			return bucket;
 		}
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'InvoiceAmount' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoInvoiceAmount()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceAmountFields.ReportTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
-			return bucket;
-		}
-
-
-
-
 
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.ReportTypeEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.AssessmentReportEntity);
 		}
 
 		/// <summary>
@@ -433,7 +417,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -441,10 +425,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._assessmentReports);
-			collectionsQueue.Enqueue(this._assessmentTypeReportTypes);
-			collectionsQueue.Enqueue(this._invoiceAmount);
-
 
 
 		}
@@ -454,10 +434,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._assessmentReports = (EntityCollection<AssessmentReportEntity>) collectionsQueue.Dequeue();
-			this._assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>) collectionsQueue.Dequeue();
-			this._invoiceAmount = (EntityCollection<InvoiceAmountEntity>) collectionsQueue.Dequeue();
-
 
 
 		}
@@ -466,19 +442,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-			if (this._assessmentReports != null)
-			{
-				return true;
-			}
-			if (this._assessmentTypeReportTypes != null)
-			{
-				return true;
-			}
-			if (this._invoiceAmount != null)
-			{
-				return true;
-			}
-
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -490,10 +453,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeReportTypeEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAmountEntityFactory))) : null);
-
 
 
 		}
@@ -505,11 +464,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-
-			toReturn.Add("AssessmentReports", _assessmentReports);
-			toReturn.Add("AssessmentTypeReportTypes", _assessmentTypeReportTypes);
-			toReturn.Add("InvoiceAmount", _invoiceAmount);
-
+			toReturn.Add("Assessment", _assessment);
+			toReturn.Add("ReportType", _reportType);
 
 
 
@@ -519,22 +475,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			if(_assessmentReports!=null)
+
+
+			if(_assessment!=null)
 			{
-				_assessmentReports.ActiveContext = base.ActiveContext;
+				_assessment.ActiveContext = base.ActiveContext;
 			}
-			if(_assessmentTypeReportTypes!=null)
+			if(_reportType!=null)
 			{
-				_assessmentTypeReportTypes.ActiveContext = base.ActiveContext;
+				_reportType.ActiveContext = base.ActiveContext;
 			}
-			if(_invoiceAmount!=null)
-			{
-				_invoiceAmount.ActiveContext = base.ActiveContext;
-			}
-
-
-
-
 
 		}
 
@@ -542,18 +492,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-			_assessmentReports = null;
-			_assessmentTypeReportTypes = null;
-			_invoiceAmount = null;
 
 
-
-
+			_assessment = null;
+			_reportType = null;
 
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -567,23 +515,85 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
+			_fieldsCustomProperties.Add("ReportId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("AssessmentId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
 			_fieldsCustomProperties.Add("ReportTypeId", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Name", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("NumberOfReports", fieldHashtable);
 		}
 		#endregion
 
+		/// <summary> Removes the sync logic for member _assessment</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAssessment(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentReportEntity.Relations.AssessmentEntityUsingAssessmentId, true, signalRelatedEntity, "AssessmentReports", resetFKFields, new int[] { (int)AssessmentReportFieldIndex.AssessmentId } );		
+			_assessment = null;
+		}
+
+		/// <summary> setups the sync logic for member _assessment</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAssessment(IEntity2 relatedEntity)
+		{
+			if(_assessment!=relatedEntity)
+			{
+				DesetupSyncAssessment(true, true);
+				_assessment = (AssessmentEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentReportEntity.Relations.AssessmentEntityUsingAssessmentId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAssessmentPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _reportType</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncReportType(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", AssessmentReportEntity.Relations.ReportTypeEntityUsingReportTypeId, true, signalRelatedEntity, "AssessmentReports", resetFKFields, new int[] { (int)AssessmentReportFieldIndex.ReportTypeId } );		
+			_reportType = null;
+		}
+
+		/// <summary> setups the sync logic for member _reportType</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncReportType(IEntity2 relatedEntity)
+		{
+			if(_reportType!=relatedEntity)
+			{
+				DesetupSyncReportType(true, true);
+				_reportType = (ReportTypeEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", AssessmentReportEntity.Relations.ReportTypeEntityUsingReportTypeId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnReportTypePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this ReportTypeEntity</param>
+		/// <param name="validator">The validator object for this AssessmentReportEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -596,15 +606,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static ReportTypeRelations Relations
+		public  static AssessmentReportRelations Relations
 		{
-			get	{ return new ReportTypeRelations(); }
+			get	{ return new AssessmentReportRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -614,43 +625,31 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentReport' 
+
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAssessmentReports
+		public static IPrefetchPathElement2 PrefetchPathAssessment
 		{
 			get
 			{
-				return new PrefetchPathElement2( new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory))),
-					(IEntityRelation)GetRelationsForField("AssessmentReports")[0], (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, 0, null, null, null, null, "AssessmentReports", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Assessment")[0], (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessment", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentTypeReportType' 
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReportType' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAssessmentTypeReportTypes
+		public static IPrefetchPathElement2 PrefetchPathReportType
 		{
 			get
 			{
-				return new PrefetchPathElement2( new EntityCollection<AssessmentTypeReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeReportTypeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("AssessmentTypeReportTypes")[0], (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity, 0, null, null, null, null, "AssessmentTypeReportTypes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("ReportType")[0], (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, 0, null, null, null, null, "ReportType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceAmount' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathInvoiceAmount
-		{
-			get
-			{
-				return new PrefetchPathElement2( new EntityCollection<InvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAmountEntityFactory))),
-					(IEntityRelation)GetRelationsForField("InvoiceAmount")[0], (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, (int)PsychologicalServices.Data.EntityType.InvoiceAmountEntity, 0, null, null, null, null, "InvoiceAmount", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
-			}
-		}
-
-
-
-
 
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
@@ -658,7 +657,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return ReportTypeEntity.CustomProperties;}
+			get { return AssessmentReportEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -674,104 +673,113 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return ReportTypeEntity.FieldsCustomProperties;}
+			get { return AssessmentReportEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The ReportTypeId property of the Entity ReportType<br/><br/>
+		/// <summary> The ReportId property of the Entity AssessmentReport<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportTypes"."ReportTypeId"<br/>
+		/// <remarks>Mapped on  table field: "AssessmentReports"."ReportId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ReportTypeId
+		public virtual System.Int32 ReportId
 		{
-			get { return (System.Int32)GetValue((int)ReportTypeFieldIndex.ReportTypeId, true); }
-			set	{ SetValue((int)ReportTypeFieldIndex.ReportTypeId, value); }
+			get { return (System.Int32)GetValue((int)AssessmentReportFieldIndex.ReportId, true); }
+			set	{ SetValue((int)AssessmentReportFieldIndex.ReportId, value); }
 		}
 
-		/// <summary> The Name property of the Entity ReportType<br/><br/>
+		/// <summary> The AssessmentId property of the Entity AssessmentReport<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportTypes"."Name"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Name
-		{
-			get { return (System.String)GetValue((int)ReportTypeFieldIndex.Name, true); }
-			set	{ SetValue((int)ReportTypeFieldIndex.Name, value); }
-		}
-
-		/// <summary> The IsActive property of the Entity ReportType<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportTypes"."IsActive"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean IsActive
-		{
-			get { return (System.Boolean)GetValue((int)ReportTypeFieldIndex.IsActive, true); }
-			set	{ SetValue((int)ReportTypeFieldIndex.IsActive, value); }
-		}
-
-		/// <summary> The NumberOfReports property of the Entity ReportType<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportTypes"."NumberOfReports"<br/>
+		/// <remarks>Mapped on  table field: "AssessmentReports"."AssessmentId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 NumberOfReports
+		public virtual System.Int32 AssessmentId
 		{
-			get { return (System.Int32)GetValue((int)ReportTypeFieldIndex.NumberOfReports, true); }
-			set	{ SetValue((int)ReportTypeFieldIndex.NumberOfReports, value); }
+			get { return (System.Int32)GetValue((int)AssessmentReportFieldIndex.AssessmentId, true); }
+			set	{ SetValue((int)AssessmentReportFieldIndex.AssessmentId, value); }
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentReportEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(AssessmentReportEntity))]
-		public virtual EntityCollection<AssessmentReportEntity> AssessmentReports
+		/// <summary> The ReportTypeId property of the Entity AssessmentReport<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AssessmentReports"."ReportTypeId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 ReportTypeId
 		{
-			get
-			{
-				if(_assessmentReports==null)
-				{
-					_assessmentReports = new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory)));
-					_assessmentReports.SetContainingEntityInfo(this, "ReportType");
-				}
-				return _assessmentReports;
-			}
+			get { return (System.Int32)GetValue((int)AssessmentReportFieldIndex.ReportTypeId, true); }
+			set	{ SetValue((int)AssessmentReportFieldIndex.ReportTypeId, value); }
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentTypeReportTypeEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(AssessmentTypeReportTypeEntity))]
-		public virtual EntityCollection<AssessmentTypeReportTypeEntity> AssessmentTypeReportTypes
+
+
+		/// <summary> Gets / sets related entity of type 'AssessmentEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual AssessmentEntity Assessment
 		{
 			get
 			{
-				if(_assessmentTypeReportTypes==null)
+				return _assessment;
+			}
+			set
+			{
+				if(base.IsDeserializing)
 				{
-					_assessmentTypeReportTypes = new EntityCollection<AssessmentTypeReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeReportTypeEntityFactory)));
-					_assessmentTypeReportTypes.SetContainingEntityInfo(this, "ReportType");
+					SetupSyncAssessment(value);
 				}
-				return _assessmentTypeReportTypes;
+				else
+				{
+					if(value==null)
+					{
+						if(_assessment != null)
+						{
+							_assessment.UnsetRelatedEntity(this, "AssessmentReports");
+						}
+					}
+					else
+					{
+						if(_assessment!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "AssessmentReports");
+						}
+					}
+				}
 			}
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceAmountEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(InvoiceAmountEntity))]
-		public virtual EntityCollection<InvoiceAmountEntity> InvoiceAmount
+		/// <summary> Gets / sets related entity of type 'ReportTypeEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual ReportTypeEntity ReportType
 		{
 			get
 			{
-				if(_invoiceAmount==null)
+				return _reportType;
+			}
+			set
+			{
+				if(base.IsDeserializing)
 				{
-					_invoiceAmount = new EntityCollection<InvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAmountEntityFactory)));
-					_invoiceAmount.SetContainingEntityInfo(this, "ReportType");
+					SetupSyncReportType(value);
 				}
-				return _invoiceAmount;
+				else
+				{
+					if(value==null)
+					{
+						if(_reportType != null)
+						{
+							_reportType.UnsetRelatedEntity(this, "AssessmentReports");
+						}
+					}
+					else
+					{
+						if(_reportType!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "AssessmentReports");
+						}
+					}
+				}
 			}
 		}
-
-
-
-
 
 	
 		
@@ -791,7 +799,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.ReportTypeEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity; }
 		}
 		#endregion
 
@@ -800,6 +808,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

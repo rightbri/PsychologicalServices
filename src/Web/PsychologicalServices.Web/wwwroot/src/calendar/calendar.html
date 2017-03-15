@@ -143,7 +143,7 @@
 			<th>Notes Writer</th>
 			<th>Report Status</th>
 			<th>File Size</th>
-			<th>Num Reports</th>
+			<th>Reports</th>
 			<th>Issues In Dispute</th>
 			<th>Info</th>
 		</tr>
@@ -185,7 +185,11 @@
 			<td>${appointment.assessment.notesWriter.firstName}</td>
 			<td>${appointment.assessment.reportStatus.name}</td>
 			<td>${appointment.assessment.fileSize}<span if.bind="appointment.assessment.isLargeFile">(L)</span></td>
-			<td># reports</td>
+			<td>
+				<ul class="list-unstyled smaller-children">
+					<li repeat.for="report of appointment.assessment.reports">${report.reportType.name}</li>
+				</ul>
+			</td>
 			<td>
 				<ul class="list-unstyled smaller-children">
 					<li repeat.for="issueInDispute of appointment.assessment.issuesInDispute">${issueInDispute.name}</li>

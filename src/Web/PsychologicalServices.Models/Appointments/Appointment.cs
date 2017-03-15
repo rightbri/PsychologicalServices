@@ -9,8 +9,6 @@ namespace PsychologicalServices.Models.Appointments
     public class Appointment
     {
         public int AppointmentId { get; set; }
-        
-        public bool PsychometristConfirmed { get; set; }
 
         public DateTime AppointmentTime { get; set; }
 

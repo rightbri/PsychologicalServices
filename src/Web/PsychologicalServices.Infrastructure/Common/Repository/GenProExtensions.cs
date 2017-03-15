@@ -22,6 +22,18 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Report ToReport(this AssessmentReportEntity report)
+        {
+            return null != report
+                ? new Report
+                {
+                    ReportId = report.ReportId,
+                    AssessmentId = report.AssessmentId,
+                    ReportType = report.ReportType.ToReportType(),
+                }
+                : null;
+        }
+
         public static Models.Attributes.Attribute ToAttribute(this AttributeEntity attribute)
         {
             return null != attribute
@@ -267,6 +279,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Notes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.Note.ToNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
+                    Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
                 }
                 : null;
         }
@@ -290,9 +303,14 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     DocListWriter = assessment.DocListWriter.ToUser(),
                     NotesWriter = assessment.NotesWriter.ToUser(),
                     Company = assessment.Company.ToCompany(),
-                    IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
+                    IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
+                    Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
+                    //Appointments
+                    //MedRehabs
+                    //Notes
+                    //Colors
                 }
                 : null;
         }
@@ -318,7 +336,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     AppointmentId = appointment.AppointmentId,
                     AppointmentTime = appointment.AppointmentTime,
-                    PsychometristConfirmed = appointment.PsychometristConfirmed,
                     Deleted = appointment.Deleted,
                     Location = appointment.Location.ToAddress(),
                     Psychometrist = appointment.Psychometrist.ToUser(),

@@ -132,11 +132,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.AssessmentId);}
 		}
-		/// <summary>Creates a new AppointmentEntity.PsychometristConfirmed field instance</summary>
-		public static EntityField2 PsychometristConfirmed
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.PsychometristConfirmed);}
-		}
 	}
 
 	/// <summary>Field Creation Class for entity AppointmentAttributeEntity</summary>
@@ -366,6 +361,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 NoteId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentNoteFieldIndex.NoteId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity AssessmentReportEntity</summary>
+	public partial class AssessmentReportFields
+	{
+		/// <summary>Creates a new AssessmentReportEntity.ReportId field instance</summary>
+		public static EntityField2 ReportId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentReportFieldIndex.ReportId);}
+		}
+		/// <summary>Creates a new AssessmentReportEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentReportFieldIndex.AssessmentId);}
+		}
+		/// <summary>Creates a new AssessmentReportEntity.ReportTypeId field instance</summary>
+		public static EntityField2 ReportTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentReportFieldIndex.ReportTypeId);}
 		}
 	}
 

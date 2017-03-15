@@ -25,3 +25,11 @@ ai-dialog-overlay.active {
 .smaller-children * {
 	font-size: smaller;
 }
+.color-swatch {
+	display: inline-block;
+	width: 19px;
+	height: 19px;
+	border-color: 333;
+	border-width: 1px;
+	border-style: solid;
+}

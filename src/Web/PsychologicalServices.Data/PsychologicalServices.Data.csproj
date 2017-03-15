@@ -244,6 +244,9 @@
     <Compile Include="DatabaseGeneric\EntityClasses\ReferralTypeEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\AssessmentReportEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\AssessmentMedRehabRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -254,6 +257,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\AddressTypeRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\RelationClasses\AssessmentReportRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\CompanyAttributeEntity.cs">

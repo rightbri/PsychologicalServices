@@ -103,7 +103,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-xs-3">
+		<div class="col-xs-2">
 			<label>Issues in Dispute</label>
 			<p class="form-control-static" if.bind="!(issuesInDispute && issuesInDispute.length > 0)">
 				N/A
@@ -114,25 +114,32 @@
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-3">
-			<label>Attributes</label>
-			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[2]">
-				<label>
-					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
-				</label>
-			</div>
-			
-			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[4,5]">
+		<div class="col-xs-2">
+			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[2,6]">
 				<label>
 					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-2">
+			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[4]">
+				<label>
+					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
+				</label>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[5]">
+				<label>
+					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
+				</label>
+			</div>
+		</div>
+		<div class="col-xs-1">
 			<label>Colors</label>
 			<div class="checkbox" repeat.for="color of colors">
 				<label>
-					<input type="checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span css="color: ${color.hexCode};">${color.name}</span>
+					<input type="checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span class="color-swatch" css="background-color: ${color.hexCode};"></span>
 				</label>
 			</div>
 		</div>
@@ -185,28 +192,6 @@
 				<button type="button" class="btn btn-default" click.delegate="searchClaimant()">
 					Search <i class="fa fa-search"></i>
 				</button>
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="docListWriter">Doc List Writer</label>
-				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
-					<option></option>
-					<option repeat.for="user of docListWriters" model.bind="user">
-						${user.firstName}
-					</option>
-				</select>
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="notesWriter">Notes Writer</label>
-				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
-					<option></option>
-					<option repeat.for="user of notesWriters" model.bind="user">
-						${user.firstName}
-					</option>
-				</select>
 			</div>
 		</div>
 	</div>
@@ -285,6 +270,65 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-2">
+			<table class="table table-striped table-condensed">
+				<caption>Reports</caption>
+				<thead>
+					<tr>
+						<th>Report Type</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr repeat.for="report of assessment.reports">
+						<td>${report.reportType.name}</td>
+						<td>
+							<button type="button" class="btn btn-danger btn-xs" click.delegate="removeReport(report)">
+								<i class="fa fa-times"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-xs-2">
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					Add Report
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li repeat.for="reportType of reportTypes">
+						<a click.delegate="addReport(reportType)">${reportType.name}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<div class="form-group">
+				<label for="docListWriter">Doc List Writer</label>
+				<select id="docListWriter" class="form-control" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
+					<option></option>
+					<option repeat.for="user of docListWriters" model.bind="user">
+						${user.firstName}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<div class="form-group">
+				<label for="notesWriter">Notes Writer</label>
+				<select id="notesWriter" class="form-control" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
+					<option></option>
+					<option repeat.for="user of notesWriters" model.bind="user">
+						${user.firstName}
+					</option>
+				</select>
+			</div>
 		</div>
 	</div>
 	

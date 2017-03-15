@@ -557,6 +557,47 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty AssessmentReportEntity objects.</summary>
+	[Serializable]
+	public partial class AssessmentReportEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AssessmentReportEntityFactory() : base("AssessmentReportEntity", PsychologicalServices.Data.EntityType.AssessmentReportEntity) { }
+
+		/// <summary>Creates a new, empty AssessmentReportEntity object.</summary>
+		/// <returns>A new, empty AssessmentReportEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AssessmentReportEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentReport
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AssessmentReportEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AssessmentReportEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentReportUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AssessmentReportEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty AssessmentTypeEntity objects.</summary>
 	[Serializable]
 	public partial class AssessmentTypeEntityFactory : EntityFactoryBase2 {
@@ -1541,6 +1582,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentNoteEntity:
 					factoryToUse = new AssessmentNoteEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentReportEntity:
+					factoryToUse = new AssessmentReportEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeEntity:
 					factoryToUse = new AssessmentTypeEntityFactory();

@@ -77,6 +77,10 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                 .SubPath(assessmentIssueInDisputePath => assessmentIssueInDisputePath
                                     .Prefetch<IssueInDisputeEntity>(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute)
                                 )
+                            .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
+                                .SubPath(assessmentReportPath => assessmentReportPath
+                                    .Prefetch<ReportTypeEntity>(assessmentReport => assessmentReport.ReportType)
+                                )
                         )
                 );
 
@@ -267,7 +271,6 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentEntity.AppointmentStatusId = appointment.AppointmentStatus.AppointmentStatusId;
                 appointmentEntity.AppointmentTime = appointment.AppointmentTime;
                 appointmentEntity.AssessmentId = appointment.Assessment.AssessmentId;
-                appointmentEntity.PsychometristConfirmed = appointment.PsychometristConfirmed;
 
                 if (!isNew)
                 {

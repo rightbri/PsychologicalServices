@@ -100,6 +100,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                     .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
                                 )
                         )
+                    .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
+                        .SubPath(assessmentReportPath => assessmentReportPath
+                            .Prefetch<ReportTypeEntity>(assessmentReport => assessmentReport.ReportType)
+                        )
                 );
 
         #endregion
@@ -273,6 +277,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentAttributes);
 
+                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentReports);
+
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
 
@@ -366,7 +372,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 appointmentEntity.LocationId != appointment.Location.AddressId ||
                                 appointmentEntity.PsychologistId != appointment.Psychologist.UserId ||
                                 appointmentEntity.PsychometristId != appointment.Psychometrist.UserId ||
-                                appointmentEntity.PsychometristConfirmed != appointment.PsychometristConfirmed ||
                                 //appointment attributes removed
                                 appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
                                     !appointment.Attributes.Any(attribute =>
@@ -403,7 +408,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         LocationId = appointment.Location.AddressId,
                         PsychologistId = appointment.Psychologist.UserId,
                         PsychometristId = appointment.Psychometrist.UserId,
-                        PsychometristConfirmed = appointment.PsychometristConfirmed,
                     };
 
                     appointmentEntity.AppointmentAttributes.AddRange(
@@ -428,7 +432,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.LocationId = appointment.Location.AddressId;
                     appointmentEntity.PsychologistId = appointment.Psychologist.UserId;
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
-                    appointmentEntity.PsychometristConfirmed = appointment.PsychometristConfirmed;
 
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
@@ -728,6 +731,33 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     assessmentAttributesToAdd.Select(attribute => new AssessmentAttributeEntity
                     {
                         AttributeId = attribute.AttributeId,
+                    })
+                );
+
+                #endregion
+
+                #region reports
+
+                var reportsToAdd = assessment.Reports
+                    .Where(report =>
+                        !assessmentEntity.AssessmentReports.Any(assessmentReport => assessmentReport.ReportId == report.ReportId)
+                    );
+
+                var reportsToRemove = assessmentEntity.AssessmentReports
+                    .Where(assessmentReport =>
+                        !assessment.Reports.Any(report => report.ReportId == assessmentReport.ReportId)
+                    );
+                
+                foreach (var report in reportsToRemove)
+                {
+                    uow.AddForDelete(report);
+                }
+
+                assessmentEntity.AssessmentReports.AddRange(
+                    reportsToAdd.Select(report =>
+                    new AssessmentReportEntity
+                    {
+                        ReportTypeId = report.ReportType.ReportTypeId,
                     })
                 );
 

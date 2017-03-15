@@ -55,6 +55,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public IEnumerable<Models.Attributes.Attribute> Attributes { get; set; }
 
+        public IEnumerable<Report> Reports { get; set; }
+
         public bool IsNew()
         {
             return AssessmentId == 0;

@@ -37,6 +37,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentIssueInDisputeEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentMedRehabEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentNoteEntityUsingAssessmentId);
+			toReturn.Add(this.AssessmentReportEntityUsingAssessmentId);
 
 			toReturn.Add(this.AssessmentTypeEntityUsingAssessmentTypeId);
 			toReturn.Add(this.CompanyEntityUsingCompanyId);
@@ -151,6 +152,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(AssessmentFields.AssessmentId, AssessmentNoteFields.AssessmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentNoteEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AssessmentEntity and AssessmentReportEntity over the 1:n relation they have, using the relation between the fields:
+		/// Assessment.AssessmentId - AssessmentReport.AssessmentId
+		/// </summary>
+		public virtual IEntityRelation AssessmentReportEntityUsingAssessmentId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentReports" , true);
+				relation.AddEntityFieldPair(AssessmentFields.AssessmentId, AssessmentReportFields.AssessmentId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentReportEntity", false);
 				return relation;
 			}
 		}

@@ -30,6 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.AssessmentReportEntityUsingReportTypeId);
 			toReturn.Add(this.AssessmentTypeReportTypeEntityUsingReportTypeId);
 			toReturn.Add(this.InvoiceAmountEntityUsingReportTypeId);
 
@@ -39,6 +40,21 @@ namespace PsychologicalServices.Data.RelationClasses
 
 		#region Class Property Declarations
 
+		/// <summary>Returns a new IEntityRelation object, between ReportTypeEntity and AssessmentReportEntity over the 1:n relation they have, using the relation between the fields:
+		/// ReportType.ReportTypeId - AssessmentReport.ReportTypeId
+		/// </summary>
+		public virtual IEntityRelation AssessmentReportEntityUsingReportTypeId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentReports" , true);
+				relation.AddEntityFieldPair(ReportTypeFields.ReportTypeId, AssessmentReportFields.ReportTypeId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReportTypeEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentReportEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between ReportTypeEntity and AssessmentTypeReportTypeEntity over the 1:n relation they have, using the relation between the fields:
 		/// ReportType.ReportTypeId - AssessmentTypeReportType.ReportTypeId
 		/// </summary>
@@ -46,7 +62,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentTypeReportTypes" , true);
 				relation.AddEntityFieldPair(ReportTypeFields.ReportTypeId, AssessmentTypeReportTypeFields.ReportTypeId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReportTypeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeReportTypeEntity", false);
