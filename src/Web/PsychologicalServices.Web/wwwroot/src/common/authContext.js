@@ -14,12 +14,13 @@ export class AuthContext {
         // what the current status of the user is with "user" being an object
         // return by Firebase with credentials and other info inside of it
         firebase.auth().onAuthStateChanged(user => {
-			if (this.authToken) {
+			if (user) {//this.authToken) {
 				this.setSigninUser(user);
 				this.ea.publish('authStateChanged', { 'user': user });
 			}
 			else {
-				this.logout();
+				this.login();
+				//this.logout();
 			}
         }, (code, message) => this.notifier.error(code + ': ' + message));
 	}

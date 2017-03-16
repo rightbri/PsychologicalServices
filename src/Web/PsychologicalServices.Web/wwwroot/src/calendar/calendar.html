@@ -29,7 +29,7 @@
 	</div>
 </div>
 
-<table class="table table-condensed" show.bind="currentView === 'schedule'" fixed-header>
+<table class="table table-condensed" if.bind="currentView === 'schedule'" fixed-header>
 	<thead>
 		<tr>
 			<th></th>
@@ -130,7 +130,7 @@
 	</tbody>
 </table>
 
-<table class="table table-condensed" show.bind="currentView === 'up to date'" fixed-header>
+<table class="table table-condensed" if.bind="currentView === 'up to date'" fixed-header>
 	<thead>
 		<tr>
 			<th></th>
