@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (37 + 0));
+			base.InitClass( (38 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -94,6 +94,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitRoleRightEntityInfos();
 			InitUserEntityInfos();
 			InitUserRoleEntityInfos();
+			InitUserUnavailabilityEntityInfos();
 
 			base.ConstructElementFieldStructures(InheritanceInfoProviderSingleton.GetInstance());
 		}
@@ -399,6 +400,14 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("UserRoleEntity", "UserId", typeof(System.Int32), true, true, false, false,  (int)UserRoleFieldIndex.UserId, 0, 0, 10);
 			base.AddElementFieldInfo("UserRoleEntity", "RoleId", typeof(System.Int32), true, true, false, false,  (int)UserRoleFieldIndex.RoleId, 0, 0, 10);
+		}
+		/// <summary>Inits UserUnavailabilityEntity's FieldInfo objects</summary>
+		private void InitUserUnavailabilityEntityInfos()
+		{
+			base.AddElementFieldInfo("UserUnavailabilityEntity", "Id", typeof(System.Int32), true, false, true, false,  (int)UserUnavailabilityFieldIndex.Id, 0, 0, 10);
+			base.AddElementFieldInfo("UserUnavailabilityEntity", "UserId", typeof(System.Int32), false, true, false, false,  (int)UserUnavailabilityFieldIndex.UserId, 0, 0, 10);
+			base.AddElementFieldInfo("UserUnavailabilityEntity", "StartDate", typeof(System.DateTime), false, false, false, false,  (int)UserUnavailabilityFieldIndex.StartDate, 0, 0, 0);
+			base.AddElementFieldInfo("UserUnavailabilityEntity", "EndDate", typeof(System.DateTime), false, false, false, false,  (int)UserUnavailabilityFieldIndex.EndDate, 0, 0, 0);
 		}
 		
 	}

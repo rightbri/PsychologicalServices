@@ -968,6 +968,31 @@ namespace PsychologicalServices.Data.HelperClasses
 			get { return (EntityField2)EntityFieldFactory.Create(UserRoleFieldIndex.RoleId);}
 		}
 	}
+
+	/// <summary>Field Creation Class for entity UserUnavailabilityEntity</summary>
+	public partial class UserUnavailabilityFields
+	{
+		/// <summary>Creates a new UserUnavailabilityEntity.Id field instance</summary>
+		public static EntityField2 Id
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserUnavailabilityFieldIndex.Id);}
+		}
+		/// <summary>Creates a new UserUnavailabilityEntity.UserId field instance</summary>
+		public static EntityField2 UserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserUnavailabilityFieldIndex.UserId);}
+		}
+		/// <summary>Creates a new UserUnavailabilityEntity.StartDate field instance</summary>
+		public static EntityField2 StartDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserUnavailabilityFieldIndex.StartDate);}
+		}
+		/// <summary>Creates a new UserUnavailabilityEntity.EndDate field instance</summary>
+		public static EntityField2 EndDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserUnavailabilityFieldIndex.EndDate);}
+		}
+	}
 	
 
 }

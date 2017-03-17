@@ -44,6 +44,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<NoteEntity> _noteUpdater;
 		private EntityCollection<NoteEntity> _noteCreator;
 		private EntityCollection<UserRoleEntity> _userRoles;
+		private EntityCollection<UserUnavailabilityEntity> _userUnavailabilities;
 
 
 
@@ -87,6 +88,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string NoteCreator = "NoteCreator";
 			/// <summary>Member name UserRoles</summary>
 			public static readonly string UserRoles = "UserRoles";
+			/// <summary>Member name UserUnavailabilities</summary>
+			public static readonly string UserUnavailabilities = "UserUnavailabilities";
 
 
 
@@ -170,6 +173,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_noteUpdater = (EntityCollection<NoteEntity>)info.GetValue("_noteUpdater", typeof(EntityCollection<NoteEntity>));
 				_noteCreator = (EntityCollection<NoteEntity>)info.GetValue("_noteCreator", typeof(EntityCollection<NoteEntity>));
 				_userRoles = (EntityCollection<UserRoleEntity>)info.GetValue("_userRoles", typeof(EntityCollection<UserRoleEntity>));
+				_userUnavailabilities = (EntityCollection<UserUnavailabilityEntity>)info.GetValue("_userUnavailabilities", typeof(EntityCollection<UserUnavailabilityEntity>));
 
 
 
@@ -248,6 +252,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserRoles":
 					this.UserRoles.Add((UserRoleEntity)entity);
 					break;
+				case "UserUnavailabilities":
+					this.UserUnavailabilities.Add((UserUnavailabilityEntity)entity);
+					break;
 
 
 
@@ -302,6 +309,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "UserRoles":
 					toReturn.Add(UserEntity.Relations.UserRoleEntityUsingUserId);
+					break;
+				case "UserUnavailabilities":
+					toReturn.Add(UserEntity.Relations.UserUnavailabilityEntityUsingUserId);
 					break;
 
 
@@ -372,6 +382,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserRoles":
 					this.UserRoles.Add((UserRoleEntity)relatedEntity);
 					break;
+				case "UserUnavailabilities":
+					this.UserUnavailabilities.Add((UserUnavailabilityEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -402,6 +415,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "UserRoles":
 					base.PerformRelatedEntityRemoval(this.UserRoles, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "UserUnavailabilities":
+					base.PerformRelatedEntityRemoval(this.UserUnavailabilities, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -444,6 +460,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.NoteUpdater);
 			toReturn.Add(this.NoteCreator);
 			toReturn.Add(this.UserRoles);
+			toReturn.Add(this.UserUnavailabilities);
 
 			return toReturn;
 		}
@@ -465,6 +482,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_noteUpdater", ((_noteUpdater!=null) && (_noteUpdater.Count>0) && !this.MarkedForDeletion)?_noteUpdater:null);
 				info.AddValue("_noteCreator", ((_noteCreator!=null) && (_noteCreator.Count>0) && !this.MarkedForDeletion)?_noteCreator:null);
 				info.AddValue("_userRoles", ((_userRoles!=null) && (_userRoles.Count>0) && !this.MarkedForDeletion)?_userRoles:null);
+				info.AddValue("_userUnavailabilities", ((_userUnavailabilities!=null) && (_userUnavailabilities.Count>0) && !this.MarkedForDeletion)?_userUnavailabilities:null);
 
 
 
@@ -552,6 +570,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'UserUnavailability' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoUserUnavailabilities()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserUnavailabilityFields.UserId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
+
 
 
 
@@ -614,6 +642,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._noteUpdater);
 			collectionsQueue.Enqueue(this._noteCreator);
 			collectionsQueue.Enqueue(this._userRoles);
+			collectionsQueue.Enqueue(this._userUnavailabilities);
 
 
 
@@ -645,6 +674,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._noteUpdater = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._noteCreator = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._userRoles = (EntityCollection<UserRoleEntity>) collectionsQueue.Dequeue();
+			this._userUnavailabilities = (EntityCollection<UserUnavailabilityEntity>) collectionsQueue.Dequeue();
 
 
 
@@ -684,6 +714,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._userUnavailabilities != null)
+			{
+				return true;
+			}
 
 
 
@@ -717,6 +751,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserRoleEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserRoleEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserUnavailabilityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserUnavailabilityEntityFactory))) : null);
 
 
 
@@ -751,6 +786,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("NoteUpdater", _noteUpdater);
 			toReturn.Add("NoteCreator", _noteCreator);
 			toReturn.Add("UserRoles", _userRoles);
+			toReturn.Add("UserUnavailabilities", _userUnavailabilities);
 
 
 
@@ -791,6 +827,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_userRoles.ActiveContext = base.ActiveContext;
 			}
+			if(_userUnavailabilities!=null)
+			{
+				_userUnavailabilities.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -826,6 +866,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_noteUpdater = null;
 			_noteCreator = null;
 			_userRoles = null;
+			_userUnavailabilities = null;
 
 
 
@@ -978,6 +1019,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2( new EntityCollection<UserRoleEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserRoleEntityFactory))),
 					(IEntityRelation)GetRelationsForField("UserRoles")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.UserRoleEntity, 0, null, null, null, null, "UserRoles", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'UserUnavailability' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathUserUnavailabilities
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<UserUnavailabilityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserUnavailabilityEntityFactory))),
+					(IEntityRelation)GetRelationsForField("UserUnavailabilities")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.UserUnavailabilityEntity, 0, null, null, null, null, "UserUnavailabilities", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -1150,6 +1202,22 @@ namespace PsychologicalServices.Data.EntityClasses
 					_userRoles.SetContainingEntityInfo(this, "User");
 				}
 				return _userRoles;
+			}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'UserUnavailabilityEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(UserUnavailabilityEntity))]
+		public virtual EntityCollection<UserUnavailabilityEntity> UserUnavailabilities
+		{
+			get
+			{
+				if(_userUnavailabilities==null)
+				{
+					_userUnavailabilities = new EntityCollection<UserUnavailabilityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserUnavailabilityEntityFactory)));
+					_userUnavailabilities.SetContainingEntityInfo(this, "User");
+				}
+				return _userUnavailabilities;
 			}
 		}
 

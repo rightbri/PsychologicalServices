@@ -35,8 +35,16 @@ export class AppointmentDialog {
 		this.appointmentTime = this.timeString(this.appointment.appointmentTime);
 
 		return Promise.all([
-			this.dataRepository.getPsychometrists(this.context.user.company.companyId).then(data => this.psychometrists = data),
-			this.dataRepository.getPsychologists(this.context.user.company.companyId).then(data => this.psychologists = data),
+			this.dataRepository.searchUsers({
+				companyId: this.context.user.company.companyId,
+				rightId: this.config.rights.Psychometrist,
+				availableDate: this.appointmentDate
+			}).then(data => this.psychometrists = data),
+			this.dataRepository.searchUsers({
+				companyId: this.context.user.company.companyId,
+				rightId: this.config.rights.Psychologist,
+				availableDate: this.appointmentDate
+			}).then(data => this.psychologists = data),
 			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
 			this.dataRepository.searchAddress().then(data => this.addresses = data),
 			this.dataRepository.searchAttributes({

@@ -52,5 +52,12 @@ export class Config {
 		this.assessmentDefaults = {
 			'attributeTypeIds': [2,4,5,6]
 		};
+		
+		this.rights = {
+			'Psychologist': 1,
+			'Psychometrist': 2,
+			'WriteDocList': 3,
+			'WriteNotes': 4
+		};
 	}
 }

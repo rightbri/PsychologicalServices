@@ -26,25 +26,27 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'AssessmentReport'.<br/><br/>
+	/// Entity class which represents the entity 'UserUnavailability'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class AssessmentReportEntity : CommonEntityBase, ISerializable
+	public partial class UserUnavailabilityEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
 
 
-		private AssessmentEntity _assessment;
-		private ReportTypeEntity _reportType;
+		private UserEntity _user;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -54,10 +56,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Assessment</summary>
-			public static readonly string Assessment = "Assessment";
-			/// <summary>Member name ReportType</summary>
-			public static readonly string ReportType = "ReportType";
+			/// <summary>Member name User</summary>
+			public static readonly string User = "User";
 
 
 
@@ -65,13 +65,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static AssessmentReportEntity()
+		static UserUnavailabilityEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public AssessmentReportEntity():base("AssessmentReportEntity")
+		public UserUnavailabilityEntity():base("UserUnavailabilityEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -79,57 +79,52 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public AssessmentReportEntity(IEntityFields2 fields):base("AssessmentReportEntity")
+		public UserUnavailabilityEntity(IEntityFields2 fields):base("UserUnavailabilityEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this AssessmentReportEntity</param>
-		public AssessmentReportEntity(IValidator validator):base("AssessmentReportEntity")
+		/// <param name="validator">The custom validator object for this UserUnavailabilityEntity</param>
+		public UserUnavailabilityEntity(IValidator validator):base("UserUnavailabilityEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="reportId">PK value for AssessmentReport which data should be fetched into this AssessmentReport object</param>
+		/// <param name="id">PK value for UserUnavailability which data should be fetched into this UserUnavailability object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AssessmentReportEntity(System.Int32 reportId):base("AssessmentReportEntity")
+		public UserUnavailabilityEntity(System.Int32 id):base("UserUnavailabilityEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.ReportId = reportId;
+			this.Id = id;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="reportId">PK value for AssessmentReport which data should be fetched into this AssessmentReport object</param>
-		/// <param name="validator">The custom validator object for this AssessmentReportEntity</param>
+		/// <param name="id">PK value for UserUnavailability which data should be fetched into this UserUnavailability object</param>
+		/// <param name="validator">The custom validator object for this UserUnavailabilityEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AssessmentReportEntity(System.Int32 reportId, IValidator validator):base("AssessmentReportEntity")
+		public UserUnavailabilityEntity(System.Int32 id, IValidator validator):base("UserUnavailabilityEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.ReportId = reportId;
+			this.Id = id;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected AssessmentReportEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected UserUnavailabilityEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 
 
-				_assessment = (AssessmentEntity)info.GetValue("_assessment", typeof(AssessmentEntity));
-				if(_assessment!=null)
+				_user = (UserEntity)info.GetValue("_user", typeof(UserEntity));
+				if(_user!=null)
 				{
-					_assessment.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
-				_reportType = (ReportTypeEntity)info.GetValue("_reportType", typeof(ReportTypeEntity));
-				if(_reportType!=null)
-				{
-					_reportType.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_user.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -137,6 +132,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -144,13 +140,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((AssessmentReportFieldIndex)fieldIndex)
+			switch((UserUnavailabilityFieldIndex)fieldIndex)
 			{
-				case AssessmentReportFieldIndex.AssessmentId:
-					DesetupSyncAssessment(true, false);
-					break;
-				case AssessmentReportFieldIndex.ReportTypeId:
-					DesetupSyncReportType(true, false);
+				case UserUnavailabilityFieldIndex.UserId:
+					DesetupSyncUser(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -174,11 +167,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Assessment":
-					this.Assessment = (AssessmentEntity)entity;
-					break;
-				case "ReportType":
-					this.ReportType = (ReportTypeEntity)entity;
+				case "User":
+					this.User = (UserEntity)entity;
 					break;
 
 
@@ -193,7 +183,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return AssessmentReportEntity.GetRelationsForField(fieldName);
+			return UserUnavailabilityEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -204,11 +194,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Assessment":
-					toReturn.Add(AssessmentReportEntity.Relations.AssessmentEntityUsingAssessmentId);
-					break;
-				case "ReportType":
-					toReturn.Add(AssessmentReportEntity.Relations.ReportTypeEntityUsingReportTypeId);
+				case "User":
+					toReturn.Add(UserUnavailabilityEntity.Relations.UserEntityUsingUserId);
 					break;
 
 
@@ -235,7 +222,6 @@ namespace PsychologicalServices.Data.EntityClasses
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
-
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -249,11 +235,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Assessment":
-					SetupSyncAssessment(relatedEntity);
-					break;
-				case "ReportType":
-					SetupSyncReportType(relatedEntity);
+				case "User":
+					SetupSyncUser(relatedEntity);
 					break;
 
 
@@ -271,11 +254,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Assessment":
-					DesetupSyncAssessment(false, true);
-					break;
-				case "ReportType":
-					DesetupSyncReportType(false, true);
+				case "User":
+					DesetupSyncUser(false, true);
 					break;
 
 
@@ -299,13 +279,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_assessment!=null)
+			if(_user!=null)
 			{
-				toReturn.Add(_assessment);
-			}
-			if(_reportType!=null)
-			{
-				toReturn.Add(_reportType);
+				toReturn.Add(_user);
 			}
 
 			return toReturn;
@@ -333,13 +309,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
-				info.AddValue("_reportType", (!this.MarkedForDeletion?_reportType:null));
+				info.AddValue("_user", (!this.MarkedForDeletion?_user:null));
 
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -347,7 +323,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(AssessmentReportFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(UserUnavailabilityFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -356,7 +332,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(AssessmentReportFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(UserUnavailabilityFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -366,29 +342,19 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new AssessmentReportRelations().GetAllRelations();
+			return new UserUnavailabilityRelations().GetAllRelations();
 		}
 		
 
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Assessment' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAssessment()
+		public virtual IRelationPredicateBucket GetRelationInfoUser()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
-			return bucket;
-		}
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'ReportType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoReportType()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReportTypeFields.ReportTypeId, null, ComparisonOperator.Equal, this.ReportTypeId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UserId));
 			return bucket;
 		}
 
@@ -397,7 +363,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.AssessmentReportEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.UserUnavailabilityEntity);
 		}
 
 		/// <summary>
@@ -412,7 +378,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(UserUnavailabilityEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -459,8 +425,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Assessment", _assessment);
-			toReturn.Add("ReportType", _reportType);
+			toReturn.Add("User", _user);
 
 
 
@@ -472,13 +437,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 
-			if(_assessment!=null)
+			if(_user!=null)
 			{
-				_assessment.ActiveContext = base.ActiveContext;
-			}
-			if(_reportType!=null)
-			{
-				_reportType.ActiveContext = base.ActiveContext;
+				_user.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -489,13 +450,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			_assessment = null;
-			_reportType = null;
+			_user = null;
 
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -509,74 +470,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ReportId", fieldHashtable);
+			_fieldsCustomProperties.Add("Id", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("AssessmentId", fieldHashtable);
+			_fieldsCustomProperties.Add("UserId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ReportTypeId", fieldHashtable);
+			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _assessment</summary>
+		/// <summary> Removes the sync logic for member _user</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncAssessment(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncUser(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentReportEntity.Relations.AssessmentEntityUsingAssessmentId, true, signalRelatedEntity, "AssessmentReports", resetFKFields, new int[] { (int)AssessmentReportFieldIndex.AssessmentId } );		
-			_assessment = null;
+			base.PerformDesetupSyncRelatedEntity( _user, new PropertyChangedEventHandler( OnUserPropertyChanged ), "User", UserUnavailabilityEntity.Relations.UserEntityUsingUserId, true, signalRelatedEntity, "UserUnavailabilities", resetFKFields, new int[] { (int)UserUnavailabilityFieldIndex.UserId } );		
+			_user = null;
 		}
 
-		/// <summary> setups the sync logic for member _assessment</summary>
+		/// <summary> setups the sync logic for member _user</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncAssessment(IEntity2 relatedEntity)
+		private void SetupSyncUser(IEntity2 relatedEntity)
 		{
-			if(_assessment!=relatedEntity)
+			if(_user!=relatedEntity)
 			{
-				DesetupSyncAssessment(true, true);
-				_assessment = (AssessmentEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", AssessmentReportEntity.Relations.AssessmentEntityUsingAssessmentId, true, new string[] {  } );
+				DesetupSyncUser(true, true);
+				_user = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _user, new PropertyChangedEventHandler( OnUserPropertyChanged ), "User", UserUnavailabilityEntity.Relations.UserEntityUsingUserId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnAssessmentPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
-		/// <summary> Removes the sync logic for member _reportType</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncReportType(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", AssessmentReportEntity.Relations.ReportTypeEntityUsingReportTypeId, true, signalRelatedEntity, "AssessmentReports", resetFKFields, new int[] { (int)AssessmentReportFieldIndex.ReportTypeId } );		
-			_reportType = null;
-		}
-
-		/// <summary> setups the sync logic for member _reportType</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncReportType(IEntity2 relatedEntity)
-		{
-			if(_reportType!=relatedEntity)
-			{
-				DesetupSyncReportType(true, true);
-				_reportType = (ReportTypeEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _reportType, new PropertyChangedEventHandler( OnReportTypePropertyChanged ), "ReportType", AssessmentReportEntity.Relations.ReportTypeEntityUsingReportTypeId, true, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnReportTypePropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnUserPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -587,7 +518,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this AssessmentReportEntity</param>
+		/// <param name="validator">The validator object for this UserUnavailabilityEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -600,15 +531,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static AssessmentReportRelations Relations
+		public  static UserUnavailabilityRelations Relations
 		{
-			get	{ return new AssessmentReportRelations(); }
+			get	{ return new UserUnavailabilityRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -620,27 +552,15 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAssessment
+		public static IPrefetchPathElement2 PrefetchPathUser
 		{
 			get
 			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Assessment")[0], (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessment", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReportType' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathReportType
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("ReportType")[0], (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, (int)PsychologicalServices.Data.EntityType.ReportTypeEntity, 0, null, null, null, null, "ReportType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
+					(IEntityRelation)GetRelationsForField("User")[0], (int)PsychologicalServices.Data.EntityType.UserUnavailabilityEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "User", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -650,7 +570,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return AssessmentReportEntity.CustomProperties;}
+			get { return UserUnavailabilityEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -666,108 +586,84 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return AssessmentReportEntity.FieldsCustomProperties;}
+			get { return UserUnavailabilityEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The ReportId property of the Entity AssessmentReport<br/><br/>
+		/// <summary> The Id property of the Entity UserUnavailability<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentReports"."ReportId"<br/>
+		/// <remarks>Mapped on  table field: "UserUnavailabilities"."Id"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ReportId
+		public virtual System.Int32 Id
 		{
-			get { return (System.Int32)GetValue((int)AssessmentReportFieldIndex.ReportId, true); }
-			set	{ SetValue((int)AssessmentReportFieldIndex.ReportId, value); }
+			get { return (System.Int32)GetValue((int)UserUnavailabilityFieldIndex.Id, true); }
+			set	{ SetValue((int)UserUnavailabilityFieldIndex.Id, value); }
 		}
 
-		/// <summary> The AssessmentId property of the Entity AssessmentReport<br/><br/>
+		/// <summary> The UserId property of the Entity UserUnavailability<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentReports"."AssessmentId"<br/>
+		/// <remarks>Mapped on  table field: "UserUnavailabilities"."UserId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AssessmentId
+		public virtual System.Int32 UserId
 		{
-			get { return (System.Int32)GetValue((int)AssessmentReportFieldIndex.AssessmentId, true); }
-			set	{ SetValue((int)AssessmentReportFieldIndex.AssessmentId, value); }
+			get { return (System.Int32)GetValue((int)UserUnavailabilityFieldIndex.UserId, true); }
+			set	{ SetValue((int)UserUnavailabilityFieldIndex.UserId, value); }
 		}
 
-		/// <summary> The ReportTypeId property of the Entity AssessmentReport<br/><br/>
+		/// <summary> The StartDate property of the Entity UserUnavailability<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentReports"."ReportTypeId"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// <remarks>Mapped on  table field: "UserUnavailabilities"."StartDate"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 ReportTypeId
+		public virtual System.DateTime StartDate
 		{
-			get { return (System.Int32)GetValue((int)AssessmentReportFieldIndex.ReportTypeId, true); }
-			set	{ SetValue((int)AssessmentReportFieldIndex.ReportTypeId, value); }
+			get { return (System.DateTime)GetValue((int)UserUnavailabilityFieldIndex.StartDate, true); }
+			set	{ SetValue((int)UserUnavailabilityFieldIndex.StartDate, value); }
+		}
+
+		/// <summary> The EndDate property of the Entity UserUnavailability<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "UserUnavailabilities"."EndDate"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.DateTime EndDate
+		{
+			get { return (System.DateTime)GetValue((int)UserUnavailabilityFieldIndex.EndDate, true); }
+			set	{ SetValue((int)UserUnavailabilityFieldIndex.EndDate, value); }
 		}
 
 
 
-		/// <summary> Gets / sets related entity of type 'AssessmentEntity' which has to be set using a fetch action earlier. If no related entity
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual AssessmentEntity Assessment
+		public virtual UserEntity User
 		{
 			get
 			{
-				return _assessment;
+				return _user;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncAssessment(value);
+					SetupSyncUser(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_assessment != null)
+						if(_user != null)
 						{
-							_assessment.UnsetRelatedEntity(this, "AssessmentReports");
+							_user.UnsetRelatedEntity(this, "UserUnavailabilities");
 						}
 					}
 					else
 					{
-						if(_assessment!=value)
+						if(_user!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "AssessmentReports");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets related entity of type 'ReportTypeEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual ReportTypeEntity ReportType
-		{
-			get
-			{
-				return _reportType;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncReportType(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_reportType != null)
-						{
-							_reportType.UnsetRelatedEntity(this, "AssessmentReports");
-						}
-					}
-					else
-					{
-						if(_reportType!=value)
-						{
-							((IEntity2)value).SetRelatedEntity(this, "AssessmentReports");
+							((IEntity2)value).SetRelatedEntity(this, "UserUnavailabilities");
 						}
 					}
 				}
@@ -792,7 +688,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.UserUnavailabilityEntity; }
 		}
 		#endregion
 
@@ -801,6 +697,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

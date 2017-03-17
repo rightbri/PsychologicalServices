@@ -42,37 +42,47 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(user);
         }
 
-        [Route("psychometrists/{companyId}")]
+        [Route("search")]
+        [HttpPost]
+        [ResponseType(typeof(IEnumerable<User>))]
+        public IHttpActionResult Post(UserSearchCriteria criteria)
+        {
+            var users = _userService.GetUsers(criteria);
+
+            return Ok(users);
+        }
+
+        [Route("psychometrists/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]
-        public IHttpActionResult GetPsychometrists(int? companyId)
+        public IHttpActionResult GetPsychometrists(int? companyId = null)
         {
             var psychometrists = _userService.GetPsychometrists(companyId);
 
             return Ok(psychometrists);
         }
 
-        [Route("psychologists/{companyId}")]
+        [Route("psychologists/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]
-        public IHttpActionResult GetPsychologists(int? companyId)
+        public IHttpActionResult GetPsychologists(int? companyId = null)
         {
             var psychologists = _userService.GetPsychologists(companyId);
 
             return Ok(psychologists);
         }
 
-        [Route("docListWriters/{companyId}")]
+        [Route("docListWriters/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]
-        public IHttpActionResult GetDocListWriters(int? companyId)
+        public IHttpActionResult GetDocListWriters(int? companyId = null)
         {
             var docListWriters = _userService.GetDocListWriters(companyId);
 
             return Ok(docListWriters);
         }
 
-        [Route("notesWriters/{companyId}")]
+        [Route("notesWriters/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]
         public IHttpActionResult GetNotesWriters(int? companyId)

@@ -49,7 +49,6 @@ export class DataRepository {
 		});
 	}
 
-	
 	getAppointment(id) {
 		return this.getSingleBasic(id, 'appointment');
 	}
@@ -213,6 +212,10 @@ export class DataRepository {
 	
 	getNotesWriters(companyId) {
 		return this.getManyBasic('user/noteswriters/' + companyId, true);
+	}
+	
+	searchUsers(criteria) {
+		return this.searchBasic(criteria, 'user');
 	}
 	
 	getCompany(id) {

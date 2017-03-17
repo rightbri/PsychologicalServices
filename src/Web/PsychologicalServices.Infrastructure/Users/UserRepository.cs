@@ -54,7 +54,10 @@ namespace PsychologicalServices.Infrastructure.Users
                                 )
                             )    
                         )
-                    
+                    .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
+                        .SubPath(userUnavailabilityPath => userUnavailabilityPath
+                            .Prefetch<UserEntity>(userUnavailability => userUnavailability.User)
+                        )
                     .Prefetch<CompanyEntity>(user => user.Company)
                 );
 
@@ -151,6 +154,17 @@ namespace PsychologicalServices.Infrastructure.Users
                     if (criteria.IsActive.HasValue)
                     {
                         users = users.Where(user => user.IsActive == criteria.IsActive.Value);
+                    }
+
+                    if (criteria.AvailableDate.HasValue)
+                    {
+                        users = users
+                            .Where(user => !user.UserUnavailabilities
+                                .Any(unavailability =>
+                                    unavailability.StartDate <= criteria.AvailableDate.Value && 
+                                    unavailability.EndDate >= criteria.AvailableDate.Value
+                                )
+                            );
                     }
                 }
 
@@ -335,19 +349,64 @@ namespace PsychologicalServices.Infrastructure.Users
                 userEntity.CompanyId = user.CompanyId;
                 userEntity.IsActive = user.IsActive;
 
-                var rolesToAdd = user.Roles.Where(role => !userEntity.UserRoles.Any(userRole => userRole.RoleId == role.RoleId));
+                #region roles
 
-                userEntity.UserRoles.AddRange(
-                    rolesToAdd.Select(role => new UserRoleEntity { UserId = user.UserId, RoleId = role.RoleId })
-                );
-                
                 var rolesToRemove = userEntity.UserRoles.Where(userRole => !user.Roles.Any(role => role.RoleId == userRole.RoleId));
 
                 foreach (var userRole in rolesToRemove)
                 {
                     userEntity.UserRoles.Remove(userRole);
                 }
+
+                var rolesToAdd = user.Roles.Where(role => !userEntity.UserRoles.Any(userRole => userRole.RoleId == role.RoleId));
+
+                userEntity.UserRoles.AddRange(
+                    rolesToAdd.Select(role => new UserRoleEntity { UserId = user.UserId, RoleId = role.RoleId })
+                );
                 
+                #endregion
+
+                #region unavailabilities
+
+                var unavailabilitiesToAdd = user.Unavailability.Where(unavailability => !userEntity.UserUnavailabilities.Any(unavailabilityEntity => unavailabilityEntity.Id == unavailability.Id));
+
+                var unavailabilitiesToRemove = userEntity.UserUnavailabilities.Where(unavailabilityEntity => !user.Unavailability.Any(unavailability => unavailability.Id == unavailabilityEntity.Id));
+
+                var unavailabilitiesToUpdate = user.Unavailability
+                    .Where(unavailability => userEntity.UserUnavailabilities
+                        .Any(unavailabilityEntity =>
+                            unavailabilityEntity.Id == unavailability.Id &&
+                            unavailabilityEntity.StartDate != unavailability.StartDate &&
+                            unavailabilityEntity.EndDate != unavailability.EndDate
+                        )
+                    );
+
+                foreach (var unavailability in unavailabilitiesToRemove)
+                {
+                    userEntity.UserUnavailabilities.Remove(unavailability);
+                }
+
+                foreach (var unavailability in unavailabilitiesToUpdate)
+                {
+                    var unavailabilityEntity = userEntity.UserUnavailabilities.Where(ue => ue.Id == unavailability.Id).SingleOrDefault();
+
+                    if (null != unavailabilityEntity)
+                    {
+                        unavailabilityEntity.StartDate = unavailability.StartDate;
+                        unavailabilityEntity.EndDate = unavailability.EndDate;
+                    }
+                }
+
+                userEntity.UserUnavailabilities.AddRange(
+                    unavailabilitiesToAdd.Select(unavailability => new UserUnavailabilityEntity
+                    {
+                        StartDate = unavailability.StartDate,
+                        EndDate = unavailability.EndDate,
+                    })
+                );
+
+                #endregion
+
                 var saved = adapter.SaveEntity(userEntity, false);
                 
                 return userEntity.UserId;

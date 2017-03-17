@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((37 + 0));
+			base.InitClass((38 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
@@ -93,6 +93,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitRoleRightEntityMappings();
 			InitUserEntityMappings();
 			InitUserRoleEntityMappings();
+			InitUserUnavailabilityEntityMappings();
 
 		}
 
@@ -435,6 +436,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "UserRoleEntity", "PsychologicalServices", @"dbo", "UserRoles", 2 );
 			base.AddElementFieldMapping( "UserRoleEntity", "UserId", "UserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "UserRoleEntity", "RoleId", "RoleId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+		}
+		/// <summary>Inits UserUnavailabilityEntity's mappings</summary>
+		private void InitUserUnavailabilityEntityMappings()
+		{
+			base.AddElementMapping( "UserUnavailabilityEntity", "PsychologicalServices", @"dbo", "UserUnavailabilities", 4 );
+			base.AddElementFieldMapping( "UserUnavailabilityEntity", "Id", "Id", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "UserUnavailabilityEntity", "UserId", "UserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "UserUnavailabilityEntity", "StartDate", "StartDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+			base.AddElementFieldMapping( "UserUnavailabilityEntity", "EndDate", "EndDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
 		}
 
 	}

@@ -690,6 +690,24 @@ namespace PsychologicalServices.Data
 	}
 
 
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: UserUnavailability.
+	/// </summary>
+	public enum UserUnavailabilityFieldIndex:int
+	{
+		///<summary>Id. </summary>
+		Id,
+		///<summary>UserId. </summary>
+		UserId,
+		///<summary>StartDate. </summary>
+		StartDate,
+		///<summary>EndDate. </summary>
+		EndDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
 
 
 
@@ -771,7 +789,9 @@ namespace PsychologicalServices.Data
 		///<summary>User</summary>
 		UserEntity,
 		///<summary>UserRole</summary>
-		UserRoleEntity
+		UserRoleEntity,
+		///<summary>UserUnavailability</summary>
+		UserUnavailabilityEntity
 	}
 
 

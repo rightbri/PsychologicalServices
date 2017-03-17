@@ -22,6 +22,19 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Unavailability ToUnavailability(this UserUnavailabilityEntity unavailability)
+        {
+            return unavailability != null
+                ? new Unavailability
+                {
+                    Id = unavailability.Id,
+                    StartDate = unavailability.StartDate,
+                    EndDate = unavailability.EndDate,
+                    User = unavailability.User.ToUser(),
+                }
+                : null;
+        }
+
         public static Report ToReport(this AssessmentReportEntity report)
         {
             return null != report

@@ -33,6 +33,13 @@ namespace PsychologicalServices.Models.Users
             return user;
         }
 
+        public IEnumerable<User> GetUsers(UserSearchCriteria criteria)
+        {
+            var users = _userRepository.GetUsers(criteria);
+
+            return users;
+        }
+
         public IEnumerable<User> GetPsychometrists(int? companyId = null)
         {
             var psychometrists = _userRepository.GetPsychometrists(companyId);

@@ -19,5 +19,7 @@ namespace PsychologicalServices.Models.Users
         public int? RightId { get; set; }
 
         public bool? IsActive { get; set; }
+
+        public DateTime? AvailableDate { get; set; }
     }
 }

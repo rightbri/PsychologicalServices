@@ -570,7 +570,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentReport
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -582,7 +581,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentReportUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -1533,6 +1531,47 @@ namespace PsychologicalServices.Data.FactoryClasses
 		#region Included Code
 
 		#endregion
+	}	
+	/// <summary>Factory to create new, empty UserUnavailabilityEntity objects.</summary>
+	[Serializable]
+	public partial class UserUnavailabilityEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public UserUnavailabilityEntityFactory() : base("UserUnavailabilityEntity", PsychologicalServices.Data.EntityType.UserUnavailabilityEntity) { }
+
+		/// <summary>Creates a new, empty UserUnavailabilityEntity object.</summary>
+		/// <returns>A new, empty UserUnavailabilityEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new UserUnavailabilityEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewUserUnavailability
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new UserUnavailabilityEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new UserUnavailabilityEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewUserUnavailabilityUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<UserUnavailabilityEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
 	}
 
 	/// <summary>Factory to create new, empty Entity objects based on the entity type specified. Uses  entity specific factory objects</summary>
@@ -1657,6 +1696,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.UserRoleEntity:
 					factoryToUse = new UserRoleEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.UserUnavailabilityEntity:
+					factoryToUse = new UserUnavailabilityEntityFactory();
 					break;
 			}
 			IEntity2 toReturn = null;

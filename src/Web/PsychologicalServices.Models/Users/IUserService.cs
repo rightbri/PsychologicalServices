@@ -10,6 +10,8 @@ namespace PsychologicalServices.Models.Users
 
         User GetUserById(int id);
 
+        IEnumerable<User> GetUsers(UserSearchCriteria criteria);
+
         IEnumerable<User> GetPsychometrists(int? companyId = null);
 
         IEnumerable<User> GetPsychologists(int? companyId = null);

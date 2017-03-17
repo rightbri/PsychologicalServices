@@ -97,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <AppDesigner Include="Properties\" />
+    <Compile Include="DatabaseGeneric\EntityClasses\ColorEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\RoleRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -107,9 +110,6 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\FactoryClasses\EntityFieldFactory.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="DatabaseGeneric\ConstantsEnums.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\AssessmentClaimRelations.cs">
@@ -128,6 +128,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\ReportTypeRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\UserUnavailabilityEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\HelperClasses\TypeDefaultValue.cs">
@@ -208,6 +211,9 @@
     <Compile Include="DatabaseGeneric\EntityClasses\AttributeTypeEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\InvoiceAmountEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\NoteEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -265,7 +271,7 @@
     <Compile Include="DatabaseGeneric\EntityClasses\CompanyAttributeEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\ColorEntity.cs">
+    <Compile Include="DatabaseGeneric\ConstantsEnums.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\ReferralSourceRelations.cs">
@@ -283,7 +289,7 @@
     <Compile Include="DatabaseGeneric\EntityClasses\AssessmentClaimEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\InvoiceAmountEntity.cs">
+    <Compile Include="DatabaseGeneric\RelationClasses\UserUnavailabilityRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\Linq\LinqMetaData.cs">

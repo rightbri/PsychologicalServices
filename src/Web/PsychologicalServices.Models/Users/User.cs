@@ -21,7 +21,9 @@ namespace PsychologicalServices.Models.Users
 
         public Company Company { get; set; }
 
-        public List<Role> Roles { get; set; }
+        public IEnumerable<Role> Roles { get; set; }
+
+        public IEnumerable<Unavailability> Unavailability { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -44,6 +46,13 @@ namespace PsychologicalServices.Models.Users
                         right.Name.Equals(rightName, StringComparison.OrdinalIgnoreCase)
                     )
                 );
+        }
+
+        public bool IsAvailable(DateTime date)
+        {
+            return null != Unavailability
+                ? !Unavailability.Any(unavailability => unavailability.StartDate <= date && unavailability.EndDate >= date)
+                : true;
         }
     }
 }

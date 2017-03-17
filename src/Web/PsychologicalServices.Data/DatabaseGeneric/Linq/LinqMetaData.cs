@@ -172,6 +172,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.UserRoleEntity:
 					toReturn = this.UserRole;
 					break;
+				case PsychologicalServices.Data.EntityType.UserUnavailabilityEntity:
+					toReturn = this.UserUnavailability;
+					break;
 				default:
 					toReturn = null;
 					break;
@@ -399,6 +402,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<UserRoleEntity> UserRole
 		{
 			get { return new DataSource2<UserRoleEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting UserUnavailabilityEntity instances in the database.</summary>
+		public DataSource2<UserUnavailabilityEntity> UserUnavailability
+		{
+			get { return new DataSource2<UserUnavailabilityEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		

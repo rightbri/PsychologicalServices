@@ -74,7 +74,24 @@ export class EditAssessment {
 						this.claimant = this.assessment.claims[0].claimant;
 					}
 					
-					return this.getData(this.assessment);
+					var firstAppointmentDate = null;
+					
+					if (this.assessment.appointments && this.assessment.appointments.length > 0) {
+						this.assessment.appointments.sort((a, b) => {
+							if (a.appointmentTime < b.appointmentTime) {
+								return -1;
+							}
+							else if (a.appointmentTime > b.appointmentTime) {
+								return 1;
+							}
+							
+							return 0;
+						});
+						
+						firstAppointmentDate = this.assessment.appointments[0].appointmentTime;
+					}
+					
+					return this.getData(firstAppointmentDate);
 				});
 		}
 		else {
@@ -101,21 +118,34 @@ export class EditAssessment {
 								reports: []
 							};
 							
-							return this.getData();
+							return this.getData(appointment.appointmentTime);
 						});
 				});
 		}
 	}
 	
-	getData() {
+	getData(firstAppointmentDate) {
 		return Promise.all([
 			this.dataRepository.getAssessmentTypes().then(data => this.assessmentTypes = data),
 			this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
 			this.dataRepository.getReferralSources().then(data => this.referralSources = data),
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
 			this.dataRepository.getReportTypes().then(data => this.reportTypes = data),
-			this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
-			this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
+			
+			this.dataRepository.searchUsers({
+				companyId: this.context.user.company.companyId,
+				rightId: this.config.rights.WriteDocList,
+				availableDate: firstAppointmentDate,
+			}).then(data => this.docListWriters = data),
+			
+			this.dataRepository.searchUsers({
+				companyId: this.context.user.company.companyId,
+				rightId: this.config.rights.WriteNotes,
+				availableDate: firstAppointmentDate,
+			}).then(data => this.notesWriters = data),
+			
+			//this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
+			//this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
 			this.dataRepository.getColors().then(data => this.colors = data),
 			this.dataRepository.searchAttributes({
 				companyIds: [this.context.user.company.companyId],

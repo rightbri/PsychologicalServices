@@ -171,6 +171,7 @@
     <Compile Include="Users\IUserRepository.cs" />
     <Compile Include="Users\IUserService.cs" />
     <Compile Include="Users\IUserValidator.cs" />
+    <Compile Include="Users\Unavailability.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Users\UserSearchCriteria.cs" />
     <Compile Include="Users\UserService.cs" />
