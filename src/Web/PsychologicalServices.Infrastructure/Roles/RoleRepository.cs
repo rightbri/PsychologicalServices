@@ -55,7 +55,7 @@ namespace PsychologicalServices.Infrastructure.Roles
                         (ILLBLGenProQuery)
                         meta.Role
                         .WithPath(RolePath)
-                        .Where(role => isActive == null || role.IsActive == isActive.Value)
+                        .Where(role => isActive == null || role.IsActive == isActive)
                     )
                     .Select(role => role.ToRole())
                     .ToList();

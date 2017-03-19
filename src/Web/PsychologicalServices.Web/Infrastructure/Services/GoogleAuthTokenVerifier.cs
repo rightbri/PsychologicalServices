@@ -34,7 +34,9 @@ namespace PsychologicalServices.Web.Infrastructure.Services
 
                     SecurityToken securityToken;
 
-                    principal = tokenHandler.ValidateToken(
+                    try
+                    {
+                        principal = tokenHandler.ValidateToken(
                         authToken,
                         new TokenValidationParameters
                         {
@@ -43,7 +45,12 @@ namespace PsychologicalServices.Web.Infrastructure.Services
                             IssuerSigningKeys = _tokenSigningKeysProvider.GetSecurityKeys(jwt.ValidTo),
                         }, out securityToken);
 
-                    return true;
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             }
 

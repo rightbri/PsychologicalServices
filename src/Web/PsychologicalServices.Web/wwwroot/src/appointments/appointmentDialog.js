@@ -24,9 +24,7 @@ export class AppointmentDialog {
 		this.psychologistMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.appointmentStatusMatcher = (a, b) => a !== null && b !== null && a.appointmentStatusId === b.appointmentStatusId;
 		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
-		this.attributeMatcher = (a, b) => {
-			return a !== null && b !== null && a.attributeId === b.attributeId;
-		};
+		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
 	}
 	
 	activate(appointment) {

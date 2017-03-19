@@ -1,23 +1,30 @@
 import {DialogService} from 'aurelia-dialog';
 import {DialogController} from 'aurelia-dialog';
 import {DataRepository} from 'services/dataRepository';
+import {Config} from 'common/config';
 import {inject} from 'aurelia-framework';
 import {ClaimantDialog} from './ClaimantDialog';
 
-@inject(DialogService, DialogController, DataRepository)
+@inject(DialogService, DialogController, DataRepository, Config)
 export class ClaimantSearchDialog {
-	constructor(dialogService, dialogController, dataRepository) {
+	constructor(dialogService, dialogController, dataRepository, config) {
 		this.dialogService = dialogService;
 		this.dialogController = dialogController;
 		this.dataRepository = dataRepository;
+		this.config = config;
 		
-		this.claimantSearch = '';
+		this.claimantSearch = null;
 		this.claimantSearchMinLength = 2;
+		this.addClaimantEnabled = true;
 		
 		this.claimants = null;
 		this.claimant = null;
 	}
 
+	activate(options) {
+		this.addClaimantEnabled = options.addClaimantEnabled;
+	}
+	
 	ok() {
 		this.dialogController.ok(this.claimant);
 	}

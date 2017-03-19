@@ -143,6 +143,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.UserRoleEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "UserRoleEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.UserTravelFeeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "UserTravelFeeEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.UserUnavailabilityEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "UserUnavailabilityEntity");
 					break;

@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (38 + 0));
+			base.InitClass( (39 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -94,6 +94,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitRoleRightEntityInfos();
 			InitUserEntityInfos();
 			InitUserRoleEntityInfos();
+			InitUserTravelFeeEntityInfos();
 			InitUserUnavailabilityEntityInfos();
 
 			base.ConstructElementFieldStructures(InheritanceInfoProviderSingleton.GetInstance());
@@ -400,6 +401,13 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("UserRoleEntity", "UserId", typeof(System.Int32), true, true, false, false,  (int)UserRoleFieldIndex.UserId, 0, 0, 10);
 			base.AddElementFieldInfo("UserRoleEntity", "RoleId", typeof(System.Int32), true, true, false, false,  (int)UserRoleFieldIndex.RoleId, 0, 0, 10);
+		}
+		/// <summary>Inits UserTravelFeeEntity's FieldInfo objects</summary>
+		private void InitUserTravelFeeEntityInfos()
+		{
+			base.AddElementFieldInfo("UserTravelFeeEntity", "UserId", typeof(System.Int32), true, true, false, false,  (int)UserTravelFeeFieldIndex.UserId, 0, 0, 10);
+			base.AddElementFieldInfo("UserTravelFeeEntity", "LocationId", typeof(System.Int32), true, true, false, false,  (int)UserTravelFeeFieldIndex.LocationId, 0, 0, 10);
+			base.AddElementFieldInfo("UserTravelFeeEntity", "Amount", typeof(System.Int32), false, false, false, false,  (int)UserTravelFeeFieldIndex.Amount, 0, 0, 10);
 		}
 		/// <summary>Inits UserUnavailabilityEntity's FieldInfo objects</summary>
 		private void InitUserUnavailabilityEntityInfos()

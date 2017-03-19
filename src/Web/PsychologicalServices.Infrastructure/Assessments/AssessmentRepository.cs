@@ -171,6 +171,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         assessments = assessments.Where(assessment => assessment.ReportStatusId == criteria.ReportStatusId.Value);
                     }
 
+                    if (criteria.ClaimantId.HasValue)
+                    {
+                        assessments = assessments.Where(assessment =>
+                            assessment.AssessmentClaims.Any(assessmentClaim =>
+                                assessmentClaim.Claim.ClaimantId == criteria.ClaimantId
+                            )
+                        );
+                    }
+
                     if (criteria.DocListWriterId.HasValue)
                     {
                         assessments = assessments.Where(assessment => assessment.DocListWriterId == criteria.DocListWriterId.Value);

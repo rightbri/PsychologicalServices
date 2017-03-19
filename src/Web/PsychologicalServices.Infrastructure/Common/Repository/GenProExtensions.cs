@@ -22,6 +22,17 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static UserTravelFee ToUserTravelFee(this UserTravelFeeEntity userTravelFee)
+        {
+            return userTravelFee != null
+                ? new UserTravelFee
+                {
+                    Location = userTravelFee.Location.ToAddress(),
+                    Amount = userTravelFee.Amount
+                }
+                : null;
+        }
+
         public static Unavailability ToUnavailability(this UserUnavailabilityEntity unavailability)
         {
             return unavailability != null
@@ -30,7 +41,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Id = unavailability.Id,
                     StartDate = unavailability.StartDate,
                     EndDate = unavailability.EndDate,
-                    User = unavailability.User.ToUser(),
                 }
                 : null;
         }
@@ -440,10 +450,27 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
-                    CompanyId = user.CompanyId,
                     IsActive = user.IsActive,
                     Company = user.Company.ToCompany(),
                     Roles = user.UserRoles.Select(userRole => userRole.Role.ToRole()).ToList(),
+                    Unavailability = user.UserUnavailabilities.Select(userUnavailability => userUnavailability.ToUnavailability()),
+                    TravelFees = user.UserTravelFees.Select(userTravelFee => userTravelFee.ToUserTravelFee()),
+                }
+                : null;
+        }
+
+        public static User ToUserLite(this UserEntity user)
+        {
+            return null != user
+                ? new User
+                {
+                    UserId = user.UserId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    IsActive = user.IsActive,
+                    Company = user.Company.ToCompany(),
+                    Roles = user.UserRoles.Select(userRole => userRole.Role.ToRole()).ToList(),   
                 }
                 : null;
         }

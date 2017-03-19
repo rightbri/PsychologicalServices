@@ -103,6 +103,8 @@
     <Build Include="dbo\Tables\AssessmentAttributes.sql" />
     <Build Include="dbo\Tables\AppointmentAttributes.sql" />
     <Build Include="dbo\Tables\AssessmentReports.sql" />
+    <Build Include="dbo\Tables\UserUnavailabilities.sql" />
+    <Build Include="dbo\Tables\UserTravelFees.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

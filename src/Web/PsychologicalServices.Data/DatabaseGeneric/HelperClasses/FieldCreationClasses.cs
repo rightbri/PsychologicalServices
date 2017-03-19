@@ -969,6 +969,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity UserTravelFeeEntity</summary>
+	public partial class UserTravelFeeFields
+	{
+		/// <summary>Creates a new UserTravelFeeEntity.UserId field instance</summary>
+		public static EntityField2 UserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserTravelFeeFieldIndex.UserId);}
+		}
+		/// <summary>Creates a new UserTravelFeeEntity.LocationId field instance</summary>
+		public static EntityField2 LocationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserTravelFeeFieldIndex.LocationId);}
+		}
+		/// <summary>Creates a new UserTravelFeeEntity.Amount field instance</summary>
+		public static EntityField2 Amount
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserTravelFeeFieldIndex.Amount);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity UserUnavailabilityEntity</summary>
 	public partial class UserUnavailabilityFields
 	{

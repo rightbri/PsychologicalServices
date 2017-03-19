@@ -25,6 +25,8 @@ namespace PsychologicalServices.Models.Users
 
         public IEnumerable<Unavailability> Unavailability { get; set; }
 
+        public IEnumerable<UserTravelFee> TravelFees { get; set; }
+
         public bool IsActive { get; set; }
 
         public bool IsNew()

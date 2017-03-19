@@ -11,14 +11,17 @@ namespace PsychologicalServices.Models.Users
     {
         private readonly ICompanyRepository _companyRepository = null;
         private readonly IRoleRepository _roleRepository = null;
+        private readonly IUnavailabilityValidator _unavailabilityValidator = null;
 
         public UserValidator(
             ICompanyRepository companyRepository,
-            IRoleRepository roleRepository
+            IRoleRepository roleRepository,
+            IUnavailabilityValidator unavailabilityValidator
         )
         {
             _companyRepository = companyRepository;
             _roleRepository = roleRepository;
+            _unavailabilityValidator = unavailabilityValidator;
         }
 
         public IValidationResult Validate(User item)
@@ -49,7 +52,7 @@ namespace PsychologicalServices.Models.Users
                 );
             }
 
-            var company = _companyRepository.GetCompany(item.CompanyId);
+            var company = _companyRepository.GetCompany(item.Company.CompanyId);
             if (null == company)
             {
                 result.ValidationErrors.Add(
@@ -57,7 +60,7 @@ namespace PsychologicalServices.Models.Users
                 );
             }
 
-            var roles = _roleRepository.GetRoles(false);
+            var roles = _roleRepository.GetRoles(null);
             foreach (var userRole in item.Roles)
             {
                 var role = roles.SingleOrDefault(r => r.RoleId == userRole.RoleId);
@@ -65,6 +68,16 @@ namespace PsychologicalServices.Models.Users
                 {
                     result.ValidationErrors.Add(
                         new ValidationError { PropertyName = "RoleId", Message = string.Format("Invalid role '{0}: {1}'", userRole.RoleId, userRole.Name) }
+                    );
+                }
+            }
+
+            if (null != item.Unavailability)
+            {
+                foreach (var unavailability in item.Unavailability)
+                {
+                    result.ValidationErrors.AddRange(
+                        _unavailabilityValidator.Validate(unavailability).ValidationErrors
                     );
                 }
             }

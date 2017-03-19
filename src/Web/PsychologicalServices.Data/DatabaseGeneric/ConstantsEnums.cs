@@ -691,6 +691,22 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: UserTravelFee.
+	/// </summary>
+	public enum UserTravelFeeFieldIndex:int
+	{
+		///<summary>UserId. </summary>
+		UserId,
+		///<summary>LocationId. </summary>
+		LocationId,
+		///<summary>Amount. </summary>
+		Amount,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: UserUnavailability.
 	/// </summary>
 	public enum UserUnavailabilityFieldIndex:int
@@ -790,6 +806,8 @@ namespace PsychologicalServices.Data
 		UserEntity,
 		///<summary>UserRole</summary>
 		UserRoleEntity,
+		///<summary>UserTravelFee</summary>
+		UserTravelFeeEntity,
 		///<summary>UserUnavailability</summary>
 		UserUnavailabilityEntity
 	}

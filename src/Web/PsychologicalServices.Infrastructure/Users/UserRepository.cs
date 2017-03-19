@@ -40,7 +40,7 @@ namespace PsychologicalServices.Infrastructure.Users
         #region Prefetch Paths
 
         private static readonly Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>>
-            UserPath =
+            UserLitePath =
                 (uPath => uPath
                     .Prefetch<UserRoleEntity>(user => user.UserRoles)
                         .SubPath(userRolePath => userRolePath
@@ -54,10 +54,32 @@ namespace PsychologicalServices.Infrastructure.Users
                                 )
                             )    
                         )
-                    .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
-                        .SubPath(userUnavailabilityPath => userUnavailabilityPath
-                            .Prefetch<UserEntity>(userUnavailability => userUnavailability.User)
+                    .Prefetch<CompanyEntity>(user => user.Company)
+                );
+
+        private static readonly Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>>
+            UserPath =
+                (uPath => uPath
+                    .Prefetch<UserRoleEntity>(user => user.UserRoles)
+                        .SubPath(userRolePath => userRolePath
+                            .Prefetch<RoleEntity>(userRole => userRole.Role)
+                            .FilterOn(role => role.IsActive)
+                            .SubPath(rolePath => rolePath
+                                .Prefetch<RoleRightEntity>(role => role.RoleRights)
+                                .SubPath(roleRightPath => roleRightPath
+                                    .Prefetch<RightEntity>(roleRight => roleRight.Right)
+                                    .FilterOn(right => right.IsActive)
+                                )
+                            )
                         )
+                    .Prefetch<UserTravelFeeEntity>(user => user.UserTravelFees)
+                        .SubPath(userTravelFeePath => userTravelFeePath
+                            .Prefetch<AddressEntity>(userTravelFee => userTravelFee.Location)
+                                .SubPath(addressPath => addressPath
+                                    .Prefetch<AddressTypeEntity>(address => address.AddressType)
+                                )
+                        )
+                    .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
                     .Prefetch<CompanyEntity>(user => user.Company)
                 );
 
@@ -77,7 +99,6 @@ namespace PsychologicalServices.Infrastructure.Users
                     .SingleOrDefault()
                     .ToUser();
             }
-            //return GetUser(user => user.UserId == id);
         }
 
         public User GetUserByEmail(string email)
@@ -94,7 +115,6 @@ namespace PsychologicalServices.Infrastructure.Users
                     .SingleOrDefault()
                     .ToUser();
             }
-            //return GetUser(user => user.Email == email);
         }
 
         public IEnumerable<User> GetUsers(UserSearchCriteria criteria)
@@ -172,7 +192,7 @@ namespace PsychologicalServices.Infrastructure.Users
                         (ILLBLGenProQuery)
                         users
                     )
-                    .Select(user => user.ToUser())
+                    .Select(user => user.ToUserLite())
                     .ToList();
             }
         }
@@ -184,7 +204,7 @@ namespace PsychologicalServices.Infrastructure.Users
                 var meta = new LinqMetaData(adapter);
 
                 var users = meta.User
-                    .WithPath(UserPath)
+                    .WithPath(UserLitePath)
                     .Where(u =>
                         u.UserRoles.Any(userRole =>
                             userRole.Role.RoleRights.Any(roleRight =>
@@ -198,19 +218,9 @@ namespace PsychologicalServices.Infrastructure.Users
                         (ILLBLGenProQuery)
                         users
                     )
-                    .Select(entity => entity.ToUser())
+                    .Select(entity => entity.ToUserLite())
                     .ToList();
             }
-
-            //return GetUsers(
-            //    u =>
-            //            u.RoleCollectionViaUserRoles.Any(role =>
-            //                role.RightCollectionViaRoleRights.Any(right =>
-            //                    right.Name == StaticRights.WriteDocList.ToString()
-            //                )
-            //            ) &&
-            //            (companyId == null || companyId.Value == u.CompanyId)
-            //    );
         }
 
         public IEnumerable<User> GetNotesWriters(int? companyId = null)
@@ -220,7 +230,7 @@ namespace PsychologicalServices.Infrastructure.Users
                 var meta = new LinqMetaData(adapter);
 
                 var users = meta.User
-                    .WithPath(UserPath)
+                    .WithPath(UserLitePath)
                     .Where(u =>
                         u.UserRoles.Any(userRole =>
                             userRole.Role.RoleRights.Any(roleRight =>
@@ -234,19 +244,9 @@ namespace PsychologicalServices.Infrastructure.Users
                         (ILLBLGenProQuery)
                         users
                     )
-                    .Select(entity => entity.ToUser())
+                    .Select(entity => entity.ToUserLite())
                     .ToList();
             }
-
-            //return GetUsers(
-            //    u =>
-            //            u.RoleCollectionViaUserRoles.Any(role =>
-            //                role.RightCollectionViaRoleRights.Any(right =>
-            //                    right.Name == StaticRights.WriteNotes.ToString()
-            //                )
-            //            ) &&
-            //            (companyId == null || companyId.Value == u.CompanyId)
-            //    );
         }
 
         public IEnumerable<User> GetPsychometrists(int? companyId = null)
@@ -256,7 +256,7 @@ namespace PsychologicalServices.Infrastructure.Users
                 var meta = new LinqMetaData(adapter);
 
                 var users = meta.User
-                    .WithPath(UserPath)
+                    .WithPath(UserLitePath)
                     .Where(u =>
                         u.UserRoles.Any(userRole =>
                             userRole.Role.RoleRights.Any(roleRight =>
@@ -270,20 +270,9 @@ namespace PsychologicalServices.Infrastructure.Users
                         (ILLBLGenProQuery)
                         users
                     )
-                    .Select(entity => entity.ToUser())
+                    .Select(entity => entity.ToUserLite())
                     .ToList();
             }
-
-            //var rightName = StaticRights.Psychometrist.ToString();
-            //return GetUsers(
-            //    u =>
-            //            u.RoleCollectionViaUserRoles.Any(role =>
-            //                role.RightCollectionViaRoleRights.Any(right =>
-            //                    right.Name == rightName
-            //                )
-            //            ) &&
-            //            (companyId == null || companyId.Value == u.CompanyId)
-            //    );
         }
 
         public IEnumerable<User> GetPsychologists(int? companyId = null)
@@ -293,7 +282,7 @@ namespace PsychologicalServices.Infrastructure.Users
                 var meta = new LinqMetaData(adapter);
 
                 var users = meta.User
-                    .WithPath(UserPath)
+                    .WithPath(UserLitePath)
                     .Where(u =>
                         u.UserRoles.Any(userRole =>
                             userRole.Role.RoleRights.Any(roleRight =>
@@ -307,25 +296,17 @@ namespace PsychologicalServices.Infrastructure.Users
                         (ILLBLGenProQuery)
                         users
                     )
-                    .Select(entity => entity.ToUser())
+                    .Select(entity => entity.ToUserLite())
                     .ToList();
             }
-            //var rightName = StaticRights.Psychologist.ToString();
-            //return GetUsers(
-            //    u =>
-            //            u.RoleCollectionViaUserRoles.Any(role =>
-            //                role.RightCollectionViaRoleRights.Any(right =>
-            //                    right.Name == rightName
-            //                )
-            //            ) &&
-            //            (companyId == null || companyId.Value == u.CompanyId)
-            //    );
         }
 
         public int SaveUser(User user)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var uow = new UnitOfWork2();
+
                 var isNew = user.IsNew();
 
                 var userEntity = new UserEntity
@@ -340,13 +321,15 @@ namespace PsychologicalServices.Infrastructure.Users
 
                     prefetch.Add(UserEntity.PrefetchPathUserRoles);
 
+                    prefetch.Add(UserEntity.PrefetchPathUserUnavailabilities);
+
                     adapter.FetchEntity(userEntity, prefetch);
                 }
 
                 userEntity.FirstName = user.FirstName;
                 userEntity.LastName = user.LastName;
                 userEntity.Email = user.Email;
-                userEntity.CompanyId = user.CompanyId;
+                userEntity.CompanyId = user.Company.CompanyId;
                 userEntity.IsActive = user.IsActive;
 
                 #region roles
@@ -355,7 +338,7 @@ namespace PsychologicalServices.Infrastructure.Users
 
                 foreach (var userRole in rolesToRemove)
                 {
-                    userEntity.UserRoles.Remove(userRole);
+                    uow.AddForDelete(userRole);
                 }
 
                 var rolesToAdd = user.Roles.Where(role => !userEntity.UserRoles.Any(userRole => userRole.RoleId == role.RoleId));
@@ -368,31 +351,33 @@ namespace PsychologicalServices.Infrastructure.Users
 
                 #region unavailabilities
 
-                var unavailabilitiesToAdd = user.Unavailability.Where(unavailability => !userEntity.UserUnavailabilities.Any(unavailabilityEntity => unavailabilityEntity.Id == unavailability.Id));
+                var unavailabilitiesToAdd = user.Unavailability
+                    .Where(unavailability => !userEntity.UserUnavailabilities.Any(unavailabilityEntity => 
+                        unavailabilityEntity.StartDate == unavailability.StartDate));
 
-                var unavailabilitiesToRemove = userEntity.UserUnavailabilities.Where(unavailabilityEntity => !user.Unavailability.Any(unavailability => unavailability.Id == unavailabilityEntity.Id));
+                var unavailabilitiesToRemove = userEntity.UserUnavailabilities
+                    .Where(unavailabilityEntity => !user.Unavailability.Any(unavailability => 
+                        unavailability.StartDate == unavailabilityEntity.StartDate));
 
                 var unavailabilitiesToUpdate = user.Unavailability
                     .Where(unavailability => userEntity.UserUnavailabilities
                         .Any(unavailabilityEntity =>
-                            unavailabilityEntity.Id == unavailability.Id &&
-                            unavailabilityEntity.StartDate != unavailability.StartDate &&
+                            unavailabilityEntity.StartDate == unavailability.StartDate &&
                             unavailabilityEntity.EndDate != unavailability.EndDate
                         )
                     );
 
                 foreach (var unavailability in unavailabilitiesToRemove)
                 {
-                    userEntity.UserUnavailabilities.Remove(unavailability);
+                    uow.AddForDelete(unavailability);
                 }
 
                 foreach (var unavailability in unavailabilitiesToUpdate)
                 {
-                    var unavailabilityEntity = userEntity.UserUnavailabilities.Where(ue => ue.Id == unavailability.Id).SingleOrDefault();
+                    var unavailabilityEntity = userEntity.UserUnavailabilities.Where(ue => ue.StartDate == unavailability.StartDate).SingleOrDefault();
 
                     if (null != unavailabilityEntity)
                     {
-                        unavailabilityEntity.StartDate = unavailability.StartDate;
                         unavailabilityEntity.EndDate = unavailability.EndDate;
                     }
                 }
@@ -407,55 +392,54 @@ namespace PsychologicalServices.Infrastructure.Users
 
                 #endregion
 
-                var saved = adapter.SaveEntity(userEntity, false);
+                #region travel fees
+
+                var travelFeesToAdd = user.TravelFees
+                    .Where(travelFee => !userEntity.UserTravelFees.Any(travelFeeEntity =>
+                        travelFeeEntity.LocationId == travelFee.Location.AddressId));
+
+                var travelFeesToRemove = userEntity.UserTravelFees
+                    .Where(travelFeeEntity => !user.TravelFees.Any(travelFee =>
+                        travelFee.Location.AddressId == travelFeeEntity.LocationId));
+
+                var travelFeesToUpdate = user.TravelFees
+                    .Where(travelFee => userEntity.UserTravelFees
+                        .Any(travelFeeEntity =>
+                            travelFeeEntity.LocationId == travelFee.Location.AddressId &&
+                            travelFeeEntity.Amount != travelFee.Amount
+                        )
+                    );
+
+                foreach (var travelFee in travelFeesToRemove)
+                {
+                    uow.AddForDelete(travelFee);
+                }
+
+                foreach (var travelFee in travelFeesToUpdate)
+                {
+                    var travelFeeEntity = userEntity.UserTravelFees.Where(tf => tf.LocationId == travelFee.Location.AddressId).SingleOrDefault();
+
+                    if (null != travelFeeEntity)
+                    {
+                        travelFeeEntity.Amount = travelFee.Amount;
+                    }
+                }
+
+                userEntity.UserTravelFees.AddRange(
+                    travelFeesToAdd.Select(travelFee => new UserTravelFeeEntity
+                    {
+                        LocationId = travelFee.Location.AddressId,
+                        Amount = travelFee.Amount
+                    })
+                );
+
+                #endregion
+
+                uow.AddForSave(userEntity);
+
+                uow.Commit(adapter);
                 
                 return userEntity.UserId;
-            }
-        }
-
-        private User GetUser(System.Linq.Expressions.Expression<Func<UserEntity, bool>> filter = null)
-        {
-            using (var adapter = AdapterFactory.CreateAdapter())
-            {
-                var meta = new LinqMetaData(adapter);
-
-                var users = meta.User
-                    .WithPath(UserPath);
-
-                if (null != filter)
-                {
-                    users.Where(filter);
-                }
-
-                return Execute<UserEntity>(
-                        (ILLBLGenProQuery)
-                        users
-                    )
-                    .SingleOrDefault()
-                    .ToUser();
-            }
-        }
-
-        private IEnumerable<User> GetUsers(System.Linq.Expressions.Expression<Func<UserEntity, bool>> filter = null)
-        {
-            using (var adapter = AdapterFactory.CreateAdapter())
-            {
-                var meta = new LinqMetaData(adapter);
-
-                var users = meta.User
-                    .WithPath(UserPath);
-
-                if (null != filter)
-                {
-                    users.Where(filter);
-                }
-
-                return Execute<UserEntity>(
-                        (ILLBLGenProQuery)
-                        users
-                    )
-                    .Select(entity => entity.ToUser())
-                    .ToList();
             }
         }
     }

@@ -20,7 +20,7 @@ SET IDENTITY_INSERT [dbo].[AddressTypes] OFF;
 
 SET IDENTITY_INSERT [dbo].[AppointmentStatuses] ON;
 
-INSERT INTO [dbo].[AppointmentStatuses] ([AppointmentStatusId],[Name],[Description],[IsActive],[NotifyImeCompany]) VALUES 
+INSERT INTO [dbo].[AppointmentStatuses] ([AppointmentStatusId],[Name],[Description],[IsActive],[NotifyReferralSource]) VALUES 
 	 (1,'On Hold','Appointment requested',1,0)
 	,(2,'Confirmed','Appointment meets criteria to proceed',1,1)
 	,(3,'Canceled',NULL,1,0)
@@ -28,6 +28,7 @@ INSERT INTO [dbo].[AppointmentStatuses] ([AppointmentStatusId],[Name],[Descripti
 	,(5,'No Show','Claimant did not arrive within 30 minutes of scheduled appointment time',1,1)
 	,(6,'Incomplete','Claimant needs to return for another appointment to finish testing',1,1)
 	,(7,'Complete','A report will be generated',1,1)
+	,(8,'Rescheduled','Referral Source has requested another appointment day/time',1,0)
 
 SET IDENTITY_INSERT [dbo].[AppointmentStatuses] OFF;
 

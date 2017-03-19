@@ -33,7 +33,7 @@ namespace PsychologicalServices.Web.Controllers
         }
 
         [Route("search")]
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(IEnumerable<Assessment>))]
         public IHttpActionResult Search(AssessmentSearchCriteria criteria)
         {

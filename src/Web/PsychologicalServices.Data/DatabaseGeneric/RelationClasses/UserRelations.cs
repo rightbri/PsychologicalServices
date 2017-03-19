@@ -37,6 +37,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
 			toReturn.Add(this.UserRoleEntityUsingUserId);
+			toReturn.Add(this.UserTravelFeeEntityUsingUserId);
 			toReturn.Add(this.UserUnavailabilityEntityUsingUserId);
 
 			toReturn.Add(this.CompanyEntityUsingCompanyId);
@@ -146,6 +147,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(UserFields.UserId, UserRoleFields.UserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserRoleEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and UserTravelFeeEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - UserTravelFee.UserId
+		/// </summary>
+		public virtual IEntityRelation UserTravelFeeEntityUsingUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "UserTravelFees" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, UserTravelFeeFields.UserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserTravelFeeEntity", false);
 				return relation;
 			}
 		}

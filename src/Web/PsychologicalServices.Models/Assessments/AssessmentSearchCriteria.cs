@@ -14,6 +14,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public int? ReportStatusId { get; set; }
 
+        public int? ClaimantId { get; set; }
+
         public int? DocListWriterId { get; set; }
 
         public int? NotesWriterId { get; set; }

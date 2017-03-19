@@ -2,7 +2,7 @@
 export class Config {
 	constructor() {
 		
-		this.longDateFormat = 'MM-DD-YYYY h:mmA';
+		this.longDateFormat = 'MMMM Do, YYYY';
 		
 		this.isoShortDateFormat = 'YYYY-MM-DD';
 		this.isoShortTimeFormat = 'HH:mm';

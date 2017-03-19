@@ -1,25 +1,41 @@
-import {inject} from 'aurelia-framework';
+import {bindable, inject} from 'aurelia-framework';
+import {jquery} from 'jquery';
 import datepicker from 'bootstrap-datepicker';
 
 @inject(Element)
 export class DatePickerCustomAttribute {
+	@bindable dates;
+	@bindable({ primaryProperty: true }) options;
 	
 	constructor(element) {
 		this.element = element;
 	}
 
 	attached() {
-		$(this.element).datepicker(this.value)
+		$(this.element).datepicker(this.options)
+			.datepicker('setDates', this.dates)
 			.on('change', e => fireEvent(e.target, 'input'))
+			.on('changeDate', e => {
+				fireEvent(e.target, 'datechanged', e);
+			})
 			.on('changeMonth', e => {
 				fireEvent(e.target, 'monthchanged', e.date);
+			})
+			.on('clearDate', e => {
+				fireEvent(e.target, 'datecleared', e);
 			});
 	}
 
 	detached() {
 		$(this.element).datepicker('destroy')
 			.off('change')
-			.off('changeMonth');
+			.off('changeDate')
+			.off('changeMonth')
+			.off('clearDate');
+	}
+	
+	datesChanged(newValue, oldValue) {
+		this.dates = newValue;
 	}
 }
 

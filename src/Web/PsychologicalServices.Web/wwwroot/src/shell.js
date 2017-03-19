@@ -14,6 +14,7 @@ export class Shell {
 		
 		config.map([
 			{ route: ['', 'calendar'], name: 'calendar', moduleId: 'calendar/calendar', title: 'Calendar', nav: true },
+			{ route: 'assessments', name: 'assessments', moduleId: 'assessments/assessments', title: 'Assessments', nav: true },
 			{ route: 'assessments/:id/edit', name: 'editAssessment', moduleId: 'assessments/editAssessment', title: 'Edit Assessment', nav: false },
 			{ route: 'assessments/add/:year/:month/:day', name: 'addAssessment', moduleId: 'assessments/editAssessment', title: 'Add Assessment', nav: false },
 			{ route: 'addresses', name: 'addresses', moduleId: 'addresses/addresses', title: 'Addresses', nav: true },
@@ -21,7 +22,10 @@ export class Shell {
 			{ route: 'addresses/add', name: 'addAddress', moduleId: 'addresses/editAddress', title: 'Add Address', nav: false },
 			{ route: 'referralSources', name: 'referralSources', moduleId: 'referralSources/referralSources', title: 'Referral Sources', nav: true },
 			{ route: 'referralSources/:id/edit', name: 'editReferralSource', moduleId: 'referralSources/editReferralSource', title: 'Edit Referral Source', nav: false },
-			{ route: 'referralSources/add', name: 'addReferralSource', moduleId: 'referralSources/editReferralSource', title: 'Add Referral Source', nav: false }
+			{ route: 'referralSources/add', name: 'addReferralSource', moduleId: 'referralSources/editReferralSource', title: 'Add Referral Source', nav: false },
+			{ route: 'users', name: 'users', moduleId: 'users/users', title: 'Users', nav: true },
+			{ route: 'users/:id/edit', name: 'editUser', moduleId: 'users/editUser', title: 'Edit User', nav: false },
+			{ route: 'users/add', name: 'addUser', moduleId: 'users/editUser', title: 'Add User', nav: false }
 		]);
 	}
 }

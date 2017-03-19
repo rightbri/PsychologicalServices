@@ -218,6 +218,14 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'user');
 	}
 	
+	getRoles() {
+		return this.getManyBasic('role', true);
+	}
+	
+	getRights() {
+		return this.getManyBasic('right', true);
+	}
+	
 	getCompany(id) {
 		return this.getSingleBasic(id, 'company');
 	}

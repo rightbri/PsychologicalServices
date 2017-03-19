@@ -1,5 +1,6 @@
 <template>
 	<require from="valueConverters/gender"></require>
+	<require from="valueConverters/date-format"></require>
 	
 	<ai-dialog>
 		<ai-dialog-header>
@@ -16,7 +17,7 @@
 								<i class="fa fa-search"></i>
 							</button>
 						</span>
-						<span class="input-group-btn">
+						<span class="input-group-btn" if.bind="addClaimantEnabled">
 							<button type="button" class="btn btn-default" click.delegate="addClaimant()">
 								<i class="fa fa-plus"></i>
 							</button>
@@ -31,6 +32,7 @@
 							<tr>
 								<th>First</th>
 								<th>Last</th>
+								<th>Date of Birth</th>
 								<th>Age</th>
 								<th>Gender</th>
 								<th></th>
@@ -40,6 +42,7 @@
 							<tr repeat.for="claimant of claimants" class.bind="claimant.selected ? 'active' : ''">
 								<td>${claimant.firstName}</td>
 								<td>${claimant.lastName}</td>
+								<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>
 								<td>${claimant.age}</td>
 								<td>${claimant.gender | gender}</td>
 								<td>

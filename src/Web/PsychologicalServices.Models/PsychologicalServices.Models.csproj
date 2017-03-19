@@ -151,6 +151,8 @@
     <Compile Include="Reports\ReportStatusValidator.cs" />
     <Compile Include="Reports\ReportTypeValidator.cs" />
     <Compile Include="Rights\IRightRepository.cs" />
+    <Compile Include="Rights\IRightService.cs" />
+    <Compile Include="Rights\RightService.cs" />
     <Compile Include="Rights\StaticRights.cs" />
     <Compile Include="Roles\IRoleRepository.cs" />
     <Compile Include="Assessments\Assessment.cs" />
@@ -166,15 +168,20 @@
     <Compile Include="Reports\ReportStatus.cs" />
     <Compile Include="Reports\ReportType.cs" />
     <Compile Include="Rights\Right.cs" />
+    <Compile Include="Roles\IRoleService.cs" />
     <Compile Include="Roles\Role.cs" />
     <Compile Include="Referrals\ReferralType.cs" />
+    <Compile Include="Roles\RoleService.cs" />
+    <Compile Include="Users\IUnavailabilityValidator.cs" />
     <Compile Include="Users\IUserRepository.cs" />
     <Compile Include="Users\IUserService.cs" />
     <Compile Include="Users\IUserValidator.cs" />
     <Compile Include="Users\Unavailability.cs" />
+    <Compile Include="Users\UnavailabilityValidator.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Users\UserSearchCriteria.cs" />
     <Compile Include="Users\UserService.cs" />
+    <Compile Include="Users\UserTravelFee.cs" />
     <Compile Include="Users\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>

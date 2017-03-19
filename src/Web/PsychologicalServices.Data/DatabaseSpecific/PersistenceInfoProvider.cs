@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((38 + 0));
+			base.InitClass((39 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
@@ -93,6 +93,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitRoleRightEntityMappings();
 			InitUserEntityMappings();
 			InitUserRoleEntityMappings();
+			InitUserTravelFeeEntityMappings();
 			InitUserUnavailabilityEntityMappings();
 
 		}
@@ -436,6 +437,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "UserRoleEntity", "PsychologicalServices", @"dbo", "UserRoles", 2 );
 			base.AddElementFieldMapping( "UserRoleEntity", "UserId", "UserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "UserRoleEntity", "RoleId", "RoleId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+		}
+		/// <summary>Inits UserTravelFeeEntity's mappings</summary>
+		private void InitUserTravelFeeEntityMappings()
+		{
+			base.AddElementMapping( "UserTravelFeeEntity", "PsychologicalServices", @"dbo", "UserTravelFees", 3 );
+			base.AddElementFieldMapping( "UserTravelFeeEntity", "UserId", "UserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "UserTravelFeeEntity", "LocationId", "LocationId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "UserTravelFeeEntity", "Amount", "Amount", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
 		}
 		/// <summary>Inits UserUnavailabilityEntity's mappings</summary>
 		private void InitUserUnavailabilityEntityMappings()

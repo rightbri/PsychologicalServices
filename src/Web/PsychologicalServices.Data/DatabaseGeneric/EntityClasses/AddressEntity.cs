@@ -38,8 +38,10 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentEntity> _appointments;
+		private EntityCollection<UserTravelFeeEntity> _userTravelFee;
 
 
+		private EntityCollection<UserEntity> _userCollectionViaUserTravelFee;
 
 
 		private AddressTypeEntity _addressType;
@@ -60,8 +62,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AddressType = "AddressType";
 			/// <summary>Member name Appointments</summary>
 			public static readonly string Appointments = "Appointments";
+			/// <summary>Member name UserTravelFee</summary>
+			public static readonly string UserTravelFee = "UserTravelFee";
 
 
+			/// <summary>Member name UserCollectionViaUserTravelFee</summary>
+			public static readonly string UserCollectionViaUserTravelFee = "UserCollectionViaUserTravelFee";
 
 
 
@@ -124,8 +130,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointments = (EntityCollection<AppointmentEntity>)info.GetValue("_appointments", typeof(EntityCollection<AppointmentEntity>));
+				_userTravelFee = (EntityCollection<UserTravelFeeEntity>)info.GetValue("_userTravelFee", typeof(EntityCollection<UserTravelFeeEntity>));
 
 
+				_userCollectionViaUserTravelFee = (EntityCollection<UserEntity>)info.GetValue("_userCollectionViaUserTravelFee", typeof(EntityCollection<UserEntity>));
 
 
 				_addressType = (AddressTypeEntity)info.GetValue("_addressType", typeof(AddressTypeEntity));
@@ -179,8 +187,16 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)entity);
 					break;
+				case "UserTravelFee":
+					this.UserTravelFee.Add((UserTravelFeeEntity)entity);
+					break;
 
 
+				case "UserCollectionViaUserTravelFee":
+					this.UserCollectionViaUserTravelFee.IsReadOnly = false;
+					this.UserCollectionViaUserTravelFee.Add((UserEntity)entity);
+					this.UserCollectionViaUserTravelFee.IsReadOnly = true;
+					break;
 
 
 
@@ -211,8 +227,15 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					toReturn.Add(AddressEntity.Relations.AppointmentEntityUsingLocationId);
 					break;
+				case "UserTravelFee":
+					toReturn.Add(AddressEntity.Relations.UserTravelFeeEntityUsingLocationId);
+					break;
 
 
+				case "UserCollectionViaUserTravelFee":
+					toReturn.Add(AddressEntity.Relations.UserTravelFeeEntityUsingLocationId, "AddressEntity__", "UserTravelFee_", JoinHint.None);
+					toReturn.Add(UserTravelFeeEntity.Relations.UserEntityUsingUserId, "UserTravelFee_", string.Empty, JoinHint.None);
+					break;
 
 
 
@@ -257,6 +280,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)relatedEntity);
 					break;
+				case "UserTravelFee":
+					this.UserTravelFee.Add((UserTravelFeeEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -277,6 +303,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Appointments":
 					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "UserTravelFee":
+					base.PerformRelatedEntityRemoval(this.UserTravelFee, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -313,6 +342,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Appointments);
+			toReturn.Add(this.UserTravelFee);
 
 			return toReturn;
 		}
@@ -328,8 +358,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointments", ((_appointments!=null) && (_appointments.Count>0) && !this.MarkedForDeletion)?_appointments:null);
+				info.AddValue("_userTravelFee", ((_userTravelFee!=null) && (_userTravelFee.Count>0) && !this.MarkedForDeletion)?_userTravelFee:null);
 
 
+				info.AddValue("_userCollectionViaUserTravelFee", ((_userCollectionViaUserTravelFee!=null) && (_userCollectionViaUserTravelFee.Count>0) && !this.MarkedForDeletion)?_userCollectionViaUserTravelFee:null);
 
 
 				info.AddValue("_addressType", (!this.MarkedForDeletion?_addressType:null));
@@ -378,7 +410,28 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'UserTravelFee' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoUserTravelFee()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserTravelFeeFields.LocationId, null, ComparisonOperator.Equal, this.AddressId));
+			return bucket;
+		}
 
+
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'User' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoUserCollectionViaUserTravelFee()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.Relations.AddRange(GetRelationsForFieldOfType("UserCollectionViaUserTravelFee"));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.AddressId, "AddressEntity__"));
+			return bucket;
+		}
 
 
 
@@ -421,8 +474,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointments);
+			collectionsQueue.Enqueue(this._userTravelFee);
 
 
+			collectionsQueue.Enqueue(this._userCollectionViaUserTravelFee);
 
 
 		}
@@ -433,8 +488,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
+			this._userTravelFee = (EntityCollection<UserTravelFeeEntity>) collectionsQueue.Dequeue();
 
 
+			this._userCollectionViaUserTravelFee = (EntityCollection<UserEntity>) collectionsQueue.Dequeue();
 
 
 		}
@@ -447,8 +504,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._userTravelFee != null)
+			{
+				return true;
+			}
 
 
+			if (this._userCollectionViaUserTravelFee != null)
+			{
+				return true;
+			}
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -461,8 +526,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))) : null);
 
 
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))) : null);
 
 
 		}
@@ -476,8 +543,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("AddressType", _addressType);
 			toReturn.Add("Appointments", _appointments);
+			toReturn.Add("UserTravelFee", _userTravelFee);
 
 
+			toReturn.Add("UserCollectionViaUserTravelFee", _userCollectionViaUserTravelFee);
 
 
 
@@ -491,8 +560,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointments.ActiveContext = base.ActiveContext;
 			}
+			if(_userTravelFee!=null)
+			{
+				_userTravelFee.ActiveContext = base.ActiveContext;
+			}
 
 
+			if(_userCollectionViaUserTravelFee!=null)
+			{
+				_userCollectionViaUserTravelFee.ActiveContext = base.ActiveContext;
+			}
 
 
 			if(_addressType!=null)
@@ -507,8 +584,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointments = null;
+			_userTravelFee = null;
 
 
+			_userCollectionViaUserTravelFee = null;
 
 
 			_addressType = null;
@@ -638,8 +717,33 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("Appointments")[0], (int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "Appointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'UserTravelFee' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathUserTravelFee
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("UserTravelFee")[0], (int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.UserTravelFeeEntity, 0, null, null, null, null, "UserTravelFee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathUserCollectionViaUserTravelFee
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = AddressEntity.Relations.UserTravelFeeEntityUsingLocationId;
+				intermediateRelation.SetAliases(string.Empty, "UserTravelFee_");
+				return new PrefetchPathElement2(new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))), intermediateRelation,
+					(int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, GetRelationsForField("UserCollectionViaUserTravelFee"), null, "UserCollectionViaUserTravelFee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
 
 
 
@@ -806,7 +910,39 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'UserTravelFeeEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(UserTravelFeeEntity))]
+		public virtual EntityCollection<UserTravelFeeEntity> UserTravelFee
+		{
+			get
+			{
+				if(_userTravelFee==null)
+				{
+					_userTravelFee = new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory)));
+					_userTravelFee.SetContainingEntityInfo(this, "Location");
+				}
+				return _userTravelFee;
+			}
+		}
 
+
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'UserEntity' which are related to this entity via a relation of type 'm:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(UserEntity))]
+		public virtual EntityCollection<UserEntity> UserCollectionViaUserTravelFee
+		{
+			get
+			{
+				if(_userCollectionViaUserTravelFee==null)
+				{
+					_userCollectionViaUserTravelFee = new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory)));
+					_userCollectionViaUserTravelFee.IsReadOnly=true;
+				}
+				return _userCollectionViaUserTravelFee;
+			}
+		}
 
 
 

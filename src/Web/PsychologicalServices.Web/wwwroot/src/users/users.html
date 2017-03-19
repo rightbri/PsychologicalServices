@@ -1,0 +1,107 @@
+<template>
+	<require from="valueConverters/boolean"></require>
+	<require from="common/date-picker"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	
+	<h2>Users</h2>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="firstName">First Name</label>
+					<input id="firstName" type="text" class="form-control" value.bind="searchFirstName" />
+				</div>
+			</div>
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="lastName">Last Name</label>
+					<input id="lastName" type="text" class="form-control" value.bind="searchLastName" />
+				</div>
+			</div>
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input id="email" type="text" class="form-control" value.bind="searchEmail" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="role">Role</label>
+					<select id="role" class="form-control" value.bind="searchRoleId">
+						<option></option>
+						<option repeat.for="role of roles" value.bind="role.roleId">${role.name}</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="right">Right</label>
+					<select id="right" class="form-control" value.bind="searchRightId">
+						<option></option>
+						<option repeat.for="right of rights" value.bind="right.rightId">${right.name}</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="searchActive">Is Active?</label>
+					<select class="form-control" value.bind="searchIsActive">
+						<option></option>
+						<option value="true">yes</option>
+						<option value="false">no</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label for="availabileDate">Available Date</label>
+					<input id="availableDate" type="text" class="form-control" value.bind="searchAvailableDate" date-picker.bind="config.datepickerOptions" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-3">
+				<button type="button" class="btn btn-default" click.delegate="search()">
+					Search&nbsp;<i class="fa fa-search"></i>
+				</button>
+			</div>
+			<div class="col-xs-offset-6 col-xs-3">
+				<a route-href="route: addUser" class="btn btn-default" title="Add User">
+					<i class="fa fa-plus"></i>&nbsp;Add
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<table class="table table-condensed" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Is Active?</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="user of users">
+				<td>
+					<a route-href="route: editUser; params.bind: { id: user.userId }" class="btn btn-default btn-xs">
+						<i class="fa fa-pencil"></i>
+					</a>
+				</td>
+				<td>${user.firstName}</td>
+				<td>${user.lastName}</td>
+				<td>${user.email}</td>
+				<td>${user.isActive | boolean}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+</template>
