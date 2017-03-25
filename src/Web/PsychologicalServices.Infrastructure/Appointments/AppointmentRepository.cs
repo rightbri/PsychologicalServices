@@ -32,6 +32,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Prefetch<AddressEntity>(appointment => appointment.Location)
                         .SubPath(addressPath => addressPath
                             .Prefetch<AddressTypeEntity>(address => address.AddressType)
+                            .Prefetch<CityEntity>(address => address.City)
                         )
                     .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                     .Prefetch<UserEntity>(appointment => appointment.Psychometrist)

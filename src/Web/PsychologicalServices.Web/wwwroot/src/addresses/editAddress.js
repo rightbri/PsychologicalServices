@@ -15,7 +15,11 @@ export class EditAddress {
 		this.notifier = notifier;
 		
 		this.address = null;
+		this.cities = null;
 		this.addressTypes = null;
+		
+		this.cityMatcher = (a, b) => a !== null && b !== null && a.cityId === b.cityId;
+		this.addressTypeMatcher = (a, b) => a !== null && b !== null && a.addressTypeId === b.addressTypeId;
 		
 		this.error = null;
 		this.validationErrors = null;
@@ -36,7 +40,7 @@ export class EditAddress {
 		else {
 			this.editType = 'Add';
 			
-			this.address = { id: 0, province: this.config.addressDefaults.province, country: this.config.addressDefaults.country };
+			this.address = { id: 0, isActive: true };
 			
 			return this.getData();
 		}
@@ -47,6 +51,7 @@ export class EditAddress {
 	
 	getData() {
 		return Promise.all([
+			this.dataRepository.getCities().then(data => this.cities = data),
 			this.dataRepository.getAddressTypes().then(data => this.addressTypes = data)
 		]);
 	}

@@ -20,12 +20,6 @@
 					<input id="lastName" type="text" class="form-control" value.bind="searchLastName" />
 				</div>
 			</div>
-			<div class="col-xs-3">
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input id="email" type="text" class="form-control" value.bind="searchEmail" />
-				</div>
-			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-3">
@@ -34,15 +28,6 @@
 					<select id="role" class="form-control" value.bind="searchRoleId">
 						<option></option>
 						<option repeat.for="role of roles" value.bind="role.roleId">${role.name}</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-xs-3">
-				<div class="form-group">
-					<label for="right">Right</label>
-					<select id="right" class="form-control" value.bind="searchRightId">
-						<option></option>
-						<option repeat.for="right of rights" value.bind="right.rightId">${right.name}</option>
 					</select>
 				</div>
 			</div>

@@ -18,7 +18,7 @@ export class EditUser {
 		this.notifier = notifier;
 		
 		this.roles = null;
-		this.locations = null;
+		this.cities = null;
 		
 		this.user = null;
 		this.unavailableDates = [];
@@ -55,7 +55,8 @@ export class EditUser {
 					company: user.company,
 					isActive: true,
 					roles: [],
-					unavailability: []
+					unavailability: [],
+					travelFees: []
 				};
 				
 				return this.getData();
@@ -66,18 +67,16 @@ export class EditUser {
 	getData() {
 		return Promise.all([
 			this.dataRepository.getRoles().then(data => this.roles = data),
-			this.dataRepository.searchAddress({
-				isActive: true
-			}).then(data => {
-				this.locations = data;
+			this.dataRepository.getCities().then(data => {
+				this.cities = data;
 				
 				this.user.travelFees = this.user.travelFees.concat(
 					getMissingTravelFees(data, this.user.travelFees)
 				).sort((a, b) => {
-					if (a.location.name < b.location.name) {
+					if (a.city.name < b.city.name) {
 						return -1;
 					}
-					else if (a.location.name > b.location.name) {
+					else if (a.city.name > b.city.name) {
 						return 1;
 					}
 					
@@ -133,8 +132,8 @@ export class EditUser {
 	}
 }
 
-function getMissingTravelFees(locations, travelFees) {
-	return locations.filter(location => 
-		!travelFees.some(travelFee => travelFee.location.addressId === location.addressId)
-	).map(function(location) { return { location: location, amount: 0 };});
+function getMissingTravelFees(cities, travelFees) {
+	return cities.filter(city => 
+		!travelFees.some(travelFee => travelFee.city.cityId === city.cityId)
+	).map(function(city) { return { city: city, amount: 0 };});
 }

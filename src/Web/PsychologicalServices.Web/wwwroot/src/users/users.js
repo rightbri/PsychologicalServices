@@ -20,14 +20,14 @@ export class Users {
 		this.searchAvailableDate = null;
 		
 		this.roles = null;
-		this.rights = null;
+		//this.rights = null;
 		this.users = null;
 		
 	}
 	
 	activate() {
 		return this.context.getUser().then(user => {
-			this.searchCompanyId = user.companyId;
+			this.searchCompanyId = user.company.companyId;
 			
 			return this.getData();
 		});
@@ -37,7 +37,7 @@ export class Users {
 	getData() {
 		return Promise.all([
 			this.dataRepository.getRoles().then(data => this.roles = data),
-			this.dataRepository.getRights().then(data => this.rights = data),
+			//this.dataRepository.getRights().then(data => this.rights = data),
 			this.search()
 		]);
 	}

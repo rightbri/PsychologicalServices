@@ -89,6 +89,12 @@
     <Compile Include="CalendarNotes\ICalendarNoteRepository.cs" />
     <Compile Include="CalendarNotes\ICalendarNoteService.cs" />
     <Compile Include="CalendarNotes\ICalendarNoteValidator.cs" />
+    <Compile Include="Cities\City.cs" />
+    <Compile Include="Cities\CityService.cs" />
+    <Compile Include="Cities\CityValidator.cs" />
+    <Compile Include="Cities\ICityRepository.cs" />
+    <Compile Include="Cities\ICityService.cs" />
+    <Compile Include="Cities\ICityValidator.cs" />
     <Compile Include="Claims\ClaimantNotFoundException.cs" />
     <Compile Include="Claims\ClaimantParameters.cs" />
     <Compile Include="Claims\ClaimantValidator.cs" />
@@ -175,6 +181,7 @@
     <Compile Include="Users\IUnavailabilityValidator.cs" />
     <Compile Include="Users\IUserRepository.cs" />
     <Compile Include="Users\IUserService.cs" />
+    <Compile Include="Users\IUserTravelFeeValidator.cs" />
     <Compile Include="Users\IUserValidator.cs" />
     <Compile Include="Users\Unavailability.cs" />
     <Compile Include="Users\UnavailabilityValidator.cs" />
@@ -182,6 +189,7 @@
     <Compile Include="Users\UserSearchCriteria.cs" />
     <Compile Include="Users\UserService.cs" />
     <Compile Include="Users\UserTravelFee.cs" />
+    <Compile Include="Users\UserTravelFeeValidator.cs" />
     <Compile Include="Users\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>

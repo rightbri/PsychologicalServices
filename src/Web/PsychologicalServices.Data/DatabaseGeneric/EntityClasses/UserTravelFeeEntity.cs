@@ -39,7 +39,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		#region Class Member Declarations
 
 
-		private AddressEntity _location;
+		private CityEntity _city;
 		private UserEntity _user;
 
 		
@@ -54,8 +54,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Location</summary>
-			public static readonly string Location = "Location";
+			/// <summary>Member name City</summary>
+			public static readonly string City = "City";
 			/// <summary>Member name User</summary>
 			public static readonly string User = "User";
 
@@ -94,25 +94,25 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="userId">PK value for UserTravelFee which data should be fetched into this UserTravelFee object</param>
-		/// <param name="locationId">PK value for UserTravelFee which data should be fetched into this UserTravelFee object</param>
+		/// <param name="cityId">PK value for UserTravelFee which data should be fetched into this UserTravelFee object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public UserTravelFeeEntity(System.Int32 userId, System.Int32 locationId):base("UserTravelFeeEntity")
+		public UserTravelFeeEntity(System.Int32 userId, System.Int32 cityId):base("UserTravelFeeEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 			this.UserId = userId;
-			this.LocationId = locationId;
+			this.CityId = cityId;
 		}
 
 		/// <summary> CTor</summary>
 		/// <param name="userId">PK value for UserTravelFee which data should be fetched into this UserTravelFee object</param>
-		/// <param name="locationId">PK value for UserTravelFee which data should be fetched into this UserTravelFee object</param>
+		/// <param name="cityId">PK value for UserTravelFee which data should be fetched into this UserTravelFee object</param>
 		/// <param name="validator">The custom validator object for this UserTravelFeeEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public UserTravelFeeEntity(System.Int32 userId, System.Int32 locationId, IValidator validator):base("UserTravelFeeEntity")
+		public UserTravelFeeEntity(System.Int32 userId, System.Int32 cityId, IValidator validator):base("UserTravelFeeEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 			this.UserId = userId;
-			this.LocationId = locationId;
+			this.CityId = cityId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
@@ -125,10 +125,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-				_location = (AddressEntity)info.GetValue("_location", typeof(AddressEntity));
-				if(_location!=null)
+				_city = (CityEntity)info.GetValue("_city", typeof(CityEntity));
+				if(_city!=null)
 				{
-					_location.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_city.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 				_user = (UserEntity)info.GetValue("_user", typeof(UserEntity));
 				if(_user!=null)
@@ -153,8 +153,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case UserTravelFeeFieldIndex.UserId:
 					DesetupSyncUser(true, false);
 					break;
-				case UserTravelFeeFieldIndex.LocationId:
-					DesetupSyncLocation(true, false);
+				case UserTravelFeeFieldIndex.CityId:
+					DesetupSyncCity(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -178,8 +178,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Location":
-					this.Location = (AddressEntity)entity;
+				case "City":
+					this.City = (CityEntity)entity;
 					break;
 				case "User":
 					this.User = (UserEntity)entity;
@@ -208,8 +208,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Location":
-					toReturn.Add(UserTravelFeeEntity.Relations.AddressEntityUsingLocationId);
+				case "City":
+					toReturn.Add(UserTravelFeeEntity.Relations.CityEntityUsingCityId);
 					break;
 				case "User":
 					toReturn.Add(UserTravelFeeEntity.Relations.UserEntityUsingUserId);
@@ -253,8 +253,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Location":
-					SetupSyncLocation(relatedEntity);
+				case "City":
+					SetupSyncCity(relatedEntity);
 					break;
 				case "User":
 					SetupSyncUser(relatedEntity);
@@ -275,8 +275,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Location":
-					DesetupSyncLocation(false, true);
+				case "City":
+					DesetupSyncCity(false, true);
 					break;
 				case "User":
 					DesetupSyncUser(false, true);
@@ -303,9 +303,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_location!=null)
+			if(_city!=null)
 			{
-				toReturn.Add(_location);
+				toReturn.Add(_city);
 			}
 			if(_user!=null)
 			{
@@ -337,7 +337,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-				info.AddValue("_location", (!this.MarkedForDeletion?_location:null));
+				info.AddValue("_city", (!this.MarkedForDeletion?_city:null));
 				info.AddValue("_user", (!this.MarkedForDeletion?_user:null));
 
 			}
@@ -377,12 +377,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// the related entity of type 'City' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoLocation()
+		public virtual IRelationPredicateBucket GetRelationInfoCity()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.LocationId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CityFields.CityId, null, ComparisonOperator.Equal, this.CityId));
 			return bucket;
 		}
 
@@ -463,7 +463,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Location", _location);
+			toReturn.Add("City", _city);
 			toReturn.Add("User", _user);
 
 
@@ -476,9 +476,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 
-			if(_location!=null)
+			if(_city!=null)
 			{
-				_location.ActiveContext = base.ActiveContext;
+				_city.ActiveContext = base.ActiveContext;
 			}
 			if(_user!=null)
 			{
@@ -493,7 +493,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			_location = null;
+			_city = null;
 			_user = null;
 
 			PerformDependencyInjection();
@@ -516,38 +516,38 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("UserId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("LocationId", fieldHashtable);
+			_fieldsCustomProperties.Add("CityId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Amount", fieldHashtable);
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _location</summary>
+		/// <summary> Removes the sync logic for member _city</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncLocation(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncCity(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _location, new PropertyChangedEventHandler( OnLocationPropertyChanged ), "Location", UserTravelFeeEntity.Relations.AddressEntityUsingLocationId, true, signalRelatedEntity, "UserTravelFee", resetFKFields, new int[] { (int)UserTravelFeeFieldIndex.LocationId } );		
-			_location = null;
+			base.PerformDesetupSyncRelatedEntity( _city, new PropertyChangedEventHandler( OnCityPropertyChanged ), "City", UserTravelFeeEntity.Relations.CityEntityUsingCityId, true, signalRelatedEntity, "UserTravelFees", resetFKFields, new int[] { (int)UserTravelFeeFieldIndex.CityId } );		
+			_city = null;
 		}
 
-		/// <summary> setups the sync logic for member _location</summary>
+		/// <summary> setups the sync logic for member _city</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncLocation(IEntity2 relatedEntity)
+		private void SetupSyncCity(IEntity2 relatedEntity)
 		{
-			if(_location!=relatedEntity)
+			if(_city!=relatedEntity)
 			{
-				DesetupSyncLocation(true, true);
-				_location = (AddressEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _location, new PropertyChangedEventHandler( OnLocationPropertyChanged ), "Location", UserTravelFeeEntity.Relations.AddressEntityUsingLocationId, true, new string[] {  } );
+				DesetupSyncCity(true, true);
+				_city = (CityEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _city, new PropertyChangedEventHandler( OnCityPropertyChanged ), "City", UserTravelFeeEntity.Relations.CityEntityUsingCityId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnLocationPropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnCityPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -624,15 +624,15 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'City' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathLocation
+		public static IPrefetchPathElement2 PrefetchPathCity
 		{
 			get
 			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Location")[0], (int)PsychologicalServices.Data.EntityType.UserTravelFeeEntity, (int)PsychologicalServices.Data.EntityType.AddressEntity, 0, null, null, null, null, "Location", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory))),
+					(IEntityRelation)GetRelationsForField("City")[0], (int)PsychologicalServices.Data.EntityType.UserTravelFeeEntity, (int)PsychologicalServices.Data.EntityType.CityEntity, 0, null, null, null, null, "City", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -684,15 +684,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)UserTravelFeeFieldIndex.UserId, value); }
 		}
 
-		/// <summary> The LocationId property of the Entity UserTravelFee<br/><br/>
+		/// <summary> The CityId property of the Entity UserTravelFee<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "UserTravelFees"."LocationId"<br/>
+		/// <remarks>Mapped on  table field: "UserTravelFees"."CityId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 LocationId
+		public virtual System.Int32 CityId
 		{
-			get { return (System.Int32)GetValue((int)UserTravelFeeFieldIndex.LocationId, true); }
-			set	{ SetValue((int)UserTravelFeeFieldIndex.LocationId, value); }
+			get { return (System.Int32)GetValue((int)UserTravelFeeFieldIndex.CityId, true); }
+			set	{ SetValue((int)UserTravelFeeFieldIndex.CityId, value); }
 		}
 
 		/// <summary> The Amount property of the Entity UserTravelFee<br/><br/>
@@ -708,35 +708,35 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
+		/// <summary> Gets / sets related entity of type 'CityEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual AddressEntity Location
+		public virtual CityEntity City
 		{
 			get
 			{
-				return _location;
+				return _city;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncLocation(value);
+					SetupSyncCity(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_location != null)
+						if(_city != null)
 						{
-							_location.UnsetRelatedEntity(this, "UserTravelFee");
+							_city.UnsetRelatedEntity(this, "UserTravelFees");
 						}
 					}
 					else
 					{
-						if(_location!=value)
+						if(_city!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "UserTravelFee");
+							((IEntity2)value).SetRelatedEntity(this, "UserTravelFees");
 						}
 					}
 				}

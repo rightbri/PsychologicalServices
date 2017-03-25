@@ -24,6 +24,7 @@ namespace PsychologicalServices.Infrastructure.Addresses
             AddressPath =
                 (aPath => aPath
                     .Prefetch<AddressTypeEntity>(address => address.AddressType)
+                    .Prefetch<CityEntity>(address => address.City)
                 );
 
         #endregion
@@ -78,7 +79,7 @@ namespace PsychologicalServices.Infrastructure.Addresses
 
                     if (!string.IsNullOrWhiteSpace(criteria.City))
                     {
-                        addresses = addresses.Where(address => address.City.Contains(criteria.City));
+                        addresses = addresses.Where(address => address.City.Name.Contains(criteria.City));
                     }
 
                     if (null != criteria.AddressTypeIds && criteria.AddressTypeIds.Any())
@@ -96,7 +97,7 @@ namespace PsychologicalServices.Infrastructure.Addresses
                         addresses = addresses
                             .Where(address => address.Name.Contains(criteria.SearchTerm) ||
                                 address.Street.Contains(criteria.SearchTerm) ||
-                                address.City.Contains(criteria.SearchTerm));
+                                address.City.Name.Contains(criteria.SearchTerm));
                     }
                 }
 
@@ -146,11 +147,9 @@ namespace PsychologicalServices.Infrastructure.Addresses
 
                 addressEntity.Street = address.Street;
                 addressEntity.Suite = address.Suite;
-                addressEntity.City = address.City;
+                addressEntity.CityId = address.City.CityId;
                 addressEntity.PostalCode = address.PostalCode;
-                addressEntity.Province = address.Province;
-                addressEntity.Country = address.Country;
-                addressEntity.AddressTypeId = address.AddressTypeId;
+                addressEntity.AddressTypeId = address.AddressType.AddressTypeId;
                 addressEntity.Name = address.Name;
                 addressEntity.IsActive = address.IsActive;
 

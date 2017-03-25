@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((39 + 0));
+			base.InitClass((40 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
@@ -74,6 +74,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAttributeEntityMappings();
 			InitAttributeTypeEntityMappings();
 			InitCalendarNoteEntityMappings();
+			InitCityEntityMappings();
 			InitClaimEntityMappings();
 			InitClaimantEntityMappings();
 			InitColorEntityMappings();
@@ -102,17 +103,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AddressEntity's mappings</summary>
 		private void InitAddressEntityMappings()
 		{
-			base.AddElementMapping( "AddressEntity", "PsychologicalServices", @"dbo", "Addresses", 10 );
+			base.AddElementMapping( "AddressEntity", "PsychologicalServices", @"dbo", "Addresses", 8 );
 			base.AddElementFieldMapping( "AddressEntity", "AddressId", "AddressId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "AddressEntity", "Street", "Address", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 1 );
-			base.AddElementFieldMapping( "AddressEntity", "Suite", "Suite", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 2 );
-			base.AddElementFieldMapping( "AddressEntity", "City", "City", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 3 );
-			base.AddElementFieldMapping( "AddressEntity", "Province", "Province", false, (int)SqlDbType.NVarChar, 10, 0, 0, false, "", null, typeof(System.String), 4 );
+			base.AddElementFieldMapping( "AddressEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "AddressEntity", "Street", "Street", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "AddressEntity", "Suite", "Suite", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 3 );
+			base.AddElementFieldMapping( "AddressEntity", "CityId", "CityId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
 			base.AddElementFieldMapping( "AddressEntity", "PostalCode", "PostalCode", false, (int)SqlDbType.NVarChar, 10, 0, 0, false, "", null, typeof(System.String), 5 );
-			base.AddElementFieldMapping( "AddressEntity", "Country", "Country", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 6 );
+			base.AddElementFieldMapping( "AddressEntity", "AddressTypeId", "AddressTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
 			base.AddElementFieldMapping( "AddressEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 7 );
-			base.AddElementFieldMapping( "AddressEntity", "AddressTypeId", "AddressTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
-			base.AddElementFieldMapping( "AddressEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 9 );
 		}
 		/// <summary>Inits AddressTypeEntity's mappings</summary>
 		private void InitAddressTypeEntityMappings()
@@ -267,6 +266,16 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "CalendarNoteEntity", "FromDate", "FromDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 1 );
 			base.AddElementFieldMapping( "CalendarNoteEntity", "ToDate", "ToDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
 			base.AddElementFieldMapping( "CalendarNoteEntity", "NoteId", "NoteId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
+		}
+		/// <summary>Inits CityEntity's mappings</summary>
+		private void InitCityEntityMappings()
+		{
+			base.AddElementMapping( "CityEntity", "PsychologicalServices", @"dbo", "Cities", 5 );
+			base.AddElementFieldMapping( "CityEntity", "CityId", "CityId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CityEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "CityEntity", "Province", "Province", false, (int)SqlDbType.NVarChar, 10, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "CityEntity", "Country", "Country", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 3 );
+			base.AddElementFieldMapping( "CityEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
 		}
 		/// <summary>Inits ClaimEntity's mappings</summary>
 		private void InitClaimEntityMappings()
@@ -443,7 +452,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		{
 			base.AddElementMapping( "UserTravelFeeEntity", "PsychologicalServices", @"dbo", "UserTravelFees", 3 );
 			base.AddElementFieldMapping( "UserTravelFeeEntity", "UserId", "UserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "UserTravelFeeEntity", "LocationId", "LocationId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "UserTravelFeeEntity", "CityId", "CityId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "UserTravelFeeEntity", "Amount", "Amount", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
 		}
 		/// <summary>Inits UserUnavailabilityEntity's mappings</summary>

@@ -4,6 +4,7 @@ using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Attributes;
 using PsychologicalServices.Models.CalendarNotes;
+using PsychologicalServices.Models.Cities;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
@@ -22,12 +23,26 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static City ToCity(this CityEntity city)
+        {
+            return city != null
+                ? new City
+                {
+                    CityId = city.CityId,
+                    Name = city.Name,
+                    Province = city.Province,
+                    Country = city.Country,
+                    IsActive = city.IsActive,
+                }
+                : null;
+        }
+
         public static UserTravelFee ToUserTravelFee(this UserTravelFeeEntity userTravelFee)
         {
             return userTravelFee != null
                 ? new UserTravelFee
                 {
-                    Location = userTravelFee.Location.ToAddress(),
+                    City = userTravelFee.City.ToCity(),
                     Amount = userTravelFee.Amount
                 }
                 : null;
@@ -388,16 +403,13 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new Address
                 {
                     AddressId = address.AddressId,
+                    Name = address.Name,
                     Street = address.Street,
                     Suite = address.Suite,
-                    City = address.City,
+                    City = address.City.ToCity(),
                     PostalCode = address.PostalCode,
-                    Province = address.Province,
-                    Country = address.Country,
-                    AddressTypeId = address.AddressTypeId,
-                    Name = address.Name,
-                    IsActive = address.IsActive,
                     AddressType = address.AddressType.ToAddressType(),
+                    IsActive = address.IsActive,
                 }
                 : null;
         }

@@ -106,6 +106,10 @@ export class DataRepository {
 		return this.getManyBasic('addresstype', true);
 	}
 	
+	getCities() {
+		return this.getManyBasic('city', true);
+	}
+	
 	searchAttributes(criteria) {
 		return this.searchBasic(criteria, 'attribute');
 	}

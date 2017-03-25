@@ -12,16 +12,19 @@ namespace PsychologicalServices.Models.Users
         private readonly ICompanyRepository _companyRepository = null;
         private readonly IRoleRepository _roleRepository = null;
         private readonly IUnavailabilityValidator _unavailabilityValidator = null;
+        private readonly IUserTravelFeeValidator _userTravelFeeValidator = null;
 
         public UserValidator(
             ICompanyRepository companyRepository,
             IRoleRepository roleRepository,
-            IUnavailabilityValidator unavailabilityValidator
+            IUnavailabilityValidator unavailabilityValidator,
+            IUserTravelFeeValidator userTravelFeeValidator
         )
         {
             _companyRepository = companyRepository;
             _roleRepository = roleRepository;
             _unavailabilityValidator = unavailabilityValidator;
+            _userTravelFeeValidator = userTravelFeeValidator;
         }
 
         public IValidationResult Validate(User item)
@@ -78,6 +81,16 @@ namespace PsychologicalServices.Models.Users
                 {
                     result.ValidationErrors.AddRange(
                         _unavailabilityValidator.Validate(unavailability).ValidationErrors
+                    );
+                }
+            }
+
+            if (null != item.TravelFees)
+            {
+                foreach (var travelFee in item.TravelFees)
+                {
+                    result.ValidationErrors.AddRange(
+                        _userTravelFeeValidator.Validate(travelFee).ValidationErrors
                     );
                 }
             }

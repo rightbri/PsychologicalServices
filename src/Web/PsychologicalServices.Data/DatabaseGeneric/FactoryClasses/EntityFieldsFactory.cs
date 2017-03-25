@@ -86,6 +86,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.CalendarNoteEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "CalendarNoteEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.CityEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "CityEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.ClaimEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "ClaimEntity");
 					break;

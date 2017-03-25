@@ -19,24 +19,20 @@ namespace PsychologicalServices.Data
 	{
 		///<summary>AddressId. </summary>
 		AddressId,
+		///<summary>Name. </summary>
+		Name,
 		///<summary>Street. </summary>
 		Street,
 		///<summary>Suite. </summary>
 		Suite,
-		///<summary>City. </summary>
-		City,
-		///<summary>Province. </summary>
-		Province,
+		///<summary>CityId. </summary>
+		CityId,
 		///<summary>PostalCode. </summary>
 		PostalCode,
-		///<summary>Country. </summary>
-		Country,
-		///<summary>IsActive. </summary>
-		IsActive,
 		///<summary>AddressTypeId. </summary>
 		AddressTypeId,
-		///<summary>Name. </summary>
-		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -345,6 +341,26 @@ namespace PsychologicalServices.Data
 		ToDate,
 		///<summary>NoteId. </summary>
 		NoteId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: City.
+	/// </summary>
+	public enum CityFieldIndex:int
+	{
+		///<summary>CityId. </summary>
+		CityId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>Province. </summary>
+		Province,
+		///<summary>Country. </summary>
+		Country,
+		///<summary>IsActive. </summary>
+		IsActive,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -697,8 +713,8 @@ namespace PsychologicalServices.Data
 	{
 		///<summary>UserId. </summary>
 		UserId,
-		///<summary>LocationId. </summary>
-		LocationId,
+		///<summary>CityId. </summary>
+		CityId,
 		///<summary>Amount. </summary>
 		Amount,
 		/// <summary></summary>
@@ -768,6 +784,8 @@ namespace PsychologicalServices.Data
 		AttributeTypeEntity,
 		///<summary>CalendarNote</summary>
 		CalendarNoteEntity,
+		///<summary>City</summary>
+		CityEntity,
 		///<summary>Claim</summary>
 		ClaimEntity,
 		///<summary>Claimant</summary>

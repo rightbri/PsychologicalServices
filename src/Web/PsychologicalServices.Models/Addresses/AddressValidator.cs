@@ -8,7 +8,6 @@ namespace PsychologicalServices.Models.Addresses
 {
     public class AddressValidator : IAddressValidator
     {
-        private const string ProvincePattern = @"[A-Za-z]{2}";
         private const string PostalCodePatternCanada = @"([A-Za-z])([0-9])([A-Za-z])([0-9])([A-Za-z])([0-9])";
         private const string PostalCodePatternUsa = @"([0-9]){5}";
 
@@ -35,17 +34,10 @@ namespace PsychologicalServices.Models.Addresses
                 );
             }
 
-            if (string.IsNullOrWhiteSpace(address.City))
+            if (null == address.City)
             {
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "City", Message = "City is required" }
-                );
-            }
-
-            if (string.IsNullOrWhiteSpace(address.Province) || !Regex.IsMatch(address.Province, ProvincePattern))
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "Province", Message = "Province is required" }
                 );
             }
 
@@ -55,25 +47,21 @@ namespace PsychologicalServices.Models.Addresses
             }
             else
             {
-                if (address.Country.Equals("Canada", StringComparison.OrdinalIgnoreCase) && !Regex.IsMatch(address.PostalCode, PostalCodePatternCanada))
+                if (null != address.City.Country)
                 {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PostalCode", Message = "Postal Code is not in a valid format" }
-                    );
+                    if (address.City.Country.Equals("Canada", StringComparison.OrdinalIgnoreCase) && !Regex.IsMatch(address.PostalCode, PostalCodePatternCanada))
+                    {
+                        result.ValidationErrors.Add(
+                            new ValidationError { PropertyName = "PostalCode", Message = "Postal Code is not in a valid format" }
+                        );
+                    }
+                    else if (address.City.Country.Equals("USA", StringComparison.OrdinalIgnoreCase) && !Regex.IsMatch(address.PostalCode, PostalCodePatternUsa))
+                    {
+                        result.ValidationErrors.Add(
+                            new ValidationError { PropertyName = "PostalCode", Message = "Postal Code is not in a valid format" }
+                        );
+                    }
                 }
-                else if (address.Country.Equals("USA", StringComparison.OrdinalIgnoreCase) && !Regex.IsMatch(address.PostalCode, PostalCodePatternUsa))
-                {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PostalCode", Message = "Postal Code is not in a valid format" }
-                    );
-                }
-            }
-            
-            if (string.IsNullOrWhiteSpace(address.Country))
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "Country", Message = "Country is required" }
-                );
             }
 
             if (string.IsNullOrWhiteSpace(address.Name))
@@ -85,7 +73,7 @@ namespace PsychologicalServices.Models.Addresses
 
             var addressTypes = _addressRepository.GetAddressTypes();
 
-            var addressType = addressTypes.SingleOrDefault(at => at.AddressTypeId == address.AddressTypeId);
+            var addressType = addressTypes.SingleOrDefault(at => at.AddressTypeId == address.AddressType.AddressTypeId);
 
             if (null == addressType)
             {

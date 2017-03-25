@@ -74,10 +74,7 @@ namespace PsychologicalServices.Infrastructure.Users
                         )
                     .Prefetch<UserTravelFeeEntity>(user => user.UserTravelFees)
                         .SubPath(userTravelFeePath => userTravelFeePath
-                            .Prefetch<AddressEntity>(userTravelFee => userTravelFee.Location)
-                                .SubPath(addressPath => addressPath
-                                    .Prefetch<AddressTypeEntity>(address => address.AddressType)
-                                )
+                            .Prefetch<CityEntity>(userTravelFee => userTravelFee.City)
                         )
                     .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
                     .Prefetch<CompanyEntity>(user => user.Company)
@@ -396,16 +393,16 @@ namespace PsychologicalServices.Infrastructure.Users
 
                 var travelFeesToAdd = user.TravelFees
                     .Where(travelFee => !userEntity.UserTravelFees.Any(travelFeeEntity =>
-                        travelFeeEntity.LocationId == travelFee.Location.AddressId));
+                        travelFeeEntity.CityId == travelFee.City.CityId));
 
                 var travelFeesToRemove = userEntity.UserTravelFees
                     .Where(travelFeeEntity => !user.TravelFees.Any(travelFee =>
-                        travelFee.Location.AddressId == travelFeeEntity.LocationId));
+                        travelFee.City.CityId == travelFeeEntity.CityId));
 
                 var travelFeesToUpdate = user.TravelFees
                     .Where(travelFee => userEntity.UserTravelFees
                         .Any(travelFeeEntity =>
-                            travelFeeEntity.LocationId == travelFee.Location.AddressId &&
+                            travelFeeEntity.CityId == travelFee.City.CityId &&
                             travelFeeEntity.Amount != travelFee.Amount
                         )
                     );
@@ -417,7 +414,7 @@ namespace PsychologicalServices.Infrastructure.Users
 
                 foreach (var travelFee in travelFeesToUpdate)
                 {
-                    var travelFeeEntity = userEntity.UserTravelFees.Where(tf => tf.LocationId == travelFee.Location.AddressId).SingleOrDefault();
+                    var travelFeeEntity = userEntity.UserTravelFees.Where(tf => tf.CityId == travelFee.City.CityId).SingleOrDefault();
 
                     if (null != travelFeeEntity)
                     {
@@ -428,7 +425,7 @@ namespace PsychologicalServices.Infrastructure.Users
                 userEntity.UserTravelFees.AddRange(
                     travelFeesToAdd.Select(travelFee => new UserTravelFeeEntity
                     {
-                        LocationId = travelFee.Location.AddressId,
+                        CityId = travelFee.City.CityId,
                         Amount = travelFee.Amount
                     })
                 );

@@ -16,9 +16,62 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="nav navbar-nav" if.bind="context.loggedIn">
+				<!--
 					<li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
 						<a data-toggle="collapse" data-target="navbar" href.bind="route.href">${route.title}</a>
 					</li>
+				-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							Assessments
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/#/calendar">Calendar</a>
+							</li>
+							<li>
+								<a href="/#/assessments">Search</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li>
+						<a href="#/schedule" data-toggle="collapse" data-target="navbar">Schedule</a>
+					</li>
+					
+					<li>
+						<a href="#/invoices" data-toggle="collapse" data-target="navbar">Invoices</a>
+					</li>
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							Reports
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							
+						</ul>
+					</li>
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							Maintenance
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/#/addresses">Addresses</a>
+							</li>
+							<li>
+								<a href="/#/referralSources">Referral Sources</a>
+							</li>
+							<li>
+								<a href="/#/users">Users</a>
+							</li>
+						</ul>
+					</li>
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>

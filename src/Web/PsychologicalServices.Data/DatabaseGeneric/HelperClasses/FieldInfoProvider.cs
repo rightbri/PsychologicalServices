@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (39 + 0));
+			base.InitClass( (40 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -75,6 +75,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAttributeEntityInfos();
 			InitAttributeTypeEntityInfos();
 			InitCalendarNoteEntityInfos();
+			InitCityEntityInfos();
 			InitClaimEntityInfos();
 			InitClaimantEntityInfos();
 			InitColorEntityInfos();
@@ -104,15 +105,13 @@ namespace PsychologicalServices.Data.HelperClasses
 		private void InitAddressEntityInfos()
 		{
 			base.AddElementFieldInfo("AddressEntity", "AddressId", typeof(System.Int32), true, false, true, false,  (int)AddressFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("AddressEntity", "Name", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.Name, 100, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "Street", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.Street, 100, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "Suite", typeof(System.String), false, false, false, true,  (int)AddressFieldIndex.Suite, 100, 0, 0);
-			base.AddElementFieldInfo("AddressEntity", "City", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.City, 100, 0, 0);
-			base.AddElementFieldInfo("AddressEntity", "Province", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.Province, 10, 0, 0);
+			base.AddElementFieldInfo("AddressEntity", "CityId", typeof(System.Int32), false, true, false, false,  (int)AddressFieldIndex.CityId, 0, 0, 10);
 			base.AddElementFieldInfo("AddressEntity", "PostalCode", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.PostalCode, 10, 0, 0);
-			base.AddElementFieldInfo("AddressEntity", "Country", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.Country, 50, 0, 0);
-			base.AddElementFieldInfo("AddressEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AddressFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "AddressTypeId", typeof(System.Int32), false, true, false, false,  (int)AddressFieldIndex.AddressTypeId, 0, 0, 10);
-			base.AddElementFieldInfo("AddressEntity", "Name", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.Name, 100, 0, 0);
+			base.AddElementFieldInfo("AddressEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AddressFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits AddressTypeEntity's FieldInfo objects</summary>
 		private void InitAddressTypeEntityInfos()
@@ -250,6 +249,15 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("CalendarNoteEntity", "FromDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)CalendarNoteFieldIndex.FromDate, 0, 0, 0);
 			base.AddElementFieldInfo("CalendarNoteEntity", "ToDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)CalendarNoteFieldIndex.ToDate, 0, 0, 0);
 			base.AddElementFieldInfo("CalendarNoteEntity", "NoteId", typeof(System.Int32), false, true, false, false,  (int)CalendarNoteFieldIndex.NoteId, 0, 0, 10);
+		}
+		/// <summary>Inits CityEntity's FieldInfo objects</summary>
+		private void InitCityEntityInfos()
+		{
+			base.AddElementFieldInfo("CityEntity", "CityId", typeof(System.Int32), true, false, true, false,  (int)CityFieldIndex.CityId, 0, 0, 10);
+			base.AddElementFieldInfo("CityEntity", "Name", typeof(System.String), false, false, false, false,  (int)CityFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("CityEntity", "Province", typeof(System.String), false, false, false, false,  (int)CityFieldIndex.Province, 10, 0, 0);
+			base.AddElementFieldInfo("CityEntity", "Country", typeof(System.String), false, false, false, false,  (int)CityFieldIndex.Country, 50, 0, 0);
+			base.AddElementFieldInfo("CityEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)CityFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits ClaimEntity's FieldInfo objects</summary>
 		private void InitClaimEntityInfos()
@@ -406,7 +414,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		private void InitUserTravelFeeEntityInfos()
 		{
 			base.AddElementFieldInfo("UserTravelFeeEntity", "UserId", typeof(System.Int32), true, true, false, false,  (int)UserTravelFeeFieldIndex.UserId, 0, 0, 10);
-			base.AddElementFieldInfo("UserTravelFeeEntity", "LocationId", typeof(System.Int32), true, true, false, false,  (int)UserTravelFeeFieldIndex.LocationId, 0, 0, 10);
+			base.AddElementFieldInfo("UserTravelFeeEntity", "CityId", typeof(System.Int32), true, true, false, false,  (int)UserTravelFeeFieldIndex.CityId, 0, 0, 10);
 			base.AddElementFieldInfo("UserTravelFeeEntity", "Amount", typeof(System.Int32), false, false, false, false,  (int)UserTravelFeeFieldIndex.Amount, 0, 0, 10);
 		}
 		/// <summary>Inits UserUnavailabilityEntity's FieldInfo objects</summary>

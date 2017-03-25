@@ -22,6 +22,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.AddressId);}
 		}
+		/// <summary>Creates a new AddressEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.Name);}
+		}
 		/// <summary>Creates a new AddressEntity.Street field instance</summary>
 		public static EntityField2 Street
 		{
@@ -32,40 +37,25 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.Suite);}
 		}
-		/// <summary>Creates a new AddressEntity.City field instance</summary>
-		public static EntityField2 City
+		/// <summary>Creates a new AddressEntity.CityId field instance</summary>
+		public static EntityField2 CityId
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.City);}
-		}
-		/// <summary>Creates a new AddressEntity.Province field instance</summary>
-		public static EntityField2 Province
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.Province);}
+			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.CityId);}
 		}
 		/// <summary>Creates a new AddressEntity.PostalCode field instance</summary>
 		public static EntityField2 PostalCode
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.PostalCode);}
 		}
-		/// <summary>Creates a new AddressEntity.Country field instance</summary>
-		public static EntityField2 Country
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.Country);}
-		}
-		/// <summary>Creates a new AddressEntity.IsActive field instance</summary>
-		public static EntityField2 IsActive
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.IsActive);}
-		}
 		/// <summary>Creates a new AddressEntity.AddressTypeId field instance</summary>
 		public static EntityField2 AddressTypeId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.AddressTypeId);}
 		}
-		/// <summary>Creates a new AddressEntity.Name field instance</summary>
-		public static EntityField2 Name
+		/// <summary>Creates a new AddressEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.Name);}
+			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.IsActive);}
 		}
 	}
 
@@ -496,6 +486,36 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 NoteId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CalendarNoteFieldIndex.NoteId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity CityEntity</summary>
+	public partial class CityFields
+	{
+		/// <summary>Creates a new CityEntity.CityId field instance</summary>
+		public static EntityField2 CityId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CityFieldIndex.CityId);}
+		}
+		/// <summary>Creates a new CityEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CityFieldIndex.Name);}
+		}
+		/// <summary>Creates a new CityEntity.Province field instance</summary>
+		public static EntityField2 Province
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CityFieldIndex.Province);}
+		}
+		/// <summary>Creates a new CityEntity.Country field instance</summary>
+		public static EntityField2 Country
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CityFieldIndex.Country);}
+		}
+		/// <summary>Creates a new CityEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CityFieldIndex.IsActive);}
 		}
 	}
 
@@ -977,10 +997,10 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(UserTravelFeeFieldIndex.UserId);}
 		}
-		/// <summary>Creates a new UserTravelFeeEntity.LocationId field instance</summary>
-		public static EntityField2 LocationId
+		/// <summary>Creates a new UserTravelFeeEntity.CityId field instance</summary>
+		public static EntityField2 CityId
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(UserTravelFeeFieldIndex.LocationId);}
+			get { return (EntityField2)EntityFieldFactory.Create(UserTravelFeeFieldIndex.CityId);}
 		}
 		/// <summary>Creates a new UserTravelFeeEntity.Amount field instance</summary>
 		public static EntityField2 Amount

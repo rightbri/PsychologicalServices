@@ -38,13 +38,12 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentEntity> _appointments;
-		private EntityCollection<UserTravelFeeEntity> _userTravelFee;
 
 
-		private EntityCollection<UserEntity> _userCollectionViaUserTravelFee;
 
 
 		private AddressTypeEntity _addressType;
+		private CityEntity _city;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -60,14 +59,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			/// <summary>Member name AddressType</summary>
 			public static readonly string AddressType = "AddressType";
+			/// <summary>Member name City</summary>
+			public static readonly string City = "City";
 			/// <summary>Member name Appointments</summary>
 			public static readonly string Appointments = "Appointments";
-			/// <summary>Member name UserTravelFee</summary>
-			public static readonly string UserTravelFee = "UserTravelFee";
 
 
-			/// <summary>Member name UserCollectionViaUserTravelFee</summary>
-			public static readonly string UserCollectionViaUserTravelFee = "UserCollectionViaUserTravelFee";
 
 
 
@@ -130,16 +127,19 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointments = (EntityCollection<AppointmentEntity>)info.GetValue("_appointments", typeof(EntityCollection<AppointmentEntity>));
-				_userTravelFee = (EntityCollection<UserTravelFeeEntity>)info.GetValue("_userTravelFee", typeof(EntityCollection<UserTravelFeeEntity>));
 
 
-				_userCollectionViaUserTravelFee = (EntityCollection<UserEntity>)info.GetValue("_userCollectionViaUserTravelFee", typeof(EntityCollection<UserEntity>));
 
 
 				_addressType = (AddressTypeEntity)info.GetValue("_addressType", typeof(AddressTypeEntity));
 				if(_addressType!=null)
 				{
 					_addressType.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_city = (CityEntity)info.GetValue("_city", typeof(CityEntity));
+				if(_city!=null)
+				{
+					_city.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -156,6 +156,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch((AddressFieldIndex)fieldIndex)
 			{
+				case AddressFieldIndex.CityId:
+					DesetupSyncCity(true, false);
+					break;
 				case AddressFieldIndex.AddressTypeId:
 					DesetupSyncAddressType(true, false);
 					break;
@@ -184,19 +187,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AddressType":
 					this.AddressType = (AddressTypeEntity)entity;
 					break;
+				case "City":
+					this.City = (CityEntity)entity;
+					break;
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)entity);
 					break;
-				case "UserTravelFee":
-					this.UserTravelFee.Add((UserTravelFeeEntity)entity);
-					break;
 
 
-				case "UserCollectionViaUserTravelFee":
-					this.UserCollectionViaUserTravelFee.IsReadOnly = false;
-					this.UserCollectionViaUserTravelFee.Add((UserEntity)entity);
-					this.UserCollectionViaUserTravelFee.IsReadOnly = true;
-					break;
 
 
 
@@ -224,18 +222,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AddressType":
 					toReturn.Add(AddressEntity.Relations.AddressTypeEntityUsingAddressTypeId);
 					break;
+				case "City":
+					toReturn.Add(AddressEntity.Relations.CityEntityUsingCityId);
+					break;
 				case "Appointments":
 					toReturn.Add(AddressEntity.Relations.AppointmentEntityUsingLocationId);
 					break;
-				case "UserTravelFee":
-					toReturn.Add(AddressEntity.Relations.UserTravelFeeEntityUsingLocationId);
-					break;
 
 
-				case "UserCollectionViaUserTravelFee":
-					toReturn.Add(AddressEntity.Relations.UserTravelFeeEntityUsingLocationId, "AddressEntity__", "UserTravelFee_", JoinHint.None);
-					toReturn.Add(UserTravelFeeEntity.Relations.UserEntityUsingUserId, "UserTravelFee_", string.Empty, JoinHint.None);
-					break;
 
 
 
@@ -261,6 +255,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -277,11 +272,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AddressType":
 					SetupSyncAddressType(relatedEntity);
 					break;
+				case "City":
+					SetupSyncCity(relatedEntity);
+					break;
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)relatedEntity);
-					break;
-				case "UserTravelFee":
-					this.UserTravelFee.Add((UserTravelFeeEntity)relatedEntity);
 					break;
 
 				default:
@@ -301,11 +296,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AddressType":
 					DesetupSyncAddressType(false, true);
 					break;
+				case "City":
+					DesetupSyncCity(false, true);
+					break;
 				case "Appointments":
 					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
-					break;
-				case "UserTravelFee":
-					base.PerformRelatedEntityRemoval(this.UserTravelFee, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -332,6 +327,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_addressType);
 			}
+			if(_city!=null)
+			{
+				toReturn.Add(_city);
+			}
 
 			return toReturn;
 		}
@@ -342,7 +341,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Appointments);
-			toReturn.Add(this.UserTravelFee);
 
 			return toReturn;
 		}
@@ -358,13 +356,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointments", ((_appointments!=null) && (_appointments.Count>0) && !this.MarkedForDeletion)?_appointments:null);
-				info.AddValue("_userTravelFee", ((_userTravelFee!=null) && (_userTravelFee.Count>0) && !this.MarkedForDeletion)?_userTravelFee:null);
 
 
-				info.AddValue("_userCollectionViaUserTravelFee", ((_userCollectionViaUserTravelFee!=null) && (_userCollectionViaUserTravelFee.Count>0) && !this.MarkedForDeletion)?_userCollectionViaUserTravelFee:null);
 
 
 				info.AddValue("_addressType", (!this.MarkedForDeletion?_addressType:null));
+				info.AddValue("_city", (!this.MarkedForDeletion?_city:null));
 
 			}
 			
@@ -410,28 +407,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'UserTravelFee' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoUserTravelFee()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserTravelFeeFields.LocationId, null, ComparisonOperator.Equal, this.AddressId));
-			return bucket;
-		}
 
-
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'User' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoUserCollectionViaUserTravelFee()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("UserCollectionViaUserTravelFee"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.AddressId, "AddressEntity__"));
-			return bucket;
-		}
 
 
 
@@ -442,6 +418,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressTypeFields.AddressTypeId, null, ComparisonOperator.Equal, this.AddressTypeId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'City' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoCity()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CityFields.CityId, null, ComparisonOperator.Equal, this.CityId));
 			return bucket;
 		}
 
@@ -474,10 +460,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointments);
-			collectionsQueue.Enqueue(this._userTravelFee);
 
 
-			collectionsQueue.Enqueue(this._userCollectionViaUserTravelFee);
 
 
 		}
@@ -488,10 +472,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
-			this._userTravelFee = (EntityCollection<UserTravelFeeEntity>) collectionsQueue.Dequeue();
 
 
-			this._userCollectionViaUserTravelFee = (EntityCollection<UserEntity>) collectionsQueue.Dequeue();
 
 
 		}
@@ -504,16 +486,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
-			if (this._userTravelFee != null)
-			{
-				return true;
-			}
 
 
-			if (this._userCollectionViaUserTravelFee != null)
-			{
-				return true;
-			}
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -526,10 +500,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))) : null);
 
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))) : null);
 
 
 		}
@@ -542,11 +514,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("AddressType", _addressType);
+			toReturn.Add("City", _city);
 			toReturn.Add("Appointments", _appointments);
-			toReturn.Add("UserTravelFee", _userTravelFee);
 
 
-			toReturn.Add("UserCollectionViaUserTravelFee", _userCollectionViaUserTravelFee);
 
 
 
@@ -560,21 +531,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointments.ActiveContext = base.ActiveContext;
 			}
-			if(_userTravelFee!=null)
-			{
-				_userTravelFee.ActiveContext = base.ActiveContext;
-			}
 
 
-			if(_userCollectionViaUserTravelFee!=null)
-			{
-				_userCollectionViaUserTravelFee.ActiveContext = base.ActiveContext;
-			}
 
 
 			if(_addressType!=null)
 			{
 				_addressType.ActiveContext = base.ActiveContext;
+			}
+			if(_city!=null)
+			{
+				_city.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -584,13 +551,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointments = null;
-			_userTravelFee = null;
 
 
-			_userCollectionViaUserTravelFee = null;
 
 
 			_addressType = null;
+			_city = null;
 
 			PerformDependencyInjection();
 			
@@ -612,31 +578,25 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
+			_fieldsCustomProperties.Add("Name", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
 			_fieldsCustomProperties.Add("Street", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Suite", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("City", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Province", fieldHashtable);
+			_fieldsCustomProperties.Add("CityId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Country", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
 			_fieldsCustomProperties.Add("AddressTypeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Name", fieldHashtable);
+			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
 		}
 		#endregion
 
@@ -665,6 +625,39 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnAddressTypePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _city</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncCity(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _city, new PropertyChangedEventHandler( OnCityPropertyChanged ), "City", AddressEntity.Relations.CityEntityUsingCityId, true, signalRelatedEntity, "Addresses", resetFKFields, new int[] { (int)AddressFieldIndex.CityId } );		
+			_city = null;
+		}
+
+		/// <summary> setups the sync logic for member _city</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncCity(IEntity2 relatedEntity)
+		{
+			if(_city!=relatedEntity)
+			{
+				DesetupSyncCity(true, true);
+				_city = (CityEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _city, new PropertyChangedEventHandler( OnCityPropertyChanged ), "City", AddressEntity.Relations.CityEntityUsingCityId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCityPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -717,33 +710,8 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("Appointments")[0], (int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "Appointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'UserTravelFee' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathUserTravelFee
-		{
-			get
-			{
-				return new PrefetchPathElement2( new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("UserTravelFee")[0], (int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.UserTravelFeeEntity, 0, null, null, null, null, "UserTravelFee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
-			}
-		}
 
 
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathUserCollectionViaUserTravelFee
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = AddressEntity.Relations.UserTravelFeeEntityUsingLocationId;
-				intermediateRelation.SetAliases(string.Empty, "UserTravelFee_");
-				return new PrefetchPathElement2(new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, GetRelationsForField("UserCollectionViaUserTravelFee"), null, "UserCollectionViaUserTravelFee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
 
 
 
@@ -756,6 +724,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AddressTypeEntityFactory))),
 					(IEntityRelation)GetRelationsForField("AddressType")[0], (int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.AddressTypeEntity, 0, null, null, null, null, "AddressType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'City' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCity
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory))),
+					(IEntityRelation)GetRelationsForField("City")[0], (int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.CityEntity, 0, null, null, null, null, "City", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -795,9 +775,20 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.AddressId, value); }
 		}
 
+		/// <summary> The Name property of the Entity Address<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Addresses"."Name"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.String Name
+		{
+			get { return (System.String)GetValue((int)AddressFieldIndex.Name, true); }
+			set	{ SetValue((int)AddressFieldIndex.Name, value); }
+		}
+
 		/// <summary> The Street property of the Entity Address<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Addresses"."Address"<br/>
+		/// <remarks>Mapped on  table field: "Addresses"."Street"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Street
@@ -817,26 +808,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.Suite, value); }
 		}
 
-		/// <summary> The City property of the Entity Address<br/><br/>
+		/// <summary> The CityId property of the Entity Address<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Addresses"."City"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// <remarks>Mapped on  table field: "Addresses"."CityId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String City
+		public virtual System.Int32 CityId
 		{
-			get { return (System.String)GetValue((int)AddressFieldIndex.City, true); }
-			set	{ SetValue((int)AddressFieldIndex.City, value); }
-		}
-
-		/// <summary> The Province property of the Entity Address<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Addresses"."Province"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 10<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Province
-		{
-			get { return (System.String)GetValue((int)AddressFieldIndex.Province, true); }
-			set	{ SetValue((int)AddressFieldIndex.Province, value); }
+			get { return (System.Int32)GetValue((int)AddressFieldIndex.CityId, true); }
+			set	{ SetValue((int)AddressFieldIndex.CityId, value); }
 		}
 
 		/// <summary> The PostalCode property of the Entity Address<br/><br/>
@@ -850,28 +830,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.PostalCode, value); }
 		}
 
-		/// <summary> The Country property of the Entity Address<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Addresses"."Country"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Country
-		{
-			get { return (System.String)GetValue((int)AddressFieldIndex.Country, true); }
-			set	{ SetValue((int)AddressFieldIndex.Country, value); }
-		}
-
-		/// <summary> The IsActive property of the Entity Address<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Addresses"."IsActive"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean IsActive
-		{
-			get { return (System.Boolean)GetValue((int)AddressFieldIndex.IsActive, true); }
-			set	{ SetValue((int)AddressFieldIndex.IsActive, value); }
-		}
-
 		/// <summary> The AddressTypeId property of the Entity Address<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Addresses"."AddressTypeId"<br/>
@@ -883,15 +841,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.AddressTypeId, value); }
 		}
 
-		/// <summary> The Name property of the Entity Address<br/><br/>
+		/// <summary> The IsActive property of the Entity Address<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Addresses"."Name"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// <remarks>Mapped on  table field: "Addresses"."IsActive"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Name
+		public virtual System.Boolean IsActive
 		{
-			get { return (System.String)GetValue((int)AddressFieldIndex.Name, true); }
-			set	{ SetValue((int)AddressFieldIndex.Name, value); }
+			get { return (System.Boolean)GetValue((int)AddressFieldIndex.IsActive, true); }
+			set	{ SetValue((int)AddressFieldIndex.IsActive, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.
@@ -910,39 +868,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'UserTravelFeeEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(UserTravelFeeEntity))]
-		public virtual EntityCollection<UserTravelFeeEntity> UserTravelFee
-		{
-			get
-			{
-				if(_userTravelFee==null)
-				{
-					_userTravelFee = new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory)));
-					_userTravelFee.SetContainingEntityInfo(this, "Location");
-				}
-				return _userTravelFee;
-			}
-		}
 
-
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'UserEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(UserEntity))]
-		public virtual EntityCollection<UserEntity> UserCollectionViaUserTravelFee
-		{
-			get
-			{
-				if(_userCollectionViaUserTravelFee==null)
-				{
-					_userCollectionViaUserTravelFee = new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory)));
-					_userCollectionViaUserTravelFee.IsReadOnly=true;
-				}
-				return _userCollectionViaUserTravelFee;
-			}
-		}
 
 
 
@@ -973,6 +899,41 @@ namespace PsychologicalServices.Data.EntityClasses
 					else
 					{
 						if(_addressType!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Addresses");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'CityEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual CityEntity City
+		{
+			get
+			{
+				return _city;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncCity(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_city != null)
+						{
+							_city.UnsetRelatedEntity(this, "Addresses");
+						}
+					}
+					else
+					{
+						if(_city!=value)
 						{
 							((IEntity2)value).SetRelatedEntity(this, "Addresses");
 						}

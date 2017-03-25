@@ -62,9 +62,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                         .SubPath(appointmentPath => appointmentPath
                             .Prefetch<AddressEntity>(appointment => appointment.Location)
-                                .SubPath(addressPath => addressPath
-                                    .Prefetch<AddressTypeEntity>(address => address.AddressType)
-                                )
+                                //.SubPath(addressPath => addressPath
+                                //    .Prefetch<AddressTypeEntity>(address => address.AddressType)
+                                //    .Prefetch<CityEntity>(address => address.City)
+                                //)
                             .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                             .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)

@@ -93,7 +93,7 @@
 					<li title="Location Name" class="smaller-siblings" if.bind="name">${name}</li>
 					<li title="Street" if.bind="street">${street}</li>
 					<li title="Suite" if.bind="suite">${suite}</li>
-					<li title="City, Province, Postal Code" if.bind="street || suite">${city}, ${province} ${postalCode}</li>
+					<li title="City, Province, Postal Code" if.bind="street || suite">${city.name}, ${city.province} ${city.postalCode}</li>
 				</ul>
 			</td>
 			<td>

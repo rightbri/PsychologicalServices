@@ -115,6 +115,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.CalendarNoteEntity:
 					toReturn = this.CalendarNote;
 					break;
+				case PsychologicalServices.Data.EntityType.CityEntity:
+					toReturn = this.City;
+					break;
 				case PsychologicalServices.Data.EntityType.ClaimEntity:
 					toReturn = this.Claim;
 					break;
@@ -291,6 +294,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<CalendarNoteEntity> CalendarNote
 		{
 			get { return new DataSource2<CalendarNoteEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting CityEntity instances in the database.</summary>
+		public DataSource2<CityEntity> City
+		{
+			get { return new DataSource2<CityEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting ClaimEntity instances in the database.</summary>

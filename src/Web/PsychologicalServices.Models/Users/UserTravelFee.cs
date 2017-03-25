@@ -1,4 +1,4 @@
-﻿using PsychologicalServices.Models.Addresses;
+﻿using PsychologicalServices.Models.Cities;
 using System;
 
 namespace PsychologicalServices.Models.Users
@@ -7,7 +7,7 @@ namespace PsychologicalServices.Models.Users
     {
         public User User { get; set; }
 
-        public Address Location { get; set; }
+        public City City { get; set; }
 
         public int Amount { get; set; }
     }

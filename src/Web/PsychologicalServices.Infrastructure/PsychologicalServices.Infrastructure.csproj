@@ -58,6 +58,7 @@
     <Compile Include="Assessments\AssessmentRepository.cs" />
     <Compile Include="Attributes\AttributeRepository.cs" />
     <Compile Include="CalendarNotes\CalendarNoteRepository.cs" />
+    <Compile Include="Cities\CityRepository.cs" />
     <Compile Include="Claims\ClaimRepository.cs" />
     <Compile Include="Colors\ColorRepository.cs" />
     <Compile Include="Common\Configuration\ConfigurationService.cs" />
