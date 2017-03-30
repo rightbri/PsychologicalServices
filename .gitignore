@@ -279,5 +279,6 @@ __pycache__/
 # tools/
 
 docs/
+dist/
 
 *Secrets.config
