@@ -172,6 +172,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.UserEntity:
 					toReturn = this.User;
 					break;
+				case PsychologicalServices.Data.EntityType.UserNoteEntity:
+					toReturn = this.UserNote;
+					break;
 				case PsychologicalServices.Data.EntityType.UserRoleEntity:
 					toReturn = this.UserRole;
 					break;
@@ -408,6 +411,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<UserEntity> User
 		{
 			get { return new DataSource2<UserEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting UserNoteEntity instances in the database.</summary>
+		public DataSource2<UserNoteEntity> UserNote
+		{
+			get { return new DataSource2<UserNoteEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting UserRoleEntity instances in the database.</summary>

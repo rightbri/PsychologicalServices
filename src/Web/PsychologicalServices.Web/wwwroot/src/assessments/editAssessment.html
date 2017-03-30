@@ -3,10 +3,11 @@
 	<require from="valueConverters/date-format"></require>
 	<require from="valueConverters/time-ago"></require>
 	<require from="valueConverters/gender"></require>
+	<require from="valueConverters/attribute-types"></require>
+	<require from="valueConverters/note-for-user"></require>
 	<require from="valueConverters/filter"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-picker"></require>
-	<require from="valueConverters/attributeTypes"></require>
 	
 <h2>${editType} Assessment</h2>
 
@@ -349,7 +350,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr repeat.for="note of assessment.notes">
+					<tr repeat.for="note of assessment.notes | noteForUser:user">
 						<td>
 							<button type="button" class="btn btn-default" click.delegate="editNote(note)">
 								<i class="fa fa-edit"></i>

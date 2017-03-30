@@ -26,26 +26,28 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'City'.<br/><br/>
+	/// Entity class which represents the entity 'UserNote'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class CityEntity : CommonEntityBase, ISerializable
+	public partial class UserNoteEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
-		private EntityCollection<AddressEntity> _addresses;
-		private EntityCollection<UserTravelFeeEntity> _userTravelFees;
 
 
-
+		private NoteEntity _note;
+		private UserEntity _user;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -55,11 +57,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-
-			/// <summary>Member name Addresses</summary>
-			public static readonly string Addresses = "Addresses";
-			/// <summary>Member name UserTravelFees</summary>
-			public static readonly string UserTravelFees = "UserTravelFees";
+			/// <summary>Member name Note</summary>
+			public static readonly string Note = "Note";
+			/// <summary>Member name User</summary>
+			public static readonly string User = "User";
 
 
 
@@ -67,13 +68,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static CityEntity()
+		static UserNoteEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public CityEntity():base("CityEntity")
+		public UserNoteEntity():base("UserNoteEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -81,57 +82,69 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public CityEntity(IEntityFields2 fields):base("CityEntity")
+		public UserNoteEntity(IEntityFields2 fields):base("UserNoteEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this CityEntity</param>
-		public CityEntity(IValidator validator):base("CityEntity")
+		/// <param name="validator">The custom validator object for this UserNoteEntity</param>
+		public UserNoteEntity(IValidator validator):base("UserNoteEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="cityId">PK value for City which data should be fetched into this City object</param>
+		/// <param name="noteId">PK value for UserNote which data should be fetched into this UserNote object</param>
+		/// <param name="userId">PK value for UserNote which data should be fetched into this UserNote object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public CityEntity(System.Int32 cityId):base("CityEntity")
+		public UserNoteEntity(System.Int32 noteId, System.Int32 userId):base("UserNoteEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.CityId = cityId;
+			this.NoteId = noteId;
+			this.UserId = userId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="cityId">PK value for City which data should be fetched into this City object</param>
-		/// <param name="validator">The custom validator object for this CityEntity</param>
+		/// <param name="noteId">PK value for UserNote which data should be fetched into this UserNote object</param>
+		/// <param name="userId">PK value for UserNote which data should be fetched into this UserNote object</param>
+		/// <param name="validator">The custom validator object for this UserNoteEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public CityEntity(System.Int32 cityId, IValidator validator):base("CityEntity")
+		public UserNoteEntity(System.Int32 noteId, System.Int32 userId, IValidator validator):base("UserNoteEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.CityId = cityId;
+			this.NoteId = noteId;
+			this.UserId = userId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected CityEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected UserNoteEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_addresses = (EntityCollection<AddressEntity>)info.GetValue("_addresses", typeof(EntityCollection<AddressEntity>));
-				_userTravelFees = (EntityCollection<UserTravelFeeEntity>)info.GetValue("_userTravelFees", typeof(EntityCollection<UserTravelFeeEntity>));
 
 
-
+				_note = (NoteEntity)info.GetValue("_note", typeof(NoteEntity));
+				if(_note!=null)
+				{
+					_note.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_user = (UserEntity)info.GetValue("_user", typeof(UserEntity));
+				if(_user!=null)
+				{
+					_user.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -139,8 +152,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((CityFieldIndex)fieldIndex)
+			switch((UserNoteFieldIndex)fieldIndex)
 			{
+				case UserNoteFieldIndex.NoteId:
+					DesetupSyncNote(true, false);
+					break;
+				case UserNoteFieldIndex.UserId:
+					DesetupSyncUser(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -163,12 +182,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-
-				case "Addresses":
-					this.Addresses.Add((AddressEntity)entity);
+				case "Note":
+					this.Note = (NoteEntity)entity;
 					break;
-				case "UserTravelFees":
-					this.UserTravelFees.Add((UserTravelFeeEntity)entity);
+				case "User":
+					this.User = (UserEntity)entity;
 					break;
 
 
@@ -183,7 +201,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return CityEntity.GetRelationsForField(fieldName);
+			return UserNoteEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -194,12 +212,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-
-				case "Addresses":
-					toReturn.Add(CityEntity.Relations.AddressEntityUsingCityId);
+				case "Note":
+					toReturn.Add(UserNoteEntity.Relations.NoteEntityUsingNoteId);
 					break;
-				case "UserTravelFees":
-					toReturn.Add(CityEntity.Relations.UserTravelFeeEntityUsingCityId);
+				case "User":
+					toReturn.Add(UserNoteEntity.Relations.UserEntityUsingUserId);
 					break;
 
 
@@ -226,6 +243,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -239,13 +257,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Note":
+					SetupSyncNote(relatedEntity);
+					break;
+				case "User":
+					SetupSyncUser(relatedEntity);
+					break;
 
-				case "Addresses":
-					this.Addresses.Add((AddressEntity)relatedEntity);
-					break;
-				case "UserTravelFees":
-					this.UserTravelFees.Add((UserTravelFeeEntity)relatedEntity);
-					break;
 
 				default:
 					break;
@@ -261,13 +279,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Note":
+					DesetupSyncNote(false, true);
+					break;
+				case "User":
+					DesetupSyncUser(false, true);
+					break;
 
-				case "Addresses":
-					base.PerformRelatedEntityRemoval(this.Addresses, relatedEntity, signalRelatedEntityManyToOne);
-					break;
-				case "UserTravelFees":
-					base.PerformRelatedEntityRemoval(this.UserTravelFees, relatedEntity, signalRelatedEntityManyToOne);
-					break;
 
 				default:
 					break;
@@ -289,7 +307,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-
+			if(_note!=null)
+			{
+				toReturn.Add(_note);
+			}
+			if(_user!=null)
+			{
+				toReturn.Add(_user);
+			}
 
 			return toReturn;
 		}
@@ -299,8 +324,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.Addresses);
-			toReturn.Add(this.UserTravelFees);
+
 
 			return toReturn;
 		}
@@ -315,16 +339,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_addresses", ((_addresses!=null) && (_addresses.Count>0) && !this.MarkedForDeletion)?_addresses:null);
-				info.AddValue("_userTravelFees", ((_userTravelFees!=null) && (_userTravelFees.Count>0) && !this.MarkedForDeletion)?_userTravelFees:null);
 
 
-
+				info.AddValue("_note", (!this.MarkedForDeletion?_note:null));
+				info.AddValue("_user", (!this.MarkedForDeletion?_user:null));
 
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -332,7 +356,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(CityFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(UserNoteFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -341,7 +365,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(CityFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(UserNoteFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -351,39 +375,38 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new CityRelations().GetAllRelations();
+			return new UserNoteRelations().GetAllRelations();
 		}
 		
 
+
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Address' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// the related entity of type 'Note' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAddresses()
+		public virtual IRelationPredicateBucket GetRelationInfoNote()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.CityId, null, ComparisonOperator.Equal, this.CityId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
 			return bucket;
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'UserTravelFee' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoUserTravelFees()
+		public virtual IRelationPredicateBucket GetRelationInfoUser()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserTravelFeeFields.CityId, null, ComparisonOperator.Equal, this.CityId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UserId));
 			return bucket;
 		}
-
-
-
 
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.CityEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.UserNoteEntity);
 		}
 
 		/// <summary>
@@ -398,7 +421,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(UserNoteEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -406,8 +429,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._addresses);
-			collectionsQueue.Enqueue(this._userTravelFees);
 
 
 		}
@@ -417,8 +438,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._addresses = (EntityCollection<AddressEntity>) collectionsQueue.Dequeue();
-			this._userTravelFees = (EntityCollection<UserTravelFeeEntity>) collectionsQueue.Dequeue();
 
 
 		}
@@ -427,14 +446,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-			if (this._addresses != null)
-			{
-				return true;
-			}
-			if (this._userTravelFees != null)
-			{
-				return true;
-			}
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -446,8 +457,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))) : null);
 
 
 		}
@@ -459,9 +468,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-
-			toReturn.Add("Addresses", _addresses);
-			toReturn.Add("UserTravelFees", _userTravelFees);
+			toReturn.Add("Note", _note);
+			toReturn.Add("User", _user);
 
 
 
@@ -471,17 +479,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			if(_addresses!=null)
+
+
+			if(_note!=null)
 			{
-				_addresses.ActiveContext = base.ActiveContext;
+				_note.ActiveContext = base.ActiveContext;
 			}
-			if(_userTravelFees!=null)
+			if(_user!=null)
 			{
-				_userTravelFees.ActiveContext = base.ActiveContext;
+				_user.ActiveContext = base.ActiveContext;
 			}
-
-
-
 
 		}
 
@@ -489,16 +496,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-			_addresses = null;
-			_userTravelFees = null;
 
 
-
+			_note = null;
+			_user = null;
 
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -512,26 +519,82 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("CityId", fieldHashtable);
+			_fieldsCustomProperties.Add("NoteId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Name", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Province", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Country", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			_fieldsCustomProperties.Add("UserId", fieldHashtable);
 		}
 		#endregion
 
+		/// <summary> Removes the sync logic for member _note</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncNote(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", UserNoteEntity.Relations.NoteEntityUsingNoteId, true, signalRelatedEntity, "UserNotes", resetFKFields, new int[] { (int)UserNoteFieldIndex.NoteId } );		
+			_note = null;
+		}
+
+		/// <summary> setups the sync logic for member _note</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncNote(IEntity2 relatedEntity)
+		{
+			if(_note!=relatedEntity)
+			{
+				DesetupSyncNote(true, true);
+				_note = (NoteEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", UserNoteEntity.Relations.NoteEntityUsingNoteId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnNotePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _user</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncUser(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _user, new PropertyChangedEventHandler( OnUserPropertyChanged ), "User", UserNoteEntity.Relations.UserEntityUsingUserId, true, signalRelatedEntity, "UserNotes", resetFKFields, new int[] { (int)UserNoteFieldIndex.UserId } );		
+			_user = null;
+		}
+
+		/// <summary> setups the sync logic for member _user</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncUser(IEntity2 relatedEntity)
+		{
+			if(_user!=relatedEntity)
+			{
+				DesetupSyncUser(true, true);
+				_user = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _user, new PropertyChangedEventHandler( OnUserPropertyChanged ), "User", UserNoteEntity.Relations.UserEntityUsingUserId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnUserPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this CityEntity</param>
+		/// <param name="validator">The validator object for this UserNoteEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -544,15 +607,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static CityRelations Relations
+		public  static UserNoteRelations Relations
 		{
-			get	{ return new CityRelations(); }
+			get	{ return new UserNoteRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -562,31 +626,31 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
+
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAddresses
+		public static IPrefetchPathElement2 PrefetchPathNote
 		{
 			get
 			{
-				return new PrefetchPathElement2( new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Addresses")[0], (int)PsychologicalServices.Data.EntityType.CityEntity, (int)PsychologicalServices.Data.EntityType.AddressEntity, 0, null, null, null, null, "Addresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Note")[0], (int)PsychologicalServices.Data.EntityType.UserNoteEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "Note", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'UserTravelFee' 
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathUserTravelFees
+		public static IPrefetchPathElement2 PrefetchPathUser
 		{
 			get
 			{
-				return new PrefetchPathElement2( new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("UserTravelFees")[0], (int)PsychologicalServices.Data.EntityType.CityEntity, (int)PsychologicalServices.Data.EntityType.UserTravelFeeEntity, 0, null, null, null, null, "UserTravelFees", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
+					(IEntityRelation)GetRelationsForField("User")[0], (int)PsychologicalServices.Data.EntityType.UserNoteEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "User", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
-
-
-
 
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
@@ -594,7 +658,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return CityEntity.CustomProperties;}
+			get { return UserNoteEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -610,98 +674,102 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return CityEntity.FieldsCustomProperties;}
+			get { return UserNoteEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The CityId property of the Entity City<br/><br/>
+		/// <summary> The NoteId property of the Entity UserNote<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Cities"."CityId"<br/>
+		/// <remarks>Mapped on  table field: "UserNotes"."NoteId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 CityId
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual System.Int32 NoteId
 		{
-			get { return (System.Int32)GetValue((int)CityFieldIndex.CityId, true); }
-			set	{ SetValue((int)CityFieldIndex.CityId, value); }
+			get { return (System.Int32)GetValue((int)UserNoteFieldIndex.NoteId, true); }
+			set	{ SetValue((int)UserNoteFieldIndex.NoteId, value); }
 		}
 
-		/// <summary> The Name property of the Entity City<br/><br/>
+		/// <summary> The UserId property of the Entity UserNote<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Cities"."Name"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Name
+		/// <remarks>Mapped on  table field: "UserNotes"."UserId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual System.Int32 UserId
 		{
-			get { return (System.String)GetValue((int)CityFieldIndex.Name, true); }
-			set	{ SetValue((int)CityFieldIndex.Name, value); }
+			get { return (System.Int32)GetValue((int)UserNoteFieldIndex.UserId, true); }
+			set	{ SetValue((int)UserNoteFieldIndex.UserId, value); }
 		}
 
-		/// <summary> The Province property of the Entity City<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Cities"."Province"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 10<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Province
-		{
-			get { return (System.String)GetValue((int)CityFieldIndex.Province, true); }
-			set	{ SetValue((int)CityFieldIndex.Province, value); }
-		}
 
-		/// <summary> The Country property of the Entity City<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Cities"."Country"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Country
-		{
-			get { return (System.String)GetValue((int)CityFieldIndex.Country, true); }
-			set	{ SetValue((int)CityFieldIndex.Country, value); }
-		}
 
-		/// <summary> The IsActive property of the Entity City<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Cities"."IsActive"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean IsActive
-		{
-			get { return (System.Boolean)GetValue((int)CityFieldIndex.IsActive, true); }
-			set	{ SetValue((int)CityFieldIndex.IsActive, value); }
-		}
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'AddressEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(AddressEntity))]
-		public virtual EntityCollection<AddressEntity> Addresses
+		/// <summary> Gets / sets related entity of type 'NoteEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual NoteEntity Note
 		{
 			get
 			{
-				if(_addresses==null)
+				return _note;
+			}
+			set
+			{
+				if(base.IsDeserializing)
 				{
-					_addresses = new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory)));
-					_addresses.SetContainingEntityInfo(this, "City");
+					SetupSyncNote(value);
 				}
-				return _addresses;
+				else
+				{
+					if(value==null)
+					{
+						if(_note != null)
+						{
+							_note.UnsetRelatedEntity(this, "UserNotes");
+						}
+					}
+					else
+					{
+						if(_note!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "UserNotes");
+						}
+					}
+				}
 			}
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'UserTravelFeeEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(UserTravelFeeEntity))]
-		public virtual EntityCollection<UserTravelFeeEntity> UserTravelFees
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual UserEntity User
 		{
 			get
 			{
-				if(_userTravelFees==null)
+				return _user;
+			}
+			set
+			{
+				if(base.IsDeserializing)
 				{
-					_userTravelFees = new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory)));
-					_userTravelFees.SetContainingEntityInfo(this, "City");
+					SetupSyncUser(value);
 				}
-				return _userTravelFees;
+				else
+				{
+					if(value==null)
+					{
+						if(_user != null)
+						{
+							_user.UnsetRelatedEntity(this, "UserNotes");
+						}
+					}
+					else
+					{
+						if(_user!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "UserNotes");
+						}
+					}
+				}
 			}
 		}
-
-
-
 
 	
 		
@@ -721,7 +789,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.CityEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.UserNoteEntity; }
 		}
 		#endregion
 
@@ -730,6 +798,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

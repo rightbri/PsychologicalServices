@@ -97,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <AppDesigner Include="Properties\" />
+    <Compile Include="DatabaseGeneric\RelationClasses\UserNoteRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\ColorEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -116,6 +119,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\AppointmentRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\UserNoteEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\AssessmentTypeEntity.cs">

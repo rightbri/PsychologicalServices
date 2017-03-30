@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (40 + 0));
+			base.InitClass( (41 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -94,6 +94,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitRoleEntityInfos();
 			InitRoleRightEntityInfos();
 			InitUserEntityInfos();
+			InitUserNoteEntityInfos();
 			InitUserRoleEntityInfos();
 			InitUserTravelFeeEntityInfos();
 			InitUserUnavailabilityEntityInfos();
@@ -403,6 +404,12 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("UserEntity", "Email", typeof(System.String), false, false, false, false,  (int)UserFieldIndex.Email, 100, 0, 0);
 			base.AddElementFieldInfo("UserEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)UserFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("UserEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)UserFieldIndex.CompanyId, 0, 0, 10);
+		}
+		/// <summary>Inits UserNoteEntity's FieldInfo objects</summary>
+		private void InitUserNoteEntityInfos()
+		{
+			base.AddElementFieldInfo("UserNoteEntity", "NoteId", typeof(System.Int32), true, true, false, false,  (int)UserNoteFieldIndex.NoteId, 0, 0, 10);
+			base.AddElementFieldInfo("UserNoteEntity", "UserId", typeof(System.Int32), true, true, false, false,  (int)UserNoteFieldIndex.UserId, 0, 0, 10);
 		}
 		/// <summary>Inits UserRoleEntity's FieldInfo objects</summary>
 		private void InitUserRoleEntityInfos()

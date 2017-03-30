@@ -693,6 +693,20 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: UserNote.
+	/// </summary>
+	public enum UserNoteFieldIndex:int
+	{
+		///<summary>NoteId. </summary>
+		NoteId,
+		///<summary>UserId. </summary>
+		UserId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: UserRole.
 	/// </summary>
 	public enum UserRoleFieldIndex:int
@@ -822,6 +836,8 @@ namespace PsychologicalServices.Data
 		RoleRightEntity,
 		///<summary>User</summary>
 		UserEntity,
+		///<summary>UserNote</summary>
+		UserNoteEntity,
 		///<summary>UserRole</summary>
 		UserRoleEntity,
 		///<summary>UserTravelFee</summary>

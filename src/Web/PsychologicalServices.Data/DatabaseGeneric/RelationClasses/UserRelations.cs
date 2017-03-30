@@ -36,6 +36,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentEntityUsingDocListWriterId);
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
+			toReturn.Add(this.UserNoteEntityUsingUserId);
 			toReturn.Add(this.UserRoleEntityUsingUserId);
 			toReturn.Add(this.UserTravelFeeEntityUsingUserId);
 			toReturn.Add(this.UserUnavailabilityEntityUsingUserId);
@@ -132,6 +133,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(UserFields.UserId, NoteFields.CreateUserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and UserNoteEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - UserNote.UserId
+		/// </summary>
+		public virtual IEntityRelation UserNoteEntityUsingUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "UserNotes" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, UserNoteFields.UserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserNoteEntity", false);
 				return relation;
 			}
 		}

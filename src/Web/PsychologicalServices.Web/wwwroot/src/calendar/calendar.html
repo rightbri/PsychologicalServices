@@ -4,7 +4,7 @@
 	<require from="valueConverters/day-class"></require>
 	<require from="valueConverters/note-for-day"></require>
 	<require from="valueConverters/appointment-for-day"></require>
-	<require from="valueConverters/attributeTypes"></require>
+	<require from="valueConverters/attribute-types"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
@@ -55,7 +55,7 @@
 			</td>
 			<td colspan="6"></td>
 			<td>
-				<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day & signal: newCalendarNoteSignalName">
+				<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day">
 					<small>${calendarNote.note.noteText}</small>
 				</p>
 			</td>

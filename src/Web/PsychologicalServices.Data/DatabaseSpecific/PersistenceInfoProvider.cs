@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((40 + 0));
+			base.InitClass((41 + 0));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
@@ -93,6 +93,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitRoleEntityMappings();
 			InitRoleRightEntityMappings();
 			InitUserEntityMappings();
+			InitUserNoteEntityMappings();
 			InitUserRoleEntityMappings();
 			InitUserTravelFeeEntityMappings();
 			InitUserUnavailabilityEntityMappings();
@@ -439,6 +440,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "UserEntity", "Email", "Email", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 3 );
 			base.AddElementFieldMapping( "UserEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
 			base.AddElementFieldMapping( "UserEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
+		}
+		/// <summary>Inits UserNoteEntity's mappings</summary>
+		private void InitUserNoteEntityMappings()
+		{
+			base.AddElementMapping( "UserNoteEntity", "PsychologicalServices", @"dbo", "UserNotes", 2 );
+			base.AddElementFieldMapping( "UserNoteEntity", "NoteId", "NoteId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "UserNoteEntity", "UserId", "UserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
 		/// <summary>Inits UserRoleEntity's mappings</summary>
 		private void InitUserRoleEntityMappings()

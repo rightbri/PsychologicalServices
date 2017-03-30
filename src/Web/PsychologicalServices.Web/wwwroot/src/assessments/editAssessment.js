@@ -59,48 +59,49 @@ export class EditAssessment {
 		
 		this.editType = id ? 'Edit' : 'Add';
 		
-		if (id) {
-			return this.dataRepository.getAssessment(id)
-				.then(data => {
-					this.assessment = data;
-					
-					this.checkMedRehab();
-					
-					if (this.assessment.referralType) {
-						this.issuesInDispute = this.assessment.referralType.issuesInDispute;
-					}
-					
-					if (this.assessment.claims && this.assessment.claims.length > 0) {
-						this.claimant = this.assessment.claims[0].claimant;
-					}
-					
-					var firstAppointmentDate = null;
-					
-					if (this.assessment.appointments && this.assessment.appointments.length > 0) {
-						this.assessment.appointments.sort((a, b) => {
-							if (a.appointmentTime < b.appointmentTime) {
-								return -1;
-							}
-							else if (a.appointmentTime > b.appointmentTime) {
-								return 1;
+		return this.context.getUser()
+			.then(user => {
+				this.user = user;
+				
+				if (id) {
+					return this.dataRepository.getAssessment(id)
+						.then(data => {
+							this.assessment = data;
+							
+							this.checkMedRehab();
+							
+							if (this.assessment.referralType) {
+								this.issuesInDispute = this.assessment.referralType.issuesInDispute;
 							}
 							
-							return 0;
+							if (this.assessment.claims && this.assessment.claims.length > 0) {
+								this.claimant = this.assessment.claims[0].claimant;
+							}
+							
+							var firstAppointmentDate = null;
+							
+							if (this.assessment.appointments && this.assessment.appointments.length > 0) {
+								this.assessment.appointments.sort((a, b) => {
+									if (a.appointmentTime < b.appointmentTime) {
+										return -1;
+									}
+									else if (a.appointmentTime > b.appointmentTime) {
+										return 1;
+									}
+									
+									return 0;
+								});
+								
+								firstAppointmentDate = this.assessment.appointments[0].appointmentTime;
+							}
+							
+							return this.getData(firstAppointmentDate);
 						});
-						
-						firstAppointmentDate = this.assessment.appointments[0].appointmentTime;
-					}
-					
-					return this.getData(firstAppointmentDate);
-				});
-		}
-		else {
-			let appointmentDate = new Date(params.year, params.month - 1, params.day);
-			appointmentDate.setHours(this.config.defaultNewAppointmentHour);
-			
-			//new assessment
-			return this.context.getUser()
-				.then(user => {
+				}
+				else {
+					let appointmentDate = new Date(params.year, params.month - 1, params.day);
+					appointmentDate.setHours(this.config.defaultNewAppointmentHour);
+		
 					return this.dataRepository.getNewAppointment(user.company.companyId)
 						.then(appointment => {
 							
@@ -120,8 +121,8 @@ export class EditAssessment {
 							
 							return this.getData(appointment.appointmentTime);
 						});
-				});
-		}
+				}
+			});
 	}
 	
 	getData(firstAppointmentDate) {
@@ -144,8 +145,6 @@ export class EditAssessment {
 				availableDate: firstAppointmentDate,
 			}).then(data => this.notesWriters = data),
 			
-			//this.dataRepository.getDocListWriters(this.assessment.company.companyId).then(data => this.docListWriters = data),
-			//this.dataRepository.getNotesWriters(this.assessment.company.companyId).then(data => this.notesWriters = data),
 			this.dataRepository.getColors().then(data => this.colors = data),
 			this.dataRepository.searchAttributes({
 				companyIds: [this.context.user.company.companyId],

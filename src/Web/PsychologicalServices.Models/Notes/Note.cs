@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.Users;
 using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Notes
 {
@@ -18,5 +19,7 @@ namespace PsychologicalServices.Models.Notes
         public User CreateUser { get; set; }
 
         public User UpdateUser { get; set; }
+
+        public IEnumerable<User> Recipients { get; set; }
     }
 }

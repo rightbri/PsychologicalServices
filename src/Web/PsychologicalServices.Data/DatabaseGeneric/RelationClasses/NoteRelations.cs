@@ -32,6 +32,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AssessmentNoteEntityUsingNoteId);
 			toReturn.Add(this.CalendarNoteEntityUsingNoteId);
+			toReturn.Add(this.UserNoteEntityUsingNoteId);
 
 			toReturn.Add(this.UserEntityUsingUpdateUserId);
 			toReturn.Add(this.UserEntityUsingCreateUserId);
@@ -66,6 +67,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(NoteFields.NoteId, CalendarNoteFields.NoteId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CalendarNoteEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between NoteEntity and UserNoteEntity over the 1:n relation they have, using the relation between the fields:
+		/// Note.NoteId - UserNote.NoteId
+		/// </summary>
+		public virtual IEntityRelation UserNoteEntityUsingNoteId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "UserNotes" , true);
+				relation.AddEntityFieldPair(NoteFields.NoteId, UserNoteFields.NoteId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserNoteEntity", false);
 				return relation;
 			}
 		}

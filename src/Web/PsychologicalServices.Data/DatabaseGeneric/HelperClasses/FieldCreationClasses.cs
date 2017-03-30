@@ -974,6 +974,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity UserNoteEntity</summary>
+	public partial class UserNoteFields
+	{
+		/// <summary>Creates a new UserNoteEntity.NoteId field instance</summary>
+		public static EntityField2 NoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserNoteFieldIndex.NoteId);}
+		}
+		/// <summary>Creates a new UserNoteEntity.UserId field instance</summary>
+		public static EntityField2 UserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserNoteFieldIndex.UserId);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity UserRoleEntity</summary>
 	public partial class UserRoleFields
 	{

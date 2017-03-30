@@ -88,6 +88,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 .SubPath(notePath => notePath
                                     .Prefetch<UserEntity>(note => note.CreateUser)
                                     .Prefetch<UserEntity>(note => note.UpdateUser)
+                                    .Prefetch<UserNoteEntity>(note => note.UserNotes)
+                                        .SubPath(userNotePath => userNotePath
+                                            .Prefetch<UserEntity>(userNote => userNote.User)
+                                        )
                                 )
                         )
                     .Prefetch<AssessmentColorEntity>(assessment => assessment.AssessmentColors)

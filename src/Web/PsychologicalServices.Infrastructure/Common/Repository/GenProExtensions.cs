@@ -151,6 +151,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Deleted = note.Deleted,
                     CreateUser = note.CreateUser.ToUser(),
                     UpdateUser = note.UpdateUser.ToUser(),
+                    Recipients = note.UserNotes.Select(userNote => userNote.User.ToUser()),
                 }
                 : null;
         }
