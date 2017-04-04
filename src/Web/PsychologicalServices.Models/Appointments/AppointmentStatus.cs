@@ -12,6 +12,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public bool NotifyReferralSource { get; set; }
 
+        public bool CanInvoice { get; set; }
+
         public bool IsActive { get; set; }
 
         public bool IsNew()

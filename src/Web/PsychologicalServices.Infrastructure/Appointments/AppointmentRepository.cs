@@ -74,13 +74,13 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                             .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
                                         )
                                 )
-                            .Prefetch<AssessmentIssueInDisputeEntity>(assessment => assessment.AssessmentIssuesInDispute)
-                                .SubPath(assessmentIssueInDisputePath => assessmentIssueInDisputePath
-                                    .Prefetch<IssueInDisputeEntity>(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute)
-                                )
                             .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
                                 .SubPath(assessmentReportPath => assessmentReportPath
                                     .Prefetch<ReportTypeEntity>(assessmentReport => assessmentReport.ReportType)
+                                    .Prefetch<AssessmentReportIssueInDisputeEntity>(assessmentReport => assessmentReport.AssessmentReportIssuesInDispute)
+                                        .SubPath(assessmentReportIssueInDisputePath => assessmentReportIssueInDisputePath
+                                            .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
+                                        )
                                 )
                         )
                 );
@@ -219,7 +219,6 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 return Execute<AppointmentEntity>(
                         (ILLBLGenProQuery)
                         appointments
-                        .WithPath(AppointmentPath)
                     )
                     .Select(appointment => appointment.ToAppointment())
                     .ToList();
@@ -329,6 +328,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentStatusEntity.Name = appointmentStatus.Name;
                 appointmentStatusEntity.Description = appointmentStatus.Description;
                 appointmentStatusEntity.NotifyReferralSource = appointmentStatus.NotifyReferralSource;
+                appointmentStatusEntity.CanInvoice = appointmentStatus.CanInvoice;
                 appointmentStatusEntity.IsActive = appointmentStatus.IsActive;
                 
                 adapter.SaveEntity(appointmentStatusEntity, false);

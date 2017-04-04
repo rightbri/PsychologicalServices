@@ -36,6 +36,20 @@
 		<div class="row">
 			<div class="col-xs-6">
 				<div class="form-group">
+					<label for="address">Address</label>
+					<select id="address" class="form-control" value.bind="referralSource.address" matcher.bind="addressMatcher">
+						<option></option>
+						<option repeat.for="address of addresses" model.bind="address">
+							${address.name} ${address.street} ${address.city.name}
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
 					<label for="largeFileSize">Large File Size</label>
 					<input id="largeFileSize" type="text" class="form-control" value.bind="referralSource.largeFileSize" />
 				</div>

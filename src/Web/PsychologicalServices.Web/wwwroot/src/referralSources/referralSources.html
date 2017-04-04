@@ -62,6 +62,7 @@
 			<th></th>
 			<th>Name</th>
 			<th>Type</th>
+			<th>Address</th>
 			<th>Large File Size</th>
 			<th>Large File Fee</th>
 			<th>Active?</th>
@@ -76,6 +77,7 @@
 			</td>
 			<td>${referralSource.name}</td>
 			<td>${referralSource.referralSourceType.name}</td>
+			<td>${referralSource.address.name}</td>
 			<td>${referralSource.largeFileSize | numeric}</td>
 			<td>${referralSource.largeFileFeeAmount | money}</td>
 			<td>${referralSource.isActive | boolean}</td>

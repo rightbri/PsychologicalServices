@@ -30,7 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.AssessmentIssueInDisputeEntityUsingIssueIsDisputeId);
+			toReturn.Add(this.AssessmentReportIssueInDisputeEntityUsingIssueInDisputeId);
 			toReturn.Add(this.ReferralTypeIssueInDisputeEntityUsingIssueInDisputeId);
 
 
@@ -39,17 +39,17 @@ namespace PsychologicalServices.Data.RelationClasses
 
 		#region Class Property Declarations
 
-		/// <summary>Returns a new IEntityRelation object, between IssueInDisputeEntity and AssessmentIssueInDisputeEntity over the 1:n relation they have, using the relation between the fields:
-		/// IssueInDispute.IssueInDisputeId - AssessmentIssueInDispute.IssueIsDisputeId
+		/// <summary>Returns a new IEntityRelation object, between IssueInDisputeEntity and AssessmentReportIssueInDisputeEntity over the 1:n relation they have, using the relation between the fields:
+		/// IssueInDispute.IssueInDisputeId - AssessmentReportIssueInDispute.IssueInDisputeId
 		/// </summary>
-		public virtual IEntityRelation AssessmentIssueInDisputeEntityUsingIssueIsDisputeId
+		public virtual IEntityRelation AssessmentReportIssueInDisputeEntityUsingIssueInDisputeId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentIssuesInDispute" , true);
-				relation.AddEntityFieldPair(IssueInDisputeFields.IssueInDisputeId, AssessmentIssueInDisputeFields.IssueIsDisputeId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentReportIssuesInDispute" , true);
+				relation.AddEntityFieldPair(IssueInDisputeFields.IssueInDisputeId, AssessmentReportIssueInDisputeFields.IssueInDisputeId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IssueInDisputeEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentIssueInDisputeEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentReportIssueInDisputeEntity", false);
 				return relation;
 			}
 		}

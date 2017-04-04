@@ -30,6 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.AssessmentTypeAttributeTypeEntityUsingAttributeTypeId);
 			toReturn.Add(this.AttributeEntityUsingAttributeTypeId);
 
 
@@ -37,6 +38,21 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between AttributeTypeEntity and AssessmentTypeAttributeTypeEntity over the 1:n relation they have, using the relation between the fields:
+		/// AttributeType.AttributeTypeId - AssessmentTypeAttributeType.AttributeTypeId
+		/// </summary>
+		public virtual IEntityRelation AssessmentTypeAttributeTypeEntityUsingAttributeTypeId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentTypeAttributeTypes" , true);
+				relation.AddEntityFieldPair(AttributeTypeFields.AttributeTypeId, AssessmentTypeAttributeTypeFields.AttributeTypeId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AttributeTypeEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeAttributeTypeEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between AttributeTypeEntity and AttributeEntity over the 1:n relation they have, using the relation between the fields:
 		/// AttributeType.AttributeTypeId - Attribute.AttributeTypeId

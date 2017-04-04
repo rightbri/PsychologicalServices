@@ -17,6 +17,19 @@ namespace PsychologicalServices.Infrastructure.Companies
         {
         }
 
+        #region Prefetch Paths
+
+        private static readonly Func<IPathEdgeRootParser<CompanyEntity>, IPathEdgeRootParser<CompanyEntity>>
+            CompanyPath =
+                (companyPath => companyPath
+                    .Prefetch<AddressEntity>(company => company.Address)
+                        .SubPath(addressPath => addressPath
+                            .Prefetch<CityEntity>(address => address.City)
+                        )
+                );
+
+        #endregion
+
         public Company GetCompany(int id)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -24,6 +37,7 @@ namespace PsychologicalServices.Infrastructure.Companies
                 var meta = new LinqMetaData(adapter);
 
                 return meta.Company
+                    .WithPath(CompanyPath)
                     .Where(company => company.CompanyId == id)
                     .SingleOrDefault()
                     .ToCompany();
@@ -63,8 +77,9 @@ namespace PsychologicalServices.Infrastructure.Companies
                     adapter.FetchEntity(entity);
                 }
 
-                company.Name = company.Name;
-                company.IsActive = company.IsActive;
+                entity.Name = company.Name;
+                entity.IsActive = company.IsActive;
+                entity.AddressId = company.Address.AddressId;
 
                 adapter.SaveEntity(entity);
 

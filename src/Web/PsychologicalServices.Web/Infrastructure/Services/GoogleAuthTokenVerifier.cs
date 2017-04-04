@@ -47,6 +47,10 @@ namespace PsychologicalServices.Web.Infrastructure.Services
 
                         return true;
                     }
+                    //catch (SecurityTokenExpiredException ex)
+                    //{
+
+                    //}
                     catch (Exception ex)
                     {
 

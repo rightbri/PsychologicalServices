@@ -21,13 +21,6 @@ namespace PsychologicalServices.Models.Reports
                 );
             }
 
-            if (item.NumberOfReports < 0)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "NumberOfReports", Message = "Number of reports must be greater than or equal to zero" }
-                );
-            }
-
             result.IsValid = !result.ValidationErrors.Any();
 
             return result;

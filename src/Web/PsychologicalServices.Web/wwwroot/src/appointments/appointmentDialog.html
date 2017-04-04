@@ -1,6 +1,6 @@
 <template>
 	<require from="common/date-picker"></require>
-	<require from="valueConverters/attributeTypes"></require>
+	<require from="valueConverters/attribute-types"></require>
 	
 	<ai-dialog>
 		<ai-dialog-header>
@@ -41,7 +41,7 @@
 						<select id="location" class="form-control" value.bind="appointment.location" matcher.bind="addressMatcher">
 							<option></option>
 							<option repeat.for="address of addresses" model.bind="address">
-								${address.name} ${address.street} ${address.city}
+								${address.name} ${address.street} ${address.city.name}
 							</option>
 						</select>
 					</div>

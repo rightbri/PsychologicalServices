@@ -16,10 +16,12 @@ export class EditReferralSource {
 		
 		this.referralSource = null;
 		
+		this.addresses = [];
 		this.referralSourceTypes = [];
 		this.reportTypes = [];
 		
-		this.referralSourceTypeMatcher = (a, b) => a != null && b != null && a.referralSourceTypeId === b.referralSourceTypeId;
+		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
+		this.referralSourceTypeMatcher = (a, b) => a !== null && b !== null && a.referralSourceTypeId === b.referralSourceTypeId;
 		
 		this.error = null;
 		this.validationErrors = null;
@@ -53,6 +55,9 @@ export class EditReferralSource {
 	
 	getData() {
 		return Promise.all([
+			this.dataRepository.searchAddress({
+				'addressTypeIds': this.config.referralSourceDefaults.addressTypeIds
+			}).then(data => this.addresses = data),
 			this.dataRepository.getReferralSourceTypes().then(data => this.referralSourceTypes = data),
 			this.dataRepository.getReportTypes().then(data => {
 				this.reportTypes = data;

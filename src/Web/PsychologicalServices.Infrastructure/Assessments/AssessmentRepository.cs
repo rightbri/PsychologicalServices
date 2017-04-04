@@ -36,6 +36,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 .SubPath(assessmentTypeReportTypePath => assessmentTypeReportTypePath
                                     .Prefetch<ReportTypeEntity>(assessmentTypeReportType => assessmentTypeReportType.ReportType)
                                 )
+                            .Prefetch<AssessmentTypeAttributeTypeEntity>(assessmentType => assessmentType.AssessmentTypeAttributeTypes)
+                                .SubPath(assessmentTypeAttributeTypePath => assessmentTypeAttributeTypePath
+                                    .Prefetch<AttributeTypeEntity>(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType)
+                                )
                         )
                     .Prefetch<ReferralTypeEntity>(assessment => assessment.ReferralType)
                         .SubPath(referralTypePath => referralTypePath
@@ -69,17 +73,13 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                             .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                            .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
-                                .SubPath(appointmentAttributePath => appointmentAttributePath
-                                    .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
-                                        .SubPath(attributePath => attributePath
-                                            .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
-                                        )
-                                )
-                        )
-                    .Prefetch<AssessmentIssueInDisputeEntity>(assessment => assessment.AssessmentIssuesInDispute)
-                        .SubPath(assessmentIssueInDisputePath => assessmentIssueInDisputePath
-                            .Prefetch<IssueInDisputeEntity>(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute)
+                            //.Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
+                            //    .SubPath(appointmentAttributePath => appointmentAttributePath
+                            //        .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
+                            //            .SubPath(attributePath => attributePath
+                            //                .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                            //            )
+                            //    )
                         )
                     .Prefetch<AssessmentMedRehabEntity>(assessment => assessment.AssessmentMedRehabs)
                     .Prefetch<AssessmentNoteEntity>(assessment => assessment.AssessmentNotes)
@@ -108,6 +108,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
                         .SubPath(assessmentReportPath => assessmentReportPath
                             .Prefetch<ReportTypeEntity>(assessmentReport => assessmentReport.ReportType)
+                            .Prefetch<AssessmentReportIssueInDisputeEntity>(assessmentReport => assessmentReport.AssessmentReportIssuesInDispute)
+                                .SubPath(assessmentReportIssueInDisputePath => assessmentReportIssueInDisputePath
+                                    .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
+                                )
                         )
                 );
 
@@ -249,6 +253,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 return Execute<AssessmentTypeEntity>(
                     (ILLBLGenProQuery)
                     meta.AssessmentType
+                        .WithPath(pre => pre.Prefetch<AssessmentTypeAttributeTypeEntity>(assessmentType => assessmentType.AssessmentTypeAttributeTypes)
+                        .SubPath(assessmentTypeAttributeTypePath => assessmentTypeAttributeTypePath
+                        .Prefetch<AttributeTypeEntity>(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType)))
                         .Where(assessmentType => isActive == null || assessmentType.IsActive == isActive.Value)
                     )
                     .Select(assessmentType => assessmentType.ToAssessmentType())
@@ -280,8 +287,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentClaims)
                         .SubPath.Add(AssessmentClaimEntity.PrefetchPathClaim);
 
-                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentIssuesInDispute);
-
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentMedRehabs);
 
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentNotes)
@@ -291,7 +296,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentAttributes);
 
-                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentReports);
+                    prefetch.Add(AssessmentEntity.PrefetchPathAssessmentReports)
+                        .SubPath.Add(AssessmentReportEntity.PrefetchPathAssessmentReportIssuesInDispute)
+                            .SubPath.Add(AssessmentReportIssueInDisputeEntity.PrefetchPathIssueInDispute);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
@@ -555,33 +562,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                 #endregion
 
-                #region issues in dispute
-
-                var issuesInDisputeToAdd = assessment.IssuesInDispute
-                    .Where(issueInDispute => 
-                        !assessmentEntity.AssessmentIssuesInDispute.Any(assessmentIssueInDispute => assessmentIssueInDispute.IssueIsDisputeId == issueInDispute.IssueInDisputeId)
-                    );
-
-                var issuesInDisputeToRemove = assessmentEntity.AssessmentIssuesInDispute
-                    .Where(assessmentIssueInDispute => 
-                        !assessment.IssuesInDispute.Any(issueInDispute => issueInDispute.IssueInDisputeId == assessmentIssueInDispute.IssueIsDisputeId)
-                    );
-
-                assessmentEntity.AssessmentIssuesInDispute.AddRange(
-                    issuesInDisputeToAdd.Select(issueInDispute => new AssessmentIssueInDisputeEntity
-                    {
-                        AssessmentId = assessment.AssessmentId,
-                        IssueIsDisputeId = issueInDispute.IssueInDisputeId,
-                    })
-                );
-
-                foreach (var issueInDispute in issuesInDisputeToRemove)
-                {
-                    uow.AddForDelete(issueInDispute);
-                }
-
-                #endregion
-
                 #region med rehabs
 
                 var medRehabsToAdd = assessment.MedRehabs
@@ -762,17 +742,90 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         !assessment.Reports.Any(report => report.ReportId == assessmentReport.ReportId)
                     );
                 
+                var reportsToUpdate = assessment.Reports
+                    .Where(report =>
+                        assessmentEntity.AssessmentReports.Any(assessmentReport =>
+                            report.ReportId == assessmentReport.ReportId &&
+                            (
+                                report.ReportType.ReportTypeId != assessmentReport.ReportTypeId ||
+                                report.IsAdditional != assessmentReport.IsAdditional ||
+                                report.IssuesInDispute.Any(issueInDispute => 
+                                    !assessmentReport.AssessmentReportIssuesInDispute.Any(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDisputeId == issueInDispute.IssueInDisputeId)
+                                ) ||
+                                assessmentReport.AssessmentReportIssuesInDispute.Any(assessmentReportIssueInDispute =>
+                                    !report.IssuesInDispute.Any(issueInDispute => issueInDispute.IssueInDisputeId == assessmentReportIssueInDispute.IssueInDisputeId)
+                                )
+                            )
+                        )
+                    );
+
                 foreach (var report in reportsToRemove)
                 {
+                    foreach (var issueInDispute in report.AssessmentReportIssuesInDispute)
+                    {
+                        uow.AddForDelete(issueInDispute);
+                    }
+
                     uow.AddForDelete(report);
+                }
+
+                foreach (var report in reportsToUpdate)
+                {
+                    var reportEntity = assessmentEntity.AssessmentReports.SingleOrDefault(assessmentReport => assessmentReport.ReportId == report.ReportId);
+
+                    if (null != reportEntity)
+                    {
+                        reportEntity.ReportTypeId = report.ReportType.ReportTypeId;
+                        reportEntity.IsAdditional = report.IsAdditional;
+
+                        #region issues in dispute
+
+                        var issuesInDisputeToAdd = report.IssuesInDispute
+                            .Where(issueInDispute =>
+                                !reportEntity.AssessmentReportIssuesInDispute.Any(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDisputeId == issueInDispute.IssueInDisputeId)
+                            );
+
+                        var issuesInDisputeToRemove = reportEntity.AssessmentReportIssuesInDispute
+                            .Where(assessmentReportIssueInDispute =>
+                                !report.IssuesInDispute.Any(issueInDispute => issueInDispute.IssueInDisputeId == assessmentReportIssueInDispute.IssueInDisputeId)
+                            );
+
+                        reportEntity.AssessmentReportIssuesInDispute.AddRange(
+                            issuesInDisputeToAdd.Select(issueInDispute => new AssessmentReportIssueInDisputeEntity
+                            {
+                                ReportId = report.ReportId,
+                                IssueInDisputeId = issueInDispute.IssueInDisputeId,
+                            })
+                        );
+
+                        foreach (var issueInDispute in issuesInDisputeToRemove)
+                        {
+                            uow.AddForDelete(issueInDispute);
+                        }
+
+                        #endregion
+                    }
                 }
 
                 assessmentEntity.AssessmentReports.AddRange(
                     reportsToAdd.Select(report =>
-                    new AssessmentReportEntity
-                    {
-                        ReportTypeId = report.ReportType.ReportTypeId,
-                    })
+                        {
+                            var assessmentReport = new AssessmentReportEntity
+                            {
+                                ReportTypeId = report.ReportType.ReportTypeId,
+                                IsAdditional = report.IsAdditional,
+                            };
+
+                            assessmentReport.AssessmentReportIssuesInDispute.AddRange(
+                                report.IssuesInDispute.Select(issueInDispute => new AssessmentReportIssueInDisputeEntity
+                                {
+                                    IssueInDisputeId = issueInDispute.IssueInDisputeId,
+                                })
+                            );
+
+                            return assessmentReport;
+                        }
+                    )
                 );
 
                 #endregion
@@ -808,7 +861,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                 assessmentTypeEntity.Name = assessmentType.Name;
                 assessmentTypeEntity.Description = assessmentType.Description;
-                assessmentTypeEntity.Duration = assessmentType.Duration;
                 assessmentTypeEntity.IsActive = assessmentType.IsActive;
 
                 var reportTypesToAdd = assessmentType.ReportTypes.Where(reportType => !assessmentTypeEntity.AssessmentTypeReportTypes.Any(assessmentTypeReportType => assessmentTypeReportType.ReportTypeId == reportType.ReportTypeId));

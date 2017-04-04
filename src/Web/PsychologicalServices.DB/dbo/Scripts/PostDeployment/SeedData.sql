@@ -40,20 +40,19 @@ INSERT INTO [dbo].[AssessmentTypes] ([Name],[Description],[Duration],[IsActive])
 	,(2,'NC','Neurocognitive',0,1)
 	,(3,'P','Psychological',0,1)
 	,(4,'PVOC','Psychovocational',0,1)
+	,(5,'NC/P','Neurocognitive/Psychological',0,1)
 ;
 SET IDENTITY_INSERT [dbo].[AssessmentTypes] OFF;
 
 
 SET IDENTITY_INSERT [dbo].[ReportTypes] ON;
 
-INSERT INTO [dbo].[ReportTypes] ([ReportTypeId],[Name],[NumberOfReports],[IsActive]) VALUES 
-	 (1,'NP',1,1)
-	,(2,'NC/P',2,1)
-	,(3,'NP/test',2,1)
-	,(4,'NC',1,1)
-	,(5,'NC/test',2,1)
-	,(6,'P',1,1)
-	,(7,'PVOC',1,1)
+INSERT INTO [dbo].[ReportTypes] ([ReportTypeId],[Name],[IsActive]) VALUES 
+	 (1,'NP',1)
+	,(2,'NC',1)
+	,(3,'P',1)
+	,(4,'PVOC',1)
+	,(5,'Test',1)
 ;
 SET IDENTITY_INSERT [dbo].[ReportTypes] OFF;
 
@@ -62,10 +61,11 @@ INSERT INTO [dbo].[AssessmentTypeReportTypes] ([AssessmentTypeId],[ReportTypeId]
 	 (1,1)
 	,(1,2)
 	,(1,3)
-	,(2,4)
+	,(1,5)
+	,(2,2)
 	,(2,5)
-	,(3,6)
-	,(4,7)
+	,(3,3)
+	,(4,4)
 
 
 SET IDENTITY_INSERT [dbo].[IssuesInDispute] ON;

@@ -139,7 +139,6 @@ namespace PsychologicalServices.Infrastructure.Reports
                 }
 
                 entity.Name = reportType.Name;
-                entity.NumberOfReports = reportType.NumberOfReports;
                 entity.IsActive = reportType.IsActive;
 
                 adapter.SaveEntity(entity, false);

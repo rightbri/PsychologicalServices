@@ -23,6 +23,62 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Invoice ToInvoice(this InvoiceEntity invoice)
+        {
+            return null != invoice
+                ? new Invoice
+                {
+                    InvoiceId = invoice.InvoiceId,
+                    Identifier = invoice.Identifier,
+                    InvoiceDate = invoice.InvoiceDate,
+                    InvoiceStatus = invoice.InvoiceStatus.ToInvoiceStatus(),
+                    UpdateDate = invoice.UpdateDate,
+                    TaxRate = invoice.TaxRate,
+                    Total = invoice.Total,
+                    ModifiedTotal = invoice.ModifiedTotal,
+                    Lines = invoice.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
+                    StatusChanges = invoice.InvoiceStatusChanges.Select(invoiceStatusChange => invoiceStatusChange.ToInvoiceStatusChange()),
+                    Appointment = invoice.Appointment.ToAppointment(),
+                }
+                : null;
+        }
+
+        public static InvoiceStatusChange ToInvoiceStatusChange(this InvoiceStatusChangeEntity invoiceStatusChange)
+        {
+            return null != invoiceStatusChange
+                ? new InvoiceStatusChange
+                {
+                    InvoiceStatusChangeId = invoiceStatusChange.InvoiceStatusChangeId,
+                    InvoiceStatus = invoiceStatusChange.InvoiceStatus.ToInvoiceStatus(),
+                    UpdateDate = invoiceStatusChange.UpdateDate,
+                }
+                : null;
+        }
+
+        public static InvoiceLine ToInvoiceLine(this InvoiceLineEntity invoiceLine)
+        {
+            return null != invoiceLine
+                ? new InvoiceLine
+                {
+                    InvoiceLineId = invoiceLine.InvoiceLineId,
+                    Description = invoiceLine.Description,
+                    Amount = invoiceLine.Amount,
+                }
+                : null;
+        }
+
+        public static InvoiceStatus ToInvoiceStatus(this InvoiceStatusEntity invoiceStatus)
+        {
+            return null != invoiceStatus
+                ? new InvoiceStatus
+                {
+                    InvoiceStatusId = invoiceStatus.InvoiceStatusId,
+                    Name = invoiceStatus.Name,
+                    IsActive = invoiceStatus.IsActive,
+                }
+                : null;
+        }
+
         public static City ToCity(this CityEntity city)
         {
             return city != null
@@ -68,6 +124,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ReportId = report.ReportId,
                     AssessmentId = report.AssessmentId,
                     ReportType = report.ReportType.ToReportType(),
+                    IssuesInDispute = report.AssessmentReportIssuesInDispute.Select(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute.ToIssueInDispute()),
                 }
                 : null;
         }
@@ -233,6 +290,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     LargeFileFeeAmount = referralSource.LargeFileFeeAmount,
                     IsActive = referralSource.IsActive,
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
+                    Address = referralSource.Address.ToAddress(),
                     InvoiceAmounts = referralSource.InvoiceAmounts.Select(invoiceAmount => invoiceAmount.ToInvoiceAmount()),
                 }
                 : null;
@@ -245,8 +303,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     IssueInDisputeId = issueInDispute.IssueInDisputeId,
                     Name = issueInDispute.Name,
-                    Instructions = issueInDispute.Instructions,
                     IsActive = issueInDispute.IsActive,
+                    AdditionalFee = issueInDispute.AdditionalFee,
                 }
                 : null;
         }
@@ -271,7 +329,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     ReportTypeId = reportType.ReportTypeId,
                     Name = reportType.Name,
-                    NumberOfReports = reportType.NumberOfReports,
                     IsActive = reportType.IsActive,
                 }
                 : null;
@@ -285,9 +342,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     AssessmentTypeId = assessmentType.AssessmentTypeId,
                     Name = assessmentType.Name,
                     Description = assessmentType.Description,
-                    Duration = assessmentType.Duration,
                     IsActive = assessmentType.IsActive,
                     ReportTypes = assessmentType.AssessmentTypeReportTypes.Select(assessmentTypeReportType => assessmentTypeReportType.ReportType.ToReportType()),
+                    AttributeTypes = assessmentType.AssessmentTypeAttributeTypes.Select(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType.ToAttributeType()),
                 }
                 : null;
         }
@@ -313,7 +370,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Company = assessment.Company.ToCompany(),
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
-                    IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
                     MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
                     Notes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.Note.ToNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
@@ -343,7 +399,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NotesWriter = assessment.NotesWriter.ToUser(),
                     Company = assessment.Company.ToCompany(),
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
-                    IssuesInDispute = assessment.AssessmentIssuesInDispute.Select(assessmentIssueInDispute => assessmentIssueInDispute.IssueInDispute.ToIssueInDispute()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
                     //Appointments
@@ -363,6 +418,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = appointmentStatus.Name,
                     Description = appointmentStatus.Description,
                     NotifyReferralSource = appointmentStatus.NotifyReferralSource,
+                    CanInvoice = appointmentStatus.CanInvoice,
                     IsActive = appointmentStatus.IsActive,
                 }
                 : null;
@@ -422,6 +478,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     CompanyId = company.CompanyId,
                     Name = company.Name,
+                    Address = company.Address.ToAddress(),
                     IsActive = company.IsActive,
                 }
                 : null;

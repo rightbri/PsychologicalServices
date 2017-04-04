@@ -47,7 +47,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
+		private AddressEntity _address;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -61,7 +61,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-
+			/// <summary>Member name Address</summary>
+			public static readonly string Address = "Address";
 			/// <summary>Member name Assessments</summary>
 			public static readonly string Assessments = "Assessments";
 			/// <summary>Member name CompanyAttributes</summary>
@@ -144,7 +145,11 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
+				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
+				if(_address!=null)
+				{
+					_address.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
@@ -160,6 +165,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch((CompanyFieldIndex)fieldIndex)
 			{
+				case CompanyFieldIndex.AddressId:
+					DesetupSyncAddress(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -182,7 +190,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-
+				case "Address":
+					this.Address = (AddressEntity)entity;
+					break;
 				case "Assessments":
 					this.Assessments.Add((AssessmentEntity)entity);
 					break;
@@ -221,7 +231,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-
+				case "Address":
+					toReturn.Add(CompanyEntity.Relations.AddressEntityUsingAddressId);
+					break;
 				case "Assessments":
 					toReturn.Add(CompanyEntity.Relations.AssessmentEntityUsingCompanyId);
 					break;
@@ -274,7 +286,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
+				case "Address":
+					SetupSyncAddress(relatedEntity);
+					break;
 				case "Assessments":
 					this.Assessments.Add((AssessmentEntity)relatedEntity);
 					break;
@@ -299,7 +313,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
+				case "Address":
+					DesetupSyncAddress(false, true);
+					break;
 				case "Assessments":
 					base.PerformRelatedEntityRemoval(this.Assessments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -330,7 +346,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-
+			if(_address!=null)
+			{
+				toReturn.Add(_address);
+			}
 
 			return toReturn;
 		}
@@ -367,7 +386,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
+				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 
 			}
 			
@@ -440,6 +459,15 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAddress()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.AddressId));
+			return bucket;
+		}
 
 	
 		
@@ -549,7 +577,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-
+			toReturn.Add("Address", _address);
 			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("CompanyAttributes", _companyAttributes);
 			toReturn.Add("Users", _users);
@@ -586,7 +614,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
+			if(_address!=null)
+			{
+				_address.ActiveContext = base.ActiveContext;
+			}
 
 		}
 
@@ -604,7 +635,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
+			_address = null;
 
 			PerformDependencyInjection();
 			
@@ -630,9 +661,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
 		}
 		#endregion
 
+		/// <summary> Removes the sync logic for member _address</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CompanyEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "Company", resetFKFields, new int[] { (int)CompanyFieldIndex.AddressId } );		
+			_address = null;
+		}
+
+		/// <summary> setups the sync logic for member _address</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAddress(IEntity2 relatedEntity)
+		{
+			if(_address!=relatedEntity)
+			{
+				DesetupSyncAddress(true, true);
+				_address = (AddressEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CompanyEntity.Relations.AddressEntityUsingAddressId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
@@ -708,6 +774,17 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAddress
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Address")[0], (int)PsychologicalServices.Data.EntityType.CompanyEntity, (int)PsychologicalServices.Data.EntityType.AddressEntity, 0, null, null, null, null, "Address", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
 
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
@@ -767,6 +844,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)CompanyFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> The AddressId property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."AddressId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> AddressId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)CompanyFieldIndex.AddressId, false); }
+			set	{ SetValue((int)CompanyFieldIndex.AddressId, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AssessmentEntity))]
@@ -822,6 +910,40 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual AddressEntity Address
+		{
+			get
+			{
+				return _address;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncAddress(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_address != null)
+						{
+							_address.UnsetRelatedEntity(this, "Company");
+						}
+					}
+					else
+					{
+						if(_address!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Company");
+						}
+					}
+				}
+			}
+		}
 
 	
 		

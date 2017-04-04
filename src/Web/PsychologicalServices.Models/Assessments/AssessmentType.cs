@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Reports;
+﻿using PsychologicalServices.Models.Attributes;
+using PsychologicalServices.Models.Reports;
 using System;
 using System.Collections.Generic;
 
@@ -12,11 +13,11 @@ namespace PsychologicalServices.Models.Assessments
 
         public string Description { get; set; }
 
-        public int Duration { get; set; }
-
         public bool IsActive { get; set; }
 
         public IEnumerable<ReportType> ReportTypes { get; set; }
+
+        public IEnumerable<AttributeType> AttributeTypes { get; set; }
 
         public bool IsNew()
         {

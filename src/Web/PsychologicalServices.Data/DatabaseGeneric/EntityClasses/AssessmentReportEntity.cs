@@ -37,7 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<AssessmentReportIssueInDisputeEntity> _assessmentReportIssuesInDispute;
 
 		private AssessmentEntity _assessment;
 		private ReportTypeEntity _reportType;
@@ -58,7 +58,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Assessment = "Assessment";
 			/// <summary>Member name ReportType</summary>
 			public static readonly string ReportType = "ReportType";
-
+			/// <summary>Member name AssessmentReportIssuesInDispute</summary>
+			public static readonly string AssessmentReportIssuesInDispute = "AssessmentReportIssuesInDispute";
 
 
 		}
@@ -119,7 +120,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_assessmentReportIssuesInDispute = (EntityCollection<AssessmentReportIssueInDisputeEntity>)info.GetValue("_assessmentReportIssuesInDispute", typeof(EntityCollection<AssessmentReportIssueInDisputeEntity>));
 
 				_assessment = (AssessmentEntity)info.GetValue("_assessment", typeof(AssessmentEntity));
 				if(_assessment!=null)
@@ -180,7 +181,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportType":
 					this.ReportType = (ReportTypeEntity)entity;
 					break;
-
+				case "AssessmentReportIssuesInDispute":
+					this.AssessmentReportIssuesInDispute.Add((AssessmentReportIssueInDisputeEntity)entity);
+					break;
 
 
 				default:
@@ -210,7 +213,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportType":
 					toReturn.Add(AssessmentReportEntity.Relations.ReportTypeEntityUsingReportTypeId);
 					break;
-
+				case "AssessmentReportIssuesInDispute":
+					toReturn.Add(AssessmentReportEntity.Relations.AssessmentReportIssueInDisputeEntityUsingReportId);
+					break;
 
 
 				default:
@@ -255,7 +260,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportType":
 					SetupSyncReportType(relatedEntity);
 					break;
-
+				case "AssessmentReportIssuesInDispute":
+					this.AssessmentReportIssuesInDispute.Add((AssessmentReportIssueInDisputeEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -277,7 +284,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportType":
 					DesetupSyncReportType(false, true);
 					break;
-
+				case "AssessmentReportIssuesInDispute":
+					base.PerformRelatedEntityRemoval(this.AssessmentReportIssuesInDispute, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -316,7 +325,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.AssessmentReportIssuesInDispute);
 
 			return toReturn;
 		}
@@ -331,7 +340,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_assessmentReportIssuesInDispute", ((_assessmentReportIssuesInDispute!=null) && (_assessmentReportIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_assessmentReportIssuesInDispute:null);
 
 				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
 				info.AddValue("_reportType", (!this.MarkedForDeletion?_reportType:null));
@@ -370,6 +379,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'AssessmentReportIssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentReportIssuesInDispute()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentReportIssueInDisputeFields.ReportId, null, ComparisonOperator.Equal, this.ReportId));
+			return bucket;
+		}
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
@@ -420,7 +438,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._assessmentReportIssuesInDispute);
 
 		}
 		
@@ -429,7 +447,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._assessmentReportIssuesInDispute = (EntityCollection<AssessmentReportIssueInDisputeEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -437,7 +455,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._assessmentReportIssuesInDispute != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -448,7 +469,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentReportIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportIssueInDisputeEntityFactory))) : null);
 
 		}
 #endif
@@ -461,7 +482,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Assessment", _assessment);
 			toReturn.Add("ReportType", _reportType);
-
+			toReturn.Add("AssessmentReportIssuesInDispute", _assessmentReportIssuesInDispute);
 
 
 			return toReturn;
@@ -470,7 +491,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_assessmentReportIssuesInDispute!=null)
+			{
+				_assessmentReportIssuesInDispute.ActiveContext = base.ActiveContext;
+			}
 
 			if(_assessment!=null)
 			{
@@ -487,7 +511,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_assessmentReportIssuesInDispute = null;
 
 			_assessment = null;
 			_reportType = null;
@@ -516,6 +540,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ReportTypeId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("IsAdditional", fieldHashtable);
 		}
 		#endregion
 
@@ -618,6 +645,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentReportIssueInDispute' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessmentReportIssuesInDispute
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AssessmentReportIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportIssueInDisputeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AssessmentReportIssuesInDispute")[0], (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, (int)PsychologicalServices.Data.EntityType.AssessmentReportIssueInDisputeEntity, 0, null, null, null, null, "AssessmentReportIssuesInDispute", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
@@ -702,6 +740,32 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AssessmentReportFieldIndex.ReportTypeId, value); }
 		}
 
+		/// <summary> The IsAdditional property of the Entity AssessmentReport<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AssessmentReports"."IsAdditional"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean IsAdditional
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentReportFieldIndex.IsAdditional, true); }
+			set	{ SetValue((int)AssessmentReportFieldIndex.IsAdditional, value); }
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentReportIssueInDisputeEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AssessmentReportIssueInDisputeEntity))]
+		public virtual EntityCollection<AssessmentReportIssueInDisputeEntity> AssessmentReportIssuesInDispute
+		{
+			get
+			{
+				if(_assessmentReportIssuesInDispute==null)
+				{
+					_assessmentReportIssuesInDispute = new EntityCollection<AssessmentReportIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportIssueInDisputeEntityFactory)));
+					_assessmentReportIssuesInDispute.SetContainingEntityInfo(this, "AssessmentReport");
+				}
+				return _assessmentReportIssuesInDispute;
+			}
+		}
 
 
 		/// <summary> Gets / sets related entity of type 'AssessmentEntity' which has to be set using a fetch action earlier. If no related entity

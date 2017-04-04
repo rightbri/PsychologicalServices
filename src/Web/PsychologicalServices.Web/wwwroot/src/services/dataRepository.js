@@ -42,6 +42,8 @@ export class DataRepository {
 					response(response) {
 						if (!response.ok) {
 							self.notifier.error('Error: ' + response.status + ' - ' + response.statusText);
+							
+							self.authContext.logout().then(() => self.authContext.login());
 						}
 						return response;
 					}

@@ -30,7 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-
+			toReturn.Add(this.AssessmentReportIssueInDisputeEntityUsingReportId);
 
 			toReturn.Add(this.AssessmentEntityUsingAssessmentId);
 			toReturn.Add(this.ReportTypeEntityUsingReportTypeId);
@@ -39,6 +39,20 @@ namespace PsychologicalServices.Data.RelationClasses
 
 		#region Class Property Declarations
 
+		/// <summary>Returns a new IEntityRelation object, between AssessmentReportEntity and AssessmentReportIssueInDisputeEntity over the 1:n relation they have, using the relation between the fields:
+		/// AssessmentReport.ReportId - AssessmentReportIssueInDispute.ReportId
+		/// </summary>
+		public virtual IEntityRelation AssessmentReportIssueInDisputeEntityUsingReportId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentReportIssuesInDispute" , true);
+				relation.AddEntityFieldPair(AssessmentReportFields.ReportId, AssessmentReportIssueInDisputeFields.ReportId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentReportEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentReportIssueInDisputeEntity", false);
+				return relation;
+			}
+		}
 
 
 		/// <summary>Returns a new IEntityRelation object, between AssessmentReportEntity and AssessmentEntity over the m:1 relation they have, using the relation between the fields:

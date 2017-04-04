@@ -48,7 +48,7 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="referralType">Referral Type</label>
-				<select id="referralType" class="form-control" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher" change.delegate="referralTypeChanged()">
+				<select id="referralType" class="form-control" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher">
 					<option></option>
 					<option repeat.for="referralType of referralTypes" model.bind="referralType">
 						${referralType.name}
@@ -104,39 +104,14 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-xs-2">
-			<label>Issues in Dispute</label>
-			<p class="form-control-static" if.bind="!(issuesInDispute && issuesInDispute.length > 0)">
-				N/A
-			</p>
-			<div class="checkbox" repeat.for="issueInDispute of issuesInDispute">
-				<label>
-					<input type="checkbox" model.bind="issueInDispute" checked.bind="assessment.issuesInDispute" matcher.bind="issueInDisputeMatcher" change.delegate="checkMedRehab()" />&nbsp;${issueInDispute.name}
-				</label>
-			</div>
-		</div>
-		<div class="col-xs-2">
-			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[2,6]">
+		<div class="col-xs-3">
+			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:getAttributeTypeIds(assessment.assessmentType.attributeTypes)">
 				<label>
 					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-2">
-			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[4]">
-				<label>
-					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
-				</label>
-			</div>
-		</div>
-		<div class="col-xs-2">
-			<div class="checkbox" repeat.for="attribute of attributes | attributeTypes:[5]">
-				<label>
-					<input type="checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
-				</label>
-			</div>
-		</div>
-		<div class="col-xs-1">
+		<div class="col-xs-3">
 			<label>Colors</label>
 			<div class="checkbox" repeat.for="color of colors">
 				<label>
@@ -195,10 +170,7 @@
 				</button>
 			</div>
 		</div>
-	</div>
-		
-	<div class="row">
-		<div class="col-xs-9">
+		<div class="col-xs-6">
 			<table class="table table-striped table-condensed">
 				<caption>Claims</caption>
 				<thead>
@@ -275,18 +247,38 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-xs-2">
+		<div class="col-xs-5">
 			<table class="table table-striped table-condensed">
 				<caption>Reports</caption>
 				<thead>
 					<tr>
+						<th>
+							<button type="button" class="btn btn-default" click.delegate="newReport()">
+								<i class="fa fa-plus"></i>
+							</button>
+						</th>
 						<th>Report Type</th>
+						<th>Issues In Dispute</th>
+						<th>Extra Benefit Report</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr repeat.for="report of assessment.reports">
+						<td>
+							<button type="button" class="btn btn-default" click.delegate="editReport(report)">
+								<i class="fa fa-edit"></i>
+							</button>
+						</td>
 						<td>${report.reportType.name}</td>
+						<td>
+							<ul class="list-unstyled smaller-children">
+								<li repeat.for="issueInDispute of report.issuesInDispute">
+									${issueInDispute.name}
+								</li>
+							</ul>
+						</td>
+						<td>${report.isAdditional | boolean}</td>
 						<td>
 							<button type="button" class="btn btn-danger btn-xs" click.delegate="removeReport(report)">
 								<i class="fa fa-times"></i>
@@ -295,19 +287,6 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div class="col-xs-2">
-			<div class="dropdown">
-				<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					Add Report
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li repeat.for="reportType of reportTypes">
-						<a click.delegate="addReport(reportType)">${reportType.name}</a>
-					</li>
-				</ul>
-			</div>
 		</div>
 		<div class="col-xs-2">
 			<div class="form-group">

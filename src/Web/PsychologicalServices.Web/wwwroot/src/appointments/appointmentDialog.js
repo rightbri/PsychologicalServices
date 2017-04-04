@@ -44,7 +44,9 @@ export class AppointmentDialog {
 				availableDate: this.appointmentDate
 			}).then(data => this.psychologists = data),
 			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
-			this.dataRepository.searchAddress().then(data => this.addresses = data),
+			this.dataRepository.searchAddress({
+				addressTypeIds: this.config.appointmentDefaults.addressTypeIds
+			}).then(data => this.addresses = data),
 			this.dataRepository.searchAttributes({
 				companyIds: [this.context.user.company.companyId],
 				attributeTypeIds: this.config.appointmentDefaults.attributeTypeIds,

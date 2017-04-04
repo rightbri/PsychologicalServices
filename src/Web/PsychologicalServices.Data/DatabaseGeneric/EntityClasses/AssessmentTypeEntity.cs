@@ -38,7 +38,9 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AssessmentEntity> _assessments;
+		private EntityCollection<AssessmentTypeAttributeTypeEntity> _assessmentTypeAttributeTypes;
 		private EntityCollection<AssessmentTypeReportTypeEntity> _assessmentTypeReportTypes;
+
 
 
 
@@ -63,8 +65,11 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			/// <summary>Member name Assessments</summary>
 			public static readonly string Assessments = "Assessments";
+			/// <summary>Member name AssessmentTypeAttributeTypes</summary>
+			public static readonly string AssessmentTypeAttributeTypes = "AssessmentTypeAttributeTypes";
 			/// <summary>Member name AssessmentTypeReportTypes</summary>
 			public static readonly string AssessmentTypeReportTypes = "AssessmentTypeReportTypes";
+
 
 
 
@@ -132,7 +137,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
+				_assessmentTypeAttributeTypes = (EntityCollection<AssessmentTypeAttributeTypeEntity>)info.GetValue("_assessmentTypeAttributeTypes", typeof(EntityCollection<AssessmentTypeAttributeTypeEntity>));
 				_assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>)info.GetValue("_assessmentTypeReportTypes", typeof(EntityCollection<AssessmentTypeReportTypeEntity>));
+
 
 
 
@@ -182,9 +189,13 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessments":
 					this.Assessments.Add((AssessmentEntity)entity);
 					break;
+				case "AssessmentTypeAttributeTypes":
+					this.AssessmentTypeAttributeTypes.Add((AssessmentTypeAttributeTypeEntity)entity);
+					break;
 				case "AssessmentTypeReportTypes":
 					this.AssessmentTypeReportTypes.Add((AssessmentTypeReportTypeEntity)entity);
 					break;
+
 
 
 
@@ -218,9 +229,13 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessments":
 					toReturn.Add(AssessmentTypeEntity.Relations.AssessmentEntityUsingAssessmentTypeId);
 					break;
+				case "AssessmentTypeAttributeTypes":
+					toReturn.Add(AssessmentTypeEntity.Relations.AssessmentTypeAttributeTypeEntityUsingAssessmentTypeId);
+					break;
 				case "AssessmentTypeReportTypes":
 					toReturn.Add(AssessmentTypeEntity.Relations.AssessmentTypeReportTypeEntityUsingAssessmentTypeId);
 					break;
+
 
 
 
@@ -268,6 +283,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessments":
 					this.Assessments.Add((AssessmentEntity)relatedEntity);
 					break;
+				case "AssessmentTypeAttributeTypes":
+					this.AssessmentTypeAttributeTypes.Add((AssessmentTypeAttributeTypeEntity)relatedEntity);
+					break;
 				case "AssessmentTypeReportTypes":
 					this.AssessmentTypeReportTypes.Add((AssessmentTypeReportTypeEntity)relatedEntity);
 					break;
@@ -289,6 +307,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 				case "Assessments":
 					base.PerformRelatedEntityRemoval(this.Assessments, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "AssessmentTypeAttributeTypes":
+					base.PerformRelatedEntityRemoval(this.AssessmentTypeAttributeTypes, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "AssessmentTypeReportTypes":
 					base.PerformRelatedEntityRemoval(this.AssessmentTypeReportTypes, relatedEntity, signalRelatedEntityManyToOne);
@@ -325,6 +346,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Assessments);
+			toReturn.Add(this.AssessmentTypeAttributeTypes);
 			toReturn.Add(this.AssessmentTypeReportTypes);
 
 			return toReturn;
@@ -341,7 +363,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_assessments", ((_assessments!=null) && (_assessments.Count>0) && !this.MarkedForDeletion)?_assessments:null);
+				info.AddValue("_assessmentTypeAttributeTypes", ((_assessmentTypeAttributeTypes!=null) && (_assessmentTypeAttributeTypes.Count>0) && !this.MarkedForDeletion)?_assessmentTypeAttributeTypes:null);
 				info.AddValue("_assessmentTypeReportTypes", ((_assessmentTypeReportTypes!=null) && (_assessmentTypeReportTypes.Count>0) && !this.MarkedForDeletion)?_assessmentTypeReportTypes:null);
+
 
 
 
@@ -396,6 +420,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'AssessmentTypeAttributeType' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentTypeAttributeTypes()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTypeAttributeTypeFields.AssessmentTypeId, null, ComparisonOperator.Equal, this.AssessmentTypeId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'AssessmentTypeReportType' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoAssessmentTypeReportTypes()
@@ -404,6 +438,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTypeReportTypeFields.AssessmentTypeId, null, ComparisonOperator.Equal, this.AssessmentTypeId));
 			return bucket;
 		}
+
 
 
 
@@ -442,7 +477,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._assessments);
+			collectionsQueue.Enqueue(this._assessmentTypeAttributeTypes);
 			collectionsQueue.Enqueue(this._assessmentTypeReportTypes);
+
 
 
 
@@ -458,7 +495,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
+			this._assessmentTypeAttributeTypes = (EntityCollection<AssessmentTypeAttributeTypeEntity>) collectionsQueue.Dequeue();
 			this._assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -476,10 +515,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._assessmentTypeAttributeTypes != null)
+			{
+				return true;
+			}
 			if (this._assessmentTypeReportTypes != null)
 			{
 				return true;
 			}
+
 
 
 
@@ -497,7 +541,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeAttributeTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeAttributeTypeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeReportTypeEntityFactory))) : null);
+
 
 
 
@@ -516,7 +562,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
 			toReturn.Add("Assessments", _assessments);
+			toReturn.Add("AssessmentTypeAttributeTypes", _assessmentTypeAttributeTypes);
 			toReturn.Add("AssessmentTypeReportTypes", _assessmentTypeReportTypes);
+
 
 
 
@@ -535,10 +583,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_assessments.ActiveContext = base.ActiveContext;
 			}
+			if(_assessmentTypeAttributeTypes!=null)
+			{
+				_assessmentTypeAttributeTypes.ActiveContext = base.ActiveContext;
+			}
 			if(_assessmentTypeReportTypes!=null)
 			{
 				_assessmentTypeReportTypes.ActiveContext = base.ActiveContext;
 			}
+
 
 
 
@@ -555,7 +608,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_assessments = null;
+			_assessmentTypeAttributeTypes = null;
 			_assessmentTypeReportTypes = null;
+
 
 
 
@@ -589,9 +644,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Description", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Duration", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
@@ -643,6 +695,17 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("Assessments")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentTypeAttributeType' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessmentTypeAttributeTypes
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AssessmentTypeAttributeTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeAttributeTypeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AssessmentTypeAttributeTypes")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeAttributeTypeEntity, 0, null, null, null, null, "AssessmentTypeAttributeTypes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentTypeReportType' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -654,6 +717,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("AssessmentTypeReportTypes")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity, 0, null, null, null, null, "AssessmentTypeReportTypes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
 
 
 
@@ -721,17 +785,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AssessmentTypeFieldIndex.Description, value); }
 		}
 
-		/// <summary> The Duration property of the Entity AssessmentType<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentTypes"."Duration"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 Duration
-		{
-			get { return (System.Int32)GetValue((int)AssessmentTypeFieldIndex.Duration, true); }
-			set	{ SetValue((int)AssessmentTypeFieldIndex.Duration, value); }
-		}
-
 		/// <summary> The IsActive property of the Entity AssessmentType<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "AssessmentTypes"."IsActive"<br/>
@@ -759,6 +812,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentTypeAttributeTypeEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AssessmentTypeAttributeTypeEntity))]
+		public virtual EntityCollection<AssessmentTypeAttributeTypeEntity> AssessmentTypeAttributeTypes
+		{
+			get
+			{
+				if(_assessmentTypeAttributeTypes==null)
+				{
+					_assessmentTypeAttributeTypes = new EntityCollection<AssessmentTypeAttributeTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeAttributeTypeEntityFactory)));
+					_assessmentTypeAttributeTypes.SetContainingEntityInfo(this, "AssessmentType");
+				}
+				return _assessmentTypeAttributeTypes;
+			}
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentTypeReportTypeEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AssessmentTypeReportTypeEntity))]
@@ -774,6 +843,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _assessmentTypeReportTypes;
 			}
 		}
+
 
 
 

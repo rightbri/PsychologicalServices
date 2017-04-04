@@ -8,8 +8,6 @@ namespace PsychologicalServices.Models.Reports
 
         public string Name { get; set; }
 
-        public int NumberOfReports { get; set; }
-
         public bool IsActive { get; set; }
 
         public bool IsNew()

@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (41 + 0));
+			base.InitClass( (46 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -66,11 +66,12 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAssessmentAttributeEntityInfos();
 			InitAssessmentClaimEntityInfos();
 			InitAssessmentColorEntityInfos();
-			InitAssessmentIssueInDisputeEntityInfos();
 			InitAssessmentMedRehabEntityInfos();
 			InitAssessmentNoteEntityInfos();
 			InitAssessmentReportEntityInfos();
+			InitAssessmentReportIssueInDisputeEntityInfos();
 			InitAssessmentTypeEntityInfos();
+			InitAssessmentTypeAttributeTypeEntityInfos();
 			InitAssessmentTypeReportTypeEntityInfos();
 			InitAttributeEntityInfos();
 			InitAttributeTypeEntityInfos();
@@ -81,7 +82,11 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitColorEntityInfos();
 			InitCompanyEntityInfos();
 			InitCompanyAttributeEntityInfos();
+			InitInvoiceEntityInfos();
 			InitInvoiceAmountEntityInfos();
+			InitInvoiceLineEntityInfos();
+			InitInvoiceStatusEntityInfos();
+			InitInvoiceStatusChangeEntityInfos();
 			InitIssueInDisputeEntityInfos();
 			InitNoteEntityInfos();
 			InitReferralSourceEntityInfos();
@@ -147,6 +152,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AppointmentStatusEntity", "Description", typeof(System.String), false, false, false, true,  (int)AppointmentStatusFieldIndex.Description, 100, 0, 0);
 			base.AddElementFieldInfo("AppointmentStatusEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("AppointmentStatusEntity", "NotifyReferralSource", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.NotifyReferralSource, 0, 0, 0);
+			base.AddElementFieldInfo("AppointmentStatusEntity", "CanInvoice", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.CanInvoice, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentEntity's FieldInfo objects</summary>
 		private void InitAssessmentEntityInfos()
@@ -184,12 +190,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentColorEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentColorFieldIndex.AssessmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentColorEntity", "ColorId", typeof(System.Int32), true, true, false, false,  (int)AssessmentColorFieldIndex.ColorId, 0, 0, 10);
 		}
-		/// <summary>Inits AssessmentIssueInDisputeEntity's FieldInfo objects</summary>
-		private void InitAssessmentIssueInDisputeEntityInfos()
-		{
-			base.AddElementFieldInfo("AssessmentIssueInDisputeEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentIssueInDisputeFieldIndex.AssessmentId, 0, 0, 10);
-			base.AddElementFieldInfo("AssessmentIssueInDisputeEntity", "IssueIsDisputeId", typeof(System.Int32), true, true, false, false,  (int)AssessmentIssueInDisputeFieldIndex.IssueIsDisputeId, 0, 0, 10);
-		}
 		/// <summary>Inits AssessmentMedRehabEntity's FieldInfo objects</summary>
 		private void InitAssessmentMedRehabEntityInfos()
 		{
@@ -212,6 +212,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentReportEntity", "ReportId", typeof(System.Int32), true, false, true, false,  (int)AssessmentReportFieldIndex.ReportId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentReportEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)AssessmentReportFieldIndex.AssessmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentReportEntity", "ReportTypeId", typeof(System.Int32), false, true, false, false,  (int)AssessmentReportFieldIndex.ReportTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentReportEntity", "IsAdditional", typeof(System.Boolean), false, false, false, false,  (int)AssessmentReportFieldIndex.IsAdditional, 0, 0, 0);
+		}
+		/// <summary>Inits AssessmentReportIssueInDisputeEntity's FieldInfo objects</summary>
+		private void InitAssessmentReportIssueInDisputeEntityInfos()
+		{
+			base.AddElementFieldInfo("AssessmentReportIssueInDisputeEntity", "ReportId", typeof(System.Int32), true, true, false, false,  (int)AssessmentReportIssueInDisputeFieldIndex.ReportId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentReportIssueInDisputeEntity", "IssueInDisputeId", typeof(System.Int32), true, true, false, false,  (int)AssessmentReportIssueInDisputeFieldIndex.IssueInDisputeId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentTypeEntity's FieldInfo objects</summary>
 		private void InitAssessmentTypeEntityInfos()
@@ -219,8 +226,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentTypeEntity", "AssessmentTypeId", typeof(System.Int32), true, false, true, false,  (int)AssessmentTypeFieldIndex.AssessmentTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)AssessmentTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("AssessmentTypeEntity", "Description", typeof(System.String), false, false, false, true,  (int)AssessmentTypeFieldIndex.Description, 100, 0, 0);
-			base.AddElementFieldInfo("AssessmentTypeEntity", "Duration", typeof(System.Int32), false, false, false, false,  (int)AssessmentTypeFieldIndex.Duration, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AssessmentTypeFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits AssessmentTypeAttributeTypeEntity's FieldInfo objects</summary>
+		private void InitAssessmentTypeAttributeTypeEntityInfos()
+		{
+			base.AddElementFieldInfo("AssessmentTypeAttributeTypeEntity", "AssessmentTypeId", typeof(System.Int32), true, true, false, false,  (int)AssessmentTypeAttributeTypeFieldIndex.AssessmentTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentTypeAttributeTypeEntity", "AttributeTypeId", typeof(System.Int32), true, true, false, false,  (int)AssessmentTypeAttributeTypeFieldIndex.AttributeTypeId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentTypeReportTypeEntity's FieldInfo objects</summary>
 		private void InitAssessmentTypeReportTypeEntityInfos()
@@ -294,12 +306,26 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("CompanyEntity", "CompanyId", typeof(System.Int32), true, false, true, false,  (int)CompanyFieldIndex.CompanyId, 0, 0, 10);
 			base.AddElementFieldInfo("CompanyEntity", "Name", typeof(System.String), false, false, false, false,  (int)CompanyFieldIndex.Name, 100, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)CompanyFieldIndex.IsActive, 0, 0, 0);
+			base.AddElementFieldInfo("CompanyEntity", "AddressId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.AddressId, 0, 0, 10);
 		}
 		/// <summary>Inits CompanyAttributeEntity's FieldInfo objects</summary>
 		private void InitCompanyAttributeEntityInfos()
 		{
 			base.AddElementFieldInfo("CompanyAttributeEntity", "CompanyId", typeof(System.Int32), true, true, false, false,  (int)CompanyAttributeFieldIndex.CompanyId, 0, 0, 10);
 			base.AddElementFieldInfo("CompanyAttributeEntity", "AttributeId", typeof(System.Int32), true, true, false, false,  (int)CompanyAttributeFieldIndex.AttributeId, 0, 0, 10);
+		}
+		/// <summary>Inits InvoiceEntity's FieldInfo objects</summary>
+		private void InitInvoiceEntityInfos()
+		{
+			base.AddElementFieldInfo("InvoiceEntity", "InvoiceId", typeof(System.Int32), true, false, true, false,  (int)InvoiceFieldIndex.InvoiceId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceEntity", "Identifier", typeof(System.String), false, false, false, false,  (int)InvoiceFieldIndex.Identifier, 20, 0, 0);
+			base.AddElementFieldInfo("InvoiceEntity", "InvoiceDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceFieldIndex.InvoiceDate, 0, 0, 0);
+			base.AddElementFieldInfo("InvoiceEntity", "AppointmentId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.AppointmentId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceEntity", "InvoiceStatusId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.InvoiceStatusId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceFieldIndex.UpdateDate, 0, 0, 0);
+			base.AddElementFieldInfo("InvoiceEntity", "TaxRate", typeof(System.Decimal), false, false, false, false,  (int)InvoiceFieldIndex.TaxRate, 0, 4, 18);
+			base.AddElementFieldInfo("InvoiceEntity", "Total", typeof(Nullable<System.Decimal>), false, false, false, true,  (int)InvoiceFieldIndex.Total, 0, 4, 18);
+			base.AddElementFieldInfo("InvoiceEntity", "ModifiedTotal", typeof(Nullable<System.Decimal>), false, false, false, true,  (int)InvoiceFieldIndex.ModifiedTotal, 0, 4, 18);
 		}
 		/// <summary>Inits InvoiceAmountEntity's FieldInfo objects</summary>
 		private void InitInvoiceAmountEntityInfos()
@@ -309,13 +335,36 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceAmountEntity", "FirstReportAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceAmountFieldIndex.FirstReportAmount, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceAmountEntity", "AdditionalReportAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceAmountFieldIndex.AdditionalReportAmount, 0, 0, 10);
 		}
+		/// <summary>Inits InvoiceLineEntity's FieldInfo objects</summary>
+		private void InitInvoiceLineEntityInfos()
+		{
+			base.AddElementFieldInfo("InvoiceLineEntity", "InvoiceLineId", typeof(System.Int32), true, false, true, false,  (int)InvoiceLineFieldIndex.InvoiceLineId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceLineEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineFieldIndex.InvoiceId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceLineEntity", "Description", typeof(System.String), false, false, false, false,  (int)InvoiceLineFieldIndex.Description, 100, 0, 0);
+			base.AddElementFieldInfo("InvoiceLineEntity", "Amount", typeof(System.Decimal), false, false, false, false,  (int)InvoiceLineFieldIndex.Amount, 0, 4, 18);
+		}
+		/// <summary>Inits InvoiceStatusEntity's FieldInfo objects</summary>
+		private void InitInvoiceStatusEntityInfos()
+		{
+			base.AddElementFieldInfo("InvoiceStatusEntity", "InvoiceStatusId", typeof(System.Int32), true, false, true, false,  (int)InvoiceStatusFieldIndex.InvoiceStatusId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceStatusEntity", "Name", typeof(System.String), false, false, false, false,  (int)InvoiceStatusFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("InvoiceStatusEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)InvoiceStatusFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits InvoiceStatusChangeEntity's FieldInfo objects</summary>
+		private void InitInvoiceStatusChangeEntityInfos()
+		{
+			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "InvoiceStatusChangeId", typeof(System.Int32), true, false, true, false,  (int)InvoiceStatusChangeFieldIndex.InvoiceStatusChangeId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceStatusChangeFieldIndex.InvoiceId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "InvoiceStatusId", typeof(System.Int32), false, true, false, false,  (int)InvoiceStatusChangeFieldIndex.InvoiceStatusId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceStatusChangeFieldIndex.UpdateDate, 0, 0, 0);
+		}
 		/// <summary>Inits IssueInDisputeEntity's FieldInfo objects</summary>
 		private void InitIssueInDisputeEntityInfos()
 		{
 			base.AddElementFieldInfo("IssueInDisputeEntity", "IssueInDisputeId", typeof(System.Int32), true, false, true, false,  (int)IssueInDisputeFieldIndex.IssueInDisputeId, 0, 0, 10);
 			base.AddElementFieldInfo("IssueInDisputeEntity", "Name", typeof(System.String), false, false, false, false,  (int)IssueInDisputeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("IssueInDisputeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)IssueInDisputeFieldIndex.IsActive, 0, 0, 0);
-			base.AddElementFieldInfo("IssueInDisputeEntity", "Instructions", typeof(System.String), false, false, false, true,  (int)IssueInDisputeFieldIndex.Instructions, 50, 0, 0);
+			base.AddElementFieldInfo("IssueInDisputeEntity", "AdditionalFee", typeof(System.Decimal), false, false, false, false,  (int)IssueInDisputeFieldIndex.AdditionalFee, 0, 4, 18);
 		}
 		/// <summary>Inits NoteEntity's FieldInfo objects</summary>
 		private void InitNoteEntityInfos()
@@ -337,6 +386,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ReferralSourceEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ReferralSourceFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("ReferralSourceEntity", "LargeFileSize", typeof(System.Int32), false, false, false, false,  (int)ReferralSourceFieldIndex.LargeFileSize, 0, 0, 10);
 			base.AddElementFieldInfo("ReferralSourceEntity", "LargeFileFeeAmount", typeof(System.Int32), false, false, false, false,  (int)ReferralSourceFieldIndex.LargeFileFeeAmount, 0, 0, 10);
+			base.AddElementFieldInfo("ReferralSourceEntity", "AddressId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ReferralSourceFieldIndex.AddressId, 0, 0, 10);
 		}
 		/// <summary>Inits ReferralSourceTypeEntity's FieldInfo objects</summary>
 		private void InitReferralSourceTypeEntityInfos()
@@ -371,7 +421,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ReportTypeEntity", "ReportTypeId", typeof(System.Int32), true, false, true, false,  (int)ReportTypeFieldIndex.ReportTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("ReportTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)ReportTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("ReportTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ReportTypeFieldIndex.IsActive, 0, 0, 0);
-			base.AddElementFieldInfo("ReportTypeEntity", "NumberOfReports", typeof(System.Int32), false, false, false, false,  (int)ReportTypeFieldIndex.NumberOfReports, 0, 0, 10);
 		}
 		/// <summary>Inits RightEntity's FieldInfo objects</summary>
 		private void InitRightEntityInfos()

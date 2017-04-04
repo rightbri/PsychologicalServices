@@ -144,7 +144,6 @@
 			<th>Report Status</th>
 			<th>File Size</th>
 			<th>Reports</th>
-			<th>Issues In Dispute</th>
 			<th>Info</th>
 		</tr>
 	</thead>
@@ -190,12 +189,14 @@
 			<td>${appointment.assessment.fileSize}<span if.bind="appointment.assessment.isLargeFile">(L)</span></td>
 			<td>
 				<ul class="list-unstyled smaller-children">
-					<li repeat.for="report of appointment.assessment.reports">${report.reportType.name}</li>
-				</ul>
-			</td>
-			<td>
-				<ul class="list-unstyled smaller-children">
-					<li repeat.for="issueInDispute of appointment.assessment.issuesInDispute">${issueInDispute.name}</li>
+					<li repeat.for="report of appointment.assessment.reports">
+						${report.reportType.name}
+						<ul class="smaller-children">
+							<li repeat.for="issueInDispute of report.issuesInDispute">
+								${issueInDispute.name}
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</td>
 			<td>

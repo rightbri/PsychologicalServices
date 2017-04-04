@@ -34,7 +34,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
 			toReturn.Add(this.UserEntityUsingCompanyId);
 
-
+			toReturn.Add(this.AddressEntityUsingAddressId);
 			return toReturn;
 		}
 
@@ -86,6 +86,20 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
+		/// Company.AddressId - Address.AddressId
+		/// </summary>
+		public virtual IEntityRelation AddressEntityUsingAddressId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
+				relation.AddEntityFieldPair(AddressFields.AddressId, CompanyFields.AddressId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				return relation;
+			}
+		}
 
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }

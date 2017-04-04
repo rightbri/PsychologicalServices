@@ -25,6 +25,10 @@ namespace PsychologicalServices.Infrastructure.Referrals
             ReferralSourcePath =
                 (referralSourcePath => referralSourcePath
                     .Prefetch<ReferralSourceTypeEntity>(referralSource => referralSource.ReferralSourceType)
+                    .Prefetch<AddressEntity>(referralSource => referralSource.Address)
+                        .SubPath(addressPath => addressPath
+                            .Prefetch<CityEntity>(address => address.City)
+                        )
                     .Prefetch<InvoiceAmountEntity>(referralSource => referralSource.InvoiceAmounts)
                         .SubPath(invoiceAmountPath => invoiceAmountPath
                             .Prefetch<ReportTypeEntity>(invoiceAmount => invoiceAmount.ReportType)
@@ -190,6 +194,15 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 entity.LargeFileFeeAmount = referralSource.LargeFileFeeAmount;
                 entity.IsActive = referralSource.IsActive;
 
+                if (null == referralSource.Address)
+                {
+                    entity.SetNewFieldValue((int)ReferralSourceFieldIndex.AddressId, null);
+                }
+                else
+                {
+                    entity.AddressId = referralSource.Address.AddressId;
+                }
+                
                 #region invoice amounts
 
                 var invoiceAmountsToAdd = referralSource.InvoiceAmounts

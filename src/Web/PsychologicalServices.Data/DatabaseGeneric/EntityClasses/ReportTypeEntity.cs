@@ -574,9 +574,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("NumberOfReports", fieldHashtable);
 		}
 		#endregion
 
@@ -708,17 +705,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)ReportTypeFieldIndex.IsActive, true); }
 			set	{ SetValue((int)ReportTypeFieldIndex.IsActive, value); }
-		}
-
-		/// <summary> The NumberOfReports property of the Entity ReportType<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportTypes"."NumberOfReports"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 NumberOfReports
-		{
-			get { return (System.Int32)GetValue((int)ReportTypeFieldIndex.NumberOfReports, true); }
-			set	{ SetValue((int)ReportTypeFieldIndex.NumberOfReports, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentReportEntity' which are related to this entity via a relation of type '1:n'.

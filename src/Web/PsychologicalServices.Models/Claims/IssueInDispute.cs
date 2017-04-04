@@ -8,9 +8,9 @@ namespace PsychologicalServices.Models.Claims
 
         public string Name { get; set; }
 
-        public string Instructions { get; set; }
-
         public bool IsActive { get; set; }
+
+        public decimal AdditionalFee { get; set; }
 
         public bool IsNew()
         {

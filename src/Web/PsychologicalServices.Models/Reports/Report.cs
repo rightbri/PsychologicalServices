@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Claims;
+using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Reports
 {
@@ -9,5 +11,9 @@ namespace PsychologicalServices.Models.Reports
         public ReportType ReportType { get; set; }
 
         public int AssessmentId { get; set; }
+
+        public bool IsAdditional { get; set; }
+
+        public IEnumerable<IssueInDispute> IssuesInDispute { get; set; }
     }
 }

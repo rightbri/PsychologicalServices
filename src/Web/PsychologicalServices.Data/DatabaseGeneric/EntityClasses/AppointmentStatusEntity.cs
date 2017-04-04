@@ -512,6 +512,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("NotifyReferralSource", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CanInvoice", fieldHashtable);
 		}
 		#endregion
 
@@ -644,6 +647,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AppointmentStatusFieldIndex.NotifyReferralSource, true); }
 			set	{ SetValue((int)AppointmentStatusFieldIndex.NotifyReferralSource, value); }
+		}
+
+		/// <summary> The CanInvoice property of the Entity AppointmentStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AppointmentStatuses"."CanInvoice"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean CanInvoice
+		{
+			get { return (System.Boolean)GetValue((int)AppointmentStatusFieldIndex.CanInvoice, true); }
+			set	{ SetValue((int)AppointmentStatusFieldIndex.CanInvoice, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.

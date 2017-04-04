@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentEntityUsingReferralSourceId);
 			toReturn.Add(this.InvoiceAmountEntityUsingReferralSourceId);
 
+			toReturn.Add(this.AddressEntityUsingAddressId);
 			toReturn.Add(this.ReferralSourceTypeEntityUsingReferralSourceTypeId);
 			return toReturn;
 		}
@@ -70,6 +71,20 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 
+		/// <summary>Returns a new IEntityRelation object, between ReferralSourceEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
+		/// ReferralSource.AddressId - Address.AddressId
+		/// </summary>
+		public virtual IEntityRelation AddressEntityUsingAddressId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
+				relation.AddEntityFieldPair(AddressFields.AddressId, ReferralSourceFields.AddressId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReferralSourceEntity", true);
+				return relation;
+			}
+		}
 		/// <summary>Returns a new IEntityRelation object, between ReferralSourceEntity and ReferralSourceTypeEntity over the m:1 relation they have, using the relation between the fields:
 		/// ReferralSource.ReferralSourceTypeId - ReferralSourceType.ReferralSourceTypeId
 		/// </summary>

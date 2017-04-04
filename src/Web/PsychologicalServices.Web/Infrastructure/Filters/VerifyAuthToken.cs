@@ -5,8 +5,10 @@ using PsychologicalServices.Web.Models;
 using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Web;
+using System.Web.Http;
 using System.Web.Http.Filters;
 
 namespace PsychologicalServices.Web.Infrastructure.Filters
@@ -21,6 +23,8 @@ namespace PsychologicalServices.Web.Infrastructure.Filters
 
         public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
+            base.OnAuthorization(actionContext);
+
             var authorized = false;
             
             if (null != actionContext.Request.Headers.Authorization)
@@ -47,10 +51,10 @@ namespace PsychologicalServices.Web.Infrastructure.Filters
 
             if (!authorized)
             {
-                throw new HttpException((int)HttpStatusCode.Unauthorized, "Unauthorized");
-            }
+                var message = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "Unauthorized" };
 
-            base.OnAuthorization(actionContext);
+                throw new HttpResponseException(message);
+            }
         }
     }
 }

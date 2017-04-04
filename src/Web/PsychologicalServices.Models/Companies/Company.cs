@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Addresses;
+using System;
 
 namespace PsychologicalServices.Models.Companies
 {
@@ -9,6 +10,8 @@ namespace PsychologicalServices.Models.Companies
         public string Name { get; set; }
 
         public bool IsActive { get; set; }
+
+        public Address Address { get; set; }
 
         public bool IsNew()
         {

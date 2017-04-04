@@ -106,6 +106,8 @@
     <Build Include="dbo\Tables\UserUnavailabilities.sql" />
     <Build Include="dbo\Tables\UserTravelFees.sql" />
     <Build Include="dbo\Tables\Cities.sql" />
+    <Build Include="dbo\Tables\UserNotes.sql" />
+    <Build Include="dbo\Tables\AssessmentTypeAttributeTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

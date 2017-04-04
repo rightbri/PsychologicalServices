@@ -59,9 +59,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AssessmentColorEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentColorEntity");
 					break;
-				case PsychologicalServices.Data.EntityType.AssessmentIssueInDisputeEntity:
-					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentIssueInDisputeEntity");
-					break;
 				case PsychologicalServices.Data.EntityType.AssessmentMedRehabEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentMedRehabEntity");
 					break;
@@ -71,8 +68,14 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AssessmentReportEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentReportEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.AssessmentReportIssueInDisputeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentReportIssueInDisputeEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentTypeEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentTypeAttributeTypeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentTypeAttributeTypeEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AssessmentTypeReportTypeEntity");
@@ -104,8 +107,20 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.CompanyAttributeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "CompanyAttributeEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceAmountEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceAmountEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceLineEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceStatusEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceStatusEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceStatusChangeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceStatusChangeEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.IssueInDisputeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "IssueInDisputeEntity");

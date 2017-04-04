@@ -38,6 +38,8 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentAttributeEntity> _appointmentAttributes;
+		private EntityCollection<InvoiceEntity> _invoices;
+
 
 		private AddressEntity _location;
 		private AppointmentStatusEntity _appointmentStatus;
@@ -69,6 +71,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Psychologist = "Psychologist";
 			/// <summary>Member name AppointmentAttributes</summary>
 			public static readonly string AppointmentAttributes = "AppointmentAttributes";
+			/// <summary>Member name Invoices</summary>
+			public static readonly string Invoices = "Invoices";
+
 
 
 		}
@@ -130,6 +135,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointmentAttributes = (EntityCollection<AppointmentAttributeEntity>)info.GetValue("_appointmentAttributes", typeof(EntityCollection<AppointmentAttributeEntity>));
+				_invoices = (EntityCollection<InvoiceEntity>)info.GetValue("_invoices", typeof(EntityCollection<InvoiceEntity>));
+
 
 				_location = (AddressEntity)info.GetValue("_location", typeof(AddressEntity));
 				if(_location!=null)
@@ -226,6 +233,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentAttributes":
 					this.AppointmentAttributes.Add((AppointmentAttributeEntity)entity);
 					break;
+				case "Invoices":
+					this.Invoices.Add((InvoiceEntity)entity);
+					break;
+
 
 
 				default:
@@ -267,6 +278,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentAttributes":
 					toReturn.Add(AppointmentEntity.Relations.AppointmentAttributeEntityUsingAppointmentId);
 					break;
+				case "Invoices":
+					toReturn.Add(AppointmentEntity.Relations.InvoiceEntityUsingAppointmentId);
+					break;
+
 
 
 				default:
@@ -328,6 +343,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentAttributes":
 					this.AppointmentAttributes.Add((AppointmentAttributeEntity)relatedEntity);
 					break;
+				case "Invoices":
+					this.Invoices.Add((InvoiceEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -360,6 +378,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AppointmentAttributes":
 					base.PerformRelatedEntityRemoval(this.AppointmentAttributes, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "Invoices":
+					base.PerformRelatedEntityRemoval(this.Invoices, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -412,6 +433,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.AppointmentAttributes);
+			toReturn.Add(this.Invoices);
 
 			return toReturn;
 		}
@@ -427,6 +449,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointmentAttributes", ((_appointmentAttributes!=null) && (_appointmentAttributes.Count>0) && !this.MarkedForDeletion)?_appointmentAttributes:null);
+				info.AddValue("_invoices", ((_invoices!=null) && (_invoices.Count>0) && !this.MarkedForDeletion)?_invoices:null);
+
 
 				info.AddValue("_location", (!this.MarkedForDeletion?_location:null));
 				info.AddValue("_appointmentStatus", (!this.MarkedForDeletion?_appointmentStatus:null));
@@ -477,6 +501,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentAttributeFields.AppointmentId, null, ComparisonOperator.Equal, this.AppointmentId));
 			return bucket;
 		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Invoice' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoices()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceFields.AppointmentId, null, ComparisonOperator.Equal, this.AppointmentId));
+			return bucket;
+		}
+
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
@@ -558,6 +593,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointmentAttributes);
+			collectionsQueue.Enqueue(this._invoices);
+
 
 		}
 		
@@ -567,6 +604,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointmentAttributes = (EntityCollection<AppointmentAttributeEntity>) collectionsQueue.Dequeue();
+			this._invoices = (EntityCollection<InvoiceEntity>) collectionsQueue.Dequeue();
+
 
 		}
 		
@@ -578,6 +617,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._invoices != null)
+			{
+				return true;
+			}
+
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -589,6 +633,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentAttributeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentAttributeEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))) : null);
+
 
 		}
 #endif
@@ -605,6 +651,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Psychometrist", _psychometrist);
 			toReturn.Add("Psychologist", _psychologist);
 			toReturn.Add("AppointmentAttributes", _appointmentAttributes);
+			toReturn.Add("Invoices", _invoices);
+
 
 
 			return toReturn;
@@ -617,6 +665,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointmentAttributes.ActiveContext = base.ActiveContext;
 			}
+			if(_invoices!=null)
+			{
+				_invoices.ActiveContext = base.ActiveContext;
+			}
+
 
 			if(_location!=null)
 			{
@@ -646,6 +699,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointmentAttributes = null;
+			_invoices = null;
+
 
 			_location = null;
 			_appointmentStatus = null;
@@ -904,6 +959,18 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("AppointmentAttributes")[0], (int)PsychologicalServices.Data.EntityType.AppointmentEntity, (int)PsychologicalServices.Data.EntityType.AppointmentAttributeEntity, 0, null, null, null, null, "AppointmentAttributes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Invoice' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoices
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Invoices")[0], (int)PsychologicalServices.Data.EntityType.AppointmentEntity, (int)PsychologicalServices.Data.EntityType.InvoiceEntity, 0, null, null, null, null, "Invoices", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
+
 
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
@@ -1094,6 +1161,23 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _appointmentAttributes;
 			}
 		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceEntity))]
+		public virtual EntityCollection<InvoiceEntity> Invoices
+		{
+			get
+			{
+				if(_invoices==null)
+				{
+					_invoices = new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory)));
+					_invoices.SetContainingEntityInfo(this, "Appointment");
+				}
+				return _invoices;
+			}
+		}
+
 
 
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity

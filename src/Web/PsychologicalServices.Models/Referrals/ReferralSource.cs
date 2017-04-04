@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Invoices;
+﻿using PsychologicalServices.Models.Addresses;
+using PsychologicalServices.Models.Invoices;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +18,8 @@ namespace PsychologicalServices.Models.Referrals
         public int LargeFileFeeAmount { get; set; }
 
         public bool IsActive { get; set; }
+
+        public Address Address { get; set; }
 
         public IEnumerable<InvoiceAmount> InvoiceAmounts { get; set; }
 

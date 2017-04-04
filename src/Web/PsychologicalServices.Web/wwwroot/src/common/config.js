@@ -37,7 +37,8 @@ export class Config {
 		
 		this.referralSourceDefaults = {
 			largeFileSize: 1000,
-			largeFileFeeAmount: 25000
+			largeFileFeeAmount: 25000,
+			'addressTypeIds': [2]
 		};
 		
 		this.addressDefaults = {
@@ -46,11 +47,12 @@ export class Config {
 		};
 		
 		this.appointmentDefaults = {
-			'attributeTypeIds': [1,3]
+			'attributeTypeIds': [1,3],
+			'addressTypeIds': [3]
 		};
 		
 		this.assessmentDefaults = {
-			'attributeTypeIds': [2,4,5,6]
+			'attributeTypeIds': [2,4,5,6,7,8]
 		};
 		
 		this.rights = {
