@@ -5,6 +5,7 @@ using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Invoices;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
@@ -15,13 +16,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
 {
     public class AssessmentRepository : RepositoryBase, IAssessmentRepository
     {
+        private readonly IInvoiceGenerator _invoiceGenerator = null;
         private readonly IDate _date = null;
 
         public AssessmentRepository(
             IDataAccessAdapterFactory adapterFactory,
+            IInvoiceGenerator invoiceGenerator,
             IDate date
         ) : base(adapterFactory)
         {
+            _invoiceGenerator = invoiceGenerator;
             _date = date;
         }
 
@@ -282,7 +286,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     var prefetch = new PrefetchPath2(EntityType.AssessmentEntity);
 
                     prefetch.Add(AssessmentEntity.PrefetchPathAppointments)
-                        .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentAttributes);
+                        .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentAttributes)
+                        .SubPath.Add(AppointmentEntity.PrefetchPathInvoices)
+                            .SubPath.Add(InvoiceEntity.PrefetchPathInvoiceLines);
                     
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentClaims)
                         .SubPath.Add(AssessmentClaimEntity.PrefetchPathClaim);
@@ -431,6 +437,13 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         PsychometristId = appointment.Psychometrist.UserId,
                     };
 
+                    if (appointment.AppointmentStatus.CanInvoice)
+                    {
+                        var invoice = _invoiceGenerator.CreateInvoice(appointment);
+
+                        appointmentEntity.Invoices.Add(invoice.ToInvoiceEntity());
+                    }
+                    
                     appointmentEntity.AppointmentAttributes.AddRange(
                         appointment.Attributes.Select(attribute =>
                             new AppointmentAttributeEntity
@@ -454,6 +467,13 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.PsychologistId = appointment.Psychologist.UserId;
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
 
+                    if (appointment.AppointmentStatus.CanInvoice && !appointmentEntity.Invoices.Any())
+                    {
+                        var invoice = _invoiceGenerator.CreateInvoice(appointment);
+
+                        appointmentEntity.Invoices.Add(invoice.ToInvoiceEntity());
+                    }
+                    
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
                             appointmentAttribute.AttributeId == attribute.AttributeId

@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace PsychologicalServices.Models.Invoices
     {
         Invoice GetInvoice(int id);
 
-        Invoice NewInvoice(int appointmentId);
+        Invoice NewInvoice(Appointment appointment);
 
         IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true);
 

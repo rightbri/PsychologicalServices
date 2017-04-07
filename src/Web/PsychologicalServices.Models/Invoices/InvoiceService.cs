@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Assessments;
+﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Common.Utility;
 using System;
@@ -9,21 +10,21 @@ namespace PsychologicalServices.Models.Invoices
 {
     public class InvoiceService : IInvoiceService
     {
-        private readonly IAssessmentRepository _assessmentRepository = null;
+        private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IInvoiceValidator _invoiceValidator = null;
         private readonly IInvoiceGenerator _invoiceGenerator = null;
         private readonly IDate _date = null;
 
         public InvoiceService(
-            IAssessmentRepository assessmentRepository,
+            IAppointmentRepository appointmentRepository,
             IInvoiceRepository invoiceRepository,
             IInvoiceValidator invoiceValidator,
             IInvoiceGenerator invoiceGenerator,
             IDate date
         )
         {
-            _assessmentRepository = assessmentRepository;
+            _appointmentRepository = appointmentRepository;
             _invoiceRepository = invoiceRepository;
             _invoiceValidator = invoiceValidator;
             _invoiceGenerator = invoiceGenerator;
@@ -37,11 +38,9 @@ namespace PsychologicalServices.Models.Invoices
             return invoice;
         }
 
-        public Invoice NewInvoice(int assessmentId)
+        public Invoice NewInvoice(Appointment appointment)
         {
-            var assessment = _assessmentRepository.GetAssessment(assessmentId);
-
-            var invoice = _invoiceGenerator.CreateInvoice(assessment);
+            var invoice = _invoiceGenerator.CreateInvoice(appointment);
 
             return invoice;
         }

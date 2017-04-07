@@ -18,5 +18,7 @@ namespace PsychologicalServices.Models.Invoices
         int GetInvoiceCount(int year, int month);
 
         int SaveInvoice(Invoice invoice);
+
+        decimal GetTaxRate();
     }
 }

@@ -535,6 +535,8 @@ namespace PsychologicalServices.Data
 		Description,
 		///<summary>Amount. </summary>
 		Amount,
+		///<summary>IsCustom. </summary>
+		IsCustom,
 		/// <summary></summary>
 		AmountOfFields
 	}

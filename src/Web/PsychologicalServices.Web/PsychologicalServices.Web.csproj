@@ -231,6 +231,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\AttributeController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\AttributeTypeController.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Controllers\IssueInDisputeController.cs" />
     <Compile Include="Controllers\ReferralSourceController.cs" />
     <Compile Include="Controllers\ColorController.cs" />
+    <Compile Include="Controllers\InvoiceStatusController.cs" />
     <Compile Include="Controllers\ReferralSourceTypeController.cs" />
     <Compile Include="Controllers\ReferralTypeController.cs" />
     <Compile Include="Controllers\ReportStatusController.cs" />

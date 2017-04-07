@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,17 @@ namespace PsychologicalServices.Models.Invoices
     {
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IUserRepository _userRepository = null;
+        private readonly IDate _date = null;
 
         public InvoiceGenerator(
             IInvoiceRepository invoiceRepository,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IDate date
         )
         {
             _invoiceRepository = invoiceRepository;
             _userRepository = userRepository;
+            _date = date;
         }
 
         //TODO: don't hard-code fake values
@@ -44,12 +48,18 @@ namespace PsychologicalServices.Models.Invoices
 
             var invoiceCount = _invoiceRepository.GetInvoiceCount(appointment.AppointmentTime.Year, appointment.AppointmentTime.Month);
 
+            var taxRate = _invoiceRepository.GetTaxRate();
+
+            var invoiceStatus = _invoiceRepository.GetInvoiceStatus(1); //TODO: don't hard-code id
+
             var invoice = new Invoice
             {
-                Identifier = string.Format("{0:YY-MM-}{1:00#}", appointment.AppointmentTime, invoiceCount + 1),
+                Identifier = string.Format("{0:yy-MM-}{1:00#}", appointment.AppointmentTime, invoiceCount + 1),
                 Appointment = appointment,
                 InvoiceDate = appointment.AppointmentTime.Date,
-                TaxRate = 0.10m,
+                InvoiceStatus = invoiceStatus,
+                TaxRate = taxRate,
+                UpdateDate = _date.UtcNow,
             };
 
             var lines = new List<InvoiceLine>();

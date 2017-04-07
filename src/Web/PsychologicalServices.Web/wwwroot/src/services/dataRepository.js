@@ -51,6 +51,22 @@ export class DataRepository {
 		});
 	}
 
+	getInvoice(id) {
+		return this.getSingleBasic(id, 'invoice');
+	}
+	
+	getInvoices(criteria) {
+		return this.searchBasic(criteria, 'invoice');
+	}
+	
+	saveInvoice(invoice) {
+		return this.saveBasic(invoice, 'invoice');
+	}
+	
+	getInvoiceStatuses() {
+		return this.getManyBasic('invoicestatus', true);
+	}
+	
 	getAppointment(id) {
 		return this.getSingleBasic(id, 'appointment');
 	}

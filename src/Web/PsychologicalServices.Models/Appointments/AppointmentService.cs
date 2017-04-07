@@ -59,17 +59,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria)
         {
-            try
-            {
-                var appointments = _appointmentRepository.GetAppointments(criteria);
-                return appointments;
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            return Enumerable.Empty<Appointment>();
+            var appointments = _appointmentRepository.GetAppointments(criteria);
+            return appointments;
         }
 
         public IEnumerable<AppointmentStatus> GetAppointmentStatuses(bool? isActive = true)

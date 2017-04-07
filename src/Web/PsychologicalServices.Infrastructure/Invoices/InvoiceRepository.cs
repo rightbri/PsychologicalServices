@@ -23,7 +23,28 @@ namespace PsychologicalServices.Infrastructure.Invoices
         #region Prefetch Paths
 
         private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
-            InvoicePath =
+            InvoiceListPath =
+                (invoicePath => invoicePath
+                    .Prefetch<InvoiceStatusEntity>(invoice => invoice.InvoiceStatus)
+                    .Prefetch<AppointmentEntity>(invoice => invoice.Appointment)
+                        .SubPath(appointmentPath => appointmentPath
+                            .Prefetch<AddressEntity>(appointment => appointment.Location)
+                            .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                                .SubPath(assessmentPath => assessmentPath
+                                    .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                                    .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                        .SubPath(assessmentClaimPath => assessmentClaimPath
+                                            .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                                .SubPath(claimPath => claimPath
+                                                    .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                                )
+                                        )
+                                )
+                        )
+                );
+
+        private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
+            InvoiceEditPath =
                 (invoicePath => invoicePath
                     .Prefetch<InvoiceLineEntity>(invoice => invoice.InvoiceLines)
                     .Prefetch<InvoiceStatusEntity>(invoice => invoice.InvoiceStatus)
@@ -90,7 +111,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 var meta = new LinqMetaData(adapter);
 
                 return meta.Invoice
-                    .WithPath(InvoicePath)
+                    .WithPath(InvoiceEditPath)
                     .Where(invoice => invoice.InvoiceId == id)
                     .SingleOrDefault()
                     .ToInvoice();
@@ -133,13 +154,28 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 var meta = new LinqMetaData(adapter);
 
                 var invoices = meta.Invoice
-                    .WithPath(InvoicePath);
+                    .WithPath(InvoiceListPath);
 
                 if (null != criteria)
                 {
                     if (criteria.AppointmentId.HasValue)
                     {
                         invoices = invoices.Where(invoice => invoice.AppointmentId == criteria.AppointmentId.Value);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(criteria.Identifier))
+                    {
+                        invoices = invoices.Where(invoice => invoice.Identifier.Contains(criteria.Identifier));
+                    }
+
+                    if (criteria.InvoiceDate.HasValue)
+                    {
+                        invoices = invoices.Where(invoice => invoice.InvoiceDate >= criteria.InvoiceDate.Value.Date && invoice.InvoiceDate < criteria.InvoiceDate.Value.Date.AddDays(1));
+                    }
+
+                    if (criteria.InvoiceStatusId.HasValue)
+                    {
+                        invoices = invoices.Where(invoice => invoice.InvoiceStatusId == criteria.InvoiceStatusId);
                     }
                 }
 
@@ -233,6 +269,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     {
                         Amount = line.Amount,
                         Description = line.Description,
+                        IsCustom = line.IsCustom,
                     })
                 );
 
@@ -273,6 +310,12 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     .Select(invoiceAmount => invoiceAmount.ToInvoiceAmount())
                     .ToList();
             }
+        }
+
+        public decimal GetTaxRate()
+        {
+            return 13.0m;   //TODO: retrieve from DB
+            throw new NotImplementedException();
         }
     }
 }

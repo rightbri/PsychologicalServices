@@ -364,11 +364,12 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits InvoiceLineEntity's mappings</summary>
 		private void InitInvoiceLineEntityMappings()
 		{
-			base.AddElementMapping( "InvoiceLineEntity", "PsychologicalServices", @"dbo", "InvoiceLines", 4 );
+			base.AddElementMapping( "InvoiceLineEntity", "PsychologicalServices", @"dbo", "InvoiceLines", 5 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "InvoiceLineId", "InvoiceLineId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "InvoiceId", "InvoiceId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "Amount", "Amount", false, (int)SqlDbType.Decimal, 0, 4, 18, false, "", null, typeof(System.Decimal), 3 );
+			base.AddElementFieldMapping( "InvoiceLineEntity", "IsCustom", "IsCustom", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
 		}
 		/// <summary>Inits InvoiceStatusEntity's mappings</summary>
 		private void InitInvoiceStatusEntityMappings()

@@ -474,6 +474,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Amount", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("IsCustom", fieldHashtable);
 		}
 		#endregion
 
@@ -624,6 +627,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Decimal)GetValue((int)InvoiceLineFieldIndex.Amount, true); }
 			set	{ SetValue((int)InvoiceLineFieldIndex.Amount, value); }
+		}
+
+		/// <summary> The IsCustom property of the Entity InvoiceLine<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceLines"."IsCustom"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean IsCustom
+		{
+			get { return (System.Boolean)GetValue((int)InvoiceLineFieldIndex.IsCustom, true); }
+			set	{ SetValue((int)InvoiceLineFieldIndex.IsCustom, value); }
 		}
 
 

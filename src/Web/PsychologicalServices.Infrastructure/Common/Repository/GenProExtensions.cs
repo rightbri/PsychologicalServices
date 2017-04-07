@@ -23,6 +23,31 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static InvoiceEntity ToInvoiceEntity(this Invoice invoice)
+        {
+            var invoiceEntity = new InvoiceEntity
+            {
+                Identifier = invoice.Identifier,
+                InvoiceDate = invoice.InvoiceDate,
+                InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId,
+                ModifiedTotal = invoice.ModifiedTotal,
+                TaxRate = invoice.TaxRate,
+                Total = invoice.Total,
+                UpdateDate = invoice.UpdateDate,
+            };
+
+            invoiceEntity.InvoiceLines.AddRange(
+                invoice.Lines.Select(line => new InvoiceLineEntity
+                {
+                    Amount = line.Amount,
+                    Description = line.Description,
+                    IsCustom = line.IsCustom,
+                })
+            );
+
+            return invoiceEntity;
+        }
+
         public static Invoice ToInvoice(this InvoiceEntity invoice)
         {
             return null != invoice
@@ -63,6 +88,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     InvoiceLineId = invoiceLine.InvoiceLineId,
                     Description = invoiceLine.Description,
                     Amount = invoiceLine.Amount,
+                    IsCustom = invoiceLine.IsCustom,
                 }
                 : null;
         }
