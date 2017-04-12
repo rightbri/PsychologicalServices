@@ -1,6 +1,7 @@
 <template>
 	<require from="valueConverters/date-format"></require>
 	<require from="valueConverters/sort-array"></require>
+	<require from="valueConverters/money"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-picker"></require>
 	
@@ -84,7 +85,7 @@
 					<tr repeat.for="travelFee of user.travelFees">
 						<td>${travelFee.city.name}</td>
 						<td>
-							<input type="number" class="form-control" value.bind="travelFee.amount" />
+							<input type="number" pattern="\d+" class="form-control" value.bind="travelFee.amount | money:'0'" />
 						</td>
 					</tr>
 				</tbody>

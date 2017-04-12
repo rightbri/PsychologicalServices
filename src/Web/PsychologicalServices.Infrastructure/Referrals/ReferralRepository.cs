@@ -29,12 +29,12 @@ namespace PsychologicalServices.Infrastructure.Referrals
                         .SubPath(addressPath => addressPath
                             .Prefetch<CityEntity>(address => address.City)
                         )
-                    .Prefetch<InvoiceAmountEntity>(referralSource => referralSource.InvoiceAmounts)
-                        .SubPath(invoiceAmountPath => invoiceAmountPath
-                            .Prefetch<ReportTypeEntity>(invoiceAmount => invoiceAmount.ReportType)
+                    .Prefetch<ReportTypeInvoiceAmountEntity>(referralSource => referralSource.ReportTypeInvoiceAmounts)
+                        .SubPath(reportTypeInvoiceAmountPath => reportTypeInvoiceAmountPath
+                            .Prefetch<ReportTypeEntity>(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ReportType)
                         )
                 );
-
+        
         private static readonly Func<IPathEdgeRootParser<ReferralTypeEntity>, IPathEdgeRootParser<ReferralTypeEntity>>
             ReferralTypePath =
                 (referralTypePath => referralTypePath
@@ -183,8 +183,8 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 {
                     var prefetch = new PrefetchPath2(EntityType.ReferralSourceEntity);
 
-                    prefetch.Add(ReferralSourceEntity.PrefetchPathInvoiceAmounts);
-                    
+                    prefetch.Add(ReferralSourceEntity.PrefetchPathReportTypeInvoiceAmounts);
+
                     adapter.FetchEntity(entity, prefetch);
                 }
 
@@ -202,58 +202,53 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 {
                     entity.AddressId = referralSource.Address.AddressId;
                 }
-                
-                #region invoice amounts
 
-                var invoiceAmountsToAdd = referralSource.InvoiceAmounts
-                    .Where(invoiceAmount =>
-                        !entity.InvoiceAmounts.Any(invoiceAmountEntity =>
-                            invoiceAmountEntity.ReportTypeId == invoiceAmount.ReportType.ReportTypeId
+                #region report type invoice amounts
+
+                var reportTypeInvoiceAmountsToAdd = referralSource.ReportTypeInvoiceAmounts
+                    .Where(reportTypeInvoiceAmount =>
+                        !entity.ReportTypeInvoiceAmounts.Any(reportTypeInvoiceAmountEntity =>
+                            reportTypeInvoiceAmountEntity.ReportTypeId == reportTypeInvoiceAmount.ReportType.ReportTypeId
                         )
                     );
 
-                var invoiceAmountsToRemove = entity.InvoiceAmounts
-                    .Where(invoiceAmountEntity =>
-                        !referralSource.InvoiceAmounts.Any(invoiceAmount =>
-                            invoiceAmount.ReportType.ReportTypeId == invoiceAmountEntity.ReportTypeId
+                var reportTypeInvoiceAmountsToRemove = entity.ReportTypeInvoiceAmounts
+                    .Where(reportTypeInvoiceAmountEntity =>
+                        !referralSource.ReportTypeInvoiceAmounts.Any(reportTypeInvoiceAmount =>
+                            reportTypeInvoiceAmount.ReportType.ReportTypeId == reportTypeInvoiceAmountEntity.ReportTypeId
                         )
                     );
 
-                var invoiceAmountsToUpdate = referralSource.InvoiceAmounts
-                    .Where(invoiceAmount =>
-                        entity.InvoiceAmounts.Any(invoiceAmountEntity =>
-                            invoiceAmountEntity.ReportTypeId == invoiceAmount.ReportType.ReportTypeId &&
-                            (
-                                invoiceAmountEntity.FirstReportAmount != invoiceAmount.FirstReportAmount ||
-                                invoiceAmountEntity.AdditionalReportAmount != invoiceAmount.AdditionalReportAmount
-                            )
+                var reportTypeInvoiceAmountsToUpdate = referralSource.ReportTypeInvoiceAmounts
+                    .Where(reportTypeInvoiceAmount =>
+                        entity.ReportTypeInvoiceAmounts.Any(reportTypeInvoiceAmountEntity =>
+                            reportTypeInvoiceAmountEntity.ReportTypeId == reportTypeInvoiceAmount.ReportType.ReportTypeId &&
+                            reportTypeInvoiceAmountEntity.InvoiceAmount != reportTypeInvoiceAmount.InvoiceAmount
                         )
                     );
 
-                foreach (var invoiceAmount in invoiceAmountsToRemove)
+                foreach (var invoiceAmount in reportTypeInvoiceAmountsToRemove)
                 {
                     uow.AddForDelete(invoiceAmount);
                 }
 
-                foreach (var invoiceAmount in invoiceAmountsToUpdate)
+                foreach (var invoiceAmount in reportTypeInvoiceAmountsToUpdate)
                 {
-                    var invoiceAmountEntity = entity.InvoiceAmounts
+                    var invoiceAmountEntity = entity.ReportTypeInvoiceAmounts
                         .Where(referralSourceInvoiceAmount => referralSourceInvoiceAmount.ReportTypeId == invoiceAmount.ReportType.ReportTypeId)
                         .SingleOrDefault();
 
                     if (null != invoiceAmountEntity)
                     {
-                        invoiceAmountEntity.FirstReportAmount = invoiceAmount.FirstReportAmount;
-                        invoiceAmountEntity.AdditionalReportAmount = invoiceAmountEntity.AdditionalReportAmount;
+                        invoiceAmountEntity.InvoiceAmount = invoiceAmount.InvoiceAmount;
                     }
                 }
 
-                entity.InvoiceAmounts.AddRange(
-                    invoiceAmountsToAdd.Select(invoiceAmount =>
-                    new InvoiceAmountEntity
+                entity.ReportTypeInvoiceAmounts.AddRange(
+                    reportTypeInvoiceAmountsToAdd.Select(invoiceAmount =>
+                    new ReportTypeInvoiceAmountEntity
                     {
-                        FirstReportAmount = invoiceAmount.FirstReportAmount,
-                        AdditionalReportAmount = invoiceAmount.AdditionalReportAmount,
+                        InvoiceAmount = invoiceAmount.InvoiceAmount,
                         ReportTypeId = invoiceAmount.ReportType.ReportTypeId,
                     })
                 );

@@ -45,6 +45,13 @@ namespace PsychologicalServices.Models.Invoices
             return invoice;
         }
 
+        public IEnumerable<InvoiceLine> GetInvoiceLines(Appointment appointment)
+        {
+            var lines = _invoiceGenerator.GetInvoiceLines(appointment);
+
+            return lines;
+        }
+
         public IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true)
         {
             var invoiceStatuses = _invoiceRepository.GetInvoiceStatuses(isActive);

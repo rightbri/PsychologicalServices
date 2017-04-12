@@ -1,0 +1,32 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ parameter type="PsychologicalServices.Models.Invoices.Invoice" name="Model" #>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>General Consent for Care and Treatment Consent</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<style>
+		body {
+			font-family:"Times New Roman",serif;
+			font-size: 17px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+
+		<div class="alert alert-info">
+			Hello World!
+		</div>
+
+	</div>
+</body>
+</html>

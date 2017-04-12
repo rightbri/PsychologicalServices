@@ -1,10 +1,11 @@
+import numeral from 'numeral'
 
 export class NumericValueConverter {
-	toView(value) {
-		var val = value;
-		
-		val = val.toLocaleString();
-		
-		return val;
+	toView(value, format) {
+		return numeral(value).format(format);
+	}
+	
+	fromView(value, format) {
+		return numeral(value).value();
 	}
 }

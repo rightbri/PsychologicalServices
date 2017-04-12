@@ -70,14 +70,14 @@ export class AppointmentDialog {
 	}
 	
 	dateString(datetime) {
-		return moment(datetime).format('MM/DD/YYYY');
+		return moment(datetime).format(this.config.shortDateFormat);
 	}
 
 	timeString(datetime) {
-		return moment(datetime).format('HH:mm');
+		return moment(datetime).format(this.config.shortTimeFormat);
 	}
 
 	parseDateTime(date, time) {
-        return moment(date + time, 'MM/DD/YYYY HH:mm A').format();
+        return moment(date + time, this.config.shortDateFormat + ' ' + this.config.shortTimeFormat).format();//'MM/DD/YYYY HH:mm A'
     }
 }

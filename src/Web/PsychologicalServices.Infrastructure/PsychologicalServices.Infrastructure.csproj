@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll</HintPath>
@@ -74,6 +78,23 @@
     <Compile Include="Common\Repository\Transaction.cs" />
     <Compile Include="Common\Repository\Transaction[TIdentity].cs" />
     <Compile Include="Common\Utility\CacheService.cs" />
+    <Compile Include="Common\Utility\FileReader.cs" />
+    <Compile Include="Common\Utility\FileWriter.cs" />
+    <Compile Include="Common\Utility\HtmlToPdfExecutablePathService.cs" />
+    <Compile Include="Common\Utility\HtmlToPdfService.cs" />
+    <Compile Include="Common\Utility\IFileReader.cs" />
+    <Compile Include="Common\Utility\IFileWriter.cs" />
+    <Compile Include="Common\Utility\IHtmlToPdfExecutablePathService.cs" />
+    <Compile Include="Common\Utility\IHtmlToPdfService.cs" />
+    <Compile Include="Common\Utility\IRunProcess.cs" />
+    <Compile Include="Common\Utility\ITempDirectory.cs" />
+    <Compile Include="Common\Utility\ITempPath.cs" />
+    <Compile Include="Common\Utility\ProcessDataReceivedEventArgs.cs" />
+    <Compile Include="Common\Utility\ProcessRunInfo.cs" />
+    <Compile Include="Common\Utility\ProcessStandardInputReaderEventArgs.cs" />
+    <Compile Include="Common\Utility\RunProcess.cs" />
+    <Compile Include="Common\Utility\TempDirectory.cs" />
+    <Compile Include="Common\Utility\TempPath.cs" />
     <Compile Include="Companies\CompanyRepository.cs" />
     <Compile Include="Invoices\InvoiceRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,7 +118,15 @@
       <Name>PsychologicalServices.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\packages\wkhtmltopdf.msvc.64.exe.0.12.2.5\tools\wkhtmltopdf.exe">
+      <Link>wkhtmltopdf.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

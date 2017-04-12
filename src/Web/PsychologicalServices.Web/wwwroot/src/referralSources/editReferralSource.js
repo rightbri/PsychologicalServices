@@ -45,8 +45,9 @@ export class EditReferralSource {
 				referralSourceId: 0,
 				largeFileSize: this.config.referralSourceDefaults.largeFileSize,
 				largeFileFeeAmount: this.config.referralSourceDefaults.largeFileFeeAmount,
+				lateCancellationRate: this.config.referralSourceDefaults.lateCancellationRate,
 				isActive: true,
-				invoiceAmounts: []
+				reportTypeInvoiceAmounts: []
 			};
 			
 			return this.getData();
@@ -62,8 +63,8 @@ export class EditReferralSource {
 			this.dataRepository.getReportTypes().then(data => {
 				this.reportTypes = data;
 				
-				this.referralSource.invoiceAmounts = this.referralSource.invoiceAmounts.concat(
-					getMissingInvoiceAmounts(data, this.referralSource.invoiceAmounts)
+				this.referralSource.reportTypeInvoiceAmounts = this.referralSource.reportTypeInvoiceAmounts.concat(
+					getMissingInvoiceAmounts(data, this.referralSource.reportTypeInvoiceAmounts)
 				).sort((a, b) => a.reportType.name < b.reportType.name);
 			})
 		]);
@@ -114,5 +115,5 @@ export class EditReferralSource {
 function getMissingInvoiceAmounts(reportTypes, invoiceAmounts) {
 	return reportTypes.filter(reportType => 
 		!invoiceAmounts.some(invoiceAmount => invoiceAmount.reportType.reportTypeId === reportType.reportTypeId)
-	).map(function(reportType) { return { reportType: reportType, amount: 0 };});
+	).map(function(reportType) { return { reportType: reportType, invoiceAmount: 0 };});
 }

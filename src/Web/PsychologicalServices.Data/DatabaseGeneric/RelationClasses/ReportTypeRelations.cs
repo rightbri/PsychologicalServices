@@ -32,7 +32,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AssessmentReportEntityUsingReportTypeId);
 			toReturn.Add(this.AssessmentTypeReportTypeEntityUsingReportTypeId);
-			toReturn.Add(this.InvoiceAmountEntityUsingReportTypeId);
+			toReturn.Add(this.ReportTypeInvoiceAmountEntityUsingReportTypeId);
 
 
 			return toReturn;
@@ -70,17 +70,17 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between ReportTypeEntity and InvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
-		/// ReportType.ReportTypeId - InvoiceAmount.ReportTypeId
+		/// <summary>Returns a new IEntityRelation object, between ReportTypeEntity and ReportTypeInvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
+		/// ReportType.ReportTypeId - ReportTypeInvoiceAmount.ReportTypeId
 		/// </summary>
-		public virtual IEntityRelation InvoiceAmountEntityUsingReportTypeId
+		public virtual IEntityRelation ReportTypeInvoiceAmountEntityUsingReportTypeId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceAmount" , true);
-				relation.AddEntityFieldPair(ReportTypeFields.ReportTypeId, InvoiceAmountFields.ReportTypeId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ReportTypeInvoiceAmounts" , true);
+				relation.AddEntityFieldPair(ReportTypeFields.ReportTypeId, ReportTypeInvoiceAmountFields.ReportTypeId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReportTypeEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceAmountEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReportTypeInvoiceAmountEntity", false);
 				return relation;
 			}
 		}

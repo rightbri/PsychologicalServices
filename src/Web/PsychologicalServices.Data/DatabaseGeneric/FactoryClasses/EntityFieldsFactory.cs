@@ -110,8 +110,8 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceEntity");
 					break;
-				case PsychologicalServices.Data.EntityType.InvoiceAmountEntity:
-					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceAmountEntity");
+				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceDocumentEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceLineEntity");
@@ -145,6 +145,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.ReportTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "ReportTypeEntity");
+					break;
+				case PsychologicalServices.Data.EntityType.ReportTypeInvoiceAmountEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "ReportTypeInvoiceAmountEntity");
 					break;
 				case PsychologicalServices.Data.EntityType.RightEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "RightEntity");

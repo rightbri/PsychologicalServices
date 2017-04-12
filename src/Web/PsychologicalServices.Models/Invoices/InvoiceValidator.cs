@@ -23,24 +23,11 @@ namespace PsychologicalServices.Models.Invoices
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            if (item.ModifiedTotal.HasValue)
+            if (item.Total < 0)
             {
-                if (item.ModifiedTotal.Value < 0)
-                {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "ModifiedTotal", Message = "Modified Total must be greater than or equal to zero." }
-                    );
-                }
-            }
-
-            if (item.Total.HasValue)
-            {
-                if (item.Total.Value < 0)
-                {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "Total", Message = "Total must be greater than or equal to zero." }
-                    );
-                }
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "Total", Message = "Total must be greater than or equal to zero." }
+                );
             }
 
             if (string.IsNullOrWhiteSpace(item.Identifier))

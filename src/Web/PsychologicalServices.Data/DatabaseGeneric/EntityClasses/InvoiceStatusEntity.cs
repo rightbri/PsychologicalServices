@@ -519,6 +519,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CanEdit", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CanOpen", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CanSubmit", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CanMarkPaid", fieldHashtable);
 		}
 		#endregion
 
@@ -638,6 +650,50 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.IsActive, true); }
 			set	{ SetValue((int)InvoiceStatusFieldIndex.IsActive, value); }
+		}
+
+		/// <summary> The CanEdit property of the Entity InvoiceStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceStatuses"."CanEdit"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean CanEdit
+		{
+			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.CanEdit, true); }
+			set	{ SetValue((int)InvoiceStatusFieldIndex.CanEdit, value); }
+		}
+
+		/// <summary> The CanOpen property of the Entity InvoiceStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceStatuses"."CanOpen"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean CanOpen
+		{
+			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.CanOpen, true); }
+			set	{ SetValue((int)InvoiceStatusFieldIndex.CanOpen, value); }
+		}
+
+		/// <summary> The CanSubmit property of the Entity InvoiceStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceStatuses"."CanSubmit"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean CanSubmit
+		{
+			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.CanSubmit, true); }
+			set	{ SetValue((int)InvoiceStatusFieldIndex.CanSubmit, value); }
+		}
+
+		/// <summary> The CanMarkPaid property of the Entity InvoiceStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceStatuses"."CanMarkPaid"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean CanMarkPaid
+		{
+			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.CanMarkPaid, true); }
+			set	{ SetValue((int)InvoiceStatusFieldIndex.CanMarkPaid, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceEntity' which are related to this entity via a relation of type '1:n'.

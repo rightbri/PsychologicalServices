@@ -78,7 +78,6 @@
     <Build Include="dbo\Tables\AppointmentStatuses.sql" />
     <Build Include="dbo\Tables\Claimants.sql" />
     <Build Include="dbo\Tables\Users.sql" />
-    <Build Include="dbo\Tables\AssessmentIssuesInDispute.sql" />
     <Build Include="dbo\Tables\ReferralSourceTypes.sql" />
     <Build Include="dbo\Tables\AddressTypes.sql" />
     <Build Include="dbo\Tables\Addresses.sql" />
@@ -86,7 +85,6 @@
     <Build Include="dbo\Tables\IssuesInDispute.sql" />
     <Build Include="dbo\Tables\ReferralTypeIssuesInDispute.sql" />
     <Build Include="dbo\Tables\AssessmentTypeReportTypes.sql" />
-    <Build Include="dbo\Tables\InvoiceAmounts.sql" />
     <Build Include="dbo\Tables\ReportTypes.sql" />
     <Build Include="dbo\Tables\Appointments.sql" />
     <Build Include="dbo\Tables\ReportStatuses.sql" />
@@ -108,6 +106,14 @@
     <Build Include="dbo\Tables\Cities.sql" />
     <Build Include="dbo\Tables\UserNotes.sql" />
     <Build Include="dbo\Tables\AssessmentTypeAttributeTypes.sql" />
+    <Build Include="dbo\Tables\InvoiceStatuses.sql" />
+    <Build Include="dbo\Tables\InvoiceStatusChanges.sql" />
+    <Build Include="dbo\Tables\Invoices.sql" />
+    <Build Include="dbo\Tables\InvoiceLines.sql" />
+    <Build Include="dbo\Tables\AssessmentReportIssuesInDispute.sql" />
+    <Build Include="dbo\Tables\ReportTypeInvoiceAmounts.sql" />
+    <Build Include="dbo\Tables\InvoiceDocuments.sql" />
+    <Build Include="dbo\Tables\InvoiceDocumentArchive.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

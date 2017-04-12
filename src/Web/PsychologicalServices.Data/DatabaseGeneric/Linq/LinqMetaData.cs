@@ -139,8 +139,8 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
-				case PsychologicalServices.Data.EntityType.InvoiceAmountEntity:
-					toReturn = this.InvoiceAmount;
+				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
+					toReturn = this.InvoiceDocument;
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineEntity:
 					toReturn = this.InvoiceLine;
@@ -174,6 +174,9 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.ReportTypeEntity:
 					toReturn = this.ReportType;
+					break;
+				case PsychologicalServices.Data.EntityType.ReportTypeInvoiceAmountEntity:
+					toReturn = this.ReportTypeInvoiceAmount;
 					break;
 				case PsychologicalServices.Data.EntityType.RightEntity:
 					toReturn = this.Right;
@@ -362,10 +365,10 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<InvoiceEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
-		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceAmountEntity instances in the database.</summary>
-		public DataSource2<InvoiceAmountEntity> InvoiceAmount
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceDocumentEntity instances in the database.</summary>
+		public DataSource2<InvoiceDocumentEntity> InvoiceDocument
 		{
-			get { return new DataSource2<InvoiceAmountEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+			get { return new DataSource2<InvoiceDocumentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineEntity instances in the database.</summary>
@@ -432,6 +435,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<ReportTypeEntity> ReportType
 		{
 			get { return new DataSource2<ReportTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting ReportTypeInvoiceAmountEntity instances in the database.</summary>
+		public DataSource2<ReportTypeInvoiceAmountEntity> ReportTypeInvoiceAmount
+		{
+			get { return new DataSource2<ReportTypeInvoiceAmountEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting RightEntity instances in the database.</summary>

@@ -62,7 +62,6 @@
 			<th>Amount</th>
 			<th>Referral Source</th>
 			<th>Claimant</th>
-			<th>Appointment Location</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -75,7 +74,7 @@
 			<td>${invoice.identifier}</td>
 			<td>${invoice.invoiceDate | dateFormat:config.shortDateFormat}</td>
 			<td>${invoice.invoiceStatus.name}</td>
-			<td>${invoice.modifiedAmount | money}</td>
+			<td>${invoice.modifiedTotal || invoice.total | money}</td>
 			<td>${invoice.appointment.assessment.referralSource.name}</td>
 			<td>
 				<ul class="list-unstyled">
@@ -84,7 +83,6 @@
 					</li>
 				</ul>
 			</td>
-			<td>${invoice.appointment.location.name}</td>
 		</tr>
 	</tbody>
 </table>

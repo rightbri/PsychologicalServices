@@ -285,8 +285,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 {
                     var prefetch = new PrefetchPath2(EntityType.AssessmentEntity);
 
-                    prefetch.Add(AssessmentEntity.PrefetchPathAppointments)
-                        .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentAttributes)
+                    var appointmentsPath = prefetch.Add(AssessmentEntity.PrefetchPathAppointments);
+                    appointmentsPath
+                        .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentAttributes);
+                    appointmentsPath
                         .SubPath.Add(AppointmentEntity.PrefetchPathInvoices)
                             .SubPath.Add(InvoiceEntity.PrefetchPathInvoiceLines);
                     
@@ -424,38 +426,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     uow.AddForDelete(appointment);
                 }
-
-                foreach (var appointment in appointmentsToAdd)
-                {
-                    var appointmentEntity = new AppointmentEntity
-                    {
-                        AppointmentStatusId = appointment.AppointmentStatus.AppointmentStatusId,
-                        AppointmentTime = appointment.AppointmentTime,
-                        Deleted = appointment.Deleted,
-                        LocationId = appointment.Location.AddressId,
-                        PsychologistId = appointment.Psychologist.UserId,
-                        PsychometristId = appointment.Psychometrist.UserId,
-                    };
-
-                    if (appointment.AppointmentStatus.CanInvoice)
-                    {
-                        var invoice = _invoiceGenerator.CreateInvoice(appointment);
-
-                        appointmentEntity.Invoices.Add(invoice.ToInvoiceEntity());
-                    }
-                    
-                    appointmentEntity.AppointmentAttributes.AddRange(
-                        appointment.Attributes.Select(attribute =>
-                            new AppointmentAttributeEntity
-                            {
-                                AttributeId = attribute.AttributeId,
-                            }
-                        )
-                    );
-
-                    assessmentEntity.Appointments.Add(appointmentEntity);
-                }
-
+                
                 foreach (var appointment in appointmentsToUpdate)
                 {
                     var appointmentEntity = assessmentEntity.Appointments.Single(entity => entity.AppointmentId == appointment.AppointmentId);
@@ -498,6 +469,37 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     );
                 }
                 
+                foreach (var appointment in appointmentsToAdd)
+                {
+                    var appointmentEntity = new AppointmentEntity
+                    {
+                        AppointmentStatusId = appointment.AppointmentStatus.AppointmentStatusId,
+                        AppointmentTime = appointment.AppointmentTime,
+                        Deleted = appointment.Deleted,
+                        LocationId = appointment.Location.AddressId,
+                        PsychologistId = appointment.Psychologist.UserId,
+                        PsychometristId = appointment.Psychometrist.UserId,
+                    };
+
+                    if (appointment.AppointmentStatus.CanInvoice)
+                    {
+                        var invoice = _invoiceGenerator.CreateInvoice(appointment);
+
+                        appointmentEntity.Invoices.Add(invoice.ToInvoiceEntity());
+                    }
+
+                    appointmentEntity.AppointmentAttributes.AddRange(
+                        appointment.Attributes.Select(attribute =>
+                            new AppointmentAttributeEntity
+                            {
+                                AttributeId = attribute.AttributeId,
+                            }
+                        )
+                    );
+
+                    assessmentEntity.Appointments.Add(appointmentEntity);
+                }
+
                 #endregion
 
                 #region claims

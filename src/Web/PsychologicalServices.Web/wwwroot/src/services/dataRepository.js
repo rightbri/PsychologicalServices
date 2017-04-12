@@ -63,6 +63,10 @@ export class DataRepository {
 		return this.saveBasic(invoice, 'invoice');
 	}
 	
+	refreshInvoiceLines(appointment) {
+		return this.postBasic('invoice/refresh', appointment);
+	}
+	
 	getInvoiceStatuses() {
 		return this.getManyBasic('invoicestatus', true);
 	}

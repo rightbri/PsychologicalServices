@@ -34,6 +34,10 @@
       <HintPath>..\packages\EmailAddress.4.0.0\lib\EmailAddress.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -133,16 +137,24 @@
     <Compile Include="Companies\ICompanyRepository.cs" />
     <Compile Include="Companies\ICompanyService.cs" />
     <Compile Include="Invoices\IInvoiceGenerator.cs" />
+    <Compile Include="Invoices\IInvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\IInvoiceRepository.cs" />
     <Compile Include="Invoices\IInvoiceService.cs" />
     <Compile Include="Invoices\IInvoiceValidator.cs" />
     <Compile Include="Invoices\Invoice.cs" />
+    <Compile Include="Invoices\InvoiceDocument.cs" />
     <Compile Include="Invoices\InvoiceGenerator.cs" />
+    <Compile Include="Invoices\InvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\InvoiceLine.cs" />
     <Compile Include="Invoices\InvoiceSearchCriteria.cs" />
     <Compile Include="Invoices\InvoiceService.cs" />
     <Compile Include="Invoices\InvoiceStatus.cs" />
     <Compile Include="Invoices\InvoiceStatusChange.cs" />
+    <Compile Include="Invoices\InvoiceTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InvoiceTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Invoices\InvoiceValidator.cs" />
     <Compile Include="Notes\INoteValidator.cs" />
     <Compile Include="Notes\Note.cs" />
@@ -175,7 +187,7 @@
     <Compile Include="Claims\Claim.cs" />
     <Compile Include="Claims\Claimant.cs" />
     <Compile Include="Companies\Company.cs" />
-    <Compile Include="Invoices\InvoiceAmount.cs" />
+    <Compile Include="Invoices\ReportTypeInvoiceAmount.cs" />
     <Compile Include="Claims\IssueInDispute.cs" />
     <Compile Include="Referrals\ReferralSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,6 +215,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Invoices\InvoiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>InvoiceTemplate.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

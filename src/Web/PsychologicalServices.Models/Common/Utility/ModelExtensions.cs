@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Appointments;
+using System;
 
 namespace PsychologicalServices.Models.Common.Utility
 {
@@ -17,6 +18,12 @@ namespace PsychologicalServices.Models.Common.Utility
             }
 
             return years;
+        }
+
+        public static bool IsLateCancellation(this Appointment appointment)
+        {
+            return null != appointment &&
+                appointment.AppointmentStatus.AppointmentStatusId == 8;
         }
     }
 }

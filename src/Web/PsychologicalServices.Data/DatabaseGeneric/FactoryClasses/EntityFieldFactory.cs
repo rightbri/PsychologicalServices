@@ -234,12 +234,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceEntity", (int)fieldIndex));
 		}
 
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceAmountEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceDocumentEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(InvoiceAmountFieldIndex fieldIndex)
+		public static IEntityField2 Create(InvoiceDocumentFieldIndex fieldIndex)
 		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceAmountEntity", (int)fieldIndex));
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceDocumentEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceLineEntity. Which EntityField is created is specified by fieldIndex</summary>
@@ -328,6 +328,14 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public static IEntityField2 Create(ReportTypeFieldIndex fieldIndex)
 		{
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("ReportTypeEntity", (int)fieldIndex));
+		}
+
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the ReportTypeInvoiceAmountEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(ReportTypeInvoiceAmountFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("ReportTypeInvoiceAmountEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the RightEntity. Which EntityField is created is specified by fieldIndex</summary>

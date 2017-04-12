@@ -13,6 +13,7 @@ using Owin;
 using Microsoft.Practices.ServiceLocation;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Infrastructure.Common.Utility;
+using log4net;
 
 namespace PsychologicalServices.Web
 {
@@ -44,6 +45,7 @@ namespace PsychologicalServices.Web
             container
                 .RegisterType<IDataAccessAdapterFactory, SqlServerAdapterFactory>()
                 .RegisterType<ICacheService, CacheService>(new InjectionConstructor(System.Runtime.Caching.MemoryCache.Default))
+                .RegisterInstance<ILog>(LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType))
                 ;
 
             // register all your components with the container here

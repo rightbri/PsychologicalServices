@@ -20,5 +20,7 @@ namespace PsychologicalServices.Models.Appointments
         int SaveAppointment(Appointment appointment);
 
         int SaveAppointmentStatus(AppointmentStatus appointmentStatus);
+
+        int GetLateCancellationStatusId();
     }
 }

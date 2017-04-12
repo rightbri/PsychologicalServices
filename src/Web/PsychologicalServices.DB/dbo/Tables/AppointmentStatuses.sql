@@ -4,6 +4,12 @@
     [Description]          NVARCHAR (100) NULL,
     [IsActive]             BIT            CONSTRAINT [DF_AppointmentStatuses_IsActive] DEFAULT ((0)) NOT NULL,
     [NotifyReferralSource] BIT            CONSTRAINT [DF_AppointmentStatuses_NotifyImeCompany] DEFAULT ((0)) NOT NULL,
+    [CanInvoice]           BIT            CONSTRAINT [DF_AppointmentStatuses_CanInvoice] DEFAULT ((0)) NOT NULL,
+    [Sort]                 INT            NOT NULL,
     CONSTRAINT [PK_AppointmentStatuses] PRIMARY KEY CLUSTERED ([AppointmentStatusId] ASC)
 );
+
+
+
+
 

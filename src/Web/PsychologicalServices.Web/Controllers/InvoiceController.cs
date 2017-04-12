@@ -33,6 +33,16 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(invoice);
         }
 
+        [Route("refresh")]
+        [HttpPost]
+        [ResponseType(typeof(IEnumerable<InvoiceLine>))]
+        public IHttpActionResult Refresh(Appointment appointment)
+        {
+            var lines = _invoiceService.GetInvoiceLines(appointment);
+
+            return Ok(lines);
+        }
+
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Invoice>))]

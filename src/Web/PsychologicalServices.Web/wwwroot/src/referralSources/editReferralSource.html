@@ -1,5 +1,7 @@
 <template>
 	<require from="common/validation-summary.html"></require>
+	<require from="valueConverters/money"></require>
+	<require from="valueConverters/numeric"></require>
 	
 	<h3>${editType} Referral Source</h3>
 
@@ -51,7 +53,7 @@
 			<div class="col-xs-6">
 				<div class="form-group">
 					<label for="largeFileSize">Large File Size</label>
-					<input id="largeFileSize" type="text" class="form-control" value.bind="referralSource.largeFileSize" />
+					<input id="largeFileSize" type="text" pattern="\d+" class="form-control" value.bind="referralSource.largeFileSize | numeric:'0'" />
 				</div>
 			</div>
 		</div>
@@ -60,7 +62,16 @@
 			<div class="col-xs-6">
 				<div class="form-group">
 					<label for="largeFileFee">Large File Fee</label>
-					<input id="largeFileFee" type="text" class="form-control" value.bind="referralSource.largeFileFeeAmount" />
+					<input id="largeFileFee" type="text" pattern="\d+" class="form-control" value.bind="referralSource.largeFileFeeAmount | money:'0'" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label for="lateCancellationRate">Late Cancellation Rate</label>
+					<input id="lateCancellationRate" type="number" pattern="\d+([.]\d{1,4})" class="form-control" value.bind="referralSource.lateCancellationRate | numeric:'0.00'" />
 				</div>
 			</div>
 		</div>
@@ -82,18 +93,14 @@
 					<thead>
 						<tr>
 							<th>Report Type</th>
-							<th>First Report Amount</th>
-							<th>Additional Report Amount</th>
+							<th>Invoice Amount</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr repeat.for="invoiceAmount of referralSource.invoiceAmounts">
+						<tr repeat.for="invoiceAmount of referralSource.reportTypeInvoiceAmounts">
 							<td>${invoiceAmount.reportType.name}</td>
 							<td>
-								<input type="text" class="form-control" value.bind="invoiceAmount.firstReportAmount" />
-							</td>
-							<td>
-								<input type="text" class="form-control" value.bind="invoiceAmount.additionalReportAmount" />
+								<input type="text" class="form-control" value.bind="invoiceAmount.invoiceAmount | money:'0'" />
 							</td>
 						</tr>
 					</tbody>

@@ -7,7 +7,7 @@ export class Config {
 		this.isoShortDateFormat = 'YYYY-MM-DD';
 		this.isoShortTimeFormat = 'HH:mm';
 		this.shortDateFormat = 'MM-DD-YYYY';
-		this.shortTimeFormat = 'h:mmA';
+		this.shortTimeFormat = 'hh:mm A';
 		
 		this.defaultNewAppointmentHour = 9;
 		
@@ -17,7 +17,7 @@ export class Config {
 			'linkedCalendars': false
 		};
 		
-		this.datePickerOptions = {
+		this.datepickerOptions = {
 			'autoclose': true,
 			'clearBtn': true,
 			'format': 'mm-dd-yyyy',
@@ -38,7 +38,16 @@ export class Config {
 		this.referralSourceDefaults = {
 			largeFileSize: 1000,
 			largeFileFeeAmount: 25000,
+			lateCancellationRate: 0.30,
 			'addressTypeIds': [2]
+		};
+
+		this.invoiceDefaults = {
+			office: {
+				fax: '905-823-1435',
+				phone: '647-987-7792',
+				email: 'mwatson002@sympatico.ca'
+			}
 		};
 		
 		this.addressDefaults = {

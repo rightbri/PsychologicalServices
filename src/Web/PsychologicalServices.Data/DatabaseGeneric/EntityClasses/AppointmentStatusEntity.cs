@@ -515,6 +515,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("CanInvoice", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Sort", fieldHashtable);
 		}
 		#endregion
 
@@ -658,6 +661,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AppointmentStatusFieldIndex.CanInvoice, true); }
 			set	{ SetValue((int)AppointmentStatusFieldIndex.CanInvoice, value); }
+		}
+
+		/// <summary> The Sort property of the Entity AppointmentStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AppointmentStatuses"."Sort"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 Sort
+		{
+			get { return (System.Int32)GetValue((int)AppointmentStatusFieldIndex.Sort, true); }
+			set	{ SetValue((int)AppointmentStatusFieldIndex.Sort, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.

@@ -21,9 +21,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public decimal TaxRate { get; set; }
 
-        public decimal? Total { get; set; }
-
-        public decimal? ModifiedTotal { get; set; }
+        public decimal Total { get; set; }
 
         public IEnumerable<InvoiceLine> Lines { get; set; }
 

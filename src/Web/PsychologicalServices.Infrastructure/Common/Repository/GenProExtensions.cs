@@ -23,6 +23,17 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static ReportTypeInvoiceAmount ToReportTypeInvoiceAmount(this ReportTypeInvoiceAmountEntity reportTypeInvoiceAmount)
+        {
+            return null != reportTypeInvoiceAmount
+                ? new ReportTypeInvoiceAmount
+                {
+                    ReportType = reportTypeInvoiceAmount.ReportType.ToReportType(),
+                    InvoiceAmount = reportTypeInvoiceAmount.InvoiceAmount,
+                }
+                : null;
+        }
+
         public static InvoiceEntity ToInvoiceEntity(this Invoice invoice)
         {
             var invoiceEntity = new InvoiceEntity
@@ -30,7 +41,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 Identifier = invoice.Identifier,
                 InvoiceDate = invoice.InvoiceDate,
                 InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId,
-                ModifiedTotal = invoice.ModifiedTotal,
                 TaxRate = invoice.TaxRate,
                 Total = invoice.Total,
                 UpdateDate = invoice.UpdateDate,
@@ -60,7 +70,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateDate = invoice.UpdateDate,
                     TaxRate = invoice.TaxRate,
                     Total = invoice.Total,
-                    ModifiedTotal = invoice.ModifiedTotal,
                     Lines = invoice.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
                     StatusChanges = invoice.InvoiceStatusChanges.Select(invoiceStatusChange => invoiceStatusChange.ToInvoiceStatusChange()),
                     Appointment = invoice.Appointment.ToAppointment(),
@@ -101,6 +110,10 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     InvoiceStatusId = invoiceStatus.InvoiceStatusId,
                     Name = invoiceStatus.Name,
                     IsActive = invoiceStatus.IsActive,
+                    CanEdit = invoiceStatus.CanEdit,
+                    CanOpen = invoiceStatus.CanOpen,
+                    CanSubmit = invoiceStatus.CanSubmit,
+                    CanMarkPaid = invoiceStatus.CanMarkPaid,
                 }
                 : null;
         }
@@ -150,6 +163,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ReportId = report.ReportId,
                     AssessmentId = report.AssessmentId,
                     ReportType = report.ReportType.ToReportType(),
+                    IsAdditional = report.IsAdditional,
                     IssuesInDispute = report.AssessmentReportIssuesInDispute.Select(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute.ToIssueInDispute()),
                 }
                 : null;
@@ -238,19 +252,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 }
                 : null;
         }
-
-        public static InvoiceAmount ToInvoiceAmount(this InvoiceAmountEntity invoiceAmount)
-        {
-            return null != invoiceAmount
-                ? new InvoiceAmount
-                {
-                    ReportType = invoiceAmount.ReportType.ToReportType(),
-                    FirstReportAmount = invoiceAmount.FirstReportAmount,
-                    AdditionalReportAmount = invoiceAmount.AdditionalReportAmount,
-                }
-                : null;
-        }
-
+        
         public static Claimant ToClaimant(this ClaimantEntity claimant)
         {
             return null != claimant
@@ -314,10 +316,11 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = referralSource.Name,
                     LargeFileSize = referralSource.LargeFileSize,
                     LargeFileFeeAmount = referralSource.LargeFileFeeAmount,
+                    LateCancellationRate = referralSource.LateCancellationRate,
                     IsActive = referralSource.IsActive,
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
                     Address = referralSource.Address.ToAddress(),
-                    InvoiceAmounts = referralSource.InvoiceAmounts.Select(invoiceAmount => invoiceAmount.ToInvoiceAmount()),
+                    ReportTypeInvoiceAmounts = referralSource.ReportTypeInvoiceAmounts.Select(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ToReportTypeInvoiceAmount()),
                 }
                 : null;
         }

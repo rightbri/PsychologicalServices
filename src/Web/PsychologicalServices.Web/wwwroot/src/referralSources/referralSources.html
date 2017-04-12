@@ -65,6 +65,7 @@
 			<th>Address</th>
 			<th>Large File Size</th>
 			<th>Large File Fee</th>
+			<th>Late Cancellation Fee Rate</th>
 			<th>Active?</th>
 		</tr>
 	</thead>
@@ -80,6 +81,7 @@
 			<td>${referralSource.address.name}</td>
 			<td>${referralSource.largeFileSize | numeric}</td>
 			<td>${referralSource.largeFileFeeAmount | money}</td>
+			<td>${referralSource.lateCancellationRate | numeric:'0.00'}</td>
 			<td>${referralSource.isActive | boolean}</td>
 		</tr>
 	</tbody>

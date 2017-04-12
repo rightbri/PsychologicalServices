@@ -3,6 +3,8 @@ using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.HelperClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
+using PsychologicalServices.Infrastructure.Common.Utility;
+using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Invoices;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -14,10 +16,20 @@ namespace PsychologicalServices.Infrastructure.Invoices
 {
     public class InvoiceRepository : RepositoryBase, IInvoiceRepository
     {
+        private readonly IDate _date = null;
+        private readonly IInvoiceHtmlGenerator _invoiceHtmlGenerator = null;
+        private readonly IHtmlToPdfService _htmlToPdfService = null;
+
         public InvoiceRepository(
-            IDataAccessAdapterFactory adapterFactory
+            IDataAccessAdapterFactory adapterFactory,
+            IDate date,
+            IInvoiceHtmlGenerator invoiceHtmlGenerator,
+            IHtmlToPdfService htmlToPdfService
         ) : base(adapterFactory)
         {
+            _date = date;
+            _invoiceHtmlGenerator = invoiceHtmlGenerator;
+            _htmlToPdfService = htmlToPdfService;
         }
 
         #region Prefetch Paths
@@ -41,6 +53,8 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                         )
                                 )
                         )
+                    .Prefetch<InvoiceDocumentEntity>(invoice => invoice.InvoiceDocument)
+                        .Exclude(invoiceDocument => invoiceDocument.Document)
                 );
 
         private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
@@ -52,6 +66,8 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         .SubPath(invoiceStatusChangePath => invoiceStatusChangePath
                             .Prefetch<InvoiceStatusEntity>(invoiceStatusChange => invoiceStatusChange.InvoiceStatus)
                         )
+                    .Prefetch<InvoiceDocumentEntity>(invoice => invoice.InvoiceDocument)
+                        .Exclude(invoiceDocument => invoiceDocument.Document)
                     .Prefetch<AppointmentEntity>(invoice => invoice.Appointment)
                         .SubPath(appointmentPath => appointmentPath
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
@@ -129,6 +145,12 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     .SingleOrDefault()
                     .ToInvoiceStatus();
             }
+        }
+
+        public InvoiceStatus GetInitialInvoiceStatus()
+        {
+            //TODO: don't hard-code value
+            return GetInvoiceStatus(1);
         }
 
         public IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true)
@@ -210,18 +232,47 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                     prefetch.Add(InvoiceEntity.PrefetchPathInvoiceLines);
 
+                    var invoiceDocumentPath = prefetch.Add(InvoiceEntity.PrefetchPathInvoiceDocument);
+                    invoiceDocumentPath.ExcludedIncludedFields = new ExcludeIncludeFieldsList(true, new[] { InvoiceDocumentFields.Document });
+
                     adapter.FetchEntity(invoiceEntity, prefetch);
+                }
+
+                var isSubmitting = invoice.InvoiceStatus.InvoiceStatusId == 2 && invoiceEntity.InvoiceStatusId != 2;
+
+                if (isSubmitting)
+                {
+                    var html = _invoiceHtmlGenerator.GetInvoiceHtml(invoice);
+                    var pdf = _htmlToPdfService.GetPdf(html);
+
+                    var document = invoiceEntity.InvoiceDocument;
+                    if (null == document)
+                    {
+                        document = new InvoiceDocumentEntity
+                        {
+                            Document = pdf,
+                        };
+                    }
+
+                    invoiceEntity.InvoiceDocument = document;
                 }
 
                 invoiceEntity.Identifier = invoice.Identifier;
                 invoiceEntity.InvoiceDate = invoice.InvoiceDate;
                 invoiceEntity.AppointmentId = invoice.Appointment.AppointmentId;
                 invoiceEntity.InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId;
-                invoiceEntity.UpdateDate = invoice.UpdateDate;
+                invoiceEntity.UpdateDate = _date.UtcNow;
                 invoiceEntity.TaxRate = invoice.TaxRate;
                 invoiceEntity.Total = invoice.Total;
-                invoiceEntity.ModifiedTotal = invoice.ModifiedTotal;
-                
+
+                var linesToAdd = invoice.Lines
+                    .Where(line =>
+                        !invoiceEntity.InvoiceLines.Any(invoiceLine =>
+                            invoiceLine.InvoiceLineId == line.InvoiceLineId
+                        )
+                    )
+                    .ToList();
+
                 if (!isNew)
                 {
                     var linesToRemove = invoiceEntity.InvoiceLines
@@ -257,13 +308,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     }
                 }
 
-                var linesToAdd = invoice.Lines
-                    .Where(line =>
-                        !invoiceEntity.InvoiceLines.Any(invoiceLine =>
-                            invoiceLine.InvoiceLineId == line.InvoiceLineId
-                        )
-                    );
-
                 invoiceEntity.InvoiceLines.AddRange(
                     linesToAdd.Select(line => new InvoiceLineEntity
                     {
@@ -296,26 +340,29 @@ namespace PsychologicalServices.Infrastructure.Invoices
             }
         }
 
-        public IEnumerable<InvoiceAmount> GetInvoiceAmounts(int companyId, int referralSourceId)
+        public decimal GetTaxRate()
+        {
+            return 0.13m;   //TODO: retrieve from DB
+            throw new NotImplementedException();
+        }
+
+        public decimal GetAdditionalReportAmount(int referralSourceId, int reportTypeId)
+        {
+            return 50000m;
+        }
+
+        public byte[] GetInvoiceDocument(int invoiceId)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
                 var meta = new LinqMetaData(adapter);
 
-                return Execute<InvoiceAmountEntity>(
-                        (ILLBLGenProQuery)
-                        meta.InvoiceAmount
-                        .Where(invoiceAmount => invoiceAmount.ReferralSourceId == referralSourceId)
-                    )
-                    .Select(invoiceAmount => invoiceAmount.ToInvoiceAmount())
-                    .ToList();
-            }
-        }
+                var doc = meta.InvoiceDocument.SingleOrDefault(invoiceDocument => invoiceDocument.InvoiceId == invoiceId);
 
-        public decimal GetTaxRate()
-        {
-            return 13.0m;   //TODO: retrieve from DB
-            throw new NotImplementedException();
+                return null != doc
+                    ? doc.Document
+                    : null;
+            }
         }
     }
 }

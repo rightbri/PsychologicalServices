@@ -1103,30 +1103,32 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
-	/// <summary>Factory to create new, empty InvoiceAmountEntity objects.</summary>
+	/// <summary>Factory to create new, empty InvoiceDocumentEntity objects.</summary>
 	[Serializable]
-	public partial class InvoiceAmountEntityFactory : EntityFactoryBase2 {
+	public partial class InvoiceDocumentEntityFactory : EntityFactoryBase2 {
 		/// <summary>CTor</summary>
-		public InvoiceAmountEntityFactory() : base("InvoiceAmountEntity", PsychologicalServices.Data.EntityType.InvoiceAmountEntity) { }
+		public InvoiceDocumentEntityFactory() : base("InvoiceDocumentEntity", PsychologicalServices.Data.EntityType.InvoiceDocumentEntity) { }
 
-		/// <summary>Creates a new, empty InvoiceAmountEntity object.</summary>
-		/// <returns>A new, empty InvoiceAmountEntity object.</returns>
+		/// <summary>Creates a new, empty InvoiceDocumentEntity object.</summary>
+		/// <returns>A new, empty InvoiceDocumentEntity object.</returns>
 		public override IEntity2 Create() {
-			IEntity2 toReturn = new InvoiceAmountEntity();
+			IEntity2 toReturn = new InvoiceDocumentEntity();
 			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceAmount
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceDocument
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			return toReturn;
 		}
 		
-		/// <summary>Creates a new InvoiceAmountEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <summary>Creates a new InvoiceDocumentEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
 		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
 		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
 		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new InvoiceAmountEntity(fields);
+			IEntity2 toReturn = new InvoiceDocumentEntity(fields);
 			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceAmountUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceDocumentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			return toReturn;
 		}
 		
@@ -1134,7 +1136,7 @@ namespace PsychologicalServices.Data.FactoryClasses
 		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
 		public override IEntityCollection2 CreateEntityCollection()
 		{
-			return new EntityCollection<InvoiceAmountEntity>(this);
+			return new EntityCollection<InvoiceDocumentEntity>(this);
 		}
 		
 
@@ -1571,6 +1573,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty ReportTypeInvoiceAmountEntity objects.</summary>
+	[Serializable]
+	public partial class ReportTypeInvoiceAmountEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public ReportTypeInvoiceAmountEntityFactory() : base("ReportTypeInvoiceAmountEntity", PsychologicalServices.Data.EntityType.ReportTypeInvoiceAmountEntity) { }
+
+		/// <summary>Creates a new, empty ReportTypeInvoiceAmountEntity object.</summary>
+		/// <returns>A new, empty ReportTypeInvoiceAmountEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new ReportTypeInvoiceAmountEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReportTypeInvoiceAmount
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new ReportTypeInvoiceAmountEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new ReportTypeInvoiceAmountEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReportTypeInvoiceAmountUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<ReportTypeInvoiceAmountEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty RightEntity objects.</summary>
 	[Serializable]
 	public partial class RightEntityFactory : EntityFactoryBase2 {
@@ -1974,8 +2015,8 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					factoryToUse = new InvoiceEntityFactory();
 					break;
-				case PsychologicalServices.Data.EntityType.InvoiceAmountEntity:
-					factoryToUse = new InvoiceAmountEntityFactory();
+				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
+					factoryToUse = new InvoiceDocumentEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineEntity:
 					factoryToUse = new InvoiceLineEntityFactory();
@@ -2009,6 +2050,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.ReportTypeEntity:
 					factoryToUse = new ReportTypeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.ReportTypeInvoiceAmountEntity:
+					factoryToUse = new ReportTypeInvoiceAmountEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.RightEntity:
 					factoryToUse = new RightEntityFactory();

@@ -1,0 +1,214 @@
+<template>
+    <require from="valueConverters/date-format"></require>
+    <require from="valueConverters/money"></require>
+	<require from="valueConverters/numeric"></require>
+	<require from="valueConverters/sort-array"></require>
+	<require from="common/validation-summary.html"></require>
+	
+    <h2>Edit Invoice</h2>
+
+    <div class="container-fluid">
+        <div class="row" if.bind="validationErrors">
+            <div class="col-xs-12">
+                <validation-summary errors.bind="validationErrors"></validation-summary>
+            </div>
+        </div>
+	
+        <!-- Bill To -->
+        <div class="row">
+            <div class="col-xs-2">
+                Bill to:
+            </div>
+            <div class="col-xs-10">
+                <p>${invoice.appointment.assessment.referralSource.name}</p>
+            </div>
+        </div>
+
+        <!-- Pay To -->
+        <div class="row">
+            <div class="col-xs-2">
+                Please Remit Payment to:
+            </div>
+            <div class="col-xs-5" with.bind="invoice.appointment.assessment.company">
+                <p>${name}</p>
+                <p>${address.street}</p>
+                <p if.bind="address.suite">${address.suite}</p>
+                <p>${address.city.name}, ${address.city.province}, ${address.postalCode}</p>
+            </div>
+            <div class="col-xs-5">
+                <p>Office Fax: ${config.invoiceDefaults.office.fax}</p>
+                <p>Office No: ${config.invoiceDefaults.office.phone}</p>
+                <p>Email: ${config.invoiceDefaults.office.email}</p>
+            </div>
+        </div>
+
+        <!-- Assessment Info -->
+        <template repeat.for="claim of invoice.appointment.assessment.claims">
+
+            <div class="row">
+                <div class="col-xs-2">
+                    Claimant Name:
+                </div>
+                <div class="col-xs-10">
+                    ${claim.claimant.firstName} ${claim.claimant.lastName}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-2">
+                    Referral Source Reference No:
+                </div>
+                <div class="col-xs-10">
+                    ${invoice.appointment.assessment.referralSourceFileNumber}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-2">
+                    Date of Loss:
+                </div>
+                <div class="col-xs-10">
+                    ${claim.dateOfLoss | dateFormat:config.shortDateFormat}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-2">
+                    Claim No:
+                </div>
+                <div class="col-xs-10">
+                    ${claim.claimNumber}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-2">
+                    Assessment Date:
+                </div>
+                <div class="col-xs-10">
+                    ${invoice.appointment.appointmentTime | dateFormat:config.shortDateFormat}
+                </div>
+            </div>
+
+        </template>
+
+        <div class="row">
+            <div class="col-xs-2">
+                Identifier:
+            </div>
+            <div class="col-xs-10">
+                ${invoice.identifier}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                Status:
+            </div>
+            <div class="col-xs-4">
+                ${invoice.invoiceStatus.name}
+            </div>
+			<div class="col-xs-6">
+				<button type="button" class="btn btn-default" click.delegate="openInvoice()" if.bind="invoice.invoiceStatus.canOpen">
+					Modify
+				</button>
+				<button type="button" class="btn btn-default" click.delegate="submitInvoice()" if.bind="invoice.invoiceStatus.canSubmit">
+					Submit
+				</button>
+				<button type="button" class="btn btn-default" click.delegate="paidInvoice()" if.bind="invoice.invoiceStatus.canMarkPaid">
+					Paid
+				</button>
+			</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                Type of Report
+            </div>
+            <div class="col-xs-10">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>
+								<button type="button" class="btn btn-info btn-xs" click.delegate="refreshLines()" if.bind="invoice.invoiceStatus.canEdit">
+									<i class="fa fa-refresh"></i>
+								</button>
+                                <button type="button" class="btn btn-info btn-xs" click.delegate="addLine()" if.bind="invoice.invoiceStatus.canEdit">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="line of invoice.lines">
+                            <td>
+                                <input type="text" class="form-control" value.bind="line.description" disabled.bind="!invoice.invoiceStatus.canEdit" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" value.bind="line.amount | money:'0'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs" click.delegate="removeLine(line)" if.bind="invoice.invoiceStatus.canEdit">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- + H.S.T -->
+                        <tr>
+                            <td>+ H.S.T.</td>
+                            <td>${subtotal * invoice.taxRate | money}</td>
+                            <td></td>
+                        </tr>
+
+                        <!-- Total Invoice Amount -->
+                        <tr>
+                            <td>Total Invoice Amount</td>
+                            <td>${invoice.total | money}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+		
+		<div class="row">
+			<div class="col-xs-2">
+				Status History
+			</div>
+			<div class="col-xs-10">
+				<table class="table table-condensed">
+					<caption>Status changes</caption>
+					<thead>
+						<tr>
+							<th>Status</th>
+							<th>Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr repeat.for="status of invoice.statusChanges | sortArray:{property:'updateDate',direction:'desc'}">
+							<td>${status.invoiceStatus.name}</td>
+							<td>${status.updateDate | dateFormat:this.config.shortDateFormat}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-default" click.delegate="back()">
+                    <i class="fa fa-arrow-left"></i> Back
+                </button>
+                <button type="button" class="btn btn-primary" click.delegate="save()">
+                    Save <i class="fa fa-save"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</template>

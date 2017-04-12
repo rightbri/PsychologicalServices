@@ -111,6 +111,8 @@ namespace PsychologicalServices.Data
 		NotifyReferralSource,
 		///<summary>CanInvoice. </summary>
 		CanInvoice,
+		///<summary>Sort. </summary>
+		Sort,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -497,26 +499,22 @@ namespace PsychologicalServices.Data
 		TaxRate,
 		///<summary>Total. </summary>
 		Total,
-		///<summary>ModifiedTotal. </summary>
-		ModifiedTotal,
 		/// <summary></summary>
 		AmountOfFields
 	}
 
 
 	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceAmount.
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceDocument.
 	/// </summary>
-	public enum InvoiceAmountFieldIndex:int
+	public enum InvoiceDocumentFieldIndex:int
 	{
-		///<summary>ReferralSourceId. </summary>
-		ReferralSourceId,
-		///<summary>ReportTypeId. </summary>
-		ReportTypeId,
-		///<summary>FirstReportAmount. </summary>
-		FirstReportAmount,
-		///<summary>AdditionalReportAmount. </summary>
-		AdditionalReportAmount,
+		///<summary>InvoiceId. </summary>
+		InvoiceId,
+		///<summary>Document. </summary>
+		Document,
+		///<summary>CreatedDate. </summary>
+		CreatedDate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -553,6 +551,14 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
+		///<summary>CanEdit. </summary>
+		CanEdit,
+		///<summary>CanOpen. </summary>
+		CanOpen,
+		///<summary>CanSubmit. </summary>
+		CanSubmit,
+		///<summary>CanMarkPaid. </summary>
+		CanMarkPaid,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -637,6 +643,8 @@ namespace PsychologicalServices.Data
 		LargeFileFeeAmount,
 		///<summary>AddressId. </summary>
 		AddressId,
+		///<summary>LateCancellationRate. </summary>
+		LateCancellationRate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -715,6 +723,22 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ReportTypeInvoiceAmount.
+	/// </summary>
+	public enum ReportTypeInvoiceAmountFieldIndex:int
+	{
+		///<summary>ReferralSourceId. </summary>
+		ReferralSourceId,
+		///<summary>ReportTypeId. </summary>
+		ReportTypeId,
+		///<summary>InvoiceAmount. </summary>
+		InvoiceAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -914,8 +938,8 @@ namespace PsychologicalServices.Data
 		CompanyAttributeEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
-		///<summary>InvoiceAmount</summary>
-		InvoiceAmountEntity,
+		///<summary>InvoiceDocument</summary>
+		InvoiceDocumentEntity,
 		///<summary>InvoiceLine</summary>
 		InvoiceLineEntity,
 		///<summary>InvoiceStatus</summary>
@@ -938,6 +962,8 @@ namespace PsychologicalServices.Data
 		ReportStatusEntity,
 		///<summary>ReportType</summary>
 		ReportTypeEntity,
+		///<summary>ReportTypeInvoiceAmount</summary>
+		ReportTypeInvoiceAmountEntity,
 		///<summary>Right</summary>
 		RightEntity,
 		///<summary>Role</summary>
