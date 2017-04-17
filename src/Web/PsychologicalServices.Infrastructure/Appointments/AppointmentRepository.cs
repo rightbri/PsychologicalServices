@@ -271,7 +271,6 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentEntity.AppointmentStatusId = appointment.AppointmentStatus.AppointmentStatusId;
                 appointmentEntity.AppointmentTime = appointment.AppointmentTime;
                 appointmentEntity.AssessmentId = appointment.Assessment.AssessmentId;
-                appointmentEntity.Deleted = appointment.Deleted;
 
                 if (!isNew)
                 {

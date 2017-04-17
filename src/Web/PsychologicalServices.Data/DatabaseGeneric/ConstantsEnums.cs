@@ -71,8 +71,6 @@ namespace PsychologicalServices.Data
 		PsychologistId,
 		///<summary>AppointmentStatusId. </summary>
 		AppointmentStatusId,
-		///<summary>Deleted. </summary>
-		Deleted,
 		///<summary>AssessmentId. </summary>
 		AssessmentId,
 		/// <summary></summary>
@@ -131,8 +129,6 @@ namespace PsychologicalServices.Data
 		ReferralSourceId,
 		///<summary>AssessmentTypeId. </summary>
 		AssessmentTypeId,
-		///<summary>Deleted. </summary>
-		Deleted,
 		///<summary>CompanyId. </summary>
 		CompanyId,
 		///<summary>ReportStatusId. </summary>
@@ -397,8 +393,6 @@ namespace PsychologicalServices.Data
 		DateOfLoss,
 		///<summary>ClaimNumber. </summary>
 		ClaimNumber,
-		///<summary>Deleted. </summary>
-		Deleted,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -499,22 +493,8 @@ namespace PsychologicalServices.Data
 		TaxRate,
 		///<summary>Total. </summary>
 		Total,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceDocument.
-	/// </summary>
-	public enum InvoiceDocumentFieldIndex:int
-	{
-		///<summary>InvoiceId. </summary>
-		InvoiceId,
 		///<summary>Document. </summary>
 		Document,
-		///<summary>CreatedDate. </summary>
-		CreatedDate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -577,6 +557,8 @@ namespace PsychologicalServices.Data
 		InvoiceStatusId,
 		///<summary>UpdateDate. </summary>
 		UpdateDate,
+		///<summary>Document. </summary>
+		Document,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -617,8 +599,6 @@ namespace PsychologicalServices.Data
 		CreateUserId,
 		///<summary>CreateDate. </summary>
 		CreateDate,
-		///<summary>Deleted. </summary>
-		Deleted,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -938,8 +918,6 @@ namespace PsychologicalServices.Data
 		CompanyAttributeEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
-		///<summary>InvoiceDocument</summary>
-		InvoiceDocumentEntity,
 		///<summary>InvoiceLine</summary>
 		InvoiceLineEntity,
 		///<summary>InvoiceStatus</summary>

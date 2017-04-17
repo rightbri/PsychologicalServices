@@ -7,6 +7,8 @@ namespace PsychologicalServices.Models.Invoices
     {
         Invoice GetInvoice(int id);
 
+        InvoiceDocument GetInvoiceDocument(int invoiceStatusChangeId);
+
         InvoiceStatus GetInvoiceStatus(int id);
 
         InvoiceStatus GetInitialInvoiceStatus();
@@ -22,7 +24,5 @@ namespace PsychologicalServices.Models.Invoices
         decimal GetTaxRate();
 
         decimal GetAdditionalReportAmount(int referralSourceId, int reportTypeId);
-
-        byte[] GetInvoiceDocument(int invoiceId);
     }
 }

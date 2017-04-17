@@ -112,11 +112,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.AppointmentStatusId);}
 		}
-		/// <summary>Creates a new AppointmentEntity.Deleted field instance</summary>
-		public static EntityField2 Deleted
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.Deleted);}
-		}
 		/// <summary>Creates a new AppointmentEntity.AssessmentId field instance</summary>
 		public static EntityField2 AssessmentId
 		{
@@ -201,11 +196,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 AssessmentTypeId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.AssessmentTypeId);}
-		}
-		/// <summary>Creates a new AssessmentEntity.Deleted field instance</summary>
-		public static EntityField2 Deleted
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.Deleted);}
 		}
 		/// <summary>Creates a new AssessmentEntity.CompanyId field instance</summary>
 		public static EntityField2 CompanyId
@@ -567,11 +557,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ClaimFieldIndex.ClaimNumber);}
 		}
-		/// <summary>Creates a new ClaimEntity.Deleted field instance</summary>
-		public static EntityField2 Deleted
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(ClaimFieldIndex.Deleted);}
-		}
 	}
 
 	/// <summary>Field Creation Class for entity ClaimantEntity</summary>
@@ -722,25 +707,10 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.Total);}
 		}
-	}
-
-	/// <summary>Field Creation Class for entity InvoiceDocumentEntity</summary>
-	public partial class InvoiceDocumentFields
-	{
-		/// <summary>Creates a new InvoiceDocumentEntity.InvoiceId field instance</summary>
-		public static EntityField2 InvoiceId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceDocumentFieldIndex.InvoiceId);}
-		}
-		/// <summary>Creates a new InvoiceDocumentEntity.Document field instance</summary>
+		/// <summary>Creates a new InvoiceEntity.Document field instance</summary>
 		public static EntityField2 Document
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceDocumentFieldIndex.Document);}
-		}
-		/// <summary>Creates a new InvoiceDocumentEntity.CreatedDate field instance</summary>
-		public static EntityField2 CreatedDate
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceDocumentFieldIndex.CreatedDate);}
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.Document);}
 		}
 	}
 
@@ -837,6 +807,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusChangeFieldIndex.UpdateDate);}
 		}
+		/// <summary>Creates a new InvoiceStatusChangeEntity.Document field instance</summary>
+		public static EntityField2 Document
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusChangeFieldIndex.Document);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity IssueInDisputeEntity</summary>
@@ -896,11 +871,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 CreateDate
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.CreateDate);}
-		}
-		/// <summary>Creates a new NoteEntity.Deleted field instance</summary>
-		public static EntityField2 Deleted
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(NoteFieldIndex.Deleted);}
 		}
 	}
 

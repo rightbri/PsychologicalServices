@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (47 + 0));
+			base.InitClass( (46 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -83,7 +83,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitCompanyEntityInfos();
 			InitCompanyAttributeEntityInfos();
 			InitInvoiceEntityInfos();
-			InitInvoiceDocumentEntityInfos();
 			InitInvoiceLineEntityInfos();
 			InitInvoiceStatusEntityInfos();
 			InitInvoiceStatusChangeEntityInfos();
@@ -136,7 +135,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AppointmentEntity", "PsychometristId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.PsychometristId, 0, 0, 10);
 			base.AddElementFieldInfo("AppointmentEntity", "PsychologistId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.PsychologistId, 0, 0, 10);
 			base.AddElementFieldInfo("AppointmentEntity", "AppointmentStatusId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.AppointmentStatusId, 0, 0, 10);
-			base.AddElementFieldInfo("AppointmentEntity", "Deleted", typeof(System.Boolean), false, false, false, false,  (int)AppointmentFieldIndex.Deleted, 0, 0, 0);
 			base.AddElementFieldInfo("AppointmentEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.AssessmentId, 0, 0, 10);
 		}
 		/// <summary>Inits AppointmentAttributeEntity's FieldInfo objects</summary>
@@ -163,7 +161,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentEntity", "ReferralTypeId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.ReferralTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "ReferralSourceId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.ReferralSourceId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "AssessmentTypeId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.AssessmentTypeId, 0, 0, 10);
-			base.AddElementFieldInfo("AssessmentEntity", "Deleted", typeof(System.Boolean), false, false, false, false,  (int)AssessmentFieldIndex.Deleted, 0, 0, 0);
 			base.AddElementFieldInfo("AssessmentEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.CompanyId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "ReportStatusId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.ReportStatusId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "FileSize", typeof(Nullable<System.Int32>), false, false, false, true,  (int)AssessmentFieldIndex.FileSize, 0, 0, 10);
@@ -279,9 +276,8 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("ClaimEntity", "ClaimId", typeof(System.Int32), true, false, true, false,  (int)ClaimFieldIndex.ClaimId, 0, 0, 10);
 			base.AddElementFieldInfo("ClaimEntity", "ClaimantId", typeof(System.Int32), false, true, false, false,  (int)ClaimFieldIndex.ClaimantId, 0, 0, 10);
-			base.AddElementFieldInfo("ClaimEntity", "DateOfLoss", typeof(System.DateTime), false, false, false, false,  (int)ClaimFieldIndex.DateOfLoss, 0, 0, 0);
-			base.AddElementFieldInfo("ClaimEntity", "ClaimNumber", typeof(System.String), false, false, false, false,  (int)ClaimFieldIndex.ClaimNumber, 50, 0, 0);
-			base.AddElementFieldInfo("ClaimEntity", "Deleted", typeof(System.Boolean), false, false, false, false,  (int)ClaimFieldIndex.Deleted, 0, 0, 0);
+			base.AddElementFieldInfo("ClaimEntity", "DateOfLoss", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)ClaimFieldIndex.DateOfLoss, 0, 0, 0);
+			base.AddElementFieldInfo("ClaimEntity", "ClaimNumber", typeof(System.String), false, false, false, true,  (int)ClaimFieldIndex.ClaimNumber, 50, 0, 0);
 		}
 		/// <summary>Inits ClaimantEntity's FieldInfo objects</summary>
 		private void InitClaimantEntityInfos()
@@ -327,13 +323,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceFieldIndex.UpdateDate, 0, 0, 0);
 			base.AddElementFieldInfo("InvoiceEntity", "TaxRate", typeof(System.Decimal), false, false, false, false,  (int)InvoiceFieldIndex.TaxRate, 0, 4, 18);
 			base.AddElementFieldInfo("InvoiceEntity", "Total", typeof(System.Decimal), false, false, false, false,  (int)InvoiceFieldIndex.Total, 0, 4, 18);
-		}
-		/// <summary>Inits InvoiceDocumentEntity's FieldInfo objects</summary>
-		private void InitInvoiceDocumentEntityInfos()
-		{
-			base.AddElementFieldInfo("InvoiceDocumentEntity", "InvoiceId", typeof(System.Int32), true, true, false, false,  (int)InvoiceDocumentFieldIndex.InvoiceId, 0, 0, 10);
-			base.AddElementFieldInfo("InvoiceDocumentEntity", "Document", typeof(System.Byte[]), false, false, false, false,  (int)InvoiceDocumentFieldIndex.Document, 2147483647, 0, 0);
-			base.AddElementFieldInfo("InvoiceDocumentEntity", "CreatedDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceDocumentFieldIndex.CreatedDate, 0, 0, 0);
+			base.AddElementFieldInfo("InvoiceEntity", "Document", typeof(System.Byte[]), false, false, false, true,  (int)InvoiceFieldIndex.Document, 2147483647, 0, 0);
 		}
 		/// <summary>Inits InvoiceLineEntity's FieldInfo objects</summary>
 		private void InitInvoiceLineEntityInfos()
@@ -362,6 +352,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceStatusChangeFieldIndex.InvoiceId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "InvoiceStatusId", typeof(System.Int32), false, true, false, false,  (int)InvoiceStatusChangeFieldIndex.InvoiceStatusId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceStatusChangeFieldIndex.UpdateDate, 0, 0, 0);
+			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "Document", typeof(System.Byte[]), false, false, false, true,  (int)InvoiceStatusChangeFieldIndex.Document, 2147483647, 0, 0);
 		}
 		/// <summary>Inits IssueInDisputeEntity's FieldInfo objects</summary>
 		private void InitIssueInDisputeEntityInfos()
@@ -380,7 +371,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("NoteEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)NoteFieldIndex.UpdateDate, 0, 0, 0);
 			base.AddElementFieldInfo("NoteEntity", "CreateUserId", typeof(System.Int32), false, true, false, false,  (int)NoteFieldIndex.CreateUserId, 0, 0, 10);
 			base.AddElementFieldInfo("NoteEntity", "CreateDate", typeof(System.DateTime), false, false, false, false,  (int)NoteFieldIndex.CreateDate, 0, 0, 0);
-			base.AddElementFieldInfo("NoteEntity", "Deleted", typeof(System.Boolean), false, false, false, false,  (int)NoteFieldIndex.Deleted, 0, 0, 0);
 		}
 		/// <summary>Inits ReferralSourceEntity's FieldInfo objects</summary>
 		private void InitReferralSourceEntityInfos()

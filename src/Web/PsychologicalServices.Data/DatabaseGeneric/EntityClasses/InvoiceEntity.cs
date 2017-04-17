@@ -42,7 +42,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		private AppointmentEntity _appointment;
 		private InvoiceStatusEntity _invoiceStatus;
-		private InvoiceDocumentEntity _invoiceDocument;
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -64,8 +64,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			/// <summary>Member name InvoiceStatusChanges</summary>
 			public static readonly string InvoiceStatusChanges = "InvoiceStatusChanges";
 
-			/// <summary>Member name InvoiceDocument</summary>
-			public static readonly string InvoiceDocument = "InvoiceDocument";
+
 		}
 		#endregion
 		
@@ -137,11 +136,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_invoiceStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_invoiceDocument = (InvoiceDocumentEntity)info.GetValue("_invoiceDocument", typeof(InvoiceDocumentEntity));
-				if(_invoiceDocument!=null)
-				{
-					_invoiceDocument.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -197,9 +192,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					this.InvoiceStatusChanges.Add((InvoiceStatusChangeEntity)entity);
 					break;
 
-				case "InvoiceDocument":
-					this.InvoiceDocument = (InvoiceDocumentEntity)entity;
-					break;
+
 				default:
 					break;
 			}
@@ -234,9 +227,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					toReturn.Add(InvoiceEntity.Relations.InvoiceStatusChangeEntityUsingInvoiceId);
 					break;
 
-				case "InvoiceDocument":
-					toReturn.Add(InvoiceEntity.Relations.InvoiceDocumentEntityUsingInvoiceId);
-					break;
+
 				default:
 
 					break;				
@@ -285,9 +276,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceStatusChanges":
 					this.InvoiceStatusChanges.Add((InvoiceStatusChangeEntity)relatedEntity);
 					break;
-				case "InvoiceDocument":
-					SetupSyncInvoiceDocument(relatedEntity);
-					break;
+
 				default:
 					break;
 			}
@@ -314,9 +303,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceStatusChanges":
 					base.PerformRelatedEntityRemoval(this.InvoiceStatusChanges, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "InvoiceDocument":
-					DesetupSyncInvoiceDocument(false, true);
-					break;
+
 				default:
 					break;
 			}
@@ -327,10 +314,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependingRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_invoiceDocument!=null)
-			{
-				toReturn.Add(_invoiceDocument);
-			}
 
 			return toReturn;
 		}
@@ -349,7 +332,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_invoiceStatus);
 			}
-
 
 			return toReturn;
 		}
@@ -380,7 +362,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 				info.AddValue("_appointment", (!this.MarkedForDeletion?_appointment:null));
 				info.AddValue("_invoiceStatus", (!this.MarkedForDeletion?_invoiceStatus:null));
-				info.AddValue("_invoiceDocument", (!this.MarkedForDeletion?_invoiceDocument:null));
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -456,15 +438,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'InvoiceDocument' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoInvoiceDocument()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceDocumentFields.InvoiceId, null, ComparisonOperator.Equal, this.InvoiceId));
-			return bucket;
-		}
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -547,7 +520,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("InvoiceLines", _invoiceLines);
 			toReturn.Add("InvoiceStatusChanges", _invoiceStatusChanges);
 
-			toReturn.Add("InvoiceDocument", _invoiceDocument);
+
 			return toReturn;
 		}
 		
@@ -571,10 +544,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_invoiceStatus.ActiveContext = base.ActiveContext;
 			}
-			if(_invoiceDocument!=null)
-			{
-				_invoiceDocument.ActiveContext = base.ActiveContext;
-			}
+
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -586,7 +556,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_appointment = null;
 			_invoiceStatus = null;
-			_invoiceDocument = null;
+
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -626,6 +596,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Total", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Document", fieldHashtable);
 		}
 		#endregion
 
@@ -695,38 +668,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _invoiceDocument</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncInvoiceDocument(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _invoiceDocument, new PropertyChangedEventHandler( OnInvoiceDocumentPropertyChanged ), "InvoiceDocument", InvoiceEntity.Relations.InvoiceDocumentEntityUsingInvoiceId, false, signalRelatedEntity, "Invoice", false, new int[] { (int)InvoiceFieldIndex.InvoiceId } );
-			_invoiceDocument = null;
-		}
-		
-		/// <summary> setups the sync logic for member _invoiceDocument</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncInvoiceDocument(IEntity2 relatedEntity)
-		{
-			if(_invoiceDocument!=relatedEntity)
-			{
-				DesetupSyncInvoiceDocument(true, true);
-				_invoiceDocument = (InvoiceDocumentEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _invoiceDocument, new PropertyChangedEventHandler( OnInvoiceDocumentPropertyChanged ), "InvoiceDocument", InvoiceEntity.Relations.InvoiceDocumentEntityUsingInvoiceId, false, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnInvoiceDocumentPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
 		/// <param name="validator">The validator object for this InvoiceEntity</param>
@@ -808,17 +749,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceDocument' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathInvoiceDocument
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory))),
-					(IEntityRelation)GetRelationsForField("InvoiceDocument")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.InvoiceDocumentEntity, 0, null, null, null, null, "InvoiceDocument", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);
-			}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -932,6 +862,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)InvoiceFieldIndex.Total, value); }
 		}
 
+		/// <summary> The Document property of the Entity Invoice<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Invoices"."Document"<br/>
+		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.Byte[] Document
+		{
+			get { return (System.Byte[])GetValue((int)InvoiceFieldIndex.Document, true); }
+			set	{ SetValue((int)InvoiceFieldIndex.Document, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(InvoiceLineEntity))]
@@ -1035,43 +976,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Gets / sets related entity of type 'InvoiceDocumentEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual InvoiceDocumentEntity InvoiceDocument
-		{
-			get
-			{
-				return _invoiceDocument;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncInvoiceDocument(value);
-					if((SerializationHelper.Optimization == SerializationOptimization.Fast) && (value!=null))
-					{
-						value.SetRelatedEntity(this, "Invoice");
-					}
-				}
-				else
-				{
-					if(value==null)
-					{
-						DesetupSyncInvoiceDocument(true, true);
-					}
-					else
-					{
-						if(_invoiceDocument!=value)
-						{
-							IEntity2 relatedEntity = (IEntity2)value;
-							relatedEntity.SetRelatedEntity(this, "Invoice");
-							SetupSyncInvoiceDocument(relatedEntity);
-						}
-					}
-				}
-			}
-		}
 	
 		
 		/// <summary> Gets the type of the hierarchy this entity is in. </summary>

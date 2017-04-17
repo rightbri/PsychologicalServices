@@ -30,9 +30,9 @@ namespace PsychologicalServices.Models.CalendarNotes
             return calendarNote;
         }
 
-        public IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate, bool includeDeleted = false)
+        public IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate)
         {
-            var calendarNotes = _calendarNoteRepository.GetCalendarNotes(fromDate, toDate, includeDeleted);
+            var calendarNotes = _calendarNoteRepository.GetCalendarNotes(fromDate, toDate);
 
             return calendarNotes;
         }

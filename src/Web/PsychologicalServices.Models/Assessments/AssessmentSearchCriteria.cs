@@ -31,7 +31,5 @@ namespace PsychologicalServices.Models.Assessments
         public string ReferralSourceContactEmail { get; set; }
 
         public int? CompanyId { get; set; }
-
-        public bool? Deleted { get; set; }
     }
 }

@@ -22,6 +22,7 @@ export class ClaimantSearchDialog {
 	}
 
 	activate(options) {
+		this.claimant = options.claimant;
 		this.addClaimantEnabled = options.addClaimantEnabled;
 	}
 	
@@ -44,10 +45,12 @@ export class ClaimantSearchDialog {
 		
 		claimant.selected = true;
 		this.claimant = claimant;
+		
+		this.ok();
 	}
 	
 	addClaimant() {
-		return this.editClaimant({ isActive: true })
+		return this.editClaimant({ lastName: this.claimantSearch, isActive: true })
 			.then(data => {
 				if (!data.wasCancelled) {
 					this.claimant = data.claimant;

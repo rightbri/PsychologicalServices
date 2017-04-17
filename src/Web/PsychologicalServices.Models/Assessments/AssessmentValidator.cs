@@ -330,6 +330,14 @@ namespace PsychologicalServices.Models.Assessments
                 }
             }
 
+            if (null != item.Reports)
+            {
+                foreach (var report in item.Reports)
+                {
+                    //if (item.)
+                }
+            }
+
             result.IsValid = !result.ValidationErrors.Any();
 
             return result;

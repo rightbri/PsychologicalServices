@@ -58,7 +58,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
             }
         }
 
-        public IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate, bool includeDeleted = false)
+        public IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
@@ -74,11 +74,6 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                 if (toDate.HasValue)
                 {
                     calendarNotes = calendarNotes.Where(calendarNote => calendarNote.ToDate >= fromDate.Value);
-                }
-
-                if (!includeDeleted)
-                {
-                    calendarNotes = calendarNotes.Where(calendarNote => !calendarNote.Note.Deleted);
                 }
 
                 return Execute<CalendarNoteEntity>(
@@ -124,7 +119,6 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                 calendarNoteEntity.Note.Note = calendarNote.Note.NoteText;
                 calendarNoteEntity.Note.UpdateUserId = calendarNote.Note.UpdateUser.UserId;
                 calendarNoteEntity.Note.UpdateDate = _now.Now;
-                calendarNoteEntity.Note.Deleted = calendarNote.Note.Deleted;
 
                 adapter.SaveEntity(calendarNoteEntity, false);
 

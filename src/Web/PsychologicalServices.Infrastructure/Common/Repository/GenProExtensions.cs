@@ -245,7 +245,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NoteText = note.Note,
                     CreateDate = note.CreateDate,
                     UpdateDate = note.UpdateDate,
-                    Deleted = note.Deleted,
                     CreateUser = note.CreateUser.ToUser(),
                     UpdateUser = note.UpdateUser.ToUser(),
                     Recipients = note.UserNotes.Select(userNote => userNote.User.ToUser()),
@@ -278,7 +277,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ClaimNumber = claim.ClaimNumber,
                     DateOfLoss = claim.DateOfLoss,
                     Claimant = claim.Claimant.ToClaimant(),
-                    Deleted = claim.Deleted,
                 }
                 : null;
         }
@@ -388,7 +386,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     FileSize = assessment.FileSize,
                     ReferralSourceFileNumber = assessment.ReferralSourceFileNumber,
                     ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
-                    Deleted = assessment.Deleted,
                     IsLargeFile = assessment.IsLargeFile,
                     AssessmentType = assessment.AssessmentType.ToAssessmentType(),
                     ReferralType = assessment.ReferralType.ToReferralType(),
@@ -418,7 +415,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     FileSize = assessment.FileSize,
                     ReferralSourceFileNumber = assessment.ReferralSourceFileNumber,
                     ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
-                    Deleted = assessment.Deleted,
                     IsLargeFile = assessment.IsLargeFile,
                     AssessmentType = assessment.AssessmentType.ToAssessmentType(),
                     ReferralType = assessment.ReferralType.ToReferralType(),
@@ -460,7 +456,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     AppointmentId = appointment.AppointmentId,
                     AppointmentTime = appointment.AppointmentTime,
-                    Deleted = appointment.Deleted,
                     Location = appointment.Location.ToAddress(),
                     Psychometrist = appointment.Psychometrist.ToUser(),
                     Psychologist = appointment.Psychologist.ToUser(),

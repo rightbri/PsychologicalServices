@@ -12,8 +12,13 @@ export class DatePickerCustomAttribute {
 	}
 
 	attached() {
-		$(this.element).datepicker(this.options)
-			.datepicker('setDates', this.dates)
+		let $datepicker = $(this.element).datepicker(this.options);
+		
+		if (this.dates) {
+			$datepicker.datepicker('setDates', this.dates);
+		}
+
+		$datepicker
 			.on('change', e => fireEvent(e.target, 'input'))
 			.on('changeDate', e => {
 				fireEvent(e.target, 'datechanged', e);

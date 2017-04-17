@@ -169,7 +169,6 @@ namespace PsychologicalServices.Infrastructure.Claims
                 entity.ClaimantId = claim.Claimant.ClaimantId;
                 entity.ClaimNumber = claim.ClaimNumber;
                 entity.DateOfLoss = claim.DateOfLoss;
-                entity.Deleted = claim.Deleted;
                 
                 adapter.SaveEntity(entity, false);
 

@@ -8,4 +8,14 @@ export class DateFormatValueConverter {
 		
 		return value;
 	}
+	
+	fromView(value, format) {
+		var m = moment(value, format);
+
+		if (m.isValid()) {
+			return m.toDate();
+		}
+		
+		return value;
+	}
 }

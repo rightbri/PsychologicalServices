@@ -14,8 +14,6 @@ namespace PsychologicalServices.Models.Notes
 
         public DateTime UpdateDate { get; set; }
 
-        public bool Deleted { get; set; }
-
         public User CreateUser { get; set; }
 
         public User UpdateUser { get; set; }

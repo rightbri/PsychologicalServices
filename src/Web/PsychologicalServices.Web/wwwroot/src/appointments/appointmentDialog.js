@@ -13,13 +13,6 @@ export class AppointmentDialog {
 		this.config = config;
 		this.context = context;
 		
-		this.psychometrists = null;
-		this.psychologists = null;
-		this.appointmentStatuses = null;
-		this.taskStatuses = null;
-		this.addresses = null;
-		this.attributes = null;
-		
 		this.psychometristMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.psychologistMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.appointmentStatusMatcher = (a, b) => a !== null && b !== null && a.appointmentStatusId === b.appointmentStatusId;
@@ -27,32 +20,16 @@ export class AppointmentDialog {
 		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
 	}
 	
-	activate(appointment) {
-		this.appointment = appointment;
-		this.appointmentDate = this.dateString(this.appointment.appointmentTime);
-		this.appointmentTime = this.timeString(this.appointment.appointmentTime);
+	activate(model) {
+		this.appointment = model.appointment;
+		this.appointmentDate = this.appointment.appointmentTime;//this.date(this.appointment.appointmentTime);
+		this.appointmentTime = this.time(this.appointment.appointmentTime);
 
-		return Promise.all([
-			this.dataRepository.searchUsers({
-				companyId: this.context.user.company.companyId,
-				rightId: this.config.rights.Psychometrist,
-				availableDate: this.appointmentDate
-			}).then(data => this.psychometrists = data),
-			this.dataRepository.searchUsers({
-				companyId: this.context.user.company.companyId,
-				rightId: this.config.rights.Psychologist,
-				availableDate: this.appointmentDate
-			}).then(data => this.psychologists = data),
-			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
-			this.dataRepository.searchAddress({
-				addressTypeIds: this.config.appointmentDefaults.addressTypeIds
-			}).then(data => this.addresses = data),
-			this.dataRepository.searchAttributes({
-				companyIds: [this.context.user.company.companyId],
-				attributeTypeIds: this.config.appointmentDefaults.attributeTypeIds,
-				isActive: true
-			}).then(data => this.attributes = data)
-		]);
+		this.psychometrists = model.psychometrists;
+		this.psychologists = model.psychologists;
+		this.appointmentStatuses = model.appointmentStatuses;
+		this.addresses = model.addresses;
+		this.attributes = model.attributes;
 	}
 	
 	ok() {
@@ -69,15 +46,23 @@ export class AppointmentDialog {
 		this.appointmentDate = e.detail.event.date;
 	}
 	
-	dateString(datetime) {
-		return moment(datetime).format(this.config.shortDateFormat);
+	date(datetime) {
+		//return new Date(datetime.getFullYear(), datetime.getMonth(), datetime.getDate());
+		//return moment(datetime).format(this.config.longDateFormat);
 	}
 
-	timeString(datetime) {
+	time(datetime) {
 		return moment(datetime).format(this.config.shortTimeFormat);
 	}
 
 	parseDateTime(date, time) {
-        return moment(date + time, this.config.shortDateFormat + ' ' + this.config.shortTimeFormat).format();//'MM/DD/YYYY HH:mm A'
+		
+        var newDate = moment(
+			moment(date).format(this.config.isoShortDateFormat) + ' ' + time,
+			this.config.isoShortDateFormat + ' ' + this.config.shortTimeFormat
+		).format();
+
+		return newDate;
+		//moment(date + time, this.config.shortDateFormat + 'T' + this.config.shortTimeFormat).format();
     }
 }

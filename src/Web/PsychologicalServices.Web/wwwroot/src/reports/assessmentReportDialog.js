@@ -20,9 +20,12 @@ export class AssessmentReportDialog {
 		
 		this.issuesInDispute = model.issuesInDispute;
 		
+		this.reportTypes = model.reportTypes;
+		/*
 		return Promise.all([
 			this.dataRepository.getReportTypes().then(data => this.reportTypes = data)
 		]);
+		*/
 	}
 	
 	ok() {

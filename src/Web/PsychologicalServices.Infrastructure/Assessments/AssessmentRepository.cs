@@ -77,13 +77,13 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                             .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                            //.Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
-                            //    .SubPath(appointmentAttributePath => appointmentAttributePath
-                            //        .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
-                            //            .SubPath(attributePath => attributePath
-                            //                .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
-                            //            )
-                            //    )
+                            .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
+                                .SubPath(appointmentAttributePath => appointmentAttributePath
+                                    .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
+                                        .SubPath(attributePath => attributePath
+                                            .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                                        )
+                                )
                         )
                     .Prefetch<AssessmentMedRehabEntity>(assessment => assessment.AssessmentMedRehabs)
                     .Prefetch<AssessmentNoteEntity>(assessment => assessment.AssessmentNotes)
@@ -118,6 +118,18 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 )
                         )
                 );
+
+        private static readonly Func<IPathEdgeRootParser<AssessmentTypeEntity>, IPathEdgeRootParser<AssessmentTypeEntity>>
+            AssessmentTypePath = (assessmentTypePath => assessmentTypePath
+                .Prefetch<AssessmentTypeReportTypeEntity>(assessmentType => assessmentType.AssessmentTypeReportTypes)
+                    .SubPath(assessmentTypeReportTypePath => assessmentTypeReportTypePath
+                        .Prefetch<ReportTypeEntity>(assessmentTypeReportType => assessmentTypeReportType.ReportType)
+                    )
+                .Prefetch<AssessmentTypeAttributeTypeEntity>(assessmentType => assessmentType.AssessmentTypeAttributeTypes)
+                    .SubPath(assessmentTypeAttributeTypePath => assessmentTypeAttributeTypePath
+                        .Prefetch<AttributeTypeEntity>(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType)
+                    )
+            );
 
         #endregion
 
@@ -232,11 +244,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     {
                         assessments = assessments.Where(assessment => assessment.CompanyId == criteria.CompanyId.Value);
                     }
-
-                    if (criteria.Deleted.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.Deleted == criteria.Deleted.Value);
-                    }
                 }
 
                 return Execute<AssessmentEntity>(
@@ -255,12 +262,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 var meta = new LinqMetaData(adapter);
 
                 return Execute<AssessmentTypeEntity>(
-                    (ILLBLGenProQuery)
-                    meta.AssessmentType
-                        .WithPath(pre => pre.Prefetch<AssessmentTypeAttributeTypeEntity>(assessmentType => assessmentType.AssessmentTypeAttributeTypes)
-                        .SubPath(assessmentTypeAttributeTypePath => assessmentTypeAttributeTypePath
-                        .Prefetch<AttributeTypeEntity>(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType)))
-                        .Where(assessmentType => isActive == null || assessmentType.IsActive == isActive.Value)
+                        (ILLBLGenProQuery)
+                        meta.AssessmentType
+                            .WithPath(AssessmentTypePath)
+                            .Where(assessmentType => isActive == null || assessmentType.IsActive == isActive.Value)
                     )
                     .Select(assessmentType => assessmentType.ToAssessmentType())
                     .ToList();
@@ -316,7 +321,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.ReferralSourceId = assessment.ReferralSource.ReferralSourceId;
                 assessmentEntity.ReportStatusId = assessment.ReportStatus.ReportStatusId;
                 assessmentEntity.CompanyId = assessment.Company.CompanyId;
-                assessmentEntity.Deleted = assessment.Deleted;
                 assessmentEntity.IsLargeFile = assessment.IsLargeFile;
 
                 if (null == assessment.MedicalFileReceivedDate)
@@ -381,14 +385,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         !assessmentEntity.Appointments.Any(appointmentEntity =>
                             appointmentEntity.AppointmentId == appointment.AppointmentId
                         )
-                    );
+                    )
+                    .ToList();
 
                 var appointmentsToRemove = assessmentEntity.Appointments
                     .Where(appointmentEntity =>
                         !assessment.Appointments.Any(appointment =>
                             appointment.AppointmentId == appointmentEntity.AppointmentId
                         )
-                    );
+                    )
+                    .ToList();
 
                 var appointmentsToUpdate = assessment.Appointments
                     .Where(appointment =>
@@ -397,7 +403,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             (
                                 appointmentEntity.AppointmentStatusId != appointment.AppointmentStatus.AppointmentStatusId ||
                                 appointmentEntity.AppointmentTime != appointment.AppointmentTime ||
-                                appointmentEntity.Deleted != appointment.Deleted ||
                                 appointmentEntity.LocationId != appointment.Location.AddressId ||
                                 appointmentEntity.PsychologistId != appointment.Psychologist.UserId ||
                                 appointmentEntity.PsychometristId != appointment.Psychometrist.UserId ||
@@ -415,7 +420,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 )
                             )
                         )
-                    );
+                    )
+                    .ToList();
 
                 foreach (var appointment in appointmentsToRemove)
                 {
@@ -433,7 +439,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     appointmentEntity.AppointmentStatusId = appointment.AppointmentStatus.AppointmentStatusId;
                     appointmentEntity.AppointmentTime = appointment.AppointmentTime;
-                    appointmentEntity.Deleted = appointment.Deleted;
                     appointmentEntity.LocationId = appointment.Location.AddressId;
                     appointmentEntity.PsychologistId = appointment.Psychologist.UserId;
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
@@ -449,12 +454,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
                             appointmentAttribute.AttributeId == attribute.AttributeId
                         )
-                    );
+                    )
+                    .ToList();
 
                     var appointmentAttributesToRemove = appointmentEntity.AppointmentAttributes.Where(appointmentAttribute =>
                         !appointment.Attributes.Any(attribute =>
                             attribute.AttributeId == appointmentAttribute.AttributeId)
-                    );
+                    )
+                    .ToList();
 
                     foreach (var attribute in appointmentAttributesToRemove)
                     {
@@ -475,7 +482,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     {
                         AppointmentStatusId = appointment.AppointmentStatus.AppointmentStatusId,
                         AppointmentTime = appointment.AppointmentTime,
-                        Deleted = appointment.Deleted,
                         LocationId = appointment.Location.AddressId,
                         PsychologistId = appointment.Psychologist.UserId,
                         PsychometristId = appointment.Psychometrist.UserId,
@@ -505,10 +511,12 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 #region claims
 
                 var claimsToAdd = assessment.Claims
-                    .Where(claim => !assessmentEntity.AssessmentClaims.Any(assessmentClaim => assessmentClaim.ClaimId == claim.ClaimId));
+                    .Where(claim => !assessmentEntity.AssessmentClaims.Any(assessmentClaim => assessmentClaim.ClaimId == claim.ClaimId))
+                    .ToList();
 
                 var claimsToRemove = assessmentEntity.AssessmentClaims
-                    .Where(assessmentClaim => !assessment.Claims.Any(claim => claim.ClaimId == assessmentClaim.ClaimId));
+                    .Where(assessmentClaim => !assessment.Claims.Any(claim => claim.ClaimId == assessmentClaim.ClaimId))
+                    .ToList();
 
                 var claimsToUpdate = assessment.Claims
                     .Where(claim => assessmentEntity.AssessmentClaims
@@ -517,11 +525,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             (
                             assessmentClaim.Claim.ClaimantId != claim.Claimant.ClaimantId ||
                             assessmentClaim.Claim.ClaimNumber != claim.ClaimNumber ||
-                            assessmentClaim.Claim.DateOfLoss != claim.DateOfLoss ||
-                            assessmentClaim.Claim.Deleted != claim.Deleted
+                            assessmentClaim.Claim.DateOfLoss != claim.DateOfLoss
                             )
                         )
-                    );
+                    )
+                    .ToList();
                 
                 foreach (var assessmentClaim in claimsToRemove)
                 {
@@ -540,7 +548,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     {
                         claimEntity.ClaimNumber = claim.ClaimNumber;
                         claimEntity.DateOfLoss = claim.DateOfLoss;
-                        claimEntity.Deleted = claim.Deleted;
                         claimEntity.ClaimantId = claim.Claimant.ClaimantId;
 
                         if (claim.Claimant.IsNew())
@@ -576,8 +583,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             }
                             : null,
                             ClaimNumber = claim.ClaimNumber,
-                            DateOfLoss = claim.DateOfLoss,
-                            Deleted = claim.Deleted,
+                            DateOfLoss = claim.DateOfLoss
                         },
                     })
                 );
@@ -589,12 +595,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 var medRehabsToAdd = assessment.MedRehabs
                     .Where(medRehab =>
                         !assessmentEntity.AssessmentMedRehabs.Any(assessmentMedRehab => assessmentMedRehab.MedRehabId == medRehab.MedRehabId)
-                    );
+                    )
+                    .ToList();
 
                 var medRehabsToRemove = assessmentEntity.AssessmentMedRehabs
                     .Where(assessmentMedRehab =>
                         !assessment.MedRehabs.Any(medRehab => medRehab.MedRehabId == assessmentMedRehab.MedRehabId)
-                    );
+                    )
+                    .ToList();
 
                 var medRehabsToUpdate = assessment.MedRehabs
                     .Where(medRehab =>
@@ -607,7 +615,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 assessmentMedRehab.Description != medRehab.Description
                             )
                         )
-                    );
+                    )
+                    .ToList();
 
                 foreach (var medRehab in medRehabsToRemove)
                 {
@@ -648,12 +657,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 var notesToAdd = assessment.Notes
                     .Where(note =>
                         !assessmentEntity.AssessmentNotes.Any(assessmentNote => assessmentNote.NoteId == note.NoteId)
-                    );
+                    )
+                    .ToList();
 
                 var notesToRemove = assessmentEntity.AssessmentNotes
                     .Where(assessmentNote =>
                         !assessment.Notes.Any(note => note.NoteId == assessmentNote.NoteId)
-                    );
+                    )
+                    .ToList();
 
                 var notesToUpdate = assessment.Notes
                     .Where(note => assessmentEntity.AssessmentNotes
@@ -661,7 +672,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             assessmentNote.NoteId == note.NoteId &&
                             assessmentNote.Note.Note != note.NoteText
                         )
-                    );
+                    )
+                    .ToList();
 
                 foreach (var assessmentNote in notesToRemove)
                 {
@@ -703,12 +715,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 var colorsToAdd = assessment.Colors
                     .Where(color =>
                         !assessmentEntity.AssessmentColors.Any(assessmentColor => assessmentColor.ColorId == color.ColorId)
-                    );
+                    )
+                    .ToList();
 
                 var colorsToRemove = assessmentEntity.AssessmentColors
                     .Where(assessmentColor =>
                         !assessment.Colors.Any(color => color.ColorId == assessmentColor.ColorId)
-                    );
+                    )
+                    .ToList();
 
                 assessmentEntity.AssessmentColors.AddRange(
                     colorsToAdd.Select(color => new AssessmentColorEntity
@@ -731,12 +745,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         !assessmentEntity.AssessmentAttributes.Any(assessmentAttribute =>
                             assessmentAttribute.AttributeId == attribute.AttributeId
                         )
-                    );
+                    )
+                    .ToList();
 
                 var assessmentAttributesToRemove = assessmentEntity.AssessmentAttributes.Where(assessmentAttribute =>
-                    !assessment.Attributes.Any(attribute =>
-                        attribute.AttributeId == assessmentAttribute.AttributeId)
-                );
+                        !assessment.Attributes.Any(attribute =>
+                            attribute.AttributeId == assessmentAttribute.AttributeId
+                        )
+                    )
+                    .ToList();
 
                 foreach (var attribute in assessmentAttributesToRemove)
                 {
@@ -757,12 +774,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 var reportsToAdd = assessment.Reports
                     .Where(report =>
                         !assessmentEntity.AssessmentReports.Any(assessmentReport => assessmentReport.ReportId == report.ReportId)
-                    );
+                    )
+                    .ToList();
 
                 var reportsToRemove = assessmentEntity.AssessmentReports
                     .Where(assessmentReport =>
                         !assessment.Reports.Any(report => report.ReportId == assessmentReport.ReportId)
-                    );
+                    )
+                    .ToList();
                 
                 var reportsToUpdate = assessment.Reports
                     .Where(report =>
@@ -779,7 +798,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 )
                             )
                         )
-                    );
+                    )
+                    .ToList();
 
                 foreach (var report in reportsToRemove)
                 {

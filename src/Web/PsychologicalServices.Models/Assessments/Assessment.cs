@@ -23,8 +23,6 @@ namespace PsychologicalServices.Models.Assessments
 
         public string ReferralSourceContactEmail { get; set; }
 
-        public bool Deleted { get; set; }
-
         public bool IsLargeFile { get; set; }
         
         public AssessmentType AssessmentType { get; set; }

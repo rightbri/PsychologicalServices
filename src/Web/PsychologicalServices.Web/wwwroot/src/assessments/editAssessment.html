@@ -79,7 +79,7 @@
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label for="medicalFileReceivedDate">Medical File Received Date</label>
-				<input id="medicalFileReceivedDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat"/>
+				<input id="medicalFileReceivedDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="assessment.medicalFileReceivedDate | dateFormat:config.longDateFormat"/>
 			</div>
 		</div>
 		<div class="col-xs-3">
@@ -128,20 +128,20 @@
 				<thead>
 					<tr>
 						<th>
-							<button type="button" class="btn btn-default" click.delegate="newMedRehab()">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="newMedRehab()">
 								<i class="fa fa-plus"></i>
 							</button>
 						</th>
 						<th>Date</th>
 						<th>Amount</th>
 						<th>Description</th>
-						<th>Deleted</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr repeat.for="medRehab of assessment.medRehabs">
 						<td>
-							<button type="button" class="btn btn-default" click.delegate="editMedRehab(medRehab)">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="editMedRehab(medRehab)">
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
@@ -149,7 +149,9 @@
 						<td>${medRehab.amount}</td>
 						<td>${medRehab.description}</td>
 						<td>
-							<input type="checkbox" checked.bind="medRehab.deleted" />
+							<button type="button" class="btn btn-danger btn-xs" click.delegate="removeMedRehab(medRehab)">
+								<i class="fa fa-times"></i>
+							</button>
 						</td>
 					</tr>
 				</tbody>
@@ -165,7 +167,7 @@
 					${claimant.firstName} ${claimant.lastName}
 					<br>${claimant.age} - ${claimant.gender | gender}
 				</p>
-				<button type="button" class="btn btn-default" click.delegate="searchClaimant()">
+				<button type="button" class="btn btn-default btn-xs" click.delegate="searchClaimant()">
 					Search <i class="fa fa-search"></i>
 				</button>
 			</div>
@@ -176,26 +178,28 @@
 				<thead>
 					<tr>
 						<th>
-							<button type="button" class="btn btn-default" click.delegate="newClaim()" disabled.bind="!claimant">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="newClaim()" disabled.bind="!claimant">
 								<i class="fa fa-plus"></i>
 							</button>
 						</th>
 						<th>Claim #</th>
 						<th>Date of Loss</th>
-						<th>Deleted</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr repeat.for="claim of assessment.claims">
 						<td>
-							<button type="button" class="btn btn-default" click.delegate="editClaim(claim)">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="editClaim(claim)">
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
 						<td>${claim.claimNumber}</td>
 						<td>${claim.dateOfLoss | dateFormat:config.shortDateFormat}</td>
 						<td>
-							<input type="checkbox" checked.bind="claim.deleted" />
+							<button type="button" class="btn btn-danger btn-xs" click.delegate="removeClaim(claim)">
+								<i class="fa fa-times"></i>
+							</button>
 						</td>
 					</tr>
 				</tbody>
@@ -210,7 +214,7 @@
 				<thead>
 					<tr>
 						<th>
-							<button type="button" class="btn btn-default" click.delegate="newAppointment()">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="newAppointment()">
 								<i class="fa fa-plus"></i>
 							</button>
 						</th>
@@ -218,27 +222,37 @@
 						<th>Location</th>
 						<th>Status</th>
 						<th>Psychometrist</th>
-						<th>Confirmed</th>
-						<th>Deleted</th>
+						<th>Info</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr repeat.for="appointment of assessment.appointments">
 						<td>
-							<button type="button" class="btn btn-default" click.delegate="editAppointment(appointment)">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="editAppointment(appointment)">
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
 						<td>
-							${appointment.appointmentTime | dateFormat:config.shortDateFormat}
+							${appointment.appointmentTime | dateFormat:config.longDateFormat}
 							<br>${appointment.appointmentTime | dateFormat:config.shortTimeFormat}
 						</td>
 						<td>${appointment.location.name}</td>
 						<td>${appointment.appointmentStatus.name}</td>
 						<td>${appointment.psychometrist.firstName}</td>
-						<td>${appointment.psychometristConfirmed | boolean}</td>
 						<td>
-							<input type="checkbox" checked.bind="appointment.deleted" />
+							<ul class="list-unstyled">
+								<li repeat.for="attribute of appointment.attributes | attributeTypes:[1,3]">
+									${attribute.name}
+								</li>
+							</ul>
+							
+							
+						</td>
+						<td>
+							<button type="button" class="btn btn-danger btn-xs" click.delegate="removeAppointment(appointment)">
+								<i class="fa fa-times"></i>
+							</button>
 						</td>
 					</tr>
 				</tbody>
@@ -253,7 +267,7 @@
 				<thead>
 					<tr>
 						<th>
-							<button type="button" class="btn btn-default" click.delegate="newReport()">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="newReport()" disabled.bind="!assessment.assessmentType">
 								<i class="fa fa-plus"></i>
 							</button>
 						</th>
@@ -266,7 +280,7 @@
 				<tbody>
 					<tr repeat.for="report of assessment.reports">
 						<td>
-							<button type="button" class="btn btn-default" click.delegate="editReport(report)">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="editReport(report)">
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
@@ -319,25 +333,31 @@
 				<thead>
 					<tr>
 						<th>
-							<button type="button" class="btn btn-default" click.delegate="newNote()">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="newNote()">
 								<i class="fa fa-plus"></i>
 							</button>
 						</th>
 						<th>Note</th>
 						<th>Update Date</th>
 						<th>Updated By</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr repeat.for="note of assessment.notes | noteForUser:user">
+					<tr repeat.for="note of assessment.notes"><!--  | noteForUser:user-->
 						<td>
-							<button type="button" class="btn btn-default" click.delegate="editNote(note)">
+							<button type="button" class="btn btn-default btn-xs" click.delegate="editNote(note)">
 								<i class="fa fa-edit"></i>
 							</button>
 						</td>
 						<td>${note.noteText}</td>
 						<td>${note.updateDate | timeAgo}</td>
 						<td>${note.updateUser.firstName} ${note.updateUser.lastName}</td>
+						<td>
+							<button type="button" class="btn btn-danger btn-xs" click.delegate="removeNote(note)">
+								<i class="fa fa-times"></i>
+							</button>
+						</td>
 					</tr>
 				</tbody>
 			</table>

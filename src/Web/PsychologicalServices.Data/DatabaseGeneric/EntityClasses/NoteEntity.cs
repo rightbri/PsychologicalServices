@@ -645,9 +645,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("CreateDate", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Deleted", fieldHashtable);
 		}
 		#endregion
 
@@ -899,17 +896,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.DateTime)GetValue((int)NoteFieldIndex.CreateDate, true); }
 			set	{ SetValue((int)NoteFieldIndex.CreateDate, value); }
-		}
-
-		/// <summary> The Deleted property of the Entity Note<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Notes"."Deleted"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean Deleted
-		{
-			get { return (System.Boolean)GetValue((int)NoteFieldIndex.Deleted, true); }
-			set	{ SetValue((int)NoteFieldIndex.Deleted, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentNoteEntity' which are related to this entity via a relation of type '1:n'.

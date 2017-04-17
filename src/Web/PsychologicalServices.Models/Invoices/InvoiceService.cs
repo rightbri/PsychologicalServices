@@ -14,6 +14,7 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IInvoiceValidator _invoiceValidator = null;
         private readonly IInvoiceGenerator _invoiceGenerator = null;
+        private readonly IMailService _mailService = null;
         private readonly IDate _date = null;
 
         public InvoiceService(
@@ -21,6 +22,7 @@ namespace PsychologicalServices.Models.Invoices
             IInvoiceRepository invoiceRepository,
             IInvoiceValidator invoiceValidator,
             IInvoiceGenerator invoiceGenerator,
+            IMailService mailService,
             IDate date
         )
         {
@@ -28,6 +30,7 @@ namespace PsychologicalServices.Models.Invoices
             _invoiceRepository = invoiceRepository;
             _invoiceValidator = invoiceValidator;
             _invoiceGenerator = invoiceGenerator;
+            _mailService = mailService;
             _date = date;
         }
         
@@ -43,6 +46,33 @@ namespace PsychologicalServices.Models.Invoices
             var invoice = _invoiceGenerator.CreateInvoice(appointment);
 
             return invoice;
+        }
+
+        public InvoiceDocument GetInvoiceDocument(int invoiceStatusChangeId)
+        {
+            var invoiceDocument = _invoiceRepository.GetInvoiceDocument(invoiceStatusChangeId);
+
+            //var message = new System.Net.Mail.MailMessage
+            //{
+            //    Body = "hey",
+            //    Subject = "test",
+            //};
+
+            //message.To.Add("brian.avent@gmail.com");
+            //message.From = new System.Net.Mail.MailAddress("michelle.avent@gmail.com", "Michelle Avent");
+
+            //message.Attachments.Add(new System.Net.Mail.Attachment(new System.IO.MemoryStream(invoiceDocument.Content), invoiceDocument.FileName));
+
+            //try
+            //{
+            //    _mailService.Send(message);
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+            
+            return invoiceDocument;
         }
 
         public IEnumerable<InvoiceLine> GetInvoiceLines(Appointment appointment)

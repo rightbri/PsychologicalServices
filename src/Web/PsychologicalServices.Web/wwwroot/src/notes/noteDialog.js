@@ -17,12 +17,13 @@ export class NoteDialog {
 	activate(note) {
 		this.note = note;
 		
-		return this.context.getUser(user => {
+		return this.context.getUser().then(user => {
 			this.user = user;
-			
+			/*
 			return this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId
 			}).then(data => this.users = data);
+			*/
 		});
 	}
 	

@@ -498,9 +498,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ClaimNumber", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Deleted", fieldHashtable);
 		}
 		#endregion
 
@@ -646,10 +643,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Claims"."DateOfLoss"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime DateOfLoss
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.DateTime> DateOfLoss
 		{
-			get { return (System.DateTime)GetValue((int)ClaimFieldIndex.DateOfLoss, true); }
+			get { return (Nullable<System.DateTime>)GetValue((int)ClaimFieldIndex.DateOfLoss, false); }
 			set	{ SetValue((int)ClaimFieldIndex.DateOfLoss, value); }
 		}
 
@@ -657,22 +654,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Claims"."ClaimNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String ClaimNumber
 		{
 			get { return (System.String)GetValue((int)ClaimFieldIndex.ClaimNumber, true); }
 			set	{ SetValue((int)ClaimFieldIndex.ClaimNumber, value); }
-		}
-
-		/// <summary> The Deleted property of the Entity Claim<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Claims"."Deleted"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean Deleted
-		{
-			get { return (System.Boolean)GetValue((int)ClaimFieldIndex.Deleted, true); }
-			set	{ SetValue((int)ClaimFieldIndex.Deleted, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentClaimEntity' which are related to this entity via a relation of type '1:n'.

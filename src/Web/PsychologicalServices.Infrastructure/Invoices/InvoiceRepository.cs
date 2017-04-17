@@ -53,8 +53,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                         )
                                 )
                         )
-                    .Prefetch<InvoiceDocumentEntity>(invoice => invoice.InvoiceDocument)
-                        .Exclude(invoiceDocument => invoiceDocument.Document)
                 );
 
         private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
@@ -66,8 +64,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         .SubPath(invoiceStatusChangePath => invoiceStatusChangePath
                             .Prefetch<InvoiceStatusEntity>(invoiceStatusChange => invoiceStatusChange.InvoiceStatus)
                         )
-                    .Prefetch<InvoiceDocumentEntity>(invoice => invoice.InvoiceDocument)
-                        .Exclude(invoiceDocument => invoiceDocument.Document)
                     .Prefetch<AppointmentEntity>(invoice => invoice.Appointment)
                         .SubPath(appointmentPath => appointmentPath
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
@@ -128,6 +124,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                 return meta.Invoice
                     .WithPath(InvoiceEditPath)
+                    .ExcludeFields<InvoiceEntity>(invoice => invoice.Document)
                     .Where(invoice => invoice.InvoiceId == id)
                     .SingleOrDefault()
                     .ToInvoice();
@@ -176,8 +173,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 var meta = new LinqMetaData(adapter);
 
                 var invoices = meta.Invoice
-                    .WithPath(InvoiceListPath);
-
+                    .WithPath(InvoiceListPath)
+                    .ExcludeFields<InvoiceEntity>(invoice => invoice.Document);
+                    
                 if (null != criteria)
                 {
                     if (criteria.AppointmentId.HasValue)
@@ -232,9 +230,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                     prefetch.Add(InvoiceEntity.PrefetchPathInvoiceLines);
 
-                    var invoiceDocumentPath = prefetch.Add(InvoiceEntity.PrefetchPathInvoiceDocument);
-                    invoiceDocumentPath.ExcludedIncludedFields = new ExcludeIncludeFieldsList(true, new[] { InvoiceDocumentFields.Document });
-
                     adapter.FetchEntity(invoiceEntity, prefetch);
                 }
 
@@ -243,18 +238,10 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 if (isSubmitting)
                 {
                     var html = _invoiceHtmlGenerator.GetInvoiceHtml(invoice);
+                    
                     var pdf = _htmlToPdfService.GetPdf(html);
 
-                    var document = invoiceEntity.InvoiceDocument;
-                    if (null == document)
-                    {
-                        document = new InvoiceDocumentEntity
-                        {
-                            Document = pdf,
-                        };
-                    }
-
-                    invoiceEntity.InvoiceDocument = document;
+                    invoiceEntity.Document = pdf;
                 }
 
                 invoiceEntity.Identifier = invoice.Identifier;
@@ -351,16 +338,22 @@ namespace PsychologicalServices.Infrastructure.Invoices
             return 50000m;
         }
 
-        public byte[] GetInvoiceDocument(int invoiceId)
+        public InvoiceDocument GetInvoiceDocument(int invoiceStatusChangeId)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
                 var meta = new LinqMetaData(adapter);
 
-                var doc = meta.InvoiceDocument.SingleOrDefault(invoiceDocument => invoiceDocument.InvoiceId == invoiceId);
+                var invoiceStatusChange = meta.InvoiceStatusChange
+                    .WithPath(invoiceStatusChangePath => invoiceStatusChangePath.Prefetch<InvoiceEntity>(isc => isc.Invoice))
+                    .SingleOrDefault(isc => isc.InvoiceStatusChangeId == invoiceStatusChangeId);
 
-                return null != doc
-                    ? doc.Document
+                return null != invoiceStatusChange
+                    ? new InvoiceDocument
+                    {
+                        FileName = string.Format("{0}-{1:yyyy-MM-dd}.pdf", invoiceStatusChange.Invoice.Identifier, invoiceStatusChange.Invoice.UpdateDate),
+                        Content = invoiceStatusChange.Document,
+                    }
                     : null;
             }
         }

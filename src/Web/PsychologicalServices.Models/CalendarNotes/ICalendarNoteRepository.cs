@@ -7,7 +7,7 @@ namespace PsychologicalServices.Models.CalendarNotes
     {
         CalendarNote GetCalendarNote(int id);
 
-        IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate, bool includeDeleted = false);
+        IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate);
 
         int SaveCalendarNote(CalendarNote calendarNote);
     }

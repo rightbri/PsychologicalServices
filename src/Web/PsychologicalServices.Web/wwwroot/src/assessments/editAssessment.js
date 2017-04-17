@@ -6,6 +6,7 @@ import {Config} from 'common/config';
 import {Context} from 'common/context';
 import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
+import {DirtyPrompter} from 'common/dirtyPrompter';
 import {ClaimantSearchDialog} from 'claimants/ClaimantSearchDialog';
 import {ClaimDialog} from 'claims/ClaimDialog';
 import {AppointmentDialog} from 'appointments/AppointmentDialog';
@@ -14,9 +15,9 @@ import {AssessmentReportDialog} from 'reports/AssessmentReportDialog';
 import {NoteDialog} from 'notes/NoteDialog';
 import moment from 'moment';
 
-@inject(Router, DataRepository, DialogService, Config, Context, Scroller, Notifier)
+@inject(Router, DataRepository, DialogService, Config, Context, Scroller, Notifier, DirtyPrompter)
 export class EditAssessment {
-	constructor(router, dataRepository, dialogService, config, context, scroller, notifier) {
+	constructor(router, dataRepository, dialogService, config, context, scroller, notifier, dirtyPrompter) {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.dialogService = dialogService;
@@ -24,22 +25,10 @@ export class EditAssessment {
 		this.context = context;
 		this.scroller = scroller;
 		this.notifier = notifier;
+		this.dirtyPrompter = dirtyPrompter;
 		
 		this.assessment = null;
-		
-		this.assessmentTypes = null;
-		this.referralTypes = null;
-		this.referralSources = null;
-		this.reportStatuses = null;
-		this.docListWriters = null;
-		this.notesWriters = null;
-		this.claims = null;
-		this.claimant = null;
-		this.notes = null;
-		this.medRehabs = null;
-		this.colors = null;
-		this.attributes = null;
-		
+
 		this.assessmentTypeMatcher = (a, b) => a != null && b != null && a.assessmentTypeId === b.assessmentTypeId;
 		this.reportStatusMatcher = (a, b) => a != null && b != null && a.reportStatusId === b.reportStatusId;
 		this.referralSourceMatcher = (a, b) => a != null && b != null && a.referralSourceId === b.referralSourceId;
@@ -86,10 +75,12 @@ export class EditAssessment {
 									return 0;
 								});
 								
-								firstAppointmentDate = this.assessment.appointments[0].appointmentTime;
+								let appointmentTime = new Date(this.assessment.appointments[0].appointmentTime);
+								firstAppointmentDate = new Date(appointmentTime.getFullYear(), appointmentTime.getMonth(), appointmentTime.getDate());
 							}
 							
-							return this.getData(firstAppointmentDate);
+							return this.getData(firstAppointmentDate)
+								.then(() => this.scroller.scrollTo(0));
 						});
 				}
 				else {
@@ -112,18 +103,26 @@ export class EditAssessment {
 								reports: []
 							};
 							
-							return this.getData(appointment.appointmentTime);
+							return this.getData(appointmentDate)//appointment.appointmentTime
+								.then(() => this.scroller.scrollTo(0));
 						});
 				}
 			});
 	}
-	
+	/*
+	canDeactivate() {
+		
+		return this.dirtyPrompter.confirm('Exit without saving?');
+		
+	}
+	*/
 	getData(firstAppointmentDate) {
 		return Promise.all([
 			this.dataRepository.getAssessmentTypes().then(data => this.assessmentTypes = data),
 			this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
 			this.dataRepository.getReferralSources().then(data => this.referralSources = data),
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
+			this.dataRepository.getColors().then(data => this.colors = data),
 			
 			this.dataRepository.searchUsers({
 				companyId: this.context.user.company.companyId,
@@ -137,12 +136,35 @@ export class EditAssessment {
 				availableDate: firstAppointmentDate,
 			}).then(data => this.notesWriters = data),
 			
-			this.dataRepository.getColors().then(data => this.colors = data),
 			this.dataRepository.searchAttributes({
 				companyIds: [this.context.user.company.companyId],
 				attributeTypeIds: this.config.assessmentDefaults.attributeTypeIds,
 				isActive: true
-			}).then(data => this.attributes = data)
+			}).then(data => this.attributes = data),
+
+			this.dataRepository.searchUsers({
+				companyId: this.context.user.company.companyId,
+				rightId: this.config.rights.Psychometrist,
+				availableDate: firstAppointmentDate
+			}).then(data => this.psychometrists = data),
+			
+			this.dataRepository.searchUsers({
+				companyId: this.context.user.company.companyId,
+				rightId: this.config.rights.Psychologist,
+				availableDate: firstAppointmentDate
+			}).then(data => this.psychologists = data),
+			
+			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
+			
+			this.dataRepository.searchAddress({
+				addressTypeIds: this.config.appointmentDefaults.addressTypeIds
+			}).then(data => this.appointmentAddresses = data),
+			
+			this.dataRepository.searchAttributes({
+				companyIds: [this.context.user.company.companyId],
+				attributeTypeIds: this.config.appointmentDefaults.attributeTypeIds,
+				isActive: true
+			}).then(data => this.appointmentAttributes = data)
 		]);
 	}
 	
@@ -225,10 +247,14 @@ export class EditAssessment {
 			})
 	}
 	
+	removeMedRehab(medRehab) {
+		this.assessment.medRehabs.splice(this.assessment.medRehabs.indexOf(medRehab), 1);
+	}
+	
 	searchClaimant() {
-		var original = JSON.parse(JSON.stringify(this.claimant));
+		var original = JSON.parse(JSON.stringify(this.claimant || {}));
 		
-		return this.dialogService.open({viewModel: ClaimantSearchDialog, model: this.claimant})
+		return this.dialogService.open({viewModel: ClaimantSearchDialog, model: { claimant: this.claimant, addClaimantEnabled: true } })
 			.then(result => {
 				var source = original;
 
@@ -246,6 +272,11 @@ export class EditAssessment {
 						for (var claim of this.assessment.claims) {
 							claim.claimant = result.claimant;
 						}
+					}
+					else {
+						this.assessment.claims = [
+							{ 'claimant': result.claimant }
+						];
 					}
 				}
 			});
@@ -281,6 +312,10 @@ export class EditAssessment {
 			})
 	}
 	
+	removeClaim(claim) {
+		this.assessment.claims.splice(this.assessment.claims.indexOf(claim), 1);
+	}
+	
 	newAppointment() {
 		this.dataRepository.getNewAppointment(this.assessment.company.companyId)
 			.then(data => this.editAppointment(data))
@@ -294,7 +329,15 @@ export class EditAssessment {
 	editAppointment(appointment) {
 		var original = JSON.parse(JSON.stringify(appointment));
 		
-		return this.dialogService.open({viewModel: AppointmentDialog, model: appointment})
+		return this.dialogService.open({viewModel: AppointmentDialog, model: {
+				'appointment': appointment,
+				'psychometrists': this.psychometrists,
+				'psychologists': this.psychologists,
+				'appointmentStatuses': this.appointmentStatuses,
+				'addresses': this.appointmentAddresses,
+				'attributes': this.appointmentAttributes
+			}
+		})
 			.then(result => {
 				var copyFrom = original;
 				
@@ -310,6 +353,10 @@ export class EditAssessment {
 				
 				return { wasCancelled: result.wasCancelled, appointment: appointment };
 			});
+	}
+	
+	removeAppointment(appointment) {
+		this.assessment.appointments.splice(this.assessment.appointments.indexOf(appointment), 1);
 	}
 	
 	newNote() {
@@ -342,11 +389,17 @@ export class EditAssessment {
 			});
 	}
 	
+	removeNote(note) {
+		this.assessment.notes.splice(this.assessment.notes.indexOf(note), 1);
+	}
+	
 	newReport() {
-		return this.editReport({ issuesInDispute: [] })
-			.then(data => {
-				if (!data.wasCancelled) {
-					this.assessment.reports.push(data.report);
+		return this.editReport({ report: null, issuesInDispute: [], reportTypes: this.assessment.assessmentType.reportTypes })
+			.then(result => {
+				if (!result.wasCancelled) {
+					this.assessment.reports.push(result.report);
+					
+					this.checkMedRehab();
 				}
 			});
 	}
@@ -354,7 +407,7 @@ export class EditAssessment {
 	editReport(report) {
 		var original = JSON.parse(JSON.stringify(report));
 		
-		return this.dialogService.open({viewModel: AssessmentReportDialog, model: { report: report, issuesInDispute: this.assessment.referralType.issuesInDispute } })
+		return this.dialogService.open({viewModel: AssessmentReportDialog, model: { report: report, issuesInDispute: this.assessment.referralType.issuesInDispute, reportTypes: this.assessment.assessmentType.reportTypes } })
 			.then(result => {
 				var copyFrom = original;
 				

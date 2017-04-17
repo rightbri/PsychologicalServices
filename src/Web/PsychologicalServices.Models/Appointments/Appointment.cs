@@ -20,8 +20,6 @@ namespace PsychologicalServices.Models.Appointments
 
         public AppointmentStatus AppointmentStatus { get; set; }
 
-        public bool Deleted { get; set; }
-
         public IEnumerable<Models.Attributes.Attribute> Attributes { get; set; }
 
         public Assessment Assessment { get; set; }

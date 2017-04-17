@@ -1,5 +1,6 @@
 <template>
 	<require from="common/date-picker"></require>
+	<require from="valueConverters/date-format"></require>
 	<require from="valueConverters/attribute-types"></require>
 	
 	<ai-dialog>
@@ -12,7 +13,7 @@
 				<div class="col-xs-6">
 					<div class="form-group">
 						<label for="appointmentDate">Date</label>
-						<input id="appointmentDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="appointmentDate"/>
+						<input id="appointmentDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="appointmentDate | dateFormat:config.longDateFormat"/>
 					</div>
 				</div>
 				<div class="col-xs-6">

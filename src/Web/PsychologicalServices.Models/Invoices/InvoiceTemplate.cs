@@ -29,29 +29,156 @@ namespace PsychologicalServices.Models.Invoices
         public virtual string TransformText()
         {
             this.Write("\r\n");
+            this.Write("\r\n<!doctype html>\r\n<html lang=\"en\">\r\n<head>\r\n    <title></title>\r\n    <meta chars" +
+                    "et=\"utf-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scal" +
+                    "e=1, maximum-scale=1, minimum-scale=1, user-scalable=no\" />\r\n\t<!--\r\n\t<link href=" +
+                    "\"https://fonts.googleapis.com/css?family=Martel\" rel=\"stylesheet\">\r\n\t-->\r\n    <s" +
+                    "tyle>\r\n\t\tbody {\r\n\t\t\tfont-family: \'Martel\', serif;\r\n\t\t\t\r\n\t\t\tfont-size: 12pt;\r\n\t\t}" +
+                    "\r\n\t\t\r\n\t\ttable {\r\n\t\t\tfont-family:\"Times New Roman\",serif;\r\n\t\t\tborder-collapse: co" +
+                    "llapse;\r\n\t\t\tmargin-left: auto;\r\n\t\t\tmargin-right: auto;\r\n\t\t\twidth: 80%;\r\n\t\t}\r\n\t\t\r" +
+                    "\n\t\ttd {\r\n\t\t\tborder-width: 1px 3px;\r\n\t\t\tborder-style: solid;\r\n\t\t\tborder-color: #0" +
+                    "00;\r\n\t\t\tpadding: 1px 5px;\r\n\t\t\tvertical-align: top;\r\n\t\t}\r\n\t\t\r\n\t\t.label {\r\n\t\t\tfont" +
+                    "-weight: bold;\r\n\t\t\tfont-style: italic;\r\n\t\t\twidth: 25%;\r\n\t\t}\r\n\t\t\r\n\t\t.title {\r\n\t\t\t" +
+                    "font-size: 24pt;\r\n\t\t\ttext-decoration: underline;\r\n\t\t\tline-height: 0.8;\r\n\t\t}\r\n\t\t." +
+                    "subtitle {\r\n\t\t\tfont-size: 16pt;\r\n\t\t\ttext-align: right;\r\n\t\t\tline-height: 0.8;\r\n\t\t" +
+                    "}\r\n\t\t.referral-source-address {\r\n\t\t\tfont-size: 12pt;\r\n\t\t\tline-height: 1.25;\r\n\t\t\t" +
+                    "margin-left: 10%;\r\n\t\t}\r\n\t\t.message {\r\n\t\t\ttext-align: center;\r\n\t\t\tline-height: 1;" +
+                    "\r\n\t\t}\r\n\t\t\r\n\t\tfooter {\r\n\t\t\ttext-align: center;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-title {\r\n\t\t\tf" +
+                    "ont-size: 16pt;\r\n\t\t\ttext-transform: uppercase;\r\n\t\t\tfont-weight: bold;\r\n\t\t\ttext-a" +
+                    "lign: center;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-data {\r\n\t\t\tfont-size: 12pt;\r\n\t\t\tfont-weight: " +
+                    "bold;\r\n\t\t\tline-height: 1;\r\n\t\t\tmargin-left: 55%;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-amount {\r\n\t" +
+                    "\t\ttext-align: right;\r\n\t\t\tpadding-right: 5px;\r\n\t\t\twidth: 5%;\r\n\t\t}\r\n\t\t\r\n\t\t.spacer " +
+                    "{\r\n\t\t\tbackground-color: #f5f5f5;\r\n\t\t\tborder-width: 3px;\r\n\t\t}\r\n\t\t\r\n\t\t.total td {\r" +
+                    "\n\t\t\tborder-width: 3px;\r\n\t\t}\r\n\t\t\r\n\t\ttr:first-child td,\r\n\t\ttr:last-child td {\r\n\t\t\t" +
+                    "border-width: 3px;\r\n\t\t}\r\n\t\t\r\n\t\t\r\n\t\t/* Sticky footer styles\r\n\t\t------------------" +
+                    "-------------------------------- */\r\n\t\thtml {\r\n\t\t  position: relative;\r\n\t\t  min-" +
+                    "height: 100%;\r\n\t\t}\r\n\t\tbody {\r\n\t\t  /* Margin bottom by footer height */\r\n\t\t  marg" +
+                    "in-bottom: 75px;\r\n\t\t}\r\n\r\n\t\tfooter {\r\n\t\t  position: absolute;\r\n\t\t  bottom: 0;\r\n\t\t" +
+                    "  width: 100%;\r\n\t\t  /* Set the fixed height of the footer here */\r\n\t\t  height: 7" +
+                    "5px;\r\n\t\t  border-width: 1px 0 0 0;\r\n\t\t  border-style: solid;\r\n\t\t  border-color: " +
+                    "#666;\r\n\t\t  color: #666;\r\n\t\t}\r\n\r\n\t\t.footer > div > div {\r\n\t\t\tpadding-top: 20px;  " +
+                    " \r\n\t\t}\r\n\t\t\r\n\t</style>\r\n</head>\r\n<body>\r\n\t<header>\r\n\t\t<h1 class=\"title\">Watson Ps" +
+                    "ychological Services Inc.</h1>\r\n\t\t<h2 class=\"subtitle\">Assessment and Counsellin" +
+                    "g Services</h2>\r\n\t</header>\r\n\t\r\n\t<p class=\"referral-source-address\">\r\n\t\tSeiden H" +
+                    "ealth Management Inc.\r\n\t\t<br>365 Bloor St. E.\r\n\t\t<br>Toronto, ON\r\n\t</p>\r\n\t\t\r\n\t<p" +
+                    " class=\"invoice-data\">Invoice Number:</p>\r\n\t<p class=\"invoice-data\">Date of Invo" +
+                    "ice:</p>\r\n\t\r\n\t<section>\r\n\t\r\n\t\t<p class=\"invoice-title\">Invoice For Services</p>\r" +
+                    "\n\t\t\r\n\t\t<table>\r\n\t\t\t<tbody>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Bill to:</td>\r\n\t\t\t\t" +
+                    "\t<td colspan=\"3\">Seiden Health Management Inc.</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<" +
+                    "td colspan=\"4\" class=\"spacer\">&nbsp;</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"" +
+                    "label\">\r\n\t\t\t\t\t\tPlease Remit<br />Payment to:\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"1\">\r" +
+                    "\n\t\t\t\t\t\tWatson Psychological Services Inc.\r\n\t\t\t\t\t\t<br />1607 Birchwood Dr.\r\n\t\t\t\t\t" +
+                    "\t<br />Mississauga, ON, L5J 1T5\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspa" +
+                    "n=\"2\">\r\n\t\t\t\t\t\tOffice Fax: 905-823-1435\r\n\t\t\t\t\t\t<br />Office No.: 647-987-7792\r\n\t\t" +
+                    "\t\t\t\t<br />Email: <a href=\"mailto:mwatson002@sympatico.ca\">mwatson002@sympatico.c" +
+                    "a</a>\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colspan=\"4\"" +
+                    " class=\"spacer\">&nbsp;</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Client " +
+                    "Name:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"lab" +
+                    "el\">Client File No.:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t" +
+                    "\t<td class=\"label\">Date of Loss:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t" +
+                    "\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Claim No.:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t" +
+                    "</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Assessment Date:</td>\r\n\t\t\t\t\t<td colspan=" +
+                    "\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colspan=\"4\" class=\"spacer\">&nbsp;</td>\r" +
+                    "\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t");
+            
+            #line 207 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+
+				for (var i = 0; i < Model.Lines.Count(); i++)
+				{
+					var line = Model.Lines.ElementAt(i);
+				
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">\r\n\t\t\t\t\t\t");
+            
+            #line 214 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i == 0 ? "Type of Report:" : "&nbsp;"));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"2\">\r\n\t\t\t\t\t\t");
+            
+            #line 217 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(line.Description));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t\t");
+            
+            #line 220 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", line.Amount)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t");
+            
+            #line 223 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+
+				}
+				
+            
+            #line default
+            #line hidden
             this.Write(@"
-<!doctype html>
-<html lang=""en"">
-<head>
-    <title>General Consent for Care and Treatment Consent</title>
-    <meta charset=""utf-8"">
-    <meta name=""viewport"" content=""width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"" />
-    <link rel=""stylesheet"" href=""http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"" integrity=""sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"" crossorigin=""anonymous"">
-	<style>
-		body {
-			font-family:""Times New Roman"",serif;
-			font-size: 17px;
-		}
-	</style>
-</head>
-<body>
-	<div class=""container"">
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan=""2"">+H.S.T.</td>
+					<td class=""invoice-amount"">
+						
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan=""2""></td>
+					<td class=""invoice-amount"">&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan=""2""></td>
+					<td class=""invoice-amount"">&nbsp;</td>
+				</tr>
+				<tr class=""total"">
+					<td class=""label"" colspan=""3"">Total Invoice Amount:</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan=""4"">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	
+	<section>
+		<p class=""message"">
+			Thank you for your business.
+			<br />Payment upon receipt would be appreciated.
+		</p>
+	</section>
 
-		<div class=""alert alert-info"">
-			Hello World!
+	<br />
+	
+	<section>
+		<p class=""message"">
+			H.S.T. Number 81832 4345 RT0001
+		</p>
+	</section>
+	
+	<br />
+	
+	<footer>
+		<div>
+			<div>
+				<p>
+					1607 Birchwood Dr. ~ Mississauga ~ Ontario ~ L5J 1T5
+					<br />Phone: 647-987-7792
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					Fax: 905-823-1435
+				</p>
+			</div>
 		</div>
-
-	</div>
+	</footer>
+	
 </body>
 </html>");
             return this.GenerationEnvironment.ToString();

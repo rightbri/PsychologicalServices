@@ -35,9 +35,9 @@ namespace PsychologicalServices.Web.Controllers
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<CalendarNote>))]
-        public IHttpActionResult Get(DateTime? fromDate, DateTime? toDate, bool includeDeleted = false)
+        public IHttpActionResult Get(DateTime? fromDate, DateTime? toDate)
         {
-            var calendarNotes = _calendarNoteService.GetCalendarNotes(fromDate, toDate, includeDeleted);
+            var calendarNotes = _calendarNoteService.GetCalendarNotes(fromDate, toDate);
 
             return Ok(calendarNotes);
         }

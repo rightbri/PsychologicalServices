@@ -186,12 +186,16 @@
 						<tr>
 							<th>Status</th>
 							<th>Date</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr repeat.for="status of invoice.statusChanges | sortArray:{property:'updateDate',direction:'desc'}">
 							<td>${status.invoiceStatus.name}</td>
-							<td>${status.updateDate | dateFormat:this.config.shortDateFormat}</td>
+							<td>${status.updateDate | dateFormat:config.shortDateFormat}</td>
+							<td>
+								<a href="#" click.delegate="getInvoiceDocument(status)">Download</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>

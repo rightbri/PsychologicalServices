@@ -1130,9 +1130,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("AssessmentTypeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Deleted", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
 			_fieldsCustomProperties.Add("CompanyId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
@@ -1663,17 +1660,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AssessmentFieldIndex.AssessmentTypeId, true); }
 			set	{ SetValue((int)AssessmentFieldIndex.AssessmentTypeId, value); }
-		}
-
-		/// <summary> The Deleted property of the Entity Assessment<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Assessments"."Deleted"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean Deleted
-		{
-			get { return (System.Boolean)GetValue((int)AssessmentFieldIndex.Deleted, true); }
-			set	{ SetValue((int)AssessmentFieldIndex.Deleted, value); }
 		}
 
 		/// <summary> The CompanyId property of the Entity Assessment<br/><br/>

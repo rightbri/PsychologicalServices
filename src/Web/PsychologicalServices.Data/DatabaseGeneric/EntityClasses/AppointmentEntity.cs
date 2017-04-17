@@ -743,9 +743,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("AppointmentStatusId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Deleted", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
 			_fieldsCustomProperties.Add("AssessmentId", fieldHashtable);
 		}
 		#endregion
@@ -1122,17 +1119,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AppointmentFieldIndex.AppointmentStatusId, true); }
 			set	{ SetValue((int)AppointmentFieldIndex.AppointmentStatusId, value); }
-		}
-
-		/// <summary> The Deleted property of the Entity Appointment<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Appointments"."Deleted"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean Deleted
-		{
-			get { return (System.Boolean)GetValue((int)AppointmentFieldIndex.Deleted, true); }
-			set	{ SetValue((int)AppointmentFieldIndex.Deleted, value); }
 		}
 
 		/// <summary> The AssessmentId property of the Entity Appointment<br/><br/>

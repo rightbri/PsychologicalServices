@@ -519,6 +519,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("UpdateDate", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Document", fieldHashtable);
 		}
 		#endregion
 
@@ -714,6 +717,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.DateTime)GetValue((int)InvoiceStatusChangeFieldIndex.UpdateDate, true); }
 			set	{ SetValue((int)InvoiceStatusChangeFieldIndex.UpdateDate, value); }
+		}
+
+		/// <summary> The Document property of the Entity InvoiceStatusChange<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceStatusChanges"."Document"<br/>
+		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.Byte[] Document
+		{
+			get { return (System.Byte[])GetValue((int)InvoiceStatusChangeFieldIndex.Document, true); }
+			set	{ SetValue((int)InvoiceStatusChangeFieldIndex.Document, value); }
 		}
 
 

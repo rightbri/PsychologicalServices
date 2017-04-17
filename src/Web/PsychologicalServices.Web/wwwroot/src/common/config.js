@@ -2,12 +2,15 @@
 export class Config {
 	constructor() {
 		
-		this.longDateFormat = 'MMMM Do, YYYY';
 		
 		this.isoShortDateFormat = 'YYYY-MM-DD';
 		this.isoShortTimeFormat = 'HH:mm';
+		
 		this.shortDateFormat = 'MM-DD-YYYY';
-		this.shortTimeFormat = 'hh:mm A';
+		this.shortTimeFormat = 'h:mm A';
+		
+		this.longDateFormat = 'MMMM D YYYY';
+		this.longDateTimeFormat = this.longDateFormat + ' ' + this.shortTimeFormat;
 		
 		this.defaultNewAppointmentHour = 9;
 		
@@ -20,7 +23,7 @@ export class Config {
 		this.datepickerOptions = {
 			'autoclose': true,
 			'clearBtn': true,
-			'format': 'mm-dd-yyyy',
+			'format': 'MM d yyyy',
 			'showOnFocus': true,
 			'toggleActive': true
 		};

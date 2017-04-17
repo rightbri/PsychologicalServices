@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Invoices
 
         Invoice NewInvoice(Appointment appointment);
 
+        InvoiceDocument GetInvoiceDocument(int invoiceStatusChangeId);
+
         IEnumerable<InvoiceLine> GetInvoiceLines(Appointment appointment);
 
         IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true);

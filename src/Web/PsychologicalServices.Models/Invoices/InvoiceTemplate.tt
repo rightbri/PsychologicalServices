@@ -9,24 +9,278 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>General Consent for Care and Treatment Consent</title>
+    <title></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<style>
+	<!--
+	<link href="https://fonts.googleapis.com/css?family=Martel" rel="stylesheet">
+	-->
+    <style>
 		body {
-			font-family:"Times New Roman",serif;
-			font-size: 17px;
+			font-family: 'Martel', serif;
+			
+			font-size: 12pt;
 		}
+		
+		table {
+			font-family:"Times New Roman",serif;
+			border-collapse: collapse;
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+		}
+		
+		td {
+			border-width: 1px 3px;
+			border-style: solid;
+			border-color: #000;
+			padding: 1px 5px;
+			vertical-align: top;
+		}
+		
+		.label {
+			font-weight: bold;
+			font-style: italic;
+			width: 25%;
+		}
+		
+		.title {
+			font-size: 24pt;
+			text-decoration: underline;
+			line-height: 0.8;
+		}
+		.subtitle {
+			font-size: 16pt;
+			text-align: right;
+			line-height: 0.8;
+		}
+		.referral-source-address {
+			font-size: 12pt;
+			line-height: 1.25;
+			margin-left: 10%;
+		}
+		.message {
+			text-align: center;
+			line-height: 1;
+		}
+		
+		footer {
+			text-align: center;
+		}
+		
+		.invoice-title {
+			font-size: 16pt;
+			text-transform: uppercase;
+			font-weight: bold;
+			text-align: center;
+		}
+		
+		.invoice-data {
+			font-size: 12pt;
+			font-weight: bold;
+			line-height: 1;
+			margin-left: 55%;
+		}
+		
+		.invoice-amount {
+			text-align: right;
+			padding-right: 5px;
+			width: 5%;
+		}
+		
+		.spacer {
+			background-color: #f5f5f5;
+			border-width: 3px;
+		}
+		
+		.total td {
+			border-width: 3px;
+		}
+		
+		tr:first-child td,
+		tr:last-child td {
+			border-width: 3px;
+		}
+		
+		
+		/* Sticky footer styles
+		-------------------------------------------------- */
+		html {
+		  position: relative;
+		  min-height: 100%;
+		}
+		body {
+		  /* Margin bottom by footer height */
+		  margin-bottom: 75px;
+		}
+
+		footer {
+		  position: absolute;
+		  bottom: 0;
+		  width: 100%;
+		  /* Set the fixed height of the footer here */
+		  height: 75px;
+		  border-width: 1px 0 0 0;
+		  border-style: solid;
+		  border-color: #666;
+		  color: #666;
+		}
+
+		.footer > div > div {
+			padding-top: 20px;   
+		}
+		
 	</style>
 </head>
 <body>
-	<div class="container">
+	<header>
+		<h1 class="title">Watson Psychological Services Inc.</h1>
+		<h2 class="subtitle">Assessment and Counselling Services</h2>
+	</header>
+	
+	<p class="referral-source-address">
+		Seiden Health Management Inc.
+		<br>365 Bloor St. E.
+		<br>Toronto, ON
+	</p>
+		
+	<p class="invoice-data">Invoice Number:</p>
+	<p class="invoice-data">Date of Invoice:</p>
+	
+	<section>
+	
+		<p class="invoice-title">Invoice For Services</p>
+		
+		<table>
+			<tbody>
+				<tr>
+					<td class="label">Bill to:</td>
+					<td colspan="3">Seiden Health Management Inc.</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="spacer">&nbsp;</td>
+				</tr>
+				<tr>
+					<td class="label">
+						Please Remit<br />Payment to:
+					</td>
+					<td colspan="1">
+						Watson Psychological Services Inc.
+						<br />1607 Birchwood Dr.
+						<br />Mississauga, ON, L5J 1T5
+						<br />&nbsp;
+					</td>
+					<td colspan="2">
+						Office Fax: 905-823-1435
+						<br />Office No.: 647-987-7792
+						<br />Email: <a href="mailto:mwatson002@sympatico.ca">mwatson002@sympatico.ca</a>
+						<br />&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="spacer">&nbsp;</td>
+				</tr>
+				<tr>
+					<td class="label">Client Name:</td>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td class="label">Client File No.:</td>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td class="label">Date of Loss:</td>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td class="label">Claim No.:</td>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td class="label">Assessment Date:</td>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td colspan="4" class="spacer">&nbsp;</td>
+				</tr>
 
-		<div class="alert alert-info">
-			Hello World!
+				<#
+				for (var i = 0; i < Model.Lines.Count(); i++)
+				{
+					var line = Model.Lines.ElementAt(i);
+				#>
+				<tr>
+					<td class="label">
+						<#= i == 0 ? "Type of Report:" : "&nbsp;" #>
+					</td>
+					<td colspan="2">
+						<#= line.Description #>
+					</td>
+					<td class="invoice-amount">
+						<#= string.Format("{0:$#,##0.00}", line.Amount) #>
+					</td>
+				</tr>
+				<#
+				}
+				#>
+
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan="2">+H.S.T.</td>
+					<td class="invoice-amount">
+						
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan="2"></td>
+					<td class="invoice-amount">&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan="2"></td>
+					<td class="invoice-amount">&nbsp;</td>
+				</tr>
+				<tr class="total">
+					<td class="label" colspan="3">Total Invoice Amount:</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="4">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	
+	<section>
+		<p class="message">
+			Thank you for your business.
+			<br />Payment upon receipt would be appreciated.
+		</p>
+	</section>
+
+	<br />
+	
+	<section>
+		<p class="message">
+			H.S.T. Number 81832 4345 RT0001
+		</p>
+	</section>
+	
+	<br />
+	
+	<footer>
+		<div>
+			<div>
+				<p>
+					1607 Birchwood Dr. ~ Mississauga ~ Ontario ~ L5J 1T5
+					<br />Phone: 647-987-7792
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					Fax: 905-823-1435
+				</p>
+			</div>
 		</div>
-
-	</div>
+	</footer>
+	
 </body>
 </html>

@@ -6,16 +6,19 @@ import {Context} from 'common/context';
 import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
 
-@inject(Router, DataRepository, Config, Context, Scroller, Notifier)
+@inject(Router, DataRepository, Config, Context, Scroller, Notifier, 'apiRoot')
 export class EditInvoice {
-    constructor(router, dataRepository, config, context, scroller, notifier) {
+    constructor(router, dataRepository, config, context, scroller, notifier, apiRoot) {
         this.router = router;
         this.dataRepository = dataRepository;
         this.config = config;
         this.context = context;
         this.scroller = scroller;
         this.notifier = notifier;
-
+		
+		this.invoiceDocumentRootUrl = apiRoot + 'api/invoicedocument/';
+		//http://stackoverflow.com/a/38765768
+		
         this.invoice = null;
 		this.invoiceStatuses = null;
 
@@ -140,5 +143,9 @@ export class EditInvoice {
 			
 			this.save();
 		}
+	}
+	
+	getInvoiceDocument(invoiceStatusChange) {
+		this.dataRepository.getInvoiceDocument(invoiceStatusChange.invoiceStatusChangeId);
 	}
 }
