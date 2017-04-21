@@ -68,7 +68,7 @@
                     Date of Loss:
                 </div>
                 <div class="col-xs-10">
-                    ${claim.dateOfLoss | dateFormat:config.shortDateFormat}
+                    ${claim.dateOfLoss | dateFormat:config.longDateFormat}
                 </div>
             </div>
 
@@ -86,7 +86,7 @@
                     Assessment Date:
                 </div>
                 <div class="col-xs-10">
-                    ${invoice.appointment.appointmentTime | dateFormat:config.shortDateFormat}
+                    ${invoice.appointment.appointmentTime | dateFormat:config.longDateFormat}
                 </div>
             </div>
 
@@ -155,8 +155,13 @@
                                 </button>
                             </td>
                         </tr>
+						
+						<tr repeat.for="statusMultiplier of statusMultipliers">
+							<td>${statusMultiplier.appointmentStatus.name}</td>
+							<td>${subtotal | money}</td>
+							<td></td>
+						</tr>
 
-                        <!-- + H.S.T -->
                         <tr>
                             <td>+ H.S.T.</td>
                             <td>${subtotal * invoice.taxRate | money}</td>
@@ -177,25 +182,46 @@
 		
 		<div class="row">
 			<div class="col-xs-2">
-				Status History
+				Documents
 			</div>
 			<div class="col-xs-10">
 				<table class="table table-condensed">
-					<caption>Status changes</caption>
+					<thead>
+						<tr>
+							<th>Document</th>
+							<th>Create Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr repeat.for="document of invoice.documents | sortArray:{property:'createDate',direction:'desc'}">
+							<td>
+								<a href="#${document.fileName}" click.delegate="getInvoiceDocument(document)">${document.fileName}</a>
+							</td>
+							<td>
+								${document.createDate | dateFormat:config.longDateTimeFormat}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-2">
+				Status changes
+			</div>
+			<div class="col-xs-10">
+				<table class="table table-condensed">
 					<thead>
 						<tr>
 							<th>Status</th>
 							<th>Date</th>
-							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr repeat.for="status of invoice.statusChanges | sortArray:{property:'updateDate',direction:'desc'}">
 							<td>${status.invoiceStatus.name}</td>
-							<td>${status.updateDate | dateFormat:config.shortDateFormat}</td>
-							<td>
-								<a href="#" click.delegate="getInvoiceDocument(status)">Download</a>
-							</td>
+							<td>${status.updateDate | dateFormat:config.longDateTimeFormat}</td>
 						</tr>
 					</tbody>
 				</table>

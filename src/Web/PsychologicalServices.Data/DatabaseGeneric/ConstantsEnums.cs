@@ -453,6 +453,14 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>AddressId. </summary>
 		AddressId,
+		///<summary>Phone. </summary>
+		Phone,
+		///<summary>Fax. </summary>
+		Fax,
+		///<summary>Email. </summary>
+		Email,
+		///<summary>TaxId. </summary>
+		TaxId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -493,8 +501,26 @@ namespace PsychologicalServices.Data
 		TaxRate,
 		///<summary>Total. </summary>
 		Total,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceDocument.
+	/// </summary>
+	public enum InvoiceDocumentFieldIndex:int
+	{
+		///<summary>InvoiceDocumentId. </summary>
+		InvoiceDocumentId,
+		///<summary>InvoiceId. </summary>
+		InvoiceId,
 		///<summary>Document. </summary>
 		Document,
+		///<summary>CreateDate. </summary>
+		CreateDate,
+		///<summary>FileName. </summary>
+		FileName,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -557,8 +583,6 @@ namespace PsychologicalServices.Data
 		InvoiceStatusId,
 		///<summary>UpdateDate. </summary>
 		UpdateDate,
-		///<summary>Document. </summary>
-		Document,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -623,8 +647,22 @@ namespace PsychologicalServices.Data
 		LargeFileFeeAmount,
 		///<summary>AddressId. </summary>
 		AddressId,
-		///<summary>LateCancellationRate. </summary>
-		LateCancellationRate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ReferralSourceAppointmentStatusSetting.
+	/// </summary>
+	public enum ReferralSourceAppointmentStatusSettingFieldIndex:int
+	{
+		///<summary>ReferralSourceId. </summary>
+		ReferralSourceId,
+		///<summary>AppointmentStatusId. </summary>
+		AppointmentStatusId,
+		///<summary>InvoiceRate. </summary>
+		InvoiceRate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -918,6 +956,8 @@ namespace PsychologicalServices.Data
 		CompanyAttributeEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
+		///<summary>InvoiceDocument</summary>
+		InvoiceDocumentEntity,
 		///<summary>InvoiceLine</summary>
 		InvoiceLineEntity,
 		///<summary>InvoiceStatus</summary>
@@ -930,6 +970,8 @@ namespace PsychologicalServices.Data
 		NoteEntity,
 		///<summary>ReferralSource</summary>
 		ReferralSourceEntity,
+		///<summary>ReferralSourceAppointmentStatusSetting</summary>
+		ReferralSourceAppointmentStatusSettingEntity,
 		///<summary>ReferralSourceType</summary>
 		ReferralSourceTypeEntity,
 		///<summary>ReferralType</summary>

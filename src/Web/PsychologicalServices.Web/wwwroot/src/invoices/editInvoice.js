@@ -32,6 +32,15 @@ export class EditInvoice {
             return this.dataRepository.getInvoice(params.id)
                 .then(data => {
 					this.invoice = data;
+					
+					this.statusMultipliers = this.invoice.appointment.assessment.referralSource.appointmentStatusSettings.filter(
+						appointmentStatusSetting => {
+							return (
+								appointmentStatusSetting.invoiceRate !== 1.0 &&
+								appointmentStatusSetting.appointmentStatus.appointmentStatusId === this.invoice.appointment.appointmentStatus.appointmentStatusId
+							);
+						});
+					
 					this.calculateTotals();
 					
 					return this.getData();
@@ -82,6 +91,7 @@ export class EditInvoice {
 				
 				this.invoice.lines = (data || []).concat(this.invoice.lines.filter(e => e.isCustom));
 				
+				this.calculateTotals();
 			});
 	}
 	
@@ -102,6 +112,10 @@ export class EditInvoice {
             this.invoice.lines
                 .map(line => line.amount)
                 .reduce((accumulator, value) => accumulator + value, 0);
+
+		if (this.statusMultipliers.length > 0) {
+			this.subtotal = this.subtotal * this.statusMultipliers[0].invoiceRate;
+		}
 
         this.invoice.total = this.subtotal * (1 + this.invoice.taxRate);
 
@@ -145,7 +159,7 @@ export class EditInvoice {
 		}
 	}
 	
-	getInvoiceDocument(invoiceStatusChange) {
-		this.dataRepository.getInvoiceDocument(invoiceStatusChange.invoiceStatusChangeId);
+	getInvoiceDocument(invoiceDocument) {
+		this.dataRepository.getInvoiceDocument(invoiceDocument);
 	}
 }

@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AppointmentEntityUsingAppointmentStatusId);
+			toReturn.Add(this.ReferralSourceAppointmentStatusSettingEntityUsingAppointmentStatusId);
 
 
 			return toReturn;
@@ -49,6 +50,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(AppointmentStatusFields.AppointmentStatusId, AppointmentFields.AppointmentStatusId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentStatusEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AppointmentStatusEntity and ReferralSourceAppointmentStatusSettingEntity over the 1:n relation they have, using the relation between the fields:
+		/// AppointmentStatus.AppointmentStatusId - ReferralSourceAppointmentStatusSetting.AppointmentStatusId
+		/// </summary>
+		public virtual IEntityRelation ReferralSourceAppointmentStatusSettingEntityUsingAppointmentStatusId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ReferralSourceAppointmentStatusSettings" , true);
+				relation.AddEntityFieldPair(AppointmentStatusFields.AppointmentStatusId, ReferralSourceAppointmentStatusSettingFields.AppointmentStatusId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentStatusEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReferralSourceAppointmentStatusSettingEntity", false);
 				return relation;
 			}
 		}

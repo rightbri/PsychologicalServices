@@ -48,30 +48,10 @@ namespace PsychologicalServices.Models.Invoices
             return invoice;
         }
 
-        public InvoiceDocument GetInvoiceDocument(int invoiceStatusChangeId)
+        public InvoiceDocument GetInvoiceDocument(int invoiceDocumentId)
         {
-            var invoiceDocument = _invoiceRepository.GetInvoiceDocument(invoiceStatusChangeId);
+            var invoiceDocument = _invoiceRepository.GetInvoiceDocument(invoiceDocumentId);
 
-            //var message = new System.Net.Mail.MailMessage
-            //{
-            //    Body = "hey",
-            //    Subject = "test",
-            //};
-
-            //message.To.Add("brian.avent@gmail.com");
-            //message.From = new System.Net.Mail.MailAddress("michelle.avent@gmail.com", "Michelle Avent");
-
-            //message.Attachments.Add(new System.Net.Mail.Attachment(new System.IO.MemoryStream(invoiceDocument.Content), invoiceDocument.FileName));
-
-            //try
-            //{
-            //    _mailService.Send(message);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //}
-            
             return invoiceDocument;
         }
 
@@ -87,6 +67,13 @@ namespace PsychologicalServices.Models.Invoices
             var invoiceStatuses = _invoiceRepository.GetInvoiceStatuses(isActive);
 
             return invoiceStatuses;
+        }
+
+        public IEnumerable<InvoiceDocument> GetInvoiceDocuments(int invoiceId)
+        {
+            var invoiceDocuments = _invoiceRepository.GetInvoiceDocuments(invoiceId);
+
+            return invoiceDocuments;
         }
 
         public IEnumerable<Invoice> GetInvoices(InvoiceSearchCriteria criteria)
@@ -108,6 +95,8 @@ namespace PsychologicalServices.Models.Invoices
 
                 if (result.ValidationResult.IsValid)
                 {
+                    invoice.Total = _invoiceGenerator.GetInvoiceTotal(invoice);
+
                     var id = _invoiceRepository.SaveInvoice(invoice);
 
                     result.Item = _invoiceRepository.GetInvoice(id);
@@ -123,5 +112,6 @@ namespace PsychologicalServices.Models.Invoices
 
             return result;
         }
+
     }
 }

@@ -31,33 +31,29 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 
-			toReturn.Add(this.InvoiceEntityUsingInvoiceId);
 
+			toReturn.Add(this.InvoiceEntityUsingInvoiceId);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
 
 
-		/// <summary>Returns a new IEntityRelation object, between InvoiceDocumentEntity and InvoiceEntity over the 1:1 relation they have, using the relation between the fields:
+
+		/// <summary>Returns a new IEntityRelation object, between InvoiceDocumentEntity and InvoiceEntity over the m:1 relation they have, using the relation between the fields:
 		/// InvoiceDocument.InvoiceId - Invoice.InvoiceId
 		/// </summary>
 		public virtual IEntityRelation InvoiceEntityUsingInvoiceId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "Invoice", false);
-
-
-
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Invoice", false);
 				relation.AddEntityFieldPair(InvoiceFields.InvoiceId, InvoiceDocumentFields.InvoiceId);
-
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceDocumentEntity", true);
 				return relation;
 			}
 		}
-
 
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }

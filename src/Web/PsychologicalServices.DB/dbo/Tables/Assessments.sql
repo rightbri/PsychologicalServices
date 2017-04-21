@@ -3,7 +3,6 @@
     [ReferralTypeId]             INT            NOT NULL,
     [ReferralSourceId]           INT            NOT NULL,
     [AssessmentTypeId]           INT            NOT NULL,
-    [Deleted]                    BIT            CONSTRAINT [DF_Assessments_Deleted] DEFAULT ((0)) NOT NULL,
     [CompanyId]                  INT            NOT NULL,
     [ReportStatusId]             INT            NOT NULL,
     [FileSize]                   INT            NULL,
@@ -22,6 +21,8 @@
     CONSTRAINT [FK_Assessments_ReferralTypes] FOREIGN KEY ([ReferralTypeId]) REFERENCES [dbo].[ReferralTypes] ([ReferralTypeId]),
     CONSTRAINT [FK_Assessments_ReportStatuses] FOREIGN KEY ([ReportStatusId]) REFERENCES [dbo].[ReportStatuses] ([ReportStatusId])
 );
+
+
 
 
 

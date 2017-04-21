@@ -13,7 +13,7 @@ namespace PsychologicalServices.Models.Appointments
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IAddressRepository _addressRepository = null;
         private readonly IUserRepository _userRepository = null;
-        
+
         public AppointmentValidator(
             IAppointmentRepository appointmentRepository,
             IAddressRepository addressRepository,
@@ -40,7 +40,7 @@ namespace PsychologicalServices.Models.Appointments
             if (null == item.Location)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "LocationId", Message = "Please select an appointment location" }
+                    new ValidationError { PropertyName = "LocationId", Message = GetValidationMessage(item, "Please select a location") }
                 );
             }
             else
@@ -50,7 +50,7 @@ namespace PsychologicalServices.Models.Appointments
                 if (null == location)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "LocationId", Message = "Invalid appointment location" }
+                        new ValidationError { PropertyName = "LocationId", Message = GetValidationMessage(item, "Invalid location") }
                     );
                 }
             }
@@ -58,7 +58,7 @@ namespace PsychologicalServices.Models.Appointments
             if (null == item.Psychometrist)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "Psychometrist", Message = "Please select a psychometrist for the appointment" }
+                    new ValidationError { PropertyName = "Psychometrist", Message = GetValidationMessage(item, "Please select a psychometrist") }
                 );
             }
             else
@@ -68,19 +68,19 @@ namespace PsychologicalServices.Models.Appointments
                 if (null == psychometrist)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychometristId", Message = "Invalid psychometrist" }
+                        new ValidationError { PropertyName = "PsychometristId", Message = GetValidationMessage(item, "Invalid psychometrist") }
                     );
                 }
                 else if (!psychometrist.HasRight(StaticRights.Psychometrist))
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychometristId", Message = "The selected user is not a psychometrist" }
+                        new ValidationError { PropertyName = "PsychometristId", Message = GetValidationMessage(item, "The selected user is not a psychometrist") }
                     );
                 }
                 else if (!psychometrist.IsActive)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychometristId", Message = "The selected psychometrist is not active" }
+                        new ValidationError { PropertyName = "PsychometristId", Message = GetValidationMessage(item, "The selected psychometrist is not active") }
                     );
                 }
             }
@@ -88,7 +88,7 @@ namespace PsychologicalServices.Models.Appointments
             if (null == item.Psychologist)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "PsychologistId", Message = "Please select a psychologist for the appointment" }
+                    new ValidationError { PropertyName = "PsychologistId", Message = GetValidationMessage(item, "Please select a psychologist") }
                 );
             }
             else
@@ -98,19 +98,19 @@ namespace PsychologicalServices.Models.Appointments
                 if (null == psychologist)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychologistId", Message = "Invalid psychologistId" }
+                        new ValidationError { PropertyName = "PsychologistId", Message = GetValidationMessage(item, "Invalid psychologistId") }
                     );
                 }
                 else if (!psychologist.HasRight(StaticRights.Psychologist))
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychologistId", Message = "The selected user is not a psychologistId" }
+                        new ValidationError { PropertyName = "PsychologistId", Message = GetValidationMessage(item, "The selected user is not a psychologistId") }
                     );
                 }
                 else if (!psychologist.IsActive)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychologistId", Message = "The selected psychologistId is not active" }
+                        new ValidationError { PropertyName = "PsychologistId", Message = GetValidationMessage(item, "The selected psychologistId is not active") }
                     );
                 }
             }
@@ -118,7 +118,7 @@ namespace PsychologicalServices.Models.Appointments
             if (null == item.AppointmentStatus)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "AppointmentStatusId", Message = "Please select an appointment status" }
+                    new ValidationError { PropertyName = "AppointmentStatusId", Message = GetValidationMessage(item, "Please select an appointment status") }
                 );
             }
             else
@@ -128,7 +128,7 @@ namespace PsychologicalServices.Models.Appointments
                 if (null == appointmentStatus)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "AppointmentStatusId", Message = "Invalid appointment status" }
+                        new ValidationError { PropertyName = "AppointmentStatusId", Message = GetValidationMessage(item, "Invalid appointment status") }
                     );
                 }
             }
@@ -136,13 +136,23 @@ namespace PsychologicalServices.Models.Appointments
             if (item.AppointmentTime == DateTime.MinValue)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "AppointmentTime", Message = "Please select an appointment time" }
+                    new ValidationError { PropertyName = "AppointmentTime", Message = GetValidationMessage(item, "Please select an appointment time") }
                 );
             }
             
             result.IsValid = !result.ValidationErrors.Any();
 
             return result;
+        }
+
+        private string GetValidationMessage(Appointment item, string message)
+        {
+            return string.Format("{0}{1}", GetMessagePrefix(item), message);
+        }
+
+        private string GetMessagePrefix(Appointment item)
+        {
+            return string.Format("Appointment on {0:MMMM d, yyyy}: ", item.AppointmentTime);
         }
     }
 }

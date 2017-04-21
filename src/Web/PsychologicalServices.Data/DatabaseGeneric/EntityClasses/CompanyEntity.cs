@@ -664,6 +664,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Phone", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Fax", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Email", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("TaxId", fieldHashtable);
 		}
 		#endregion
 
@@ -853,6 +865,50 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.Int32>)GetValue((int)CompanyFieldIndex.AddressId, false); }
 			set	{ SetValue((int)CompanyFieldIndex.AddressId, value); }
+		}
+
+		/// <summary> The Phone property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."Phone"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String Phone
+		{
+			get { return (System.String)GetValue((int)CompanyFieldIndex.Phone, true); }
+			set	{ SetValue((int)CompanyFieldIndex.Phone, value); }
+		}
+
+		/// <summary> The Fax property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."Fax"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String Fax
+		{
+			get { return (System.String)GetValue((int)CompanyFieldIndex.Fax, true); }
+			set	{ SetValue((int)CompanyFieldIndex.Fax, value); }
+		}
+
+		/// <summary> The Email property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."Email"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String Email
+		{
+			get { return (System.String)GetValue((int)CompanyFieldIndex.Email, true); }
+			set	{ SetValue((int)CompanyFieldIndex.Email, value); }
+		}
+
+		/// <summary> The TaxId property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."TaxId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String TaxId
+		{
+			get { return (System.String)GetValue((int)CompanyFieldIndex.TaxId, true); }
+			set	{ SetValue((int)CompanyFieldIndex.TaxId, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.

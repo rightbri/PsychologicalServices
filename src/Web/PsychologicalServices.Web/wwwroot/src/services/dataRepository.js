@@ -43,7 +43,7 @@ export class DataRepository {
 						if (!response.ok) {
 							self.notifier.error('Error: ' + response.status + ' - ' + response.statusText);
 							
-							if (response.status === 403) {
+							if (response.status === 401) {//403) {
 								self.authContext.logout().then(() => self.authContext.login());
 							}
 						}
@@ -278,14 +278,14 @@ export class DataRepository {
 		return this.saveBasic(calendarNote, 'calendarNote');
 	}
 	
-	getInvoiceDocument(id) {
+	getInvoiceDocument(invoiceDocument) {
 		var promise = new Promise((resolve, reject) => {
 			
-			this.httpFetch.fetch(this.apiRoot + 'api/invoicedocument/' + id)
+			this.httpFetch.fetch(this.apiRoot + 'api/invoicedocument/' + invoiceDocument.invoiceDocumentId)
 				.then(response => {
 					if (response.ok) {
 						
-						var defaultFileName = "default.pdf";
+						var defaultFileName = invoiceDocument.fileName;
 					
 						var disposition = response.headers.has('content-disposition')
 							? response.headers.get('content-disposition')

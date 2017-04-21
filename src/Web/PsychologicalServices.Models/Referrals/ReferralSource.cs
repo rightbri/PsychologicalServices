@@ -17,13 +17,13 @@ namespace PsychologicalServices.Models.Referrals
 
         public int LargeFileFeeAmount { get; set; }
 
-        public decimal LateCancellationRate { get; set; }
-
         public bool IsActive { get; set; }
 
         public Address Address { get; set; }
 
         public IEnumerable<ReportTypeInvoiceAmount> ReportTypeInvoiceAmounts { get; set; }
+
+        public IEnumerable<AppointmentStatusSetting> AppointmentStatusSettings { get; set; }
 
         public bool IsNew()
         {

@@ -11,6 +11,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PsychologicalServices.Infrastructure.Invoices
 {
@@ -51,6 +52,13 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                     .Prefetch<ClaimantEntity>(claim => claim.Claimant)
                                                 )
                                         )
+                                    .Prefetch<CompanyEntity>(assessment => assessment.Company)
+                                        .SubPath(companyPath => companyPath
+                                            .Prefetch<AddressEntity>(company => company.Address)
+                                                .SubPath(addressPath => addressPath
+                                                    .Prefetch<CityEntity>(address => address.City)
+                                                )
+                                        )
                                 )
                         )
                 );
@@ -64,6 +72,8 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         .SubPath(invoiceStatusChangePath => invoiceStatusChangePath
                             .Prefetch<InvoiceStatusEntity>(invoiceStatusChange => invoiceStatusChange.InvoiceStatus)
                         )
+                    .Prefetch<InvoiceDocumentEntity>(invoice => invoice.InvoiceDocuments)
+                        .Exclude(invoiceDocument => invoiceDocument.Document)
                     .Prefetch<AppointmentEntity>(invoice => invoice.Appointment)
                         .SubPath(appointmentPath => appointmentPath
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
@@ -95,6 +105,10 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                 .SubPath(addressPath => addressPath
                                                     .Prefetch<CityEntity>(address => address.City)
                                                 )
+                                            .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(referralSource => referralSource.ReferralSourceAppointmentStatusSettings)
+                                                .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
+                                                    .Prefetch<AppointmentStatusEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.AppointmentStatus)
+                                                )
                                         )
                                     .Prefetch<CompanyEntity>(assessment => assessment.Company)
                                         .SubPath(companyPath => companyPath
@@ -124,7 +138,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                 return meta.Invoice
                     .WithPath(InvoiceEditPath)
-                    .ExcludeFields<InvoiceEntity>(invoice => invoice.Document)
                     .Where(invoice => invoice.InvoiceId == id)
                     .SingleOrDefault()
                     .ToInvoice();
@@ -173,8 +186,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 var meta = new LinqMetaData(adapter);
 
                 var invoices = meta.Invoice
-                    .WithPath(InvoiceListPath)
-                    .ExcludeFields<InvoiceEntity>(invoice => invoice.Document);
+                    .WithPath(InvoiceListPath);
                     
                 if (null != criteria)
                 {
@@ -208,6 +220,23 @@ namespace PsychologicalServices.Infrastructure.Invoices
             }
         }
 
+        public IEnumerable<InvoiceDocument> GetInvoiceDocuments(int invoiceId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return Execute<InvoiceDocumentEntity>(
+                    (ILLBLGenProQuery)
+                        meta.InvoiceDocument
+                        .ExcludeFields(invoiceDocument => invoiceDocument.Document)
+                        .Where(invoiceDocument => invoiceDocument.InvoiceId == invoiceId)
+                    )
+                    .Select(invoiceDocument => invoiceDocument.ToInvoiceDocument())
+                    .ToList();
+            }
+        }
+
         public int SaveInvoice(Invoice invoice)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -233,17 +262,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     adapter.FetchEntity(invoiceEntity, prefetch);
                 }
 
+                //determine whether we're changing to a submitted status
                 var isSubmitting = invoice.InvoiceStatus.InvoiceStatusId == 2 && invoiceEntity.InvoiceStatusId != 2;
-
-                if (isSubmitting)
-                {
-                    var html = _invoiceHtmlGenerator.GetInvoiceHtml(invoice);
-                    
-                    var pdf = _htmlToPdfService.GetPdf(html);
-
-                    invoiceEntity.Document = pdf;
-                }
-
+                
                 invoiceEntity.Identifier = invoice.Identifier;
                 invoiceEntity.InvoiceDate = invoice.InvoiceDate;
                 invoiceEntity.AppointmentId = invoice.Appointment.AppointmentId;
@@ -251,7 +272,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 invoiceEntity.UpdateDate = _date.UtcNow;
                 invoiceEntity.TaxRate = invoice.TaxRate;
                 invoiceEntity.Total = invoice.Total;
-
+                
                 var linesToAdd = invoice.Lines
                     .Where(line =>
                         !invoiceEntity.InvoiceLines.Any(invoiceLine =>
@@ -308,6 +329,14 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                 uow.Commit(adapter);
 
+                //generate and store pdf asynchronously
+                if (isSubmitting)
+                {
+                    invoice.InvoiceId = invoiceEntity.InvoiceId;
+
+                    SaveInvoiceDocument(invoice);
+                }
+
                 return invoiceEntity.InvoiceId;
             }
         }
@@ -338,24 +367,39 @@ namespace PsychologicalServices.Infrastructure.Invoices
             return 50000m;
         }
 
-        public InvoiceDocument GetInvoiceDocument(int invoiceStatusChangeId)
+        public InvoiceDocument GetInvoiceDocument(int invoiceDocumentId)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
                 var meta = new LinqMetaData(adapter);
 
-                var invoiceStatusChange = meta.InvoiceStatusChange
-                    .WithPath(invoiceStatusChangePath => invoiceStatusChangePath.Prefetch<InvoiceEntity>(isc => isc.Invoice))
-                    .SingleOrDefault(isc => isc.InvoiceStatusChangeId == invoiceStatusChangeId);
-
-                return null != invoiceStatusChange
-                    ? new InvoiceDocument
-                    {
-                        FileName = string.Format("{0}-{1:yyyy-MM-dd}.pdf", invoiceStatusChange.Invoice.Identifier, invoiceStatusChange.Invoice.UpdateDate),
-                        Content = invoiceStatusChange.Document,
-                    }
-                    : null;
+                return meta.InvoiceDocument
+                    .Where(invoiceDocument => invoiceDocument.InvoiceDocumentId == invoiceDocumentId)
+                    .SingleOrDefault()
+                    .ToInvoiceDocument();
             }
+        }
+
+        public void SaveInvoiceDocument(Invoice invoice)
+        {
+            var task = Task.Run(() =>
+                {
+                    var html = _invoiceHtmlGenerator.GetInvoiceHtml(invoice);
+
+                    var pdf = _htmlToPdfService.GetPdf(html);
+
+                    using (var adapter = AdapterFactory.CreateAdapter())
+                    {
+                        var entity = new InvoiceDocumentEntity
+                        {
+                            InvoiceId = invoice.InvoiceId,
+                            FileName = string.Format("{0}_{1:yyyyMMddhhmmss}.pdf", invoice.Identifier, _date.UtcNow),
+                            Document = pdf,
+                        };
+
+                        adapter.SaveEntity(entity);
+                    }
+                });
         }
     }
 }

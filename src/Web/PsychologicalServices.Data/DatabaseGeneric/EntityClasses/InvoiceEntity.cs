@@ -37,6 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private EntityCollection<InvoiceDocumentEntity> _invoiceDocuments;
 		private EntityCollection<InvoiceLineEntity> _invoiceLines;
 		private EntityCollection<InvoiceStatusChangeEntity> _invoiceStatusChanges;
 
@@ -59,6 +60,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Appointment = "Appointment";
 			/// <summary>Member name InvoiceStatus</summary>
 			public static readonly string InvoiceStatus = "InvoiceStatus";
+			/// <summary>Member name InvoiceDocuments</summary>
+			public static readonly string InvoiceDocuments = "InvoiceDocuments";
 			/// <summary>Member name InvoiceLines</summary>
 			public static readonly string InvoiceLines = "InvoiceLines";
 			/// <summary>Member name InvoiceStatusChanges</summary>
@@ -123,6 +126,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_invoiceDocuments = (EntityCollection<InvoiceDocumentEntity>)info.GetValue("_invoiceDocuments", typeof(EntityCollection<InvoiceDocumentEntity>));
 				_invoiceLines = (EntityCollection<InvoiceLineEntity>)info.GetValue("_invoiceLines", typeof(EntityCollection<InvoiceLineEntity>));
 				_invoiceStatusChanges = (EntityCollection<InvoiceStatusChangeEntity>)info.GetValue("_invoiceStatusChanges", typeof(EntityCollection<InvoiceStatusChangeEntity>));
 
@@ -185,6 +189,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceStatus":
 					this.InvoiceStatus = (InvoiceStatusEntity)entity;
 					break;
+				case "InvoiceDocuments":
+					this.InvoiceDocuments.Add((InvoiceDocumentEntity)entity);
+					break;
 				case "InvoiceLines":
 					this.InvoiceLines.Add((InvoiceLineEntity)entity);
 					break;
@@ -219,6 +226,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "InvoiceStatus":
 					toReturn.Add(InvoiceEntity.Relations.InvoiceStatusEntityUsingInvoiceStatusId);
+					break;
+				case "InvoiceDocuments":
+					toReturn.Add(InvoiceEntity.Relations.InvoiceDocumentEntityUsingInvoiceId);
 					break;
 				case "InvoiceLines":
 					toReturn.Add(InvoiceEntity.Relations.InvoiceLineEntityUsingInvoiceId);
@@ -270,6 +280,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceStatus":
 					SetupSyncInvoiceStatus(relatedEntity);
 					break;
+				case "InvoiceDocuments":
+					this.InvoiceDocuments.Add((InvoiceDocumentEntity)relatedEntity);
+					break;
 				case "InvoiceLines":
 					this.InvoiceLines.Add((InvoiceLineEntity)relatedEntity);
 					break;
@@ -296,6 +309,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "InvoiceStatus":
 					DesetupSyncInvoiceStatus(false, true);
+					break;
+				case "InvoiceDocuments":
+					base.PerformRelatedEntityRemoval(this.InvoiceDocuments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "InvoiceLines":
 					base.PerformRelatedEntityRemoval(this.InvoiceLines, relatedEntity, signalRelatedEntityManyToOne);
@@ -341,6 +357,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+			toReturn.Add(this.InvoiceDocuments);
 			toReturn.Add(this.InvoiceLines);
 			toReturn.Add(this.InvoiceStatusChanges);
 
@@ -357,6 +374,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_invoiceDocuments", ((_invoiceDocuments!=null) && (_invoiceDocuments.Count>0) && !this.MarkedForDeletion)?_invoiceDocuments:null);
 				info.AddValue("_invoiceLines", ((_invoiceLines!=null) && (_invoiceLines.Count>0) && !this.MarkedForDeletion)?_invoiceLines:null);
 				info.AddValue("_invoiceStatusChanges", ((_invoiceStatusChanges!=null) && (_invoiceStatusChanges.Count>0) && !this.MarkedForDeletion)?_invoiceStatusChanges:null);
 
@@ -396,6 +414,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			return new InvoiceRelations().GetAllRelations();
 		}
 		
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'InvoiceDocument' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceDocuments()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceDocumentFields.InvoiceId, null, ComparisonOperator.Equal, this.InvoiceId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'InvoiceLine' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
@@ -466,6 +494,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
+			collectionsQueue.Enqueue(this._invoiceDocuments);
 			collectionsQueue.Enqueue(this._invoiceLines);
 			collectionsQueue.Enqueue(this._invoiceStatusChanges);
 
@@ -476,6 +505,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+			this._invoiceDocuments = (EntityCollection<InvoiceDocumentEntity>) collectionsQueue.Dequeue();
 			this._invoiceLines = (EntityCollection<InvoiceLineEntity>) collectionsQueue.Dequeue();
 			this._invoiceStatusChanges = (EntityCollection<InvoiceStatusChangeEntity>) collectionsQueue.Dequeue();
 
@@ -485,6 +515,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
+			if (this._invoiceDocuments != null)
+			{
+				return true;
+			}
 			if (this._invoiceLines != null)
 			{
 				return true;
@@ -503,6 +537,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceDocumentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceLineEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceStatusChangeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusChangeEntityFactory))) : null);
 
@@ -517,6 +552,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Appointment", _appointment);
 			toReturn.Add("InvoiceStatus", _invoiceStatus);
+			toReturn.Add("InvoiceDocuments", _invoiceDocuments);
 			toReturn.Add("InvoiceLines", _invoiceLines);
 			toReturn.Add("InvoiceStatusChanges", _invoiceStatusChanges);
 
@@ -527,6 +563,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+			if(_invoiceDocuments!=null)
+			{
+				_invoiceDocuments.ActiveContext = base.ActiveContext;
+			}
 			if(_invoiceLines!=null)
 			{
 				_invoiceLines.ActiveContext = base.ActiveContext;
@@ -551,6 +591,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+			_invoiceDocuments = null;
 			_invoiceLines = null;
 			_invoiceStatusChanges = null;
 
@@ -596,9 +637,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Total", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Document", fieldHashtable);
 		}
 		#endregion
 
@@ -701,6 +739,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceDocument' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceDocuments
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<InvoiceDocumentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceDocuments")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.InvoiceDocumentEntity, 0, null, null, null, null, "InvoiceDocuments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceLine' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -862,15 +911,20 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)InvoiceFieldIndex.Total, value); }
 		}
 
-		/// <summary> The Document property of the Entity Invoice<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Invoices"."Document"<br/>
-		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual System.Byte[] Document
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceDocumentEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceDocumentEntity))]
+		public virtual EntityCollection<InvoiceDocumentEntity> InvoiceDocuments
 		{
-			get { return (System.Byte[])GetValue((int)InvoiceFieldIndex.Document, true); }
-			set	{ SetValue((int)InvoiceFieldIndex.Document, value); }
+			get
+			{
+				if(_invoiceDocuments==null)
+				{
+					_invoiceDocuments = new EntityCollection<InvoiceDocumentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory)));
+					_invoiceDocuments.SetContainingEntityInfo(this, "Invoice");
+				}
+				return _invoiceDocuments;
+			}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineEntity' which are related to this entity via a relation of type '1:n'.

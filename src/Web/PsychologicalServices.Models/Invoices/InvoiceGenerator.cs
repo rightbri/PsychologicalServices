@@ -62,16 +62,7 @@ namespace PsychologicalServices.Models.Invoices
 
             invoice.Lines = GetInvoiceLines(appointment);
 
-            var subtotal = (invoice.Lines.Select(line => line.Amount).Sum() / 100);
-
-            if (invoice.Appointment.AppointmentStatus.AppointmentStatusId == _appointmentRepository.GetLateCancellationStatusId())
-            {
-                var referralSource = _referralRepository.GetReferralSource(appointment.Assessment.ReferralSource.ReferralSourceId);
-
-                subtotal = subtotal * referralSource.LateCancellationRate;
-            }
-
-            invoice.Total = subtotal * (1 + invoice.TaxRate);
+            invoice.Total = GetInvoiceTotal(invoice);
 
             return invoice;
         }
@@ -146,6 +137,21 @@ namespace PsychologicalServices.Models.Invoices
             }
 
             return lines;
+        }
+
+        public decimal GetInvoiceTotal(Invoice invoice)
+        {
+            var subtotal = (invoice.Lines.Select(line => line.Amount).Sum());
+
+            var referralSource = _referralRepository.GetReferralSource(invoice.Appointment.Assessment.ReferralSource.ReferralSourceId);
+
+            var appointmentStatusSetting = referralSource.AppointmentStatusSettings.SingleOrDefault(setting => setting.AppointmentStatus.AppointmentStatusId == invoice.Appointment.AppointmentStatus.AppointmentStatusId);
+            if (null != appointmentStatusSetting)
+            {
+                subtotal = subtotal * appointmentStatusSetting.InvoiceRate;
+            }
+
+            return subtotal * (1 + invoice.TaxRate);
         }
     }
 }

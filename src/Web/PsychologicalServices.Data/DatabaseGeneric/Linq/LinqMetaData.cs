@@ -139,6 +139,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
+					toReturn = this.InvoiceDocument;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineEntity:
 					toReturn = this.InvoiceLine;
 					break;
@@ -156,6 +159,9 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.ReferralSourceEntity:
 					toReturn = this.ReferralSource;
+					break;
+				case PsychologicalServices.Data.EntityType.ReferralSourceAppointmentStatusSettingEntity:
+					toReturn = this.ReferralSourceAppointmentStatusSetting;
 					break;
 				case PsychologicalServices.Data.EntityType.ReferralSourceTypeEntity:
 					toReturn = this.ReferralSourceType;
@@ -362,6 +368,12 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<InvoiceEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceDocumentEntity instances in the database.</summary>
+		public DataSource2<InvoiceDocumentEntity> InvoiceDocument
+		{
+			get { return new DataSource2<InvoiceDocumentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineEntity instances in the database.</summary>
 		public DataSource2<InvoiceLineEntity> InvoiceLine
 		{
@@ -396,6 +408,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<ReferralSourceEntity> ReferralSource
 		{
 			get { return new DataSource2<ReferralSourceEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting ReferralSourceAppointmentStatusSettingEntity instances in the database.</summary>
+		public DataSource2<ReferralSourceAppointmentStatusSettingEntity> ReferralSourceAppointmentStatusSetting
+		{
+			get { return new DataSource2<ReferralSourceAppointmentStatusSettingEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting ReferralSourceTypeEntity instances in the database.</summary>

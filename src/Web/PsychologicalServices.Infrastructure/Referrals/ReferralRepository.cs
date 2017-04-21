@@ -33,6 +33,10 @@ namespace PsychologicalServices.Infrastructure.Referrals
                         .SubPath(reportTypeInvoiceAmountPath => reportTypeInvoiceAmountPath
                             .Prefetch<ReportTypeEntity>(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ReportType)
                         )
+                    .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(referralSource => referralSource.ReferralSourceAppointmentStatusSettings)
+                        .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
+                            .Prefetch<AppointmentStatusEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.AppointmentStatus)
+                        )
                 );
         
         private static readonly Func<IPathEdgeRootParser<ReferralTypeEntity>, IPathEdgeRootParser<ReferralTypeEntity>>

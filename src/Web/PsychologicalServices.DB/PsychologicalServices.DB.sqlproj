@@ -114,6 +114,7 @@
     <Build Include="dbo\Tables\ReportTypeInvoiceAmounts.sql" />
     <Build Include="dbo\Tables\InvoiceDocuments.sql" />
     <Build Include="dbo\Tables\InvoiceDocumentArchive.sql" />
+    <Build Include="dbo\Tables\ReferralSourceAppointmentStatusSettings.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Web.Controllers
 {
@@ -23,11 +24,21 @@ namespace PsychologicalServices.Web.Controllers
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(InvoiceDocument))]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult GetDocument(int id)
         {
-            var invoice = _invoiceService.GetInvoiceDocument(id);
+            var invoiceDocument = _invoiceService.GetInvoiceDocument(id);
 
-            return new BinaryFileResult(invoice.Content, invoice.FileName);
+            return new BinaryFileResult(invoiceDocument.Content, invoiceDocument.FileName);
+        }
+
+        [Route("invoice/{id}")]
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<InvoiceDocument>))]
+        public IHttpActionResult GetDocuments(int id)
+        {
+            var invoiceDocuments = _invoiceService.GetInvoiceDocuments(id);
+
+            return Ok(invoiceDocuments);
         }
     }
 }

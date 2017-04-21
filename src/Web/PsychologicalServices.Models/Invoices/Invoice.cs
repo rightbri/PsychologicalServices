@@ -27,7 +27,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public IEnumerable<InvoiceStatusChange> StatusChanges { get; set; }
 
-        public byte[] Document { get; set; }
+        public IEnumerable<InvoiceDocument> Documents { get; set; }
 
         public bool IsNew()
         {

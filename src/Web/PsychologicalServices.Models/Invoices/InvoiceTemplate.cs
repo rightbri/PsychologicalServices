@@ -57,90 +57,396 @@ namespace PsychologicalServices.Models.Invoices
                     "  width: 100%;\r\n\t\t  /* Set the fixed height of the footer here */\r\n\t\t  height: 7" +
                     "5px;\r\n\t\t  border-width: 1px 0 0 0;\r\n\t\t  border-style: solid;\r\n\t\t  border-color: " +
                     "#666;\r\n\t\t  color: #666;\r\n\t\t}\r\n\r\n\t\t.footer > div > div {\r\n\t\t\tpadding-top: 20px;  " +
-                    " \r\n\t\t}\r\n\t\t\r\n\t</style>\r\n</head>\r\n<body>\r\n\t<header>\r\n\t\t<h1 class=\"title\">Watson Ps" +
-                    "ychological Services Inc.</h1>\r\n\t\t<h2 class=\"subtitle\">Assessment and Counsellin" +
-                    "g Services</h2>\r\n\t</header>\r\n\t\r\n\t<p class=\"referral-source-address\">\r\n\t\tSeiden H" +
-                    "ealth Management Inc.\r\n\t\t<br>365 Bloor St. E.\r\n\t\t<br>Toronto, ON\r\n\t</p>\r\n\t\t\r\n\t<p" +
-                    " class=\"invoice-data\">Invoice Number:</p>\r\n\t<p class=\"invoice-data\">Date of Invo" +
-                    "ice:</p>\r\n\t\r\n\t<section>\r\n\t\r\n\t\t<p class=\"invoice-title\">Invoice For Services</p>\r" +
-                    "\n\t\t\r\n\t\t<table>\r\n\t\t\t<tbody>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Bill to:</td>\r\n\t\t\t\t" +
-                    "\t<td colspan=\"3\">Seiden Health Management Inc.</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<" +
-                    "td colspan=\"4\" class=\"spacer\">&nbsp;</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"" +
-                    "label\">\r\n\t\t\t\t\t\tPlease Remit<br />Payment to:\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"1\">\r" +
-                    "\n\t\t\t\t\t\tWatson Psychological Services Inc.\r\n\t\t\t\t\t\t<br />1607 Birchwood Dr.\r\n\t\t\t\t\t" +
-                    "\t<br />Mississauga, ON, L5J 1T5\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspa" +
-                    "n=\"2\">\r\n\t\t\t\t\t\tOffice Fax: 905-823-1435\r\n\t\t\t\t\t\t<br />Office No.: 647-987-7792\r\n\t\t" +
-                    "\t\t\t\t<br />Email: <a href=\"mailto:mwatson002@sympatico.ca\">mwatson002@sympatico.c" +
-                    "a</a>\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colspan=\"4\"" +
-                    " class=\"spacer\">&nbsp;</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Client " +
-                    "Name:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"lab" +
-                    "el\">Client File No.:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t" +
-                    "\t<td class=\"label\">Date of Loss:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t" +
-                    "\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Claim No.:</td>\r\n\t\t\t\t\t<td colspan=\"3\"></td>\r\n\t\t\t\t" +
-                    "</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Assessment Date:</td>\r\n\t\t\t\t\t<td colspan=" +
-                    "\"3\"></td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colspan=\"4\" class=\"spacer\">&nbsp;</td>\r" +
-                    "\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t");
+                    " \r\n\t\t}\r\n\t\t\r\n\t</style>\r\n</head>\r\n<body>\r\n\t");
+            
+            #line 136 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ var company = Model.Appointment.Assessment.Company; 
+            
+            #line default
+            #line hidden
+            this.Write("\t<header>\r\n\t\t<h1 class=\"title\">\r\n\t\t\t");
+            
+            #line 139 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t</h1>\r\n\t\t<h2 class=\"subtitle\">\r\n\t\t\tAssessment and Counselling Services\r\n\t\t</h" +
+                    "2>\r\n\t</header>\r\n\t\r\n\t<p class=\"referral-source-address\">\r\n\t\t");
+            
+            #line 147 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ var referralSource = Model.Appointment.Assessment.ReferralSource; 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t");
+            
+            #line 148 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t");
+            
+            #line 149 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ if (null != referralSource.Address) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t<br />");
+            
+            #line 150 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.Street));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t");
+            
+            #line 151 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(referralSource.Address.Suite)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t<br />");
+            
+            #line 152 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.Suite));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t");
+            
+            #line 153 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t<br />");
+            
+            #line 154 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.City.Name));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 154 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.City.Province));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 154 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.PostalCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t");
+            
+            #line 155 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t<br />&nbsp;\r\n\t</p>\r\n\t\t\r\n\t<p class=\"invoice-data\">\r\n\t\tInvoice Number:&nbsp;");
+            
+            #line 160 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Model.Identifier));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t</p>\r\n\t<p class=\"invoice-data\">\r\n\t\tDate of Invoice:&nbsp;");
+            
+            #line 163 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", Model.InvoiceDate)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t</p>\r\n\t\r\n\t<section>\r\n\t\r\n\t\t<p class=\"invoice-title\">Invoice For Services</p>\r\n\t" +
+                    "\t\r\n\t\t<table>\r\n\t\t\t<tbody>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Bill to:</td>\r\n\t\t\t\t\t<" +
+                    "td colspan=\"3\">\r\n\t\t\t\t\t\t");
+            
+            #line 175 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colspan=\"4\" class=\"spacer\">&nbsp;</td" +
+                    ">\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">\r\n\t\t\t\t\t\tPlease Remit<br />Payment" +
+                    " to:\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"1\">\r\n\t\t\t\t\t\t");
+            
+            #line 186 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t<br />");
+            
+            #line 187 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Street));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t");
+            
+            #line 188 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t<br />");
+            
+            #line 189 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Suite));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t");
+            
+            #line 190 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t<br />");
+            
+            #line 191 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Name));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 191 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Province));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 191 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.PostalCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"2\">\r\n\t\t\t\t\t\tOffice Fax: ");
+            
+            #line 195 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Fax));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t<br />Office No.: ");
+            
+            #line 196 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Phone));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t<br />Email: <a href=\"mailto:");
+            
+            #line 197 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Email));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t");
+            
+            #line 198 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Email));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colsp" +
+                    "an=\"4\" class=\"spacer\">&nbsp;</td>\r\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t");
             
             #line 207 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ foreach (var claim in Model.Appointment.Assessment.Claims) { 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td class=\"label\">Client Name:</td>\r\n\t\t\t\t\t\t<td colspan=\"3\">\r\n\t" +
+                    "\t\t\t\t\t\t");
+            
+            #line 212 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.FirstName));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 212 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.LastName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t</td>\r\n\t\t\t\t\t</tr>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td class=\"label\">Client File No.:</t" +
+                    "d>\r\n\t\t\t\t\t\t<td colspan=\"3\">\r\n\t\t\t\t\t\t\t");
+            
+            #line 218 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Model.Appointment.Assessment.ReferralSourceFileNumber));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t</td>\r\n\t\t\t\t\t</tr>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td class=\"label\">Date of Loss:</td>\r" +
+                    "\n\t\t\t\t\t\t<td colspan=\"3\">\r\n\t\t\t\t\t\t\t");
+            
+            #line 224 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ if (claim.DateOfLoss.HasValue) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t\t");
+            
+            #line 225 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", claim.DateOfLoss)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t\t");
+            
+            #line 226 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t</td>\r\n\t\t\t\t\t</tr>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td class=\"label\">Claim No.:</td>\r\n\t\t\t\t" +
+                    "\t\t<td colspan=\"3\">\r\n\t\t\t\t\t\t\t");
+            
+            #line 232 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(claim.ClaimNumber)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t\t");
+            
+            #line 233 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(claim.ClaimNumber));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t\t");
+            
+            #line 234 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t</td>\r\n\t\t\t\t\t</tr>\r\n\r\n\t\t\t\t");
+            
+            #line 238 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Assessment Date:</td>\r\n\t\t\t\t\t<td colspan=\"3\">\r\n" +
+                    "\t\t\t\t\t\t");
+            
+            #line 243 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", Model.Appointment.AppointmentTime)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colspan=\"4\" class=\"spacer\">&nbsp;</td" +
+                    ">\r\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t");
+            
+            #line 250 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+
+				var subtotal = 0.0m;
 
 				for (var i = 0; i < Model.Lines.Count(); i++)
 				{
 					var line = Model.Lines.ElementAt(i);
+					subtotal += line.Amount;
 				
             
             #line default
             #line hidden
             this.Write("\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">\r\n\t\t\t\t\t\t");
             
-            #line 214 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            #line 260 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i == 0 ? "Type of Report:" : "&nbsp;"));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"2\">\r\n\t\t\t\t\t\t");
             
-            #line 217 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            #line 263 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(line.Description));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t\t");
             
-            #line 220 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", line.Amount)));
+            #line 266 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", line.Amount / 100)));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t");
             
-            #line 223 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            #line 269 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
 
 				}
 				
             
             #line default
             #line hidden
+            this.Write("\r\n\t\t\t\t");
+            
+            #line 273 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+
+				var statusSetting = referralSource.AppointmentStatusSettings
+					.FirstOrDefault(appointmentStatusSetting =>
+						appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == Model.Appointment.AppointmentStatus.AppointmentStatusId &&
+						appointmentStatusSetting.InvoiceRate != 1.0m
+					);
+				if (null != statusSetting) {
+					subtotal = subtotal * statusSetting.InvoiceRate;
+				
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td>&nbsp;</td>\r\n\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t");
+            
+            #line 285 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(statusSetting.AppointmentStatus.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t");
+            
+            #line 288 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", subtotal / 100)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t</td>\r\n\t\t\t\t\t</tr>\r\n\t\t\t\t");
+            
+            #line 291 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td>&nbsp;</td>\r\n\t\t\t\t\t<td colspan=\"2\">+H.S.T.</td>\r\n\t\t\t\t\t<td cla" +
+                    "ss=\"invoice-amount\">\r\n\t\t\t\t\t\t");
+            
+            #line 297 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", subtotal * Model.TaxRate / 100)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr class=\"total\">\r\n\t\t\t\t\t<td class=\"label\" colspan=\"" +
+                    "3\">Total Invoice Amount:</td>\r\n\t\t\t\t\t<td>\r\n\t\t\t\t\t\t");
+            
+            #line 303 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", subtotal * (1 + Model.TaxRate) / 100)));
+            
+            #line default
+            #line hidden
             this.Write(@"
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan=""2"">+H.S.T.</td>
-					<td class=""invoice-amount"">
-						
 					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan=""2""></td>
-					<td class=""invoice-amount"">&nbsp;</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan=""2""></td>
-					<td class=""invoice-amount"">&nbsp;</td>
-				</tr>
-				<tr class=""total"">
-					<td class=""label"" colspan=""3"">Total Invoice Amount:</td>
-					<td></td>
 				</tr>
 				<tr>
 					<td colspan=""4"">&nbsp;</td>
@@ -160,27 +466,78 @@ namespace PsychologicalServices.Models.Invoices
 	
 	<section>
 		<p class=""message"">
-			H.S.T. Number 81832 4345 RT0001
-		</p>
-	</section>
-	
-	<br />
-	
-	<footer>
-		<div>
-			<div>
-				<p>
-					1607 Birchwood Dr. ~ Mississauga ~ Ontario ~ L5J 1T5
-					<br />Phone: 647-987-7792
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					Fax: 905-823-1435
-				</p>
-			</div>
-		</div>
-	</footer>
-	
-</body>
-</html>");
+			H.S.T. Number ");
+            
+            #line 324 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.TaxId));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t</p>\r\n\t</section>\r\n\t\r\n\t<br />\r\n\t\r\n\t<footer>\r\n\t\t<div>\r\n\t\t\t<div>\r\n\t\t\t\t<p>\r\n\t\t\t\t" +
+                    "\t");
+            
+            #line 334 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Street));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t");
+            
+            #line 335 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t~ ");
+            
+            #line 336 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Suite));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t");
+            
+            #line 337 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t~ ");
+            
+            #line 338 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t~ ");
+            
+            #line 339 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Province));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t~ ");
+            
+            #line 340 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.PostalCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t<br />Phone:&nbsp;");
+            
+            #line 341 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Phone));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t&nbsp;&nbsp;&nbsp;&nbsp;\r\n\t\t\t\t\tFax:&nbsp;");
+            
+            #line 343 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\InvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(company.Fax));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t</p>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</footer>\r\n\t\r\n</body>\r\n</html>");
             return this.GenerationEnvironment.ToString();
         }
         

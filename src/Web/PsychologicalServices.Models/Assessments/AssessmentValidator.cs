@@ -332,10 +332,17 @@ namespace PsychologicalServices.Models.Assessments
 
             if (null != item.Reports)
             {
-                foreach (var report in item.Reports)
-                {
-                    //if (item.)
-                }
+                result.ValidationErrors.AddRange(
+                   item.Reports
+                       .Where(report => !item.AssessmentType.ReportTypes
+                           .Any(reportType => report.ReportType.ReportTypeId == reportType.ReportTypeId)
+                        )
+                        .Select(report => new ValidationError
+                        {
+                            PropertyName = "Reports",
+                            Message = string.Format("{0} report type is not valid for {1} assessments", report.ReportType.Name, item.AssessmentType.Description),
+                        })
+                );
             }
 
             result.IsValid = !result.ValidationErrors.Any();

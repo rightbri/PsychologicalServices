@@ -9,7 +9,7 @@ namespace PsychologicalServices.Models.Claims
     {
         private readonly IClaimRepository _claimRepository = null;
         private readonly IClaimantParameters _claimantParameters = null;
-
+        
         public ClaimantValidator(
             IClaimRepository claimRepository,
             IClaimantParameters claimantParameters
@@ -33,7 +33,7 @@ namespace PsychologicalServices.Models.Claims
                 if (null == claimant)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "ClaimantId", Message = "Invalid claimant" }
+                        new ValidationError { PropertyName = "ClaimantId", Message = GetValidationMessage(item, "Invalid claimant") }
                     );
                 }
             }
@@ -41,21 +41,21 @@ namespace PsychologicalServices.Models.Claims
             if (string.IsNullOrWhiteSpace(item.FirstName))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "FirstName", Message = "Claimant first name is required" }
+                    new ValidationError { PropertyName = "FirstName", Message = GetValidationMessage(item, "First name is required") }
                 );
             }
 
             if (string.IsNullOrWhiteSpace(item.LastName))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "LastName", Message = "Claimant last name is required" }
+                    new ValidationError { PropertyName = "LastName", Message = GetValidationMessage(item, "Last name is required") }
                 );
             }
 
             if (!item.Age.HasValue && !item.DateOfBirth.HasValue)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "DateOfBirth", Message = "Claimant age or date of birth is required" }
+                    new ValidationError { PropertyName = "DateOfBirth", Message = GetValidationMessage(item, "Age or date of birth is required") }
                 );
             }
             else
@@ -63,14 +63,14 @@ namespace PsychologicalServices.Models.Claims
                 if (item.Age < _claimantParameters.MinAge)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "Age", Message = string.Format("Claimant age is below minimum value of {0}", _claimantParameters.MinAge) }
+                        new ValidationError { PropertyName = "Age", Message = GetValidationMessage(item, string.Format("Age is below minimum value of {0}", _claimantParameters.MinAge)) }
                     );
                 }
 
                 if (item.Age > _claimantParameters.MaxAge)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "Age", Message = string.Format("Claimant age is above maximum value of {0}", _claimantParameters.MaxAge) }
+                        new ValidationError { PropertyName = "Age", Message = GetValidationMessage(item, string.Format("Age is above maximum value of {0}", _claimantParameters.MaxAge)) }
                     );
                 }
 
@@ -79,13 +79,23 @@ namespace PsychologicalServices.Models.Claims
             if (!_claimantParameters.ValidGenders.Any(gender => gender.Abbreviation == item.Gender))
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "Gender", Message = string.Format("Claimant gender is not valid. Valid values include: {0}", string.Join(", ", _claimantParameters.ValidGenders.Select(gender => gender.Description))) }
+                    new ValidationError { PropertyName = "Gender", Message = GetValidationMessage(item, string.Format("Gender is not valid. Valid values include: {0}", string.Join(", ", _claimantParameters.ValidGenders.Select(gender => gender.Description)))) }
                 );
             }
 
             result.IsValid = !result.ValidationErrors.Any();
 
             return result;
+        }
+
+        private string GetValidationMessage(Claimant item, string message)
+        {
+            return string.Format("{0}{1}", GetMessagePrefix(item), message);
+        }
+
+        private string GetMessagePrefix(Claimant item)
+        {
+            return string.Format("Claimant {0} {1}: ", item.FirstName, item.LastName);
         }
     }
 }

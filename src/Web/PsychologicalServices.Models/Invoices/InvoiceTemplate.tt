@@ -133,19 +133,35 @@
 	</style>
 </head>
 <body>
+	<# var company = Model.Appointment.Assessment.Company; #>
 	<header>
-		<h1 class="title">Watson Psychological Services Inc.</h1>
-		<h2 class="subtitle">Assessment and Counselling Services</h2>
+		<h1 class="title">
+			<#= company.Name #>
+		</h1>
+		<h2 class="subtitle">
+			Assessment and Counselling Services
+		</h2>
 	</header>
 	
 	<p class="referral-source-address">
-		Seiden Health Management Inc.
-		<br>365 Bloor St. E.
-		<br>Toronto, ON
+		<# var referralSource = Model.Appointment.Assessment.ReferralSource; #>
+		<#= referralSource.Name #>
+		<# if (null != referralSource.Address) { #>
+			<br /><#= referralSource.Address.Street #>
+			<# if (!string.IsNullOrWhiteSpace(referralSource.Address.Suite)) { #>
+			<br /><#= referralSource.Address.Suite #>
+			<# } #>
+			<br /><#= referralSource.Address.City.Name #>, <#= referralSource.Address.City.Province #>, <#= referralSource.Address.PostalCode #>
+		<# } #>
+		<br />&nbsp;
 	</p>
 		
-	<p class="invoice-data">Invoice Number:</p>
-	<p class="invoice-data">Date of Invoice:</p>
+	<p class="invoice-data">
+		Invoice Number:&nbsp;<#= Model.Identifier #>
+	</p>
+	<p class="invoice-data">
+		Date of Invoice:&nbsp;<#= string.Format("{0:MMMM d, yyyy}", Model.InvoiceDate) #>
+	</p>
 	
 	<section>
 	
@@ -155,7 +171,9 @@
 			<tbody>
 				<tr>
 					<td class="label">Bill to:</td>
-					<td colspan="3">Seiden Health Management Inc.</td>
+					<td colspan="3">
+						<#= referralSource.Name #>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="4" class="spacer">&nbsp;</td>
@@ -165,49 +183,77 @@
 						Please Remit<br />Payment to:
 					</td>
 					<td colspan="1">
-						Watson Psychological Services Inc.
-						<br />1607 Birchwood Dr.
-						<br />Mississauga, ON, L5J 1T5
+						<#= company.Name #>
+						<br /><#= company.Address.Street #>
+						<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
+						<br /><#= company.Address.Suite #>
+						<# } #>
+						<br /><#= company.Address.City.Name #>, <#= company.Address.City.Province #>, <#= company.Address.PostalCode #>
 						<br />&nbsp;
 					</td>
 					<td colspan="2">
-						Office Fax: 905-823-1435
-						<br />Office No.: 647-987-7792
-						<br />Email: <a href="mailto:mwatson002@sympatico.ca">mwatson002@sympatico.ca</a>
+						Office Fax: <#= company.Fax #>
+						<br />Office No.: <#= company.Phone #>
+						<br />Email: <a href="mailto:<#= company.Email #>">
+							<#= company.Email #>
+						</a>
 						<br />&nbsp;
 					</td>
 				</tr>
 				<tr>
 					<td colspan="4" class="spacer">&nbsp;</td>
 				</tr>
-				<tr>
-					<td class="label">Client Name:</td>
-					<td colspan="3"></td>
-				</tr>
-				<tr>
-					<td class="label">Client File No.:</td>
-					<td colspan="3"></td>
-				</tr>
-				<tr>
-					<td class="label">Date of Loss:</td>
-					<td colspan="3"></td>
-				</tr>
-				<tr>
-					<td class="label">Claim No.:</td>
-					<td colspan="3"></td>
-				</tr>
+
+				<# foreach (var claim in Model.Appointment.Assessment.Claims) { #>
+
+					<tr>
+						<td class="label">Client Name:</td>
+						<td colspan="3">
+							<#= claim.Claimant.FirstName #> <#= claim.Claimant.LastName #>
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Client File No.:</td>
+						<td colspan="3">
+							<#= Model.Appointment.Assessment.ReferralSourceFileNumber #>
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Date of Loss:</td>
+						<td colspan="3">
+							<# if (claim.DateOfLoss.HasValue) { #>
+								<#= string.Format("{0:MMMM d, yyyy}", claim.DateOfLoss) #>
+							<# } #>
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Claim No.:</td>
+						<td colspan="3">
+							<# if (!string.IsNullOrWhiteSpace(claim.ClaimNumber)) { #>
+								<#= claim.ClaimNumber #>
+							<# } #>
+						</td>
+					</tr>
+
+				<# } #>
+
 				<tr>
 					<td class="label">Assessment Date:</td>
-					<td colspan="3"></td>
+					<td colspan="3">
+						<#= string.Format("{0:MMMM d, yyyy}", Model.Appointment.AppointmentTime) #>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="4" class="spacer">&nbsp;</td>
 				</tr>
 
 				<#
+				var subtotal = 0.0m;
+
 				for (var i = 0; i < Model.Lines.Count(); i++)
 				{
 					var line = Model.Lines.ElementAt(i);
+					subtotal += line.Amount;
 				#>
 				<tr>
 					<td class="label">
@@ -217,33 +263,45 @@
 						<#= line.Description #>
 					</td>
 					<td class="invoice-amount">
-						<#= string.Format("{0:$#,##0.00}", line.Amount) #>
+						<#= string.Format("{0:$#,##0.00}", line.Amount / 100) #>
 					</td>
 				</tr>
 				<#
 				}
 				#>
 
+				<#
+				var statusSetting = referralSource.AppointmentStatusSettings
+					.FirstOrDefault(appointmentStatusSetting =>
+						appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == Model.Appointment.AppointmentStatus.AppointmentStatusId &&
+						appointmentStatusSetting.InvoiceRate != 1.0m
+					);
+				if (null != statusSetting) {
+					subtotal = subtotal * statusSetting.InvoiceRate;
+				#>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+							<#= statusSetting.AppointmentStatus.Name #>
+						</td>
+						<td>
+							<#= string.Format("{0:$#,##0.00}", subtotal / 100) #>
+						</td>
+					</tr>
+				<# } #>
+
 				<tr>
 					<td>&nbsp;</td>
 					<td colspan="2">+H.S.T.</td>
 					<td class="invoice-amount">
-						
+						<#= string.Format("{0:$#,##0.00}", subtotal * Model.TaxRate / 100) #>
 					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan="2"></td>
-					<td class="invoice-amount">&nbsp;</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan="2"></td>
-					<td class="invoice-amount">&nbsp;</td>
 				</tr>
 				<tr class="total">
 					<td class="label" colspan="3">Total Invoice Amount:</td>
-					<td></td>
+					<td>
+						<#= string.Format("{0:$#,##0.00}", subtotal * (1 + Model.TaxRate) / 100) #>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="4">&nbsp;</td>
@@ -263,7 +321,7 @@
 	
 	<section>
 		<p class="message">
-			H.S.T. Number 81832 4345 RT0001
+			H.S.T. Number <#= company.TaxId #>
 		</p>
 	</section>
 	
@@ -273,10 +331,16 @@
 		<div>
 			<div>
 				<p>
-					1607 Birchwood Dr. ~ Mississauga ~ Ontario ~ L5J 1T5
-					<br />Phone: 647-987-7792
+					<#= company.Address.Street #>
+					<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
+						~ <#= company.Address.Suite #>
+					<# } #>
+						~ <#= company.Address.City.Name #>
+						~ <#= company.Address.City.Province #>
+						~ <#= company.Address.PostalCode #>
+					<br />Phone:&nbsp;<#= company.Phone #>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					Fax: 905-823-1435
+					Fax:&nbsp;<#= company.Fax #>
 				</p>
 			</div>
 		</div>

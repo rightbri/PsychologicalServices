@@ -23,6 +23,17 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static AppointmentStatusSetting ToAppointmentStatusSetting(this ReferralSourceAppointmentStatusSettingEntity referralSourceAppointmentStatusSetting)
+        {
+            return null != referralSourceAppointmentStatusSetting
+                ? new AppointmentStatusSetting
+                {
+                    AppointmentStatus = referralSourceAppointmentStatusSetting.AppointmentStatus.ToAppointmentStatus(),
+                    InvoiceRate = referralSourceAppointmentStatusSetting.InvoiceRate,
+                }
+                : null;
+        }
+
         public static ReportTypeInvoiceAmount ToReportTypeInvoiceAmount(this ReportTypeInvoiceAmountEntity reportTypeInvoiceAmount)
         {
             return null != reportTypeInvoiceAmount
@@ -30,6 +41,19 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     ReportType = reportTypeInvoiceAmount.ReportType.ToReportType(),
                     InvoiceAmount = reportTypeInvoiceAmount.InvoiceAmount,
+                }
+                : null;
+        }
+
+        public static InvoiceDocument ToInvoiceDocument(this InvoiceDocumentEntity invoiceDocument)
+        {
+            return null != invoiceDocument
+                ? new InvoiceDocument
+                {
+                    InvoiceDocumentId = invoiceDocument.InvoiceDocumentId,
+                    FileName = invoiceDocument.FileName,
+                    CreateDate = invoiceDocument.CreateDate,
+                    Content = invoiceDocument.Document,
                 }
                 : null;
         }
@@ -72,6 +96,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Total = invoice.Total,
                     Lines = invoice.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
                     StatusChanges = invoice.InvoiceStatusChanges.Select(invoiceStatusChange => invoiceStatusChange.ToInvoiceStatusChange()),
+                    Documents = invoice.InvoiceDocuments.Select(invoiceDocument => invoiceDocument.ToInvoiceDocument()),
                     Appointment = invoice.Appointment.ToAppointment(),
                 }
                 : null;
@@ -314,11 +339,11 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = referralSource.Name,
                     LargeFileSize = referralSource.LargeFileSize,
                     LargeFileFeeAmount = referralSource.LargeFileFeeAmount,
-                    LateCancellationRate = referralSource.LateCancellationRate,
                     IsActive = referralSource.IsActive,
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
                     Address = referralSource.Address.ToAddress(),
                     ReportTypeInvoiceAmounts = referralSource.ReportTypeInvoiceAmounts.Select(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ToReportTypeInvoiceAmount()),
+                    AppointmentStatusSettings = referralSource.ReferralSourceAppointmentStatusSettings.Select(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ToAppointmentStatusSetting()),
                 }
                 : null;
         }
@@ -504,6 +529,10 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = company.Name,
                     Address = company.Address.ToAddress(),
                     IsActive = company.IsActive,
+                    Phone = company.Phone,
+                    Fax = company.Fax,
+                    Email = company.Email,
+                    TaxId = company.TaxId,
                 }
                 : null;
         }

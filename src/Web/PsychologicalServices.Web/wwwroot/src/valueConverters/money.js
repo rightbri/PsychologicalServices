@@ -2,10 +2,12 @@ import numeral from 'numeral'
 
 export class MoneyValueConverter {
 	toView(value, format) {
-		return numeral(value / 100).format(format || '$0,0.00');
+		var v = numeral(value / 100).format(format || '$0,0.00');
+		return v;
 	}
 	
 	fromView(value, format) {
-		return numeral(value).value() * 100;
+		var v = numeral(value).value() * 100;
+		return v;
 	}
 }

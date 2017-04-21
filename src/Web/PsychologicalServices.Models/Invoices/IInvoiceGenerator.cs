@@ -9,5 +9,7 @@ namespace PsychologicalServices.Models.Invoices
         Invoice CreateInvoice(Appointment appointment);
 
         IEnumerable<InvoiceLine> GetInvoiceLines(Appointment appointment);
+
+        decimal GetInvoiceTotal(Invoice invoice);
     }
 }

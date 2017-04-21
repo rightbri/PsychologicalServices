@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (46 + 0));
+			base.InitClass( (48 + 0));
 			InitAddressEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
@@ -83,12 +83,14 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitCompanyEntityInfos();
 			InitCompanyAttributeEntityInfos();
 			InitInvoiceEntityInfos();
+			InitInvoiceDocumentEntityInfos();
 			InitInvoiceLineEntityInfos();
 			InitInvoiceStatusEntityInfos();
 			InitInvoiceStatusChangeEntityInfos();
 			InitIssueInDisputeEntityInfos();
 			InitNoteEntityInfos();
 			InitReferralSourceEntityInfos();
+			InitReferralSourceAppointmentStatusSettingEntityInfos();
 			InitReferralSourceTypeEntityInfos();
 			InitReferralTypeEntityInfos();
 			InitReferralTypeIssueInDisputeEntityInfos();
@@ -305,6 +307,10 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("CompanyEntity", "Name", typeof(System.String), false, false, false, false,  (int)CompanyFieldIndex.Name, 100, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)CompanyFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "AddressId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("CompanyEntity", "Phone", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.Phone, 50, 0, 0);
+			base.AddElementFieldInfo("CompanyEntity", "Fax", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.Fax, 50, 0, 0);
+			base.AddElementFieldInfo("CompanyEntity", "Email", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.Email, 100, 0, 0);
+			base.AddElementFieldInfo("CompanyEntity", "TaxId", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.TaxId, 50, 0, 0);
 		}
 		/// <summary>Inits CompanyAttributeEntity's FieldInfo objects</summary>
 		private void InitCompanyAttributeEntityInfos()
@@ -323,7 +329,15 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceFieldIndex.UpdateDate, 0, 0, 0);
 			base.AddElementFieldInfo("InvoiceEntity", "TaxRate", typeof(System.Decimal), false, false, false, false,  (int)InvoiceFieldIndex.TaxRate, 0, 4, 18);
 			base.AddElementFieldInfo("InvoiceEntity", "Total", typeof(System.Decimal), false, false, false, false,  (int)InvoiceFieldIndex.Total, 0, 4, 18);
-			base.AddElementFieldInfo("InvoiceEntity", "Document", typeof(System.Byte[]), false, false, false, true,  (int)InvoiceFieldIndex.Document, 2147483647, 0, 0);
+		}
+		/// <summary>Inits InvoiceDocumentEntity's FieldInfo objects</summary>
+		private void InitInvoiceDocumentEntityInfos()
+		{
+			base.AddElementFieldInfo("InvoiceDocumentEntity", "InvoiceDocumentId", typeof(System.Int32), true, false, true, false,  (int)InvoiceDocumentFieldIndex.InvoiceDocumentId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceDocumentEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceDocumentFieldIndex.InvoiceId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceDocumentEntity", "Document", typeof(System.Byte[]), false, false, false, false,  (int)InvoiceDocumentFieldIndex.Document, 2147483647, 0, 0);
+			base.AddElementFieldInfo("InvoiceDocumentEntity", "CreateDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceDocumentFieldIndex.CreateDate, 0, 0, 0);
+			base.AddElementFieldInfo("InvoiceDocumentEntity", "FileName", typeof(System.String), false, false, false, false,  (int)InvoiceDocumentFieldIndex.FileName, 50, 0, 0);
 		}
 		/// <summary>Inits InvoiceLineEntity's FieldInfo objects</summary>
 		private void InitInvoiceLineEntityInfos()
@@ -352,7 +366,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceStatusChangeFieldIndex.InvoiceId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "InvoiceStatusId", typeof(System.Int32), false, true, false, false,  (int)InvoiceStatusChangeFieldIndex.InvoiceStatusId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)InvoiceStatusChangeFieldIndex.UpdateDate, 0, 0, 0);
-			base.AddElementFieldInfo("InvoiceStatusChangeEntity", "Document", typeof(System.Byte[]), false, false, false, true,  (int)InvoiceStatusChangeFieldIndex.Document, 2147483647, 0, 0);
 		}
 		/// <summary>Inits IssueInDisputeEntity's FieldInfo objects</summary>
 		private void InitIssueInDisputeEntityInfos()
@@ -382,7 +395,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ReferralSourceEntity", "LargeFileSize", typeof(System.Int32), false, false, false, false,  (int)ReferralSourceFieldIndex.LargeFileSize, 0, 0, 10);
 			base.AddElementFieldInfo("ReferralSourceEntity", "LargeFileFeeAmount", typeof(System.Int32), false, false, false, false,  (int)ReferralSourceFieldIndex.LargeFileFeeAmount, 0, 0, 10);
 			base.AddElementFieldInfo("ReferralSourceEntity", "AddressId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ReferralSourceFieldIndex.AddressId, 0, 0, 10);
-			base.AddElementFieldInfo("ReferralSourceEntity", "LateCancellationRate", typeof(System.Decimal), false, false, false, false,  (int)ReferralSourceFieldIndex.LateCancellationRate, 0, 4, 18);
+		}
+		/// <summary>Inits ReferralSourceAppointmentStatusSettingEntity's FieldInfo objects</summary>
+		private void InitReferralSourceAppointmentStatusSettingEntityInfos()
+		{
+			base.AddElementFieldInfo("ReferralSourceAppointmentStatusSettingEntity", "ReferralSourceId", typeof(System.Int32), true, true, false, false,  (int)ReferralSourceAppointmentStatusSettingFieldIndex.ReferralSourceId, 0, 0, 10);
+			base.AddElementFieldInfo("ReferralSourceAppointmentStatusSettingEntity", "AppointmentStatusId", typeof(System.Int32), true, true, false, false,  (int)ReferralSourceAppointmentStatusSettingFieldIndex.AppointmentStatusId, 0, 0, 10);
+			base.AddElementFieldInfo("ReferralSourceAppointmentStatusSettingEntity", "InvoiceRate", typeof(System.Decimal), false, false, false, false,  (int)ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceRate, 0, 4, 18);
 		}
 		/// <summary>Inits ReferralSourceTypeEntity's FieldInfo objects</summary>
 		private void InitReferralSourceTypeEntityInfos()
