@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
 
@@ -6,9 +7,11 @@ namespace PsychologicalServices.Models.Invoices
 {
     public interface IInvoiceGenerator
     {
-        Invoice CreateInvoice(Appointment appointment);
+        Invoice CreatePsychologistInvoice(Appointment appointment);
 
-        IEnumerable<InvoiceLine> GetInvoiceLines(Appointment appointment);
+        Invoice CreatePsychometristInvoice(User psychometrist, DateTime invoiceDate);
+
+        IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
 
         decimal GetInvoiceTotal(Invoice invoice);
     }

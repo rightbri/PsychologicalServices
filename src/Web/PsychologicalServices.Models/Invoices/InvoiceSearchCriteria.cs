@@ -10,6 +10,14 @@ namespace PsychologicalServices.Models.Invoices
 
         public DateTime? InvoiceDate { get; set; }
 
+        public DateTime? InvoiceMonth { get; set; }
+
         public int? InvoiceStatusId { get; set; }
+
+        public int? InvoiceTypeId { get; set; }
+
+        public int? PayableToId { get; set; }
+
+        public int? CompanyId { get; set; }
     }
 }

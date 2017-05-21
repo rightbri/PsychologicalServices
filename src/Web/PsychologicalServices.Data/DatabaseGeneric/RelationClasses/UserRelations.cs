@@ -34,6 +34,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AppointmentEntityUsingPsychologistId);
 			toReturn.Add(this.AssessmentEntityUsingNotesWriterId);
 			toReturn.Add(this.AssessmentEntityUsingDocListWriterId);
+			toReturn.Add(this.InvoiceEntityUsingPayableToId);
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
 			toReturn.Add(this.UserNoteEntityUsingUserId);
@@ -103,6 +104,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.DocListWriterId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and InvoiceEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - Invoice.PayableToId
+		/// </summary>
+		public virtual IEntityRelation InvoiceEntityUsingPayableToId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Invoices" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, InvoiceFields.PayableToId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceEntity", false);
 				return relation;
 			}
 		}

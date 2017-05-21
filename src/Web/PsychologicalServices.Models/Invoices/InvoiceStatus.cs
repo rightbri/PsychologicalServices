@@ -4,6 +4,10 @@ namespace PsychologicalServices.Models.Invoices
 {
     public class InvoiceStatus
     {
+        public const int Open = 1;
+        public const int Submitted = 2;
+        public const int Paid = 3;
+
         public int InvoiceStatusId { get; set; }
 
         public string Name { get; set; }

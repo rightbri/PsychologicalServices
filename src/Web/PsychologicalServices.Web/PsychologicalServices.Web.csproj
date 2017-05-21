@@ -251,6 +251,7 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\ContextController.cs" />
     <Compile Include="Controllers\GenderController.cs" />
+    <Compile Include="Controllers\InvoiceTypeController.cs" />
     <Compile Include="Controllers\IssueInDisputeController.cs" />
     <Compile Include="Controllers\ReferralSourceController.cs" />
     <Compile Include="Controllers\ColorController.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Infrastructure\Filters\UnityFilterProvider.cs" />
     <Compile Include="Infrastructure\Filters\VerifyAuthToken.cs" />
     <Compile Include="Infrastructure\Results\BinaryFileResult.cs" />
+    <Compile Include="Infrastructure\Services\Log4NetExceptionLogger.cs" />
     <Compile Include="Infrastructure\Services\GoogleAuthTokenVerifier.cs" />
     <Compile Include="Infrastructure\Services\IGoogleAuthTokenVerifier.cs" />
     <Compile Include="Infrastructure\Services\GoogleAuthTokenSigningKeysProvider.cs" />

@@ -11,19 +11,23 @@ namespace PsychologicalServices.Models.Invoices
 
         InvoiceStatus GetInvoiceStatus(int id);
 
+        InvoiceType GetInvoiceType(int id);
+
         InvoiceStatus GetInitialInvoiceStatus();
 
         IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true);
+
+        IEnumerable<InvoiceType> GetInvoiceTypes(bool? isActive = true);
 
         IEnumerable<InvoiceDocument> GetInvoiceDocuments(int invoiceId);
 
         IEnumerable<Invoice> GetInvoices(InvoiceSearchCriteria criteria);
 
         int GetInvoiceCount(int year, int month);
+
+        int GetInvoiceCount(int userId);
         
         int SaveInvoice(Invoice invoice);
-
-        void SaveInvoiceDocument(Invoice invoice);
 
         decimal GetTaxRate();
 

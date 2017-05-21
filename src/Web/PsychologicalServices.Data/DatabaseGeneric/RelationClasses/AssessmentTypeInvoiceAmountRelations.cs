@@ -33,7 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 
 
 			toReturn.Add(this.AssessmentTypeEntityUsingAssessmentTypeId);
-			toReturn.Add(this.ReferralSourceEntityUsingReferralSourceId);
+			toReturn.Add(this.InvoiceTypeEntityUsingInvoiceTypeId);
 			return toReturn;
 		}
 
@@ -55,16 +55,16 @@ namespace PsychologicalServices.Data.RelationClasses
 				return relation;
 			}
 		}
-		/// <summary>Returns a new IEntityRelation object, between AssessmentTypeInvoiceAmountEntity and ReferralSourceEntity over the m:1 relation they have, using the relation between the fields:
-		/// AssessmentTypeInvoiceAmount.ReferralSourceId - ReferralSource.ReferralSourceId
+		/// <summary>Returns a new IEntityRelation object, between AssessmentTypeInvoiceAmountEntity and InvoiceTypeEntity over the m:1 relation they have, using the relation between the fields:
+		/// AssessmentTypeInvoiceAmount.InvoiceTypeId - InvoiceType.InvoiceTypeId
 		/// </summary>
-		public virtual IEntityRelation ReferralSourceEntityUsingReferralSourceId
+		public virtual IEntityRelation InvoiceTypeEntityUsingInvoiceTypeId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "ReferralSource", false);
-				relation.AddEntityFieldPair(ReferralSourceFields.ReferralSourceId, AssessmentTypeInvoiceAmountFields.ReferralSourceId);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReferralSourceEntity", false);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "InvoiceType", false);
+				relation.AddEntityFieldPair(InvoiceTypeFields.InvoiceTypeId, AssessmentTypeInvoiceAmountFields.InvoiceTypeId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceTypeEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeInvoiceAmountEntity", true);
 				return relation;
 			}

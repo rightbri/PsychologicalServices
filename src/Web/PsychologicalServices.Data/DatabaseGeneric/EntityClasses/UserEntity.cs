@@ -41,6 +41,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		private EntityCollection<InvoiceEntity> _invoices;
 		private EntityCollection<NoteEntity> _noteUpdater;
 		private EntityCollection<NoteEntity> _noteCreator;
 		private EntityCollection<UserNoteEntity> _userNotes;
@@ -55,10 +56,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		private EntityCollection<CityEntity> _citiesCollectionViaUserTravelFee;
 
 
-		private EntityCollection<NoteEntity> _noteCollectionViaUserNotes;
+
+
+
+
 
 
 
@@ -86,6 +89,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			/// <summary>Member name Invoices</summary>
+			public static readonly string Invoices = "Invoices";
 			/// <summary>Member name NoteUpdater</summary>
 			public static readonly string NoteUpdater = "NoteUpdater";
 			/// <summary>Member name NoteCreator</summary>
@@ -106,12 +111,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			/// <summary>Member name CitiesCollectionViaUserTravelFee</summary>
-			public static readonly string CitiesCollectionViaUserTravelFee = "CitiesCollectionViaUserTravelFee";
 
 
-			/// <summary>Member name NoteCollectionViaUserNotes</summary>
-			public static readonly string NoteCollectionViaUserNotes = "NoteCollectionViaUserNotes";
+
+
+
+
 
 
 
@@ -182,6 +187,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				_invoices = (EntityCollection<InvoiceEntity>)info.GetValue("_invoices", typeof(EntityCollection<InvoiceEntity>));
 				_noteUpdater = (EntityCollection<NoteEntity>)info.GetValue("_noteUpdater", typeof(EntityCollection<NoteEntity>));
 				_noteCreator = (EntityCollection<NoteEntity>)info.GetValue("_noteCreator", typeof(EntityCollection<NoteEntity>));
 				_userNotes = (EntityCollection<UserNoteEntity>)info.GetValue("_userNotes", typeof(EntityCollection<UserNoteEntity>));
@@ -196,10 +202,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				_citiesCollectionViaUserTravelFee = (EntityCollection<CityEntity>)info.GetValue("_citiesCollectionViaUserTravelFee", typeof(EntityCollection<CityEntity>));
 
 
-				_noteCollectionViaUserNotes = (EntityCollection<NoteEntity>)info.GetValue("_noteCollectionViaUserNotes", typeof(EntityCollection<NoteEntity>));
+
+
+
+
 
 
 
@@ -259,6 +267,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Invoices":
+					this.Invoices.Add((InvoiceEntity)entity);
+					break;
 				case "NoteUpdater":
 					this.NoteUpdater.Add((NoteEntity)entity);
 					break;
@@ -285,18 +296,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				case "CitiesCollectionViaUserTravelFee":
-					this.CitiesCollectionViaUserTravelFee.IsReadOnly = false;
-					this.CitiesCollectionViaUserTravelFee.Add((CityEntity)entity);
-					this.CitiesCollectionViaUserTravelFee.IsReadOnly = true;
-					break;
 
 
-				case "NoteCollectionViaUserNotes":
-					this.NoteCollectionViaUserNotes.IsReadOnly = false;
-					this.NoteCollectionViaUserNotes.Add((NoteEntity)entity);
-					this.NoteCollectionViaUserNotes.IsReadOnly = true;
-					break;
+
+
+
+
 
 
 
@@ -333,6 +338,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Invoices":
+					toReturn.Add(UserEntity.Relations.InvoiceEntityUsingPayableToId);
+					break;
 				case "NoteUpdater":
 					toReturn.Add(UserEntity.Relations.NoteEntityUsingUpdateUserId);
 					break;
@@ -359,16 +367,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				case "CitiesCollectionViaUserTravelFee":
-					toReturn.Add(UserEntity.Relations.UserTravelFeeEntityUsingUserId, "UserEntity__", "UserTravelFee_", JoinHint.None);
-					toReturn.Add(UserTravelFeeEntity.Relations.CityEntityUsingCityId, "UserTravelFee_", string.Empty, JoinHint.None);
-					break;
 
 
-				case "NoteCollectionViaUserNotes":
-					toReturn.Add(UserEntity.Relations.UserNoteEntityUsingUserId, "UserEntity__", "UserNote_", JoinHint.None);
-					toReturn.Add(UserNoteEntity.Relations.NoteEntityUsingNoteId, "UserNote_", string.Empty, JoinHint.None);
-					break;
+
+
+
+
 
 
 
@@ -419,6 +423,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Invoices":
+					this.Invoices.Add((InvoiceEntity)relatedEntity);
+					break;
 				case "NoteUpdater":
 					this.NoteUpdater.Add((NoteEntity)relatedEntity);
 					break;
@@ -459,6 +466,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				case "Invoices":
+					base.PerformRelatedEntityRemoval(this.Invoices, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "NoteUpdater":
 					base.PerformRelatedEntityRemoval(this.NoteUpdater, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -515,6 +525,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			toReturn.Add(this.Invoices);
 			toReturn.Add(this.NoteUpdater);
 			toReturn.Add(this.NoteCreator);
 			toReturn.Add(this.UserNotes);
@@ -539,6 +550,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				info.AddValue("_invoices", ((_invoices!=null) && (_invoices.Count>0) && !this.MarkedForDeletion)?_invoices:null);
 				info.AddValue("_noteUpdater", ((_noteUpdater!=null) && (_noteUpdater.Count>0) && !this.MarkedForDeletion)?_noteUpdater:null);
 				info.AddValue("_noteCreator", ((_noteCreator!=null) && (_noteCreator.Count>0) && !this.MarkedForDeletion)?_noteCreator:null);
 				info.AddValue("_userNotes", ((_userNotes!=null) && (_userNotes.Count>0) && !this.MarkedForDeletion)?_userNotes:null);
@@ -553,10 +565,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				info.AddValue("_citiesCollectionViaUserTravelFee", ((_citiesCollectionViaUserTravelFee!=null) && (_citiesCollectionViaUserTravelFee.Count>0) && !this.MarkedForDeletion)?_citiesCollectionViaUserTravelFee:null);
 
 
-				info.AddValue("_noteCollectionViaUserNotes", ((_noteCollectionViaUserNotes!=null) && (_noteCollectionViaUserNotes.Count>0) && !this.MarkedForDeletion)?_noteCollectionViaUserNotes:null);
+
+
+
+
 
 
 
@@ -603,6 +617,16 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Invoice' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoices()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceFields.PayableToId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'Note' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
@@ -672,29 +696,11 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'City' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoCitiesCollectionViaUserTravelFee()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("CitiesCollectionViaUserTravelFee"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UserId, "UserEntity__"));
-			return bucket;
-		}
 
 
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Note' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoNoteCollectionViaUserNotes()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("NoteCollectionViaUserNotes"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UserId, "UserEntity__"));
-			return bucket;
-		}
+
+
 
 
 
@@ -745,6 +751,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			collectionsQueue.Enqueue(this._invoices);
 			collectionsQueue.Enqueue(this._noteUpdater);
 			collectionsQueue.Enqueue(this._noteCreator);
 			collectionsQueue.Enqueue(this._userNotes);
@@ -759,10 +766,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			collectionsQueue.Enqueue(this._citiesCollectionViaUserTravelFee);
 
 
-			collectionsQueue.Enqueue(this._noteCollectionViaUserNotes);
+
+
+
+
 
 
 
@@ -781,6 +790,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			this._invoices = (EntityCollection<InvoiceEntity>) collectionsQueue.Dequeue();
 			this._noteUpdater = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._noteCreator = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._userNotes = (EntityCollection<UserNoteEntity>) collectionsQueue.Dequeue();
@@ -795,10 +805,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			this._citiesCollectionViaUserTravelFee = (EntityCollection<CityEntity>) collectionsQueue.Dequeue();
 
 
-			this._noteCollectionViaUserNotes = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
+
+
+
+
 
 
 
@@ -816,6 +828,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			if (this._invoices != null)
+			{
+				return true;
+			}
 			if (this._noteUpdater != null)
 			{
 				return true;
@@ -848,16 +864,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			if (this._citiesCollectionViaUserTravelFee != null)
-			{
-				return true;
-			}
 
 
-			if (this._noteCollectionViaUserNotes != null)
-			{
-				return true;
-			}
+
+
+
+
 
 
 
@@ -878,6 +890,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserNoteEntityFactory))) : null);
@@ -892,10 +905,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory))) : null);
 
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
+
+
+
+
 
 
 
@@ -917,6 +932,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			toReturn.Add("Invoices", _invoices);
 			toReturn.Add("NoteUpdater", _noteUpdater);
 			toReturn.Add("NoteCreator", _noteCreator);
 			toReturn.Add("UserNotes", _userNotes);
@@ -931,10 +947,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			toReturn.Add("CitiesCollectionViaUserTravelFee", _citiesCollectionViaUserTravelFee);
 
 
-			toReturn.Add("NoteCollectionViaUserNotes", _noteCollectionViaUserNotes);
+
+
+
+
 
 
 
@@ -953,6 +971,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			if(_invoices!=null)
+			{
+				_invoices.ActiveContext = base.ActiveContext;
+			}
 			if(_noteUpdater!=null)
 			{
 				_noteUpdater.ActiveContext = base.ActiveContext;
@@ -985,16 +1007,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			if(_citiesCollectionViaUserTravelFee!=null)
-			{
-				_citiesCollectionViaUserTravelFee.ActiveContext = base.ActiveContext;
-			}
 
 
-			if(_noteCollectionViaUserNotes!=null)
-			{
-				_noteCollectionViaUserNotes.ActiveContext = base.ActiveContext;
-			}
+
+
+
+
 
 
 
@@ -1017,6 +1035,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			_invoices = null;
 			_noteUpdater = null;
 			_noteCreator = null;
 			_userNotes = null;
@@ -1031,10 +1050,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			_citiesCollectionViaUserTravelFee = null;
 
 
-			_noteCollectionViaUserNotes = null;
+
+
+
+
 
 
 
@@ -1146,6 +1167,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Invoice' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoices
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Invoices")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.InvoiceEntity, 0, null, null, null, null, "Invoices", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1221,35 +1253,11 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'City' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathCitiesCollectionViaUserTravelFee
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = UserEntity.Relations.UserTravelFeeEntityUsingUserId;
-				intermediateRelation.SetAliases(string.Empty, "UserTravelFee_");
-				return new PrefetchPathElement2(new EntityCollection<CityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.CityEntity, 0, null, null, GetRelationsForField("CitiesCollectionViaUserTravelFee"), null, "CitiesCollectionViaUserTravelFee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
 
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathNoteCollectionViaUserNotes
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = UserEntity.Relations.UserNoteEntityUsingUserId;
-				intermediateRelation.SetAliases(string.Empty, "UserNote_");
-				return new PrefetchPathElement2(new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, GetRelationsForField("NoteCollectionViaUserNotes"), null, "NoteCollectionViaUserNotes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
+
+
 
 
 
@@ -1365,6 +1373,22 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceEntity))]
+		public virtual EntityCollection<InvoiceEntity> Invoices
+		{
+			get
+			{
+				if(_invoices==null)
+				{
+					_invoices = new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory)));
+					_invoices.SetContainingEntityInfo(this, "PayableTo");
+				}
+				return _invoices;
+			}
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'NoteEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(NoteEntity))]
@@ -1469,39 +1493,11 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'CityEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(CityEntity))]
-		public virtual EntityCollection<CityEntity> CitiesCollectionViaUserTravelFee
-		{
-			get
-			{
-				if(_citiesCollectionViaUserTravelFee==null)
-				{
-					_citiesCollectionViaUserTravelFee = new EntityCollection<CityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory)));
-					_citiesCollectionViaUserTravelFee.IsReadOnly=true;
-				}
-				return _citiesCollectionViaUserTravelFee;
-			}
-		}
 
 
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'NoteEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(NoteEntity))]
-		public virtual EntityCollection<NoteEntity> NoteCollectionViaUserNotes
-		{
-			get
-			{
-				if(_noteCollectionViaUserNotes==null)
-				{
-					_noteCollectionViaUserNotes = new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory)));
-					_noteCollectionViaUserNotes.IsReadOnly=true;
-				}
-				return _noteCollectionViaUserNotes;
-			}
-		}
+
+
 
 
 

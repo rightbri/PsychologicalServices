@@ -40,6 +40,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		private AppointmentStatusEntity _appointmentStatus;
+		private InvoiceTypeEntity _invoiceType;
 		private ReferralSourceEntity _referralSource;
 
 		
@@ -56,6 +57,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			/// <summary>Member name AppointmentStatus</summary>
 			public static readonly string AppointmentStatus = "AppointmentStatus";
+			/// <summary>Member name InvoiceType</summary>
+			public static readonly string InvoiceType = "InvoiceType";
 			/// <summary>Member name ReferralSource</summary>
 			public static readonly string ReferralSource = "ReferralSource";
 
@@ -95,24 +98,28 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <param name="referralSourceId">PK value for ReferralSourceAppointmentStatusSetting which data should be fetched into this ReferralSourceAppointmentStatusSetting object</param>
 		/// <param name="appointmentStatusId">PK value for ReferralSourceAppointmentStatusSetting which data should be fetched into this ReferralSourceAppointmentStatusSetting object</param>
+		/// <param name="invoiceTypeId">PK value for ReferralSourceAppointmentStatusSetting which data should be fetched into this ReferralSourceAppointmentStatusSetting object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReferralSourceAppointmentStatusSettingEntity(System.Int32 referralSourceId, System.Int32 appointmentStatusId):base("ReferralSourceAppointmentStatusSettingEntity")
+		public ReferralSourceAppointmentStatusSettingEntity(System.Int32 referralSourceId, System.Int32 appointmentStatusId, System.Int32 invoiceTypeId):base("ReferralSourceAppointmentStatusSettingEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 			this.ReferralSourceId = referralSourceId;
 			this.AppointmentStatusId = appointmentStatusId;
+			this.InvoiceTypeId = invoiceTypeId;
 		}
 
 		/// <summary> CTor</summary>
 		/// <param name="referralSourceId">PK value for ReferralSourceAppointmentStatusSetting which data should be fetched into this ReferralSourceAppointmentStatusSetting object</param>
 		/// <param name="appointmentStatusId">PK value for ReferralSourceAppointmentStatusSetting which data should be fetched into this ReferralSourceAppointmentStatusSetting object</param>
+		/// <param name="invoiceTypeId">PK value for ReferralSourceAppointmentStatusSetting which data should be fetched into this ReferralSourceAppointmentStatusSetting object</param>
 		/// <param name="validator">The custom validator object for this ReferralSourceAppointmentStatusSettingEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReferralSourceAppointmentStatusSettingEntity(System.Int32 referralSourceId, System.Int32 appointmentStatusId, IValidator validator):base("ReferralSourceAppointmentStatusSettingEntity")
+		public ReferralSourceAppointmentStatusSettingEntity(System.Int32 referralSourceId, System.Int32 appointmentStatusId, System.Int32 invoiceTypeId, IValidator validator):base("ReferralSourceAppointmentStatusSettingEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 			this.ReferralSourceId = referralSourceId;
 			this.AppointmentStatusId = appointmentStatusId;
+			this.InvoiceTypeId = invoiceTypeId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
@@ -129,6 +136,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				if(_appointmentStatus!=null)
 				{
 					_appointmentStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_invoiceType = (InvoiceTypeEntity)info.GetValue("_invoiceType", typeof(InvoiceTypeEntity));
+				if(_invoiceType!=null)
+				{
+					_invoiceType.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 				_referralSource = (ReferralSourceEntity)info.GetValue("_referralSource", typeof(ReferralSourceEntity));
 				if(_referralSource!=null)
@@ -156,6 +168,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case ReferralSourceAppointmentStatusSettingFieldIndex.AppointmentStatusId:
 					DesetupSyncAppointmentStatus(true, false);
 					break;
+				case ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceTypeId:
+					DesetupSyncInvoiceType(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -180,6 +195,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				case "AppointmentStatus":
 					this.AppointmentStatus = (AppointmentStatusEntity)entity;
+					break;
+				case "InvoiceType":
+					this.InvoiceType = (InvoiceTypeEntity)entity;
 					break;
 				case "ReferralSource":
 					this.ReferralSource = (ReferralSourceEntity)entity;
@@ -211,6 +229,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentStatus":
 					toReturn.Add(ReferralSourceAppointmentStatusSettingEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId);
 					break;
+				case "InvoiceType":
+					toReturn.Add(ReferralSourceAppointmentStatusSettingEntity.Relations.InvoiceTypeEntityUsingInvoiceTypeId);
+					break;
 				case "ReferralSource":
 					toReturn.Add(ReferralSourceAppointmentStatusSettingEntity.Relations.ReferralSourceEntityUsingReferralSourceId);
 					break;
@@ -240,6 +261,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -255,6 +277,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				case "AppointmentStatus":
 					SetupSyncAppointmentStatus(relatedEntity);
+					break;
+				case "InvoiceType":
+					SetupSyncInvoiceType(relatedEntity);
 					break;
 				case "ReferralSource":
 					SetupSyncReferralSource(relatedEntity);
@@ -277,6 +302,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				case "AppointmentStatus":
 					DesetupSyncAppointmentStatus(false, true);
+					break;
+				case "InvoiceType":
+					DesetupSyncInvoiceType(false, true);
 					break;
 				case "ReferralSource":
 					DesetupSyncReferralSource(false, true);
@@ -306,6 +334,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(_appointmentStatus!=null)
 			{
 				toReturn.Add(_appointmentStatus);
+			}
+			if(_invoiceType!=null)
+			{
+				toReturn.Add(_invoiceType);
 			}
 			if(_referralSource!=null)
 			{
@@ -338,6 +370,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 				info.AddValue("_appointmentStatus", (!this.MarkedForDeletion?_appointmentStatus:null));
+				info.AddValue("_invoiceType", (!this.MarkedForDeletion?_invoiceType:null));
 				info.AddValue("_referralSource", (!this.MarkedForDeletion?_referralSource:null));
 
 			}
@@ -383,6 +416,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentStatusFields.AppointmentStatusId, null, ComparisonOperator.Equal, this.AppointmentStatusId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'InvoiceType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceType()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceTypeFields.InvoiceTypeId, null, ComparisonOperator.Equal, this.InvoiceTypeId));
 			return bucket;
 		}
 
@@ -464,6 +507,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("AppointmentStatus", _appointmentStatus);
+			toReturn.Add("InvoiceType", _invoiceType);
 			toReturn.Add("ReferralSource", _referralSource);
 
 
@@ -480,6 +524,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointmentStatus.ActiveContext = base.ActiveContext;
 			}
+			if(_invoiceType!=null)
+			{
+				_invoiceType.ActiveContext = base.ActiveContext;
+			}
 			if(_referralSource!=null)
 			{
 				_referralSource.ActiveContext = base.ActiveContext;
@@ -494,6 +542,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 			_appointmentStatus = null;
+			_invoiceType = null;
 			_referralSource = null;
 
 			PerformDependencyInjection();
@@ -517,6 +566,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("AppointmentStatusId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("InvoiceTypeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("InvoiceRate", fieldHashtable);
@@ -548,6 +600,39 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnAppointmentStatusPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _invoiceType</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncInvoiceType(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _invoiceType, new PropertyChangedEventHandler( OnInvoiceTypePropertyChanged ), "InvoiceType", ReferralSourceAppointmentStatusSettingEntity.Relations.InvoiceTypeEntityUsingInvoiceTypeId, true, signalRelatedEntity, "ReferralSourceAppointmentStatusSettings", resetFKFields, new int[] { (int)ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceTypeId } );		
+			_invoiceType = null;
+		}
+
+		/// <summary> setups the sync logic for member _invoiceType</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncInvoiceType(IEntity2 relatedEntity)
+		{
+			if(_invoiceType!=relatedEntity)
+			{
+				DesetupSyncInvoiceType(true, true);
+				_invoiceType = (InvoiceTypeEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _invoiceType, new PropertyChangedEventHandler( OnInvoiceTypePropertyChanged ), "InvoiceType", ReferralSourceAppointmentStatusSettingEntity.Relations.InvoiceTypeEntityUsingInvoiceTypeId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnInvoiceTypePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -636,6 +721,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceType' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceType
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceTypeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceType")[0], (int)PsychologicalServices.Data.EntityType.ReferralSourceAppointmentStatusSettingEntity, (int)PsychologicalServices.Data.EntityType.InvoiceTypeEntity, 0, null, null, null, null, "InvoiceType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReferralSource' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -695,6 +792,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ReferralSourceAppointmentStatusSettingFieldIndex.AppointmentStatusId, value); }
 		}
 
+		/// <summary> The InvoiceTypeId property of the Entity ReferralSourceAppointmentStatusSetting<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "ReferralSourceAppointmentStatusSettings"."InvoiceTypeId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual System.Int32 InvoiceTypeId
+		{
+			get { return (System.Int32)GetValue((int)ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceTypeId, true); }
+			set	{ SetValue((int)ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceTypeId, value); }
+		}
+
 		/// <summary> The InvoiceRate property of the Entity ReferralSourceAppointmentStatusSetting<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "ReferralSourceAppointmentStatusSettings"."InvoiceRate"<br/>
@@ -735,6 +843,41 @@ namespace PsychologicalServices.Data.EntityClasses
 					else
 					{
 						if(_appointmentStatus!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "ReferralSourceAppointmentStatusSettings");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'InvoiceTypeEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual InvoiceTypeEntity InvoiceType
+		{
+			get
+			{
+				return _invoiceType;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncInvoiceType(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_invoiceType != null)
+						{
+							_invoiceType.UnsetRelatedEntity(this, "ReferralSourceAppointmentStatusSettings");
+						}
+					}
+					else
+					{
+						if(_invoiceType!=value)
 						{
 							((IEntity2)value).SetRelatedEntity(this, "ReferralSourceAppointmentStatusSettings");
 						}

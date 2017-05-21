@@ -402,6 +402,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.IsActive);}
 		}
+		/// <summary>Creates a new AssessmentTypeEntity.InvoiceAmount field instance</summary>
+		public static EntityField2 InvoiceAmount
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.InvoiceAmount);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentTypeAttributeTypeEntity</summary>
@@ -702,11 +707,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.InvoiceDate);}
 		}
-		/// <summary>Creates a new InvoiceEntity.AppointmentId field instance</summary>
-		public static EntityField2 AppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.AppointmentId);}
-		}
 		/// <summary>Creates a new InvoiceEntity.InvoiceStatusId field instance</summary>
 		public static EntityField2 InvoiceStatusId
 		{
@@ -726,6 +726,36 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 Total
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.Total);}
+		}
+		/// <summary>Creates a new InvoiceEntity.InvoiceTypeId field instance</summary>
+		public static EntityField2 InvoiceTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.InvoiceTypeId);}
+		}
+		/// <summary>Creates a new InvoiceEntity.PayableToId field instance</summary>
+		public static EntityField2 PayableToId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.PayableToId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity InvoiceAppointmentEntity</summary>
+	public partial class InvoiceAppointmentFields
+	{
+		/// <summary>Creates a new InvoiceAppointmentEntity.InvoiceAppointmentId field instance</summary>
+		public static EntityField2 InvoiceAppointmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.InvoiceAppointmentId);}
+		}
+		/// <summary>Creates a new InvoiceAppointmentEntity.InvoiceId field instance</summary>
+		public static EntityField2 InvoiceId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.InvoiceId);}
+		}
+		/// <summary>Creates a new InvoiceAppointmentEntity.AppointmentId field instance</summary>
+		public static EntityField2 AppointmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.AppointmentId);}
 		}
 	}
 
@@ -767,10 +797,10 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceLineId);}
 		}
-		/// <summary>Creates a new InvoiceLineEntity.InvoiceId field instance</summary>
-		public static EntityField2 InvoiceId
+		/// <summary>Creates a new InvoiceLineEntity.InvoiceAppointmentId field instance</summary>
+		public static EntityField2 InvoiceAppointmentId
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceId);}
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceAppointmentId);}
 		}
 		/// <summary>Creates a new InvoiceLineEntity.Description field instance</summary>
 		public static EntityField2 Description
@@ -851,6 +881,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 UpdateDate
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusChangeFieldIndex.UpdateDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity InvoiceTypeEntity</summary>
+	public partial class InvoiceTypeFields
+	{
+		/// <summary>Creates a new InvoiceTypeEntity.InvoiceTypeId field instance</summary>
+		public static EntityField2 InvoiceTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceTypeFieldIndex.InvoiceTypeId);}
+		}
+		/// <summary>Creates a new InvoiceTypeEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceTypeFieldIndex.Name);}
+		}
+		/// <summary>Creates a new InvoiceTypeEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceTypeFieldIndex.IsActive);}
 		}
 	}
 
@@ -966,6 +1016,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 AppointmentStatusId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceAppointmentStatusSettingFieldIndex.AppointmentStatusId);}
+		}
+		/// <summary>Creates a new ReferralSourceAppointmentStatusSettingEntity.InvoiceTypeId field instance</summary>
+		public static EntityField2 InvoiceTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceTypeId);}
 		}
 		/// <summary>Creates a new ReferralSourceAppointmentStatusSettingEntity.InvoiceRate field instance</summary>
 		public static EntityField2 InvoiceRate

@@ -37,6 +37,13 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                     .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                     .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
+                        .SubPath(appointmentStatusPath => appointmentStatusPath
+                            .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(appointmentStatus => appointmentStatus.ReferralSourceAppointmentStatusSettings)
+                                .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
+                                    .Prefetch<ReferralSourceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ReferralSource)
+                                    .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
+                                )
+                        )
                     .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
                         .SubPath(appointmentAttributePath => appointmentAttributePath
                             .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)

@@ -6,6 +6,7 @@ using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 using PsychologicalServices.Web.Infrastructure.Filters;
 using System.Web.Http.Filters;
+using System.Web.Http.ExceptionHandling;
 
 namespace PsychologicalServices.Web
 {
@@ -21,6 +22,8 @@ namespace PsychologicalServices.Web
             config.Filters.Add(
                 (IFilter)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(VerifyAuthToken))
             );
+
+            config.Services.Add(typeof(IExceptionLogger), GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ExceptionLogger)));
 
             // Use camel case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

@@ -1,0 +1,211 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ parameter type="PsychologicalServices.Models.Invoices.Invoice" name="Model" #>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			
+			font-size: 12pt;
+		}
+		
+		table {
+			font-family:"Times New Roman",serif;
+			border-collapse: collapse;
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+		}
+		
+		th {
+			border-width: 1px;
+			border-style: solid;
+			border-color: #000;
+			padding: 5px;
+			vertical-align: top;
+		}
+
+		td {
+			border-width: 1px;
+			border-style: none solid none solid;
+			border-color: #000;
+			padding: 5px;
+			vertical-align: top;
+		}
+		
+		.label {
+			font-weight: bold;
+			font-style: italic;
+			width: 25%;
+		}
+		
+		.title {
+			font-size: 24pt;
+			text-decoration: underline;
+			line-height: 0.8;
+		}
+		.subtitle {
+			font-size: 16pt;
+			text-align: right;
+			line-height: 0.8;
+		}
+		.referral-source-address {
+			font-size: 12pt;
+			line-height: 1.25;
+			margin-left: 10%;
+		}
+		.message {
+			text-align: center;
+			line-height: 1;
+		}
+
+		.invoice-data {
+			font-size: 12pt;
+			font-weight: bold;
+			line-height: 1;
+			margin-left: 55%;
+		}
+		
+		.invoice-amount {
+			text-align: right;
+			padding-right: 5px;
+			width: 5%;
+			font-weight: bold;
+		}
+
+		.summary-row td {
+			text-align: right;
+		}
+
+		.summary-row .description {
+			border-style: none;
+		}
+
+		.summary-row .invoice-amount {
+			border-style: none solid none solid;
+		}
+
+		.summary-row.subtotal .description {
+			border-style: solid none none none;
+		}
+
+		.summary-row.subtotal .invoice-amount {
+			border-style: solid solid none solid;
+		}
+
+		.summary-row.total .description {
+			font-weight: bold;
+		}
+
+		.summary-row.total .invoice-amount {
+			border-width: 3px;
+			border-style: solid;
+		}
+		
+	</style>
+</head>
+<body>
+	<#
+		var psychometrist = Model.PayableTo;
+		var company = Model.Appointments.First().Appointment.Assessment.Company;
+	#>
+
+	<header>
+		<h1 class="title">
+			<#= string.Format("{0} {1}", psychometrist.FirstName, psychometrist.LastName) #>
+		</h1>
+		<p>
+			<a href="mailto:<#= psychometrist.Email #>"><#= psychometrist.Email #></a>
+		</p>
+	</header>
+
+	<p class="invoice-data">
+		Invoice Number:&nbsp;<#= Model.Identifier #>
+	</p>
+	<p class="invoice-data">
+		Date of Invoice:&nbsp;<#= string.Format("{0:MMMM d, yyyy}", Model.InvoiceDate) #>
+	</p>
+	
+	<p class="bill-to">
+		Bill To:
+		<br><#= company.Name #>
+		<# if (!string.IsNullOrWhiteSpace(company.Address.Street)) { #>
+		<br><#= company.Address.Street #>
+		<# } #>
+		<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
+		<br><#= company.Address.Suite #>
+		<# } #>
+		<br><#= company.Address.City.Name #>, <#= company.Address.City.Province #>
+		<# if (!string.IsNullOrWhiteSpace(company.Address.PostalCode)) { #>
+		<br><#= company.Address.PostalCode #>
+		<# } #>
+	</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Patient Name</th>
+				<th>Assessment Date</th>
+				<th>Description</th>
+				<th>Assessment Centre</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<#
+				var subtotal = 0.0m;
+
+				foreach (var invoiceAppointment in Model.Appointments)
+				{
+					var appointment = invoiceAppointment.Appointment;
+					var firstClaim = appointment.Assessment.Claims.OrderByDescending(claim => claim.DateOfLoss.HasValue ? claim.DateOfLoss.Value : DateTime.MinValue).FirstOrDefault();
+
+					foreach (var line in invoiceAppointment.Lines)
+					{
+						subtotal += line.Amount;
+			#>
+			<tr>
+				<td><#= firstClaim != null ? string.Format("{0} {1}", firstClaim.Claimant.FirstName, firstClaim.Claimant.LastName) : "" #></td>
+				<td><#= string.Format("{0:dddd, MMMM d, yyyy}", appointment.AppointmentTime) #></td>
+				<td><#= line.Description #></td>
+				<td><#= appointment.Location.Name #></td>
+				<td class="invoice-amount">
+					<#= string.Format("{0:$#,##0.00}", line.Amount / 100) #>
+				</td>
+			</tr>
+			<#
+					}
+				}
+			#>
+			<tr class="summary-row subtotal">
+				<td class="description" colspan="4">Subtotal</td>
+				<td class="invoice-amount">
+					<#= string.Format("{0:$#,##0.00}", subtotal / 100) #>
+				</td>
+			</tr>
+			<tr class="summary-row tax">
+				<td class="description" colspan="4">HST</td>
+				<td class="invoice-amount">
+					<#= string.Format("{0:$#,##0.00}", subtotal * Model.TaxRate / 100) #>
+				</td>
+			</tr>
+			<tr class="summary-row total">
+				<td class="description" colspan="4">Total</td>
+				<td class="invoice-amount">
+					<#= string.Format("{0:$#,##0.00}", Model.Total / 100) #>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

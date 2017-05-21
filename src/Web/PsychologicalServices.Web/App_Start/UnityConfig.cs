@@ -14,6 +14,7 @@ using Microsoft.Practices.ServiceLocation;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Infrastructure.Common.Utility;
 using log4net;
+using System.Web.Http.ExceptionHandling;
 
 namespace PsychologicalServices.Web
 {
@@ -46,6 +47,7 @@ namespace PsychologicalServices.Web
                 .RegisterType<IDataAccessAdapterFactory, SqlServerAdapterFactory>()
                 .RegisterType<ICacheService, CacheService>(new InjectionConstructor(System.Runtime.Caching.MemoryCache.Default))
                 .RegisterInstance<ILog>(LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType))
+                .RegisterType<ExceptionLogger, Log4NetExceptionLogger>()
                 ;
 
             // register all your components with the container here

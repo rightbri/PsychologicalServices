@@ -133,7 +133,10 @@
 	</style>
 </head>
 <body>
-	<# var company = Model.Appointment.Assessment.Company; #>
+	<#
+		var assessment = Model.Appointments.First().Appointment.Assessment;
+		var company = assessment.Company;
+	#>
 	<header>
 		<h1 class="title">
 			<#= company.Name #>
@@ -144,7 +147,7 @@
 	</header>
 	
 	<p class="referral-source-address">
-		<# var referralSource = Model.Appointment.Assessment.ReferralSource; #>
+		<# var referralSource = assessment.ReferralSource; #>
 		<#= referralSource.Name #>
 		<# if (null != referralSource.Address) { #>
 			<br /><#= referralSource.Address.Street #>
@@ -204,103 +207,113 @@
 					<td colspan="4" class="spacer">&nbsp;</td>
 				</tr>
 
-				<# foreach (var claim in Model.Appointment.Assessment.Claims) { #>
-
-					<tr>
-						<td class="label">Client Name:</td>
-						<td colspan="3">
-							<#= claim.Claimant.FirstName #> <#= claim.Claimant.LastName #>
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Client File No.:</td>
-						<td colspan="3">
-							<#= Model.Appointment.Assessment.ReferralSourceFileNumber #>
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Date of Loss:</td>
-						<td colspan="3">
-							<# if (claim.DateOfLoss.HasValue) { #>
-								<#= string.Format("{0:MMMM d, yyyy}", claim.DateOfLoss) #>
-							<# } #>
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Claim No.:</td>
-						<td colspan="3">
-							<# if (!string.IsNullOrWhiteSpace(claim.ClaimNumber)) { #>
-								<#= claim.ClaimNumber #>
-							<# } #>
-						</td>
-					</tr>
-
-				<# } #>
-
-				<tr>
-					<td class="label">Assessment Date:</td>
-					<td colspan="3">
-						<#= string.Format("{0:MMMM d, yyyy}", Model.Appointment.AppointmentTime) #>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4" class="spacer">&nbsp;</td>
-				</tr>
-
 				<#
-				var subtotal = 0.0m;
+				var total = 0m;
 
-				for (var i = 0; i < Model.Lines.Count(); i++)
+				for (var i = 0; i < Model.Appointments.Count(); i++)
 				{
-					var line = Model.Lines.ElementAt(i);
-					subtotal += line.Amount;
-				#>
-				<tr>
-					<td class="label">
-						<#= i == 0 ? "Type of Report:" : "&nbsp;" #>
-					</td>
-					<td colspan="2">
-						<#= line.Description #>
-					</td>
-					<td class="invoice-amount">
-						<#= string.Format("{0:$#,##0.00}", line.Amount / 100) #>
-					</td>
-				</tr>
-				<#
+					var invoiceAppointment = Model.Appointments.ElementAt(i);
+					
+					var appointment = invoiceAppointment.Appointment;
+
+					foreach (var claim in appointment.Assessment.Claims)
+					{
+					#>
+						<tr>
+							<td class="label">Client Name:</td>
+							<td colspan="3">
+								<#= claim.Claimant.FirstName #> <#= claim.Claimant.LastName #>
+							</td>
+						</tr>
+						<tr>
+							<td class="label">Client File No.:</td>
+							<td colspan="3">
+								<#= appointment.Assessment.ReferralSourceFileNumber #>
+							</td>
+						</tr>
+						<tr>
+							<td class="label">Date of Loss:</td>
+							<td colspan="3">
+								<# if (claim.DateOfLoss.HasValue) { #>
+									<#= string.Format("{0:MMMM d, yyyy}", claim.DateOfLoss) #>
+								<# } #>
+							</td>
+						</tr>
+						<tr>
+							<td class="label">Claim No.:</td>
+							<td colspan="3">
+								<# if (!string.IsNullOrWhiteSpace(claim.ClaimNumber)) { #>
+									<#= claim.ClaimNumber #>
+								<# } #>
+							</td>
+						</tr>
+					<#
+					}	
+					#>
+
+					<tr>
+						<td class="label">Assessment Date:</td>
+						<td colspan="3">
+							<#= string.Format("{0:MMMM d, yyyy}", appointment.AppointmentTime) #>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" class="spacer">&nbsp;</td>
+					</tr>
+
+					<#
+					var subtotal = 0.0m;
+
+					for (var j = 0; j < invoiceAppointment.Lines.Count(); j++)
+					{
+						var line = invoiceAppointment.Lines.ElementAt(j);
+						subtotal += line.Amount;
+					#>
+						<tr>
+							<td class="label">
+								<#= j == 0 ? "Type of Report:" : "&nbsp;" #>
+							</td>
+							<td colspan="2">
+								<#= line.Description #>
+							</td>
+							<td class="invoice-amount">
+								<#= string.Format("{0:$#,##0.00}", line.Amount / 100) #>
+							</td>
+						</tr>
+					<#
+					}
+
+					if (invoiceAppointment.InvoiceRate != 1.0m)
+					{
+						subtotal = subtotal * invoiceAppointment.InvoiceRate;
+					#>
+						<tr>
+							<td>&nbsp;</td>
+							<td colspan="2">
+								<#= invoiceAppointment.Appointment.AppointmentStatus.Name #>
+							</td>
+							<td class="invoice-amount">
+								<#= string.Format("{0:$#,##0.00}", subtotal / 100) #>
+							</td>
+						</tr>
+					<#
+					}
+
+					total += subtotal;
 				}
 				#>
-
-				<#
-				var statusSetting = referralSource.AppointmentStatusSettings
-					.FirstOrDefault(appointmentStatusSetting =>
-						appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == Model.Appointment.AppointmentStatus.AppointmentStatusId &&
-						appointmentStatusSetting.InvoiceRate != 1.0m
-					);
-				if (null != statusSetting) {
-					subtotal = subtotal * statusSetting.InvoiceRate;
-				#>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-							<#= statusSetting.AppointmentStatus.Name #>
-						</td>
-						<td>
-							<#= string.Format("{0:$#,##0.00}", subtotal / 100) #>
-						</td>
-					</tr>
-				<# } #>
-
+				
 				<tr>
 					<td>&nbsp;</td>
 					<td colspan="2">+H.S.T.</td>
 					<td class="invoice-amount">
-						<#= string.Format("{0:$#,##0.00}", subtotal * Model.TaxRate / 100) #>
+						<#= string.Format("{0:$#,##0.00}", total * Model.TaxRate / 100) #>
 					</td>
 				</tr>
-				<tr class="total">
+				<tr class="invoice-amount total">
 					<td class="label" colspan="3">Total Invoice Amount:</td>
 					<td>
-						<#= string.Format("{0:$#,##0.00}", subtotal * (1 + Model.TaxRate) / 100) #>
+						<#= string.Format("{0:$#,##0.00}", total * (1 + Model.TaxRate) / 100) #>
 					</td>
 				</tr>
 				<tr>

@@ -39,24 +39,21 @@ namespace PsychologicalServices.Infrastructure.Invoices
             InvoiceListPath =
                 (invoicePath => invoicePath
                     .Prefetch<InvoiceStatusEntity>(invoice => invoice.InvoiceStatus)
-                    .Prefetch<AppointmentEntity>(invoice => invoice.Appointment)
-                        .SubPath(appointmentPath => appointmentPath
-                            .Prefetch<AddressEntity>(appointment => appointment.Location)
-                            .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
-                                .SubPath(assessmentPath => assessmentPath
-                                    .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
-                                    .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
-                                        .SubPath(assessmentClaimPath => assessmentClaimPath
-                                            .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
-                                                .SubPath(claimPath => claimPath
-                                                    .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                                )
-                                        )
-                                    .Prefetch<CompanyEntity>(assessment => assessment.Company)
-                                        .SubPath(companyPath => companyPath
-                                            .Prefetch<AddressEntity>(company => company.Address)
-                                                .SubPath(addressPath => addressPath
-                                                    .Prefetch<CityEntity>(address => address.City)
+                    .Prefetch<InvoiceTypeEntity>(invoice => invoice.InvoiceType)
+                    .Prefetch<UserEntity>(invoice => invoice.PayableTo)
+                    .Prefetch<InvoiceAppointmentEntity>(invoice => invoice.InvoiceAppointments)
+                        .SubPath(invoiceAppointmentPath => invoiceAppointmentPath
+                            .Prefetch<AppointmentEntity>(invoiceAppointment => invoiceAppointment.Appointment)
+                                .SubPath(appointmentPath => appointmentPath
+                                    .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                                        .SubPath(assessmentPath => assessmentPath
+                                            .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                                .SubPath(assessmentClaimPath => assessmentClaimPath
+                                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                                        .SubPath(claimPath => claimPath
+                                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                                        )
                                                 )
                                         )
                                 )
@@ -66,62 +63,77 @@ namespace PsychologicalServices.Infrastructure.Invoices
         private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
             InvoiceEditPath =
                 (invoicePath => invoicePath
-                    .Prefetch<InvoiceLineEntity>(invoice => invoice.InvoiceLines)
                     .Prefetch<InvoiceStatusEntity>(invoice => invoice.InvoiceStatus)
+                    .Prefetch<InvoiceTypeEntity>(invoice => invoice.InvoiceType)
+                    .Prefetch<UserEntity>(invoice => invoice.PayableTo)
                     .Prefetch<InvoiceStatusChangeEntity>(invoice => invoice.InvoiceStatusChanges)
                         .SubPath(invoiceStatusChangePath => invoiceStatusChangePath
                             .Prefetch<InvoiceStatusEntity>(invoiceStatusChange => invoiceStatusChange.InvoiceStatus)
                         )
                     .Prefetch<InvoiceDocumentEntity>(invoice => invoice.InvoiceDocuments)
                         .Exclude(invoiceDocument => invoiceDocument.Document)
-                    .Prefetch<AppointmentEntity>(invoice => invoice.Appointment)
-                        .SubPath(appointmentPath => appointmentPath
-                            .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                            .Prefetch<UserEntity>(appointment => appointment.Psychologist)
-                                .SubPath(psychologistPath => psychologistPath
-                                    .Prefetch<UserTravelFeeEntity>(psychologist => psychologist.UserTravelFees)
-                                        .SubPath(userTravelFeePath => userTravelFeePath
-                                            .Prefetch<CityEntity>(userTravelFee => userTravelFee.City)
-                                        )
-                                )
-                            .Prefetch<AddressEntity>(appointment => appointment.Location)
-                                .SubPath(locationPath => locationPath
-                                    .Prefetch<CityEntity>(location => location.City)
-                                )
-                            .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
-                                .SubPath(assessmentPath => assessmentPath
-                                    .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
-                                    .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
-                                        .SubPath(assessmentReportPath => assessmentReportPath
-                                            .Prefetch<ReportTypeEntity>(assessmentReport => assessmentReport.ReportType)
-                                            .Prefetch<AssessmentReportIssueInDisputeEntity>(assessmentReport => assessmentReport.AssessmentReportIssuesInDispute)
-                                                .SubPath(assessmentReportIssueInDisputePath => assessmentReportIssueInDisputePath
-                                                    .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
-                                                )
-                                        )
-                                    .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
-                                        .SubPath(referralSourcePath => referralSourcePath
-                                            .Prefetch<AddressEntity>(referralSource => referralSource.Address)
-                                                .SubPath(addressPath => addressPath
-                                                    .Prefetch<CityEntity>(address => address.City)
-                                                )
-                                            .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(referralSource => referralSource.ReferralSourceAppointmentStatusSettings)
+                    .Prefetch<InvoiceAppointmentEntity>(invoice => invoice.InvoiceAppointments)
+                        .SubPath(invoiceAppointmentPath => invoiceAppointmentPath
+                            .Prefetch<InvoiceLineEntity>(invoiceAppointment => invoiceAppointment.InvoiceLines)
+                            .Prefetch<AppointmentEntity>(invoiceAppointment => invoiceAppointment.Appointment)
+                                .SubPath(appointmentPath => appointmentPath
+                                    .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
+                                        .SubPath(appointmentStatusPath => appointmentStatusPath
+                                            .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(appointmentStatus => appointmentStatus.ReferralSourceAppointmentStatusSettings)
                                                 .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
-                                                    .Prefetch<AppointmentStatusEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.AppointmentStatus)
+                                                    .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
+                                                    .Prefetch<ReferralSourceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ReferralSource)
                                                 )
                                         )
-                                    .Prefetch<CompanyEntity>(assessment => assessment.Company)
-                                        .SubPath(companyPath => companyPath
-                                            .Prefetch<AddressEntity>(company => company.Address)
-                                                .SubPath(addressPath => addressPath
-                                                    .Prefetch<CityEntity>(address => address.City)
+                                    .Prefetch<UserEntity>(appointment => appointment.Psychologist)
+                                        .SubPath(psychologistPath => psychologistPath
+                                            .Prefetch<UserTravelFeeEntity>(psychologist => psychologist.UserTravelFees)
+                                                .SubPath(userTravelFeePath => userTravelFeePath
+                                                    .Prefetch<CityEntity>(userTravelFee => userTravelFee.City)
                                                 )
                                         )
-                                    .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
-                                        .SubPath(assessmentClaimPath => assessmentClaimPath
-                                            .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
-                                                .SubPath(claimPath => claimPath
-                                                    .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                    .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
+                                        .SubPath(psychometristPath => psychometristPath
+                                            .Prefetch<UserTravelFeeEntity>(psychometrist => psychometrist.UserTravelFees)
+                                                .SubPath(userTravelFeePath => userTravelFeePath
+                                                    .Prefetch<CityEntity>(userTravelFee => userTravelFee.City)
+                                                )
+                                        )
+                                    .Prefetch<AddressEntity>(appointment => appointment.Location)
+                                        .SubPath(locationPath => locationPath
+                                            .Prefetch<CityEntity>(location => location.City)
+                                        )
+                                    .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                                        .SubPath(assessmentPath => assessmentPath
+                                            .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
+                                            .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
+                                                .SubPath(assessmentReportPath => assessmentReportPath
+                                                    .Prefetch<ReportTypeEntity>(assessmentReport => assessmentReport.ReportType)
+                                                    .Prefetch<AssessmentReportIssueInDisputeEntity>(assessmentReport => assessmentReport.AssessmentReportIssuesInDispute)
+                                                        .SubPath(assessmentReportIssueInDisputePath => assessmentReportIssueInDisputePath
+                                                            .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
+                                                        )
+                                                )
+                                            .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                                                .SubPath(referralSourcePath => referralSourcePath
+                                                    .Prefetch<AddressEntity>(referralSource => referralSource.Address)
+                                                        .SubPath(addressPath => addressPath
+                                                            .Prefetch<CityEntity>(address => address.City)
+                                                        )
+                                                )
+                                            .Prefetch<CompanyEntity>(assessment => assessment.Company)
+                                                .SubPath(companyPath => companyPath
+                                                    .Prefetch<AddressEntity>(company => company.Address)
+                                                        .SubPath(addressPath => addressPath
+                                                            .Prefetch<CityEntity>(address => address.City)
+                                                        )
+                                                )
+                                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                                .SubPath(assessmentClaimPath => assessmentClaimPath
+                                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                                        .SubPath(claimPath => claimPath
+                                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                                        )
                                                 )
                                         )
                                 )
@@ -192,7 +204,15 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 {
                     if (criteria.AppointmentId.HasValue)
                     {
-                        invoices = invoices.Where(invoice => invoice.AppointmentId == criteria.AppointmentId.Value);
+                        invoices = invoices
+                            .Where(invoice => invoice.InvoiceAppointments
+                                .Any(invoiceAppointment => invoiceAppointment.AppointmentId == criteria.AppointmentId.Value)
+                            );
+                    }
+
+                    if (criteria.CompanyId.HasValue)
+                    {
+                        invoices = invoices.Where(invoice => invoice.PayableTo.CompanyId == criteria.CompanyId);
                     }
 
                     if (!string.IsNullOrWhiteSpace(criteria.Identifier))
@@ -205,9 +225,28 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         invoices = invoices.Where(invoice => invoice.InvoiceDate >= criteria.InvoiceDate.Value.Date && invoice.InvoiceDate < criteria.InvoiceDate.Value.Date.AddDays(1));
                     }
 
+                    if (criteria.InvoiceMonth.HasValue)
+                    {
+                        var monthBegin = new DateTime(criteria.InvoiceMonth.Value.Year, criteria.InvoiceMonth.Value.Month, 1);
+                        
+                        var monthEnd = monthBegin.AddMonths(1);
+
+                        invoices = invoices.Where(invoice => invoice.InvoiceDate >= monthBegin && invoice.InvoiceDate < monthEnd);
+                    }
+
                     if (criteria.InvoiceStatusId.HasValue)
                     {
                         invoices = invoices.Where(invoice => invoice.InvoiceStatusId == criteria.InvoiceStatusId);
+                    }
+
+                    if (criteria.InvoiceTypeId.HasValue)
+                    {
+                        invoices = invoices.Where(invoice => invoice.InvoiceTypeId == criteria.InvoiceTypeId);
+                    }
+
+                    if (criteria.PayableToId.HasValue)
+                    {
+                        invoices = invoices.Where(invoice => invoice.PayableToId == criteria.PayableToId);
                     }
                 }
 
@@ -255,87 +294,184 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 {
                     var prefetch = new PrefetchPath2(EntityType.InvoiceEntity);
 
-                    prefetch.Add(InvoiceEntity.PrefetchPathAppointment);
+                    var invoiceAppointmentPath = prefetch.Add(InvoiceEntity.PrefetchPathInvoiceAppointments);
 
-                    prefetch.Add(InvoiceEntity.PrefetchPathInvoiceLines);
+                    invoiceAppointmentPath
+                        .SubPath.Add(InvoiceAppointmentEntity.PrefetchPathAppointment);
+
+                    invoiceAppointmentPath
+                        .SubPath.Add(InvoiceAppointmentEntity.PrefetchPathInvoiceLines);
 
                     adapter.FetchEntity(invoiceEntity, prefetch);
                 }
 
                 //determine whether we're changing to a submitted status
-                var isSubmitting = invoice.InvoiceStatus.InvoiceStatusId == 2 && invoiceEntity.InvoiceStatusId != 2;
+                var isSubmitting = 
+                    invoiceEntity.InvoiceStatusId != InvoiceStatus.Submitted &&
+                    invoice.InvoiceStatus.InvoiceStatusId == InvoiceStatus.Submitted;
                 
                 invoiceEntity.Identifier = invoice.Identifier;
                 invoiceEntity.InvoiceDate = invoice.InvoiceDate;
-                invoiceEntity.AppointmentId = invoice.Appointment.AppointmentId;
                 invoiceEntity.InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId;
+                invoiceEntity.InvoiceTypeId = invoice.InvoiceType.InvoiceTypeId;
+                invoiceEntity.PayableToId = invoice.PayableTo.UserId;
                 invoiceEntity.UpdateDate = _date.UtcNow;
                 invoiceEntity.TaxRate = invoice.TaxRate;
                 invoiceEntity.Total = invoice.Total;
-                
-                var linesToAdd = invoice.Lines
-                    .Where(line =>
-                        !invoiceEntity.InvoiceLines.Any(invoiceLine =>
-                            invoiceLine.InvoiceLineId == line.InvoiceLineId
+
+                #region appointments
+
+                var appointmentsToAdd = invoice.Appointments
+                    .Where(ia => 
+                        !invoiceEntity.InvoiceAppointments.Any(invoiceAppointment => 
+                            invoiceAppointment.AppointmentId == ia.Appointment.AppointmentId
                         )
                     )
                     .ToList();
 
                 if (!isNew)
                 {
-                    var linesToRemove = invoiceEntity.InvoiceLines
-                        .Where(invoiceLine =>
-                            !invoice.Lines.Any(line => line.InvoiceLineId == invoiceLine.InvoiceLineId)
-                        );
+                    var appointmentsToRemove = invoiceEntity.InvoiceAppointments
+                        .Where(invoiceAppointment =>
+                            !invoice.Appointments.Any(ia =>
+                                ia.Appointment.AppointmentId == invoiceAppointment.AppointmentId
+                            )
+                        )
+                        .ToList();
 
-                    foreach (var line in linesToRemove)
+                    foreach (var appointment in appointmentsToRemove)
                     {
-                        uow.AddForDelete(line);
+                        uow.AddCollectionForDelete(appointment.InvoiceLines);
+
+                        uow.AddForDelete(appointment);
                     }
 
-                    var linesToUpdate = invoice.Lines
-                        .Where(line =>
-                            invoiceEntity.InvoiceLines.Any(invoiceLine =>
-                                invoiceLine.InvoiceLineId == line.InvoiceLineId &&
+                    var appointmentsToUpdate = invoice.Appointments
+                        .Where(ia => invoiceEntity.InvoiceAppointments.Any(invoiceAppointment =>
+                                invoiceAppointment.AppointmentId == ia.Appointment.AppointmentId &&
                                 (
-                                    invoiceLine.Amount != line.Amount ||
-                                    invoiceLine.Description != line.Description
+                                    //new lines
+                                    ia.Lines.Any(line => !invoiceAppointment.InvoiceLines.Any(invoiceLine => invoiceLine.InvoiceLineId == line.InvoiceLineId)) ||
+                                    invoiceAppointment.InvoiceLines.Any(invoiceLine =>
+                                        //deleted lines
+                                        !ia.Lines.Any(line => line.InvoiceLineId == invoiceLine.InvoiceLineId) ||
+                                        //updated lines
+                                        ia.Lines.Any(line => line.InvoiceLineId == invoiceLine.InvoiceLineId &&
+                                            (
+                                            line.Description != invoiceLine.Description ||
+                                            line.Amount != invoiceLine.Amount
+                                            )
+                                        )
+                                    )
                                 )
                             )
-                        );
+                        )
+                        .ToList();
 
-                    foreach (var line in linesToUpdate)
+                    foreach (var ia in appointmentsToUpdate)
                     {
-                        var lineEntity = invoiceEntity.InvoiceLines.SingleOrDefault(invoiceLine => invoiceLine.InvoiceLineId == line.InvoiceLineId);
-
-                        if (null != lineEntity)
+                        var invoiceAppointmentEntity = invoiceEntity.InvoiceAppointments.SingleOrDefault(invoiceAppointment => invoiceAppointment.InvoiceAppointmentId == ia.InvoiceAppointmentId);
+                        if (null != invoiceAppointmentEntity)
                         {
-                            lineEntity.Amount = line.Amount;
-                            lineEntity.Description = line.Description;
+                            #region invoice lines
+
+                            var linesToAdd = ia.Lines
+                                .Where(line =>
+                                    !invoiceAppointmentEntity.InvoiceLines.Any(invoiceLine =>
+                                        invoiceLine.InvoiceLineId == line.InvoiceLineId
+                                    )
+                                )
+                                .ToList();
+
+                            if (!isNew)
+                            {
+                                var linesToRemove = invoiceAppointmentEntity.InvoiceLines
+                                    .Where(invoiceLine =>
+                                        !ia.Lines.Any(line => line.InvoiceLineId == invoiceLine.InvoiceLineId)
+                                    );
+
+                                foreach (var line in linesToRemove)
+                                {
+                                    uow.AddForDelete(line);
+                                }
+
+                                var linesToUpdate = ia.Lines
+                                    .Where(line =>
+                                        invoiceAppointmentEntity.InvoiceLines.Any(invoiceLine =>
+                                            invoiceLine.InvoiceLineId == line.InvoiceLineId &&
+                                            (
+                                                invoiceLine.Amount != line.Amount ||
+                                                invoiceLine.Description != line.Description
+                                            )
+                                        )
+                                    );
+
+                                foreach (var line in linesToUpdate)
+                                {
+                                    var lineEntity = invoiceAppointmentEntity.InvoiceLines.SingleOrDefault(invoiceLine => invoiceLine.InvoiceLineId == line.InvoiceLineId);
+                                    if (null != lineEntity)
+                                    {
+                                        lineEntity.Amount = line.Amount;
+                                        lineEntity.Description = line.Description;
+                                    }
+                                }
+                            }
+
+                            invoiceAppointmentEntity.InvoiceLines.AddRange(
+                                linesToAdd.Select(line => new InvoiceLineEntity
+                                {
+                                    Amount = line.Amount,
+                                    Description = line.Description,
+                                    IsCustom = line.IsCustom,
+                                })
+                            );
+
+                            #endregion
                         }
                     }
                 }
 
-                invoiceEntity.InvoiceLines.AddRange(
-                    linesToAdd.Select(line => new InvoiceLineEntity
+                //new invoice appointments
+                foreach (var ia in appointmentsToAdd)
+                {
+                    var invoiceAppointment = new InvoiceAppointmentEntity
                     {
-                        Amount = line.Amount,
-                        Description = line.Description,
-                        IsCustom = line.IsCustom,
-                    })
-                );
+                        AppointmentId = ia.Appointment.AppointmentId,
+                    };
+
+                    invoiceAppointment.InvoiceLines.AddRange(
+                        ia.Lines.Select(line => new InvoiceLineEntity
+                        {
+                            Amount = line.Amount,
+                            Description = line.Description,
+                            IsCustom = line.IsCustom,
+                        })
+                    );
+
+                    invoiceEntity.InvoiceAppointments.Add(invoiceAppointment);
+                }
+                
+                #endregion
+
+                if (isSubmitting)
+                {
+                    //generate and store pdf
+                    var html = _invoiceHtmlGenerator.GetInvoiceHtml(invoice);
+
+                    var pdf = _htmlToPdfService.GetPdf(html);
+
+                    invoiceEntity.InvoiceDocuments.Add(
+                        new InvoiceDocumentEntity
+                        {
+                            FileName = string.Format("{0}_{1:yyyyMMddhhmmss}.pdf", invoice.Identifier, _date.UtcNow),
+                            Document = pdf,
+                        }
+                    );
+                }
 
                 uow.AddForSave(invoiceEntity);
 
                 uow.Commit(adapter);
-
-                //generate and store pdf asynchronously
-                if (isSubmitting)
-                {
-                    invoice.InvoiceId = invoiceEntity.InvoiceId;
-
-                    SaveInvoiceDocument(invoice);
-                }
 
                 return invoiceEntity.InvoiceId;
             }
@@ -352,6 +488,18 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                 return meta.Invoice
                     .Where(invoice => invoice.InvoiceDate >= startDate && invoice.InvoiceDate <= endDate)
+                    .Count();
+            }
+        }
+
+        public int GetInvoiceCount(int userId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return meta.Invoice
+                    .Where(invoice => invoice.PayableToId == userId)
                     .Count();
             }
         }
@@ -380,26 +528,33 @@ namespace PsychologicalServices.Infrastructure.Invoices
             }
         }
 
-        public void SaveInvoiceDocument(Invoice invoice)
+        public InvoiceType GetInvoiceType(int id)
         {
-            var task = Task.Run(() =>
-                {
-                    var html = _invoiceHtmlGenerator.GetInvoiceHtml(invoice);
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
 
-                    var pdf = _htmlToPdfService.GetPdf(html);
+                return meta.InvoiceType
+                    .Where(invoiceType => invoiceType.InvoiceTypeId == id)
+                    .SingleOrDefault()
+                    .ToInvoiceType();
+            }
+        }
 
-                    using (var adapter = AdapterFactory.CreateAdapter())
-                    {
-                        var entity = new InvoiceDocumentEntity
-                        {
-                            InvoiceId = invoice.InvoiceId,
-                            FileName = string.Format("{0}_{1:yyyyMMddhhmmss}.pdf", invoice.Identifier, _date.UtcNow),
-                            Document = pdf,
-                        };
+        public IEnumerable<InvoiceType> GetInvoiceTypes(bool? isActive = true)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
 
-                        adapter.SaveEntity(entity);
-                    }
-                });
+                return Execute<InvoiceTypeEntity>(
+                    (ILLBLGenProQuery)
+                    meta.InvoiceType
+                    .Where(invoiceType => isActive == null || invoiceType.IsActive == isActive)
+                )
+                .Select(invoiceType => invoiceType.ToInvoiceType())
+                .ToList();
+            }
         }
     }
 }

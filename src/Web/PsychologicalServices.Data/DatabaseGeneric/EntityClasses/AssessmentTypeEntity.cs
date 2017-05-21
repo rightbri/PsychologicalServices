@@ -647,6 +647,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("InvoiceAmount", fieldHashtable);
 		}
 		#endregion
 
@@ -794,6 +797,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AssessmentTypeFieldIndex.IsActive, true); }
 			set	{ SetValue((int)AssessmentTypeFieldIndex.IsActive, value); }
+		}
+
+		/// <summary> The InvoiceAmount property of the Entity AssessmentType<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AssessmentTypes"."InvoiceAmount"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 InvoiceAmount
+		{
+			get { return (System.Int32)GetValue((int)AssessmentTypeFieldIndex.InvoiceAmount, true); }
+			set	{ SetValue((int)AssessmentTypeFieldIndex.InvoiceAmount, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.

@@ -138,6 +138,7 @@
     <Compile Include="Companies\CompanyService.cs" />
     <Compile Include="Companies\ICompanyRepository.cs" />
     <Compile Include="Companies\ICompanyService.cs" />
+    <Compile Include="Invoices\InvoiceAppointment.cs" />
     <Compile Include="Invoices\IInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\IInvoiceRepository.cs" />
@@ -152,12 +153,19 @@
     <Compile Include="Invoices\InvoiceService.cs" />
     <Compile Include="Invoices\InvoiceStatus.cs" />
     <Compile Include="Invoices\InvoiceStatusChange.cs" />
-    <Compile Include="Invoices\InvoiceTemplate.cs">
+    <Compile Include="Invoices\PsychologistInvoiceTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InvoiceTemplate.tt</DependentUpon>
+      <DependentUpon>PsychologistInvoiceTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Invoices\InvoiceType.cs" />
     <Compile Include="Invoices\InvoiceValidator.cs" />
+    <Compile Include="Invoices\PsychometristInvoiceCreationParameters.cs" />
+    <Compile Include="Invoices\PsychometristInvoiceTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PsychometristInvoiceTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Notes\INoteValidator.cs" />
     <Compile Include="Notes\Note.cs" />
     <Compile Include="Notes\NoteValidator.cs" />
@@ -220,9 +228,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Invoices\InvoiceTemplate.tt">
+    <Content Include="Invoices\PsychologistInvoiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>InvoiceTemplate.cs</LastGenOutput>
+      <LastGenOutput>PsychologistInvoiceTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Invoices\PsychometristInvoiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PsychometristInvoiceTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

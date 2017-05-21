@@ -37,12 +37,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private EntityCollection<InvoiceAppointmentEntity> _invoiceAppointments;
 		private EntityCollection<InvoiceDocumentEntity> _invoiceDocuments;
-		private EntityCollection<InvoiceLineEntity> _invoiceLines;
 		private EntityCollection<InvoiceStatusChangeEntity> _invoiceStatusChanges;
 
-		private AppointmentEntity _appointment;
+
 		private InvoiceStatusEntity _invoiceStatus;
+		private InvoiceTypeEntity _invoiceType;
+		private UserEntity _payableTo;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -56,16 +58,19 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Appointment</summary>
-			public static readonly string Appointment = "Appointment";
 			/// <summary>Member name InvoiceStatus</summary>
 			public static readonly string InvoiceStatus = "InvoiceStatus";
+			/// <summary>Member name InvoiceType</summary>
+			public static readonly string InvoiceType = "InvoiceType";
+			/// <summary>Member name PayableTo</summary>
+			public static readonly string PayableTo = "PayableTo";
+			/// <summary>Member name InvoiceAppointments</summary>
+			public static readonly string InvoiceAppointments = "InvoiceAppointments";
 			/// <summary>Member name InvoiceDocuments</summary>
 			public static readonly string InvoiceDocuments = "InvoiceDocuments";
-			/// <summary>Member name InvoiceLines</summary>
-			public static readonly string InvoiceLines = "InvoiceLines";
 			/// <summary>Member name InvoiceStatusChanges</summary>
 			public static readonly string InvoiceStatusChanges = "InvoiceStatusChanges";
+
 
 
 		}
@@ -126,19 +131,25 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_invoiceAppointments = (EntityCollection<InvoiceAppointmentEntity>)info.GetValue("_invoiceAppointments", typeof(EntityCollection<InvoiceAppointmentEntity>));
 				_invoiceDocuments = (EntityCollection<InvoiceDocumentEntity>)info.GetValue("_invoiceDocuments", typeof(EntityCollection<InvoiceDocumentEntity>));
-				_invoiceLines = (EntityCollection<InvoiceLineEntity>)info.GetValue("_invoiceLines", typeof(EntityCollection<InvoiceLineEntity>));
 				_invoiceStatusChanges = (EntityCollection<InvoiceStatusChangeEntity>)info.GetValue("_invoiceStatusChanges", typeof(EntityCollection<InvoiceStatusChangeEntity>));
 
-				_appointment = (AppointmentEntity)info.GetValue("_appointment", typeof(AppointmentEntity));
-				if(_appointment!=null)
-				{
-					_appointment.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
+
 				_invoiceStatus = (InvoiceStatusEntity)info.GetValue("_invoiceStatus", typeof(InvoiceStatusEntity));
 				if(_invoiceStatus!=null)
 				{
 					_invoiceStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_invoiceType = (InvoiceTypeEntity)info.GetValue("_invoiceType", typeof(InvoiceTypeEntity));
+				if(_invoiceType!=null)
+				{
+					_invoiceType.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_payableTo = (UserEntity)info.GetValue("_payableTo", typeof(UserEntity));
+				if(_payableTo!=null)
+				{
+					_payableTo.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -155,11 +166,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch((InvoiceFieldIndex)fieldIndex)
 			{
-				case InvoiceFieldIndex.AppointmentId:
-					DesetupSyncAppointment(true, false);
-					break;
 				case InvoiceFieldIndex.InvoiceStatusId:
 					DesetupSyncInvoiceStatus(true, false);
+					break;
+				case InvoiceFieldIndex.InvoiceTypeId:
+					DesetupSyncInvoiceType(true, false);
+					break;
+				case InvoiceFieldIndex.PayableToId:
+					DesetupSyncPayableTo(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -183,21 +197,25 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Appointment":
-					this.Appointment = (AppointmentEntity)entity;
-					break;
 				case "InvoiceStatus":
 					this.InvoiceStatus = (InvoiceStatusEntity)entity;
+					break;
+				case "InvoiceType":
+					this.InvoiceType = (InvoiceTypeEntity)entity;
+					break;
+				case "PayableTo":
+					this.PayableTo = (UserEntity)entity;
+					break;
+				case "InvoiceAppointments":
+					this.InvoiceAppointments.Add((InvoiceAppointmentEntity)entity);
 					break;
 				case "InvoiceDocuments":
 					this.InvoiceDocuments.Add((InvoiceDocumentEntity)entity);
 					break;
-				case "InvoiceLines":
-					this.InvoiceLines.Add((InvoiceLineEntity)entity);
-					break;
 				case "InvoiceStatusChanges":
 					this.InvoiceStatusChanges.Add((InvoiceStatusChangeEntity)entity);
 					break;
+
 
 
 				default:
@@ -221,21 +239,25 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Appointment":
-					toReturn.Add(InvoiceEntity.Relations.AppointmentEntityUsingAppointmentId);
-					break;
 				case "InvoiceStatus":
 					toReturn.Add(InvoiceEntity.Relations.InvoiceStatusEntityUsingInvoiceStatusId);
+					break;
+				case "InvoiceType":
+					toReturn.Add(InvoiceEntity.Relations.InvoiceTypeEntityUsingInvoiceTypeId);
+					break;
+				case "PayableTo":
+					toReturn.Add(InvoiceEntity.Relations.UserEntityUsingPayableToId);
+					break;
+				case "InvoiceAppointments":
+					toReturn.Add(InvoiceEntity.Relations.InvoiceAppointmentEntityUsingInvoiceId);
 					break;
 				case "InvoiceDocuments":
 					toReturn.Add(InvoiceEntity.Relations.InvoiceDocumentEntityUsingInvoiceId);
 					break;
-				case "InvoiceLines":
-					toReturn.Add(InvoiceEntity.Relations.InvoiceLineEntityUsingInvoiceId);
-					break;
 				case "InvoiceStatusChanges":
 					toReturn.Add(InvoiceEntity.Relations.InvoiceStatusChangeEntityUsingInvoiceId);
 					break;
+
 
 
 				default:
@@ -261,6 +283,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -274,17 +297,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Appointment":
-					SetupSyncAppointment(relatedEntity);
-					break;
 				case "InvoiceStatus":
 					SetupSyncInvoiceStatus(relatedEntity);
 					break;
+				case "InvoiceType":
+					SetupSyncInvoiceType(relatedEntity);
+					break;
+				case "PayableTo":
+					SetupSyncPayableTo(relatedEntity);
+					break;
+				case "InvoiceAppointments":
+					this.InvoiceAppointments.Add((InvoiceAppointmentEntity)relatedEntity);
+					break;
 				case "InvoiceDocuments":
 					this.InvoiceDocuments.Add((InvoiceDocumentEntity)relatedEntity);
-					break;
-				case "InvoiceLines":
-					this.InvoiceLines.Add((InvoiceLineEntity)relatedEntity);
 					break;
 				case "InvoiceStatusChanges":
 					this.InvoiceStatusChanges.Add((InvoiceStatusChangeEntity)relatedEntity);
@@ -304,17 +330,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Appointment":
-					DesetupSyncAppointment(false, true);
-					break;
 				case "InvoiceStatus":
 					DesetupSyncInvoiceStatus(false, true);
 					break;
+				case "InvoiceType":
+					DesetupSyncInvoiceType(false, true);
+					break;
+				case "PayableTo":
+					DesetupSyncPayableTo(false, true);
+					break;
+				case "InvoiceAppointments":
+					base.PerformRelatedEntityRemoval(this.InvoiceAppointments, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "InvoiceDocuments":
 					base.PerformRelatedEntityRemoval(this.InvoiceDocuments, relatedEntity, signalRelatedEntityManyToOne);
-					break;
-				case "InvoiceLines":
-					base.PerformRelatedEntityRemoval(this.InvoiceLines, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "InvoiceStatusChanges":
 					base.PerformRelatedEntityRemoval(this.InvoiceStatusChanges, relatedEntity, signalRelatedEntityManyToOne);
@@ -340,13 +369,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_appointment!=null)
-			{
-				toReturn.Add(_appointment);
-			}
 			if(_invoiceStatus!=null)
 			{
 				toReturn.Add(_invoiceStatus);
+			}
+			if(_invoiceType!=null)
+			{
+				toReturn.Add(_invoiceType);
+			}
+			if(_payableTo!=null)
+			{
+				toReturn.Add(_payableTo);
 			}
 
 			return toReturn;
@@ -357,8 +390,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+			toReturn.Add(this.InvoiceAppointments);
 			toReturn.Add(this.InvoiceDocuments);
-			toReturn.Add(this.InvoiceLines);
 			toReturn.Add(this.InvoiceStatusChanges);
 
 			return toReturn;
@@ -374,12 +407,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_invoiceAppointments", ((_invoiceAppointments!=null) && (_invoiceAppointments.Count>0) && !this.MarkedForDeletion)?_invoiceAppointments:null);
 				info.AddValue("_invoiceDocuments", ((_invoiceDocuments!=null) && (_invoiceDocuments.Count>0) && !this.MarkedForDeletion)?_invoiceDocuments:null);
-				info.AddValue("_invoiceLines", ((_invoiceLines!=null) && (_invoiceLines.Count>0) && !this.MarkedForDeletion)?_invoiceLines:null);
 				info.AddValue("_invoiceStatusChanges", ((_invoiceStatusChanges!=null) && (_invoiceStatusChanges.Count>0) && !this.MarkedForDeletion)?_invoiceStatusChanges:null);
 
-				info.AddValue("_appointment", (!this.MarkedForDeletion?_appointment:null));
+
 				info.AddValue("_invoiceStatus", (!this.MarkedForDeletion?_invoiceStatus:null));
+				info.AddValue("_invoiceType", (!this.MarkedForDeletion?_invoiceType:null));
+				info.AddValue("_payableTo", (!this.MarkedForDeletion?_payableTo:null));
 
 			}
 			
@@ -416,22 +451,22 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'InvoiceAppointment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceAppointments()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceAppointmentFields.InvoiceId, null, ComparisonOperator.Equal, this.InvoiceId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'InvoiceDocument' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoInvoiceDocuments()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceDocumentFields.InvoiceId, null, ComparisonOperator.Equal, this.InvoiceId));
-			return bucket;
-		}
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'InvoiceLine' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoInvoiceLines()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineFields.InvoiceId, null, ComparisonOperator.Equal, this.InvoiceId));
 			return bucket;
 		}
 
@@ -446,15 +481,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Appointment' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAppointment()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentFields.AppointmentId, null, ComparisonOperator.Equal, this.AppointmentId));
-			return bucket;
-		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'InvoiceStatus' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
@@ -463,6 +489,26 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceStatusFields.InvoiceStatusId, null, ComparisonOperator.Equal, this.InvoiceStatusId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'InvoiceType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceType()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceTypeFields.InvoiceTypeId, null, ComparisonOperator.Equal, this.InvoiceTypeId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPayableTo()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.PayableToId));
 			return bucket;
 		}
 
@@ -494,9 +540,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
+			collectionsQueue.Enqueue(this._invoiceAppointments);
 			collectionsQueue.Enqueue(this._invoiceDocuments);
-			collectionsQueue.Enqueue(this._invoiceLines);
 			collectionsQueue.Enqueue(this._invoiceStatusChanges);
+
 
 		}
 		
@@ -505,9 +552,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+			this._invoiceAppointments = (EntityCollection<InvoiceAppointmentEntity>) collectionsQueue.Dequeue();
 			this._invoiceDocuments = (EntityCollection<InvoiceDocumentEntity>) collectionsQueue.Dequeue();
-			this._invoiceLines = (EntityCollection<InvoiceLineEntity>) collectionsQueue.Dequeue();
 			this._invoiceStatusChanges = (EntityCollection<InvoiceStatusChangeEntity>) collectionsQueue.Dequeue();
+
 
 		}
 		
@@ -515,11 +563,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-			if (this._invoiceDocuments != null)
+			if (this._invoiceAppointments != null)
 			{
 				return true;
 			}
-			if (this._invoiceLines != null)
+			if (this._invoiceDocuments != null)
 			{
 				return true;
 			}
@@ -527,6 +575,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -537,9 +586,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceAppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAppointmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceDocumentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceLineEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceStatusChangeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusChangeEntityFactory))) : null);
+
 
 		}
 #endif
@@ -550,11 +600,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Appointment", _appointment);
 			toReturn.Add("InvoiceStatus", _invoiceStatus);
+			toReturn.Add("InvoiceType", _invoiceType);
+			toReturn.Add("PayableTo", _payableTo);
+			toReturn.Add("InvoiceAppointments", _invoiceAppointments);
 			toReturn.Add("InvoiceDocuments", _invoiceDocuments);
-			toReturn.Add("InvoiceLines", _invoiceLines);
 			toReturn.Add("InvoiceStatusChanges", _invoiceStatusChanges);
+
 
 
 			return toReturn;
@@ -563,26 +615,31 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+			if(_invoiceAppointments!=null)
+			{
+				_invoiceAppointments.ActiveContext = base.ActiveContext;
+			}
 			if(_invoiceDocuments!=null)
 			{
 				_invoiceDocuments.ActiveContext = base.ActiveContext;
-			}
-			if(_invoiceLines!=null)
-			{
-				_invoiceLines.ActiveContext = base.ActiveContext;
 			}
 			if(_invoiceStatusChanges!=null)
 			{
 				_invoiceStatusChanges.ActiveContext = base.ActiveContext;
 			}
 
-			if(_appointment!=null)
-			{
-				_appointment.ActiveContext = base.ActiveContext;
-			}
+
 			if(_invoiceStatus!=null)
 			{
 				_invoiceStatus.ActiveContext = base.ActiveContext;
+			}
+			if(_invoiceType!=null)
+			{
+				_invoiceType.ActiveContext = base.ActiveContext;
+			}
+			if(_payableTo!=null)
+			{
+				_payableTo.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -591,12 +648,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+			_invoiceAppointments = null;
 			_invoiceDocuments = null;
-			_invoiceLines = null;
 			_invoiceStatusChanges = null;
 
-			_appointment = null;
+
 			_invoiceStatus = null;
+			_invoiceType = null;
+			_payableTo = null;
 
 			PerformDependencyInjection();
 			
@@ -624,9 +683,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("InvoiceDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("AppointmentId", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
 			_fieldsCustomProperties.Add("InvoiceStatusId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
@@ -637,41 +693,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Total", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("InvoiceTypeId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("PayableToId", fieldHashtable);
 		}
 		#endregion
-
-		/// <summary> Removes the sync logic for member _appointment</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncAppointment(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _appointment, new PropertyChangedEventHandler( OnAppointmentPropertyChanged ), "Appointment", InvoiceEntity.Relations.AppointmentEntityUsingAppointmentId, true, signalRelatedEntity, "Invoices", resetFKFields, new int[] { (int)InvoiceFieldIndex.AppointmentId } );		
-			_appointment = null;
-		}
-
-		/// <summary> setups the sync logic for member _appointment</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncAppointment(IEntity2 relatedEntity)
-		{
-			if(_appointment!=relatedEntity)
-			{
-				DesetupSyncAppointment(true, true);
-				_appointment = (AppointmentEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _appointment, new PropertyChangedEventHandler( OnAppointmentPropertyChanged ), "Appointment", InvoiceEntity.Relations.AppointmentEntityUsingAppointmentId, true, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnAppointmentPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
 
 		/// <summary> Removes the sync logic for member _invoiceStatus</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
@@ -698,6 +727,72 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnInvoiceStatusPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _invoiceType</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncInvoiceType(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _invoiceType, new PropertyChangedEventHandler( OnInvoiceTypePropertyChanged ), "InvoiceType", InvoiceEntity.Relations.InvoiceTypeEntityUsingInvoiceTypeId, true, signalRelatedEntity, "Invoices", resetFKFields, new int[] { (int)InvoiceFieldIndex.InvoiceTypeId } );		
+			_invoiceType = null;
+		}
+
+		/// <summary> setups the sync logic for member _invoiceType</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncInvoiceType(IEntity2 relatedEntity)
+		{
+			if(_invoiceType!=relatedEntity)
+			{
+				DesetupSyncInvoiceType(true, true);
+				_invoiceType = (InvoiceTypeEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _invoiceType, new PropertyChangedEventHandler( OnInvoiceTypePropertyChanged ), "InvoiceType", InvoiceEntity.Relations.InvoiceTypeEntityUsingInvoiceTypeId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnInvoiceTypePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _payableTo</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncPayableTo(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _payableTo, new PropertyChangedEventHandler( OnPayableToPropertyChanged ), "PayableTo", InvoiceEntity.Relations.UserEntityUsingPayableToId, true, signalRelatedEntity, "Invoices", resetFKFields, new int[] { (int)InvoiceFieldIndex.PayableToId } );		
+			_payableTo = null;
+		}
+
+		/// <summary> setups the sync logic for member _payableTo</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncPayableTo(IEntity2 relatedEntity)
+		{
+			if(_payableTo!=relatedEntity)
+			{
+				DesetupSyncPayableTo(true, true);
+				_payableTo = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _payableTo, new PropertyChangedEventHandler( OnPayableToPropertyChanged ), "PayableTo", InvoiceEntity.Relations.UserEntityUsingPayableToId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPayableToPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -739,6 +834,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceAppointment' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceAppointments
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<InvoiceAppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAppointmentEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceAppointments")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.InvoiceAppointmentEntity, 0, null, null, null, null, "InvoiceAppointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceDocument' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -748,17 +854,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2( new EntityCollection<InvoiceDocumentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory))),
 					(IEntityRelation)GetRelationsForField("InvoiceDocuments")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.InvoiceDocumentEntity, 0, null, null, null, null, "InvoiceDocuments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
-			}
-		}
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceLine' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathInvoiceLines
-		{
-			get
-			{
-				return new PrefetchPathElement2( new EntityCollection<InvoiceLineEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineEntityFactory))),
-					(IEntityRelation)GetRelationsForField("InvoiceLines")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.InvoiceLineEntity, 0, null, null, null, null, "InvoiceLines", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceStatusChange' 
@@ -774,17 +869,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Appointment' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAppointment
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Appointment")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "Appointment", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceStatus' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
@@ -795,6 +879,30 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusEntityFactory))),
 					(IEntityRelation)GetRelationsForField("InvoiceStatus")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.InvoiceStatusEntity, 0, null, null, null, null, "InvoiceStatus", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceType' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceType
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceTypeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceType")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.InvoiceTypeEntity, 0, null, null, null, null, "InvoiceType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPayableTo
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
+					(IEntityRelation)GetRelationsForField("PayableTo")[0], (int)PsychologicalServices.Data.EntityType.InvoiceEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "PayableTo", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -856,17 +964,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)InvoiceFieldIndex.InvoiceDate, value); }
 		}
 
-		/// <summary> The AppointmentId property of the Entity Invoice<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Invoices"."AppointmentId"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AppointmentId
-		{
-			get { return (System.Int32)GetValue((int)InvoiceFieldIndex.AppointmentId, true); }
-			set	{ SetValue((int)InvoiceFieldIndex.AppointmentId, value); }
-		}
-
 		/// <summary> The InvoiceStatusId property of the Entity Invoice<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Invoices"."InvoiceStatusId"<br/>
@@ -911,6 +1008,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)InvoiceFieldIndex.Total, value); }
 		}
 
+		/// <summary> The InvoiceTypeId property of the Entity Invoice<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Invoices"."InvoiceTypeId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 InvoiceTypeId
+		{
+			get { return (System.Int32)GetValue((int)InvoiceFieldIndex.InvoiceTypeId, true); }
+			set	{ SetValue((int)InvoiceFieldIndex.InvoiceTypeId, value); }
+		}
+
+		/// <summary> The PayableToId property of the Entity Invoice<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Invoices"."PayableToId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 PayableToId
+		{
+			get { return (System.Int32)GetValue((int)InvoiceFieldIndex.PayableToId, true); }
+			set	{ SetValue((int)InvoiceFieldIndex.PayableToId, value); }
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceAppointmentEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceAppointmentEntity))]
+		public virtual EntityCollection<InvoiceAppointmentEntity> InvoiceAppointments
+		{
+			get
+			{
+				if(_invoiceAppointments==null)
+				{
+					_invoiceAppointments = new EntityCollection<InvoiceAppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceAppointmentEntityFactory)));
+					_invoiceAppointments.SetContainingEntityInfo(this, "Invoice");
+				}
+				return _invoiceAppointments;
+			}
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceDocumentEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(InvoiceDocumentEntity))]
@@ -924,22 +1059,6 @@ namespace PsychologicalServices.Data.EntityClasses
 					_invoiceDocuments.SetContainingEntityInfo(this, "Invoice");
 				}
 				return _invoiceDocuments;
-			}
-		}
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(InvoiceLineEntity))]
-		public virtual EntityCollection<InvoiceLineEntity> InvoiceLines
-		{
-			get
-			{
-				if(_invoiceLines==null)
-				{
-					_invoiceLines = new EntityCollection<InvoiceLineEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineEntityFactory)));
-					_invoiceLines.SetContainingEntityInfo(this, "Invoice");
-				}
-				return _invoiceLines;
 			}
 		}
 
@@ -960,40 +1079,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 
-		/// <summary> Gets / sets related entity of type 'AppointmentEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual AppointmentEntity Appointment
-		{
-			get
-			{
-				return _appointment;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncAppointment(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_appointment != null)
-						{
-							_appointment.UnsetRelatedEntity(this, "Invoices");
-						}
-					}
-					else
-					{
-						if(_appointment!=value)
-						{
-							((IEntity2)value).SetRelatedEntity(this, "Invoices");
-						}
-					}
-				}
-			}
-		}
 
 		/// <summary> Gets / sets related entity of type 'InvoiceStatusEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
@@ -1022,6 +1107,76 @@ namespace PsychologicalServices.Data.EntityClasses
 					else
 					{
 						if(_invoiceStatus!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Invoices");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'InvoiceTypeEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual InvoiceTypeEntity InvoiceType
+		{
+			get
+			{
+				return _invoiceType;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncInvoiceType(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_invoiceType != null)
+						{
+							_invoiceType.UnsetRelatedEntity(this, "Invoices");
+						}
+					}
+					else
+					{
+						if(_invoiceType!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Invoices");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual UserEntity PayableTo
+		{
+			get
+			{
+				return _payableTo;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncPayableTo(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_payableTo != null)
+						{
+							_payableTo.UnsetRelatedEntity(this, "Invoices");
+						}
+					}
+					else
+					{
+						if(_payableTo!=value)
 						{
 							((IEntity2)value).SetRelatedEntity(this, "Invoices");
 						}

@@ -31,7 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AppointmentAttributeEntityUsingAppointmentId);
-			toReturn.Add(this.InvoiceEntityUsingAppointmentId);
+			toReturn.Add(this.InvoiceAppointmentEntityUsingAppointmentId);
 
 			toReturn.Add(this.AddressEntityUsingLocationId);
 			toReturn.Add(this.AppointmentStatusEntityUsingAppointmentStatusId);
@@ -58,17 +58,17 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and InvoiceEntity over the 1:n relation they have, using the relation between the fields:
-		/// Appointment.AppointmentId - Invoice.AppointmentId
+		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and InvoiceAppointmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// Appointment.AppointmentId - InvoiceAppointment.AppointmentId
 		/// </summary>
-		public virtual IEntityRelation InvoiceEntityUsingAppointmentId
+		public virtual IEntityRelation InvoiceAppointmentEntityUsingAppointmentId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Invoices" , true);
-				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, InvoiceFields.AppointmentId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceAppointments" , true);
+				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, InvoiceAppointmentFields.AppointmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceAppointmentEntity", false);
 				return relation;
 			}
 		}

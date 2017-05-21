@@ -44,6 +44,34 @@
 	<div class="row">
 		<div class="col-xs-6">
 			<div class="form-group">
+				<label for="searchType">Type</label>
+				<select id="searchType" class="form-control" value.bind="searchType" matcher.bind="invoiceTypeMatcher">
+					<option></option>
+					<option repeat.for="invoiceType of invoiceTypes" model.bind="invoiceType">
+						${invoiceType.name}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="searchPayableTo">Payable To</label>
+				<select id="searchPayableTo" class="form-control" value.bind="searchPayableTo" matcher.bind="payableToMatcher">
+					<option></option>
+					<option repeat.for="payableTo of payableTos" model.bind="payableTo">
+						${payableTo.firstName} ${payableTo.lastName}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
 				<button type="button" class="btn btn-default" click.delegate="searchInvoices()">
 					Search
 				</button>
@@ -59,6 +87,8 @@
 			<th>ID</th>
 			<th>Date</th>
 			<th>Status</th>
+			<th>Type</th>
+			<th>Payable To</th>
 			<th>Amount</th>
 			<th>Referral Source</th>
 			<th>Claimant</th>
@@ -72,9 +102,11 @@
 				</a>
 			</td>
 			<td>${invoice.identifier}</td>
-			<td>${invoice.invoiceDate | dateFormat:config.shortDateFormat}</td>
+			<td>${invoice.invoiceDate | dateFormat:config.longDateFormat}</td>
 			<td>${invoice.invoiceStatus.name}</td>
-			<td>${invoice.modifiedTotal || invoice.total | money}</td>
+			<td>${invoice.invoiceType.name}</td>
+			<td>${invoice.payableTo.firstName} ${invoice.payableTo.lastName}</td>
+			<td>${invoice.total | money}</td>
 			<td>${invoice.appointment.assessment.referralSource.name}</td>
 			<td>
 				<ul class="list-unstyled">

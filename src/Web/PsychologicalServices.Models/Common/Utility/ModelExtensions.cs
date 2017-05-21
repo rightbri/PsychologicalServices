@@ -1,5 +1,4 @@
-﻿using PsychologicalServices.Models.Appointments;
-using System;
+﻿using System;
 
 namespace PsychologicalServices.Models.Common.Utility
 {
@@ -20,10 +19,24 @@ namespace PsychologicalServices.Models.Common.Utility
             return years;
         }
 
-        public static bool IsLateCancellation(this Appointment appointment)
+        public static DateTime StartOfMonth(this DateTime date)
         {
-            return null != appointment &&
-                appointment.AppointmentStatus.AppointmentStatusId == 8;
+            return new DateTime(date.Year, date.Month, 1);
+        }
+
+        public static DateTime EndOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1).AddMonths(1).AddSeconds(-1);
+        }
+
+        public static DateTime FirstDayOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1);
+        }
+
+        public static DateTime LastDayOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1).AddMonths(1).AddDays(-1);
         }
     }
 }

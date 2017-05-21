@@ -23,12 +23,25 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static InvoiceType ToInvoiceType(this InvoiceTypeEntity invoiceType)
+        {
+            return null != invoiceType
+                ? new InvoiceType
+                {
+                    InvoiceTypeId = invoiceType.InvoiceTypeId,
+                    Name = invoiceType.Name,
+                    IsActive = invoiceType.IsActive,
+                }
+                : null;
+        }
+
         public static AppointmentStatusSetting ToAppointmentStatusSetting(this ReferralSourceAppointmentStatusSettingEntity referralSourceAppointmentStatusSetting)
         {
             return null != referralSourceAppointmentStatusSetting
                 ? new AppointmentStatusSetting
                 {
-                    AppointmentStatus = referralSourceAppointmentStatusSetting.AppointmentStatus.ToAppointmentStatus(),
+                    ReferralSource = referralSourceAppointmentStatusSetting.ReferralSource.ToReferralSource(),
+                    InvoiceType = referralSourceAppointmentStatusSetting.InvoiceType.ToInvoiceType(),
                     InvoiceRate = referralSourceAppointmentStatusSetting.InvoiceRate,
                 }
                 : null;
@@ -62,22 +75,38 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
         {
             var invoiceEntity = new InvoiceEntity
             {
+                InvoiceId = invoice.InvoiceId,
+                IsNew = invoice.IsNew(),
                 Identifier = invoice.Identifier,
                 InvoiceDate = invoice.InvoiceDate,
                 InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId,
+                InvoiceTypeId = invoice.InvoiceType.InvoiceTypeId,
                 TaxRate = invoice.TaxRate,
                 Total = invoice.Total,
                 UpdateDate = invoice.UpdateDate,
             };
 
-            invoiceEntity.InvoiceLines.AddRange(
-                invoice.Lines.Select(line => new InvoiceLineEntity
+            foreach (var invoiceAppointment in invoice.Appointments)
+            {
+                var invoiceAppointmentEntity = new InvoiceAppointmentEntity
                 {
-                    Amount = line.Amount,
-                    Description = line.Description,
-                    IsCustom = line.IsCustom,
-                })
-            );
+                    InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
+                    AppointmentId = invoiceAppointment.Appointment.AppointmentId,
+                };
+
+                invoiceAppointmentEntity.InvoiceLines.AddRange(
+                    invoiceAppointment.Lines.Select(invoiceLine => new InvoiceLineEntity
+                    {
+                        InvoiceLineId = invoiceLine.InvoiceLineId,
+                        InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
+                        Amount = invoiceLine.Amount,
+                        Description = invoiceLine.Description,
+                        IsCustom = invoiceLine.IsCustom,
+                    })
+                );
+
+                invoiceEntity.InvoiceAppointments.Add(invoiceAppointmentEntity);
+            }
 
             return invoiceEntity;
         }
@@ -91,15 +120,44 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Identifier = invoice.Identifier,
                     InvoiceDate = invoice.InvoiceDate,
                     InvoiceStatus = invoice.InvoiceStatus.ToInvoiceStatus(),
+                    InvoiceType = invoice.InvoiceType.ToInvoiceType(),
+                    PayableTo = invoice.PayableTo.ToUser(),
                     UpdateDate = invoice.UpdateDate,
                     TaxRate = invoice.TaxRate,
                     Total = invoice.Total,
-                    Lines = invoice.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
+                    Appointments = invoice.InvoiceAppointments.Select(invoiceAppointment => invoiceAppointment.ToInvoiceAppointment(invoice.InvoiceTypeId)),
                     StatusChanges = invoice.InvoiceStatusChanges.Select(invoiceStatusChange => invoiceStatusChange.ToInvoiceStatusChange()),
                     Documents = invoice.InvoiceDocuments.Select(invoiceDocument => invoiceDocument.ToInvoiceDocument()),
-                    Appointment = invoice.Appointment.ToAppointment(),
                 }
                 : null;
+        }
+
+        public static InvoiceAppointment ToInvoiceAppointment(this InvoiceAppointmentEntity invoiceAppointment, int invoiceTypeId)
+        {
+            InvoiceAppointment result = null;
+
+            if (null != invoiceAppointment)
+            {
+                result = new InvoiceAppointment
+                {
+                    InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
+                    Appointment = invoiceAppointment.Appointment.ToAppointment(),
+                    Lines = invoiceAppointment.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
+                };
+
+                if (null != invoiceAppointment.Appointment.AppointmentStatus)
+                {
+                    var statusSetting = invoiceAppointment.Appointment.AppointmentStatus.ReferralSourceAppointmentStatusSettings
+                    .SingleOrDefault(appointmentStatusSetting =>
+                        appointmentStatusSetting.InvoiceTypeId == invoiceTypeId &&
+                        appointmentStatusSetting.ReferralSourceId == invoiceAppointment.Appointment.Assessment.ReferralSourceId
+                    );
+
+                    result.InvoiceRate = null != statusSetting ? statusSetting.InvoiceRate : 1.0m;
+                }
+            }
+
+            return result;
         }
 
         public static InvoiceStatusChange ToInvoiceStatusChange(this InvoiceStatusChangeEntity invoiceStatusChange)
@@ -343,7 +401,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
                     Address = referralSource.Address.ToAddress(),
                     ReportTypeInvoiceAmounts = referralSource.ReportTypeInvoiceAmounts.Select(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ToReportTypeInvoiceAmount()),
-                    AppointmentStatusSettings = referralSource.ReferralSourceAppointmentStatusSettings.Select(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ToAppointmentStatusSetting()),
                 }
                 : null;
         }
@@ -395,6 +452,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = assessmentType.Name,
                     Description = assessmentType.Description,
                     IsActive = assessmentType.IsActive,
+                    InvoiceAmount = assessmentType.InvoiceAmount,
                     ReportTypes = assessmentType.AssessmentTypeReportTypes.Select(assessmentTypeReportType => assessmentTypeReportType.ReportType.ToReportType()),
                     AttributeTypes = assessmentType.AssessmentTypeAttributeTypes.Select(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType.ToAttributeType()),
                 }
@@ -470,6 +528,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NotifyReferralSource = appointmentStatus.NotifyReferralSource,
                     CanInvoice = appointmentStatus.CanInvoice,
                     IsActive = appointmentStatus.IsActive,
+                    AppointmentStatusSettings = appointmentStatus.ReferralSourceAppointmentStatusSettings.Select(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ToAppointmentStatusSetting()),
                 }
                 : null;
         }

@@ -13,85 +13,16 @@
                 <validation-summary errors.bind="validationErrors"></validation-summary>
             </div>
         </div>
-	
-        <!-- Bill To -->
-        <div class="row">
-            <div class="col-xs-2">
-                Bill to:
-            </div>
-            <div class="col-xs-10">
-                <p>${invoice.appointment.assessment.referralSource.name}</p>
-            </div>
-        </div>
-
-        <!-- Pay To -->
-        <div class="row">
-            <div class="col-xs-2">
-                Please Remit Payment to:
-            </div>
-            <div class="col-xs-5" with.bind="invoice.appointment.assessment.company">
-                <p>${name}</p>
-                <p>${address.street}</p>
-                <p if.bind="address.suite">${address.suite}</p>
-                <p>${address.city.name}, ${address.city.province}, ${address.postalCode}</p>
-            </div>
-            <div class="col-xs-5">
-                <p>Office Fax: ${config.invoiceDefaults.office.fax}</p>
-                <p>Office No: ${config.invoiceDefaults.office.phone}</p>
-                <p>Email: ${config.invoiceDefaults.office.email}</p>
-            </div>
-        </div>
-
-        <!-- Assessment Info -->
-        <template repeat.for="claim of invoice.appointment.assessment.claims">
-
-            <div class="row">
-                <div class="col-xs-2">
-                    Claimant Name:
-                </div>
-                <div class="col-xs-10">
-                    ${claim.claimant.firstName} ${claim.claimant.lastName}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-2">
-                    Referral Source Reference No:
-                </div>
-                <div class="col-xs-10">
-                    ${invoice.appointment.assessment.referralSourceFileNumber}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-2">
-                    Date of Loss:
-                </div>
-                <div class="col-xs-10">
-                    ${claim.dateOfLoss | dateFormat:config.longDateFormat}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-2">
-                    Claim No:
-                </div>
-                <div class="col-xs-10">
-                    ${claim.claimNumber}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-2">
-                    Assessment Date:
-                </div>
-                <div class="col-xs-10">
-                    ${invoice.appointment.appointmentTime | dateFormat:config.longDateFormat}
-                </div>
-            </div>
-
-        </template>
-
+		
+		<div class="row">
+			<div class="col-xs-2">
+				Type:
+			</div>
+			<div class="col-xs-10">
+				${invoice.invoiceType.name} Invoice
+			</div>
+		</div>
+        
         <div class="row">
             <div class="col-xs-2">
                 Identifier:
@@ -123,7 +54,7 @@
 
         <div class="row">
             <div class="col-xs-2">
-                Type of Report
+                Appointments
             </div>
             <div class="col-xs-10">
                 <table class="table table-condensed">
@@ -135,33 +66,48 @@
 								<button type="button" class="btn btn-info btn-xs" click.delegate="refreshLines()" if.bind="invoice.invoiceStatus.canEdit">
 									<i class="fa fa-refresh"></i>
 								</button>
-                                <button type="button" class="btn btn-info btn-xs" click.delegate="addLine()" if.bind="invoice.invoiceStatus.canEdit">
-                                    <i class="fa fa-plus"></i>
-                                </button>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr repeat.for="line of invoice.lines">
-                            <td>
-                                <input type="text" class="form-control" value.bind="line.description" disabled.bind="!invoice.invoiceStatus.canEdit" />
-                            </td>
-                            <td>
-                                <input type="number" class="form-control" value.bind="line.amount | money:'0'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-xs" click.delegate="removeLine(line)" if.bind="invoice.invoiceStatus.canEdit">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </td>
-                        </tr>
-						
-						<tr repeat.for="statusMultiplier of statusMultipliers">
-							<td>${statusMultiplier.appointmentStatus.name}</td>
-							<td>${subtotal | money}</td>
-							<td></td>
-						</tr>
-
+						<template repeat.for="invoiceAppointment of invoice.appointments">
+							<tr class="info">
+								<td colspan="2">
+									${invoiceAppointment.appointment.appointmentTime | dateFormat:config.longDateFormat},
+									${invoiceAppointment.appointment.assessment.assessmentType.description} Assessment
+									in ${invoiceAppointment.appointment.location.city.name}
+									<template repeat.for="claim of invoiceAppointment.appointment.assessment.claims">
+									for ${invoiceAppointment.appointment.assessment.referralSource.name}/${claim.claimant.firstName} ${claim.claimant.lastName}
+									</template>
+								</td>
+								<td>
+									<button type="button" class="btn btn-info btn-xs" click.delegate="addLine(invoiceAppointment)" if.bind="invoice.invoiceStatus.canEdit">
+										<i class="fa fa-plus"></i>
+									</button>
+								</td>
+							</tr>
+							<tr repeat.for="line of invoiceAppointment.lines">
+								<td>
+									<input type="text" class="form-control" value.bind="line.description" disabled.bind="!invoice.invoiceStatus.canEdit" />
+								</td>
+								<td>
+									<input type="number" class="form-control" value.bind="line.amount | money:'0'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
+								</td>
+								<td>
+									<button type="button" class="btn btn-danger btn-xs" click.delegate="removeLine(invoiceAppointment, line)" if.bind="invoice.invoiceStatus.canEdit">
+										<i class="fa fa-times"></i>
+									</button>
+								</td>
+							</tr>
+							
+							<tr class="warning" if.bind="invoiceAppointment.showStatusLine">
+								<td>${invoiceAppointment.appointment.appointmentStatus.name}</td>
+								<td>${invoiceAppointment.subtotal | money}</td>
+								<td></td>
+							</tr>
+							
+						</template>
+					
                         <tr>
                             <td>+ H.S.T.</td>
                             <td>${subtotal * invoice.taxRate | money}</td>

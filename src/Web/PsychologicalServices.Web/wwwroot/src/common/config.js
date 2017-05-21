@@ -45,13 +45,10 @@ export class Config {
 			'addressTypeIds': [2]
 		};
 
-		this.invoiceDefaults = {
-			office: {
-				fax: '905-823-1435',
-				phone: '647-987-7792',
-				email: 'mwatson002@sympatico.ca'
-			}
-		};
+		this.invoiceTypes = {
+			'psychologist': 1,
+			'psychometrist': 2
+		}
 		
 		this.addressDefaults = {
 			'province': 'ON',

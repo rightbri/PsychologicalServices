@@ -139,6 +139,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceAppointmentEntity:
+					toReturn = this.InvoiceAppointment;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
 					toReturn = this.InvoiceDocument;
 					break;
@@ -150,6 +153,9 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceStatusChangeEntity:
 					toReturn = this.InvoiceStatusChange;
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceTypeEntity:
+					toReturn = this.InvoiceType;
 					break;
 				case PsychologicalServices.Data.EntityType.IssueInDisputeEntity:
 					toReturn = this.IssueInDispute;
@@ -368,6 +374,12 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<InvoiceEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceAppointmentEntity instances in the database.</summary>
+		public DataSource2<InvoiceAppointmentEntity> InvoiceAppointment
+		{
+			get { return new DataSource2<InvoiceAppointmentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceDocumentEntity instances in the database.</summary>
 		public DataSource2<InvoiceDocumentEntity> InvoiceDocument
 		{
@@ -390,6 +402,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<InvoiceStatusChangeEntity> InvoiceStatusChange
 		{
 			get { return new DataSource2<InvoiceStatusChangeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceTypeEntity instances in the database.</summary>
+		public DataSource2<InvoiceTypeEntity> InvoiceType
+		{
+			get { return new DataSource2<InvoiceTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting IssueInDisputeEntity instances in the database.</summary>

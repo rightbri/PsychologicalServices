@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Referrals;
+using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Appointments
 {
@@ -15,6 +17,8 @@ namespace PsychologicalServices.Models.Appointments
         public bool CanInvoice { get; set; }
 
         public bool IsActive { get; set; }
+
+        public IEnumerable<AppointmentStatusSetting> AppointmentStatusSettings { get; set; }
 
         public bool IsNew()
         {

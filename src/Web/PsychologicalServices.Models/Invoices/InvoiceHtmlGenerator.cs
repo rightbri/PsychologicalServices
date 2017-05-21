@@ -7,16 +7,45 @@ namespace PsychologicalServices.Models.Invoices
     {
         public string GetInvoiceHtml(Invoice invoice)
         {
-            var template = new InvoiceTemplate();
+            string html = null;
 
-            template.Session = new Dictionary<string, object>()
+            switch (invoice.InvoiceType.InvoiceTypeId)
             {
-                { "Model", invoice }
-            };
+                case InvoiceType.Psychologist:
+                    var psychologistTemplate = 
+                        new PsychologistInvoiceTemplate();
 
-            template.Initialize();
+                    psychologistTemplate.Session = new Dictionary<string, object>()
+                    {
+                        { "Model", invoice }
+                    };
 
-            return template.TransformText();
+                    psychologistTemplate.Initialize();
+
+                    html = psychologistTemplate.TransformText();
+
+                    break;
+                case InvoiceType.Psychometrist:
+                    var psychometristTemplate = 
+                        new PsychometristInvoiceTemplate();
+
+                    psychometristTemplate.Session = new Dictionary<string, object>()
+                    {
+                        { "Model", invoice }
+                    };
+
+                    psychometristTemplate.Initialize();
+
+                    html = psychometristTemplate.TransformText();
+
+                    break;
+                default:
+                    throw new NotImplementedException(
+                        string.Format("Invoice HTML Generator not implemented for invoice type {0}", invoice.InvoiceType.InvoiceTypeId)
+                    );
+            }
+
+            return html;
         }
     }
 }

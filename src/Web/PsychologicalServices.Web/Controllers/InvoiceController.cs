@@ -35,12 +35,12 @@ namespace PsychologicalServices.Web.Controllers
 
         [Route("refresh")]
         [HttpPost]
-        [ResponseType(typeof(IEnumerable<InvoiceLine>))]
-        public IHttpActionResult Refresh(Appointment appointment)
+        [ResponseType(typeof(IEnumerable<InvoiceAppointment>))]
+        public IHttpActionResult Refresh(Invoice invoice)
         {
-            var lines = _invoiceService.GetInvoiceLines(appointment);
+            var invoiceAppointments = _invoiceService.GetInvoiceAppointments(invoice);
 
-            return Ok(lines);
+            return Ok(invoiceAppointments);
         }
 
         [Route("search")]
@@ -59,6 +59,16 @@ namespace PsychologicalServices.Web.Controllers
         public IHttpActionResult Save(Invoice invoice)
         {
             var result = _invoiceService.SaveInvoice(invoice);
+
+            return Ok(result);
+        }
+
+        [Route("createpsychometristinvoices")]
+        [HttpPost]
+        [ResponseType(typeof(IEnumerable<Invoice>))]
+        public IHttpActionResult CreatePsychometristInvoices(PsychometristInvoiceCreationParameters parameters)
+        {
+            var result = _invoiceService.CreatePsychometristInvoices(parameters.CompanyId, parameters.InvoiceMonth);
 
             return Ok(result);
         }

@@ -17,8 +17,6 @@ namespace PsychologicalServices.Models.Users
 
         public string Email { get; set; }
 
-        public int CompanyId { get; set; }
-
         public Company Company { get; set; }
 
         public IEnumerable<Role> Roles { get; set; }

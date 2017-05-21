@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
 
@@ -13,9 +14,11 @@ namespace PsychologicalServices.Models.Invoices
 
         public DateTime InvoiceDate { get; set; }
 
-        public Appointment Appointment { get; set; }
-
         public InvoiceStatus InvoiceStatus { get; set; }
+
+        public InvoiceType InvoiceType { get; set; }
+
+        public User PayableTo { get; set; }
 
         public DateTime UpdateDate { get; set; }
 
@@ -23,7 +26,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public decimal Total { get; set; }
 
-        public IEnumerable<InvoiceLine> Lines { get; set; }
+        public IEnumerable<InvoiceAppointment> Appointments { get; set; }
 
         public IEnumerable<InvoiceStatusChange> StatusChanges { get; set; }
 

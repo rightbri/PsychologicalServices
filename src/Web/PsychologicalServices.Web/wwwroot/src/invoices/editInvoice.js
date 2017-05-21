@@ -6,19 +6,16 @@ import {Context} from 'common/context';
 import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
 
-@inject(Router, DataRepository, Config, Context, Scroller, Notifier, 'apiRoot')
+@inject(Router, DataRepository, Config, Context, Scroller, Notifier)
 export class EditInvoice {
-    constructor(router, dataRepository, config, context, scroller, notifier, apiRoot) {
+    constructor(router, dataRepository, config, context, scroller, notifier) {
         this.router = router;
         this.dataRepository = dataRepository;
         this.config = config;
         this.context = context;
         this.scroller = scroller;
         this.notifier = notifier;
-		
-		this.invoiceDocumentRootUrl = apiRoot + 'api/invoicedocument/';
-		//http://stackoverflow.com/a/38765768
-		
+
         this.invoice = null;
 		this.invoiceStatuses = null;
 
@@ -32,15 +29,7 @@ export class EditInvoice {
             return this.dataRepository.getInvoice(params.id)
                 .then(data => {
 					this.invoice = data;
-					
-					this.statusMultipliers = this.invoice.appointment.assessment.referralSource.appointmentStatusSettings.filter(
-						appointmentStatusSetting => {
-							return (
-								appointmentStatusSetting.invoiceRate !== 1.0 &&
-								appointmentStatusSetting.appointmentStatus.appointmentStatusId === this.invoice.appointment.appointmentStatus.appointmentStatusId
-							);
-						});
-					
+
 					this.calculateTotals();
 					
 					return this.getData();
@@ -56,8 +45,6 @@ export class EditInvoice {
 
     save() {
 		
-		this.calculateTotals();
-		
 		this.dataRepository.saveInvoice(this.invoice)
             .then(data => {
 
@@ -72,6 +59,8 @@ export class EditInvoice {
                 if (data.isSaved) {
                     this.invoice = data.item;
 					
+					this.calculateTotals();
+
 					this.notifier.info('Saved');
                 }
 				
@@ -86,36 +75,47 @@ export class EditInvoice {
 	}
 
 	refreshLines() {
-		this.dataRepository.refreshInvoiceLines(this.invoice.appointment)
+		this.dataRepository.refreshInvoiceLines(this.invoice)
 			.then(data => {
 				
-				this.invoice.lines = (data || []).concat(this.invoice.lines.filter(e => e.isCustom));
+				this.invoice.appointments = (data || []);
 				
 				this.calculateTotals();
 			});
 	}
 	
-    removeLine(line) {
+    removeLine(invoiceAppointment, line) {
 		if (confirm('Remove Invoice Line\nAre you sure?')) {
-			this.invoice.lines.splice(this.invoice.lines.indexOf(line), 1);
+			
+			invoiceAppointment.lines.splice(invoiceAppointment.lines.indexOf(line), 1);
+			
 			this.calculateTotals();
 		}
     }
 
-    addLine() {
-        this.invoice.lines.push({ 'description': '', 'amount': 0, 'isCustom': true });
+    addLine(invoiceAppointment) {
+        invoiceAppointment.lines.push({ 'description': '', 'amount': 0, 'isCustom': true });
     }
 
     calculateTotals() {
         
-        this.subtotal =
-            this.invoice.lines
+		this.subtotal = 0;
+		
+		this.invoice.appointments.forEach(invoiceAppointment =>
+		{
+			let appointmentSubtotal = 0;
+			
+			appointmentSubtotal = invoiceAppointment.lines
                 .map(line => line.amount)
                 .reduce((accumulator, value) => accumulator + value, 0);
 
-		if (this.statusMultipliers.length > 0) {
-			this.subtotal = this.subtotal * this.statusMultipliers[0].invoiceRate;
-		}
+			appointmentSubtotal = appointmentSubtotal * invoiceAppointment.invoiceRate;
+			
+			invoiceAppointment.showStatusLine = invoiceAppointment.invoiceRate !== 1.0;
+			invoiceAppointment.subtotal = appointmentSubtotal;
+			
+			this.subtotal += appointmentSubtotal;
+		});
 
         this.invoice.total = this.subtotal * (1 + this.invoice.taxRate);
 

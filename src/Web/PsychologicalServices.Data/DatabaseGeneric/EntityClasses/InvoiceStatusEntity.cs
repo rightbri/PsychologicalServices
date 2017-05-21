@@ -43,6 +43,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -60,6 +61,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Invoices = "Invoices";
 			/// <summary>Member name InvoiceStatusChanges</summary>
 			public static readonly string InvoiceStatusChanges = "InvoiceStatusChanges";
+
 
 
 
@@ -127,6 +129,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -173,6 +176,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					break;
 			}
@@ -201,6 +205,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceStatusChanges":
 					toReturn.Add(InvoiceStatusEntity.Relations.InvoiceStatusChangeEntityUsingInvoiceStatusId);
 					break;
+
 
 
 
@@ -321,6 +326,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -378,6 +384,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -410,6 +417,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._invoiceStatusChanges);
 
 
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -419,6 +427,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._invoices = (EntityCollection<InvoiceEntity>) collectionsQueue.Dequeue();
 			this._invoiceStatusChanges = (EntityCollection<InvoiceStatusChangeEntity>) collectionsQueue.Dequeue();
+
 
 
 		}
@@ -437,6 +446,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 
 
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -448,6 +458,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceStatusChangeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusChangeEntityFactory))) : null);
+
 
 
 		}
@@ -462,6 +473,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			toReturn.Add("Invoices", _invoices);
 			toReturn.Add("InvoiceStatusChanges", _invoiceStatusChanges);
+
 
 
 
@@ -483,6 +495,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -491,6 +504,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_invoices = null;
 			_invoiceStatusChanges = null;
+
 
 
 
@@ -590,6 +604,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("InvoiceStatusChanges")[0], (int)PsychologicalServices.Data.EntityType.InvoiceStatusEntity, (int)PsychologicalServices.Data.EntityType.InvoiceStatusChangeEntity, 0, null, null, null, null, "InvoiceStatusChanges", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
 
 
 
@@ -727,6 +742,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _invoiceStatusChanges;
 			}
 		}
+
 
 
 
