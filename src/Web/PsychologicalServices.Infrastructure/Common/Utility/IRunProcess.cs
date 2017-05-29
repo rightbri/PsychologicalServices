@@ -11,8 +11,6 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
 
         event EventHandler<ProcessDataReceivedEventArgs> ProcessStandardErrorDataReceived;
 
-        ProcessRunInfo Run(ProcessStartInfo startInfo);
-
-        void Kill();
+        ProcessRunInfo Run(ProcessStartInfo startInfo, int timeout = 30000);
     }
 }

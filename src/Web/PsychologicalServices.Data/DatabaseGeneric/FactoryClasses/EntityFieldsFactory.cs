@@ -125,6 +125,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.InvoiceStatusChangeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceStatusChangeEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceStatusPathsEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceStatusPathsEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "InvoiceTypeEntity");
 					break;

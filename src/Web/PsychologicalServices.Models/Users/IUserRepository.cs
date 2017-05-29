@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Schedule;
+using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Users
@@ -18,6 +19,8 @@ namespace PsychologicalServices.Models.Users
         IEnumerable<User> GetPsychometrists(int? companyId = null);
 
         IEnumerable<User> GetPsychologists(int? companyId = null);
+
+        IEnumerable<User> GetPsychometristSchedules(ScheduleSearchCriteria criteria);
 
         int SaveUser(User user);
     }

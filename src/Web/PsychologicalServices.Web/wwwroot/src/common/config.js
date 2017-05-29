@@ -33,7 +33,7 @@ export class Config {
 			'clearBtn': true,
 			'format': 'MM, yyyy',
 			'startView': 'months',
-			'minViewMode': 'months',//1,
+			'minViewMode': 'months',
 			'showOnFocus': true,
 			'toggleActive': true
 		};
@@ -61,7 +61,16 @@ export class Config {
 		};
 		
 		this.assessmentDefaults = {
-			'attributeTypeIds': [2,4,5,6,7,8]
+			'attributeTypeIds': [2,4,5,6,7,8],
+			'summary': 'Lawyer: \r\n\r\nDetails of accident: \r\n\r\nInjuries: \r\n\r\nEducation / Employment information: \r\n\r\nCountry of Birth/First language: \r\n\r\nPre-existing / Pre-accident conditions: \r\n\r\nPrevious Assessment Findings: \r\n\r\n'
+		};
+		
+		this.assessmentSummaryDefaults = {
+			'attributeTypeIds': {
+				'psychiatrist': 6,
+				'reader': 1,
+				'translator': 1
+			}
 		};
 		
 		this.rights = {

@@ -39,6 +39,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		#region Class Member Declarations
 		private EntityCollection<InvoiceEntity> _invoices;
 		private EntityCollection<InvoiceStatusChangeEntity> _invoiceStatusChanges;
+		private EntityCollection<InvoiceStatusPathsEntity> _nextInvoiceStatusPaths;
+		private EntityCollection<InvoiceStatusPathsEntity> _invoiceStatusPaths;
 
 
 
@@ -61,6 +63,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Invoices = "Invoices";
 			/// <summary>Member name InvoiceStatusChanges</summary>
 			public static readonly string InvoiceStatusChanges = "InvoiceStatusChanges";
+			/// <summary>Member name NextInvoiceStatusPaths</summary>
+			public static readonly string NextInvoiceStatusPaths = "NextInvoiceStatusPaths";
+			/// <summary>Member name InvoiceStatusPaths</summary>
+			public static readonly string InvoiceStatusPaths = "InvoiceStatusPaths";
 
 
 
@@ -125,6 +131,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_invoices = (EntityCollection<InvoiceEntity>)info.GetValue("_invoices", typeof(EntityCollection<InvoiceEntity>));
 				_invoiceStatusChanges = (EntityCollection<InvoiceStatusChangeEntity>)info.GetValue("_invoiceStatusChanges", typeof(EntityCollection<InvoiceStatusChangeEntity>));
+				_nextInvoiceStatusPaths = (EntityCollection<InvoiceStatusPathsEntity>)info.GetValue("_nextInvoiceStatusPaths", typeof(EntityCollection<InvoiceStatusPathsEntity>));
+				_invoiceStatusPaths = (EntityCollection<InvoiceStatusPathsEntity>)info.GetValue("_invoiceStatusPaths", typeof(EntityCollection<InvoiceStatusPathsEntity>));
 
 
 
@@ -173,6 +181,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceStatusChanges":
 					this.InvoiceStatusChanges.Add((InvoiceStatusChangeEntity)entity);
 					break;
+				case "NextInvoiceStatusPaths":
+					this.NextInvoiceStatusPaths.Add((InvoiceStatusPathsEntity)entity);
+					break;
+				case "InvoiceStatusPaths":
+					this.InvoiceStatusPaths.Add((InvoiceStatusPathsEntity)entity);
+					break;
 
 
 
@@ -204,6 +218,12 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "InvoiceStatusChanges":
 					toReturn.Add(InvoiceStatusEntity.Relations.InvoiceStatusChangeEntityUsingInvoiceStatusId);
+					break;
+				case "NextInvoiceStatusPaths":
+					toReturn.Add(InvoiceStatusEntity.Relations.InvoiceStatusPathsEntityUsingNextInvoiceStatusId);
+					break;
+				case "InvoiceStatusPaths":
+					toReturn.Add(InvoiceStatusEntity.Relations.InvoiceStatusPathsEntityUsingInvoiceStatusId);
 					break;
 
 
@@ -251,6 +271,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceStatusChanges":
 					this.InvoiceStatusChanges.Add((InvoiceStatusChangeEntity)relatedEntity);
 					break;
+				case "NextInvoiceStatusPaths":
+					this.NextInvoiceStatusPaths.Add((InvoiceStatusPathsEntity)relatedEntity);
+					break;
+				case "InvoiceStatusPaths":
+					this.InvoiceStatusPaths.Add((InvoiceStatusPathsEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -272,6 +298,12 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "InvoiceStatusChanges":
 					base.PerformRelatedEntityRemoval(this.InvoiceStatusChanges, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "NextInvoiceStatusPaths":
+					base.PerformRelatedEntityRemoval(this.NextInvoiceStatusPaths, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "InvoiceStatusPaths":
+					base.PerformRelatedEntityRemoval(this.InvoiceStatusPaths, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -306,6 +338,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Invoices);
 			toReturn.Add(this.InvoiceStatusChanges);
+			toReturn.Add(this.NextInvoiceStatusPaths);
+			toReturn.Add(this.InvoiceStatusPaths);
 
 			return toReturn;
 		}
@@ -322,6 +356,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				info.AddValue("_invoices", ((_invoices!=null) && (_invoices.Count>0) && !this.MarkedForDeletion)?_invoices:null);
 				info.AddValue("_invoiceStatusChanges", ((_invoiceStatusChanges!=null) && (_invoiceStatusChanges.Count>0) && !this.MarkedForDeletion)?_invoiceStatusChanges:null);
+				info.AddValue("_nextInvoiceStatusPaths", ((_nextInvoiceStatusPaths!=null) && (_nextInvoiceStatusPaths.Count>0) && !this.MarkedForDeletion)?_nextInvoiceStatusPaths:null);
+				info.AddValue("_invoiceStatusPaths", ((_invoiceStatusPaths!=null) && (_invoiceStatusPaths.Count>0) && !this.MarkedForDeletion)?_invoiceStatusPaths:null);
 
 
 
@@ -381,6 +417,26 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'InvoiceStatusPaths' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoNextInvoiceStatusPaths()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceStatusPathsFields.NextInvoiceStatusId, null, ComparisonOperator.Equal, this.InvoiceStatusId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'InvoiceStatusPaths' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceStatusPaths()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceStatusPathsFields.InvoiceStatusId, null, ComparisonOperator.Equal, this.InvoiceStatusId));
+			return bucket;
+		}
+
 
 
 
@@ -415,6 +471,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._invoices);
 			collectionsQueue.Enqueue(this._invoiceStatusChanges);
+			collectionsQueue.Enqueue(this._nextInvoiceStatusPaths);
+			collectionsQueue.Enqueue(this._invoiceStatusPaths);
 
 
 
@@ -427,6 +485,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._invoices = (EntityCollection<InvoiceEntity>) collectionsQueue.Dequeue();
 			this._invoiceStatusChanges = (EntityCollection<InvoiceStatusChangeEntity>) collectionsQueue.Dequeue();
+			this._nextInvoiceStatusPaths = (EntityCollection<InvoiceStatusPathsEntity>) collectionsQueue.Dequeue();
+			this._invoiceStatusPaths = (EntityCollection<InvoiceStatusPathsEntity>) collectionsQueue.Dequeue();
 
 
 
@@ -444,6 +504,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._nextInvoiceStatusPaths != null)
+			{
+				return true;
+			}
+			if (this._invoiceStatusPaths != null)
+			{
+				return true;
+			}
 
 
 
@@ -458,6 +526,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceStatusChangeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusChangeEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceStatusPathsEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusPathsEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceStatusPathsEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusPathsEntityFactory))) : null);
 
 
 
@@ -473,6 +543,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			toReturn.Add("Invoices", _invoices);
 			toReturn.Add("InvoiceStatusChanges", _invoiceStatusChanges);
+			toReturn.Add("NextInvoiceStatusPaths", _nextInvoiceStatusPaths);
+			toReturn.Add("InvoiceStatusPaths", _invoiceStatusPaths);
 
 
 
@@ -491,6 +563,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_invoiceStatusChanges.ActiveContext = base.ActiveContext;
 			}
+			if(_nextInvoiceStatusPaths!=null)
+			{
+				_nextInvoiceStatusPaths.ActiveContext = base.ActiveContext;
+			}
+			if(_invoiceStatusPaths!=null)
+			{
+				_invoiceStatusPaths.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -504,6 +584,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_invoices = null;
 			_invoiceStatusChanges = null;
+			_nextInvoiceStatusPaths = null;
+			_invoiceStatusPaths = null;
 
 
 
@@ -538,13 +620,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("CanEdit", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("CanOpen", fieldHashtable);
+			_fieldsCustomProperties.Add("SaveDocument", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("CanSubmit", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("CanMarkPaid", fieldHashtable);
+			_fieldsCustomProperties.Add("ActionName", fieldHashtable);
 		}
 		#endregion
 
@@ -602,6 +681,28 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2( new EntityCollection<InvoiceStatusChangeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusChangeEntityFactory))),
 					(IEntityRelation)GetRelationsForField("InvoiceStatusChanges")[0], (int)PsychologicalServices.Data.EntityType.InvoiceStatusEntity, (int)PsychologicalServices.Data.EntityType.InvoiceStatusChangeEntity, 0, null, null, null, null, "InvoiceStatusChanges", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceStatusPaths' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathNextInvoiceStatusPaths
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<InvoiceStatusPathsEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusPathsEntityFactory))),
+					(IEntityRelation)GetRelationsForField("NextInvoiceStatusPaths")[0], (int)PsychologicalServices.Data.EntityType.InvoiceStatusEntity, (int)PsychologicalServices.Data.EntityType.InvoiceStatusPathsEntity, 0, null, null, null, null, "NextInvoiceStatusPaths", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceStatusPaths' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceStatusPaths
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<InvoiceStatusPathsEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusPathsEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceStatusPaths")[0], (int)PsychologicalServices.Data.EntityType.InvoiceStatusEntity, (int)PsychologicalServices.Data.EntityType.InvoiceStatusPathsEntity, 0, null, null, null, null, "InvoiceStatusPaths", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -678,37 +779,26 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)InvoiceStatusFieldIndex.CanEdit, value); }
 		}
 
-		/// <summary> The CanOpen property of the Entity InvoiceStatus<br/><br/>
+		/// <summary> The SaveDocument property of the Entity InvoiceStatus<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceStatuses"."CanOpen"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceStatuses"."SaveDocument"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean CanOpen
+		public virtual System.Boolean SaveDocument
 		{
-			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.CanOpen, true); }
-			set	{ SetValue((int)InvoiceStatusFieldIndex.CanOpen, value); }
+			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.SaveDocument, true); }
+			set	{ SetValue((int)InvoiceStatusFieldIndex.SaveDocument, value); }
 		}
 
-		/// <summary> The CanSubmit property of the Entity InvoiceStatus<br/><br/>
+		/// <summary> The ActionName property of the Entity InvoiceStatus<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceStatuses"."CanSubmit"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// <remarks>Mapped on  table field: "InvoiceStatuses"."ActionName"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean CanSubmit
+		public virtual System.String ActionName
 		{
-			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.CanSubmit, true); }
-			set	{ SetValue((int)InvoiceStatusFieldIndex.CanSubmit, value); }
-		}
-
-		/// <summary> The CanMarkPaid property of the Entity InvoiceStatus<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceStatuses"."CanMarkPaid"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean CanMarkPaid
-		{
-			get { return (System.Boolean)GetValue((int)InvoiceStatusFieldIndex.CanMarkPaid, true); }
-			set	{ SetValue((int)InvoiceStatusFieldIndex.CanMarkPaid, value); }
+			get { return (System.String)GetValue((int)InvoiceStatusFieldIndex.ActionName, true); }
+			set	{ SetValue((int)InvoiceStatusFieldIndex.ActionName, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceEntity' which are related to this entity via a relation of type '1:n'.
@@ -740,6 +830,38 @@ namespace PsychologicalServices.Data.EntityClasses
 					_invoiceStatusChanges.SetContainingEntityInfo(this, "InvoiceStatus");
 				}
 				return _invoiceStatusChanges;
+			}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceStatusPathsEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceStatusPathsEntity))]
+		public virtual EntityCollection<InvoiceStatusPathsEntity> NextInvoiceStatusPaths
+		{
+			get
+			{
+				if(_nextInvoiceStatusPaths==null)
+				{
+					_nextInvoiceStatusPaths = new EntityCollection<InvoiceStatusPathsEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusPathsEntityFactory)));
+					_nextInvoiceStatusPaths.SetContainingEntityInfo(this, "NextInvoiceStatus");
+				}
+				return _nextInvoiceStatusPaths;
+			}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceStatusPathsEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceStatusPathsEntity))]
+		public virtual EntityCollection<InvoiceStatusPathsEntity> InvoiceStatusPaths
+		{
+			get
+			{
+				if(_invoiceStatusPaths==null)
+				{
+					_invoiceStatusPaths = new EntityCollection<InvoiceStatusPathsEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusPathsEntityFactory)));
+					_invoiceStatusPaths.SetContainingEntityInfo(this, "InvoiceStatus");
+				}
+				return _invoiceStatusPaths;
 			}
 		}
 

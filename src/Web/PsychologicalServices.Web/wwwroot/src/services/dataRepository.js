@@ -97,6 +97,14 @@ export class DataRepository {
 		}
 	}
 	
+	searchSchedule(criteria) {
+		return this.searchBasic(criteria, 'schedule');
+	}
+	
+	sendSchedule(criteria) {
+		return this.postBasic('schedule/send', criteria);
+	}
+	
 	searchAppointments(criteria) {
 		return this.searchBasic(criteria, 'appointment');
 	}

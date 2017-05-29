@@ -30,10 +30,14 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.AppointmentEntityUsingPsychometristId);
+			toReturn.Add(this.AppointmentEntityUsingCreateUserId);
+			toReturn.Add(this.AppointmentEntityUsingUpdateUserId);
 			toReturn.Add(this.AppointmentEntityUsingPsychologistId);
-			toReturn.Add(this.AssessmentEntityUsingNotesWriterId);
+			toReturn.Add(this.AppointmentEntityUsingPsychometristId);
+			toReturn.Add(this.AssessmentEntityUsingCreateUserId);
+			toReturn.Add(this.AssessmentEntityUsingUpdateUserId);
 			toReturn.Add(this.AssessmentEntityUsingDocListWriterId);
+			toReturn.Add(this.AssessmentEntityUsingNotesWriterId);
 			toReturn.Add(this.InvoiceEntityUsingPayableToId);
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
@@ -42,6 +46,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.UserTravelFeeEntityUsingUserId);
 			toReturn.Add(this.UserUnavailabilityEntityUsingUserId);
 
+			toReturn.Add(this.AddressEntityUsingAddressId);
 			toReturn.Add(this.CompanyEntityUsingCompanyId);
 			return toReturn;
 		}
@@ -49,14 +54,29 @@ namespace PsychologicalServices.Data.RelationClasses
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between UserEntity and AppointmentEntity over the 1:n relation they have, using the relation between the fields:
-		/// User.UserId - Appointment.PsychometristId
+		/// User.UserId - Appointment.CreateUserId
 		/// </summary>
-		public virtual IEntityRelation AppointmentEntityUsingPsychometristId
+		public virtual IEntityRelation AppointmentEntityUsingCreateUserId
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
-				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.PsychometristId);
+				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.CreateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and AppointmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - Appointment.UpdateUserId
+		/// </summary>
+		public virtual IEntityRelation AppointmentEntityUsingUpdateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.UpdateUserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", false);
 				return relation;
@@ -78,15 +98,45 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between UserEntity and AssessmentEntity over the 1:n relation they have, using the relation between the fields:
-		/// User.UserId - Assessment.NotesWriterId
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and AppointmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - Appointment.PsychometristId
 		/// </summary>
-		public virtual IEntityRelation AssessmentEntityUsingNotesWriterId
+		public virtual IEntityRelation AppointmentEntityUsingPsychometristId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PsychometristAppointments" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.PsychometristId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and AssessmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - Assessment.CreateUserId
+		/// </summary>
+		public virtual IEntityRelation AssessmentEntityUsingCreateUserId
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
-				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.NotesWriterId);
+				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.CreateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and AssessmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - Assessment.UpdateUserId
+		/// </summary>
+		public virtual IEntityRelation AssessmentEntityUsingUpdateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.UpdateUserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
 				return relation;
@@ -102,6 +152,21 @@ namespace PsychologicalServices.Data.RelationClasses
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
 				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.DocListWriterId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and AssessmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - Assessment.NotesWriterId
+		/// </summary>
+		public virtual IEntityRelation AssessmentEntityUsingNotesWriterId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.NotesWriterId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
 				return relation;
@@ -214,6 +279,20 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
+		/// User.AddressId - Address.AddressId
+		/// </summary>
+		public virtual IEntityRelation AddressEntityUsingAddressId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
+				relation.AddEntityFieldPair(AddressFields.AddressId, UserFields.AddressId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				return relation;
+			}
+		}
 		/// <summary>Returns a new IEntityRelation object, between UserEntity and CompanyEntity over the m:1 relation they have, using the relation between the fields:
 		/// User.CompanyId - Company.CompanyId
 		/// </summary>

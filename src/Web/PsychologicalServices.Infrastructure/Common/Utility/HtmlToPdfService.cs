@@ -1,6 +1,7 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Common.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PsychologicalServices.Infrastructure.Common.Utility
@@ -8,60 +9,48 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
     public class HtmlToPdfService : IHtmlToPdfService
     {
         private readonly IConfigurationService _configurationService = null;
+        private readonly IHtmlToPdfExecutablePathService _htmlToPdfExecutablePathService = null;
         private readonly IRunProcess _runProcess = null;
-        private readonly ITempDirectory _tempDirectory = null;
+        private readonly ITempDirectoryFactory _tempDirectoryFactory = null;
         private readonly IFileWriter _fileWriter = null;
         private readonly IFileReader _fileReader = null;
-        private readonly IHtmlToPdfExecutablePathService _executablePathService = null;
         private readonly ILog _log = null;
 
         public HtmlToPdfService(
             IConfigurationService configurationService,
+            IHtmlToPdfExecutablePathService htmlToPdfExecutablePathService,
             IRunProcess runProcess,
-            ITempDirectory tempDirectory,
+            ITempDirectoryFactory tempDirectoryFactory,
             IFileWriter fileWriter,
             IFileReader fileReader,
-            IHtmlToPdfExecutablePathService executablePathService,
             ILog log
         )
         {
             _configurationService = configurationService;
+            _htmlToPdfExecutablePathService = htmlToPdfExecutablePathService;
             _runProcess = runProcess;
-            _tempDirectory = tempDirectory;
+            _tempDirectoryFactory = tempDirectoryFactory;
             _fileWriter = fileWriter;
             _fileReader = fileReader;
-            _executablePathService = executablePathService;
             _log = log;
         }
 
-        public byte[] GetPdf(string html)
+        public byte[] GetPdf(string html, HtmlToPdfParameters parameters = null)
         {
             byte[] output = null;
 
-            var pageSize = _configurationService.AppSettingValue("HtmlToPdf.PageSize");
-            if (string.IsNullOrWhiteSpace(pageSize))
+            using (var tempDirectory = _tempDirectoryFactory.Create())
             {
-                pageSize = "Letter";
-            }
-
-            var proxy = _configurationService.AppSettingValue("HtmlToPdf.Proxy");
-            if (string.IsNullOrWhiteSpace(proxy))
-            {
-                proxy = "None";
-            }
-
-            using (_tempDirectory)
-            {
-                var htmlFilePath = Path.Combine(_tempDirectory.FullPath, string.Format("{0}.html", Path.GetRandomFileName()));
+                var htmlFilePath = Path.Combine(tempDirectory.FullPath, string.Format("{0}.html", Path.GetRandomFileName()));
 
                 _fileWriter.WriteText(html, htmlFilePath);
 
-                var pdfFilePath = Path.Combine(_tempDirectory.FullPath, string.Format("{0}.pdf", Path.GetRandomFileName()));
+                var pdfFilePath = Path.Combine(tempDirectory.FullPath, string.Format("{0}.pdf", Path.GetRandomFileName()));
 
                 var startInfo = new System.Diagnostics.ProcessStartInfo
                 {
-                    Arguments = string.Format("--page-size {0} -p {1} \"{2}\" \"{3}\"", pageSize, proxy, htmlFilePath, pdfFilePath),
-                    FileName = _executablePathService.ExecutablePath,
+                    Arguments = string.Format("{0} \"{1}\" \"{2}\"", GetArguments(parameters), htmlFilePath, pdfFilePath),
+                    FileName = _htmlToPdfExecutablePathService.ExecutablePath,
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
@@ -72,19 +61,19 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
                 {
                     var info = _runProcess.Run(startInfo);
 
-                    if (info.ExitCode == 0)
+                    if (info.Timeout)
                     {
-                        if (!string.IsNullOrWhiteSpace(info.StandardOutput))
-                        {
-                            _log.Info(info.StandardOutput);
-                        }
+                        _log.InfoFormat("Pdf generation timed out. Arguments: {0}", startInfo.Arguments);
                     }
-                    else
+
+                    if (!string.IsNullOrWhiteSpace(info.StandardOutput))
                     {
-                        if (!string.IsNullOrWhiteSpace(info.StandardError) || !string.IsNullOrWhiteSpace(info.StandardOutput))
-                        {
-                            _log.ErrorFormat("{0}{1}{2}", info.StandardError, Environment.NewLine, info.StandardOutput);
-                        }
+                        _log.InfoFormat("Standard out: {0}", info.StandardOutput);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(info.StandardError))
+                    {
+                        _log.InfoFormat("Standard error: {0}", info.StandardError);
                     }
 
                     var pdfFileInfo = new FileInfo(pdfFilePath);
@@ -100,6 +89,33 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
             }
             
             return output;
+        }
+
+        private string GetArguments(HtmlToPdfParameters parameters)
+        {
+            if (null == parameters)
+            {
+                return "";
+            }
+
+            var arguments = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(parameters.PageSize))
+            {
+                arguments.Add(string.Format("--page-size {0}", parameters.PageSize));
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.Proxy))
+            {
+                arguments.Add(string.Format("--proxy {0}", parameters.Proxy));
+            }
+
+            if (parameters.JavascriptDelay.HasValue)
+            {
+                arguments.Add(string.Format("--javascript-delay {0}", parameters.JavascriptDelay.Value));
+            }
+
+            return string.Join(" ", arguments);
         }
     }
 }

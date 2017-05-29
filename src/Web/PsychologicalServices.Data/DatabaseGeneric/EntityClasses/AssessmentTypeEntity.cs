@@ -50,6 +50,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -69,6 +72,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AssessmentTypeAttributeTypes = "AssessmentTypeAttributeTypes";
 			/// <summary>Member name AssessmentTypeReportTypes</summary>
 			public static readonly string AssessmentTypeReportTypes = "AssessmentTypeReportTypes";
+
+
+
 
 
 
@@ -149,6 +155,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -204,6 +213,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 				default:
 					break;
 			}
@@ -235,6 +247,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTypeReportTypes":
 					toReturn.Add(AssessmentTypeEntity.Relations.AssessmentTypeReportTypeEntityUsingAssessmentTypeId);
 					break;
+
+
+
 
 
 
@@ -375,6 +390,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -448,6 +466,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -487,6 +508,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -497,6 +521,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._assessmentTypeAttributeTypes = (EntityCollection<AssessmentTypeAttributeTypeEntity>) collectionsQueue.Dequeue();
 			this._assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>) collectionsQueue.Dequeue();
+
+
+
 
 
 
@@ -531,6 +558,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -543,6 +573,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeAttributeTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeAttributeTypeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeReportTypeEntityFactory))) : null);
+
+
+
 
 
 
@@ -564,6 +597,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("AssessmentTypeAttributeTypes", _assessmentTypeAttributeTypes);
 			toReturn.Add("AssessmentTypeReportTypes", _assessmentTypeReportTypes);
+
+
+
 
 
 
@@ -601,6 +637,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -610,6 +649,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessments = null;
 			_assessmentTypeAttributeTypes = null;
 			_assessmentTypeReportTypes = null;
+
+
+
 
 
 
@@ -720,6 +762,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("AssessmentTypeReportTypes")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity, 0, null, null, null, null, "AssessmentTypeReportTypes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
+
 
 
 
@@ -857,6 +902,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _assessmentTypeReportTypes;
 			}
 		}
+
+
+
 
 
 

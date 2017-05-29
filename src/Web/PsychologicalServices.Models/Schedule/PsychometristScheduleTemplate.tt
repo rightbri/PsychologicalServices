@@ -1,0 +1,103 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ parameter type="PsychologicalServices.Models.Users.User" name="Model" #>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<!--
+	<link href="https://fonts.googleapis.com/css?family=Martel" rel="stylesheet">
+	-->
+    <style>
+		body {
+			font-family: 'Martel', serif;
+			
+			font-size: 12pt;
+		}
+	</style>
+</head>
+<body>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Location</th>
+				<th>Referral Source</th>
+				<th>Claimant</th>
+				<th>Info</th>
+			</tr>
+		</thead>
+		<tbody>
+	<# foreach (var appointment in Model.PsychometristAppointments) { #>
+			<tr>
+				<td><#= string.Format("{0:MMMM d, yyyy}", appointment.AppointmentTime) #></td>
+				<td><#= string.Format("{0:hh:mmtt}", appointment.AppointmentTime) #></td>
+				<td>
+					<ul class="list-unstyled">
+						<li title="Location Name" class="smaller-siblings">
+							<#= appointment.Location.Name #>
+						</li>
+						<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
+						<li title="Street">
+							<#= appointment.Location.Street #>
+						</li>
+						<# } #>
+						<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
+						<li title="Suite">
+							<#= appointment.Location.Suite #>
+						</li>
+						<# } #>
+						<# if (
+							!string.IsNullOrWhiteSpace(appointment.Location.City.Name) ||
+							!string.IsNullOrWhiteSpace(appointment.Location.City.Province) ||
+							!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)
+						) { #>
+						<li title="City, Province, Postal Code">
+							<# if (!string.IsNullOrWhiteSpace(appointment.Location.City.Name)) { #>
+								<#= appointment.Location.City.Name #>
+							<# } #>
+							<# if (!string.IsNullOrWhiteSpace(appointment.Location.City.Province)) { #>
+								<#= appointment.Location.City.Province #>
+							<# } #>
+							<# if (!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)) { #>
+								<#= appointment.Location.PostalCode #>
+							<# } #>
+						</li>
+						<# } #>
+					</ul>
+				</td>
+				<td><#= appointment.Assessment.ReferralSource.Name #></td>
+				<td>
+					<ul class="list-unstyled">
+					<# foreach (var claim in appointment.Assessment.Claims) { #>
+						<li>
+						<#= claim.Claimant.FirstName #>
+						&nbsp;<#= claim.Claimant.LastName #>
+						&nbsp;&#45;
+						&nbsp;<#= claim.Claimant.Age #>
+						&nbsp;<#= claim.Claimant.Gender #>
+						</li>
+					<# } #>
+					</ul>
+				</td>
+				<td>
+					<ul class="list-unstyled">
+						<# foreach (var attribute in appointment.Attributes.Where(attribute => new[] { 1,5,6 }.Contains(attribute.AttributeType.AttributeTypeId))) { #>
+							<li><#= attribute.Name #></li>
+						<# } #>
+					</ul>
+				</td>
+			</tr>
+	<# } #>
+		</tbody>
+	</table>
+</body>
+</html>

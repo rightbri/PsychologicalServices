@@ -84,6 +84,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                             .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
                                         )
                                 )
+                            .Prefetch<UserEntity>(appointment => appointment.CreateUser)
+                            .Prefetch<UserEntity>(appointment => appointment.UpdateUser)
                         )
                     .Prefetch<AssessmentMedRehabEntity>(assessment => assessment.AssessmentMedRehabs)
                     .Prefetch<AssessmentNoteEntity>(assessment => assessment.AssessmentNotes)
@@ -117,6 +119,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                     .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
                                 )
                         )
+                    .Prefetch<NoteEntity>(assessment => assessment.Summary)
+                    .Prefetch<UserEntity>(assessment => assessment.CreateUser)
+                    .Prefetch<UserEntity>(assessment => assessment.UpdateUser)
                 );
 
         private static readonly Func<IPathEdgeRootParser<AssessmentTypeEntity>, IPathEdgeRootParser<AssessmentTypeEntity>>
@@ -284,11 +289,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 {
                     IsNew = isNew,
                     AssessmentId = assessment.AssessmentId,
+                    CreateDate = _date.UtcNow,
+                    CreateUserId = assessment.CreateUser.UserId,
                 };
 
                 if (!isNew)
                 {
                     var prefetch = new PrefetchPath2(EntityType.AssessmentEntity);
+
+                    prefetch.Add(AssessmentEntity.PrefetchPathSummary);
 
                     var appointmentsPath = prefetch.Add(AssessmentEntity.PrefetchPathAppointments);
 
@@ -329,6 +338,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.ReportStatusId = assessment.ReportStatus.ReportStatusId;
                 assessmentEntity.CompanyId = assessment.Company.CompanyId;
                 assessmentEntity.IsLargeFile = assessment.IsLargeFile;
+                assessmentEntity.UpdateDate = _date.UtcNow;
+                assessmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
 
                 if (null == assessment.MedicalFileReceivedDate)
                 {
@@ -449,6 +460,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.LocationId = appointment.Location.AddressId;
                     appointmentEntity.PsychologistId = appointment.Psychologist.UserId;
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
+                    appointmentEntity.UpdateDate = _date.UtcNow;
+                    appointmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
 
                     if (appointment.AppointmentStatus.CanInvoice &&
                         !appointmentEntity.InvoiceAppointments.Any())
@@ -498,6 +511,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         LocationId = appointment.Location.AddressId,
                         PsychologistId = appointment.Psychologist.UserId,
                         PsychometristId = appointment.Psychometrist.UserId,
+                        CreateDate = _date.UtcNow,
+                        CreateUserId = assessment.CreateUser.UserId,
+                        UpdateDate = _date.UtcNow,
+                        UpdateUserId = assessment.UpdateUser.UserId,
                     };
 
                     if (appointment.AppointmentStatus.CanInvoice)
@@ -891,6 +908,36 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 );
 
                 #endregion
+
+
+                var updateSummaryNote =
+                    assessmentEntity.SummaryNoteId.HasValue &&
+                    null != assessment.Summary &&
+                    assessmentEntity.Summary.Note != assessment.Summary.NoteText;
+                if (updateSummaryNote)
+                {
+                    //update summary note
+                    assessmentEntity.Summary.Note = assessment.Summary.NoteText;
+                    assessmentEntity.Summary.UpdateDate = _date.UtcNow;
+                    assessmentEntity.Summary.UpdateUserId = assessment.UpdateUser.UserId;
+                }
+
+                var addSummaryNote =
+                    !assessmentEntity.SummaryNoteId.HasValue &&
+                    null != assessment.Summary &&
+                    !string.IsNullOrWhiteSpace(assessment.Summary.NoteText);
+                if (addSummaryNote)
+                {
+                    //add summary note
+                    assessmentEntity.Summary = new NoteEntity
+                    {
+                        CreateDate = _date.UtcNow,
+                        CreateUserId = assessment.UpdateUser.UserId,
+                        UpdateDate = _date.UtcNow,
+                        UpdateUserId = assessment.UpdateUser.UserId,
+                        Note = assessment.Summary.NoteText,
+                    };
+                }
 
                 uow.AddForSave(assessmentEntity);
 

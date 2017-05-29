@@ -38,7 +38,7 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AddressEntity> _addresses;
-		private EntityCollection<CityEntity> _citiesCollectionViaAddress;
+
 
 
 		
@@ -56,8 +56,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			/// <summary>Member name Addresses</summary>
 			public static readonly string Addresses = "Addresses";
-			/// <summary>Member name CitiesCollectionViaAddress</summary>
-			public static readonly string CitiesCollectionViaAddress = "CitiesCollectionViaAddress";
+
 
 		}
 		#endregion
@@ -118,7 +117,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_addresses = (EntityCollection<AddressEntity>)info.GetValue("_addresses", typeof(EntityCollection<AddressEntity>));
-				_citiesCollectionViaAddress = (EntityCollection<CityEntity>)info.GetValue("_citiesCollectionViaAddress", typeof(EntityCollection<CityEntity>));
+
 
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -161,11 +160,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Addresses":
 					this.Addresses.Add((AddressEntity)entity);
 					break;
-				case "CitiesCollectionViaAddress":
-					this.CitiesCollectionViaAddress.IsReadOnly = false;
-					this.CitiesCollectionViaAddress.Add((CityEntity)entity);
-					this.CitiesCollectionViaAddress.IsReadOnly = true;
-					break;
+
 
 				default:
 					break;
@@ -192,10 +187,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Addresses":
 					toReturn.Add(AddressTypeEntity.Relations.AddressEntityUsingAddressTypeId);
 					break;
-				case "CitiesCollectionViaAddress":
-					toReturn.Add(AddressTypeEntity.Relations.AddressEntityUsingAddressTypeId, "AddressTypeEntity__", "Address_", JoinHint.None);
-					toReturn.Add(AddressEntity.Relations.CityEntityUsingCityId, "Address_", string.Empty, JoinHint.None);
-					break;
+
 
 				default:
 
@@ -302,7 +294,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_addresses", ((_addresses!=null) && (_addresses.Count>0) && !this.MarkedForDeletion)?_addresses:null);
-				info.AddValue("_citiesCollectionViaAddress", ((_citiesCollectionViaAddress!=null) && (_citiesCollectionViaAddress.Count>0) && !this.MarkedForDeletion)?_citiesCollectionViaAddress:null);
+
 
 
 			}
@@ -349,16 +341,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'City' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoCitiesCollectionViaAddress()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("CitiesCollectionViaAddress"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressTypeFields.AddressTypeId, null, ComparisonOperator.Equal, this.AddressTypeId, "AddressTypeEntity__"));
-			return bucket;
-		}
 
 
 	
@@ -390,7 +372,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._addresses);
-			collectionsQueue.Enqueue(this._citiesCollectionViaAddress);
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -399,7 +381,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._addresses = (EntityCollection<AddressEntity>) collectionsQueue.Dequeue();
-			this._citiesCollectionViaAddress = (EntityCollection<CityEntity>) collectionsQueue.Dequeue();
+
 		}
 		
 		/// <summary>Determines whether the entity has populated member collections</summary>
@@ -410,10 +392,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
-			if (this._citiesCollectionViaAddress != null)
-			{
-				return true;
-			}
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -424,7 +403,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory))) : null);
+
 		}
 #endif
 		/// <summary>
@@ -436,7 +415,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
 			toReturn.Add("Addresses", _addresses);
-			toReturn.Add("CitiesCollectionViaAddress", _citiesCollectionViaAddress);
+
 
 			return toReturn;
 		}
@@ -448,10 +427,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_addresses.ActiveContext = base.ActiveContext;
 			}
-			if(_citiesCollectionViaAddress!=null)
-			{
-				_citiesCollectionViaAddress.ActiveContext = base.ActiveContext;
-			}
+
 
 
 		}
@@ -461,7 +437,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_addresses = null;
-			_citiesCollectionViaAddress = null;
+
 
 
 			PerformDependencyInjection();
@@ -537,19 +513,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'City' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathCitiesCollectionViaAddress
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = AddressTypeEntity.Relations.AddressEntityUsingAddressTypeId;
-				intermediateRelation.SetAliases(string.Empty, "Address_");
-				return new PrefetchPathElement2(new EntityCollection<CityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AddressTypeEntity, (int)PsychologicalServices.Data.EntityType.CityEntity, 0, null, null, GetRelationsForField("CitiesCollectionViaAddress"), null, "CitiesCollectionViaAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
 
 
 
@@ -626,21 +589,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'CityEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(CityEntity))]
-		public virtual EntityCollection<CityEntity> CitiesCollectionViaAddress
-		{
-			get
-			{
-				if(_citiesCollectionViaAddress==null)
-				{
-					_citiesCollectionViaAddress = new EntityCollection<CityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CityEntityFactory)));
-					_citiesCollectionViaAddress.IsReadOnly=true;
-				}
-				return _citiesCollectionViaAddress;
-			}
-		}
 
 
 	

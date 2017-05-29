@@ -36,8 +36,10 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AddressEntityUsingLocationId);
 			toReturn.Add(this.AppointmentStatusEntityUsingAppointmentStatusId);
 			toReturn.Add(this.AssessmentEntityUsingAssessmentId);
-			toReturn.Add(this.UserEntityUsingPsychometristId);
+			toReturn.Add(this.UserEntityUsingCreateUserId);
+			toReturn.Add(this.UserEntityUsingUpdateUserId);
 			toReturn.Add(this.UserEntityUsingPsychologistId);
+			toReturn.Add(this.UserEntityUsingPsychometristId);
 			return toReturn;
 		}
 
@@ -117,14 +119,28 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
-		/// Appointment.PsychometristId - User.UserId
+		/// Appointment.CreateUserId - User.UserId
 		/// </summary>
-		public virtual IEntityRelation UserEntityUsingPsychometristId
+		public virtual IEntityRelation UserEntityUsingCreateUserId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Psychometrist", false);
-				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.PsychometristId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CreateUser", false);
+				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.CreateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
+		/// Appointment.UpdateUserId - User.UserId
+		/// </summary>
+		public virtual IEntityRelation UserEntityUsingUpdateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "UpdateUser", false);
+				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.UpdateUserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
 				return relation;
@@ -139,6 +155,20 @@ namespace PsychologicalServices.Data.RelationClasses
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Psychologist", false);
 				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.PsychologistId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
+		/// Appointment.PsychometristId - User.UserId
+		/// </summary>
+		public virtual IEntityRelation UserEntityUsingPsychometristId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Psychometrist", false);
+				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.PsychometristId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
 				return relation;

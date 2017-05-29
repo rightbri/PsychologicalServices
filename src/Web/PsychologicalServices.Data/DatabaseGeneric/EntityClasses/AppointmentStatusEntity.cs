@@ -47,6 +47,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -64,6 +66,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Appointments = "Appointments";
 			/// <summary>Member name ReferralSourceAppointmentStatusSettings</summary>
 			public static readonly string ReferralSourceAppointmentStatusSettings = "ReferralSourceAppointmentStatusSettings";
+
+
 
 
 
@@ -139,6 +143,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -189,6 +195,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				default:
 					break;
 			}
@@ -217,6 +225,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReferralSourceAppointmentStatusSettings":
 					toReturn.Add(AppointmentStatusEntity.Relations.ReferralSourceAppointmentStatusSettingEntityUsingAppointmentStatusId);
 					break;
+
+
 
 
 
@@ -345,6 +355,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -406,6 +418,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -442,6 +456,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -451,6 +467,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
 			this._referralSourceAppointmentStatusSettings = (EntityCollection<ReferralSourceAppointmentStatusSettingEntity>) collectionsQueue.Dequeue();
+
+
 
 
 
@@ -477,6 +495,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -488,6 +508,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceAppointmentStatusSettingEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceAppointmentStatusSettingEntityFactory))) : null);
+
+
 
 
 
@@ -506,6 +528,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			toReturn.Add("Appointments", _appointments);
 			toReturn.Add("ReferralSourceAppointmentStatusSettings", _referralSourceAppointmentStatusSettings);
+
+
 
 
 
@@ -535,6 +559,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -543,6 +569,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_appointments = null;
 			_referralSourceAppointmentStatusSettings = null;
+
+
 
 
 
@@ -646,6 +674,8 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("ReferralSourceAppointmentStatusSettings")[0], (int)PsychologicalServices.Data.EntityType.AppointmentStatusEntity, (int)PsychologicalServices.Data.EntityType.ReferralSourceAppointmentStatusSettingEntity, 0, null, null, null, null, "ReferralSourceAppointmentStatusSettings", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
 
 
 
@@ -787,6 +817,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _referralSourceAppointmentStatusSettings;
 			}
 		}
+
+
 
 
 

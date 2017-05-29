@@ -7,5 +7,6 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
         public int ExitCode { get; set; }
         public string StandardError { get; set; }
         public string StandardOutput { get; set; }
+        public bool Timeout { get; set; }
     }
 }

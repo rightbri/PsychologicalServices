@@ -93,6 +93,7 @@ export class EditAssessment {
 							appointment.appointmentTime = appointmentDate;
 							
 							this.assessment = {
+								assessmentId: 0,
 								company: user.company,
 								appointments: [ appointment ],
 								claims: [],
@@ -100,10 +101,11 @@ export class EditAssessment {
 								notes: [],
 								colors: [],
 								attributes: [],
-								reports: []
+								reports: [],
+								summary: { 'noteText': this.config.assessmentDefaults.summary }
 							};
 							
-							return this.getData(appointmentDate)//appointment.appointmentTime
+							return this.getData(appointmentDate)
 								.then(() => this.scroller.scrollTo(0));
 						});
 				}
@@ -125,31 +127,31 @@ export class EditAssessment {
 			this.dataRepository.getColors().then(data => this.colors = data),
 			
 			this.dataRepository.searchUsers({
-				companyId: this.context.user.company.companyId,
+				companyId: this.user.company.companyId,
 				rightId: this.config.rights.WriteDocList,
 				availableDate: firstAppointmentDate,
 			}).then(data => this.docListWriters = data),
 			
 			this.dataRepository.searchUsers({
-				companyId: this.context.user.company.companyId,
+				companyId: this.user.company.companyId,
 				rightId: this.config.rights.WriteNotes,
 				availableDate: firstAppointmentDate,
 			}).then(data => this.notesWriters = data),
 			
 			this.dataRepository.searchAttributes({
-				companyIds: [this.context.user.company.companyId],
+				companyIds: [this.user.company.companyId],
 				attributeTypeIds: this.config.assessmentDefaults.attributeTypeIds,
 				isActive: true
 			}).then(data => this.attributes = data),
 
 			this.dataRepository.searchUsers({
-				companyId: this.context.user.company.companyId,
+				companyId: this.user.company.companyId,
 				rightId: this.config.rights.Psychometrist,
 				availableDate: firstAppointmentDate
 			}).then(data => this.psychometrists = data),
 			
 			this.dataRepository.searchUsers({
-				companyId: this.context.user.company.companyId,
+				companyId: this.user.company.companyId,
 				rightId: this.config.rights.Psychologist,
 				availableDate: firstAppointmentDate
 			}).then(data => this.psychologists = data),
@@ -161,7 +163,7 @@ export class EditAssessment {
 			}).then(data => this.appointmentAddresses = data),
 			
 			this.dataRepository.searchAttributes({
-				companyIds: [this.context.user.company.companyId],
+				companyIds: [this.user.company.companyId],
 				attributeTypeIds: this.config.appointmentDefaults.attributeTypeIds,
 				isActive: true
 			}).then(data => this.appointmentAttributes = data)
@@ -171,6 +173,12 @@ export class EditAssessment {
 	save() {
 		
 		var isNew = this.assessment.assessmentId === 0;
+		
+		if (isNew) {
+			this.assessment.createUser = this.user;
+		}
+		
+		this.assessment.updateUser = this.user;
 		
 		this.dataRepository.saveAssessment(this.assessment)
             .then(data => {
@@ -360,7 +368,7 @@ export class EditAssessment {
 	}
 	
 	newNote() {
-		return this.editNote({ createUser: this.context.user, createDate: new Date(), updateUser: this.context.user, updateDate: new Date() })
+		return this.editNote({ createUser: this.user, createDate: new Date(), updateUser: this.user, updateDate: new Date() })
 			.then(data => {
 				if (!data.wasCancelled) {
 					this.assessment.notes.push(data.note);
@@ -431,7 +439,7 @@ export class EditAssessment {
 		this.assessment.reports.splice(this.assessment.reports.indexOf(report), 1);
 		this.checkMedRehab();
 	}
-	
+
 	getAttributeTypeIds(attributeTypes)
 	{
 		if (attributeTypes)

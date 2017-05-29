@@ -24,6 +24,14 @@ namespace PsychologicalServices.Models.Appointments
 
         public Assessment Assessment { get; set; }
 
+        public DateTime CreateDate { get; set; }
+
+        public User CreateUser { get; set; }
+
+        public DateTime UpdateDate { get; set; }
+
+        public User UpdateUser { get; set; }
+
         public bool IsNew()
         {
             return AppointmentId == 0;

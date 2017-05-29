@@ -2,7 +2,8 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {DialogService} from 'aurelia-dialog';
-import {CalendarNoteDialog} from '../calendarNotes/CalendarNoteDialog';
+import {CalendarNoteDialog} from 'calendarNotes/CalendarNoteDialog';
+import {AssessmentSummaryDialog} from 'assessments/AssessmentSummaryDialog';
 import {Context} from 'common/context';
 import {Config} from 'common/config';
 import moment from 'moment';
@@ -145,5 +146,9 @@ export class Calendar {
 				
 				return { wasCancelled: result.wasCancelled, calendarNote: calendarNote };
 			});
+	}
+	
+	viewSummary(appointment) {
+		return this.dialogService.open({viewModel: AssessmentSummaryDialog, model: appointment});
 	}
 }

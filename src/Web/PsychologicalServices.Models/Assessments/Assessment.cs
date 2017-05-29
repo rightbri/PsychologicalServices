@@ -39,6 +39,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public Company Company { get; set; }
 
+        public Note Summary { get; set; }
+
         public IEnumerable<Claim> Claims { get; set; }
 
         public IEnumerable<Appointment> Appointments { get; set; }
@@ -54,6 +56,14 @@ namespace PsychologicalServices.Models.Assessments
         public IEnumerable<Models.Attributes.Attribute> Attributes { get; set; }
 
         public IEnumerable<Report> Reports { get; set; }
+
+        public DateTime CreateDate { get; set; }
+
+        public User CreateUser { get; set; }
+
+        public DateTime UpdateDate { get; set; }
+
+        public User UpdateUser { get; set; }
 
         public bool IsNew()
         {

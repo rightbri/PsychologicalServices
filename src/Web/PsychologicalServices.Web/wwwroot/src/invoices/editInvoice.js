@@ -118,47 +118,15 @@ export class EditInvoice {
 		});
 
         this.invoice.total = this.subtotal * (1 + this.invoice.taxRate);
-
-        console.log('totals calculated...');
     }
 	
-	openInvoice() {
-		if (confirm('Modify Invoice\nAre you sure?')) {
-			for (var i = 0; i < this.invoiceStatuses.length; i++) {
-				if (this.invoiceStatuses[i].invoiceStatusId === 1) {
-					this.invoice.invoiceStatus = this.invoiceStatuses[i];
-					break;
-				}
-			}
-		}
-	}
-	
-	submitInvoice() {
-		if (confirm('Submit Invoice\nAre you sure?')) {
-			for (var i = 0; i < this.invoiceStatuses.length; i++) {
-				if (this.invoiceStatuses[i].invoiceStatusId === 2) {
-					this.invoice.invoiceStatus = this.invoiceStatuses[i];
-					break;
-				}
-			}
-			
+	setStatus(nextStatus) {
+		if (confirm('Update invoice status to ' + nextStatus.name + '?')) {
+			this.invoice.invoiceStatus = nextStatus;
 			this.save();
 		}
 	}
-	
-	paidInvoice() {
-		if (confirm('Mark Invoice Paid\nAre you sure?')) {
-			for (var i = 0; i < this.invoiceStatuses.length; i++) {
-				if (this.invoiceStatuses[i].invoiceStatusId === 3) {
-					this.invoice.invoiceStatus = this.invoiceStatuses[i];
-					break;
-				}
-			}
-			
-			this.save();
-		}
-	}
-	
+
 	getInvoiceDocument(invoiceDocument) {
 		this.dataRepository.getInvoiceDocument(invoiceDocument);
 	}

@@ -40,15 +40,11 @@
                 ${invoice.invoiceStatus.name}
             </div>
 			<div class="col-xs-6">
-				<button type="button" class="btn btn-default" click.delegate="openInvoice()" if.bind="invoice.invoiceStatus.canOpen">
-					Modify
-				</button>
-				<button type="button" class="btn btn-default" click.delegate="submitInvoice()" if.bind="invoice.invoiceStatus.canSubmit">
-					Submit
-				</button>
-				<button type="button" class="btn btn-default" click.delegate="paidInvoice()" if.bind="invoice.invoiceStatus.canMarkPaid">
-					Paid
-				</button>
+				<template repeat.for="nextStatus of invoice.invoiceStatus.nextInvoiceStatuses">
+					<button type="button" class="btn btn-default" click.delegate="setStatus(nextStatus)">
+						${nextStatus.actionName}
+					</button>
+				</template>
 			</div>
         </div>
 
@@ -179,7 +175,7 @@
                 <button type="button" class="btn btn-default" click.delegate="back()">
                     <i class="fa fa-arrow-left"></i> Back
                 </button>
-                <button type="button" class="btn btn-primary" click.delegate="save()">
+                <button type="button" class="btn btn-primary" click.delegate="save()" if.bind="invoice.invoiceStatus.canEdit">
                     Save <i class="fa fa-save"></i>
                 </button>
             </div>

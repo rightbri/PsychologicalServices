@@ -47,6 +47,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 		private AddressEntity _address;
 
 		
@@ -69,6 +73,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string CompanyAttributes = "CompanyAttributes";
 			/// <summary>Member name Users</summary>
 			public static readonly string Users = "Users";
+
+
+
+
 
 
 
@@ -145,6 +153,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
 				if(_address!=null)
 				{
@@ -210,6 +222,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 				default:
 					break;
 			}
@@ -243,6 +259,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Users":
 					toReturn.Add(CompanyEntity.Relations.UserEntityUsingCompanyId);
 					break;
+
+
+
+
 
 
 
@@ -386,6 +406,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 
 			}
@@ -459,6 +483,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
@@ -507,6 +535,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -517,6 +549,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._companyAttributes = (EntityCollection<CompanyAttributeEntity>) collectionsQueue.Dequeue();
 			this._users = (EntityCollection<UserEntity>) collectionsQueue.Dequeue();
+
+
+
+
 
 
 
@@ -549,6 +585,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -561,6 +601,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyAttributeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyAttributeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))) : null);
+
+
+
+
 
 
 
@@ -581,6 +625,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("CompanyAttributes", _companyAttributes);
 			toReturn.Add("Users", _users);
+
+
+
+
 
 
 
@@ -614,6 +662,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 			if(_address!=null)
 			{
 				_address.ActiveContext = base.ActiveContext;
@@ -628,6 +680,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessments = null;
 			_companyAttributes = null;
 			_users = null;
+
+
+
+
 
 
 
@@ -684,7 +740,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CompanyEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "Company", resetFKFields, new int[] { (int)CompanyFieldIndex.AddressId } );		
+			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CompanyEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "Companies", resetFKFields, new int[] { (int)CompanyFieldIndex.AddressId } );		
 			_address = null;
 		}
 
@@ -778,6 +834,10 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("Users")[0], (int)PsychologicalServices.Data.EntityType.CompanyEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "Users", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
+
+
 
 
 
@@ -966,6 +1026,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
@@ -987,14 +1051,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_address != null)
 						{
-							_address.UnsetRelatedEntity(this, "Company");
+							_address.UnsetRelatedEntity(this, "Companies");
 						}
 					}
 					else
 					{
 						if(_address!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "Company");
+							((IEntity2)value).SetRelatedEntity(this, "Companies");
 						}
 					}
 				}

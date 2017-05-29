@@ -89,7 +89,14 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                             .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
                                         )
                                 )
+                            .Prefetch<AssessmentColorEntity>(assessment => assessment.AssessmentColors)
+                                .SubPath(assessmentColorPath => assessmentColorPath
+                                    .Prefetch<ColorEntity>(assessmentColor => assessmentColor.Color)
+                                )
+                            .Prefetch<NoteEntity>(assessment => assessment.Summary)
                         )
+                    .Prefetch<UserEntity>(appointment => appointment.CreateUser)
+                    .Prefetch<UserEntity>(appointment => appointment.UpdateUser)
                 );
 
         #endregion

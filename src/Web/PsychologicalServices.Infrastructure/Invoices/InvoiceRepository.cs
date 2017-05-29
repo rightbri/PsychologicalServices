@@ -64,6 +64,12 @@ namespace PsychologicalServices.Infrastructure.Invoices
             InvoiceEditPath =
                 (invoicePath => invoicePath
                     .Prefetch<InvoiceStatusEntity>(invoice => invoice.InvoiceStatus)
+                        .SubPath(invoiceStatusPath => invoiceStatusPath
+                            .Prefetch<InvoiceStatusPathsEntity>(invoiceStatus => invoiceStatus.InvoiceStatusPaths)
+                                .SubPath(invoiceStatusPathsPath => invoiceStatusPathsPath
+                                    .Prefetch<InvoiceStatusEntity>(invoiceStatusPaths => invoiceStatusPaths.NextInvoiceStatus)
+                                )
+                        )
                     .Prefetch<InvoiceTypeEntity>(invoice => invoice.InvoiceType)
                     .Prefetch<UserEntity>(invoice => invoice.PayableTo)
                     .Prefetch<InvoiceStatusChangeEntity>(invoice => invoice.InvoiceStatusChanges)
@@ -294,6 +300,14 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 {
                     var prefetch = new PrefetchPath2(EntityType.InvoiceEntity);
 
+                    prefetch.Add(InvoiceEntity.PrefetchPathInvoiceStatus);
+
+                    var payableToPath = prefetch.Add(InvoiceEntity.PrefetchPathPayableTo);
+
+                    payableToPath
+                        .SubPath.Add(UserEntity.PrefetchPathAddress)
+                        .SubPath.Add(AddressEntity.PrefetchPathCity);
+
                     var invoiceAppointmentPath = prefetch.Add(InvoiceEntity.PrefetchPathInvoiceAppointments);
 
                     invoiceAppointmentPath
@@ -304,11 +318,15 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                     adapter.FetchEntity(invoiceEntity, prefetch);
                 }
+                else
+                {
+                    invoiceEntity.InvoiceStatus = invoice.InvoiceStatus.ToInvoiceStatusEntity();
+                }
 
-                //determine whether we're changing to a submitted status
-                var isSubmitting = 
-                    invoiceEntity.InvoiceStatusId != InvoiceStatus.Submitted &&
-                    invoice.InvoiceStatus.InvoiceStatusId == InvoiceStatus.Submitted;
+                //determine whether we're changing to a status that requires an invoice document to be saved
+                var saveDocument = 
+                    !invoiceEntity.InvoiceStatus.SaveDocument &&
+                    invoice.InvoiceStatus.SaveDocument;
                 
                 invoiceEntity.Identifier = invoice.Identifier;
                 invoiceEntity.InvoiceDate = invoice.InvoiceDate;
@@ -453,7 +471,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 
                 #endregion
 
-                if (isSubmitting)
+                if (saveDocument)
                 {
                     //generate and store pdf
                     var html = _invoiceHtmlGenerator.GetInvoiceHtml(invoice);

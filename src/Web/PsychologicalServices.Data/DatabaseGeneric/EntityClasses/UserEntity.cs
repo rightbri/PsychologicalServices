@@ -40,6 +40,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		private EntityCollection<AppointmentEntity> _psychometristAppointments;
+
+
+
 
 		private EntityCollection<InvoiceEntity> _invoices;
 		private EntityCollection<NoteEntity> _noteUpdater;
@@ -69,6 +73,27 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		private AddressEntity _address;
 		private CompanyEntity _company;
 
 		
@@ -83,8 +108,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
+			/// <summary>Member name Address</summary>
+			public static readonly string Address = "Address";
 			/// <summary>Member name Company</summary>
 			public static readonly string Company = "Company";
+
+
+
+			/// <summary>Member name PsychometristAppointments</summary>
+			public static readonly string PsychometristAppointments = "PsychometristAppointments";
 
 
 
@@ -103,6 +135,26 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string UserTravelFees = "UserTravelFees";
 			/// <summary>Member name UserUnavailabilities</summary>
 			public static readonly string UserUnavailabilities = "UserUnavailabilities";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -186,6 +238,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+				_psychometristAppointments = (EntityCollection<AppointmentEntity>)info.GetValue("_psychometristAppointments", typeof(EntityCollection<AppointmentEntity>));
+
+
+
 
 				_invoices = (EntityCollection<InvoiceEntity>)info.GetValue("_invoices", typeof(EntityCollection<InvoiceEntity>));
 				_noteUpdater = (EntityCollection<NoteEntity>)info.GetValue("_noteUpdater", typeof(EntityCollection<NoteEntity>));
@@ -215,6 +271,31 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
+				if(_address!=null)
+				{
+					_address.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_company = (CompanyEntity)info.GetValue("_company", typeof(CompanyEntity));
 				if(_company!=null)
 				{
@@ -238,6 +319,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case UserFieldIndex.CompanyId:
 					DesetupSyncCompany(true, false);
 					break;
+				case UserFieldIndex.AddressId:
+					DesetupSyncAddress(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -260,8 +344,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
+				case "Address":
+					this.Address = (AddressEntity)entity;
+					break;
 				case "Company":
 					this.Company = (CompanyEntity)entity;
+					break;
+
+
+
+				case "PsychometristAppointments":
+					this.PsychometristAppointments.Add((AppointmentEntity)entity);
 					break;
 
 
@@ -310,6 +403,26 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				default:
 					break;
 			}
@@ -331,8 +444,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
+				case "Address":
+					toReturn.Add(UserEntity.Relations.AddressEntityUsingAddressId);
+					break;
 				case "Company":
 					toReturn.Add(UserEntity.Relations.CompanyEntityUsingCompanyId);
+					break;
+
+
+
+				case "PsychometristAppointments":
+					toReturn.Add(UserEntity.Relations.AppointmentEntityUsingPsychometristId);
 					break;
 
 
@@ -381,6 +503,26 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				default:
 
 					break;				
@@ -403,6 +545,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -416,8 +559,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Address":
+					SetupSyncAddress(relatedEntity);
+					break;
 				case "Company":
 					SetupSyncCompany(relatedEntity);
+					break;
+
+
+
+				case "PsychometristAppointments":
+					this.PsychometristAppointments.Add((AppointmentEntity)relatedEntity);
 					break;
 
 
@@ -459,8 +611,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Address":
+					DesetupSyncAddress(false, true);
+					break;
 				case "Company":
 					DesetupSyncCompany(false, true);
+					break;
+
+
+
+				case "PsychometristAppointments":
+					base.PerformRelatedEntityRemoval(this.PsychometristAppointments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 
@@ -508,6 +669,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
+			if(_address!=null)
+			{
+				toReturn.Add(_address);
+			}
 			if(_company!=null)
 			{
 				toReturn.Add(_company);
@@ -521,6 +686,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+
+
+
+			toReturn.Add(this.PsychometristAppointments);
 
 
 
@@ -546,6 +715,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+
+
+
+				info.AddValue("_psychometristAppointments", ((_psychometristAppointments!=null) && (_psychometristAppointments.Count>0) && !this.MarkedForDeletion)?_psychometristAppointments:null);
 
 
 
@@ -578,6 +751,27 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
 
 			}
@@ -613,6 +807,19 @@ namespace PsychologicalServices.Data.EntityClasses
 			return new UserRelations().GetAllRelations();
 		}
 		
+
+
+
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Appointment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPsychometristAppointments()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentFields.PsychometristId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
 
 
 
@@ -709,6 +916,36 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAddress()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.AddressId));
+			return bucket;
+		}
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Company' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
@@ -750,6 +987,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			collectionsQueue.Enqueue(this._psychometristAppointments);
+
+
+
 
 			collectionsQueue.Enqueue(this._invoices);
 			collectionsQueue.Enqueue(this._noteUpdater);
@@ -779,6 +1020,26 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -786,6 +1047,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+
+
+
+			this._psychometristAppointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
 
 
 
@@ -818,12 +1083,39 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		}
 		
 		/// <summary>Determines whether the entity has populated member collections</summary>
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
+
+
+
+			if (this._psychometristAppointments != null)
+			{
+				return true;
+			}
 
 
 
@@ -877,6 +1169,26 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -886,6 +1198,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+
+
+
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
 
 
 
@@ -918,6 +1234,26 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		}
 #endif
 		/// <summary>
@@ -927,7 +1263,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("Address", _address);
 			toReturn.Add("Company", _company);
+
+
+
+			toReturn.Add("PsychometristAppointments", _psychometristAppointments);
 
 
 
@@ -961,12 +1302,39 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			return toReturn;
 		}
 		
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+
+
+
+			if(_psychometristAppointments!=null)
+			{
+				_psychometristAppointments.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -1020,6 +1388,30 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			if(_address!=null)
+			{
+				_address.ActiveContext = base.ActiveContext;
+			}
 			if(_company!=null)
 			{
 				_company.ActiveContext = base.ActiveContext;
@@ -1031,6 +1423,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+
+
+
+			_psychometristAppointments = null;
 
 
 
@@ -1063,6 +1459,27 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			_address = null;
 			_company = null;
 
 			PerformDependencyInjection();
@@ -1098,8 +1515,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("CompanyId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
 		}
 		#endregion
+
+		/// <summary> Removes the sync logic for member _address</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", UserEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "Users", resetFKFields, new int[] { (int)UserFieldIndex.AddressId } );		
+			_address = null;
+		}
+
+		/// <summary> setups the sync logic for member _address</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAddress(IEntity2 relatedEntity)
+		{
+			if(_address!=relatedEntity)
+			{
+				DesetupSyncAddress(true, true);
+				_address = (AddressEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", UserEntity.Relations.AddressEntityUsingAddressId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 		/// <summary> Removes the sync logic for member _company</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
@@ -1167,6 +1620,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Appointment' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPsychometristAppointments
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))),
+					(IEntityRelation)GetRelationsForField("PsychometristAppointments")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "PsychometristAppointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Invoice' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1265,6 +1729,38 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAddress
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Address")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.AddressEntity, 0, null, null, null, null, "Address", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
@@ -1367,6 +1863,36 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)UserFieldIndex.CompanyId, true); }
 			set	{ SetValue((int)UserFieldIndex.CompanyId, value); }
+		}
+
+		/// <summary> The AddressId property of the Entity User<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Users"."AddressId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 AddressId
+		{
+			get { return (System.Int32)GetValue((int)UserFieldIndex.AddressId, true); }
+			set	{ SetValue((int)UserFieldIndex.AddressId, value); }
+		}
+
+
+
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(AppointmentEntity))]
+		public virtual EntityCollection<AppointmentEntity> PsychometristAppointments
+		{
+			get
+			{
+				if(_psychometristAppointments==null)
+				{
+					_psychometristAppointments = new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory)));
+					_psychometristAppointments.SetContainingEntityInfo(this, "Psychometrist");
+				}
+				return _psychometristAppointments;
+			}
 		}
 
 
@@ -1505,6 +2031,61 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual AddressEntity Address
+		{
+			get
+			{
+				return _address;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncAddress(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_address != null)
+						{
+							_address.UnsetRelatedEntity(this, "Users");
+						}
+					}
+					else
+					{
+						if(_address!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Users");
+						}
+					}
+				}
+			}
+		}
 
 		/// <summary> Gets / sets related entity of type 'CompanyEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>

@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AppointmentEntityUsingLocationId);
 			toReturn.Add(this.CompanyEntityUsingAddressId);
 			toReturn.Add(this.ReferralSourceEntityUsingAddressId);
+			toReturn.Add(this.UserEntityUsingAddressId);
 
 			toReturn.Add(this.AddressTypeEntityUsingAddressTypeId);
 			toReturn.Add(this.CityEntityUsingCityId);
@@ -63,7 +64,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Company" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Companies" , true);
 				relation.AddEntityFieldPair(AddressFields.AddressId, CompanyFields.AddressId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", false);
@@ -78,10 +79,25 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ReferralSource" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ReferralSources" , true);
 				relation.AddEntityFieldPair(AddressFields.AddressId, ReferralSourceFields.AddressId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReferralSourceEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AddressEntity and UserEntity over the 1:n relation they have, using the relation between the fields:
+		/// Address.AddressId - User.AddressId
+		/// </summary>
+		public virtual IEntityRelation UserEntityUsingAddressId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Users" , true);
+				relation.AddEntityFieldPair(AddressFields.AddressId, UserFields.AddressId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
 				return relation;
 			}
 		}

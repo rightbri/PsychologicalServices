@@ -49,6 +49,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 		private AddressEntity _address;
 		private ReferralSourceTypeEntity _referralSourceType;
 
@@ -74,6 +77,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ReferralSourceAppointmentStatusSettings = "ReferralSourceAppointmentStatusSettings";
 			/// <summary>Member name ReportTypeInvoiceAmounts</summary>
 			public static readonly string ReportTypeInvoiceAmounts = "ReportTypeInvoiceAmounts";
+
+
+
 
 
 
@@ -145,6 +151,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
 				_referralSourceAppointmentStatusSettings = (EntityCollection<ReferralSourceAppointmentStatusSettingEntity>)info.GetValue("_referralSourceAppointmentStatusSettings", typeof(EntityCollection<ReferralSourceAppointmentStatusSettingEntity>));
 				_reportTypeInvoiceAmounts = (EntityCollection<ReportTypeInvoiceAmountEntity>)info.GetValue("_reportTypeInvoiceAmounts", typeof(EntityCollection<ReportTypeInvoiceAmountEntity>));
+
+
+
 
 
 
@@ -232,6 +241,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 				default:
 					break;
 			}
@@ -268,6 +280,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportTypeInvoiceAmounts":
 					toReturn.Add(ReferralSourceEntity.Relations.ReportTypeInvoiceAmountEntityUsingReferralSourceId);
 					break;
+
+
+
 
 
 
@@ -426,6 +441,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_referralSourceType", (!this.MarkedForDeletion?_referralSourceType:null));
 
@@ -502,6 +520,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
@@ -562,6 +583,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -572,6 +596,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._referralSourceAppointmentStatusSettings = (EntityCollection<ReferralSourceAppointmentStatusSettingEntity>) collectionsQueue.Dequeue();
 			this._reportTypeInvoiceAmounts = (EntityCollection<ReportTypeInvoiceAmountEntity>) collectionsQueue.Dequeue();
+
+
+
 
 
 
@@ -608,6 +635,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -620,6 +650,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceAppointmentStatusSettingEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceAppointmentStatusSettingEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReportTypeInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReportTypeInvoiceAmountEntityFactory))) : null);
+
+
+
 
 
 
@@ -643,6 +676,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("ReferralSourceAppointmentStatusSettings", _referralSourceAppointmentStatusSettings);
 			toReturn.Add("ReportTypeInvoiceAmounts", _reportTypeInvoiceAmounts);
+
+
+
 
 
 
@@ -680,6 +716,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 			if(_address!=null)
 			{
 				_address.ActiveContext = base.ActiveContext;
@@ -698,6 +737,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessments = null;
 			_referralSourceAppointmentStatusSettings = null;
 			_reportTypeInvoiceAmounts = null;
+
+
+
 
 
 
@@ -754,7 +796,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", ReferralSourceEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "ReferralSource", resetFKFields, new int[] { (int)ReferralSourceFieldIndex.AddressId } );		
+			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", ReferralSourceEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "ReferralSources", resetFKFields, new int[] { (int)ReferralSourceFieldIndex.AddressId } );		
 			_address = null;
 		}
 
@@ -881,6 +923,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("ReportTypeInvoiceAmounts")[0], (int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, (int)PsychologicalServices.Data.EntityType.ReportTypeInvoiceAmountEntity, 0, null, null, null, null, "ReportTypeInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
+
 
 
 
@@ -1074,6 +1119,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
@@ -1095,14 +1143,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_address != null)
 						{
-							_address.UnsetRelatedEntity(this, "ReferralSource");
+							_address.UnsetRelatedEntity(this, "ReferralSources");
 						}
 					}
 					else
 					{
 						if(_address!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "ReferralSource");
+							((IEntity2)value).SetRelatedEntity(this, "ReferralSources");
 						}
 					}
 				}

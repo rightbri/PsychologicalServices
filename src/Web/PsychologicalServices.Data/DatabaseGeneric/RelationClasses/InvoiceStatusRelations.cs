@@ -32,6 +32,8 @@ namespace PsychologicalServices.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.InvoiceEntityUsingInvoiceStatusId);
 			toReturn.Add(this.InvoiceStatusChangeEntityUsingInvoiceStatusId);
+			toReturn.Add(this.InvoiceStatusPathsEntityUsingNextInvoiceStatusId);
+			toReturn.Add(this.InvoiceStatusPathsEntityUsingInvoiceStatusId);
 
 
 			return toReturn;
@@ -65,6 +67,36 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(InvoiceStatusFields.InvoiceStatusId, InvoiceStatusChangeFields.InvoiceStatusId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceStatusEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceStatusChangeEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between InvoiceStatusEntity and InvoiceStatusPathsEntity over the 1:n relation they have, using the relation between the fields:
+		/// InvoiceStatus.InvoiceStatusId - InvoiceStatusPaths.NextInvoiceStatusId
+		/// </summary>
+		public virtual IEntityRelation InvoiceStatusPathsEntityUsingNextInvoiceStatusId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "NextInvoiceStatusPaths" , true);
+				relation.AddEntityFieldPair(InvoiceStatusFields.InvoiceStatusId, InvoiceStatusPathsFields.NextInvoiceStatusId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceStatusEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceStatusPathsEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between InvoiceStatusEntity and InvoiceStatusPathsEntity over the 1:n relation they have, using the relation between the fields:
+		/// InvoiceStatus.InvoiceStatusId - InvoiceStatusPaths.InvoiceStatusId
+		/// </summary>
+		public virtual IEntityRelation InvoiceStatusPathsEntityUsingInvoiceStatusId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceStatusPaths" , true);
+				relation.AddEntityFieldPair(InvoiceStatusFields.InvoiceStatusId, InvoiceStatusPathsFields.InvoiceStatusId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceStatusEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceStatusPathsEntity", false);
 				return relation;
 			}
 		}

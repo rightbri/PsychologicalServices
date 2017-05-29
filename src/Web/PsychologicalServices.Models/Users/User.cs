@@ -1,4 +1,6 @@
-﻿using PsychologicalServices.Models.Companies;
+﻿using PsychologicalServices.Models.Addresses;
+using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Roles;
 using System;
@@ -19,11 +21,15 @@ namespace PsychologicalServices.Models.Users
 
         public Company Company { get; set; }
 
+        public Address Address { get; set; }
+
         public IEnumerable<Role> Roles { get; set; }
 
         public IEnumerable<Unavailability> Unavailability { get; set; }
 
         public IEnumerable<UserTravelFee> TravelFees { get; set; }
+
+        public IEnumerable<Appointment> PsychometristAppointments { get; set; }
 
         public bool IsActive { get; set; }
 

@@ -81,6 +81,7 @@
     <Compile Include="Common\Utility\FileReader.cs" />
     <Compile Include="Common\Utility\FileWriter.cs" />
     <Compile Include="Common\Utility\HtmlToPdfExecutablePathService.cs" />
+    <Compile Include="Common\Utility\HtmlToPdfParameters.cs" />
     <Compile Include="Common\Utility\HtmlToPdfService.cs" />
     <Compile Include="Common\Utility\IFileReader.cs" />
     <Compile Include="Common\Utility\IFileWriter.cs" />
@@ -88,12 +89,14 @@
     <Compile Include="Common\Utility\IHtmlToPdfService.cs" />
     <Compile Include="Common\Utility\IRunProcess.cs" />
     <Compile Include="Common\Utility\ITempDirectory.cs" />
+    <Compile Include="Common\Utility\ITempDirectoryFactory.cs" />
     <Compile Include="Common\Utility\ITempPath.cs" />
     <Compile Include="Common\Utility\ProcessDataReceivedEventArgs.cs" />
     <Compile Include="Common\Utility\ProcessRunInfo.cs" />
     <Compile Include="Common\Utility\ProcessStandardInputReaderEventArgs.cs" />
     <Compile Include="Common\Utility\RunProcess.cs" />
     <Compile Include="Common\Utility\TempDirectory.cs" />
+    <Compile Include="Common\Utility\TempDirectoryFactory.cs" />
     <Compile Include="Common\Utility\TempPath.cs" />
     <Compile Include="Companies\CompanyRepository.cs" />
     <Compile Include="Invoices\InvoiceRepository.cs" />

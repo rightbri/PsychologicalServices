@@ -37,17 +37,9 @@ namespace PsychologicalServices.Web.Controllers
         [ResponseType(typeof(IEnumerable<PsychologicalServices.Models.Attributes.Attribute>))]
         public IHttpActionResult Search(AttributeSearchCriteria criteria)
         {
-            try
-            {
-                var attributes = _attributeService.SearchAttributes(criteria);
+            var attributes = _attributeService.SearchAttributes(criteria);
 
-                return Ok(attributes);
-            }
-            catch (Exception ex)
-            {
-                return Content(HttpStatusCode.InternalServerError, "Something bad happened");
-            }
-            
+            return Ok(attributes);
         }
 
         [Route("save")]

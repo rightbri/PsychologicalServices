@@ -117,6 +117,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.AssessmentId);}
 		}
+		/// <summary>Creates a new AppointmentEntity.CreateDate field instance</summary>
+		public static EntityField2 CreateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.CreateDate);}
+		}
+		/// <summary>Creates a new AppointmentEntity.CreateUserId field instance</summary>
+		public static EntityField2 CreateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.CreateUserId);}
+		}
+		/// <summary>Creates a new AppointmentEntity.UpdateDate field instance</summary>
+		public static EntityField2 UpdateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.UpdateDate);}
+		}
+		/// <summary>Creates a new AppointmentEntity.UpdateUserId field instance</summary>
+		public static EntityField2 UpdateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.UpdateUserId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AppointmentAttributeEntity</summary>
@@ -241,6 +261,31 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 ReferralSourceFileNumber
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.ReferralSourceFileNumber);}
+		}
+		/// <summary>Creates a new AssessmentEntity.CreateDate field instance</summary>
+		public static EntityField2 CreateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.CreateDate);}
+		}
+		/// <summary>Creates a new AssessmentEntity.CreateUserId field instance</summary>
+		public static EntityField2 CreateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.CreateUserId);}
+		}
+		/// <summary>Creates a new AssessmentEntity.UpdateDate field instance</summary>
+		public static EntityField2 UpdateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.UpdateDate);}
+		}
+		/// <summary>Creates a new AssessmentEntity.UpdateUserId field instance</summary>
+		public static EntityField2 UpdateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.UpdateUserId);}
+		}
+		/// <summary>Creates a new AssessmentEntity.SummaryNoteId field instance</summary>
+		public static EntityField2 SummaryNoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.SummaryNoteId);}
 		}
 	}
 
@@ -842,20 +887,15 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusFieldIndex.CanEdit);}
 		}
-		/// <summary>Creates a new InvoiceStatusEntity.CanOpen field instance</summary>
-		public static EntityField2 CanOpen
+		/// <summary>Creates a new InvoiceStatusEntity.SaveDocument field instance</summary>
+		public static EntityField2 SaveDocument
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusFieldIndex.CanOpen);}
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusFieldIndex.SaveDocument);}
 		}
-		/// <summary>Creates a new InvoiceStatusEntity.CanSubmit field instance</summary>
-		public static EntityField2 CanSubmit
+		/// <summary>Creates a new InvoiceStatusEntity.ActionName field instance</summary>
+		public static EntityField2 ActionName
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusFieldIndex.CanSubmit);}
-		}
-		/// <summary>Creates a new InvoiceStatusEntity.CanMarkPaid field instance</summary>
-		public static EntityField2 CanMarkPaid
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusFieldIndex.CanMarkPaid);}
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusFieldIndex.ActionName);}
 		}
 	}
 
@@ -881,6 +921,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 UpdateDate
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusChangeFieldIndex.UpdateDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity InvoiceStatusPathsEntity</summary>
+	public partial class InvoiceStatusPathsFields
+	{
+		/// <summary>Creates a new InvoiceStatusPathsEntity.InvoiceStatusPathId field instance</summary>
+		public static EntityField2 InvoiceStatusPathId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusPathsFieldIndex.InvoiceStatusPathId);}
+		}
+		/// <summary>Creates a new InvoiceStatusPathsEntity.InvoiceStatusId field instance</summary>
+		public static EntityField2 InvoiceStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusPathsFieldIndex.InvoiceStatusId);}
+		}
+		/// <summary>Creates a new InvoiceStatusPathsEntity.NextInvoiceStatusId field instance</summary>
+		public static EntityField2 NextInvoiceStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceStatusPathsFieldIndex.NextInvoiceStatusId);}
 		}
 	}
 
@@ -1241,6 +1301,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 CompanyId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(UserFieldIndex.CompanyId);}
+		}
+		/// <summary>Creates a new UserEntity.AddressId field instance</summary>
+		public static EntityField2 AddressId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserFieldIndex.AddressId);}
 		}
 	}
 

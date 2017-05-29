@@ -8,6 +8,7 @@ using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Roles;
+using PsychologicalServices.Models.Schedule;
 using PsychologicalServices.Models.Users;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -21,18 +22,18 @@ namespace PsychologicalServices.Infrastructure.Users
 {
     public class UserRepository : RepositoryBase, IUserRepository
     {
-        //private readonly ICacheService _cache = null;
+        private readonly ICacheService _cache = null;
         private readonly IConfigurationService _configuration = null;
         private readonly IDate _now = null;
 
         public UserRepository(
             IDataAccessAdapterFactory adapterFactory,
-            //ICacheService cache,
+            ICacheService cache,
             IConfigurationService configuration,
             IDate now
         ) : base(adapterFactory)
         {
-            //_cache = cache;
+            _cache = cache;
             _configuration = configuration;
             _now = now;
         }
@@ -79,6 +80,55 @@ namespace PsychologicalServices.Infrastructure.Users
                     .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
                     .Prefetch<CompanyEntity>(user => user.Company)
                 );
+
+        private Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>> GetPsychometristSchedulePath(
+            ScheduleSearchCriteria criteria
+        )
+        {
+            return (uPath => uPath
+                    .Prefetch<CompanyEntity>(user => user.Company)
+                    .Prefetch<AppointmentEntity>(user => user.PsychometristAppointments)
+                        .SubPath(appointmentPath => appointmentPath
+                            .Prefetch<AddressEntity>(appointment => appointment.Location)
+                                .SubPath(addressPath => addressPath
+                                    .Prefetch<CityEntity>(address => address.City)
+                                )
+                            .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
+                                .SubPath(appointmentAttributePath => appointmentAttributePath
+                                    .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
+                                        .SubPath(attributePath => attributePath
+                                            .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                                        )
+                                )
+                            .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                                .SubPath(assessmentPath => assessmentPath
+                                    .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
+                                    .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                                    .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                        .SubPath(assessmentClaimPath => assessmentClaimPath
+                                            .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                                .SubPath(claimPath => claimPath
+                                                    .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                                )
+                                        )
+                                    .Prefetch<AssessmentAttributeEntity>(assessment => assessment.AssessmentAttributes)
+                                        .SubPath(assessmentAttributePath => assessmentAttributePath
+                                            .Prefetch<AttributeEntity>(assessmentAttribute => assessmentAttribute.Attribute)
+                                                .SubPath(attributePath => attributePath
+                                                    .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
+                                                )
+                                        )
+                                )
+                        )
+                        .FilterOn(appointment =>
+                            null == criteria ||
+                            (
+                            appointment.AppointmentTime >= criteria.StartDate &&
+                            appointment.AppointmentTime <= criteria.EndDate
+                            )
+                        )
+                );
+        }
 
         #endregion
 
@@ -294,6 +344,43 @@ namespace PsychologicalServices.Infrastructure.Users
                         users
                     )
                     .Select(entity => entity.ToUserLite())
+                    .ToList();
+            }
+        }
+
+        public IEnumerable<User> GetPsychometristSchedules(ScheduleSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var path = GetPsychometristSchedulePath(criteria);
+
+                var users = meta.User
+                    .WithPath(path);
+                
+                if (null != criteria)
+                {
+                    users = users
+                        .Where(user =>
+                            user.CompanyId == criteria.CompanyId &&
+                            user.PsychometristAppointments.Any(appointment =>
+                                appointment.AppointmentTime >= criteria.StartDate &&
+                                appointment.AppointmentTime <= criteria.EndDate
+                            )
+                        );
+
+                    if (criteria.PsychometristId.HasValue)
+                    {
+                        users = users.Where(user => user.UserId == criteria.PsychometristId);
+                    }
+                }
+                
+                return Execute<UserEntity>(
+                        (ILLBLGenProQuery)
+                        users
+                    )
+                    .Select(entity => entity.ToPsychometristScheduleUser())
                     .ToList();
             }
         }

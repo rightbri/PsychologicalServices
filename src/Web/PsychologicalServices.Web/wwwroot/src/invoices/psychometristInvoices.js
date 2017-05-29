@@ -2,7 +2,6 @@ import {inject} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
 import {Context} from 'common/context';
 import {Config} from 'common/config';
-import moment from 'moment';
 
 @inject(DataRepository, Context, Config)
 export class PsychometristInvoices {

@@ -210,6 +210,17 @@
     <Compile Include="Roles\Role.cs" />
     <Compile Include="Referrals\ReferralType.cs" />
     <Compile Include="Roles\RoleService.cs" />
+    <Compile Include="Schedule\IScheduleHtmlGenerator.cs" />
+    <Compile Include="Schedule\IScheduleService.cs" />
+    <Compile Include="Schedule\PsychometristScheduleTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PsychometristScheduleTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Schedule\ScheduleHtmlGenerator.cs" />
+    <Compile Include="Schedule\ScheduleSearchCriteria.cs" />
+    <Compile Include="Schedule\ScheduleService.cs" />
+    <Compile Include="Schedule\SendScheduleResult.cs" />
     <Compile Include="Users\IUnavailabilityValidator.cs" />
     <Compile Include="Users\IUserRepository.cs" />
     <Compile Include="Users\IUserService.cs" />
@@ -235,6 +246,10 @@
     <Content Include="Invoices\PsychometristInvoiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PsychometristInvoiceTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Schedule\PsychometristScheduleTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>PsychometristScheduleTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

@@ -73,6 +73,14 @@ namespace PsychologicalServices.Data
 		AppointmentStatusId,
 		///<summary>AssessmentId. </summary>
 		AssessmentId,
+		///<summary>CreateDate. </summary>
+		CreateDate,
+		///<summary>CreateUserId. </summary>
+		CreateUserId,
+		///<summary>UpdateDate. </summary>
+		UpdateDate,
+		///<summary>UpdateUserId. </summary>
+		UpdateUserId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -147,6 +155,16 @@ namespace PsychologicalServices.Data
 		IsLargeFile,
 		///<summary>ReferralSourceFileNumber. </summary>
 		ReferralSourceFileNumber,
+		///<summary>CreateDate. </summary>
+		CreateDate,
+		///<summary>CreateUserId. </summary>
+		CreateUserId,
+		///<summary>UpdateDate. </summary>
+		UpdateDate,
+		///<summary>UpdateUserId. </summary>
+		UpdateUserId,
+		///<summary>SummaryNoteId. </summary>
+		SummaryNoteId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -579,12 +597,10 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>CanEdit. </summary>
 		CanEdit,
-		///<summary>CanOpen. </summary>
-		CanOpen,
-		///<summary>CanSubmit. </summary>
-		CanSubmit,
-		///<summary>CanMarkPaid. </summary>
-		CanMarkPaid,
+		///<summary>SaveDocument. </summary>
+		SaveDocument,
+		///<summary>ActionName. </summary>
+		ActionName,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -603,6 +619,22 @@ namespace PsychologicalServices.Data
 		InvoiceStatusId,
 		///<summary>UpdateDate. </summary>
 		UpdateDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceStatusPaths.
+	/// </summary>
+	public enum InvoiceStatusPathsFieldIndex:int
+	{
+		///<summary>InvoiceStatusPathId. </summary>
+		InvoiceStatusPathId,
+		///<summary>InvoiceStatusId. </summary>
+		InvoiceStatusId,
+		///<summary>NextInvoiceStatusId. </summary>
+		NextInvoiceStatusId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -867,6 +899,8 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>CompanyId. </summary>
 		CompanyId,
+		///<summary>AddressId. </summary>
+		AddressId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1004,6 +1038,8 @@ namespace PsychologicalServices.Data
 		InvoiceStatusEntity,
 		///<summary>InvoiceStatusChange</summary>
 		InvoiceStatusChangeEntity,
+		///<summary>InvoiceStatusPaths</summary>
+		InvoiceStatusPathsEntity,
 		///<summary>InvoiceType</summary>
 		InvoiceTypeEntity,
 		///<summary>IssueInDispute</summary>

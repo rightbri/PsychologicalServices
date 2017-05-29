@@ -91,6 +91,14 @@
 				</div>
 			</div>
 
+			<div class="row" if.bind="appointment.createUser || appointment.updateUser">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<span class="form-control-static small" if.bind="appointment.createUser">Created by ${appointment.createUser.firstName} ${appointment.createUser.lastName} at ${appointment.createDate | dateFormat:config.longDateTimeFormat}</span>
+						<br><span class="form-control-static small" if.bind="appointment.updateUser">Updated by ${appointment.updateUser.firstName} ${appointment.updateUser.lastName} at ${appointment.updateDate | dateFormat:config.longDateTimeFormat}</span>
+					</div>
+				</div>
+			</div>
 		</div>
 		</ai-dialog-body>
 		<ai-dialog-footer>

@@ -125,6 +125,21 @@
 			<#= string.Format("{0} {1}", psychometrist.FirstName, psychometrist.LastName) #>
 		</h1>
 		<p>
+			<# if (null != psychometrist.Address) { #>
+				<# if (!string.IsNullOrWhiteSpace(psychometrist.Address.Street)) { #>
+				<#= psychometrist.Address.Street #>
+				<# } #>
+				<#= psychometrist.Address.Street #>
+				<# if (!string.IsNullOrWhiteSpace(psychometrist.Address.Suite)) { #>
+				<br><#= psychometrist.Address.Suite #>
+				<# } #>
+				<# if (null != psychometrist.Address.City) { #>
+				<br><#= psychometrist.Address.City.Name #>, <#= psychometrist.Address.City.Province #>
+				<# } #>
+				<# if (!string.IsNullOrWhiteSpace(psychometrist.Address.PostalCode)) { #>
+				<br><#= psychometrist.Address.PostalCode #>
+				<# } #>
+			<# } #>
 			<a href="mailto:<#= psychometrist.Email #>"><#= psychometrist.Email #></a>
 		</p>
 	</header>
@@ -139,15 +154,19 @@
 	<p class="bill-to">
 		Bill To:
 		<br><#= company.Name #>
-		<# if (!string.IsNullOrWhiteSpace(company.Address.Street)) { #>
-		<br><#= company.Address.Street #>
-		<# } #>
-		<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
-		<br><#= company.Address.Suite #>
-		<# } #>
-		<br><#= company.Address.City.Name #>, <#= company.Address.City.Province #>
-		<# if (!string.IsNullOrWhiteSpace(company.Address.PostalCode)) { #>
-		<br><#= company.Address.PostalCode #>
+		<# if (null != company.Address) { #>
+			<# if (!string.IsNullOrWhiteSpace(company.Address.Street)) { #>
+			<br><#= company.Address.Street #>
+			<# } #>
+			<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
+			<br><#= company.Address.Suite #>
+			<# } #>
+			<# if (null != company.Address.City) { #>
+			<br><#= company.Address.City.Name #>, <#= company.Address.City.Province #>
+			<# } #>
+			<# if (!string.IsNullOrWhiteSpace(company.Address.PostalCode)) { #>
+			<br><#= company.Address.PostalCode #>
+			<# } #>
 		<# } #>
 	</p>
 

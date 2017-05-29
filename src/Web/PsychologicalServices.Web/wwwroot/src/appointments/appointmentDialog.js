@@ -22,7 +22,7 @@ export class AppointmentDialog {
 	
 	activate(model) {
 		this.appointment = model.appointment;
-		this.appointmentDate = this.appointment.appointmentTime;//this.date(this.appointment.appointmentTime);
+		this.appointmentDate = this.appointment.appointmentTime;
 		this.appointmentTime = this.time(this.appointment.appointmentTime);
 
 		this.psychometrists = model.psychometrists;
@@ -45,11 +45,6 @@ export class AppointmentDialog {
 	appointmentDateChanged(e) {
 		this.appointmentDate = e.detail.event.date;
 	}
-	
-	date(datetime) {
-		//return new Date(datetime.getFullYear(), datetime.getMonth(), datetime.getDate());
-		//return moment(datetime).format(this.config.longDateFormat);
-	}
 
 	time(datetime) {
 		return moment(datetime).format(this.config.shortTimeFormat);
@@ -63,6 +58,5 @@ export class AppointmentDialog {
 		).format();
 
 		return newDate;
-		//moment(date + time, this.config.shortDateFormat + 'T' + this.config.shortTimeFormat).format();
     }
 }
