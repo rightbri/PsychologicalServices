@@ -6,9 +6,11 @@
     [CreateUserId] INT             NOT NULL,
     [CreateDate]   DATETIME        CONSTRAINT [DF_Notes_CreateDate] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_Notes] PRIMARY KEY CLUSTERED ([NoteId] ASC),
-    CONSTRAINT [FK_Notes_Users] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
-    CONSTRAINT [FK_Notes_Users1] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
+    CONSTRAINT [FK_Notes_CreateUser] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
+    CONSTRAINT [FK_Notes_UpdateUser] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 
