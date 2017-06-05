@@ -1,0 +1,130 @@
+<template>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/boolean"></require>
+	<require from="common/preserve-breaks"></require>
+	
+	<ux-dialog>
+		<ux-dialog-header>
+		<h3>Assessment Summary</h3>
+		</ux-dialog-header>
+		<ux-dialog-body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>Name</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						${claim.claimant.firstName} ${claim.claimant.lastName}
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>Psychiatrist</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						${psychiatrist | boolean}
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>DOB</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						${claim.claimant.dateOfBirth | dateFormat:config.longDateFormat}
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>Reader</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						${reader | boolean}
+					</div>
+				</div>
+			</div>
+				
+			<div class="row">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>DOL</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						${claim.dateOfLoss | dateFormat:config.longDateFormat}
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>Translator</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						${translator | boolean}
+					</div>
+				</div>
+			</div>
+				
+			<div class="row">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>Issues in Dispute</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						<ul>
+							<li repeat.for="issueInDispute of issuesInDispute">
+							${issueInDispute.name}
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>Colour</strong>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-group">
+						<template repeat.for="color of colors">
+							<span class="color-swatch" css="background-color: ${color.hexCode};"></span>
+						</template>
+					</div>
+				</div>
+			</div>
+				
+			<div class="row">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<strong>Summary</strong>
+					</div>
+				</div>
+				<div class="col-xs-10">
+					<div class="form-group">
+						<span preserve-breaks.bind="summary"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		</ux-dialog-body>
+		<ux-dialog-footer>
+		<button type="button" class="btn btn-primary" click.delegate="cancel()">
+			Close
+		</button>
+		</ux-dialog-footer>
+	</ux-dialog>
+</template>

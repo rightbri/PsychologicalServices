@@ -1,0 +1,122 @@
+<template>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/money"></require>
+	<require from="common/date-picker"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	
+
+<h2>Invoices</h2>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="searchIdentifier">ID</label>
+				<input id="searchIdentifier" type="text" class="form-control" value.bind="searchIdentifier" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="searchDate">Invoice Date</label>
+				<input id="searchDate" type="text" class="form-control" value.bind="searchDate" date-picker.bind="config.datepickerOptions" />
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="searchStatus">Status</label>
+				<select id="searchStatus" class="form-control" value.bind="searchStatus" matcher.bind="invoiceStatusMatcher">
+					<option></option>
+					<option repeat.for="invoiceStatus of invoiceStatuses" model.bind="invoiceStatus">
+						${invoiceStatus.name}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="searchType">Type</label>
+				<select id="searchType" class="form-control" value.bind="searchType" matcher.bind="invoiceTypeMatcher">
+					<option></option>
+					<option repeat.for="invoiceType of invoiceTypes" model.bind="invoiceType">
+						${invoiceType.name}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="searchPayableTo">Payable To</label>
+				<select id="searchPayableTo" class="form-control" value.bind="searchPayableTo" matcher.bind="payableToMatcher">
+					<option></option>
+					<option repeat.for="payableTo of payableTos" model.bind="payableTo">
+						${payableTo.firstName} ${payableTo.lastName}
+					</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group">
+				<button type="button" class="btn btn-default" click.delegate="searchInvoices()">
+					Search
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<table class="table table-condensed" fixed-header>
+	<thead>
+		<tr>
+			<th></th>
+			<th>ID</th>
+			<th>Date</th>
+			<th>Status</th>
+			<th>Type</th>
+			<th>Payable To</th>
+			<th>Amount</th>
+			<th>Referral Source</th>
+			<th>Claimant</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr repeat.for="invoice of invoices">
+			<td>
+				<a route-href="route: editInvoice; params.bind: { id: invoice.invoiceId }" class="btn btn-default btn-xs" title="Edit Invoice">
+					<i class="fa fa-pencil"></i>
+				</a>
+			</td>
+			<td>${invoice.identifier}</td>
+			<td>${invoice.invoiceDate | dateFormat:config.longDateFormat}</td>
+			<td>${invoice.invoiceStatus.name}</td>
+			<td>${invoice.invoiceType.name}</td>
+			<td>${invoice.payableTo.firstName} ${invoice.payableTo.lastName}</td>
+			<td>${invoice.total | money}</td>
+			<td>${invoice.appointment.assessment.referralSource.name}</td>
+			<td>
+				<ul class="list-unstyled">
+					<li repeat.for="claim of invoice.appointment.assessment.claims">
+						${claim.claimant.firstName} ${claim.claimant.lastName}
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+</template>

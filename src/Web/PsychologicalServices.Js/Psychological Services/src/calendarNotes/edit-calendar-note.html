@@ -1,0 +1,57 @@
+<template>
+	<require from="common/date-picker"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="common/validation-summary.html"></require>
+	
+	<ux-dialog>
+		<ux-dialog-header>
+		<h3>Edit Calendar Note</h3>
+		</ux-dialog-header>
+		<ux-dialog-body>
+		<validation-summary errors.bind="validationErrors" if.bind="validationErrors"></validation-summary>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="fromDate">From Date</label>
+						<input id="fromDate" type="text" class="form-control" value.bind="calendarNote.fromDate | dateFormat:config.shortDateFormat" date-picker.bind="config.datepickerOptions" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="toDate">To Date</label>
+						<input id="toDate" type="text" class="form-control" value.bind="calendarNote.toDate | dateFormat:config.shortDateFormat" date-picker.bind="config.datepickerOptions" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="noteText">Note</label>
+						<textarea id="noteText" class="form-control" value.bind="calendarNote.note.noteText"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked.bind="calendarNote.note.deleted" />&nbsp;Deleted
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		</ux-dialog-body>
+		<ux-dialog-footer>
+		<button type="button" class="btn btn-primary" click.delegate="ok()">
+			Ok
+		</button>
+		<button type="button" class="btn btn-default" click.delegate="cancel()">
+			Cancel
+		</button>
+		</ux-dialog-footer>
+	</ux-dialog>
+</template>

@@ -1,0 +1,111 @@
+<template>
+	<require from="bootstrap/css/bootstrap.css"></require>
+	<require from="bootstrap-datepicker/css/bootstrap-datepicker3.css"></require>
+	<require from="../../content/css/styles.css"></require>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Psychological Services</a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="nav navbar-nav" if.bind="context.loggedIn">
+				<!--
+					<li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
+						<a data-toggle="collapse" data-target="navbar" href.bind="route.href">${route.title}</a>
+					</li>
+				-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							Assessments
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/#/calendar">Calendar</a>
+							</li>
+							<li>
+								<a href="/#/assessments">Search</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li>
+						<a href="/#/schedule" data-toggle="collapse" data-target="navbar">Schedule</a>
+					</li>
+					
+					<li>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							Invoices
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/#/invoices">Search</a>
+							</li>
+							<li>
+								<a href="/#/invoices/psychometrist">Psychometrists</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							Reports
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							
+						</ul>
+					</li>
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							Maintenance
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/#/addresses">Addresses</a>
+							</li>
+							<li>
+								<a href="/#/referralSources">Referral Sources</a>
+							</li>
+							<li>
+								<a href="/#/users">Users</a>
+							</li>
+						</ul>
+					</li>
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#" click.delegate="context.login()" if.bind="!context.loggedIn">Login</a>
+					</li>
+					<li class="dropdown" if.bind="context.loggedIn">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							${context.username}
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#" click.delegate="context.logout()">Logout</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<i class="fa fa-cog fa-spin fa-3x" style="margin: 0 auto;" if.bind="router.isNavigating"></i>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<router-view if.bind="context.loggedIn"></router-view>
+</template>

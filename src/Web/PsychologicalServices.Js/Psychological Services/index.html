@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Aurelia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://use.fontawesome.com/594ab2bb0d.js"></script>
+  </head>
+  <body aurelia-app="main">
+	<div>Loading...</div>
+	<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+		apiKey: "AIzaSyAUMGfIT6-wPR7hSmG-6YcTHkg3_mhG2gg",
+		authDomain: "psychologicalservices-146622.firebaseapp.com",
+		databaseURL: "https://psychologicalservices-146622.firebaseio.com",
+		storageBucket: "psychologicalservices-146622.appspot.com",
+		messagingSenderId: "799270231201"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+    <script src="scripts/vendor-bundle.js" data-main="aurelia-bootstrapper"></script>
+  </body>
+</html>
