@@ -19,6 +19,7 @@ export class Context {
 			this.getUser().then(user => {
 				this.loggedIn = user && user.email;
 			}).catch(err => {
+				console.log(err);
 				this.logout();
 			});
         });

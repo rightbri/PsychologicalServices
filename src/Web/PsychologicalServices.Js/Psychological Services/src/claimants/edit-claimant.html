@@ -2,6 +2,7 @@
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/gender"></require>
 	<require from="common/validation-summary.html"></require>
+	<require from="common/date-picker"></require>
 	
 	<ux-dialog>
 		<ux-dialog-header>
@@ -30,7 +31,7 @@
 				<div class="col-xs-12">
 					<div class="form-group">
 						<label for="dateOfBirth">Date of Birth</label>
-						<input id="dateOfBirth" type="text" class="form-control" value.bind="claimant.dateOfBirth" />
+						<input id="dateOfBirth" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="claimant.dateOfBirth" />
 					</div>
 				</div>
 			</div>

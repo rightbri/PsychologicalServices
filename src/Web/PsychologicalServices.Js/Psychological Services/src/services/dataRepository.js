@@ -42,10 +42,11 @@ export class DataRepository {
 					response(response) {
 						if (!response.ok) {
 							self.notifier.error('Error: ' + response.status + ' - ' + response.statusText);
-							
+							/*
 							if (response.status === 401) {//403) {
 								self.authContext.logout().then(() => self.authContext.login());
 							}
+							*/
 						}
 						return response;
 					}

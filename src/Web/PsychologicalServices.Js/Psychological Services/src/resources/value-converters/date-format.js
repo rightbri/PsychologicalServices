@@ -13,7 +13,8 @@ export class DateFormatValueConverter {
 		var m = moment(value, format);
 
 		if (m.isValid()) {
-			return m.toDate();
+			//return m.toDate();
+			return m.format();
 		}
 		
 		return value;

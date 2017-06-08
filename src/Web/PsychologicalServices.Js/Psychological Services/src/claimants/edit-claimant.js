@@ -1,12 +1,14 @@
 import {DialogController} from 'aurelia-dialog';
 import {DataRepository} from 'services/dataRepository';
+import {Config} from 'common/config';
 import {inject} from 'aurelia-framework';
 
-@inject(DialogController, DataRepository)
+@inject(DialogController, DataRepository, Config)
 export class EditClaimant {
-	constructor(dialogController, dataRepository) {
+	constructor(dialogController, dataRepository, config) {
 		this.dialogController = dialogController;
 		this.dataRepository = dataRepository;
+		this.config = config;
 
 		this.error = null;
 		this.validationErrors = null;

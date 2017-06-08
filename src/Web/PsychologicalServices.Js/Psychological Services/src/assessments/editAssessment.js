@@ -90,7 +90,7 @@ export class EditAssessment {
 					return this.dataRepository.getNewAppointment(user.company.companyId)
 						.then(appointment => {
 							
-							appointment.appointmentTime = appointmentDate;
+							appointment.appointmentTime = moment(appointmentDate).format();
 							
 							this.assessment = {
 								assessmentId: 0,
@@ -238,7 +238,7 @@ export class EditAssessment {
 		var original = JSON.parse(JSON.stringify(medRehab));
 		
 		return this.dialogService.open({viewModel: EditMedRehab, model: medRehab})
-			.then(result => {
+			.whenClosed(result => {
 				var copyFrom = original;
 				
 				if (!result.wasCancelled) {
@@ -263,7 +263,7 @@ export class EditAssessment {
 		var original = JSON.parse(JSON.stringify(this.claimant || {}));
 		
 		return this.dialogService.open({viewModel: SearchClaimant, model: { claimant: this.claimant, addClaimantEnabled: true } })
-			.then(result => {
+			.whenClosed(result => {
 				var source = original;
 
 				if (!result.wasCancelled) {
@@ -303,7 +303,7 @@ export class EditAssessment {
 		var original = JSON.parse(JSON.stringify(claim));
 		
 		return this.dialogService.open({viewModel: EditClaim, model: claim})
-			.then(result => {
+			.whenClosed(result => {
 				var copyFrom = original;
 				
 				if (!result.wasCancelled) {
@@ -346,21 +346,21 @@ export class EditAssessment {
 				'attributes': this.appointmentAttributes
 			}
 		})
-			.whenClosed(result => {
-				var copyFrom = original;
-				
-				if (!result.wasCancelled) {
-					copyFrom = result.output;
+		.whenClosed(result => {
+			var copyFrom = original;
+			
+			if (!result.wasCancelled) {
+				copyFrom = result.output;
+			}
+			
+			for (var prop in copyFrom) {
+				if (copyFrom.hasOwnProperty(prop)) {
+					appointment[prop] = copyFrom[prop];
 				}
-				
-				for (var prop in copyFrom) {
-					if (copyFrom.hasOwnProperty(prop)) {
-						appointment[prop] = copyFrom[prop];
-					}
-				}
-				
-				return { wasCancelled: result.wasCancelled, appointment: appointment };
-			});
+			}
+			
+			return { wasCancelled: result.wasCancelled, appointment: appointment };
+		});
 	}
 	
 	removeAppointment(appointment) {
@@ -380,7 +380,7 @@ export class EditAssessment {
 		var original = JSON.parse(JSON.stringify(note));
 		
 		return this.dialogService.open({viewModel: EditNote, model: note})
-			.then(result => {
+			.whenClosed(result => {
 				var copyFrom = original;
 				
 				if (!result.wasCancelled) {
@@ -416,7 +416,7 @@ export class EditAssessment {
 		var original = JSON.parse(JSON.stringify(report));
 		
 		return this.dialogService.open({viewModel: EditAssessmentReport, model: { report: report, issuesInDispute: this.assessment.referralType.issuesInDispute, reportTypes: this.assessment.assessmentType.reportTypes } })
-			.then(result => {
+			.whenClosed(result => {
 				var copyFrom = original;
 				
 				if (!result.wasCancelled) {

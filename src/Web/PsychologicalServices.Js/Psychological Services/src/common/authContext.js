@@ -19,10 +19,15 @@ export class AuthContext {
 				this.ea.publish('authStateChanged', { 'user': user });
 			}
 			else {
-				this.login();
-				//this.logout();
+				//this.login();
+				this.logout();
 			}
-        }, (code, message) => this.notifier.error(code + ': ' + message));
+        }, (code, message) => {
+			console.log(code + ' - ' + message);
+			this.notifier.error(code + ': ' + message);
+			
+		}
+		);
 	}
 	
 	clear() {
@@ -48,6 +53,7 @@ export class AuthContext {
 			this.setAuthToken(result.credential.idToken);
 			return result;
         }).catch(err => {
+			console.log(err);
 			/*
             //let email = err.email;
             //let credential = err.credential;
@@ -65,6 +71,7 @@ export class AuthContext {
 	
 	logout() {
 		return firebase.auth().signOut().then(() => this.clear()).catch(err => {
+			console.log(err);
 			/*
             this.dialogService.open({
 				viewModel: MessageDialog,
