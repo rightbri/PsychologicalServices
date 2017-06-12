@@ -631,7 +631,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NewAssessmentReportStatus = company.NewAssessmentReportStatus.ToReportStatus(),
                     NewAssessmentSummary = new Note
                     {
-                        NoteText = company.NewAssessmentSummaryNoteText,
+                        NoteText = company.NewAssessmentSummaryNoteText.Replace("\\r","\r").Replace("\\n","\n"),
                     }
                 }
                 : null;
