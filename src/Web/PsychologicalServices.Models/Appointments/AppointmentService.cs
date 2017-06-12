@@ -82,6 +82,9 @@ namespace PsychologicalServices.Models.Appointments
 
                 if (result.ValidationResult.IsValid)
                 {
+
+                    //TODO: notify on appointment status changes
+
                     var id = _appointmentRepository.SaveAppointment(appointment);
 
                     result.Item = _appointmentRepository.GetAppointment(id);

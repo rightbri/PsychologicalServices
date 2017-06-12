@@ -26,6 +26,14 @@ namespace PsychologicalServices.Infrastructure.Companies
                         .SubPath(addressPath => addressPath
                             .Prefetch<CityEntity>(address => address.City)
                         )
+                    .Prefetch<AddressEntity>(company => company.NewAppointmentLocation)
+                        .SubPath(addressPath => addressPath
+                            .Prefetch<CityEntity>(address => address.City)
+                        )
+                    .Prefetch<UserEntity>(company => company.NewAppointmentPsychologist)
+                    .Prefetch<UserEntity>(company => company.NewAppointmentPsychometrist)
+                    .Prefetch<AppointmentStatusEntity>(company => company.NewAppointmentStatus)
+                    .Prefetch<ReportStatusEntity>(company => company.NewAssessmentReportStatus)
                 );
 
         #endregion
@@ -80,6 +88,17 @@ namespace PsychologicalServices.Infrastructure.Companies
                 entity.Name = company.Name;
                 entity.IsActive = company.IsActive;
                 entity.AddressId = company.Address.AddressId;
+                entity.Phone = company.Phone;
+                entity.Fax = company.Fax;
+                entity.Email = company.Email;
+                entity.TaxId = company.TaxId;
+                entity.NewAppointmentTime = company.NewAppointmentTime.HasValue ? company.NewAppointmentTime.Value.Ticks : 0;
+                entity.NewAppointmentLocationId = null != company.NewAppointmentLocation ? company.NewAppointmentLocation.AddressId : (int?)null;
+                entity.NewAppointmentPsychologistId = null != company.NewAppointmentPsychologist ? company.NewAppointmentPsychologist.UserId : (int?)null;
+                entity.NewAppointmentPsychometristId = null != company.NewAppointmentPsychometrist ? company.NewAppointmentPsychometrist.UserId : (int?)null;
+                entity.NewAppointmentStatusId = null != company.NewAppointmentStatus ? company.NewAppointmentStatus.AppointmentStatusId : (int?)null;
+                entity.NewAssessmentReportStatusId = null != company.NewAssessmentReportStatus ? company.NewAssessmentReportStatus.ReportStatusId : (int?)null;
+                entity.NewAssessmentSummaryNoteText = null != company.NewAssessmentSummary ? company.NewAssessmentSummary.NoteText : null;
 
                 adapter.SaveEntity(entity);
 

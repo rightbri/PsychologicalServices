@@ -31,7 +31,7 @@
 				<div class="col-xs-12">
 					<div class="form-group">
 						<label for="dateOfBirth">Date of Birth</label>
-						<input id="dateOfBirth" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="claimant.dateOfBirth" />
+						<input id="dateOfBirth" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="claimant.dateOfBirth | dateFormat:config.longDateFormat" />
 					</div>
 				</div>
 			</div>

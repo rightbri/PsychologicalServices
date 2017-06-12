@@ -1,4 +1,8 @@
 ﻿using PsychologicalServices.Models.Addresses;
+using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Notes;
+using PsychologicalServices.Models.Reports;
+using PsychologicalServices.Models.Users;
 using System;
 
 namespace PsychologicalServices.Models.Companies
@@ -20,6 +24,20 @@ namespace PsychologicalServices.Models.Companies
         public string Email { get; set; }
 
         public string TaxId { get; set; }
+
+        public TimeSpan? NewAppointmentTime { get; set; }
+
+        public Address NewAppointmentLocation { get; set; }
+
+        public User NewAppointmentPsychologist { get; set; }
+
+        public User NewAppointmentPsychometrist { get; set; }
+
+        public AppointmentStatus NewAppointmentStatus { get; set; }
+
+        public ReportStatus NewAssessmentReportStatus { get; set; }
+
+        public Note NewAssessmentSummary { get; set; }
 
         public bool IsNew()
         {

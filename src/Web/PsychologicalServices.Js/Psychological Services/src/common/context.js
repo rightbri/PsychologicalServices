@@ -13,6 +13,7 @@ export class Context {
 		this.username = null;
 		this.user = null;
 		this.loggedIn = false;
+		this.session = {};
 		
 		this.subscriber = this.ea.subscribe('authStateChanged', response => {
 			this.username = response.user.email;

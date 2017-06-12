@@ -84,6 +84,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 TaxRate = invoice.TaxRate,
                 Total = invoice.Total,
                 UpdateDate = invoice.UpdateDate,
+                PayableToId = invoice.PayableTo.UserId,
             };
 
             foreach (var invoiceAppointment in invoice.Appointments)
@@ -622,6 +623,16 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Fax = company.Fax,
                     Email = company.Email,
                     TaxId = company.TaxId,
+                    NewAppointmentTime = company.NewAppointmentTime.HasValue ? TimeSpan.FromTicks(company.NewAppointmentTime.Value) : TimeSpan.Zero,
+                    NewAppointmentLocation = company.NewAppointmentLocation.ToAddress(),
+                    NewAppointmentPsychologist = company.NewAppointmentPsychologist.ToUser(),
+                    NewAppointmentPsychometrist = company.NewAppointmentPsychometrist.ToUser(),
+                    NewAppointmentStatus = company.NewAppointmentStatus.ToAppointmentStatus(),
+                    NewAssessmentReportStatus = company.NewAssessmentReportStatus.ToReportStatus(),
+                    NewAssessmentSummary = new Note
+                    {
+                        NoteText = company.NewAssessmentSummaryNoteText,
+                    }
                 }
                 : null;
         }

@@ -45,6 +45,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		private EntityCollection<InvoiceEntity> _invoices;
 		private EntityCollection<NoteEntity> _noteUpdater;
 		private EntityCollection<NoteEntity> _noteCreator;
@@ -52,6 +54,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<UserRoleEntity> _userRoles;
 		private EntityCollection<UserTravelFeeEntity> _userTravelFees;
 		private EntityCollection<UserUnavailabilityEntity> _userUnavailabilities;
+
+
+
+
+
+
+
+
 
 
 
@@ -121,6 +131,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			/// <summary>Member name Invoices</summary>
 			public static readonly string Invoices = "Invoices";
 			/// <summary>Member name NoteUpdater</summary>
@@ -135,6 +147,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string UserTravelFees = "UserTravelFees";
 			/// <summary>Member name UserUnavailabilities</summary>
 			public static readonly string UserUnavailabilities = "UserUnavailabilities";
+
+
+
+
+
+
+
+
 
 
 
@@ -243,6 +263,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				_invoices = (EntityCollection<InvoiceEntity>)info.GetValue("_invoices", typeof(EntityCollection<InvoiceEntity>));
 				_noteUpdater = (EntityCollection<NoteEntity>)info.GetValue("_noteUpdater", typeof(EntityCollection<NoteEntity>));
 				_noteCreator = (EntityCollection<NoteEntity>)info.GetValue("_noteCreator", typeof(EntityCollection<NoteEntity>));
@@ -250,6 +272,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				_userRoles = (EntityCollection<UserRoleEntity>)info.GetValue("_userRoles", typeof(EntityCollection<UserRoleEntity>));
 				_userTravelFees = (EntityCollection<UserTravelFeeEntity>)info.GetValue("_userTravelFees", typeof(EntityCollection<UserTravelFeeEntity>));
 				_userUnavailabilities = (EntityCollection<UserUnavailabilityEntity>)info.GetValue("_userUnavailabilities", typeof(EntityCollection<UserUnavailabilityEntity>));
+
+
+
+
+
+
+
+
 
 
 
@@ -360,6 +390,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				case "Invoices":
 					this.Invoices.Add((InvoiceEntity)entity);
 					break;
@@ -381,6 +413,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserUnavailabilities":
 					this.UserUnavailabilities.Add((UserUnavailabilityEntity)entity);
 					break;
+
+
+
+
+
+
+
+
 
 
 
@@ -460,6 +500,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				case "Invoices":
 					toReturn.Add(UserEntity.Relations.InvoiceEntityUsingPayableToId);
 					break;
@@ -481,6 +523,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserUnavailabilities":
 					toReturn.Add(UserEntity.Relations.UserUnavailabilityEntityUsingUserId);
 					break;
+
+
+
+
+
+
+
+
 
 
 
@@ -575,6 +625,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				case "Invoices":
 					this.Invoices.Add((InvoiceEntity)relatedEntity);
 					break;
@@ -623,6 +675,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "PsychometristAppointments":
 					base.PerformRelatedEntityRemoval(this.PsychometristAppointments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
+
+
 
 
 
@@ -694,6 +748,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			toReturn.Add(this.Invoices);
 			toReturn.Add(this.NoteUpdater);
 			toReturn.Add(this.NoteCreator);
@@ -723,6 +779,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				info.AddValue("_invoices", ((_invoices!=null) && (_invoices.Count>0) && !this.MarkedForDeletion)?_invoices:null);
 				info.AddValue("_noteUpdater", ((_noteUpdater!=null) && (_noteUpdater.Count>0) && !this.MarkedForDeletion)?_noteUpdater:null);
 				info.AddValue("_noteCreator", ((_noteCreator!=null) && (_noteCreator.Count>0) && !this.MarkedForDeletion)?_noteCreator:null);
@@ -730,6 +788,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_userRoles", ((_userRoles!=null) && (_userRoles.Count>0) && !this.MarkedForDeletion)?_userRoles:null);
 				info.AddValue("_userTravelFees", ((_userTravelFees!=null) && (_userTravelFees.Count>0) && !this.MarkedForDeletion)?_userTravelFees:null);
 				info.AddValue("_userUnavailabilities", ((_userUnavailabilities!=null) && (_userUnavailabilities.Count>0) && !this.MarkedForDeletion)?_userUnavailabilities:null);
+
+
+
+
+
+
+
+
 
 
 
@@ -820,6 +886,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentFields.PsychometristId, null, ComparisonOperator.Equal, this.UserId));
 			return bucket;
 		}
+
+
 
 
 
@@ -936,6 +1004,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
@@ -992,6 +1068,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			collectionsQueue.Enqueue(this._invoices);
 			collectionsQueue.Enqueue(this._noteUpdater);
 			collectionsQueue.Enqueue(this._noteCreator);
@@ -999,6 +1077,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._userRoles);
 			collectionsQueue.Enqueue(this._userTravelFees);
 			collectionsQueue.Enqueue(this._userUnavailabilities);
+
+
+
+
+
+
+
+
 
 
 
@@ -1055,6 +1141,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			this._invoices = (EntityCollection<InvoiceEntity>) collectionsQueue.Dequeue();
 			this._noteUpdater = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._noteCreator = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
@@ -1062,6 +1150,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._userRoles = (EntityCollection<UserRoleEntity>) collectionsQueue.Dequeue();
 			this._userTravelFees = (EntityCollection<UserTravelFeeEntity>) collectionsQueue.Dequeue();
 			this._userUnavailabilities = (EntityCollection<UserUnavailabilityEntity>) collectionsQueue.Dequeue();
+
+
+
+
+
+
+
+
 
 
 
@@ -1116,6 +1212,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+
+
 
 
 
@@ -1189,6 +1287,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -1206,6 +1312,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
@@ -1213,6 +1321,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserRoleEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserRoleEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserUnavailabilityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserUnavailabilityEntityFactory))) : null);
+
+
+
+
+
+
+
+
 
 
 
@@ -1273,6 +1389,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			toReturn.Add("Invoices", _invoices);
 			toReturn.Add("NoteUpdater", _noteUpdater);
 			toReturn.Add("NoteCreator", _noteCreator);
@@ -1280,6 +1398,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("UserRoles", _userRoles);
 			toReturn.Add("UserTravelFees", _userTravelFees);
 			toReturn.Add("UserUnavailabilities", _userUnavailabilities);
+
+
+
+
+
+
+
+
 
 
 
@@ -1335,6 +1461,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_psychometristAppointments.ActiveContext = base.ActiveContext;
 			}
+
+
 
 
 
@@ -1408,6 +1536,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 			if(_address!=null)
 			{
 				_address.ActiveContext = base.ActiveContext;
@@ -1431,6 +1567,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			_invoices = null;
 			_noteUpdater = null;
 			_noteCreator = null;
@@ -1438,6 +1576,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			_userRoles = null;
 			_userTravelFees = null;
 			_userUnavailabilities = null;
+
+
+
+
+
+
+
+
 
 
 
@@ -1750,6 +1896,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1899,6 +2053,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(InvoiceEntity))]
@@ -2010,6 +2166,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _userUnavailabilities;
 			}
 		}
+
+
+
+
+
+
+
+
 
 
 

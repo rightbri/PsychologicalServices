@@ -28,6 +28,13 @@ export class ViewAssessmentSummary {
 		
 		this.colors = appointment.assessment.colors;
 		
+		this.borderColor = '#ffffff';
+		
+		for (let color of this.colors) {
+			this.borderColor = color.hexCode;
+			break;
+		}
+		
 		this.claim = null;
 		
 		for (let claim of appointment.assessment.claims) {

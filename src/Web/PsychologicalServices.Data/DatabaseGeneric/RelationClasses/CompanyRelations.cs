@@ -34,7 +34,12 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
 			toReturn.Add(this.UserEntityUsingCompanyId);
 
+			toReturn.Add(this.AddressEntityUsingNewAppointmentLocationId);
 			toReturn.Add(this.AddressEntityUsingAddressId);
+			toReturn.Add(this.AppointmentStatusEntityUsingNewAppointmentStatusId);
+			toReturn.Add(this.ReportStatusEntityUsingNewAssessmentReportStatusId);
+			toReturn.Add(this.UserEntityUsingNewAppointmentPsychometristId);
+			toReturn.Add(this.UserEntityUsingNewAppointmentPsychologistId);
 			return toReturn;
 		}
 
@@ -87,6 +92,20 @@ namespace PsychologicalServices.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
+		/// Company.NewAppointmentLocationId - Address.AddressId
+		/// </summary>
+		public virtual IEntityRelation AddressEntityUsingNewAppointmentLocationId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NewAppointmentLocation", false);
+				relation.AddEntityFieldPair(AddressFields.AddressId, CompanyFields.NewAppointmentLocationId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
 		/// Company.AddressId - Address.AddressId
 		/// </summary>
 		public virtual IEntityRelation AddressEntityUsingAddressId
@@ -96,6 +115,62 @@ namespace PsychologicalServices.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
 				relation.AddEntityFieldPair(AddressFields.AddressId, CompanyFields.AddressId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AppointmentStatusEntity over the m:1 relation they have, using the relation between the fields:
+		/// Company.NewAppointmentStatusId - AppointmentStatus.AppointmentStatusId
+		/// </summary>
+		public virtual IEntityRelation AppointmentStatusEntityUsingNewAppointmentStatusId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NewAppointmentStatus", false);
+				relation.AddEntityFieldPair(AppointmentStatusFields.AppointmentStatusId, CompanyFields.NewAppointmentStatusId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentStatusEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and ReportStatusEntity over the m:1 relation they have, using the relation between the fields:
+		/// Company.NewAssessmentReportStatusId - ReportStatus.ReportStatusId
+		/// </summary>
+		public virtual IEntityRelation ReportStatusEntityUsingNewAssessmentReportStatusId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NewAssessmentReportStatus", false);
+				relation.AddEntityFieldPair(ReportStatusFields.ReportStatusId, CompanyFields.NewAssessmentReportStatusId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReportStatusEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
+		/// Company.NewAppointmentPsychometristId - User.UserId
+		/// </summary>
+		public virtual IEntityRelation UserEntityUsingNewAppointmentPsychometristId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NewAppointmentPsychometrist", false);
+				relation.AddEntityFieldPair(UserFields.UserId, CompanyFields.NewAppointmentPsychometristId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
+		/// Company.NewAppointmentPsychologistId - User.UserId
+		/// </summary>
+		public virtual IEntityRelation UserEntityUsingNewAppointmentPsychologistId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NewAppointmentPsychologist", false);
+				relation.AddEntityFieldPair(UserFields.UserId, CompanyFields.NewAppointmentPsychologistId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				return relation;
 			}

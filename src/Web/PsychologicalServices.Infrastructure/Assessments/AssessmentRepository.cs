@@ -1,10 +1,11 @@
 ﻿using PsychologicalServices.Data;
 using PsychologicalServices.Data.EntityClasses;
-using PsychologicalServices.Data.HelperClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
+using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Invoices;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -16,15 +17,21 @@ namespace PsychologicalServices.Infrastructure.Assessments
 {
     public class AssessmentRepository : RepositoryBase, IAssessmentRepository
     {
+        private readonly IAppointmentRepository _appointmentRepository = null;
+        private readonly ICompanyRepository _companyRepository = null;
         private readonly IInvoiceGenerator _invoiceGenerator = null;
         private readonly IDate _date = null;
 
         public AssessmentRepository(
             IDataAccessAdapterFactory adapterFactory,
+            IAppointmentRepository appointmentRepository,
+            ICompanyRepository companyRepository,
             IInvoiceGenerator invoiceGenerator,
             IDate date
         ) : base(adapterFactory)
         {
+            _appointmentRepository = appointmentRepository;
+            _companyRepository = companyRepository;
             _invoiceGenerator = invoiceGenerator;
             _date = date;
         }
@@ -150,6 +157,33 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .SingleOrDefault()
                     .ToAssessment();
             }
+        }
+        
+        public Assessment GetNewAssessment(int companyId, DateTime appointmentTime)
+        {
+            var company = _companyRepository.GetCompany(companyId);
+
+            if (null == company)
+            {
+                throw new ArgumentOutOfRangeException("companyId");
+            }
+
+            var appointment = _appointmentRepository.NewAppointment(companyId);
+            appointment.AppointmentTime = appointmentTime.Add(company.NewAppointmentTime.HasValue ? company.NewAppointmentTime.Value : TimeSpan.Zero);
+
+            return new Assessment
+            {
+                Appointments = new List<Appointment>(new[] { appointment }),
+                Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
+                Claims = Enumerable.Empty<Models.Claims.Claim>(),
+                Colors = Enumerable.Empty<Models.Colors.Color>(),
+                Company = company,
+                MedRehabs = Enumerable.Empty<Models.Claims.MedRehab>(),
+                Notes = Enumerable.Empty<Models.Notes.Note>(),
+                Reports = Enumerable.Empty<Models.Reports.Report>(),
+                ReportStatus = company.NewAssessmentReportStatus,
+                Summary = company.NewAssessmentSummary,
+            };
         }
 
         public AssessmentType GetAssessmentType(int id)
@@ -908,8 +942,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 );
 
                 #endregion
-
-
+                
                 var updateSummaryNote =
                     assessmentEntity.SummaryNoteId.HasValue &&
                     null != assessment.Summary &&
@@ -994,5 +1027,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 return assessmentTypeEntity.AssessmentTypeId;
             }
         }
+
     }
 }

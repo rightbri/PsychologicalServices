@@ -717,6 +717,41 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.TaxId);}
 		}
+		/// <summary>Creates a new CompanyEntity.NewAppointmentTime field instance</summary>
+		public static EntityField2 NewAppointmentTime
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAppointmentTime);}
+		}
+		/// <summary>Creates a new CompanyEntity.NewAppointmentLocationId field instance</summary>
+		public static EntityField2 NewAppointmentLocationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAppointmentLocationId);}
+		}
+		/// <summary>Creates a new CompanyEntity.NewAppointmentPsychologistId field instance</summary>
+		public static EntityField2 NewAppointmentPsychologistId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAppointmentPsychologistId);}
+		}
+		/// <summary>Creates a new CompanyEntity.NewAppointmentPsychometristId field instance</summary>
+		public static EntityField2 NewAppointmentPsychometristId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAppointmentPsychometristId);}
+		}
+		/// <summary>Creates a new CompanyEntity.NewAppointmentStatusId field instance</summary>
+		public static EntityField2 NewAppointmentStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAppointmentStatusId);}
+		}
+		/// <summary>Creates a new CompanyEntity.NewAssessmentReportStatusId field instance</summary>
+		public static EntityField2 NewAssessmentReportStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAssessmentReportStatusId);}
+		}
+		/// <summary>Creates a new CompanyEntity.NewAssessmentSummaryNoteText field instance</summary>
+		public static EntityField2 NewAssessmentSummaryNoteText
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAssessmentSummaryNoteText);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CompanyAttributeEntity</summary>

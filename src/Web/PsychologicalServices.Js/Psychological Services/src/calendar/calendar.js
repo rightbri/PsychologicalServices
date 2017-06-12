@@ -17,7 +17,7 @@ export class Calendar {
 		this.config = config;
 		this.context = context;
 		
-		this.searchDate = new Date();
+		this.searchDate = this.context.calendarMonth || new Date();
 		
 		this.searchStatus = null;
 		this.searchStart = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth(), 1);
@@ -105,6 +105,7 @@ export class Calendar {
 	}
 	
 	monthChanged(e) {
+		this.context.calendarMonth = e.detail;
 		this.refreshAppointments(e.detail);
 	}
 	

@@ -4,6 +4,7 @@ using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Companies;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
@@ -14,14 +15,17 @@ namespace PsychologicalServices.Infrastructure.Appointments
 {
     public class AppointmentRepository : RepositoryBase, IAppointmentRepository
     {
-        private readonly IDate _now = null;
+        private readonly IDate _date = null;
+        private readonly ICompanyRepository _companyRepository = null;
 
         public AppointmentRepository(
             IDataAccessAdapterFactory adapterFactory,
-            IDate now
+            IDate date,
+            ICompanyRepository companyRepository
         ) : base(adapterFactory)
         {
-            _now = now;
+            _date = date;
+            _companyRepository = companyRepository;
         }
 
         #region Prefetch Paths
@@ -117,23 +121,22 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
         public Appointment NewAppointment(int companyId)
         {
-            using (var adapter = AdapterFactory.CreateAdapter())
+            var company = _companyRepository.GetCompany(companyId);
+
+            if (null == company)
             {
-                var meta = new LinqMetaData(adapter);
-
-                var companyEntity = meta.Company.Where(company => company.CompanyId == companyId).SingleOrDefault();
-
-                if (null == companyEntity)
-                {
-                    throw new ArgumentOutOfRangeException("companyId");
-                }
-
-                return new Appointment
-                {
-                    AppointmentTime = _now.Now,
-                    Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
-                };
+                throw new ArgumentOutOfRangeException("companyId");
             }
+
+            return new Appointment
+            {
+                AppointmentTime = company.NewAppointmentTime.HasValue ? _date.Today.Add(company.NewAppointmentTime.Value) : _date.Now,
+                Location = company.NewAppointmentLocation,
+                AppointmentStatus = company.NewAppointmentStatus,
+                Psychologist = company.NewAppointmentPsychologist,
+                Psychometrist = company.NewAppointmentPsychometrist,
+                Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
+            };
         }
 
         public Appointment NewAppointment(int assessmentId, int companyId)
@@ -158,7 +161,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
                 return new Appointment
                 {
-                    AppointmentTime = _now.Now,
+                    AppointmentTime = _date.Now,
                     Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
                     Assessment = assessmentEntity.ToAssessment(),
                 };

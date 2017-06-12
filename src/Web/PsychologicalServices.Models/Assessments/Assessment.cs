@@ -45,8 +45,6 @@ namespace PsychologicalServices.Models.Assessments
 
         public IEnumerable<Appointment> Appointments { get; set; }
 
-        public IEnumerable<IssueInDispute> IssuesInDispute { get; set; }
-
         public IEnumerable<MedRehab> MedRehabs { get; set; }
 
         public IEnumerable<Note> Notes { get; set; }

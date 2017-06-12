@@ -84,28 +84,11 @@ export class EditAssessment {
 						});
 				}
 				else {
-					let appointmentDate = new Date(params.year, params.month - 1, params.day);
-					appointmentDate.setHours(this.config.defaultNewAppointmentHour);
-		
-					return this.dataRepository.getNewAppointment(user.company.companyId)
-						.then(appointment => {
+					return this.dataRepository.getNewAssessment(user.company.companyId, params.year, params.month, params.day)
+						.then(assessment => {
+							this.assessment = assessment;
 							
-							appointment.appointmentTime = moment(appointmentDate).format();
-							
-							this.assessment = {
-								assessmentId: 0,
-								company: user.company,
-								appointments: [ appointment ],
-								claims: [],
-								medRehabs: [],
-								notes: [],
-								colors: [],
-								attributes: [],
-								reports: [],
-								summary: { 'noteText': this.config.assessmentDefaults.summary }
-							};
-							
-							return this.getData(appointmentDate)
+							return this.getData(this.assessment.appointments[0].appointmentTime)
 								.then(() => this.scroller.scrollTo(0));
 						});
 				}

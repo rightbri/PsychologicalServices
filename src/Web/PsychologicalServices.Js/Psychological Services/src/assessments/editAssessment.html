@@ -87,31 +87,6 @@
 		</div>
 		<div class="col-xs-3">
 			<div class="form-group">
-				<label for="reportStatus">Report Status</label>
-				<select id="reportStatus" class="form-control" value.bind="assessment.reportStatus" matcher.bind="reportStatusMatcher">
-					<option></option>
-					<option repeat.for="reportStatus of reportStatuses" model.bind="reportStatus">
-						${reportStatus.name}
-					</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="referralType">Referral Type</label>
-				<select id="referralType" class="form-control" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher">
-					<option></option>
-					<option repeat.for="referralType of referralTypes" model.bind="referralType">
-						${referralType.name}
-					</option>
-				</select>
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="form-group">
 				<label for="referralSource">Referral Source</label>
 				<select id="referralSource" class="form-control" value.bind="assessment.referralSource" matcher.bind="referralSourceMatcher">
 					<option></option>
@@ -132,6 +107,17 @@
 	<div class="row">
 		<div class="col-xs-3">
 			<div class="form-group">
+				<label for="referralType">Referral Type</label>
+				<select id="referralType" class="form-control" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher">
+					<option></option>
+					<option repeat.for="referralType of referralTypes" model.bind="referralType">
+						${referralType.name}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
 				<label for="medicalFileReceivedDate">Medical File Received Date</label>
 				<input id="medicalFileReceivedDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="assessment.medicalFileReceivedDate | dateFormat:config.longDateFormat"/>
 			</div>
@@ -140,19 +126,6 @@
 			<div class="form-group">
 				<label for="fileNumber">File Number</label>
 				<input id="fileNumber" type="text" class="form-control" value.bind="assessment.referralSourceFileNumber" />
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="fileSize">File Size</label>
-				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
-			</div>
-		</div>
-		<div class="col-xs-3">
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" checked.bind="assessment.isLargeFile" />&nbsp;Large?
-				</label>
 			</div>
 		</div>
 	</div>
@@ -241,7 +214,7 @@
 							</button>
 						</td>
 						<td>${claim.claimNumber}</td>
-						<td>${claim.dateOfLoss | dateFormat:config.shortDateFormat}</td>
+						<td>${claim.dateOfLoss | dateFormat:config.longDateFormat}</td>
 						<td>
 							<button type="button" class="btn btn-danger btn-xs" click.delegate="removeClaim(claim)">
 								<i class="fa fa-times"></i>
@@ -315,6 +288,33 @@
 						${user.firstName}
 					</option>
 				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="reportStatus">Report Status</label>
+				<select id="reportStatus" class="form-control" value.bind="assessment.reportStatus" matcher.bind="reportStatusMatcher">
+					<option></option>
+					<option repeat.for="reportStatus of reportStatuses" model.bind="reportStatus">
+						${reportStatus.name}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label for="fileSize">File Size</label>
+				<input id="fileSize" type="number" class="form-control" value.bind="assessment.fileSize" />
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" checked.bind="assessment.isLargeFile" />&nbsp;Large?
+				</label>
 			</div>
 		</div>
 	</div>

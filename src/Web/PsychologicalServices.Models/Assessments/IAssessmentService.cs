@@ -8,6 +8,8 @@ namespace PsychologicalServices.Models.Assessments
     {
         Assessment GetAssessment(int id);
 
+        Assessment GetNewAssessment(int companyId, DateTime appointmentTime);
+
         AssessmentType GetAssessmentType(int id);
 
         IEnumerable<Assessment> SearchAssessments(AssessmentSearchCriteria criteria);
@@ -17,9 +19,5 @@ namespace PsychologicalServices.Models.Assessments
         SaveResult<Assessment> SaveAssessment(Assessment assessment);
 
         SaveResult<AssessmentType> SaveAssessmentType(AssessmentType assessmentType);
-
-        //TODO: notify on status change
-        //Claimant shows for appointment
-        //Assessment is completed
     }
 }

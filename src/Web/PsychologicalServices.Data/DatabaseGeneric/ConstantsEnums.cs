@@ -481,6 +481,20 @@ namespace PsychologicalServices.Data
 		Email,
 		///<summary>TaxId. </summary>
 		TaxId,
+		///<summary>NewAppointmentTime. </summary>
+		NewAppointmentTime,
+		///<summary>NewAppointmentLocationId. </summary>
+		NewAppointmentLocationId,
+		///<summary>NewAppointmentPsychologistId. </summary>
+		NewAppointmentPsychologistId,
+		///<summary>NewAppointmentPsychometristId. </summary>
+		NewAppointmentPsychometristId,
+		///<summary>NewAppointmentStatusId. </summary>
+		NewAppointmentStatusId,
+		///<summary>NewAssessmentReportStatusId. </summary>
+		NewAssessmentReportStatusId,
+		///<summary>NewAssessmentSummaryNoteText. </summary>
+		NewAssessmentSummaryNoteText,
 		/// <summary></summary>
 		AmountOfFields
 	}

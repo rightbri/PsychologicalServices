@@ -7,6 +7,8 @@ namespace PsychologicalServices.Models.Assessments
     {
         Assessment GetAssessment(int id);
 
+        Assessment GetNewAssessment(int companyId, DateTime appointmentTime);
+
         AssessmentType GetAssessmentType(int id);
 
         IEnumerable<Assessment> GetAssessments(AssessmentSearchCriteria criteria);

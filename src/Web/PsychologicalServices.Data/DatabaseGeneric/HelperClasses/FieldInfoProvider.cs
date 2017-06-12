@@ -324,6 +324,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("CompanyEntity", "Fax", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.Fax, 50, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "Email", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.Email, 100, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "TaxId", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.TaxId, 50, 0, 0);
+			base.AddElementFieldInfo("CompanyEntity", "NewAppointmentTime", typeof(Nullable<System.Int64>), false, false, false, true,  (int)CompanyFieldIndex.NewAppointmentTime, 0, 0, 19);
+			base.AddElementFieldInfo("CompanyEntity", "NewAppointmentLocationId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAppointmentLocationId, 0, 0, 10);
+			base.AddElementFieldInfo("CompanyEntity", "NewAppointmentPsychologistId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAppointmentPsychologistId, 0, 0, 10);
+			base.AddElementFieldInfo("CompanyEntity", "NewAppointmentPsychometristId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAppointmentPsychometristId, 0, 0, 10);
+			base.AddElementFieldInfo("CompanyEntity", "NewAppointmentStatusId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAppointmentStatusId, 0, 0, 10);
+			base.AddElementFieldInfo("CompanyEntity", "NewAssessmentReportStatusId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAssessmentReportStatusId, 0, 0, 10);
+			base.AddElementFieldInfo("CompanyEntity", "NewAssessmentSummaryNoteText", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.NewAssessmentSummaryNoteText, 2147483647, 0, 0);
 		}
 		/// <summary>Inits CompanyAttributeEntity's FieldInfo objects</summary>
 		private void InitCompanyAttributeEntityInfos()
@@ -413,7 +420,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		private void InitNoteEntityInfos()
 		{
 			base.AddElementFieldInfo("NoteEntity", "NoteId", typeof(System.Int32), true, false, true, false,  (int)NoteFieldIndex.NoteId, 0, 0, 10);
-			base.AddElementFieldInfo("NoteEntity", "Note", typeof(System.String), false, false, false, false,  (int)NoteFieldIndex.Note, 1000, 0, 0);
+			base.AddElementFieldInfo("NoteEntity", "Note", typeof(System.String), false, false, false, false,  (int)NoteFieldIndex.Note, 2147483647, 0, 0);
 			base.AddElementFieldInfo("NoteEntity", "UpdateUserId", typeof(System.Int32), false, true, false, false,  (int)NoteFieldIndex.UpdateUserId, 0, 0, 10);
 			base.AddElementFieldInfo("NoteEntity", "UpdateDate", typeof(System.DateTime), false, false, false, false,  (int)NoteFieldIndex.UpdateDate, 0, 0, 0);
 			base.AddElementFieldInfo("NoteEntity", "CreateUserId", typeof(System.Int32), false, true, false, false,  (int)NoteFieldIndex.CreateUserId, 0, 0, 10);

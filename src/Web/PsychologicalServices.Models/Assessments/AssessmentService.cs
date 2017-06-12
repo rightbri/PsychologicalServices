@@ -25,6 +25,13 @@ namespace PsychologicalServices.Models.Assessments
             return assessment;
         }
 
+        public Assessment GetNewAssessment(int companyId, DateTime appointmentTime)
+        {
+            var newAssessment = _assessmentRepository.GetNewAssessment(companyId, appointmentTime);
+
+            return newAssessment;
+        }
+
         public AssessmentType GetAssessmentType(int id)
         {
             var assessmentType = _assessmentRepository.GetAssessmentType(id);

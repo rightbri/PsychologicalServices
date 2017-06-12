@@ -38,9 +38,18 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentEntity> _appointments;
+
 		private EntityCollection<CompanyEntity> _companies;
 		private EntityCollection<ReferralSourceEntity> _referralSources;
 		private EntityCollection<UserEntity> _users;
+
+
+
+
+
+
+
+
 
 
 
@@ -70,12 +79,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string City = "City";
 			/// <summary>Member name Appointments</summary>
 			public static readonly string Appointments = "Appointments";
+
 			/// <summary>Member name Companies</summary>
 			public static readonly string Companies = "Companies";
 			/// <summary>Member name ReferralSources</summary>
 			public static readonly string ReferralSources = "ReferralSources";
 			/// <summary>Member name Users</summary>
 			public static readonly string Users = "Users";
+
+
+
+
+
+
+
+
 
 
 
@@ -144,9 +162,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointments = (EntityCollection<AppointmentEntity>)info.GetValue("_appointments", typeof(EntityCollection<AppointmentEntity>));
+
 				_companies = (EntityCollection<CompanyEntity>)info.GetValue("_companies", typeof(EntityCollection<CompanyEntity>));
 				_referralSources = (EntityCollection<ReferralSourceEntity>)info.GetValue("_referralSources", typeof(EntityCollection<ReferralSourceEntity>));
 				_users = (EntityCollection<UserEntity>)info.GetValue("_users", typeof(EntityCollection<UserEntity>));
+
+
+
+
+
+
+
+
 
 
 
@@ -217,6 +244,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)entity);
 					break;
+
 				case "Companies":
 					this.Companies.Add((CompanyEntity)entity);
 					break;
@@ -226,6 +254,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Users":
 					this.Users.Add((UserEntity)entity);
 					break;
+
+
+
+
+
+
+
+
 
 
 
@@ -265,6 +301,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					toReturn.Add(AddressEntity.Relations.AppointmentEntityUsingLocationId);
 					break;
+
 				case "Companies":
 					toReturn.Add(AddressEntity.Relations.CompanyEntityUsingAddressId);
 					break;
@@ -274,6 +311,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Users":
 					toReturn.Add(AddressEntity.Relations.UserEntityUsingAddressId);
 					break;
+
+
+
+
+
+
+
+
 
 
 
@@ -328,6 +373,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)relatedEntity);
 					break;
+
 				case "Companies":
 					this.Companies.Add((CompanyEntity)relatedEntity);
 					break;
@@ -361,6 +407,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
+
 				case "Companies":
 					base.PerformRelatedEntityRemoval(this.Companies, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -409,6 +456,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Appointments);
+
 			toReturn.Add(this.Companies);
 			toReturn.Add(this.ReferralSources);
 			toReturn.Add(this.Users);
@@ -427,9 +475,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointments", ((_appointments!=null) && (_appointments.Count>0) && !this.MarkedForDeletion)?_appointments:null);
+
 				info.AddValue("_companies", ((_companies!=null) && (_companies.Count>0) && !this.MarkedForDeletion)?_companies:null);
 				info.AddValue("_referralSources", ((_referralSources!=null) && (_referralSources.Count>0) && !this.MarkedForDeletion)?_referralSources:null);
 				info.AddValue("_users", ((_users!=null) && (_users.Count>0) && !this.MarkedForDeletion)?_users:null);
+
+
+
+
+
+
+
+
 
 
 
@@ -485,6 +542,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'Company' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
@@ -514,6 +572,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.AddressId, null, ComparisonOperator.Equal, this.AddressId));
 			return bucket;
 		}
+
+
+
+
+
+
+
+
 
 
 
@@ -572,9 +638,18 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointments);
+
 			collectionsQueue.Enqueue(this._companies);
 			collectionsQueue.Enqueue(this._referralSources);
 			collectionsQueue.Enqueue(this._users);
+
+
+
+
+
+
+
+
 
 
 
@@ -591,9 +666,18 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
+
 			this._companies = (EntityCollection<CompanyEntity>) collectionsQueue.Dequeue();
 			this._referralSources = (EntityCollection<ReferralSourceEntity>) collectionsQueue.Dequeue();
 			this._users = (EntityCollection<UserEntity>) collectionsQueue.Dequeue();
+
+
+
+
+
+
+
+
 
 
 
@@ -612,6 +696,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+
 			if (this._companies != null)
 			{
 				return true;
@@ -632,6 +717,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -642,9 +735,18 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
+
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))) : null);
+
+
+
+
+
+
+
+
 
 
 
@@ -665,9 +767,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("AddressType", _addressType);
 			toReturn.Add("City", _city);
 			toReturn.Add("Appointments", _appointments);
+
 			toReturn.Add("Companies", _companies);
 			toReturn.Add("ReferralSources", _referralSources);
 			toReturn.Add("Users", _users);
+
+
+
+
+
+
+
+
 
 
 
@@ -687,6 +798,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointments.ActiveContext = base.ActiveContext;
 			}
+
 			if(_companies!=null)
 			{
 				_companies.ActiveContext = base.ActiveContext;
@@ -699,6 +811,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_users.ActiveContext = base.ActiveContext;
 			}
+
+
+
+
+
+
+
+
 
 
 
@@ -723,9 +843,18 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointments = null;
+
 			_companies = null;
 			_referralSources = null;
 			_users = null;
+
+
+
+
+
+
+
+
 
 
 
@@ -931,6 +1060,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AddressType' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1084,6 +1221,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'CompanyEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(CompanyEntity))]
@@ -1131,6 +1269,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _users;
 			}
 		}
+
+
+
+
+
+
+
+
 
 
 

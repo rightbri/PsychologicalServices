@@ -12,8 +12,6 @@ export class Config {
 		this.longDateFormat = 'MMMM D YYYY';
 		this.longDateTimeFormat = this.longDateFormat + ' ' + this.shortTimeFormat;
 		
-		this.defaultNewAppointmentHour = 9;
-		
 		this.dateRangePickerOptions = {
 			'autoApply': true,
 			'showDropdowns': true,
@@ -61,8 +59,7 @@ export class Config {
 		};
 		
 		this.assessmentDefaults = {
-			'attributeTypeIds': [2,4,5,6,7,8],
-			'summary': 'Lawyer: \r\n\r\nDetails of accident: \r\n\r\nInjuries: \r\n\r\nEducation / Employment information: \r\n\r\nCountry of Birth/First language: \r\n\r\nPre-existing / Pre-accident conditions: \r\n\r\nPrevious Assessment Findings: \r\n\r\n'
+			'attributeTypeIds': [2,4,5,6,7,8]
 		};
 		
 		this.assessmentSummaryDefaults = {

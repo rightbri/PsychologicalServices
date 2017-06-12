@@ -122,6 +122,10 @@ export class DataRepository {
 		return this.getSingleBasic(id, 'assessment');
 	}
 	
+	getNewAssessment(companyId, year, month, day) {
+		return this.getBasic(`assessment/company/${companyId}/appointment/${year}/${month}/${day}`);
+	}
+	
 	searchAssessments(criteria) {
 		return this.searchBasic(criteria, 'assessment');
 	}

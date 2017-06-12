@@ -32,6 +32,17 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(assessment);
         }
 
+        [Route("company/{companyId}/appointment/{year}/{month}/{day}")]
+        [HttpGet]
+        [ResponseType(typeof(Assessment))]
+        public IHttpActionResult GetNewAssessment(int companyId, int year, int month, int day)
+        {
+            var assessment = _assessmentService.GetNewAssessment(companyId, new DateTime(year, month, day));
+            
+            return Ok(assessment);
+        }
+
+
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Assessment>))]
