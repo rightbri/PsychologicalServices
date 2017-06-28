@@ -1,29 +1,21 @@
-import {DialogController} from 'aurelia-dialog';
-import {DataRepository} from 'services/dataRepository';
-import {Context} from 'common/context';
 import {inject} from 'aurelia-framework';
+import {bindable, bindingMode} from 'aurelia-framework';
+import {Context} from 'common/context';
 
-@inject(DialogController, DataRepository, Context)
-export class EditNote {
-	constructor(dialogController, dataRepository, context) {
-		this.dialogController = dialogController;
-		this.dataRepository = dataRepository;
+@inject(Element, Context)
+export class EditNoteCustomElement {
+	@bindable({ defaultBindingMode: bindingMode.twoWay }) note;
+	
+	constructor(element, context) {
+		this.element = element;
 		this.context = context;
-		
-		this.user = null;
-		this.users = null;
 	}
 	
-	activate(note) {
-		this.note = note;
+	activate() {
+		this.backup = JSON.parse(JSON.stringify(this.note));
 		
 		return this.context.getUser().then(user => {
 			this.user = user;
-			/*
-			return this.dataRepository.searchUsers({
-				companyId: this.user.company.companyId
-			}).then(data => this.users = data);
-			*/
 		});
 	}
 	
@@ -31,10 +23,30 @@ export class EditNote {
 		this.note.updateUser = this.user;
 		this.note.updateDate = new Date();
 		
-		this.dialogController.ok(this.note);
+		fireEvent(this.element, 'edited', this.note);
 	}
 	
 	cancel() {
-		this.dialogController.cancel();
+		fireEvent(this.element, 'canceled', this.backup);
 	}
+}
+
+function createEvent(name, customData) {
+	let customEvent;
+	
+	if (window.CustomEvent) {
+		customEvent = new CustomEvent(name, { bubbles: true, 'detail': { note: customData } });
+	}
+	else {
+		customEvent = document.createEvent('CustomEvent');
+		
+		customEvent.initCustomEvent(name, true, true, { 'detail': { note: customData } });
+	}
+	
+	return customEvent;
+}
+
+function fireEvent(element, name, customData) {  
+	var event = createEvent(name, customData);
+	element.dispatchEvent(event);
 }

@@ -15,7 +15,7 @@ export class DatePickerCustomAttribute {
 		let $datepicker = $(this.element).datepicker(this.options);
 		
 		if (this.dates) {
-			$datepicker.datepicker('setDates', this.dates);
+			$datepicker.datepicker('setDates', this.dates).datepicker('update');
 		}
 
 		$datepicker

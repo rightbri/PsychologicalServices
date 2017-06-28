@@ -1,5 +1,6 @@
 import {Context} from 'common/context';
 import {inject} from 'aurelia-framework';
+import {UIkit} from 'uikit';
 
 @inject(Context)
 export class App {

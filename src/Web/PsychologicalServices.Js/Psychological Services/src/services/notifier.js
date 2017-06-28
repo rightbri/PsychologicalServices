@@ -1,32 +1,13 @@
-import {jquery} from 'jquery';
-import notify from 'bootstrap-notify';
+import {show, ACTION_TYPE} from 'snackbar';
 
 export class Notifier {
 
 	error(message) {
-		_notify({
-			//options
-			message: message,
-			icon: 'fa fa-exclamation fa-lg'
-		}, {
-			//settings
-			type: 'danger'
-		});
+		show({text: message, pos:'bottom-center'});
 	}
 	
 	info(message) {
-		_notify({
-			//options
-			message: message,
-			icon: 'fa fa-info fa-lg'
-		}, {
-			//settings
-			type: 'info'
-		});
+		show({text: message, pos:'bottom-center'});
 	}
 	
-}
-
-function _notify(options, settings) {
-	$.notify(options, settings);
 }

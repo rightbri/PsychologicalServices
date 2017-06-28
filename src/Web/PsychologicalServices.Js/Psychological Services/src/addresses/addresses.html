@@ -1,106 +1,106 @@
 <template>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
-	
-<h2>Addresses</h2>
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="searchName">Name</label>
-				<input id="searchName" type="text" class="form-control" value.bind="searchName" />
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Addresses</legend>
+		
+		<form class="uk-form-stacked">
+		
+			<div class="uk-margin">
+				<label for="searchName" class="uk-form-label">Name</label>
+				<div class="uk-form-controls">
+					<input id="searchName" type="text" class="uk-input" value.bind="searchName" />
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="searchStreet">Street</label>
-				<input id="searchStreet" type="text" class="form-control" value.bind="searchStreet" />
+
+			<div class="uk-margin">
+				<label for="searchStreet" class="uk-form-label">Street</label>
+				<div class="uk-form-controls">
+					<input id="searchStreet" type="text" class="uk-input" value.bind="searchStreet" />
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="searchCity">City</label>
-				<input id="searchCity" type="text" class="form-control" value.bind="searchCity" />
+			
+			<div class="uk-margin">
+				<label for="searchCity" class="uk-form-label">City</label>
+				<div class="uk-form-controls">
+					<input id="searchCity" type="text" class="uk-input" value.bind="searchCity" />
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="checkbox" repeat.for="addressType of addressTypes">
-				<label>
-					<input type="checkbox" model.bind="addressType.addressTypeId" checked.bind="searchAddressTypes" />&nbsp;${addressType.name}
-				</label>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label">Address Types</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="addressType of addressTypes">
+						<input class="uk-checkbox" type="checkbox" model.bind="addressType.addressTypeId" checked.bind="searchAddressTypes">&nbsp;${addressType.name}
+					</label>
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="searchActive">Is Active?</label>
-				<select class="form-control" value.bind="searchActive">
-					<option></option>
-					<option value="true">yes</option>
-					<option value="false">no</option>
-				</select>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="searchActive">Is Active?</label>
+				<div class="uk-form-controls">
+					<select class="uk-select" id="searchActive" value.bind="searchActive">
+						<option></option>
+						<option value="true">yes</option>
+						<option value="false">no</option>
+					</select>
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<button type="button" class="btn btn-default" click.delegate="search()">
-				Search <i class="fa fa-search"></i>
-			</button>
-		</div>
-		<div class="col-xs-offset-8 col-xs-1">
-			<a route-href="route: addAddress" class="btn btn-default">
-				<i class="fa fa-plus"></i>&nbsp;Add
-			</a>
-		</div>
-	</div>
+			
+			<div class="uk-margin">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+					Search
+				</button>
+			</div>
+			
+			<div class="uk-margin">
+				<a route-href="route: addAddress" class="uk-button uk-button-secondary">
+					<i class="fa fa-plus"></i>&nbsp;Add
+				</a>
+			</div>
+			
+		</form>
+		
+	</fieldset>
 	
 </div>
-			
-<table class="table table-condensed" fixed-header>
-	<thead>
-		<tr>
-			<th></th>
-			<th>Name</th>
-			<th>Street</th>
-			<th>Suite</th>
-			<th>City</th>
-			<th>Province</th>
-			<th>Postal Code</th>
-			<th>Country</th>
-			<th>Type</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr repeat.for="address of addresses">
-			<td>
-				<a route-href="route: editAddress; params.bind: { id: address.addressId }" class="btn btn-default btn-xs">
-					<i class="fa fa-pencil"></i>
-				</a>
-			</td>
-			<td>${address.name}</td>
-			<td>${address.street}</td>
-			<td>${address.suite}</td>
-			<td>${address.city.name}</td>
-			<td>${address.city.province}</td>
-			<td>${address.postalCode}</td>
-			<td>${address.city.country}</td>
-			<td>${address.addressType.name}</td>
-		</tr>
-	</tbody>
-</table>
+
+<div class="uk-overflow-auto" if.bind="addresses">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Street</th>
+				<th>Suite</th>
+				<th>City</th>
+				<th>Province</th>
+				<th>Postal Code</th>
+				<th>Country</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="address of addresses">
+				<td>
+					<a route-href="route: editAddress; params.bind: { id: address.addressId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${address.name}</td>
+				<td>${address.street}</td>
+				<td>${address.suite}</td>
+				<td>${address.city.name}</td>
+				<td>${address.city.province}</td>
+				<td>${address.postalCode}</td>
+				<td>${address.city.country}</td>
+				<td>${address.addressType.name}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
 </template>

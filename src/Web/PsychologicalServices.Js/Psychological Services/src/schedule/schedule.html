@@ -3,91 +3,94 @@
 	<require from="resources/value-converters/attribute-types"></require>
 	<require from="common/date-picker"></require>
 	
-	<h2>Schedule</h2>
+<div class="uk-container">
 
-	<div class="container-fluid">
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Schedule</legend>
+	
+		<form class="uk-form-stacked uk-grid-medium" uk-grid>
 		
-		<div class="row">
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label for="searchStart">Start Date</label>
-					<input id="searchStart" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="searchStart | dateFormat:config.longDateFormat"/>
+			<div class="uk-width-1-3@s">
+				<label class="uk-form-label" for="searchStart">Start Date</label>
+				<div class="uk-form-controls">
+					<input id="searchStart" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="searchStart | dateFormat:config.longDateFormat"/>
 				</div>
 			</div>
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label for="searchEnd">End Date</label>
-					<input id="searchEnd" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="searchEnd | dateFormat:config.longDateFormat"/>
+		
+			<div class="uk-width-1-3@s">
+				<label class="uk-form-label" for="searchEnd">End Date</label>
+				<div class="uk-form-controls">
+					<input id="searchEnd" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="searchEnd | dateFormat:config.longDateFormat"/>
 				</div>
 			</div>
-			<div class="col-xs-4">
-				<div class="form-group">
-					<button type="button" class="btn btn-default" click.delegate="search()">Search</button>
-				</div>
+			
+			<div class="uk-width-1-3@s">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">Search</button>
 			</div>
-		</div>
+		</form>
 		
-		<div class="row" if.bind="users">
-			<div class="col-xs-12">
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th>Psychometrist</th>
-							<th>Date</th>
-							<th>Time</th>
-							<th>Location</th>
-							<th>Referral Source</th>
-							<th>Claimant</th>
-							<th>Info</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<template repeat.for="user of users">
-							<tr class="info">
-								<td>
-									${user.firstName}
-								</td>
-								<td colspan="6">&nbsp;</td>
-								<td>
-									<button class="btn btn-default btn-xs" click.delegate="sendSchedule(user)">
-										<i class="fa fa-envelope-o"></i>
-									</button>
-								</td>
-							</tr>
-							<tr repeat.for="appointment of user.psychometristAppointments">
-								<td>&nbsp;</td>
-								<td>${appointment.appointmentTime | dateFormat:config.longDateFormat}</td>
-								<td>${appointment.appointmentTime | dateFormat:config.shortTimeFormat}</td>
-								<td with.bind="appointment.location">
-									<ul class="list-unstyled">
-										<li title="Location Name" class="smaller-siblings" if.bind="name">${name}</li>
-										<li title="Street" if.bind="street">${street}</li>
-										<li title="Suite" if.bind="suite">${suite}</li>
-										<li title="City, Province, Postal Code" if.bind="street || suite">${city.name}, ${city.province} ${postalCode}</li>
-									</ul>
-								</td>
-								<td>${appointment.assessment.referralSource.name}</td>
-								<td>
-									<ul class="list-unstyled" repeat.for="claim of appointment.assessment.claims">
-										<li title="Claimant" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName} - ${claim.claimant.age} ${claim.claimant.gender}</li>
-									</ul>
-								</td>
-								<td>
-									<ul class="list-unstyled">
-										<li repeat.for="attribute of appointment.attributes | attributeTypes:[1,5,6]">
-											${attribute.name}
-										</li>
-									</ul>
-								</td>
-								<td>&nbsp;</td>
-							</tr>
-						</template>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		
-	</div>
+	</fieldset>
+	
+</div>
+
+<div class="uk-overflow-auto" if.bind="users">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th>Psychometrist</th>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Location</th>
+				<th>Referral Source</th>
+				<th>Claimant</th>
+				<th>Info</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<template repeat.for="user of users">
+				<tr class="info">
+					<td>
+						${user.firstName}
+					</td>
+					<td colspan="6">&nbsp;</td>
+					<td>
+						<button class="uk-button uk-button-default" click.delegate="sendSchedule(user)">
+							<i class="fa fa-envelope-o"></i>&nbsp;Send Schedule
+						</button>
+					</td>
+				</tr>
+				<tr repeat.for="appointment of user.psychometristAppointments">
+					<td>&nbsp;</td>
+					<td>${appointment.appointmentTime | dateFormat:config.longDateFormat}</td>
+					<td>${appointment.appointmentTime | dateFormat:config.shortTimeFormat}</td>
+					<td with.bind="appointment.location">
+						<ul class="uk-list">
+							<li title="Location Name" class="smaller-siblings" if.bind="name">${name}</li>
+							<li title="Street" if.bind="street">${street}</li>
+							<li title="Suite" if.bind="suite">${suite}</li>
+							<li title="City, Province, Postal Code" if.bind="street || suite">${city.name}, ${city.province} ${postalCode}</li>
+						</ul>
+					</td>
+					<td>${appointment.assessment.referralSource.name}</td>
+					<td>
+						<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
+							<li title="Claimant" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName} - ${claim.claimant.age} ${claim.claimant.gender}</li>
+						</ul>
+					</td>
+					<td>
+						<ul class="uk-list">
+							<li repeat.for="attribute of appointment.attributes | attributeTypes:[1,5,6]">
+								${attribute.name}
+							</li>
+						</ul>
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+			</template>
+		</tbody>
+	</table>
+
+</div>
 	
 </template>

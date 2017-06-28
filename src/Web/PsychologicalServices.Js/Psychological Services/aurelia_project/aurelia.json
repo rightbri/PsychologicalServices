@@ -167,37 +167,33 @@
 			"export": "$"
 		  },
 		  {
-			"name": "bootstrap",
-			"path": "../node_modules/bootstrap/dist",
-			"main": "js/bootstrap.min",
-			"deps": ["jquery"],
-			"exports": "$",
-			"resources": [
-				"css/bootstrap.css"
-			]
-		  },
-		  {
-			"name": "bootstrap-notify",
-			"path": "../node_modules/bootstrap-notify",
-			"main": "bootstrap-notify.min",
-			"exports": "$",
-			"deps": ["jquery"]
-		  },
-		  {
 			"name": "bootstrap-datepicker",
 			"path": "../node_modules/bootstrap-datepicker/dist",
-			"main": "js/bootstrap-datepicker",
-			"exports": "$",
+			"main": "js/bootstrap-datepicker.min",
 			"deps": ["jquery"],
 			"resources": [
-				"css/bootstrap-datepicker3.css"
+				"css/bootstrap-datepicker3.standalone.css"
 			]
+		  },
+		  {
+			"name": "snackbar",
+			"path": "../node_modules/js-snackbar/dist",
+			"main": "snackbar",
+			"resources": [
+				"snackbar.css"
+			]
+		  },
+		  {
+			  "name": "uikit",
+			  "path": "../node_modules/uikit/dist",
+			  "main": "js/uikit.min",
+			  "deps": ["jquery"],
+			  "resources": [
+				"css/uikit.css"
+			  ]
 		  }
         ],
 		"copyFiles": {
-			"node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts",
-			"node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff": "bootstrap/fonts",
-			"node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf": "bootstrap/fonts"
 		}
       }
     ]

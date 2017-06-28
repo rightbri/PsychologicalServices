@@ -1,10 +1,9 @@
 <template bindable="errors">
-	<div class="panel panel-danger">
-		<div class="panel-heading">
-			Please correct the following issues:
-		</div>
-		<ul class="list-group">
-			<li class="list-group-item text-danger" repeat.for="error of errors">
+	<div class="uk-alert-danger" uk-alert>
+		<p>Please correct the following issues:</p>
+			
+		<ul class="uk-list uk-list-bullet">
+			<li class="uk-text-danger" repeat.for="error of errors">
 				${error.message}
 			</li>
 		</ul>

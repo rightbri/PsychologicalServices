@@ -1,81 +1,69 @@
-import {DialogService} from 'aurelia-dialog';
-import {DialogController} from 'aurelia-dialog';
+import {inject} from 'aurelia-framework';
+import {bindable, bindingMode} from 'aurelia-framework';
+import {computedFrom} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
-import {inject} from 'aurelia-framework';
-import {EditClaimant} from './edit-claimant';
 
-@inject(DialogService, DialogController, DataRepository, Config)
-export class SearchClaimant {
-	constructor(dialogService, dialogController, dataRepository, config) {
-		this.dialogService = dialogService;
-		this.dialogController = dialogController;
+@inject(Element, DataRepository, Config)
+export class SearchClaimantCustomElement {
+	@bindable({ defaultBindingMode: bindingMode.twoWay }) claimant;
+	
+	constructor(element, dataRepository, config) {
+		this.element = element;
 		this.dataRepository = dataRepository;
 		this.config = config;
 		
-		this.claimantSearch = null;
 		this.claimantSearchMinLength = 2;
-		this.addClaimantEnabled = true;
-		
+		this.claimantSearch = null;
 		this.claimants = null;
-		this.claimant = null;
-	}
-
-	activate(options) {
-		this.claimant = options.claimant;
-		this.addClaimantEnabled = options.addClaimantEnabled;
 	}
 	
-	ok() {
-		this.dialogController.ok(this.claimant);
-	}
-	
-	cancel() {
-		this.dialogController.cancel();
+	search() {
+		if (this.claimantSearch) {
+			this.claimant = null;
+			this.searchClaimant(this.claimantSearch);
+		}
+		else {
+			this.claimants = null;
+		}
 	}
 	
 	searchClaimant(lastName) {
-		this.dataRepository.getClaimants(lastName).then(data => {
-			this.claimants = data;
-		});
+		if (this.claimantSearch.length >= this.claimantSearchMinLength) {
+			this.dataRepository.getClaimants(lastName).then(data => {
+				this.claimants = data;
+			});
+		}
 	}
 	
 	selectClaimant(claimant) {
-		this.claimants.forEach(c => c.selected = false);
-		
-		claimant.selected = true;
 		this.claimant = claimant;
 		
-		this.ok();
+		fireEvent(this.element, 'selected', claimant);
 	}
 	
-	addClaimant() {
-		return this.editClaimant({ lastName: this.claimantSearch, isActive: true })
-			.then(data => {
-				if (!data.wasCancelled) {
-					this.claimant = data.claimant;
-				}
-			});
+	@computedFrom('claimants', 'claimant')
+	get showResults() {
+		return this.claimants && !this.claimant;
 	}
+}
+
+function createEvent(name, customData) {
+	let customEvent;
 	
-	editClaimant(claimant) {
-		var original = JSON.parse(JSON.stringify(claimant));
+	if (window.CustomEvent) {
+		customEvent = new CustomEvent(name, { bubbles: true, 'detail': { claimant: customData } });
+	}
+	else {
+		customEvent = document.createEvent('CustomEvent');
 		
-		return this.dialogService.open({viewModel: EditClaimant, model: claimant})
-			.then(result => {
-				var copyFrom = original;
-				
-				if (!result.wasCancelled) {
-					copyFrom = result.output;
-				}
-				
-				for (var prop in copyFrom) {
-					if (copyFrom.hasOwnProperty(prop)) {
-						claimant[prop] = copyFrom[prop];
-					}
-				}
-				
-				return { wasCancelled: result.wasCancelled, claimant: claimant };
-			});
+		customEvent.initCustomEvent(name, true, true, { 'detail': { claimant: customData } });
 	}
+	
+	return customEvent;
+}
+
+function fireEvent(element, name, customData) {  
+	var event = createEvent(name, customData);
+	element.dispatchEvent(event);
 }

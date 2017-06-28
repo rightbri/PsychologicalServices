@@ -7,12 +7,10 @@ import {Context} from 'common/context';
 import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
 import {DirtyPrompter} from 'common/dirtyPrompter';
-import {SearchClaimant} from 'claimants/search-claimant';
 import {EditClaim} from 'claims/edit-claim';
 import {EditAppointment} from 'appointments/edit-appointment';
 import {EditMedRehab} from 'medRehab/edit-med-rehab';
 import {EditAssessmentReport} from 'reports/edit-assessment-report';
-import {EditNote} from 'notes/edit-note';
 import moment from 'moment';
 
 @inject(Router, DataRepository, DialogService, Config, Context, Scroller, Notifier, DirtyPrompter)
@@ -242,35 +240,19 @@ export class EditAssessment {
 		this.assessment.medRehabs.splice(this.assessment.medRehabs.indexOf(medRehab), 1);
 	}
 	
-	searchClaimant() {
-		var original = JSON.parse(JSON.stringify(this.claimant || {}));
+	claimantSelected(e) {
+		let result = e.detail;
 		
-		return this.dialogService.open({viewModel: SearchClaimant, model: { claimant: this.claimant, addClaimantEnabled: true } })
-			.whenClosed(result => {
-				var source = original;
-
-				if (!result.wasCancelled) {
-					source = result.output;
-				}
-				
-				this.claimant = source;
-				
-				return { wasCancelled: result.wasCancelled, claimant: this.claimant };
-			})
-			.then(result => {
-				if (!result.wasCancelled) {
-					if (this.assessment.claims && this.assessment.claims.length > 0) {
-						for (var claim of this.assessment.claims) {
-							claim.claimant = result.claimant;
-						}
-					}
-					else {
-						this.assessment.claims = [
-							{ 'claimant': result.claimant }
-						];
-					}
-				}
-			});
+		if (this.assessment.claims && this.assessment.claims.length > 0) {
+			for (var claim of this.assessment.claims) {
+				claim.claimant = result.claimant;
+			}
+		}
+		else {
+			this.assessment.claims = [
+				{ 'claimant': result.claimant }
+			];
+		}
 	}
 	
 	newClaim() {
@@ -360,24 +342,21 @@ export class EditAssessment {
 	}
 	
 	editNote(note) {
-		var original = JSON.parse(JSON.stringify(note));
+		this.noteToEdit = note;
+	}
 		
-		return this.dialogService.open({viewModel: EditNote, model: note})
-			.whenClosed(result => {
-				var copyFrom = original;
+	noteEdited(e) {
+		
+	}
+	
+	noteCanceled(e) {
+		var copyFrom = e.detail;
 				
-				if (!result.wasCancelled) {
-					copyFrom = result.output;
-				}
-				
-				for (var prop in copyFrom) {
-					if (copyFrom.hasOwnProperty(prop)) {
-						note[prop] = copyFrom[prop];
-					}
-				}
-				
-				return { wasCancelled: result.wasCancelled, note: note };
-			});
+		for (var prop in copyFrom) {
+			if (copyFrom.hasOwnProperty(prop)) {
+				this.editNote[prop] = copyFrom[prop];
+			}
+		}
 	}
 	
 	removeNote(note) {

@@ -1,75 +1,79 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
+	<require from="claimants/search-claimant"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
-	
-<h2>Assessments</h2>
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-4">
-			<div class="form-group">
-				<select class="form-control" value.bind="searchReferralSourceId">
-					<option></option>
-					<option repeat.for="referralSource of referralSources" value.bind="referralSource.referralSourceId">${referralSource.name}</option>
-				</select>
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Assessments</legend>
+	
+		<form class="uk-form-stacked">
+		
+			<div class="uk-margin">
+				<label class="uk-form-label" for="searchReferralSource">Referral Source</label>
+				<div class="uk-form-controls">
+					<select id="searchReferralSource" class="uk-select" value.bind="searchReferralSourceId">
+						<option></option>
+						<option repeat.for="referralSource of referralSources" value.bind="referralSource.referralSourceId">${referralSource.name}</option>
+					</select>
+				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-2">
-			<div class="form-group">
-				<button class="btn btn-default" click.delegate="chooseClaimant()">
-					Claimant search
-				</button>
+		
+			<div class="uk-margin">
+				<label class="uk-form-label">Claimant</label>
+				<div class="uk-form-controls">
+					<search-claimant claimant.bind="searchClaimant"></search-claimant>
+				</div>
 			</div>
-		</div>
-		<div class="col-xs-2" if.bind="searchClaimant">
-			<div class="form-group">
-				<p class="form-control-static">
+			
+			<div class="uk-margin" if.bind="searchClaimant">
+				<p>
 					${searchClaimant.firstName} ${searchClaimant.lastName}
 				</p>
 			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-2">
-			<div class="form-group">
-				<button type="button" class="btn btn-default" click.delegate="search()">
-					Search&nbsp;<i class="fa fa-search"></i>
+			
+			<div class="uk-margin">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+					Search
 				</button>
 			</div>
-		</div>
-	</div>
+			
+		</form>
+	
+	</fieldset>
 	
 </div>
 
-<table class="table table-condensed" if.bind="assessments" fixed-header>
-	<thead>
-		<tr>
-			<th></th>
-			<th>Assessment Type</th>
-			<th>Referral Source</th>
-			<th>Claimant</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr repeat.for="assessment of assessments">
-			<td>
-				<a route-href="route: editAssessment; params.bind: { id: assessment.assessmentId }" class="btn btn-default btn-xs">
-					<i class="fa fa-pencil"></i>
-				</a>
-			</td>
-			<td>${assessment.assessmentType.name}</td>
-			<td>${assessment.referralSource.name}</td>
-			<td>
-				<ul class="list-unstyled" repeat.for="claim of assessment.claims">
-					<li if.bind="claim.claimant" class="smaller-siblings">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
-					<li if.bind="claim.claimant">${claim.claimant.dateOfBirth | dateFormat:config.longDateFormat}</li>
-				</ul>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div class="uk-overflow-auto" if.bind="assessments">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Assessment Type</th>
+				<th>Referral Source</th>
+				<th>Claimant</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="assessment of assessments">
+				<td>
+					<a route-href="route: editAssessment; params.bind: { id: assessment.assessmentId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${assessment.assessmentType.name}</td>
+				<td>${assessment.referralSource.name}</td>
+				<td>
+					<ul class="list-unstyled" repeat.for="claim of assessment.claims">
+						<li if.bind="claim.claimant" class="smaller-siblings">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
+						<li if.bind="claim.claimant">${claim.claimant.dateOfBirth | dateFormat:config.longDateFormat}</li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
 </template>

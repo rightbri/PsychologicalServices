@@ -5,86 +5,85 @@
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
 	
-<h3>Referral Sources</h3>
+<div class="uk-container">
 
-<div class="container-fluid">
-
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="searchName">Name</label>
-				<input id="searchName" type="text" class="form-control" value.bind="searchName" />
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Referral Sources</legend>
+		
+		<form class="uk-form-stacked">
+		
+			<div class="uk-margin">
+				<label class="uk-form-label" for="searchName">Name</label>
+				<div class="uk-form-controls">
+					<input id="searchName" type="text" class="uk-input" value.bind="searchName" />
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="checkbox" repeat.for="referralSourceType of referralSourceTypes">
-				<label>
-					<input type="checkbox" value.bind="referralSourceType.referralSourceTypeId" checked.bind="searchReferralSourceTypeIds" />&nbsp;${referralSourceType.name}
-				</label>
+		
+			<div class="uk-margin">
+				<label class="uk-form-label">Referral Source Types</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="referralSourceType of referralSourceTypes">
+						<input type="checkbox" class="uk-checkbox" value.bind="referralSourceType.referralSourceTypeId" checked.bind="searchReferralSourceTypeIds" />&nbsp;${referralSourceType.name}
+					</label>
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<div class="form-group">
-				<label for="searchActive">Is Active?</label>
-				<select class="form-control" value.bind="searchActive">
-					<option></option>
-					<option value="true">yes</option>
-					<option value="false">no</option>
-				</select>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="searchActive">Is Active?</label>
+				<div class="uk-form-controls">
+					<select class="uk-select" value.bind="searchActive">
+						<option></option>
+						<option value="true">yes</option>
+						<option value="false">no</option>
+					</select>
+				</div>
 			</div>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<button type="button" class="btn btn-default" click.delegate="search()">
-				Search <i class="fa fa-search"></i>
-			</button>
-		</div>
-		<div class="col-xs-offset-8 col-xs-1">
-			<a route-href="route: addReferralSource" class="btn btn-default" title="Add Assessment">
-				<i class="fa fa-plus"></i>&nbsp;Add
-			</a>
-		</div>
-	</div>
+			
+			<div class="uk-margin">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+					Search
+				</button>
+				<a route-href="route: addReferralSource" class="uk-button uk-button-default">
+					<i class="fa fa-plus"></i>&nbsp;Add
+				</a>
+			</div>
+			
+		</form>
+		
+	</fieldset>
 	
 </div>
 
-<table class="table table-condensed" fixed-header>
-	<thead>
-		<tr>
-			<th></th>
-			<th>Name</th>
-			<th>Type</th>
-			<th>Address</th>
-			<th>Large File Size</th>
-			<th>Large File Fee</th>
-			<th>Late Cancellation Fee Rate</th>
-			<th>Active?</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr repeat.for="referralSource of referralSources">
-			<td>
-				<a route-href="route: editReferralSource; params.bind: { id: referralSource.referralSourceId }" class="btn btn-default btn-xs" title="Edit Referral Source">
-					<i class="fa fa-pencil"></i>
-				</a>
-			</td>
-			<td>${referralSource.name}</td>
-			<td>${referralSource.referralSourceType.name}</td>
-			<td>${referralSource.address.name}</td>
-			<td>${referralSource.largeFileSize | numeric}</td>
-			<td>${referralSource.largeFileFeeAmount | money}</td>
-			<td>${referralSource.lateCancellationRate | numeric:'0.00'}</td>
-			<td>${referralSource.isActive | boolean}</td>
-		</tr>
-	</tbody>
-</table>
-
+<div class="uk-overflow-auto">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Address</th>
+				<th>Large File Size</th>
+				<th>Large File Fee</th>
+				<th>Late Cancellation Fee Rate</th>
+				<th>Active?</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="referralSource of referralSources">
+				<td>
+					<a route-href="route: editReferralSource; params.bind: { id: referralSource.referralSourceId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${referralSource.name}</td>
+				<td>${referralSource.referralSourceType.name}</td>
+				<td>${referralSource.address.name}</td>
+				<td>${referralSource.largeFileSize | numeric}</td>
+				<td>${referralSource.largeFileFeeAmount | money}</td>
+				<td>${referralSource.lateCancellationRate | numeric:'0.00'}</td>
+				<td>${referralSource.isActive | boolean}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 </template>

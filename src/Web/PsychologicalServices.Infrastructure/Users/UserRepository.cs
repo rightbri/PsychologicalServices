@@ -407,6 +407,8 @@ namespace PsychologicalServices.Infrastructure.Users
 
                     prefetch.Add(UserEntity.PrefetchPathUserUnavailabilities);
 
+                    prefetch.Add(UserEntity.PrefetchPathUserTravelFees);
+
                     adapter.FetchEntity(userEntity, prefetch);
                 }
 

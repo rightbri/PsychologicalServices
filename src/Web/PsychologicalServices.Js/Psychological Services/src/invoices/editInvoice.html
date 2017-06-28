@@ -5,181 +5,175 @@
 	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/validation-summary.html"></require>
 	
-    <h2>Edit Invoice</h2>
+    <div class="uk-container">
+	
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Edit Invoice</legend>
+			
+			<form class="uk-form-stacked uk-grid-medium" uk-grid>
+			
+				<div class="uk-width-1-1" if.bind="validationErrors">
+					<validation-summary errors.bind="validationErrors"></validation-summary>
+				</div>
+				
+				<div class="uk-width-1-4@s">
+					<label class="uk-form-label">Type</label>
+					<div class="uk-form-controls">
+						<p>${invoice.invoiceType.name} Invoice</p>
+					</div>
+				</div>
+			
+				<div class="uk-width-1-4@s">
+					<label class="uk-form-label">Identifier</label>
+					<div class="uk-form-controls">
+						<p>${invoice.identifier}</p>
+					</div>
+				</div>
+				
+				<div class="uk-width-1-4@s">
+					<label class="uk-form-label">Status</label>
+					<div class="uk-form-controls">
+						<p>${invoice.invoiceStatus.name}</p>
+					</div>
+				</div>
+				
+				<div class="uk-width-1-4@s">
+					<template repeat.for="nextStatus of invoice.invoiceStatus.nextInvoiceStatuses">
+						<button type="button" class="uk-button uk-button-default" click.delegate="setStatus(nextStatus)">
+							${nextStatus.actionName}
+						</button>
+					</template>
+				</div>
+				
+				<div class="uk-width-1-1">
+					<label class="uk-form-label">Appointments</label>
+					<div class="uk-form-controls uk-overflow-auto">
+						
+						<table class="uk-table uk-table-divider uk-table-small">
+							<thead>
+								<tr>
+									<th>Description</th>
+									<th>Amount</th>
+									<th>
+										<a href="#" click.delegate="refreshLines()" if.bind="invoice.invoiceStatus.canEdit">
+											<i class="fa fa-refresh"></i>
+										</a>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template repeat.for="invoiceAppointment of invoice.appointments">
+									<tr class="uk-background-muted">
+										<td colspan="2">
+											${invoiceAppointment.appointment.appointmentTime | dateFormat:config.longDateFormat},
+											${invoiceAppointment.appointment.assessment.assessmentType.description} Assessment
+											in ${invoiceAppointment.appointment.location.city.name}
+											<template repeat.for="claim of invoiceAppointment.appointment.assessment.claims">
+											&nbsp;for ${invoiceAppointment.appointment.assessment.referralSource.name}/${claim.claimant.firstName} ${claim.claimant.lastName}
+											</template>
+										</td>
+										<td>
+											<a href="#" click.delegate="addLine(invoiceAppointment)" if.bind="invoice.invoiceStatus.canEdit">
+												<i class="fa fa-plus"></i>
+											</a>
+										</td>
+									</tr>
+									<tr repeat.for="line of invoiceAppointment.lines">
+										<td>
+											<input type="text" class="uk-input" value.bind="line.description" disabled.bind="!invoice.invoiceStatus.canEdit" />
+										</td>
+										<td class="uk-table-shrink">
+											<input type="number" class="uk-input uk-form-width-small" value.bind="line.amount | money:'0'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
+										</td>
+										<td class="uk-table-shrink">
+											<a href="#" click.delegate="removeLine(invoiceAppointment, line)" if.bind="invoice.invoiceStatus.canEdit">
+												<i class="fa fa-times"></i>
+											</a>
+										</td>
+									</tr>
+									
+									<tr if.bind="invoiceAppointment.showStatusLine">
+										<td class="uk-text-warning">${invoiceAppointment.appointment.appointmentStatus.name}</td>
+										<td>${invoiceAppointment.subtotal | money}</td>
+										<td></td>
+									</tr>
+									
+								</template>
+							
+								<tr>
+									<td>+ H.S.T.</td>
+									<td>${subtotal * invoice.taxRate | money}</td>
+									<td></td>
+								</tr>
 
-    <div class="container-fluid">
-        <div class="row" if.bind="validationErrors">
-            <div class="col-xs-12">
-                <validation-summary errors.bind="validationErrors"></validation-summary>
-            </div>
-        </div>
-		
-		<div class="row">
-			<div class="col-xs-2">
-				Type:
-			</div>
-			<div class="col-xs-10">
-				${invoice.invoiceType.name} Invoice
-			</div>
-		</div>
-        
-        <div class="row">
-            <div class="col-xs-2">
-                Identifier:
-            </div>
-            <div class="col-xs-10">
-                ${invoice.identifier}
-            </div>
-        </div>
+								<!-- Total Invoice Amount -->
+								<tr>
+									<td>Total Invoice Amount</td>
+									<td>${invoice.total | money}</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
 
-        <div class="row">
-            <div class="col-xs-2">
-                Status:
-            </div>
-            <div class="col-xs-4">
-                ${invoice.invoiceStatus.name}
-            </div>
-			<div class="col-xs-6">
-				<template repeat.for="nextStatus of invoice.invoiceStatus.nextInvoiceStatuses">
-					<button type="button" class="btn btn-default" click.delegate="setStatus(nextStatus)">
-						${nextStatus.actionName}
+					</div>
+				</div>
+				
+				<div class="uk-width-1-1">
+					<label class="uk-form-label">Documents</label>
+					<div class="uk-form-controls uk-overflow-auto">
+						<table class="uk-table uk-table-divider uk-table-small">
+							<thead>
+								<tr>
+									<th>Document</th>
+									<th>Create Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr repeat.for="document of invoice.documents | sortArray:{property:'createDate',direction:'desc'}">
+									<td>
+										<a href="#${document.fileName}" click.delegate="getInvoiceDocument(document)">${document.fileName}</a>
+									</td>
+									<td>
+										${document.createDate | dateFormat:config.longDateTimeFormat}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div class="uk-width-1-1">
+					<label class="uk-form-label">Status changes</label>
+					<div class="uk-form-controls uk-overflow-auto">
+						<table class="uk-table uk-table-divider uk-table-small">
+							<thead>
+								<tr>
+									<th>Status</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr repeat.for="status of invoice.statusChanges | sortArray:{property:'updateDate',direction:'desc'}">
+									<td>${status.invoiceStatus.name}</td>
+									<td>${status.updateDate | dateFormat:config.longDateTimeFormat}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div class="uk-width-1-1">
+					<button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
+						<i class="fa fa-arrow-left"></i> Back
 					</button>
-				</template>
-			</div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-2">
-                Appointments
-            </div>
-            <div class="col-xs-10">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>
-								<button type="button" class="btn btn-info btn-xs" click.delegate="refreshLines()" if.bind="invoice.invoiceStatus.canEdit">
-									<i class="fa fa-refresh"></i>
-								</button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-						<template repeat.for="invoiceAppointment of invoice.appointments">
-							<tr class="info">
-								<td colspan="2">
-									${invoiceAppointment.appointment.appointmentTime | dateFormat:config.longDateFormat},
-									${invoiceAppointment.appointment.assessment.assessmentType.description} Assessment
-									in ${invoiceAppointment.appointment.location.city.name}
-									<template repeat.for="claim of invoiceAppointment.appointment.assessment.claims">
-									for ${invoiceAppointment.appointment.assessment.referralSource.name}/${claim.claimant.firstName} ${claim.claimant.lastName}
-									</template>
-								</td>
-								<td>
-									<button type="button" class="btn btn-info btn-xs" click.delegate="addLine(invoiceAppointment)" if.bind="invoice.invoiceStatus.canEdit">
-										<i class="fa fa-plus"></i>
-									</button>
-								</td>
-							</tr>
-							<tr repeat.for="line of invoiceAppointment.lines">
-								<td>
-									<input type="text" class="form-control" value.bind="line.description" disabled.bind="!invoice.invoiceStatus.canEdit" />
-								</td>
-								<td>
-									<input type="number" class="form-control" value.bind="line.amount | money:'0'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
-								</td>
-								<td>
-									<button type="button" class="btn btn-danger btn-xs" click.delegate="removeLine(invoiceAppointment, line)" if.bind="invoice.invoiceStatus.canEdit">
-										<i class="fa fa-times"></i>
-									</button>
-								</td>
-							</tr>
-							
-							<tr class="warning" if.bind="invoiceAppointment.showStatusLine">
-								<td>${invoiceAppointment.appointment.appointmentStatus.name}</td>
-								<td>${invoiceAppointment.subtotal | money}</td>
-								<td></td>
-							</tr>
-							
-						</template>
-					
-                        <tr>
-                            <td>+ H.S.T.</td>
-                            <td>${subtotal * invoice.taxRate | money}</td>
-                            <td></td>
-                        </tr>
-
-                        <!-- Total Invoice Amount -->
-                        <tr>
-                            <td>Total Invoice Amount</td>
-                            <td>${invoice.total | money}</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-		
-		<div class="row">
-			<div class="col-xs-2">
-				Documents
-			</div>
-			<div class="col-xs-10">
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th>Document</th>
-							<th>Create Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr repeat.for="document of invoice.documents | sortArray:{property:'createDate',direction:'desc'}">
-							<td>
-								<a href="#${document.fileName}" click.delegate="getInvoiceDocument(document)">${document.fileName}</a>
-							</td>
-							<td>
-								${document.createDate | dateFormat:config.longDateTimeFormat}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-xs-2">
-				Status changes
-			</div>
-			<div class="col-xs-10">
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th>Status</th>
-							<th>Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr repeat.for="status of invoice.statusChanges | sortArray:{property:'updateDate',direction:'desc'}">
-							<td>${status.invoiceStatus.name}</td>
-							<td>${status.updateDate | dateFormat:config.longDateTimeFormat}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <button type="button" class="btn btn-default" click.delegate="back()">
-                    <i class="fa fa-arrow-left"></i> Back
-                </button>
-                <button type="button" class="btn btn-primary" click.delegate="save()" if.bind="invoice.invoiceStatus.canEdit">
-                    Save <i class="fa fa-save"></i>
-                </button>
-            </div>
-        </div>
+					<button type="button" class="uk-button uk-button-primary" click.delegate="save()" if.bind="invoice.invoiceStatus.canEdit">
+						Save <i class="fa fa-save"></i>
+					</button>
+				</div>
+				
+			</form>
+			
+		</fieldset>
 
     </div>
 

@@ -7,9 +7,9 @@ export function configure(aurelia) {
 
   aurelia.use
     .instance('apiRoot', apiRoot)
-		.standardConfiguration()
+	.standardConfiguration()
     .plugin('aurelia-dialog')
-		.feature('resources');
+	.feature('resources');
 
   if (environment.debug) {
     aurelia.use.developmentLogging();
@@ -18,6 +18,6 @@ export function configure(aurelia) {
   if (environment.testing) {
     aurelia.use.plugin('aurelia-testing');
   }
-
+  
   aurelia.start().then(() => aurelia.setRoot());
 }

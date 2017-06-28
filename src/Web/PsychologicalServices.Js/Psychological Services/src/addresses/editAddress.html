@@ -1,69 +1,59 @@
 <template>
 	<require from="common/validation-summary.html"></require>
-	
-	<h2>${editType} Address</h2>
-	
-	<div class="container-fluid">
-	
-		<div class="row" if.bind="validationErrors">
-			<div class="col-xs-6">
+
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">${editType} Address</legend>
+		
+		<form class="uk-form-stacked uk-grid-medium" uk-grid>
+		
+			<div class="uk-width-1-1" if.bind="validationErrors">
 				<validation-summary errors.bind="validationErrors"></validation-summary>
 			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="form-group">
-					<label for="name">Name</label>
-					<input id="name" type="text" class="form-control" value.bind="address.name" />
+			
+			<div class="uk-width-1-1">
+				<label for="name" class="uk-form-label">Name</label>
+				<div class="uk-form-controls">
+					<input id="name" type="text" class="uk-input" value.bind="address.name" />
 				</div>
 			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="form-group">
-					<label for="street">Street</label>
-					<input id="street" type="text" class="form-control" value.bind="address.street" />
+			
+			<div class="uk-width-1-2@s">
+				<label for="street" class="uk-form-label">Street</label>
+				<div class="uk-form-controls">
+					<input id="street" type="text" class="uk-input" value.bind="address.street" />
 				</div>
 			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="form-group">
-					<label for="suite">Suite</label>
-					<input id="suite" type="text" class="form-control" value.bind="address.suite" />
+			
+			<div class="uk-width-1-2@s">
+				<label for="suite" class="uk-form-label">Suite</label>
+				<div class="uk-form-controls">
+					<input id="suite" type="text" class="uk-input" value.bind="address.suite" />
 				</div>
 			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="form-group">
-					<label for="city">City</label>
-					<select id="city" class="form-control" value.bind="address.city" matcher.bind="cityMatcher">
+			
+			<div class="uk-width-1-2@s">
+				<label for="city" class="uk-form-label">City</label>
+				<div class="uk-form-controls">
+					<select id="city" class="uk-select" value.bind="address.city" matcher.bind="cityMatcher">
 						<option></option>
 						<option repeat.for="city of cities" model.bind="city">${city.name}, ${city.province}</option>
 					</select>
 				</div>
 			</div>
-		</div>
 		
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="form-group">
-					<label for="postalCode">Postal Code</label>
-					<input id="postalCode" type="text" class="form-control" value.bind="address.postalCode" />
+			<div class="uk-width-1-2@s">
+				<label for="postalCode" class="uk-form-label">Postal Code</label>
+				<div class="uk-form-controls">
+					<input id="postalCode" type="text" class="uk-input" value.bind="address.postalCode" />
 				</div>
 			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="form-group">
-					<label for="type">Type</label>
-					<select class="form-control" value.bind="address.addressType" matcher.bind="addressTypeMatcher">
+		
+			<div class="uk-width-1-2@s">
+				<label for="type" class="uk-form-label">Type</label>
+				<div class="uk-form-controls">
+					<select class="uk-select" value.bind="address.addressType" matcher.bind="addressTypeMatcher">
 						<option></option>
 						<option repeat.for="addressType of addressTypes" model.bind="addressType">
 							${addressType.name}
@@ -71,28 +61,28 @@
 					</select>
 				</div>
 			</div>
-		</div>
 		
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="checkbox">
-					<label>
-						<input id="active" type="checkbox" checked.bind="address.isActive" />&nbsp;Is Active?
+			<div class="uk-width-1-2@s">
+				<label class="uk-form-label">Status</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label">
+						<input id="active" class="uk-checkbox" type="checkbox" checked.bind="address.isActive" />&nbsp;Is Active?
 					</label>
 				</div>
 			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-xs-6">
-				<button type="button" class="btn btn-default" click.delegate="back()">
+			
+			<div class="uk-width-1-1">
+				<button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
 					<i class="fa fa-arrow-left"></i>&nbsp;Back
 				</button>
-				<button type="button" class="btn btn-primary" click.delegate="save()">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="save()">
 					<i class="fa fa-save"></i>&nbsp;Save
 				</button>
 			</div>
-		</div>
-	</div>
-	
+		
+		</form>
+		
+	</fieldset>
+
+</div>
 </template>

@@ -2,69 +2,42 @@
 	<require from="resources/value-converters/gender"></require>
 	<require from="resources/value-converters/date-format"></require>
 	
-	<ux-dialog>
-		<ux-dialog-header>
-		<h3>Search Claimants</h3>
-		</ux-dialog-header>
-		<ux-dialog-body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-9">
-					<div class="input-group">
-						<input id="claimantSearch" type="text" class="form-control" placeholder="Claimant Last Name" value.bind="claimantSearch" />
-						<span class="input-group-btn">
-							<button type="button" class="btn btn-default" click.delegate="searchClaimant(claimantSearch)" disabled.bind="claimantSearch.length < claimantSearchMinLength">
-								<i class="fa fa-search"></i>
-							</button>
-						</span>
-						<span class="input-group-btn" if.bind="addClaimantEnabled">
-							<button type="button" class="btn btn-default" click.delegate="addClaimant()">
-								<i class="fa fa-plus"></i>
-							</button>
-						</span>
-					</div>
-				</div>
-			</div>
-			<div class="row" if.bind="claimants">
-				<div class="col-xs-12">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>First</th>
-								<th>Last</th>
-								<th>Date of Birth</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr repeat.for="claimant of claimants" class.bind="claimant.selected ? 'active' : ''">
-								<td>${claimant.firstName}</td>
-								<td>${claimant.lastName}</td>
-								<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>
-								<td>${claimant.age}</td>
-								<td>${claimant.gender | gender}</td>
-								<td>
-									<button type="button" class="btn btn-default" click.delegate="selectClaimant(claimant)">
-										Select
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			
-		</div>
-		</ux-dialog-body>
-		<ux-dialog-footer>
-		<button type="button" class="btn btn-primary" click.delegate="ok()">
-			Ok
-		</button>
-		<button type="button" class="btn btn-default" click.delegate="cancel()">
-			Cancel
-		</button>
-		</ux-dialog-footer>
-	</ux-dialog>
+<div class="uk-container">
+
+	<div class="uk-margin">
+		<form class="uk-search uk-search-default">
+			<span class="uk-search-icon-flip" uk-search-icon></span>
+			<input type="search" class="uk-search-input" placeholder="Claimant Name" value.bind="claimantSearch" input.delegate="search() & debounce:200" />
+		</form>
+	</div>
+
+	<table class="uk-table uk-table-divider" if.bind="showResults">
+		<thead>
+			<tr>
+				<th>First</th>
+				<th>Last</th>
+				<th>Date of Birth</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="claimant of claimants">
+				<td>${claimant.firstName}</td>
+				<td>${claimant.lastName}</td>
+				<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>
+				<td>${claimant.age}</td>
+				<td>${claimant.gender | gender}</td>
+				<td>
+					<button type="button" class="uk-button uk-button-default" click.delegate="selectClaimant(claimant)">
+						Select
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+	
 </template>
