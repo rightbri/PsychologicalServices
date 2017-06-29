@@ -1,15 +1,20 @@
-import {DialogController} from 'aurelia-dialog';
-import {Config} from 'common/config';
 import {inject} from 'aurelia-framework';
+import {bindable, bindingMode} from 'aurelia-framework';
+import {Config} from 'common/config';
 
-@inject(DialogController, Config)
-export class ViewAssessmentSummary {
-	constructor(dialogController, config) {
-		this.dialogController = dialogController;
+@inject(Config)
+export class ViewAssessmentSummaryCustomElement {
+	@bindable({ defaultBindingMode: bindingMode.oneTime }) model;
+	@bindable({ defaultBindingMode: bindingMode.oneTime }) containerId;
+	
+	constructor(config) {
 		this.config = config;
 	}
 	
-	activate(appointment) {
+	modelChanged(oldValue, newValue) {
+		let appointment = oldValue;
+		
+		this.modalId = `assessment-summary-${appointment.appointmentId}`;
 		
 		this.psychiatrist = appointment.assessment.attributes.some(attr =>
 			attr.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.psychiatrist &&
@@ -28,13 +33,14 @@ export class ViewAssessmentSummary {
 		
 		this.colors = appointment.assessment.colors;
 		
-		this.borderColor = '#ffffff';
-		
-		for (let color of this.colors) {
-			this.borderColor = color.hexCode;
-			break;
+		if (this.colors.length === 0) {
+			this.colors.push({ 'hexCode': '#666666'});
 		}
 		
+		while (this.colors.length < 3) {
+			this.colors.push(this.colors[this.colors.length - 1]);
+		}
+
 		this.claim = null;
 		
 		for (let claim of appointment.assessment.claims) {
@@ -53,9 +59,5 @@ export class ViewAssessmentSummary {
 		}
 	
 		this.summary = appointment.assessment.summary.noteText;
-	}
-	
-	cancel() {
-		this.dialogController.cancel();
 	}
 }

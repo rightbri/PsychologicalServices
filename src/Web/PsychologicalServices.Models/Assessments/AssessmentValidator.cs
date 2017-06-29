@@ -234,7 +234,7 @@ namespace PsychologicalServices.Models.Assessments
                     );
                 }
 
-                if (item.MedicalFileReceivedDate > _now.Now)
+                if (item.MedicalFileReceivedDate > _now.UtcNow)
                 {
                     result.ValidationErrors.Add(
                         new ValidationError { PropertyName = "MedicalFileReceivedDate", Message = "The medical file received date cannot be in the future." }

@@ -1,0 +1,41 @@
+<template>
+	<require from="resources/elements/edit-panel"></require>
+	
+	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Report</legend>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="reportType">Report Type</label>
+				<div class="uk-form-controls">
+					<select id="reportType" class="uk-select" value.bind="model.report.reportType" matcher.bind="reportTypeMatcher">
+						<option></option>
+						<option repeat.for="reportType of reportTypes" model.bind="reportType">
+							${reportType.name}
+						</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label">Issues in Dispute</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" if.bind="!(model.issuesInDispute && model.issuesInDispute.length > 0)">
+						N/A
+					</label>
+					<label class="uk-form-label" repeat.for="issueInDispute of model.issuesInDispute">
+						<input type="checkbox" class="uk-checkbox" model.bind="issueInDispute" checked.bind="model.report.issuesInDispute" matcher.bind="issueInDisputeMatcher" />&nbsp;${issueInDispute.name}
+					</label>
+				</div>
+			</div>
+			
+			<div class="uk-margin">
+				<div class="uk-form-controls">
+					<label>
+						<input type="checkbox" class="uk-checkbox" checked.bind="model.report.isAdditional" />&nbsp;Extra Benefit Report?
+					</label>
+				</div>
+			</div>
+		</fieldset>
+	</edit-panel>
+</template>

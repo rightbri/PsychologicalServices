@@ -9,10 +9,14 @@
 	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-picker"></require>
+	<require from="appointments/edit-appointment"></require>
 	<require from="claimants/search-claimant"></require>
+	<require from="medRehab/edit-med-rehab"></require>
+	<require from="claims/edit-claim"></require>
+	<require from="reports/edit-report"></require>
 	<require from="notes/edit-note"></require>
 	
-<div class="uk-container">
+<div id="editAssessment" class="uk-container">
 	
 	<fieldset class="uk-fieldset">
 		<legend class="uk-legend">${editType} Assessment</legend>
@@ -30,9 +34,9 @@
 						<thead>
 							<tr>
 								<th>
-									<a href="#" click.delegate="newAppointment()">
+									<button type="button" class="uk-button uk-button-link" click.delegate="newAppointment()" title="Add appointment" uk-tooltip>
 										<i class="fa fa-plus"></i>
-									</a>
+									</button>
 								</th>
 								<th>Date/Time</th>
 								<th>Location</th>
@@ -64,9 +68,9 @@
 									</ul>
 								</td>
 								<td>
-									<a href="#" click.delegate="removeAppointment(appointment)">
+									<button type="button" class="uk-button uk-button-link" click.delegate="removeAppointment(appointment)" title="Remove appointment" uk-tooltip>
 										<i class="fa fa-times"></i>
-									</a>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -74,8 +78,12 @@
 				</div>
 			</div>
 			
+			<div class="uk-width-1-1 uk-background-muted" if.bind="appointmentEditModel">
+				<edit-appointment model.bind="appointmentEditModel" edited.delegate="appointmentEdited($event)" canceled.delegate="appointmentCanceled($event)"></edit-appointment>
+			</div>
+			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="assessmentType">Assessment Type</label>
+				<label class="uk-form-label" for="assessmentType">Assessment Type</label>
 				<div class="uk-form-controls">
 					<select id="assessmentType" class="uk-select" value.bind="assessment.assessmentType" matcher.bind="assessmentTypeMatcher">
 						<option></option>
@@ -87,7 +95,7 @@
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="referralSource">Referral Source</label>
+				<label class="uk-form-label" for="referralSource">Referral Source</label>
 				<div class="uk-form-controls">
 					<select id="referralSource" class="uk-select" value.bind="assessment.referralSource" matcher.bind="referralSourceMatcher">
 						<option></option>
@@ -99,14 +107,14 @@
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="referralSourceContactEmail">Referral Source Contact Email</label>
+				<label class="uk-form-label" for="referralSourceContactEmail">Referral Source Contact Email</label>
 				<div class="uk-form-controls">
 					<input id="referralSourceContactEmail" type="email" class="uk-input" value.bind="assessment.referralSourceContactEmail" />
 				</div>
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="referralType">Referral Type</label>
+				<label class="uk-form-label" for="referralType">Referral Type</label>
 				<div class="uk-form-controls">
 					<select id="referralType" class="uk-select" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher">
 						<option></option>
@@ -118,21 +126,21 @@
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="medicalFileReceivedDate">Medical File Received Date</label>
+				<label class="uk-form-label" for="medicalFileReceivedDate">Medical File Received Date</label>
 				<div class="uk-form-controls">
 					<input id="medicalFileReceivedDate" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="assessment.medicalFileReceivedDate | dateFormat:config.longDateFormat"/>
 				</div>
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="fileNumber">File Number</label>
+				<label class="uk-form-label" for="fileNumber">File Number</label>
 				<div class="uk-form-controls">
 					<input id="fileNumber" type="text" class="uk-input" value.bind="assessment.referralSourceFileNumber" />
 				</div>
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label"></label>
+				<label class="uk-form-label"></label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label" repeat.for="attribute of attributes | attributeTypes:getAttributeTypeIds(assessment.assessmentType.attributeTypes)">
 						<input type="checkbox" class="uk-checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
@@ -141,15 +149,15 @@
 			</div>
 			
 			<div class="uk-width-2-3@s">
-				<label for="type" class="uk-form-label">Med Rehabs</label>
+				<label class="uk-form-label">Med Rehabs</label>
 				<div class="uk-form-controls uk-overflow-auto">
 					<table class="uk-table uk-table-divider uk-table-small">
 						<thead>
 							<tr>
 								<th>
-									<a href="#" click.delegate="newMedRehab()">
+									<button type="button" class="uk-button uk-button-link" click.delegate="newMedRehab()" title="Add Med Rehab" uk-tooltip>
 										<i class="fa fa-plus"></i>
-									</a>
+									</button>
 								</th>
 								<th>Date</th>
 								<th>Amount</th>
@@ -164,13 +172,13 @@
 										Edit
 									</button>
 								</td>
-								<td>${medRehab.date | dateFormat:config.shortDateFormat}</td>
+								<td>${medRehab.date | dateFormat:config.longDateFormat}</td>
 								<td>${medRehab.amount}</td>
 								<td>${medRehab.description}</td>
 								<td>
-									<a href="#" click.delegate="removeMedRehab(medRehab)">
+									<button type="button" class="uk-button uk-button-link" click.delegate="removeMedRehab(medRehab)" title="Remove Med Rehab" uk-tooltip>
 										<i class="fa fa-times"></i>
-									</a>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -178,8 +186,12 @@
 				</div>
 			</div>
 			
+			<div class="uk-width-1-1 uk-background-muted" if.bind="medRehabEditModel">
+				<edit-med-rehab model.bind="medRehabEditModel" edited.delegate="medRehabEdited($event)" canceled.delegate="medRehabCanceled($event)"></edit-med-rehab>
+			</div>
+			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label">Claimant</label>
+				<label class="uk-form-label">Claimant</label>
 				<div class="uk-form-controls">
 					<search-claimant claimant.bind="claimant" selected.delegate="claimantSelected($event)"></search-claimant>
 					<p if.bind="claimant">
@@ -190,15 +202,15 @@
 			</div>
 			
 			<div class="uk-width-2-3@s">
-				<label for="type" class="uk-form-label">Claims</label>
+				<label class="uk-form-label">Claims</label>
 				<div class="uk-form-controls uk-overflow-auto">
 					<table class="uk-table uk-table-divider uk-table-small">
 						<thead>
 							<tr>
 								<th>
-									<a href="#" click.delegate="newClaim()" disabled.bind="!claimant">
+									<button type="button" class="uk-button uk-button-link" click.delegate="newClaim()" disabled.bind="!claimant" title="Add claim" uk-tooltip>
 										<i class="fa fa-plus"></i>
-									</a>
+									</button>
 								</th>
 								<th>Claim #</th>
 								<th>Date of Loss</th>
@@ -215,9 +227,9 @@
 								<td>${claim.claimNumber}</td>
 								<td>${claim.dateOfLoss | dateFormat:config.longDateFormat}</td>
 								<td>
-									<a href="#" click.delegate="removeClaim(claim)">
+									<button type="button" class="uk-button uk-button-link" click.delegate="removeClaim(claim)" title="Remove claim" uk-tooltip>
 										<i class="fa fa-times"></i>
-									</a>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -225,10 +237,14 @@
 				</div>
 			</div>
 			
+			<div class="uk-width-1-1 uk-background-muted" if.bind="claimEditModel">
+				<edit-claim model.bind="claimEditModel" edited.delegate="claimEdited($event)" canceled.delegate="claimCanceled($event)"></edit-claim>
+			</div>
+			
 			<div class="uk-width-1-3@s">
 			
 				<div class="uk-margin">
-					<label for="type" class="uk-form-label" for="docListWriter">Doc List Writer</label>
+					<label class="uk-form-label" for="docListWriter">Doc List Writer</label>
 					<div class="uk-form-controls">
 						<select id="docListWriter" class="uk-select" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
 							<option></option>
@@ -240,7 +256,7 @@
 				</div>
 				
 				<div class="uk-margin">
-					<label for="type" class="uk-form-label" for="notesWriter">Notes Writer</label>
+					<label class="uk-form-label" for="notesWriter">Notes Writer</label>
 					<div class="uk-form-controls">
 						<select id="notesWriter" class="uk-select" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
 							<option></option>
@@ -254,15 +270,15 @@
 			</div>
 			
 			<div class="uk-width-2-3@s">
-				<label for="type" class="uk-form-label">Reports</label>
+				<label class="uk-form-label">Reports</label>
 				<div class="uk-form-controls uk-overflow-auto">
 					<table class="uk-table uk-table-divider uk-table-small">
 						<thead>
 							<tr>
 								<th>
-									<a href="#" click.delegate="newReport()" disabled.bind="!assessment.assessmentType">
+									<button type="button" class="uk-button uk-button-link" click.delegate="newReport()" disabled.bind="!assessment.assessmentType" title="Add report" uk-tooltip>
 										<i class="fa fa-plus"></i>
-									</a>
+									</button>
 								</th>
 								<th>Report Type</th>
 								<th>Issues In Dispute</th>
@@ -287,9 +303,9 @@
 								</td>
 								<td>${report.isAdditional | boolean}</td>
 								<td>
-									<a href="#" click.delegate="removeReport(report)">
+									<button type="button" class="uk-button uk-button-link" click.delegate="removeReport(report)" title="Remove report" uk-tooltip>
 										<i class="fa fa-times"></i>
-									</a>
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -297,8 +313,12 @@
 				</div>
 			</div>
 			
+			<div class="uk-width-1-1 uk-background-muted" if.bind="reportEditModel">
+				<edit-report model.bind="reportEditModel" edited.delegate="reportEdited($event)" canceled.delegate="reportCanceled($event)"></edit-report>
+			</div>
+			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="reportStatus">Report Status</label>
+				<label class="uk-form-label" for="reportStatus">Report Status</label>
 				<div class="uk-form-controls">
 					<select id="reportStatus" class="uk-select" value.bind="assessment.reportStatus" matcher.bind="reportStatusMatcher">
 						<option></option>
@@ -310,14 +330,14 @@
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label" for="fileSize">File Size</label>
+				<label class="uk-form-label" for="fileSize">File Size</label>
 				<div class="uk-form-controls">
 					<input id="fileSize" type="number" class="uk-input" value.bind="assessment.fileSize" />
 				</div>
 			</div>
 			
 			<div class="uk-width-1-3@s">
-				<label for="type" class="uk-form-label"></label>
+				<label class="uk-form-label"></label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label">
 						<input type="checkbox" class="uk-checkbox" checked.bind="assessment.isLargeFile" />&nbsp;Large?
@@ -326,13 +346,13 @@
 			</div>
 			
 			<div class="uk-width-1-1">
-				<label for="type" class="uk-form-label">Notes</label>
+				<label class="uk-form-label">Notes</label>
 				<div class="uk-form-controls uk-overflow-auto">
 					<table class="uk-table uk-table-divider uk-table-small">
 						<thead>
 							<tr>
 								<th>
-									<button type="button" class="uk-button uk-button-link" click.delegate="newNote()">
+									<button type="button" class="uk-button uk-button-link" click.delegate="newNote()" title="Add note" uk-tooltip>
 										<i class="fa fa-plus"></i>
 									</button>
 								</th>
@@ -353,7 +373,7 @@
 								<td>${note.updateDate | timeAgo}</td>
 								<td>${note.updateUser.firstName} ${note.updateUser.lastName}</td>
 								<td>
-									<button type="button" class="uk-button uk-button-link" click.delegate="removeNote(note)">
+									<button type="button" class="uk-button uk-button-link" click.delegate="removeNote(note)" title="Remove note" uk-tooltip>
 										<i class="fa fa-times"></i>
 									</button>
 								</td>
@@ -363,19 +383,19 @@
 				</div>
 			</div>
 			
-			<div class="uk-width-1-1" if.bind="noteToEdit">
-				<edit-note note.bind="noteToEdit" edited.delegate="noteEdited" canceled.delegate="noteCanceled"></edit-note>
+			<div class="uk-width-1-1 uk-background-muted" if.bind="noteEditModel">
+				<edit-note model.bind="noteEditModel" edited.delegate="noteEdited($event)" canceled.delegate="noteCanceled($event)"></edit-note>
 			</div>
 			
 			<div class="uk-width-3-4@s">
-				<label for="type" class="uk-form-label" for="summary">Summary</label>
+				<label class="uk-form-label" for="summary">Summary</label>
 				<div class="uk-form-controls">
 					<textarea id="summary" class="uk-textarea" value.bind="assessment.summary.noteText"></textarea>
 				</div>
 			</div>
 			
 			<div class="uk-width-1-4@s">
-				<label for="type" class="uk-form-label">Colors</label>
+				<label class="uk-form-label">Colors</label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label" repeat.for="color of colors">
 						<input type="checkbox" class="uk-checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span class="color-swatch" css="background-color: ${color.hexCode};"></span>

@@ -1,27 +1,38 @@
-import {DialogController} from 'aurelia-dialog';
-import {Config} from '../common/config';
 import {inject} from 'aurelia-framework';
+import {bindable, bindingMode} from 'aurelia-framework';
+import {Config} from '../common/config';
+import {EventHelper} from 'services/eventHelper';
 
-@inject(DialogController, Config)
+@inject(Element, Config, EventHelper)
 export class EditMedRehab {
-	constructor(dialogController, config) {
-		this.dialogController = dialogController;
+	@bindable({ defaultBindingMode: bindingMode.twoWay }) model;
+	
+	constructor(element, config, eventHelper) {
+		this.element = element;
 		this.config = config;
+		this.eventHelper = eventHelper;
 	}
 	
-	activate(medRehab) {
-		this.medRehab = medRehab;
+	modelChanged(oldValue, newValue) {
+		this.backup = getBackup(oldValue);
 	}
 	
-	ok() {
-		this.dialogController.ok(this.medRehab);
+	ok(e) {
+		this.backup = getBackup(this.model);
+		
+		this.eventHelper.fireEvent(this.element, 'edited', { 'medRehab': this.model });
 	}
 	
-	cancel() {
-		this.dialogController.cancel();
+	cancel(e) {
+		this.eventHelper.fireEvent(this.element, 'canceled', { 'medRehab': this.backup });
 	}
-	
+	/*
 	medRehabDateChanged(e) {
 		this.medRehab.date = e.detail.event.date;
 	}
+	*/
+}
+
+function getBackup(obj) {
+	return JSON.parse(JSON.stringify(obj));
 }

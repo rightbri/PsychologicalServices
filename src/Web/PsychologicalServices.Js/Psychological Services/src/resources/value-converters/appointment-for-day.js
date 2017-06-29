@@ -5,7 +5,7 @@ export class AppointmentForDayValueConverter {
 		let compareDay = moment(day);
 		
 		return array.filter(item => {
-			let itemDate = moment(item.appointmentTime);
+			let itemDate = moment.utc(item.appointmentTime);
 			
 			let forDay = !itemDate.isBefore(compareDay.clone().startOf('day')) && !itemDate.isAfter(compareDay.clone().endOf('day'));
 			

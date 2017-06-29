@@ -1,29 +1,21 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
-import {DialogService} from 'aurelia-dialog';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
 import {Context} from 'common/context';
 import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
-import {DirtyPrompter} from 'common/dirtyPrompter';
-import {EditClaim} from 'claims/edit-claim';
-import {EditAppointment} from 'appointments/edit-appointment';
-import {EditMedRehab} from 'medRehab/edit-med-rehab';
-import {EditAssessmentReport} from 'reports/edit-assessment-report';
 import moment from 'moment';
 
-@inject(Router, DataRepository, DialogService, Config, Context, Scroller, Notifier, DirtyPrompter)
+@inject(Router, DataRepository, Config, Context, Scroller, Notifier)
 export class EditAssessment {
-	constructor(router, dataRepository, dialogService, config, context, scroller, notifier, dirtyPrompter) {
+	constructor(router, dataRepository, config, context, scroller, notifier) {
 		this.router = router;
 		this.dataRepository = dataRepository;
-		this.dialogService = dialogService;
 		this.config = config;
 		this.context = context;
 		this.scroller = scroller;
 		this.notifier = notifier;
-		this.dirtyPrompter = dirtyPrompter;
 		
 		this.assessment = null;
 
@@ -35,7 +27,6 @@ export class EditAssessment {
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
 		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
 		
-		this.error = null;
 		this.validationErrors = null;
 	}
 	
@@ -207,41 +198,49 @@ export class EditAssessment {
 	}
 	
 	newMedRehab() {
-		return this.editMedRehab({ assessmentId: this.assessment.assessmentId, date: moment().format('MM/DD/YYYY'), amount: 0 })
-			.then(data => {
-				if (!data.wasCancelled) {
-					this.assessment.medRehabs.push(data.medRehab);
-				}
-			});
+		let medRehab = {
+			assessmentId: this.assessment.assessmentId,
+			date: moment().utc().format(),
+			amount: 0,
+			isAdd: true
+		};
+		this.editMedRehab(medRehab);
 	}
 	
 	editMedRehab(medRehab) {
-		var original = JSON.parse(JSON.stringify(medRehab));
+		this.medRehabEditModel = medRehab;
+	}
+	
+	medRehabEdited(e) {
+		let medRehab = e.detail.medRehab;
 		
-		return this.dialogService.open({viewModel: EditMedRehab, model: medRehab})
-			.whenClosed(result => {
-				var copyFrom = original;
-				
-				if (!result.wasCancelled) {
-					copyFrom = result.output;
-				}
-				
-				for (var prop in copyFrom) {
-					if (copyFrom.hasOwnProperty(prop)) {
-						medRehab[prop] = copyFrom[prop];
-					}
-				}
-				
-				return { wasCancelled: result.wasCancelled, medRehab: medRehab };
-			})
+		if (medRehab.isAdd) {
+			delete medRehab['isAdd'];
+			this.assessment.medRehabs.push(medRehab);
+		}
+		
+		this.medRehabEditModel = null;
+	}
+	
+	medRehabCanceled(e) {
+		let medRehab = e.detail.medRehab;
+
+		if (!medRehab.isAdd) {
+			copyValues(medRehab, this.medRehabEditModel);
+		}
+		
+		this.medRehabEditModel = null;
 	}
 	
 	removeMedRehab(medRehab) {
+		
 		this.assessment.medRehabs.splice(this.assessment.medRehabs.indexOf(medRehab), 1);
 	}
 	
 	claimantSelected(e) {
 		let result = e.detail;
+		
+		this.claimant = result.claimant;
 		
 		if (this.assessment.claims && this.assessment.claims.length > 0) {
 			for (var claim of this.assessment.claims) {
@@ -256,76 +255,77 @@ export class EditAssessment {
 	}
 	
 	newClaim() {
-		return this.editClaim({ claimant: this.claimant })
-			.then(data => {
-				if (!data.wasCancelled) {
-					this.assessment.claims.push(data.claim);
-				}
-			});
+		let claim = { claimant: this.claimant, isAdd: true };
+		this.editClaim(claim);
 	}
 	
 	editClaim(claim) {
-		var original = JSON.parse(JSON.stringify(claim));
-		
-		return this.dialogService.open({viewModel: EditClaim, model: claim})
-			.whenClosed(result => {
-				var copyFrom = original;
-				
-				if (!result.wasCancelled) {
-					copyFrom = result.output;
-				}
-				
-				for (var prop in copyFrom) {
-					if (copyFrom.hasOwnProperty(prop)) {
-						claim[prop] = copyFrom[prop];
-					}
-				}
-				
-				return { wasCancelled: result.wasCancelled, claim: claim };
-			})
+		this.claimEditModel = claim;
 	}
 	
+	claimEdited(e) {
+		let claim = e.detail.claim;
+		
+		if (claim.isAdd) {
+			delete claim['isAdd'];
+			this.assessment.claims.push(claim);
+		}
+		
+		this.claimEditModel = null;
+	}
+	
+	claimCanceled(e) {
+		let claim = e.detail.claim;
+
+		if (!claim.isAdd) {
+			copyValues(claim, this.claimEditModel);
+		}
+		
+		this.claimEditModel = null;
+	}
+
 	removeClaim(claim) {
 		this.assessment.claims.splice(this.assessment.claims.indexOf(claim), 1);
 	}
 	
 	newAppointment() {
 		this.dataRepository.getNewAppointment(this.assessment.company.companyId)
-			.then(data => this.editAppointment(data))
 			.then(data => {
-				if (!data.wasCancelled) {
-					this.assessment.appointments.push(data.appointment);
-				}
+				data.isAdd = true;
+				this.editAppointment(data);
 			});
 	}
 	
 	editAppointment(appointment) {
-		var original = JSON.parse(JSON.stringify(appointment));
+		this.appointmentEditModel = {
+			'appointment': appointment,
+			'psychometrists': this.psychometrists,
+			'psychologists': this.psychologists,
+			'appointmentStatuses': this.appointmentStatuses,
+			'addresses': this.appointmentAddresses,
+			'attributes': this.appointmentAttributes
+		};
+	}
+	
+	appointmentEdited(e) {
+		let appointment = e.detail.appointment;
 		
-		return this.dialogService.open({viewModel: EditAppointment, model: {
-				'appointment': appointment,
-				'psychometrists': this.psychometrists,
-				'psychologists': this.psychologists,
-				'appointmentStatuses': this.appointmentStatuses,
-				'addresses': this.appointmentAddresses,
-				'attributes': this.appointmentAttributes
-			}
-		})
-		.whenClosed(result => {
-			var copyFrom = original;
-			
-			if (!result.wasCancelled) {
-				copyFrom = result.output;
-			}
-			
-			for (var prop in copyFrom) {
-				if (copyFrom.hasOwnProperty(prop)) {
-					appointment[prop] = copyFrom[prop];
-				}
-			}
-			
-			return { wasCancelled: result.wasCancelled, appointment: appointment };
-		});
+		if (appointment.isAdd) {
+			delete appointment['isAdd'];
+			this.assessment.appointments.push(appointment);
+		}
+		
+		this.appointmentEditModel = null;
+	}
+	
+	appointmentCanceled(e) {
+		let appointment = e.detail.appointment;
+
+		if (!appointment.isAdd) {
+			copyValues(appointment, this.appointmentEditModel);
+		}
+		
+		this.appointmentEditModel = null;
 	}
 	
 	removeAppointment(appointment) {
@@ -333,30 +333,33 @@ export class EditAssessment {
 	}
 	
 	newNote() {
-		return this.editNote({ createUser: this.user, createDate: new Date(), updateUser: this.user, updateDate: new Date() })
-			.then(data => {
-				if (!data.wasCancelled) {
-					this.assessment.notes.push(data.note);
-				}
-			});
+		let note = { createUser: this.user, createDate: new Date(), updateUser: this.user, updateDate: new Date(), isAdd: true };
+		this.editNote(note);
 	}
 	
 	editNote(note) {
-		this.noteToEdit = note;
+		this.noteEditModel = note;
 	}
 		
 	noteEdited(e) {
+		let note = e.detail.note;
 		
+		if (note.isAdd) {
+			delete note['isAdd'];
+			this.assessment.notes.push(note);
+		}
+		
+		this.noteEditModel = null;
 	}
 	
 	noteCanceled(e) {
-		var copyFrom = e.detail;
-				
-		for (var prop in copyFrom) {
-			if (copyFrom.hasOwnProperty(prop)) {
-				this.editNote[prop] = copyFrom[prop];
-			}
+		let note = e.detail.note;
+
+		if (!note.isAdd) {
+			copyValues(note, this.noteEditModel);
 		}
+		
+		this.noteEditModel = null;
 	}
 	
 	removeNote(note) {
@@ -364,37 +367,39 @@ export class EditAssessment {
 	}
 	
 	newReport() {
-		return this.editReport({ report: null, issuesInDispute: [], reportTypes: this.assessment.assessmentType.reportTypes })
-			.then(result => {
-				if (!result.wasCancelled) {
-					this.assessment.reports.push(result.report);
-					
-					this.checkMedRehab();
-				}
-			});
+		let report = { isNew: true, issuesInDispute: [] };
+		this.editReport(report);
 	}
 	
 	editReport(report) {
-		var original = JSON.parse(JSON.stringify(report));
+		this.reportEditModel = {
+			report: report,
+			issuesInDispute: this.assessment.referralType.issuesInDispute,
+			reportTypes: this.assessment.assessmentType.reportTypes
+		};
+	}
+	
+	reportEdited(e) {
+		let report = e.detail.report;
 		
-		return this.dialogService.open({viewModel: EditAssessmentReport, model: { report: report, issuesInDispute: this.assessment.referralType.issuesInDispute, reportTypes: this.assessment.assessmentType.reportTypes } })
-			.whenClosed(result => {
-				var copyFrom = original;
-				
-				if (!result.wasCancelled) {
-					copyFrom = result.output;
-					
-					this.checkMedRehab();
-				}
-				
-				for (var prop in copyFrom) {
-					if (copyFrom.hasOwnProperty(prop)) {
-						report[prop] = copyFrom[prop];
-					}
-				}
-				
-				return { wasCancelled: result.wasCancelled, report: report };
-			});
+		if (report.isAdd) {
+			delete report['isAdd'];
+			this.assessment.reports.push(report);
+		}
+		
+		this.checkMedRehab();
+		
+		this.reportEditModel = null;
+	}
+	
+	reportCanceled(e) {
+		let report = e.detail.report;
+
+		if (!report.isAdd) {
+			copyValues(report, this.reportEditModel.report);
+		}
+		
+		this.reportEditModel = null;
 	}
 	
 	removeReport(report) {
@@ -410,5 +415,14 @@ export class EditAssessment {
 		}
 		
 		return [];
+	}
+
+}
+
+function copyValues(copyFrom, copyTo) {
+	for (var prop in copyFrom) {
+		if (copyTo.hasOwnProperty(prop)) {
+			copyTo[prop] = copyFrom[prop];
+		}
 	}
 }

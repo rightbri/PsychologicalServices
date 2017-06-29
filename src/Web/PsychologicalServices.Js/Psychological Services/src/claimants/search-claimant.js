@@ -3,15 +3,17 @@ import {bindable, bindingMode} from 'aurelia-framework';
 import {computedFrom} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
+import {EventHelper} from 'services/eventHelper';
 
-@inject(Element, DataRepository, Config)
+@inject(Element, DataRepository, Config, EventHelper)
 export class SearchClaimantCustomElement {
 	@bindable({ defaultBindingMode: bindingMode.twoWay }) claimant;
 	
-	constructor(element, dataRepository, config) {
+	constructor(element, dataRepository, config, eventHelper) {
 		this.element = element;
 		this.dataRepository = dataRepository;
 		this.config = config;
+		this.eventHelper = eventHelper;
 		
 		this.claimantSearchMinLength = 2;
 		this.claimantSearch = null;
@@ -39,31 +41,11 @@ export class SearchClaimantCustomElement {
 	selectClaimant(claimant) {
 		this.claimant = claimant;
 		
-		fireEvent(this.element, 'selected', claimant);
+		this.eventHelper.fireEvent(this.element, 'selected', claimant);
 	}
 	
 	@computedFrom('claimants', 'claimant')
 	get showResults() {
 		return this.claimants && !this.claimant;
 	}
-}
-
-function createEvent(name, customData) {
-	let customEvent;
-	
-	if (window.CustomEvent) {
-		customEvent = new CustomEvent(name, { bubbles: true, 'detail': { claimant: customData } });
-	}
-	else {
-		customEvent = document.createEvent('CustomEvent');
-		
-		customEvent.initCustomEvent(name, true, true, { 'detail': { claimant: customData } });
-	}
-	
-	return customEvent;
-}
-
-function fireEvent(element, name, customData) {  
-	var event = createEvent(name, customData);
-	element.dispatchEvent(event);
 }

@@ -110,7 +110,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                     calendarNoteEntity.Note = new NoteEntity
                         {
                             CreateUserId = calendarNote.Note.CreateUser.UserId,
-                            CreateDate = _now.Now,
+                            CreateDate = _now.UtcNow,
                         };
                 }
 
@@ -118,7 +118,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                 calendarNoteEntity.ToDate = calendarNote.ToDate;
                 calendarNoteEntity.Note.Note = calendarNote.Note.NoteText;
                 calendarNoteEntity.Note.UpdateUserId = calendarNote.Note.UpdateUser.UserId;
-                calendarNoteEntity.Note.UpdateDate = _now.Now;
+                calendarNoteEntity.Note.UpdateDate = _now.UtcNow;
 
                 adapter.SaveEntity(calendarNoteEntity, false);
 

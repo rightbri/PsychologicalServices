@@ -130,7 +130,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
             return new Appointment
             {
-                AppointmentTime = company.NewAppointmentTime.HasValue ? _date.Today.Add(company.NewAppointmentTime.Value) : _date.Now,
+                AppointmentTime = company.NewAppointmentTime.HasValue ? _date.Today.Add(company.NewAppointmentTime.Value) : _date.UtcNow,
                 Location = company.NewAppointmentLocation,
                 AppointmentStatus = company.NewAppointmentStatus,
                 Psychologist = company.NewAppointmentPsychologist,
@@ -161,7 +161,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
                 return new Appointment
                 {
-                    AppointmentTime = _date.Now,
+                    AppointmentTime = _date.UtcNow,
                     Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
                     Assessment = assessmentEntity.ToAssessment(),
                 };

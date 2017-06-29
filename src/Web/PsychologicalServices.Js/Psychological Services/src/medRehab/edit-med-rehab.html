@@ -1,46 +1,32 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="common/date-picker"></require>
+	<require from="resources/elements/edit-panel"></require>
 	
-	<ux-dialog>
-		<ux-dialog-header>
-		<h3>Edit Med Rehab</h3>
-		</ux-dialog-header>
-		<ux-dialog-body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="medRehabDate">Date</label>
-						<input id="medRehabDate" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="medRehab.date | dateFormat:config.shortDateFormat"/>
-					</div>
+	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Med Rehab</legend>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="medRehabDate">Date</label>
+				<div class="uk-form-controls">
+					<input id="medRehabDate" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="model.date | dateFormat:config.longDateFormat"/>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="medRehabAmount">Amount</label>
-						<input id="medRehabAmount" type="text" class="form-control" pattern="[0-9]+([.][0-9]{2})?" value.bind="medRehab.amount" />
-					</div>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="medRehabAmount">Amount</label>
+				<div class="uk-form-controls">
+					<input id="medRehabAmount" type="text" class="uk-input" pattern="[0-9]+([.][0-9]{2})?" value.bind="model.amount" />
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="medRehabDescription">Description</label>
-						<input id="medRehabDescription" type="text" class="form-control" value.bind="medRehab.description" />
-					</div>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="medRehabDescription">Description</label>
+				<div class="uk-form-controls">
+					<input id="medRehabDescription" type="text" class="uk-input" value.bind="model.description" />
 				</div>
 			</div>
-		</div>
-		</ux-dialog-body>
-		<ux-dialog-footer>
-		<button type="button" class="btn btn-primary" click.delegate="ok()">
-			Ok
-		</button>
-		<button type="button" class="btn btn-default" click.delegate="cancel()">
-			Cancel
-		</button>
-		</ux-dialog-footer>
-	</ux-dialog>
+		</fieldset>
+	</edit-panel>
 </template>

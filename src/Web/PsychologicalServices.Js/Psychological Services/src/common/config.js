@@ -2,16 +2,15 @@
 export class Config {
 	constructor() {
 		
-		
 		this.isoShortDateFormat = 'YYYY-MM-DD';
 		this.isoShortTimeFormat = 'HH:mm';
 		
 		this.shortDateFormat = 'MM-DD-YYYY';
 		this.shortTimeFormat = 'h:mm A';
 		
-		this.longDateFormat = 'MMMM D YYYY';
+		this.longDateFormat = 'MMMM D, YYYY';
 		this.longDateTimeFormat = this.longDateFormat + ' ' + this.shortTimeFormat;
-		
+				
 		this.dateRangePickerOptions = {
 			'autoApply': true,
 			'showDropdowns': true,

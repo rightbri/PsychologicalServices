@@ -3,7 +3,6 @@ import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {DialogService} from 'aurelia-dialog';
 import {EditCalendarNote} from 'calendarNotes/edit-calendar-note';
-import {ViewAssessmentSummary} from 'assessments/view-assessment-summary';
 import {Context} from 'common/context';
 import {Config} from 'common/config';
 import moment from 'moment';
@@ -149,7 +148,11 @@ export class Calendar {
 			});
 	}
 	
-	viewSummary(appointment) {
-		return this.dialogService.open({viewModel: ViewAssessmentSummary, model: appointment});
+	summaryModalToggleValue(appointment) {
+		return '#' + this.summaryModalContainerId(appointment);
+	}
+	
+	summaryModalContainerId(appointment) {
+		return `assessment-summary-${appointment.appointmentId}`;
 	}
 }

@@ -6,12 +6,17 @@
 
 <div class="uk-offcanvas-content">
 	
-	<nav class="uk-navbar-container" uk-navbar>
+	<nav class="uk-background-secondary uk-dark" uk-navbar><!--uk-navbar-container-->
 		<div class="uk-navbar-left">
 			<a class="uk-navbar-item uk-logo" href="#">Psychological Services</a>
 		</div>
 		<div class="uk-navbar-right">
-			<ul class="uk-navbar-nav">
+			<ul class="uk-navbar-nav" if.bind="!context.loggedIn">
+				<li>
+					<a href="#" click.delegate="context.login()">Login</a>
+				</li>
+			</ul>
+			<ul class="uk-navbar-nav" if.bind="context.loggedIn">
 				<li>
 					<a href="#offCanvasNav" class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle></a>
 				</li>
@@ -24,12 +29,6 @@
 
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 
-			<ul class="uk-nav" if.bind="!context.loggedIn">
-				<li>
-					<a href="#" click.delegate="context.login()">Login</a>
-				</li>
-			</ul>
-			
 			<ul class="uk-nav" if.bind="context.loggedIn">
 				<li class="uk-parent">
 					<span class="uk-text-primary">${context.username}</span>

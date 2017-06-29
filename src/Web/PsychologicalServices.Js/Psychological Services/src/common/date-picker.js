@@ -1,14 +1,16 @@
 import {bindable, inject} from 'aurelia-framework';
+import {EventHelper} from 'services/eventHelper'
 import {jquery} from 'jquery';
-import datepicker from 'bootstrap-datepicker';
+import datepicker from 'bootstrap-datepicker';;
 
-@inject(Element)
+@inject(Element, EventHelper)
 export class DatePickerCustomAttribute {
 	@bindable dates;
 	@bindable({ primaryProperty: true }) options;
 	
-	constructor(element) {
+	constructor(element, eventHelper) {
 		this.element = element;
+		this.eventHelper = eventHelper;
 	}
 
 	attached() {
@@ -21,13 +23,13 @@ export class DatePickerCustomAttribute {
 		$datepicker
 			.on('change', e => fireEvent(e.target, 'input'))
 			.on('changeDate', e => {
-				fireEvent(e.target, 'datechanged', e);
+				this.eventHelper.fireEvent(e.target, 'datechanged', e);
 			})
 			.on('changeMonth', e => {
-				fireEvent(e.target, 'monthchanged', e.date);
+				this.eventHelper.fireEvent(e.target, 'monthchanged', e.date);
 			})
 			.on('clearDate', e => {
-				fireEvent(e.target, 'datecleared', e);
+				this.eventHelper.fireEvent(e.target, 'datecleared', e);
 			});
 	}
 
@@ -42,14 +44,4 @@ export class DatePickerCustomAttribute {
 	datesChanged(newValue, oldValue) {
 		this.dates = newValue;
 	}
-}
-
-function createEvent(name, customData) {  
-	var event = new CustomEvent(name, { bubbles: true, 'detail': customData });
-	return event;
-}
-
-function fireEvent(element, name, customData) {  
-	var event = createEvent(name, customData);
-	element.dispatchEvent(event);
 }

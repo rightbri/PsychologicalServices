@@ -280,6 +280,7 @@ __pycache__/
 
 docs/
 dist/
+.vs/
 
 **/logs/*
 *Secrets.config

@@ -1,24 +1,7 @@
-ai-dialog-overlay.active {
-  background-color: black;
-  opacity: .5;
-}
+
 .day-display,
 .date-display {
 	font-weight: bold;
-}
-.day-display {
-}
-.day-header {
-	border-width: 1px 0 0 0;
-	border-style: solid;
-	border-color: #ccc;
-	padding: 2px 0 0 0;
-}
-.appointment {
-	border-width: 1px 0 0 0;
-	border-style: dashed;
-	border-color: #ddd;
-	padding: 2px 0 0 0;
 }
 
 .smaller-siblings ~ *,
@@ -27,17 +10,19 @@ ai-dialog-overlay.active {
 }
 .color-swatch {
 	display: inline-block;
-	width: 19px;
-	height: 19px;
+	width: 13px;
+	height: 13px;
 	border-color: 333;
 	border-width: 1px;
 	border-style: solid;
 }
 
-textarea.form-control.form-control-wide {
-	width: 800px;
+.assessment-summary .uk-panel {
+	border-style: solid;
+	border-width: 0 0 2px 0;
 }
-
-textarea.form-control.form-control-tall {
-	height: 300px;
+.assessment-summary .uk-form-label,
+#editAssessment .uk-form-label {
+	color: #333;
+	font-weight: bold;
 }

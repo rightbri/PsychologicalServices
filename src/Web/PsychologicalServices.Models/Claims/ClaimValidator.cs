@@ -37,7 +37,7 @@ namespace PsychologicalServices.Models.Claims
             }
 
             if (item.DateOfLoss.HasValue &&
-                item.DateOfLoss > _now.Now)
+                item.DateOfLoss > _now.UtcNow)
             {
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "DateOfLoss", Message = "Date of loss cannot be in the future" }

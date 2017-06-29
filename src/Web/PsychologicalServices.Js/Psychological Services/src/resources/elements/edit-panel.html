@@ -1,0 +1,11 @@
+<template>
+	<div class="uk-padding">
+		<div class="uk-margin">
+			<slot></slot>
+		</div>
+		<div class="uk-margin">
+			<button type="button" class="uk-button uk-button-primary uk-button-small" click.delegate="ok()">Ok</button>
+			<button type="button" class="uk-button uk-button-secondary uk-button-small" click.delegate="cancel()">Cancel</button>
+		</div>
+	</div>
+</template>

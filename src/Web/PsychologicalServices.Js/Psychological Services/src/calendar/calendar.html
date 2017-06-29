@@ -1,7 +1,7 @@
 <template>
 	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/date-format"></require>
-	<require from="resources/value-converters/day-class"></require>
+	<require from="assessments/view-assessment-summary"></require>
 	<require from="resources/value-converters/note-for-day"></require>
 	<require from="resources/value-converters/appointment-for-day"></require>
 	<require from="resources/value-converters/attribute-types"></require>
@@ -10,11 +10,14 @@
 	<require from="../../content/css/fixed-header.css"></require>
 	
 
-<form class="uk-form-horizontal">
-	<div class="uk-margin">
+<form class="uk-form-horizontal uk-padding-small">
+	<div class="uk-form-controls">
 		<input type="text" class="uk-input uk-form-width-medium" date-picker.bind="config.monthPickerOptions" monthchanged.delegate="monthChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
-		<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-primary' : 'uk-button-default'}" click.delegate="setView('schedule')">Schedule</button>
-		<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-default' : 'uk-button-primary'}" click.delegate="setView('up to date')">Up to date</button>
+		
+		<div class="uk-button-group">
+			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-primary' : 'uk-button-default'}" click.delegate="setView('schedule')">Schedule</button>
+			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-default' : 'uk-button-primary'}" click.delegate="setView('up to date')">Up to date</button>
+		</div>
 	</div>
 </form>
 
@@ -34,7 +37,7 @@
 	</thead>
 	<tbody>
 		<template repeat.for="day of days">
-		<tr class="day-header ${day | dayClass}">
+		<tr>
 			<td>
 				<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
 					${day | dateFormat:'ddd MMM D'}
@@ -59,13 +62,14 @@
 								</a>
 							</li>
 							<li>
-								<a href="#" click.delegate="viewSummary(appointment)" if.bind="appointment.assessment.summary">
+								<a href.one-time="summaryModalToggleValue(appointment)" uk-toggle if.bind="appointment.assessment.summary">
 									Summary
 								</a>
 							</li>
 						</ul>
 					</div>
 				</div>
+				<view-assessment-summary model.bind="appointment" container-id.bind="summaryModalContainerId(appointment)"></view-assessment-summary>
 			</td>
 			<td>
 				<ul class="uk-list">
@@ -152,7 +156,7 @@
 	</thead>
 	<tbody>
 		<template repeat.for="day of days">
-		<tr class="day-header ${day | dayClass}">
+		<tr>
 			<td>
 				<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
 					${day | dateFormat:'ddd MMM D'}

@@ -763,7 +763,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     {
                         noteEntity.Note = note.NoteText;
                         noteEntity.UpdateUserId = note.UpdateUser.UserId;
-                        noteEntity.UpdateDate = _date.Now;
+                        noteEntity.UpdateDate = _date.UtcNow;
                     }
                 }
 

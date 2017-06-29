@@ -1,17 +1,19 @@
-import {DialogController} from 'aurelia-dialog';
-import {DataRepository} from 'services/dataRepository';
-import {Context} from 'common/context';
-import {Config} from 'common/config';
 import {inject} from 'aurelia-framework';
+import {bindable, bindingMode} from 'aurelia-framework';
+import {DataRepository} from 'services/dataRepository';
+import {Config} from 'common/config';
+import {EventHelper} from 'services/eventHelper';
 import moment from 'moment';
 
-@inject(DialogController, DataRepository, Config, Context)
+@inject(Element, DataRepository, Config, EventHelper)
 export class EditAppointment {
-	constructor(dialogController, dataRepository, config, context) {
-		this.dialogController = dialogController;
+	@bindable({ defaultBindingMode: bindingMode.twoWay }) model;
+	
+	constructor(element, dataRepository, config, eventHelper) {
+		this.element = element;
 		this.dataRepository = dataRepository;
 		this.config = config;
-		this.context = context;
+		this.eventHelper = eventHelper;
 		
 		this.psychometristMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.psychologistMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
@@ -20,10 +22,13 @@ export class EditAppointment {
 		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
 	}
 	
-	activate(model) {
-		this.appointment = model.appointment;
-		this.appointmentDate = this.appointment.appointmentTime;
-		this.appointmentTime = this.time(this.appointment.appointmentTime);
+	modelChanged(oldValue, newValue) {
+		this.backup = getBackup(oldValue.appointment);
+		
+		let model = this.model;
+		
+		this.appointmentDate = model.appointment.appointmentTime;
+		this.appointmentTime = time(model.appointment.appointmentTime, this.config.shortTimeFormat);
 
 		this.psychometrists = model.psychometrists;
 		this.psychologists = model.psychologists;
@@ -32,31 +37,44 @@ export class EditAppointment {
 		this.attributes = model.attributes;
 	}
 	
-	ok() {
-		this.appointment.appointmentTime = this.parseDateTime(this.appointmentDate, this.appointmentTime);
-        
-		this.dialogController.ok(this.appointment);
-	}
-	
-	cancel() {
-		this.dialogController.cancel();
-	}
-	
+	/*
 	appointmentDateChanged(e) {
 		this.appointmentDate = e.detail.event.date;
 	}
+	*/
 
-	time(datetime) {
-		return moment(datetime).format(this.config.shortTimeFormat);
-	}
-
-	parseDateTime(date, time) {
+	ok(e) {
+		this.model.appointment.appointmentTime =
+			parseDateTime(
+				this.appointmentDate,
+				this.appointmentTime,
+				this.config.isoShortDateFormat,
+				this.config.shortTimeFormat
+			);
+        
+		this.backup = getBackup(this.model.appointment);
 		
-        var newDate = moment(
-			moment(date).format(this.config.isoShortDateFormat) + ' ' + time,
-			this.config.isoShortDateFormat + ' ' + this.config.shortTimeFormat
-		).format();
+		this.eventHelper.fireEvent(this.element, 'edited', { 'appointment': this.model.appointment });
+	}
+	
+	cancel(e) {
+		this.eventHelper.fireEvent(this.element, 'canceled', { 'appointment': this.backup });
+	}
+}
 
-		return newDate;
-    }
+function parseDateTime(date, time, dateFormat, timeFormat) {
+	var newDate = moment(
+		moment(date).format(dateFormat) + ' ' + time,
+		dateFormat + ' ' + timeFormat
+	).utc().format();
+
+	return newDate;
+}
+
+function time(datetime, format) {
+	return moment.utc(datetime).format(format);
+}
+
+function getBackup(obj) {
+	return JSON.parse(JSON.stringify(obj));
 }

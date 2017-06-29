@@ -1,20 +1,8 @@
 <template>
-	<div class="uk-container">
-		
-		<div class="uk-margin">
-			<label for="noteText">Note</label>
-			<textarea id="noteText" class="uk-textarea" value.bind="note.noteText"></textarea>
-		</div>
-		
-		<div class="uk-margin">
-			<button type="button" class="uk-button uk-button-default" click.delegate="ok()">
-				Ok
-			</button>
-			
-			<button type="button" class="uk-button uk-button-secondary" click.delegate="cancel()">
-				Cancel
-			</button>
-		</div>
-	</div>
-
+	<require from="resources/elements/edit-panel"></require>
+	
+	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
+		<label for="noteText">Note</label>
+		<textarea id="noteText" class="uk-textarea" value.bind="model.noteText"></textarea>
+	</edit-panel>
 </template>

@@ -93,7 +93,7 @@
 									</tr>
 									
 									<tr if.bind="invoiceAppointment.showStatusLine">
-										<td class="uk-text-warning">${invoiceAppointment.appointment.appointmentStatus.name}</td>
+										<td class="uk-text-warning" uk-leader>${invoiceAppointment.appointment.appointmentStatus.name}</td>
 										<td>${invoiceAppointment.subtotal | money}</td>
 										<td></td>
 									</tr>
@@ -101,14 +101,14 @@
 								</template>
 							
 								<tr>
-									<td>+ H.S.T.</td>
+									<td uk-leader>+ H.S.T.</td>
 									<td>${subtotal * invoice.taxRate | money}</td>
 									<td></td>
 								</tr>
 
 								<!-- Total Invoice Amount -->
 								<tr>
-									<td>Total Invoice Amount</td>
+									<td uk-leader>Total Invoice Amount</td>
 									<td>${invoice.total | money}</td>
 									<td></td>
 								</tr>
