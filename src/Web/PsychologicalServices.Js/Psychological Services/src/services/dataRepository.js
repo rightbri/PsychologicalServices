@@ -89,13 +89,8 @@ export class DataRepository {
 		return this.getSingleBasic(id, 'appointment');
 	}
 	
-	getNewAppointment(companyId, assessmentId) {
-		if (assessmentId) {
-			return this.getBasic(`appointment/company/${companyId}/assessment/${assessmentId}`);
-		}
-		else {
-			return this.getBasic(`appointment/company/${companyId}`);
-		}
+	getNewAppointment(companyId) {
+		return this.getBasic(`appointment/company/${companyId}`);
 	}
 	
 	searchSchedule(criteria) {
@@ -132,6 +127,10 @@ export class DataRepository {
 	
 	saveAssessment(assessment) {
 		return this.saveBasic(assessment, 'assessment');
+	}
+	
+	deleteAssessment(id) {
+		return this.deleteBasic(id, 'assessment');
 	}
 	
 	getAssessmentTypes() {
@@ -178,12 +177,20 @@ export class DataRepository {
 		return this.getManyBasic('gender', true);
 	}
 	
-	getClaimants(lastName) {
-		return this.getManyBasic('claimant/search/' + lastName);
+	getClaimant(id) {
+		return this.getSingleBasic(id, 'claimant');
+	}
+	
+	getClaimants(name) {
+		return this.getManyBasic('claimant/search/' + name);
 	}
 	
 	saveClaimant(claimant) {
 		return this.saveBasic(claimant, 'claimant');
+	}
+	
+	deleteClaimant(id) {
+		return this.deleteBasic(id, 'claimant');
 	}
 	
 	saveClaim(claim) {
@@ -251,19 +258,19 @@ export class DataRepository {
 	}
 
 	getPsychometrists(companyId) {
-		return this.getManyBasic('user/psychometrists/' + companyId, true);
+		return this.getManyBasic('user/psychometrists/' + companyId);
 	}
 
 	getPsychologists(companyId) {
-		return this.getManyBasic('user/psychologists/' + companyId, true);
+		return this.getManyBasic('user/psychologists/' + companyId);
 	}
 
 	getDocListWriters(companyId) {
-		return this.getManyBasic('user/doclistwriters/' + companyId, true);
+		return this.getManyBasic('user/doclistwriters/' + companyId);
 	}
 	
 	getNotesWriters(companyId) {
-		return this.getManyBasic('user/noteswriters/' + companyId, true);
+		return this.getManyBasic('user/noteswriters/' + companyId);
 	}
 	
 	searchUsers(criteria) {
@@ -413,6 +420,24 @@ export class DataRepository {
 			this.httpFetch.fetch(url, {
 				method: method || 'POST',
 				body: json(data || {})
+			})
+			.then(response => {
+				if (response.ok) {
+					return response.json();
+				}
+				throw new Error({ status: response.status, statusText: response.statusText });
+			})
+			.then(data => resolve(data))
+			.catch(err => reject(err));
+		});
+		return promise;
+	}
+	
+	deleteBasic(id, type) {
+		var promise = new Promise((resolve, reject) => {
+			this.httpFetch.fetch(this.apiRoot + 'api/' + type + '/' + id, {
+				method: 'DELETE',
+				body: json({})
 			})
 			.then(response => {
 				if (response.ok) {

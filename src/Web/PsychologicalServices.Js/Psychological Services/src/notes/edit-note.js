@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework';
 import {bindable, bindingMode} from 'aurelia-framework';
 import {Context} from 'common/context';
 import {EventHelper} from 'services/eventHelper';
+import moment from 'moment';
 
 @inject(Element, Context, EventHelper)
 export class EditNoteCustomElement {
@@ -13,19 +14,24 @@ export class EditNoteCustomElement {
 		this.eventHelper = eventHelper;
 	}
 	
-	activate() {
+	modelChanged(newValue, oldValue) {
+		this.backup = getBackup(newValue);
+		
 		return this.context.getUser().then(user => {
 			this.user = user;
 		});
 	}
 	
-	modelChanged(newValue, oldValue) {
-		this.backup = getBackup(newValue);
-	}
-	
 	ok(e) {
+		let now = moment.utc().toDate();
+		
+		if (this.model.isAdd) {
+			this.model.createUser = this.user;
+			this.model.createDate = now;
+		}
+		
 		this.model.updateUser = this.user;
-		this.model.updateDate = new Date();
+		this.model.updateDate = now;
 		
 		this.backup = getBackup(this.model);
 		

@@ -1,31 +1,32 @@
 <template>
 	<require from="resources/value-converters/boolean"></require>
-	<require from="common/date-picker"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="common/date-mask"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
 	
 	<div class="uk-container">
 	
 		<fieldset class="uk-fieldset">
-			<legend class="uk-legend">Users</legend>
+			<legend class="uk-legend">Search Users</legend>
 			
-			<form class="uk-form-stacked">
+			<form class="uk-form-stacked uk-grid-medium" uk-grid>
 			
-				<div class="uk-margin">
+				<div class="uk-width-1-2@s">
 					<label class="uk-form-label" for="firstName">First Name</label>
 					<div class="uk-form-controls">
 						<input id="firstName" type="text" class="uk-input" value.bind="searchFirstName" />
 					</div>
 				</div>
 				
-				<div class="uk-margin">
+				<div class="uk-width-1-2@s">
 					<label class="uk-form-label" for="lastName">Last Name</label>
 					<div class="uk-form-controls">
 						<input id="lastName" type="text" class="uk-input" value.bind="searchLastName" />
 					</div>
 				</div>
 				
-				<div class="uk-margin">
+				<div class="uk-width-1-2@s">
 					<label class="uk-form-label" for="role">Role</label>
 					<div class="uk-form-controls">
 						<select id="role" class="uk-select" value.bind="searchRoleId">
@@ -35,7 +36,7 @@
 					</div>
 				</div>
 				
-				<div class="uk-margin">
+				<div class="uk-width-1-2@s">
 					<label class="uk-form-label" for="searchActive">Is Active?</label>
 					<div class="uk-form-controls">
 						<select class="uk-select" value.bind="searchIsActive">
@@ -46,25 +47,23 @@
 					</div>
 				</div>
 				
-				<div class="uk-margin">
+				<div class="uk-width-1-1">
 					<label class="uk-form-label" for="availabileDate">Available Date</label>
 					<div class="uk-form-controls">
-						<input id="availableDate" type="text" class="uk-input" value.bind="searchAvailableDate" date-picker.bind="config.datepickerOptions" />
+						<input id="availableDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="searchAvailableDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
 					</div>
 				</div>
 				
-				<div class="uk-margin">
+				<div class="uk-width-1-1">
 					<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
 						Search
 					</button>
-				</div>
-				
-				<div class="uk-margin">
+					
 					<a route-href="route: addUser" class="uk-button uk-button-secondary">
 						<i class="fa fa-plus"></i>&nbsp;Add
 					</a>
 				</div>
-				
+
 			</form>
 			
 		</fieldset>

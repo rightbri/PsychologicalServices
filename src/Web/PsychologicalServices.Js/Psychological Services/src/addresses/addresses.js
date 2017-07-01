@@ -2,7 +2,7 @@ import {inject} from 'aurelia-framework';
 import {DataRepository} from '../services/dataRepository';
 
 @inject(DataRepository)
-export class Address {
+export class Addresses {
 	constructor(dataRepository) {
 		this.dataRepository = dataRepository;
 		

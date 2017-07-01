@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 
@@ -8,14 +9,17 @@ namespace PsychologicalServices.Models.Assessments
     {
         private readonly IAssessmentRepository _assessmentRepository = null;
         private readonly IAssessmentValidator _assessmentValidator = null;
+        private readonly ILog _log = null;
 
         public AssessmentService(
             IAssessmentRepository assessmentRepository,
-            IAssessmentValidator  assessmentValidator
+            IAssessmentValidator  assessmentValidator,
+            ILog log
         )
         {
             _assessmentRepository = assessmentRepository;
             _assessmentValidator = assessmentValidator;
+            _log = log;
         }
 
         public Assessment GetAssessment(int id)
@@ -78,7 +82,7 @@ namespace PsychologicalServices.Models.Assessments
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveAssessment", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -99,7 +103,27 @@ namespace PsychologicalServices.Models.Assessments
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveAssessmentType", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
+
+        public DeleteResult DeleteAssessment(int id)
+        {
+            var result = new DeleteResult();
+
+            try
+            {
+                var rowsAffected = _assessmentRepository.DeleteAssessment(id);
+
+                result.IsDeleted = rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("DeleteAssessment", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

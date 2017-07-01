@@ -8,7 +8,7 @@ namespace PsychologicalServices.Models.Addresses
 {
     public class AddressValidator : IAddressValidator
     {
-        private const string PostalCodePatternCanada = @"([A-Za-z])([0-9])([A-Za-z])([0-9])([A-Za-z])([0-9])";
+        private const string PostalCodePatternCanada = @"([A-Za-z])([0-9])([A-Za-z])[ ]?([0-9])([A-Za-z])([0-9])";
         private const string PostalCodePatternUsa = @"([0-9]){5}";
 
         private readonly IAddressRepository _addressRepository = null;

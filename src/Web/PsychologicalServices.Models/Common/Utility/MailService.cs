@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common.Configuration;
+﻿using log4net;
+using PsychologicalServices.Models.Common.Configuration;
 using System;
 using System.Net;
 using System.Net.Mail;
@@ -8,38 +9,60 @@ namespace PsychologicalServices.Models.Common.Utility
     public class MailService : IMailService
     {
         private readonly IConfigurationService _configurationService = null;
+        private readonly ILog _log = null;
 
         public MailService(
-            IConfigurationService configurationService
+            IConfigurationService configurationService,
+            ILog log
         )
         {
             _configurationService = configurationService;
+            _log = log;
         }
 
-        public void Send(MailMessage message)
+        public MailResult Send(MailMessage message)
         {
-            int port;
-            if (!int.TryParse(_configurationService.AppSettingValue("SmtpPort"), out port))
-            {
-                port = 25;
-            }
+            var result = new MailResult();
 
-            using (var client = new SmtpClient
+            try
+            {
+                int port;
+                if (!int.TryParse(_configurationService.AppSettingValue("SmtpPort"), out port))
+                {
+                    port = 25;
+                }
+
+                bool enableSsl;
+                if (!bool.TryParse(_configurationService.AppSettingValue("SmtpSsl"), out enableSsl))
+                {
+                    enableSsl = false;
+                }
+
+                using (var client = new SmtpClient
                 {
                     Host = _configurationService.AppSettingValue("SmtpHost"),
                     Port = port,
-                    Credentials = new NetworkCredential(
-                        _configurationService.AppSettingValue("SmtpClientUsername"),
-                        _configurationService.AppSettingValue("SmtpClientPassword")
-                    ),
                     UseDefaultCredentials = false,
-                    //EnableSsl = true,
+                    Credentials = new NetworkCredential(
+                            _configurationService.AppSettingValue("SmtpClientUsername"),
+                            _configurationService.AppSettingValue("SmtpClientPassword")
+                        ),
+                    EnableSsl = enableSsl,
                 })
-            {
-                //client.Port = 587;// 465;//
+                {
+                    client.Send(message);
 
-                client.Send(message);
+                    result.MailSent = true;
+                }
             }
+            catch (Exception ex)
+            {
+                _log.Error("Send", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+            
+            return result;
         }
     }
 }

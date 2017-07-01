@@ -1,19 +1,18 @@
-﻿using PsychologicalServices.Models.Users;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Schedule
 {
     public class ScheduleHtmlGenerator : IScheduleHtmlGenerator
     {
-        public string GeneratePsychometristScheduleHtml(User user)
+        public string GeneratePsychometristScheduleHtml(ScheduleModel model)
         {
             var psychometristScheduleTemplate =
                         new PsychometristScheduleTemplate();
 
             psychometristScheduleTemplate.Session = new Dictionary<string, object>()
                     {
-                        { "Model", user }
+                        { "Model", model }
                     };
 
             psychometristScheduleTemplate.Initialize();

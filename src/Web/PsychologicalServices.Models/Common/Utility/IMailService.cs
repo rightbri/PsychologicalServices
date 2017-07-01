@@ -5,6 +5,6 @@ namespace PsychologicalServices.Models.Common.Utility
 {
     public interface IMailService
     {
-        void Send(MailMessage message);
+        MailResult Send(MailMessage message);
     }
 }

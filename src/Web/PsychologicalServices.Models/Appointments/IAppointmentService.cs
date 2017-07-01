@@ -11,8 +11,6 @@ namespace PsychologicalServices.Models.Appointments
 
         Appointment GetNewAppointment(int companyId);
 
-        Appointment GetNewAppointment(int assessmentId, int companyId);
-
         AppointmentStatus GetAppointmentStatus(int id);
 
         IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria);

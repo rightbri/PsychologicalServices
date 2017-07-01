@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace PsychologicalServices.Models.Appointments
     {
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IAppointmentValidator _appointmentValidator = null;
+        private readonly ILog _log = null;
 
         public AppointmentService(
             IAppointmentRepository appointmentRepository,
-            IAppointmentValidator appointmentValidator
+            IAppointmentValidator appointmentValidator,
+            ILog log
         )
         {
             _appointmentRepository = appointmentRepository;
             _appointmentValidator = appointmentValidator;
+            _log = log;
         }
 
         public Appointment GetAppointment(int id)
@@ -34,13 +38,6 @@ namespace PsychologicalServices.Models.Appointments
         public Appointment GetNewAppointment(int companyId)
         {
             var newAppointment = _appointmentRepository.NewAppointment(companyId);
-
-            return newAppointment;
-        }
-
-        public Appointment GetNewAppointment(int assessmentId, int companyId)
-        {
-            var newAppointment = _appointmentRepository.NewAppointment(assessmentId, companyId);
 
             return newAppointment;
         }
@@ -82,7 +79,6 @@ namespace PsychologicalServices.Models.Appointments
 
                 if (result.ValidationResult.IsValid)
                 {
-
                     //TODO: notify on appointment status changes
 
                     var id = _appointmentRepository.SaveAppointment(appointment);
@@ -93,7 +89,7 @@ namespace PsychologicalServices.Models.Appointments
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveAppointment", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -114,7 +110,7 @@ namespace PsychologicalServices.Models.Appointments
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveAppointmentStatus", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

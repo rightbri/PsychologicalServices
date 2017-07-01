@@ -42,16 +42,6 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(appointment);
         }
 
-        [Route("company/{companyId}/assessment/{assessmentId}")]
-        [HttpGet]
-        [ResponseType(typeof(Appointment))]
-        public IHttpActionResult GetNewAppointment(int assessmentId, int companyId)
-        {
-            var appointment = _appointmentService.GetNewAppointment(assessmentId, companyId);
-
-            return Ok(appointment);
-        }
-
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Appointment>))]

@@ -498,6 +498,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ClaimNumber", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Lawyer", fieldHashtable);
 		}
 		#endregion
 
@@ -659,6 +662,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.String)GetValue((int)ClaimFieldIndex.ClaimNumber, true); }
 			set	{ SetValue((int)ClaimFieldIndex.ClaimNumber, value); }
+		}
+
+		/// <summary> The Lawyer property of the Entity Claim<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Claims"."Lawyer"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String Lawyer
+		{
+			get { return (System.String)GetValue((int)ClaimFieldIndex.Lawyer, true); }
+			set	{ SetValue((int)ClaimFieldIndex.Lawyer, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentClaimEntity' which are related to this entity via a relation of type '1:n'.

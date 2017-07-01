@@ -1,10 +1,9 @@
-﻿using PsychologicalServices.Models.Users;
-using System;
+﻿using System;
 
 namespace PsychologicalServices.Models.Schedule
 {
     public interface IScheduleHtmlGenerator
     {
-        string GeneratePsychometristScheduleHtml(User user);
+        string GeneratePsychometristScheduleHtml(ScheduleModel model);
     }
 }

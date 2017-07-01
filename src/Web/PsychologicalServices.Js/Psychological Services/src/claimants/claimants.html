@@ -1,0 +1,47 @@
+<template>
+	<require from="claimants/search-claimant"></require>
+	<require from="claimants/edit-claimant"></require>
+	<require from="resources/value-converters/gender"></require>
+	
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Search Claimants</legend>
+		
+		<form class="uk-form-stacked uk-grid-medium" uk-grid>
+		
+			<div class="uk-width-1-2@s" if.bind="!claimantEditModel">
+				<search-claimant claimant.bind="claimant" claimants.bind="claimants" selected.delegate="claimantSelected($event)"></search-claimant>
+			</div>
+			
+			<div class="uk-width-1-2@s" if.bind="!claimantEditModel">
+				<button type="button" class="uk-button uk-button-default" click.delegate="newClaimant()">
+					Add Claimant
+				</button>
+			</div>
+			
+			<div class="uk-width-1-2@s" if.bind="claimant && !claimantEditModel">
+				${claimant.firstName} ${claimant.lastName}
+				<br>${claimant.age} - ${claimant.gender | gender}
+			</div>
+			
+			<div class="uk-width-1-2@s" if.bind="claimant && !claimantEditModel">
+				<button type="button" class="uk-button uk-button-default" click.delegate="editClaimant(claimant)">
+					Edit Claimant
+				</button>
+				
+				<button type="button" class="uk-button uk-button-default" click.delegate="deleteClaimant(claimant)">
+					Delete Claimant
+				</button>
+			</div>
+			
+			<div class="uk-width-1-1" if.bind="claimantEditModel">
+				<edit-claimant model.bind="claimantEditModel" edited.delegate="claimantEdited($event)" canceled.delegate="claimantCanceled($event)"></edit-claimant>
+			</div>
+			
+		</form>
+		
+	</fieldset>
+	
+</div>
+</template>

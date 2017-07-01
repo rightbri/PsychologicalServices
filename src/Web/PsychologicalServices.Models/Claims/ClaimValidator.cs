@@ -27,15 +27,24 @@ namespace PsychologicalServices.Models.Claims
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            var claimant = _claimRepository.GetClaimant(item.Claimant.ClaimantId);
-
-            if (null == claimant)
+            if (null == item.Claimant)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "ClaimantId", Message = "Invalid claimant" }
+                    new ValidationError { PropertyName = "ClaimantId", Message = "Claimant is required" }
                 );
             }
+            else
+            {
+                var claimant = _claimRepository.GetClaimant(item.Claimant.ClaimantId);
 
+                if (null == claimant)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ClaimantId", Message = "Invalid claimant" }
+                    );
+                }
+            }
+            
             if (item.DateOfLoss.HasValue &&
                 item.DateOfLoss > _now.UtcNow)
             {

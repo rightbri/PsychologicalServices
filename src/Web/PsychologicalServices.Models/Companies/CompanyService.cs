@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 
@@ -7,12 +8,15 @@ namespace PsychologicalServices.Models.Companies
     public class CompanyService : ICompanyService
     {
         private readonly ICompanyRepository _companyRepository = null;
+        private readonly ILog _log = null;
 
         public CompanyService(
-            ICompanyRepository companyRepository
+            ICompanyRepository companyRepository,
+            ILog log
         )
         {
             _companyRepository = companyRepository;
+            _log = log;
         }
 
         public Company GetCompany(int id)
@@ -47,7 +51,7 @@ namespace PsychologicalServices.Models.Companies
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveCompany", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

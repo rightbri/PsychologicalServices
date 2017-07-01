@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,19 @@ namespace PsychologicalServices.Models.Attributes
         private readonly IAttributeRepository _attributeRepository = null;
         private readonly IAttributeValidator _attributeValidator = null;
         private readonly IAttributeTypeValidator _attributeTypeValidator = null;
+        private readonly ILog _log = null;
 
         public AttributeService(
             IAttributeRepository attributeRepository,
             IAttributeValidator attributeValidator,
-            IAttributeTypeValidator attributeTypeValidator
+            IAttributeTypeValidator attributeTypeValidator,
+            ILog log
         )
         {
             _attributeRepository = attributeRepository;
             _attributeValidator = attributeValidator;
             _attributeTypeValidator = attributeTypeValidator;
+            _log = log;
         }
 
         public Attribute GetAttribute(int id)
@@ -70,7 +74,7 @@ namespace PsychologicalServices.Models.Attributes
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveAttribute", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -98,7 +102,7 @@ namespace PsychologicalServices.Models.Attributes
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveAttributeType", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

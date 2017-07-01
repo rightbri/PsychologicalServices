@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 
@@ -10,18 +11,21 @@ namespace PsychologicalServices.Models.Referrals
         private readonly IReferralSourceTypeValidator _referralSourceTypeValidator = null;
         private readonly IReferralSourceValidator _referralSourceValidator = null;
         private readonly IReferralTypeValidator _referralTypeValidator = null;
+        private readonly ILog _log = null;
 
         public ReferralService(
             IReferralRepository referralRepository,
             IReferralSourceTypeValidator referralSourceTypeValidator,
             IReferralSourceValidator referralSourceValidator,
-            IReferralTypeValidator referralTypeValidator
+            IReferralTypeValidator referralTypeValidator,
+            ILog log
         )
         {
             _referralRepository = referralRepository;
             _referralSourceTypeValidator = referralSourceTypeValidator;
             _referralSourceValidator = referralSourceValidator;
             _referralTypeValidator = referralTypeValidator;
+            _log = log;
         }
 
         public ReferralSource GetReferralSource(int id)
@@ -86,7 +90,7 @@ namespace PsychologicalServices.Models.Referrals
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveReferralSource", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -114,7 +118,7 @@ namespace PsychologicalServices.Models.Referrals
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveReferralSourceType", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -142,7 +146,7 @@ namespace PsychologicalServices.Models.Referrals
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveReferralType", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

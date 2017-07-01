@@ -413,6 +413,8 @@ namespace PsychologicalServices.Data
 		DateOfLoss,
 		///<summary>ClaimNumber. </summary>
 		ClaimNumber,
+		///<summary>Lawyer. </summary>
+		Lawyer,
 		/// <summary></summary>
 		AmountOfFields
 	}

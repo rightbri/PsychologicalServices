@@ -1,45 +1,53 @@
-import {DialogController} from 'aurelia-dialog';
+import {inject} from 'aurelia-framework';
+import {bindable, bindingMode} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
-import {inject} from 'aurelia-framework';
+import {EventHelper} from 'services/eventHelper';
 
-@inject(DialogController, DataRepository, Config)
-export class EditClaimant {
-	constructor(dialogController, dataRepository, config) {
-		this.dialogController = dialogController;
+@inject(Element, DataRepository, Config, EventHelper)
+export class EditClaimantCustomElement {
+	@bindable({ defaultBindingMode: bindingMode.twoWay }) model;
+	
+	constructor(element, dataRepository, config, eventHelper) {
+		this.element = element;
 		this.dataRepository = dataRepository;
 		this.config = config;
+		this.eventHelper = eventHelper;
 
-		this.error = null;
 		this.validationErrors = null;
 	}
 	
-	activate(claimant) {
-		this.claimant = claimant;
+	modelChanged(newValue, oldValue) {
+		if (newValue) {
+			this.genders = newValue.genders;
 		
-		return this.dataRepository.getGenders()
-			.then(data => {
-				this.genders = data;
-			});
+			this.backup = getBackup(newValue.claimant);
+		}
 	}
 	
-	ok() {
-		this.dataRepository.saveClaimant(this.claimant)
+	ok(e) {
+		this.dataRepository.saveClaimant(this.model.claimant)
 			.then(data => {
 				
-				this.error = data.isError ? data.errorDetails : null;
-
 				this.validationErrors = (data.validationResult && data.validationResult.validationErrors && data.validationResult.validationErrors.length > 0)
 					? data.validationResult.validationErrors
 					: null;
 				
 				if (data.isSaved) {
-					this.dialogController.ok(data.item);
+					this.model.claimant = data.item;
+					
+					this.backup = getBackup(this.model.claimant);
+
+					this.eventHelper.fireEvent(this.element, 'edited', { 'claimant': this.model.claimant });
 				}
 			});
 	}
 	
-	cancel() {
-		this.dialogController.cancel();
+	cancel(e) {
+		this.eventHelper.fireEvent(this.element, 'canceled', { 'claimant': this.backup });
 	}
+}
+
+function getBackup(obj) {
+	return JSON.parse(JSON.stringify(obj));
 }

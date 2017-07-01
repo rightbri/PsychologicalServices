@@ -13,7 +13,7 @@ namespace PsychologicalServices.Models.Claims
 
         IEnumerable<Claim> GetAssessmentClaims(int assessmentId);
 
-        IEnumerable<Claimant> SearchClaimants(string lastName);
+        IEnumerable<Claimant> SearchClaimants(string name);
 
         IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId);
 
@@ -26,5 +26,7 @@ namespace PsychologicalServices.Models.Claims
         int SaveClaimant(Claimant claimant);
 
         int SaveIssueInDispute(IssueInDispute issueInDispute);
+
+        bool DeleteClaimant(int id);
     }
 }

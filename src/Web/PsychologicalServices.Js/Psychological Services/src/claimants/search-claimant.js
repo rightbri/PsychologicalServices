@@ -8,6 +8,7 @@ import {EventHelper} from 'services/eventHelper';
 @inject(Element, DataRepository, Config, EventHelper)
 export class SearchClaimantCustomElement {
 	@bindable({ defaultBindingMode: bindingMode.twoWay }) claimant;
+	@bindable claimants;
 	
 	constructor(element, dataRepository, config, eventHelper) {
 		this.element = element;
@@ -17,7 +18,6 @@ export class SearchClaimantCustomElement {
 		
 		this.claimantSearchMinLength = 2;
 		this.claimantSearch = null;
-		this.claimants = null;
 	}
 	
 	search() {
@@ -30,9 +30,9 @@ export class SearchClaimantCustomElement {
 		}
 	}
 	
-	searchClaimant(lastName) {
+	searchClaimant(name) {
 		if (this.claimantSearch.length >= this.claimantSearchMinLength) {
-			this.dataRepository.getClaimants(lastName).then(data => {
+			this.dataRepository.getClaimants(name).then(data => {
 				this.claimants = data;
 			});
 		}
@@ -41,11 +41,15 @@ export class SearchClaimantCustomElement {
 	selectClaimant(claimant) {
 		this.claimant = claimant;
 		
-		this.eventHelper.fireEvent(this.element, 'selected', claimant);
+		this.eventHelper.fireEvent(this.element, 'selected', { 'claimant': claimant });
 	}
 	
 	@computedFrom('claimants', 'claimant')
 	get showResults() {
 		return this.claimants && !this.claimant;
+	}
+	
+	enterpressed(e) {
+		this.search();
 	}
 }

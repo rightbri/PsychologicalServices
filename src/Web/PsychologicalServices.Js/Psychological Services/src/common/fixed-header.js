@@ -1,21 +1,53 @@
-import {inject} from 'aurelia-framework';
+import {bindable, inject} from 'aurelia-framework';
 //import {jquery} from 'jquery';
 
 @inject(Element)
 export class FixedHeaderCustomAttribute {
-	
+	@bindable offset = '[uk-navbar]';
+
 	constructor(element) {
 		this.element = element;
 	}
 
 	attached() {
-		$(this.element).fixMe();
+		create(this.element, this.offset);
+		//$(this.element).fixMe();
 	}
 
 	detached() {
-		$(this.element).fixMe('destroy');
+		destroy(this.element);
+		//$(this.element).fixMe('destroy');
 	}
-}/*
+	
+	offsetChanged(newValue, oldValue) {
+		destroy(this.element);
+		create(this.element, newValue);
+	}
+}
+
+function create(element, offset) {
+	let args = undefined;
+	
+	//if (offset) {
+		let $offsetEl = $(offset);
+		
+		let positionTop = $offsetEl.position().top;
+		let offsetTop = 0;//$offsetEl.offset().top;
+		let outerHeight = $offsetEl.outerHeight(true);
+		
+		let offsetPx = positionTop + offsetTop + outerHeight;
+		
+		args = { 'offset': offsetPx };
+	//}
+	
+	$(element).fixMe(args);
+}
+
+function destroy(element) {
+	$(element).fixMe('destroy');
+}
+
+/*
 //https://codepen.io/jgx/pen/wiIGc
 ;(function($, window, undefined) {
    $.fn.fixMe = function() {
@@ -94,10 +126,19 @@ $(document).ready(function(){
 			
 			$(window).on('resize.fixed-header', resizeFixed);
 			$(window).on('scroll.fixed-header', scrollFixed);
-			$el.wrap('<div class="container-fluid" />');
+			//$el.wrap('<div class="container-fluid" />');
+			$el.wrap('<div/>');
 			$el_fixed = $el.clone();
-			$el_fixed.find("tbody").remove().end().addClass("fixed").insertBefore($el);
-			resizeFixed();
+			let cssTop = 0;
+			if (options.offset) {
+				cssTop = options.offset + "px";
+			}
+			$el_fixed.find("tbody").remove().end().addClass("fixed").css("top",cssTop).insertBefore($el);
+			
+			setTimeout(function() {
+				resizeFixed();
+				scrollFixed();
+			}, 0);
 		});
 	  
       hook('onInit');

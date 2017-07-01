@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace PsychologicalServices.Models.Colors
     {
         private readonly IColorRepository _colorRepository = null;
         private readonly IColorValidator _colorValidator = null;
+        private readonly ILog _log = null;
 
         public ColorService(
             IColorRepository colorRepository,
-            IColorValidator colorValidator
+            IColorValidator colorValidator,
+            ILog log
         )
         {
             _colorRepository = colorRepository;
             _colorValidator = colorValidator;
+            _log = log;
         }
 
         public Color GetColor(int id)
@@ -53,7 +57,7 @@ namespace PsychologicalServices.Models.Colors
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveColor", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

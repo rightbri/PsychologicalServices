@@ -7,7 +7,7 @@ export class AuthContext {
 	constructor(eventAggregator, notifier) {
 		this.ea = eventAggregator;
 		this.notifier = notifier;
-		this.authToken = window.sessionStorage.getItem('firebaseAuthToken');
+		this.authToken = window.localStorage.getItem('firebaseAuthToken');
 		this.signinUser;
 		
 		// This mostly gets called on subsequent page loads to determine
@@ -33,7 +33,7 @@ export class AuthContext {
 	clear() {
 		this.signinUser = null;
 		this.authToken = null;
-		window.sessionStorage.clear();
+		window.localStorage.clear();
 	}
 	
 	setSigninUser(user) {
@@ -42,7 +42,7 @@ export class AuthContext {
 	
 	setAuthToken(token) {
 		this.authToken = token;
-		window.sessionStorage.setItem('firebaseAuthToken', token);
+		window.localStorage.setItem('firebaseAuthToken', token);
 	}
 	
 	login() {

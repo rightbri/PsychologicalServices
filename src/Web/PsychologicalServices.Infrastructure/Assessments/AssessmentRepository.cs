@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Data;
+using PsychologicalServices.Data.DatabaseSpecific;
 using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
@@ -168,9 +169,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 throw new ArgumentOutOfRangeException("companyId");
             }
 
-            var appointment = _appointmentRepository.NewAppointment(companyId);
-            appointment.AppointmentTime = appointmentTime.Add(company.NewAppointmentTime.HasValue ? company.NewAppointmentTime.Value : TimeSpan.Zero);
-
+            var appointment = _appointmentRepository.NewAppointment(companyId, appointmentTime);
+            
             return new Assessment
             {
                 Appointments = new List<Appointment>(new[] { appointment }),
@@ -496,7 +496,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
                     appointmentEntity.UpdateDate = _date.UtcNow;
                     appointmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
-
+                    
                     if (appointment.AppointmentStatus.CanInvoice &&
                         !appointmentEntity.InvoiceAppointments.Any())
                     {
@@ -509,7 +509,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             }
                         );
                     }
-                    
+
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
                             appointmentAttribute.AttributeId == attribute.AttributeId
@@ -550,19 +550,13 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         UpdateDate = _date.UtcNow,
                         UpdateUserId = assessment.UpdateUser.UserId,
                     };
-
                     if (appointment.AppointmentStatus.CanInvoice)
                     {
                         appointment.Assessment = assessment;
 
                         var invoice = _invoiceGenerator.CreatePsychologistInvoice(appointment);
-
-                        appointmentEntity.InvoiceAppointments.Add(
-                            new InvoiceAppointmentEntity
-                            {
-                                Invoice = invoice.ToInvoiceEntity()
-                            }
-                        );
+                        
+                        invoice.AddToAppointment(appointmentEntity);
                     }
 
                     appointmentEntity.AppointmentAttributes.AddRange(
@@ -596,7 +590,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             (
                             assessmentClaim.Claim.ClaimantId != claim.Claimant.ClaimantId ||
                             assessmentClaim.Claim.ClaimNumber != claim.ClaimNumber ||
-                            assessmentClaim.Claim.DateOfLoss != claim.DateOfLoss
+                            assessmentClaim.Claim.DateOfLoss != claim.DateOfLoss ||
+                            assessmentClaim.Claim.Lawyer != claim.Lawyer
                             )
                         )
                     )
@@ -619,6 +614,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     {
                         claimEntity.ClaimNumber = claim.ClaimNumber;
                         claimEntity.DateOfLoss = claim.DateOfLoss;
+                        claimEntity.Lawyer = claim.Lawyer;
                         claimEntity.ClaimantId = claim.Claimant.ClaimantId;
 
                         if (claim.Claimant.IsNew())
@@ -654,7 +650,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             }
                             : null,
                             ClaimNumber = claim.ClaimNumber,
-                            DateOfLoss = claim.DateOfLoss
+                            DateOfLoss = claim.DateOfLoss,
+                            Lawyer = claim.Lawyer,
                         },
                     })
                 );
@@ -942,7 +939,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 );
 
                 #endregion
-                
+
+                #region summary
+
                 var updateSummaryNote =
                     assessmentEntity.SummaryNoteId.HasValue &&
                     null != assessment.Summary &&
@@ -972,6 +971,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     };
                 }
 
+                #endregion
+                
                 uow.AddForSave(assessmentEntity);
 
                 uow.Commit(adapter);
@@ -1028,5 +1029,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
             }
         }
 
+        public int DeleteAssessment(int id)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var rowsAffected = ActionProcedures.DeleteAssessment(id, (DataAccessAdapter)adapter);
+
+                return rowsAffected;
+            }
+        }
     }
 }

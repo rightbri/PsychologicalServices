@@ -71,7 +71,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
-        public static InvoiceEntity ToInvoiceEntity(this Invoice invoice)
+        private static InvoiceEntity ToInvoiceEntityBase(this Invoice invoice)
         {
             var invoiceEntity = new InvoiceEntity
             {
@@ -87,6 +87,25 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 PayableToId = invoice.PayableTo.UserId,
             };
 
+            return invoiceEntity;
+        }
+
+        private static InvoiceLineEntity ToInvoiceLineEntity(this InvoiceLine invoiceLine)
+        {
+            return new InvoiceLineEntity
+            {
+                InvoiceLineId = invoiceLine.InvoiceLineId,
+                InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
+                Amount = invoiceLine.Amount,
+                Description = invoiceLine.Description,
+                IsCustom = invoiceLine.IsCustom,
+            };
+        }
+
+        public static InvoiceEntity ToInvoiceEntity(this Invoice invoice)
+        {
+            var invoiceEntity = invoice.ToInvoiceEntityBase();
+
             foreach (var invoiceAppointment in invoice.Appointments)
             {
                 var invoiceAppointmentEntity = new InvoiceAppointmentEntity
@@ -96,17 +115,31 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 };
 
                 invoiceAppointmentEntity.InvoiceLines.AddRange(
-                    invoiceAppointment.Lines.Select(invoiceLine => new InvoiceLineEntity
-                    {
-                        InvoiceLineId = invoiceLine.InvoiceLineId,
-                        InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
-                        Amount = invoiceLine.Amount,
-                        Description = invoiceLine.Description,
-                        IsCustom = invoiceLine.IsCustom,
-                    })
+                    invoiceAppointment.Lines.Select(invoiceLine => invoiceLine.ToInvoiceLineEntity())
                 );
 
                 invoiceEntity.InvoiceAppointments.Add(invoiceAppointmentEntity);
+            }
+
+            return invoiceEntity;
+        }
+
+        public static InvoiceEntity AddToAppointment(this Invoice invoice, AppointmentEntity appointmentEntity)
+        {
+            var invoiceEntity = invoice.ToInvoiceEntityBase();
+
+            foreach (var invoiceAppointment in invoice.Appointments)
+            {
+                var invoiceAppointmentEntity = new InvoiceAppointmentEntity
+                {
+                    Invoice = invoiceEntity,
+                };
+                
+                invoiceAppointmentEntity.InvoiceLines.AddRange(
+                    invoiceAppointment.Lines.Select(invoiceLine => invoiceLine.ToInvoiceLineEntity())
+                );
+                
+                appointmentEntity.InvoiceAppointments.Add(invoiceAppointmentEntity);
             }
 
             return invoiceEntity;
@@ -179,6 +212,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new InvoiceLine
                 {
                     InvoiceLineId = invoiceLine.InvoiceLineId,
+                    InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
                     Description = invoiceLine.Description,
                     Amount = invoiceLine.Amount,
                     IsCustom = invoiceLine.IsCustom,
@@ -379,6 +413,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ClaimNumber = claim.ClaimNumber,
                     DateOfLoss = claim.DateOfLoss,
                     Claimant = claim.Claimant.ToClaimant(),
+                    Lawyer = claim.Lawyer,
                 }
                 : null;
         }
@@ -678,6 +713,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Roles = user.UserRoles.Select(userRole => userRole.Role.ToRole()).ToList(),
                     Unavailability = user.UserUnavailabilities.Select(userUnavailability => userUnavailability.ToUnavailability()),
                     TravelFees = user.UserTravelFees.Select(userTravelFee => userTravelFee.ToUserTravelFee()),
+                    Address = user.Address.ToAddress(),
                 }
                 : null;
         }

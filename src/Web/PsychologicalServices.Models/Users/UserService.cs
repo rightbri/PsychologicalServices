@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace PsychologicalServices.Models.Users
     {
         private readonly IUserRepository _userRepository = null;
         private readonly IUserValidator _userValidator = null;
+        private readonly ILog _log = null;
 
         public UserService(
             IUserRepository userRepository,
-            IUserValidator userValidator
+            IUserValidator userValidator,
+            ILog log
         )
         {
             _userRepository = userRepository;
             _userValidator = userValidator;
+            _log = log;
         }
 
         public User GetUserByEmail(string email)
@@ -88,7 +92,7 @@ namespace PsychologicalServices.Models.Users
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveUser", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

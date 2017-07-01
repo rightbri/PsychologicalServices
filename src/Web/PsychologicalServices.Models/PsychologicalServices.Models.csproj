@@ -120,11 +120,13 @@
     <Compile Include="Colors\IColorService.cs" />
     <Compile Include="Colors\IColorValidator.cs" />
     <Compile Include="Common\Configuration\IConfigurationService.cs" />
+    <Compile Include="Common\DeleteResult.cs" />
     <Compile Include="Common\Utility\EmailAddressValidator.cs" />
     <Compile Include="Common\Utility\ICacheService.cs" />
     <Compile Include="Common\Utility\IDate.cs" />
     <Compile Include="Common\Utility\IEmailAddressValidator.cs" />
     <Compile Include="Common\Utility\IMailService.cs" />
+    <Compile Include="Common\Utility\MailResult.cs" />
     <Compile Include="Common\Utility\MailService.cs" />
     <Compile Include="Common\Utility\ModelExtensions.cs" />
     <Compile Include="Common\Utility\Date.cs" />
@@ -218,6 +220,7 @@
       <DependentUpon>PsychometristScheduleTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Schedule\ScheduleHtmlGenerator.cs" />
+    <Compile Include="Schedule\ScheduleModel.cs" />
     <Compile Include="Schedule\ScheduleSearchCriteria.cs" />
     <Compile Include="Schedule\ScheduleService.cs" />
     <Compile Include="Schedule\SendScheduleResult.cs" />

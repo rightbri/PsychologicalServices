@@ -2,13 +2,15 @@ import {inject} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
 import {Context} from 'common/context';
+import {Notifier} from 'services/notifier';
 
-@inject(DataRepository, Config, Context)
+@inject(DataRepository, Config, Context, Notifier)
 export class Assessments {
-	constructor(dataRepository, config, context) {
+	constructor(dataRepository, config, context, notifier) {
 		this.dataRepository = dataRepository;
 		this.config = config;
 		this.context = context;
+		this.notifier = notifier;
 		
 		this.referralSources = null;
 		
@@ -37,5 +39,21 @@ export class Assessments {
 			claimantId: this.searchClaimant ? this.searchClaimant.claimantId : null,
 			companyId: this.searchCompanyId
 		}).then(data => this.assessments = data);
+	}
+	
+	deleteAssessment(assessment) {
+		if (confirm('Delete Assessment\nAre you sure?')) {
+			this.dataRepository.deleteAssessment(assessment.assessmentId).then(data => {
+			
+				if (data.isError) {
+					this.notifier.error(data.errorDetails);
+				}
+				else {
+					this.assessments.splice(this.assessments.indexOf(assessment), 1);
+					
+					this.notifier.info('Deleted');
+				}
+			});
+		}
 	}
 }

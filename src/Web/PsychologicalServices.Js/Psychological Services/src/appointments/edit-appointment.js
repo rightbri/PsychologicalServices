@@ -72,7 +72,7 @@ function parseDateTime(date, time, dateFormat, timeFormat) {
 }
 
 function time(datetime, format) {
-	return moment.utc(datetime).format(format);
+	return moment.utc(datetime).local().format(format);
 }
 
 function getBackup(obj) {

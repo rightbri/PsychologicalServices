@@ -62,7 +62,7 @@
 				<div class="uk-width-1-2@s">
 					<label class="uk-form-label" for="lateCancellationRate">Late Cancellation Rate</label>
 					<div class="uk-form-controls">
-						<input id="lateCancellationRate" type="number" pattern="\d+([.]\d{1,4})" class="uk-input" value.bind="referralSource.lateCancellationRate | numeric:'0.00'" />
+						<input id="lateCancellationRate" type="number" pattern="\d+([.]\d{1,4})" class="uk-input" value.bind="referralSource.lateCancellationRate | numeric:'0.00' & updateTrigger:'blur'" />
 					</div>
 				</div>
 				

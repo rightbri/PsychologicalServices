@@ -2,9 +2,6 @@
 using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -59,6 +56,16 @@ namespace PsychologicalServices.Web.Controllers
         public IHttpActionResult Save(Assessment assessment)
         {
             var result = _assessmentService.SaveAssessment(assessment);
+
+            return Ok(result);
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        [ResponseType(typeof(DeleteResult))]
+        public IHttpActionResult Delete([FromUri]int id)
+        {
+            var result = _assessmentService.DeleteAssessment(id);
 
             return Ok(result);
         }

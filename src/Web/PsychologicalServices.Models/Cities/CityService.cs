@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace PsychologicalServices.Models.Cities
     {
         private readonly ICityRepository _cityRepository = null;
         private readonly ICityValidator _cityValidator = null;
+        private readonly ILog _log = null;
 
         public CityService(
             ICityRepository cityRepository,
-            ICityValidator cityValidator
+            ICityValidator cityValidator,
+            ILog log
         )
         {
             _cityRepository = cityRepository;
             _cityValidator = cityValidator;
+            _log = log;
         }
 
         public City GetCity(int id)
@@ -53,7 +57,7 @@ namespace PsychologicalServices.Models.Cities
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveCity", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

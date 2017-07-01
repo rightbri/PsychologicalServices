@@ -79,6 +79,10 @@ namespace PsychologicalServices.Infrastructure.Users
                         )
                     .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
                     .Prefetch<CompanyEntity>(user => user.Company)
+                    .Prefetch<AddressEntity>(user => user.Address)
+                        .SubPath(addressPath => addressPath
+                            .Prefetch<CityEntity>(address => address.City)
+                        )
                 );
 
         private Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>> GetPsychometristSchedulePath(
@@ -416,6 +420,7 @@ namespace PsychologicalServices.Infrastructure.Users
                 userEntity.LastName = user.LastName;
                 userEntity.Email = user.Email;
                 userEntity.CompanyId = user.Company.CompanyId;
+                userEntity.AddressId = user.Address.AddressId;
                 userEntity.IsActive = user.IsActive;
 
                 #region roles

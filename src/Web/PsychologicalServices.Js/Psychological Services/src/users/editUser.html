@@ -38,19 +38,31 @@
 			</div>
 			
 			<div class="uk-width-1-2@s">
-				<label class="uk-form-label">Status</label>
+				<label class="uk-form-label" for="address">Address</label>
 				<div class="uk-form-controls">
-					<label class="uk-form-label">
-						<input type="checkbox" class="uk-checkbox" checked.bind="user.isActive" />&nbsp;Is Active?
-					</label>
+					<select id="address" class="uk-select" value.bind="user.address" matcher.bind="addressMatcher">
+						<option></option>
+						<option repeat.for="address of addresses" model.bind="address">
+							${address.name} ${address.street} ${address.city.name}
+						</option>
+					</select>
 				</div>
 			</div>
 			
-			<div class="uk-width-1-1">
+			<div class="uk-width-1-2@s">
 				<label class="uk-form-label">Roles</label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label" repeat.for="role of roles">
 						<input type="checkbox" class="uk-checkbox" model.bind="role" checked.bind="user.roles" matcher.bind="roleMatcher" />&nbsp;${role.name}
+					</label>
+				</div>
+			</div>
+			
+			<div class="uk-width-1-2@s">
+				<label class="uk-form-label">Status</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label">
+						<input type="checkbox" class="uk-checkbox" checked.bind="user.isActive" />&nbsp;Is Active?
 					</label>
 				</div>
 			</div>
@@ -76,7 +88,7 @@
 			<div class="uk-width-1-1">
 				<label class="uk-form-label">Travel Fees</label>
 				<div class="uk-form-controls">
-					<table class="uk-table uk-table-divider">
+					<table class="uk-table uk-table-divider uk-table-small">
 						<thead>
 							<tr>
 								<th>City</th>

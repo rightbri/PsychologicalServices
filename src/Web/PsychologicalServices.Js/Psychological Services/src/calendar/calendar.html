@@ -5,12 +5,12 @@
 	<require from="resources/value-converters/note-for-day"></require>
 	<require from="resources/value-converters/appointment-for-day"></require>
 	<require from="resources/value-converters/attribute-types"></require>
+	<require from="calendarNotes/edit-calendar-note"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
-	
 
-<form class="uk-form-horizontal uk-padding-small">
+<form class="uk-padding-small">
 	<div class="uk-form-controls">
 		<input type="text" class="uk-input uk-form-width-medium" date-picker.bind="config.monthPickerOptions" monthchanged.delegate="monthChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
 		
@@ -25,7 +25,9 @@
 	<table class="uk-table uk-table-divider" if.bind="currentView === 'schedule'" fixed-header>
 	<thead>
 		<tr>
-			<th></th>
+			<th>
+				<a href="#" uk-totop uk-scroll style="display: none;"></a>
+			</th>
 			<th>Time</th>
 			<th>Type</th>
 			<th>Source</th>
@@ -38,38 +40,32 @@
 	<tbody>
 		<template repeat.for="day of days">
 		<tr>
-			<td>
+			<td class="uk-table-shrink">
 				<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
 					${day | dateFormat:'ddd MMM D'}
 				</a>
 			</td>
 			<td colspan="6"></td>
 			<td>
-				<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day">
+				<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day" click.delegate="editCalendarNote(calendarNote)" uk-toggle="target: #calendar-note-form">
 					<small>${calendarNote.note.noteText}</small>
 				</p>
 			</td>
 		</tr>
 		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
 			<td class="uk-table-shrink">
-				<div class="uk-inline">
-					<i class="fa fa-ellipsis-h fa-2x"></i>
-					<div uk-dropdown="mode: click">
-						<ul class="uk-nav uk-dropdown-nav">
-							<li>
-								<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }">
-									Edit
-								</a>
-							</li>
-							<li>
-								<a href.one-time="summaryModalToggleValue(appointment)" uk-toggle if.bind="appointment.assessment.summary">
-									Summary
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<view-assessment-summary model.bind="appointment" container-id.bind="summaryModalContainerId(appointment)"></view-assessment-summary>
+				<ul class="uk-list">
+					<li>
+						<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="uk-link-text" title="Edit assessment" uk-tooltip="pos: right">
+							<i class="fa fa-pencil"></i>
+						</a>
+					</li>
+					<li if.bind="appointment.assessment.summary">
+						<a href.one-time="summaryModalToggleValue(appointment)" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
+							<i class="fa fa-info"></i>
+						</a>
+					</li>
+				</ul>
 			</td>
 			<td>
 				<ul class="uk-list">
@@ -157,7 +153,7 @@
 	<tbody>
 		<template repeat.for="day of days">
 		<tr>
-			<td>
+			<td class="uk-table-shrink">
 				<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
 					${day | dateFormat:'ddd MMM D'}
 				</a>
@@ -166,9 +162,18 @@
 		</tr>
 		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
 			<td class="uk-table-shrink">
-				<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="uk-button uk-button-default" title="Edit Assessment">
-					<i class="fa fa-pencil"></i>
-				</a>
+				<ul class="uk-list">
+					<li>
+						<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="uk-link-text" title="Edit assessment" uk-tooltip="pos: right">
+							<i class="fa fa-pencil"></i>
+						</a>
+					</li>
+					<li if.bind="appointment.assessment.summary">
+						<a href.one-time="summaryModalToggleValue(appointment)" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
+							<i class="fa fa-info"></i>
+						</a>
+					</li>
+				</ul>
 			</td>
 			<td>${appointment.location.name}</td>
 			<td>
@@ -213,4 +218,6 @@
 	</tbody>
 </table>
 </div>
+<view-assessment-summary model.bind="appointment" container-id.bind="summaryModalContainerId(appointment)" repeat.for="appointment of appointments"></view-assessment-summary>
+<edit-calendar-note model.bind="calendarNoteEditModel" addedCalendarNote.delegate="addedCalendarNote($event)" hide.delegate="hidCalendarNote($event)" if.bind="calendarNoteEditModel"></edit-calendar-note>
 </template>

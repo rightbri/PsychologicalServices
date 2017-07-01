@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 
@@ -8,14 +9,17 @@ namespace PsychologicalServices.Models.CalendarNotes
     {
         private readonly ICalendarNoteRepository _calendarNoteRepository = null;
         private readonly ICalendarNoteValidator _calendarNoteValidator = null;
+        private readonly ILog _log = null;
 
         public CalendarNoteService(
             ICalendarNoteRepository calendarNoteRepository,
-            ICalendarNoteValidator calendarNoteValidator
+            ICalendarNoteValidator calendarNoteValidator,
+            ILog log
         )
         {
             _calendarNoteRepository = calendarNoteRepository;
             _calendarNoteValidator = calendarNoteValidator;
+            _log = log;
         }
 
         public CalendarNote GetCalendarNote(int id)
@@ -57,7 +61,7 @@ namespace PsychologicalServices.Models.CalendarNotes
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveCalendarNote", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

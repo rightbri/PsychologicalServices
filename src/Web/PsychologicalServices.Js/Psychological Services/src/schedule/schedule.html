@@ -1,7 +1,7 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/attribute-types"></require>
-	<require from="common/date-picker"></require>
+	<require from="common/date-mask"></require>
 	
 <div class="uk-container">
 
@@ -13,14 +13,14 @@
 			<div class="uk-width-1-3@s">
 				<label class="uk-form-label" for="searchStart">Start Date</label>
 				<div class="uk-form-controls">
-					<input id="searchStart" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="searchStart | dateFormat:config.longDateFormat"/>
+					<input id="searchStart" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="searchStart | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
 				</div>
 			</div>
 		
 			<div class="uk-width-1-3@s">
 				<label class="uk-form-label" for="searchEnd">End Date</label>
 				<div class="uk-form-controls">
-					<input id="searchEnd" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="searchEnd | dateFormat:config.longDateFormat"/>
+					<input id="searchEnd" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="searchEnd | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
 				</div>
 			</div>
 			

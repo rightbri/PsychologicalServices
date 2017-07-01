@@ -121,6 +121,11 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
         public Appointment NewAppointment(int companyId)
         {
+            return NewAppointment(companyId, DateTime.Today);
+        }
+        
+        public Appointment NewAppointment(int companyId, DateTime appointmentDate)
+        {
             var company = _companyRepository.GetCompany(companyId);
 
             if (null == company)
@@ -128,44 +133,21 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 throw new ArgumentOutOfRangeException("companyId");
             }
 
+            var appointmentTime = appointmentDate.Add(
+                company.NewAppointmentTime.HasValue
+                    ? company.NewAppointmentTime.Value
+                    : new TimeSpan(9, 0, 0)
+                ).ToUniversalTime();
+
             return new Appointment
             {
-                AppointmentTime = company.NewAppointmentTime.HasValue ? _date.Today.Add(company.NewAppointmentTime.Value) : _date.UtcNow,
+                AppointmentTime = appointmentTime,
                 Location = company.NewAppointmentLocation,
                 AppointmentStatus = company.NewAppointmentStatus,
                 Psychologist = company.NewAppointmentPsychologist,
                 Psychometrist = company.NewAppointmentPsychometrist,
                 Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
             };
-        }
-
-        public Appointment NewAppointment(int assessmentId, int companyId)
-        {
-            using (var adapter = AdapterFactory.CreateAdapter())
-            {
-                var meta = new LinqMetaData(adapter);
-
-                var assessmentEntity = meta.Assessment.Where(assessment => assessment.AssessmentId == assessmentId).SingleOrDefault();
-
-                if (null == assessmentEntity)
-                {
-                    throw new ArgumentOutOfRangeException("assessmentId");
-                }
-
-                //var companyEntity = meta.Company.Where(company => company.CompanyId == companyId).SingleOrDefault();
-
-                //if (null == companyEntity)
-                //{
-                //    throw new ArgumentOutOfRangeException("companyId");
-                //}
-
-                return new Appointment
-                {
-                    AppointmentTime = _date.UtcNow,
-                    Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
-                    Assessment = assessmentEntity.ToAssessment(),
-                };
-            }
         }
 
         public AppointmentStatus GetAppointmentStatus(int id)
@@ -359,5 +341,6 @@ namespace PsychologicalServices.Infrastructure.Appointments
             //TODO: retrieve from DB or config
             return 8;
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common.Validation;
+﻿using PsychologicalServices.Models.Addresses;
+using PsychologicalServices.Models.Common.Validation;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Roles;
 using System;
@@ -10,18 +11,21 @@ namespace PsychologicalServices.Models.Users
     public class UserValidator : IUserValidator
     {
         private readonly ICompanyRepository _companyRepository = null;
+        private readonly IAddressRepository _addressRepository = null;
         private readonly IRoleRepository _roleRepository = null;
         private readonly IUnavailabilityValidator _unavailabilityValidator = null;
         private readonly IUserTravelFeeValidator _userTravelFeeValidator = null;
 
         public UserValidator(
             ICompanyRepository companyRepository,
+            IAddressRepository addressRepository,
             IRoleRepository roleRepository,
             IUnavailabilityValidator unavailabilityValidator,
             IUserTravelFeeValidator userTravelFeeValidator
         )
         {
             _companyRepository = companyRepository;
+            _addressRepository = addressRepository;
             _roleRepository = roleRepository;
             _unavailabilityValidator = unavailabilityValidator;
             _userTravelFeeValidator = userTravelFeeValidator;
@@ -61,6 +65,23 @@ namespace PsychologicalServices.Models.Users
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "CompanyId", Message = "Invalid company" }
                 );
+            }
+
+            if (null == item.Address)
+            {
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "AddressId", Message = "Address is required" }
+                );
+            }
+            else
+            {
+                var address = _addressRepository.GetAddress(item.Address.AddressId);
+                if (null == address)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "AddressId", Message = "Invalid address" }
+                    );
+                }
             }
 
             var roles = _roleRepository.GetRoles(null);

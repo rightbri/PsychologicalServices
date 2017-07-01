@@ -607,6 +607,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ClaimFieldIndex.ClaimNumber);}
 		}
+		/// <summary>Creates a new ClaimEntity.Lawyer field instance</summary>
+		public static EntityField2 Lawyer
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ClaimFieldIndex.Lawyer);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity ClaimantEntity</summary>

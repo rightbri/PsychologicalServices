@@ -2,52 +2,51 @@
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/gender"></require>
 	<require from="common/validation-summary.html"></require>
-	<require from="common/date-picker"></require>
+	<require from="common/date-mask"></require>
+	<require from="resources/elements/edit-panel"></require>
 	
-	<ux-dialog>
-		<ux-dialog-header>
-		<h3>Edit Claimant</h3>
-		</ux-dialog-header>
-		<ux-dialog-body>
-		<validation-summary errors.bind="validationErrors" if.bind="validationErrors"></validation-summary>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="firstName">First Name</label>
-						<input id="firstName" type="text" class="form-control" value.bind="claimant.firstName" />
+	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Claimant</legend>
+		
+			<div class="uk-grid-medium uk-child-width-1-1" uk-grid>
+			
+				<div class="uk-width-1-1">
+					<validation-summary errors.bind="validationErrors" if.bind="validationErrors"></validation-summary>
+				</div>
+				
+				<div>
+					<label class="uk-form-label" for="firstName">First Name</label>
+					<div class="uk-form-controls">
+						<input id="firstName" type="text" class="uk-input" value.bind="model.claimant.firstName" />
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="lastName">Last Name</label>
-						<input id="lastName" type="text" class="form-control" value.bind="claimant.lastName" />
+				
+				<div>
+					<label class="uk-form-label" for="lastName">Last Name</label>
+					<div class="uk-form-controls">
+						<input id="lastName" type="text" class="uk-input" value.bind="model.claimant.lastName" />
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="dateOfBirth">Date of Birth</label>
-						<input id="dateOfBirth" type="text" class="form-control" date-picker.bind="config.datepickerOptions" value.bind="claimant.dateOfBirth | dateFormat:config.longDateFormat" />
+				
+				<div>
+					<label class="uk-form-label" for="dateOfBirth">Date of Birth</label>
+					<div class="uk-form-controls">
+						<input id="dateOfBirth" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.claimant.dateOfBirth | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="age">Age</label>
-						<input id="age" type="text" class="form-control" pattern="[0-9]+" value.bind="claimant.age" />
+				
+				<div>
+					<label class="uk-form-label" for="age">Age</label>
+					<div class="uk-form-controls">
+						<input id="age" type="text" class="uk-input" pattern="[0-9]+" value.bind="model.claimant.age" />
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label for="gender">Gender</label>
-						<select id="gender" class="form-control" value.bind="claimant.gender">
+				
+				<div>
+					<label class="uk-form-label" for="gender">Gender</label>
+					<div class="uk-form-controls">
+						<select id="gender" class="uk-select" value.bind="model.claimant.gender">
 							<option></option>
 							<option repeat.for="gender of genders" model.bind="gender.abbreviation">
 								${gender.description}
@@ -55,16 +54,16 @@
 						</select>
 					</div>
 				</div>
+				
+				<div>
+					<label class="uk-form-label" for="active">Status</label>
+					<div class="uk-form-controls">
+						<label class="uk-form-label" for="active">
+							<input id="active" type="checkbox" class="uk-checkbox" checked.bind="model.claimant.isActive" />&nbsp;Is Active?
+						</label>
+					</div>
+				</div>
 			</div>
-		</div>
-		</ux-dialog-body>
-		<ux-dialog-footer>
-		<button type="button" class="btn btn-primary" click.delegate="ok()">
-			Ok
-		</button>
-		<button type="button" class="btn btn-default" click.delegate="cancel()">
-			Cancel
-		</button>
-		</ux-dialog-footer>
-	</ux-dialog>
+		</fieldset>
+	</edit-panel>
 </template>

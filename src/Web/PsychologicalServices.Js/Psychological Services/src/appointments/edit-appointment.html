@@ -1,5 +1,5 @@
 <template>
-	<require from="common/date-picker"></require>
+	<require from="common/date-mask"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/attribute-types"></require>
 	<require from="resources/elements/edit-panel"></require>
@@ -13,14 +13,14 @@
 				<div>
 					<label class="uk-form-label" for="appointmentDate">Date</label>
 					<div class="uk-form-controls">
-						<input id="appointmentDate" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="appointmentDate | dateFormat:config.longDateFormat"/>
+						<input id="appointmentDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="appointmentDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
 					</div>
 				</div>
 			
 				<div>
 					<label class="uk-form-label" for="time">Time</label>
 					<div class="uk-form-controls">
-						<input id="time" type="text" class="uk-input" placeholder="09:00 AM" pattern="(0?[1-9]|1[0-2]):[0-5][0-9] [AP]M" value.bind="appointmentTime" />
+						<input id="time" type="text" class="uk-input" date-mask.bind="config.timemaskOptions" value.bind="appointmentTime" />
 					</div>
 				</div>
 				

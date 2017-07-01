@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Appointments;
+﻿using log4net;
+using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Common.Utility;
@@ -18,6 +19,7 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IInvoiceGenerator _invoiceGenerator = null;
         private readonly IMailService _mailService = null;
         private readonly IDate _date = null;
+        private readonly ILog _log = null;
 
         public InvoiceService(
             IAppointmentRepository appointmentRepository,
@@ -26,7 +28,8 @@ namespace PsychologicalServices.Models.Invoices
             IInvoiceValidator invoiceValidator,
             IInvoiceGenerator invoiceGenerator,
             IMailService mailService,
-            IDate date
+            IDate date,
+            ILog log
         )
         {
             _appointmentRepository = appointmentRepository;
@@ -36,6 +39,7 @@ namespace PsychologicalServices.Models.Invoices
             _invoiceGenerator = invoiceGenerator;
             _mailService = mailService;
             _date = date;
+            _log = log;
         }
         
         public Invoice GetInvoice(int id)
@@ -164,7 +168,7 @@ namespace PsychologicalServices.Models.Invoices
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveInvoice", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

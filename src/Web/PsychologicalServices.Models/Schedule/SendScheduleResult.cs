@@ -8,5 +8,9 @@ namespace PsychologicalServices.Models.Schedule
         public User User { get; set; }
 
         public bool Success { get; set; }
+
+        public bool IsError { get; set; }
+
+        public string ErrorDetails { get; set; }
     }
 }

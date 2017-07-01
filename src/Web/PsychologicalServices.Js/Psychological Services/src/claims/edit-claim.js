@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {bindable, bindingMode} from 'aurelia-framework';
 import {EventHelper} from 'services/eventHelper';
-import {Config} from '../common/config';
+import {Config} from 'common/config';
 
 @inject(Element, Config, EventHelper)
 export class EditClaimCustomElement {

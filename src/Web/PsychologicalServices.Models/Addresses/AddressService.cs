@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Common.Validation;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,17 @@ namespace PsychologicalServices.Models.Addresses
     {
         private readonly IAddressRepository _addressRepository = null;
         private readonly IAddressValidator _addressValidator = null;
+        private readonly ILog _log = null;
 
         public AddressService(
             IAddressRepository addressRepository,
-            IAddressValidator addressValidator
+            IAddressValidator addressValidator,
+            ILog log
         )
         {
             _addressRepository = addressRepository;
             _addressValidator = addressValidator;
+            _log = log;
         }
 
         public Address GetAddress(int id)
@@ -73,7 +77,7 @@ namespace PsychologicalServices.Models.Addresses
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveAddress", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

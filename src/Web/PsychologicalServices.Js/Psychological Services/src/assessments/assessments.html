@@ -51,6 +51,7 @@
 		<thead>
 			<tr>
 				<th></th>
+				<th></th>
 				<th>Assessment Type</th>
 				<th>Referral Source</th>
 				<th>Claimant</th>
@@ -59,9 +60,14 @@
 		<tbody>
 			<tr repeat.for="assessment of assessments">
 				<td>
-					<a route-href="route: editAssessment; params.bind: { id: assessment.assessmentId }" class="uk-button uk-button-default">
+					<a route-href="route: editAssessment; params.bind: { id: assessment.assessmentId }" class="uk-button uk-button-primary">
 						Edit
 					</a>
+				</td>
+				<td>
+					<button class="uk-button uk-button-danger" click.delegate="deleteAssessment(assessment)">
+						Delete
+					</button>
 				</td>
 				<td>${assessment.assessmentType.name}</td>
 				<td>${assessment.referralSource.name}</td>

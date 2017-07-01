@@ -17,9 +17,6 @@ export class EditUser {
 		this.scroller = scroller;
 		this.notifier = notifier;
 		
-		this.roles = null;
-		this.cities = null;
-		
 		this.user = null;
 		this.unavailableDates = [];
 		
@@ -29,6 +26,7 @@ export class EditUser {
 		};
 		
 		this.roleMatcher = (a, b) => a !== null && b !== null && a.roleId === b.roleId;
+		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
 		
 		this.error = null;
 		this.validationErrors = null;
@@ -66,6 +64,9 @@ export class EditUser {
 	
 	getData() {
 		return Promise.all([
+			this.dataRepository.searchAddress({
+				'addressTypeIds': [this.config.addressDefaults.userAddressTypeId]
+			}).then(data => this.addresses = data),
 			this.dataRepository.getRoles().then(data => this.roles = data),
 			this.dataRepository.getCities().then(data => {
 				this.cities = data;
@@ -127,7 +128,12 @@ export class EditUser {
 	}
 	
 	dateChanged(e) {
-		this.user.unavailability = e.detail.dates.map(d => { return { 'startDate': d, 'endDate': moment(d).add(1, 'days').subtract(1, 'seconds').toDate() }; });
+		this.user.unavailability = e.detail.dates.map(d => {
+			return {
+				'startDate': d,
+				'endDate': moment(d).add(1, 'days').subtract(1, 'seconds').toDate()
+			};
+		});
 		this.unavailableDates = e.detail.dates;
 	}
 }

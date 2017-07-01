@@ -2,7 +2,7 @@
 	<require from="resources/elements/edit-panel"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/gender"></require>
-	<require from="common/date-picker"></require>
+	<require from="common/date-mask"></require>
 	
 	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
 		<fieldset class="uk-fieldset">
@@ -21,7 +21,7 @@
 			<div class="uk-margin">
 				<label class="uk-form-label" for="dateOfLoss">Date of loss</label>
 				<div class="uk-form-controls">
-					<input id="dateOfLoss" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" value.bind="model.dateOfLoss | dateFormat:config.longDateFormat"/>
+					<input id="dateOfLoss" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.dateOfLoss | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
 				</div>
 			</div>
 			
@@ -29,6 +29,13 @@
 				<label class="uk-form-label" for="claimNumber">Claim Number</label>
 				<div class="uk-form-controls">
 					<input id="claimNumber" type="text" class="uk-input" pattern="[A-Za-z0-9-]+" value.bind="model.claimNumber" />
+				</div>
+			</div>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="lawyer">Lawyer</label>
+				<div class="uk-form-controls">
+					<input id="lawyer" type="text" class="uk-input" value.bind="model.lawyer" />
 				</div>
 			</div>
 		</fieldset>

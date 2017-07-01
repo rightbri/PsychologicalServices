@@ -2,9 +2,7 @@
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Claims;
-using PsychologicalServices.Models.Common;
 using SD.LLBLGen.Pro.LinqSupportClasses;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -79,7 +77,7 @@ namespace PsychologicalServices.Infrastructure.Claims
             }
         }
 
-        public IEnumerable<Claimant> SearchClaimants(string lastName)
+        public IEnumerable<Claimant> SearchClaimants(string name)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
@@ -88,7 +86,7 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return Execute<ClaimantEntity>(
                     (ILLBLGenProQuery)
                     meta.Claimant
-                    .Where(claimant => claimant.LastName.Contains(lastName))
+                    .Where(claimant => claimant.LastName.Contains(name) || claimant.FirstName.Contains(name))
                     .Take(20)
                 )
                 .Select(claimant => claimant.ToClaimant())
@@ -169,6 +167,7 @@ namespace PsychologicalServices.Infrastructure.Claims
                 entity.ClaimantId = claim.Claimant.ClaimantId;
                 entity.ClaimNumber = claim.ClaimNumber;
                 entity.DateOfLoss = claim.DateOfLoss;
+                entity.Lawyer = claim.Lawyer;
                 
                 adapter.SaveEntity(entity, false);
 
@@ -233,5 +232,19 @@ namespace PsychologicalServices.Infrastructure.Claims
             }
         }
 
+        public bool DeleteClaimant(int id)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var success = adapter.DeleteEntity(
+                    new ClaimantEntity(id)
+                );
+
+
+                return success;
+            }
+        }
     }
 }

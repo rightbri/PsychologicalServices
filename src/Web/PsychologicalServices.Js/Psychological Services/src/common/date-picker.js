@@ -1,11 +1,11 @@
-import {bindable, inject} from 'aurelia-framework';
+import {bindable, bindingMode, inject} from 'aurelia-framework';
 import {EventHelper} from 'services/eventHelper'
 import {jquery} from 'jquery';
 import datepicker from 'bootstrap-datepicker';;
 
 @inject(Element, EventHelper)
 export class DatePickerCustomAttribute {
-	@bindable dates;
+	@bindable({ defaultBindingMode: bindingMode.twoWay }) dates;
 	@bindable({ primaryProperty: true }) options;
 	
 	constructor(element, eventHelper) {
@@ -17,11 +17,11 @@ export class DatePickerCustomAttribute {
 		let $datepicker = $(this.element).datepicker(this.options);
 		
 		if (this.dates) {
-			$datepicker.datepicker('setDates', this.dates).datepicker('update');
+			$datepicker.datepicker('setDates', this.dates);
 		}
 
 		$datepicker
-			.on('change', e => fireEvent(e.target, 'input'))
+			.on('change', e => this.eventHelper.fireEvent(e.target, 'input'))
 			.on('changeDate', e => {
 				this.eventHelper.fireEvent(e.target, 'datechanged', e);
 			})
@@ -40,8 +40,9 @@ export class DatePickerCustomAttribute {
 			.off('changeMonth')
 			.off('clearDate');
 	}
-	
+	/*
 	datesChanged(newValue, oldValue) {
 		this.dates = newValue;
 	}
+	*/
 }

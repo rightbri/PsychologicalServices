@@ -1,18 +1,15 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
-import {DialogService} from 'aurelia-dialog';
-import {EditCalendarNote} from 'calendarNotes/edit-calendar-note';
 import {Context} from 'common/context';
 import {Config} from 'common/config';
 import moment from 'moment';
 
-@inject(Router, DataRepository, DialogService, Config, Context)
+@inject(Router, DataRepository, Config, Context)
 export class Calendar {
-	constructor(router, dataRepository, dialogService, config, context) {
+	constructor(router, dataRepository, config, context) {
 		this.router = router;
 		this.dataRepository = dataRepository;
-		this.dialogService = dialogService;
 		this.config = config;
 		this.context = context;
 		
@@ -30,13 +27,13 @@ export class Calendar {
 		
 		this.appointments = null;
 		this.calendarNotes = null;
+		this.editCalendarNoteModel = null;
 		
 		this.days = this.getDays(this.searchStart, this.searchEnd);
 	}
 	
 	activate(params) {
-		return this.context.getUser()
-			.then(user => {
+		return this.context.getUser().then(user => {
 				this.user = user;
 				this.searchCompany = user.company.companyId;
 				
@@ -72,10 +69,10 @@ export class Calendar {
 			
 			return (
 				calendarNote.fromDate === null || 
-				!moment(calendarNote.fromDate).isAfter(moment(day).clone().endOf('day'))
+				!moment.utc(calendarNote.fromDate).isAfter(moment.utc(day).clone().endOf('day'))
 			) && (
 				calendarNote.ToDate === null ||
-				moment(calendarNote.toDate).isAfter(moment(day).clone().startOf('day'))
+				moment.utc(calendarNote.toDate).isAfter(moment.utc(day).clone().startOf('day'))
 			);
 			
 		}, this);
@@ -83,8 +80,8 @@ export class Calendar {
 	
 	setSearchRange(date) {
 		this.searchDate = date;
-		this.searchStart = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth(), 1);
-		this.searchEnd = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth() + 1, 0);
+		this.searchStart = moment.utc(new Date(this.searchDate.getFullYear(), this.searchDate.getMonth(), 1)).toDate();
+		this.searchEnd = moment.utc(new Date(this.searchDate.getFullYear(), this.searchDate.getMonth() + 1, 0)).toDate();
 	}
 	
 	getDays(min, max) {
@@ -116,36 +113,33 @@ export class Calendar {
 			});
 	}
 	
+	addedCalendarNote(e) {
+		let calendarNote = e.detail.calendarNote;
+		
+		this.calendarNotes.push(calendarNote);
+		
+		//this.days = this.getDays(this.searchStart, this.searchEnd);
+	}
+	
+	hidCalendarNote(e) {
+		this.calendarNoteEditModel.calendarNote = null;
+		this.calendarNoteEditModel = null;
+	}
+	
 	addCalendarNote(fromDay) {
-		return this.editCalendarNote({ fromDate: fromDay, note: { createUser: this.user, updateUser: this.user } })
-			.then(data => {
-				if (!data.wasCancelled) {
-					this.calendarNotes.push(data.calendarNote);
-					
-					this.days = this.getDays(this.searchStart, this.searchEnd);
-				}
-			});
+		this.calendarNoteEditModel = {
+			'calendarNote': {
+				'fromDate': fromDay,
+				'note': {},
+				'isAdd': true
+			}
+		};
 	}
 	
 	editCalendarNote(calendarNote) {
-		var original = JSON.parse(JSON.stringify(calendarNote));
-		
-		return this.dialogService.open({viewModel: EditCalendarNote, model: calendarNote})
-			.then(result => {
-				var copyFrom = original;
-				
-				if (!result.wasCancelled) {
-					copyFrom = result.output;
-				}
-				
-				for (var prop in copyFrom) {
-					if (copyFrom.hasOwnProperty(prop)) {
-						calendarNote[prop] = copyFrom[prop];
-					}
-				}
-				
-				return { wasCancelled: result.wasCancelled, calendarNote: calendarNote };
-			});
+		this.calendarNoteEditModel = {
+			'calendarNote': calendarNote
+		};
 	}
 	
 	summaryModalToggleValue(appointment) {

@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Common.Utility;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,21 @@ namespace PsychologicalServices.Models.Claims
         private readonly IClaimValidator _claimValidator = null;
         private readonly IClaimantValidator _claimantValidator = null;
         private readonly IDate _date = null;
+        private readonly ILog _log = null;
 
         public ClaimService(
             IClaimRepository claimRepository,
             IClaimValidator claimValidator,
             IClaimantValidator claimantValidator,
-            IDate date
+            IDate date,
+            ILog log
         )
         {
             _claimRepository = claimRepository;
             _claimValidator = claimValidator;
             _claimantValidator = claimantValidator;
             _date = date;
+            _log = log;
         }
 
         public Claimant GetClaimant(int id)
@@ -47,9 +51,9 @@ namespace PsychologicalServices.Models.Claims
             return claims;
         }
 
-        public IEnumerable<Claimant> SearchClaimants(string lastName)
+        public IEnumerable<Claimant> SearchClaimants(string name)
         {
-            var claimants = _claimRepository.SearchClaimants(lastName);
+            var claimants = _claimRepository.SearchClaimants(name);
 
             foreach (var claimant in claimants)
             {
@@ -100,7 +104,7 @@ namespace PsychologicalServices.Models.Claims
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveClaim", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -130,7 +134,7 @@ namespace PsychologicalServices.Models.Claims
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveClaimant", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -151,27 +155,54 @@ namespace PsychologicalServices.Models.Claims
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveIssueInDispute", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
 
             return result;
         }
-
+        
         private void CalculateClaimantAge(Claimant claimant)
         {
             //recalculate age/date of birth
             if (claimant.DateOfBirth.HasValue)
             {
-                claimant.Age = _date.Today.YearsFrom(claimant.DateOfBirth.Value);
+                claimant.Age = GetAge(claimant.DateOfBirth.Value);
             }
             else if (claimant.Age.HasValue)
             {
-                //when calculating date of birth from age, always set claimant date of birth to 1/1/{birth year}
-                claimant.DateOfBirth = new DateTime(_date.Today.AddYears(-claimant.Age.Value).Year, 1, 1);
-
+                claimant.DateOfBirth = GetDateOfBirth(_date, claimant.Age.Value);
             }
+        }
+        
+        private int GetAge(DateTime date)
+        {
+            return _date.Today.YearsFrom(date);
+        }
+
+        private DateTime GetDateOfBirth(IDate date, int age)
+        {
+            //when calculating date of birth from age, always set date of birth to 1/1/{birth year}
+            return new DateTime(date.Today.AddYears(-Math.Abs(age)).Year, 1, 1);
+        }
+
+        public DeleteResult DeleteClaimant(int id)
+        {
+            var result = new DeleteResult();
+
+            try
+            {
+                result.IsDeleted = _claimRepository.DeleteClaimant(id);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("DeleteClaimant", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
         }
     }
 }

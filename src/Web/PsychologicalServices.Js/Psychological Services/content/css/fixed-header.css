@@ -3,7 +3,8 @@
   position:fixed;
   width:auto;
   display:none;
-  border:none;
+  /*border:none;*/
+  border: 1px solid #e5e5e5;
 }
 .fixed thead {
 	background-color: #fff;

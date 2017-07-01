@@ -22,12 +22,22 @@ namespace PsychologicalServices.Web.Controllers
             _claimService = claimService;
         }
 
-        [Route("search/{lastName}")]
+        [Route("{id}")]
+        [HttpGet]
+        [ResponseType(typeof(Claimant))]
+        public IHttpActionResult Get(int id)
+        {
+            var claimant = _claimService.GetClaimant(id);
+
+            return Ok(claimant);
+        }
+
+        [Route("search/{name}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Claimant>))]
-        public IHttpActionResult Get(string lastName)
+        public IHttpActionResult Get(string name)
         {
-            var claimants = _claimService.SearchClaimants(lastName);
+            var claimants = _claimService.SearchClaimants(name);
             
             return Ok(claimants);
         }
@@ -38,6 +48,16 @@ namespace PsychologicalServices.Web.Controllers
         public IHttpActionResult Save(Claimant claimant)
         {
             var result = _claimService.SaveClaimant(claimant);
+
+            return Ok(result);
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        [ResponseType(typeof(DeleteResult))]
+        public IHttpActionResult Delete([FromUri]int id)
+        {
+            var result = _claimService.DeleteClaimant(id);
 
             return Ok(result);
         }

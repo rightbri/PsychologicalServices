@@ -5,7 +5,8 @@ export class Config {
 		this.isoShortDateFormat = 'YYYY-MM-DD';
 		this.isoShortTimeFormat = 'HH:mm';
 		
-		this.shortDateFormat = 'MM-DD-YYYY';
+		this.shortDateFormat = 'DD/MM/YYYY';
+		
 		this.shortTimeFormat = 'h:mm A';
 		
 		this.longDateFormat = 'MMMM D, YYYY';
@@ -20,7 +21,7 @@ export class Config {
 		this.datepickerOptions = {
 			'autoclose': true,
 			'clearBtn': true,
-			'format': 'MM d yyyy',
+			'format': 'MM d, yyyy',
 			'showOnFocus': true,
 			'toggleActive': true
 		};
@@ -33,6 +34,14 @@ export class Config {
 			'minViewMode': 'months',
 			'showOnFocus': true,
 			'toggleActive': true
+		};
+		
+		this.datemaskOptions = {
+			'alias': 'dd/mm/yyyy'
+		};
+		
+		this.timemaskOptions = {
+			'alias': 'hh:mm t'
 		};
 		
 		this.referralSourceDefaults = {
@@ -49,7 +58,8 @@ export class Config {
 		
 		this.addressDefaults = {
 			'province': 'ON',
-			'country': 'Canada'
+			'country': 'Canada',
+			'userAddressTypeId': 4
 		};
 		
 		this.appointmentDefaults = {

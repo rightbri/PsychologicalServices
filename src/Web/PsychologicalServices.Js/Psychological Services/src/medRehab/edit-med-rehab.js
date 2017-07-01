@@ -26,11 +26,6 @@ export class EditMedRehab {
 	cancel(e) {
 		this.eventHelper.fireEvent(this.element, 'canceled', { 'medRehab': this.backup });
 	}
-	/*
-	medRehabDateChanged(e) {
-		this.medRehab.date = e.detail.event.date;
-	}
-	*/
 }
 
 function getBackup(obj) {

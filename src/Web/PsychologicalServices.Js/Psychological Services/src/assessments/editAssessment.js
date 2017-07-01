@@ -97,6 +97,7 @@ export class EditAssessment {
 			this.dataRepository.getReferralSources().then(data => this.referralSources = data),
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
 			this.dataRepository.getColors().then(data => this.colors = data),
+			this.dataRepository.getGenders().then(data => this.genders = data),
 			
 			this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId,
@@ -233,25 +234,46 @@ export class EditAssessment {
 	}
 	
 	removeMedRehab(medRehab) {
-		
 		this.assessment.medRehabs.splice(this.assessment.medRehabs.indexOf(medRehab), 1);
 	}
 	
 	claimantSelected(e) {
-		let result = e.detail;
+		let claimant = e.detail.claimant;
 		
-		this.claimant = result.claimant;
+		this.claimant = claimant;
 		
 		if (this.assessment.claims && this.assessment.claims.length > 0) {
 			for (var claim of this.assessment.claims) {
-				claim.claimant = result.claimant;
+				claim.claimant = claimant;
 			}
 		}
 		else {
 			this.assessment.claims = [
-				{ 'claimant': result.claimant }
+				{ 'claimant': claimant }
 			];
 		}
+		
+		this.claimantEditModel = null;
+	}
+	
+	newClaimant() {
+		let claimant = { isAdd: true, isActive: true };
+		this.editClaimant(claimant);
+	}
+	
+	editClaimant(claimant) {
+		let model = { 'genders': this.genders, 'claimant': claimant };
+		this.claimantEditModel = model;
+	}
+	
+	claimantCanceled(e) {
+		let claimant = e.detail.claimant;
+		
+		if (!claimant.isAdd) {
+			copyValues(claimant, this.claimantEditModel);
+		}
+		
+		this.claimantEditModel = null;
 	}
 	
 	newClaim() {
@@ -367,7 +389,7 @@ export class EditAssessment {
 	}
 	
 	newReport() {
-		let report = { isNew: true, issuesInDispute: [] };
+		let report = { isAdd: true, issuesInDispute: [] };
 		this.editReport(report);
 	}
 	

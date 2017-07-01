@@ -1,4 +1,5 @@
 ﻿using log4net;
+using PsychologicalServices.Models.Common.Configuration;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Users;
 using System;
@@ -12,18 +13,21 @@ namespace PsychologicalServices.Models.Schedule
         private readonly IUserRepository _userRepository = null;
         private readonly IScheduleHtmlGenerator _scheduleHtmlGenerator = null;
         private readonly IMailService _mailService = null;
+        private readonly IConfigurationService _configurationService = null;
         private readonly ILog _log = null;
 
         public ScheduleService(
             IUserRepository userRepository,
             IScheduleHtmlGenerator scheduleHtmlGenerator,
             IMailService mailService,
+            IConfigurationService configurationService,
             ILog log
         )
         {
             _userRepository = userRepository;
             _scheduleHtmlGenerator = scheduleHtmlGenerator;
             _mailService = mailService;
+            _configurationService = configurationService;
             _log = log;
         }
 
@@ -50,23 +54,33 @@ namespace PsychologicalServices.Models.Schedule
                 try
                 {
                     var subject = string.Format("Assessment schedule: {0:MMMM d, yyyy} - {1:MMMM d, yyyy}", criteria.StartDate, criteria.EndDate);
-                    
-                    var body = _scheduleHtmlGenerator.GeneratePsychometristScheduleHtml(user);
+
+                    var model = new ScheduleModel
+                    {
+                        User = user,
+                        DisplayTimezoneId = _configurationService.AppSettingValue("DisplayTimezoneId"),
+                    };
+
+                    var body = _scheduleHtmlGenerator.GeneratePsychometristScheduleHtml(model);
 
                     var message = new MailMessage(user.Company.Email, user.Email, subject, body)
                         {
                             IsBodyHtml = true,
                         };
 
-                    _mailService.Send(message);
-
-                    result.Success = true;
+                    var mailResult = _mailService.Send(message);
+                    
+                    result.Success = mailResult.MailSent;
+                    result.IsError = mailResult.IsError;
+                    result.ErrorDetails = mailResult.ErrorDetails;
                 }
                 catch (Exception ex)
                 {
                     _log.Error(
                         string.Format("An error occurred while attempting to send a psychometrist schedule with criteria: psychometristId = {0}, companyId = {1}, startDate = {2}, endDate = {3}", criteria.PsychometristId, criteria.CompanyId, criteria.StartDate, criteria.EndDate), 
                         ex);
+                    result.IsError = true;
+                    result.ErrorDetails = ex.Message;
                 }
                 finally
                 {

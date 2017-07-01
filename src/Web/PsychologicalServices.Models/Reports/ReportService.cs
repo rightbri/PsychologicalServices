@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +13,19 @@ namespace PsychologicalServices.Models.Reports
         private readonly IReportRepository _reportRepository = null;
         private readonly IReportStatusValidator _reportStatusValidator = null;
         private readonly IReportTypeValidator _reportTypeValidator = null;
+        private readonly ILog _log = null;
 
         public ReportService(
             IReportRepository reportRepository,
             IReportStatusValidator reportStatusValidator,
-            IReportTypeValidator reportTypeValidator
+            IReportTypeValidator reportTypeValidator,
+            ILog log
         )
         {
             _reportRepository = reportRepository;
             _reportStatusValidator = reportStatusValidator;
             _reportTypeValidator = reportTypeValidator;
+            _log = log;
         }
 
         public ReportStatus GetReportStatus(int id)
@@ -79,7 +83,7 @@ namespace PsychologicalServices.Models.Reports
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveReportStatus", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -107,7 +111,7 @@ namespace PsychologicalServices.Models.Reports
             }
             catch (Exception ex)
             {
-                //TODO: log error
+                _log.Error("SaveReportType", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
