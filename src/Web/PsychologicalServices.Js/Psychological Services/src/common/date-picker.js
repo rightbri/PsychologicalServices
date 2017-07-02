@@ -1,7 +1,7 @@
 import {bindable, bindingMode, inject} from 'aurelia-framework';
 import {EventHelper} from 'services/eventHelper'
 import {jquery} from 'jquery';
-import datepicker from 'bootstrap-datepicker';;
+import datepicker from 'bootstrap-datepicker';
 
 @inject(Element, EventHelper)
 export class DatePickerCustomAttribute {
@@ -40,9 +40,4 @@ export class DatePickerCustomAttribute {
 			.off('changeMonth')
 			.off('clearDate');
 	}
-	/*
-	datesChanged(newValue, oldValue) {
-		this.dates = newValue;
-	}
-	*/
 }

@@ -20,7 +20,7 @@
 				<div>
 					<label class="uk-form-label" for="time">Time</label>
 					<div class="uk-form-controls">
-						<input id="time" type="text" class="uk-input" date-mask.bind="config.timemaskOptions" value.bind="appointmentTime" />
+						<input id="time" type="text" class="uk-input" date-mask.bind="config.timemaskOptions" value.bind="appointmentTime | dateFormat:config.shortTimeFormat & updateTrigger:'blur'" />
 					</div>
 				</div>
 				

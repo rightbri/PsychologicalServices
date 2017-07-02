@@ -1,5 +1,4 @@
 import {bindable, inject} from 'aurelia-framework';
-//import {jquery} from 'jquery';
 
 @inject(Element)
 export class FixedHeaderCustomAttribute {
@@ -11,12 +10,10 @@ export class FixedHeaderCustomAttribute {
 
 	attached() {
 		create(this.element, this.offset);
-		//$(this.element).fixMe();
 	}
 
 	detached() {
 		destroy(this.element);
-		//$(this.element).fixMe('destroy');
 	}
 	
 	offsetChanged(newValue, oldValue) {
@@ -27,18 +24,16 @@ export class FixedHeaderCustomAttribute {
 
 function create(element, offset) {
 	let args = undefined;
+
+	let $offsetEl = $(offset);
 	
-	//if (offset) {
-		let $offsetEl = $(offset);
-		
-		let positionTop = $offsetEl.position().top;
-		let offsetTop = 0;//$offsetEl.offset().top;
-		let outerHeight = $offsetEl.outerHeight(true);
-		
-		let offsetPx = positionTop + offsetTop + outerHeight;
-		
-		args = { 'offset': offsetPx };
-	//}
+	let positionTop = $offsetEl.position().top;
+	let offsetTop = 0;//$offsetEl.offset().top;
+	let outerHeight = $offsetEl.outerHeight(true);
+	
+	let offsetPx = positionTop + offsetTop + outerHeight;
+	
+	args = { 'offset': offsetPx };
 	
 	$(element).fixMe(args);
 }

@@ -63,6 +63,7 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Scripts" />
     <Folder Include="dbo\Scripts\PostDeployment" />
+    <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Companies.sql" />
@@ -119,6 +120,7 @@
     <Build Include="dbo\Tables\InvoiceTypes.sql" />
     <Build Include="dbo\Tables\InvoiceStatusPaths.sql" />
     <Build Include="dbo\Tables\InvoiceAppointments.sql" />
+    <Build Include="dbo\Stored Procedures\DeleteAssessment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

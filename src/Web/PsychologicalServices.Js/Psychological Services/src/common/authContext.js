@@ -1,38 +1,39 @@
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {Notifier} from 'services/notifier';
 import {inject} from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {Config} from 'common/config';
+import {Notifier} from 'services/notifier';
 
-@inject(EventAggregator, Notifier)
+@inject(EventAggregator, Config, Notifier)
 export class AuthContext {
-	constructor(eventAggregator, notifier) {
+	constructor(eventAggregator, config, notifier) {
 		this.ea = eventAggregator;
+		this.config = config;
 		this.notifier = notifier;
-		this.authToken = window.localStorage.getItem('firebaseAuthToken');
+		this.authToken = window.localStorage.getItem(this.config.authTokenKey);
 		this.signinUser;
 		
 		// This mostly gets called on subsequent page loads to determine
         // what the current status of the user is with "user" being an object
         // return by Firebase with credentials and other info inside of it
         firebase.auth().onAuthStateChanged(user => {
-			if (user) {//this.authToken) {
+			if (user) {
 				this.setSigninUser(user);
 				this.ea.publish('authStateChanged', { 'user': user });
 			}
 			else {
-				//this.login();
 				this.logout();
 			}
         }, (code, message) => {
+			this.notifier.error('[AuthStateChanged]: ' + code + ': ' + message);
 			console.log(code + ' - ' + message);
-			this.notifier.error(code + ': ' + message);
-			
-		}
-		);
+		});
 	}
 	
 	clear() {
 		this.signinUser = null;
+		
 		this.authToken = null;
+		
 		window.localStorage.clear();
 	}
 	
@@ -42,45 +43,33 @@ export class AuthContext {
 	
 	setAuthToken(token) {
 		this.authToken = token;
-		window.localStorage.setItem('firebaseAuthToken', token);
+		
+		window.localStorage.setItem(this.config.authTokenKey, token);
 	}
 	
 	login() {
         let provider = new firebase.auth.GoogleAuthProvider();
 
         return firebase.auth().signInWithPopup(provider).then(result => {
-			this.setSigninUser(result.user);
-			this.setAuthToken(result.credential.idToken);
-			return result;
-        }).catch(err => {
-			console.log(err);
-			/*
-            //let email = err.email;
-            //let credential = err.credential;
 			
-			this.dialogService.open({
-				viewModel: MessageDialog,
-				model: {
-					heading: 'Sign In Error',
-					message: err.code + ': ' + err.message
-				}
-			});
-			*/
+			this.setSigninUser(result.user);
+			
+			this.setAuthToken(result.credential.idToken);
+			
+			return result;
+			
+        }).catch(err => {
+			this.notifier.error('[Login] ' + err.code + ': ' + err.message);
+			
+			console.log(err);
         });
     }
 	
 	logout() {
 		return firebase.auth().signOut().then(() => this.clear()).catch(err => {
+			this.notifier.error('[Logout] ' + err.code + ': ' + err.message);
+			
 			console.log(err);
-			/*
-            this.dialogService.open({
-				viewModel: MessageDialog,
-				model: {
-					heading: 'Sign Out Error',
-					message: err.code + ': ' + err.message
-				}
-			});
-			*/
         });
 	}
 }

@@ -1,7 +1,7 @@
+import {inject} from 'aurelia-framework';
 import {HttpClient as HttpFetch, json} from 'aurelia-fetch-client';
 import {AuthContext} from 'common/authContext';
 import {Notifier} from 'services/notifier';
-import {inject} from 'aurelia-framework';
 
 @inject(HttpFetch, AuthContext, Notifier, 'apiRoot')
 export class DataRepository {
@@ -31,6 +31,9 @@ export class DataRepository {
 				})
 				.withInterceptor({
 					request(request) {
+						
+						self.lastRequest = request.clone();
+						
 						if (!request.headers.has('Authorization')) {
 							if (self.authContext.authToken) {
 								request.headers.append('Authorization','Token ' + self.authContext.authToken);
@@ -41,17 +44,24 @@ export class DataRepository {
 					},
 					response(response) {
 						if (!response.ok) {
-							self.notifier.error('Error: ' + response.status + ' - ' + response.statusText);
-							/*
-							if (response.status === 401) {//403) {
-								self.authContext.logout().then(() => self.authContext.login());
+							self.notifier.error('[API]: ' + response.status + ' - ' + response.statusText);
+							
+							if (response.status === 401) {
+								return self.authContext.logout()
+									.then(() => self.authContext.login())
+									.then(() => self.retry(self.lastRequest));
 							}
-							*/
 						}
 						return response;
 					}
 				});
 		});
+	}
+	
+	retry(request) {
+		console.log('retrying request: ' + request.url);
+		var promise = new Promise((resolve, reject) => this.httpFetch.fetch(request));
+		return promise;
 	}
 
 	getInvoice(id) {

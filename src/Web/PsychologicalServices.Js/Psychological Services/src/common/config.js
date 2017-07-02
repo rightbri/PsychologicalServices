@@ -2,6 +2,8 @@
 export class Config {
 	constructor() {
 		
+		this.timezone = 'America/Toronto';	//moment-timezone
+		
 		this.isoShortDateFormat = 'YYYY-MM-DD';
 		this.isoShortTimeFormat = 'HH:mm';
 		
@@ -11,7 +13,7 @@ export class Config {
 		
 		this.longDateFormat = 'MMMM D, YYYY';
 		this.longDateTimeFormat = this.longDateFormat + ' ' + this.shortTimeFormat;
-				
+		
 		this.dateRangePickerOptions = {
 			'autoApply': true,
 			'showDropdowns': true,
@@ -85,5 +87,7 @@ export class Config {
 			'WriteDocList': 3,
 			'WriteNotes': 4
 		};
+		
+		this.authTokenKey = 'firebaseAuthToken';
 	}
 }

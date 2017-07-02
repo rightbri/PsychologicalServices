@@ -1,7 +1,7 @@
+import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {DataRepository} from 'services/dataRepository';
 import {AuthContext} from 'common/authContext';
-import {inject} from 'aurelia-framework';
 
 @inject(EventAggregator, DataRepository, AuthContext)
 export class Context {
@@ -25,11 +25,7 @@ export class Context {
 			});
         });
 	}
-/*
-    detached() {
-        this.subscriber.dispose();
-    }
-*/
+
 	clear() {
 		this.username = null;
 		this.user = null;

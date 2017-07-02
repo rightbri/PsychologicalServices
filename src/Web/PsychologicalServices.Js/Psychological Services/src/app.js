@@ -1,5 +1,5 @@
-import {Context} from 'common/context';
 import {inject} from 'aurelia-framework';
+import {Context} from 'common/context';
 import {UIkit} from 'uikit';
 
 @inject(Context)
