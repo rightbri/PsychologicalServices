@@ -43,14 +43,18 @@ export class Claimants {
 					this.notifier.error(data.errorDetails);
 				}
 				else {
+					this.removeClaimant(claimant);
 					this.claimantEditModel = null;
 					this.claimant = null;
-					this.claimants = null;
 					
 					this.notifier.info('Deleted');
 				}
 			});
 		}
+	}
+	
+	removeClaimant(claimant) {
+		this.claimants.splice(this.claimants.indexOf(claimant), 1);
 	}
 	
 	claimantEdited(e) {

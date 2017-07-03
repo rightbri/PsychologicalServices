@@ -41,6 +41,12 @@ export class Calendar {
 			});
 	}
 	
+	addMonths(numberOfMonths) {
+		let searchDate = moment.utc(this.searchDate).add(numberOfMonths || 0, 'months').toDate();
+		
+		this.refreshAppointments(searchDate)
+	}
+	
 	setView(viewType) {
 		this.currentView = viewType;
 	}

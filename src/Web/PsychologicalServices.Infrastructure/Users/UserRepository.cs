@@ -55,6 +55,7 @@ namespace PsychologicalServices.Infrastructure.Users
                                 )
                             )    
                         )
+                    .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
                     .Prefetch<CompanyEntity>(user => user.Company)
                 );
 

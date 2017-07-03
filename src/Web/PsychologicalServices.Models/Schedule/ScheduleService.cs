@@ -14,6 +14,7 @@ namespace PsychologicalServices.Models.Schedule
         private readonly IScheduleHtmlGenerator _scheduleHtmlGenerator = null;
         private readonly IMailService _mailService = null;
         private readonly IConfigurationService _configurationService = null;
+        private readonly ITimezoneService _timezoneService = null;
         private readonly ILog _log = null;
 
         public ScheduleService(
@@ -21,6 +22,7 @@ namespace PsychologicalServices.Models.Schedule
             IScheduleHtmlGenerator scheduleHtmlGenerator,
             IMailService mailService,
             IConfigurationService configurationService,
+            ITimezoneService timezoneService,
             ILog log
         )
         {
@@ -28,6 +30,7 @@ namespace PsychologicalServices.Models.Schedule
             _scheduleHtmlGenerator = scheduleHtmlGenerator;
             _mailService = mailService;
             _configurationService = configurationService;
+            _timezoneService = timezoneService;
             _log = log;
         }
 
@@ -59,6 +62,7 @@ namespace PsychologicalServices.Models.Schedule
                     {
                         User = user,
                         DisplayTimezoneId = _configurationService.AppSettingValue("DisplayTimezoneId"),
+                        TimezoneService = _timezoneService,
                     };
 
                     var body = _scheduleHtmlGenerator.GeneratePsychometristScheduleHtml(model);

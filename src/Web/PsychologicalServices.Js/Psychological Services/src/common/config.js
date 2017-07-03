@@ -9,7 +9,7 @@ export class Config {
 		
 		this.shortDateFormat = 'DD/MM/YYYY';
 		
-		this.shortTimeFormat = 'h:mm A';
+		this.shortTimeFormat = 'h:mm a';
 		
 		this.longDateFormat = 'MMMM D, YYYY';
 		this.longDateTimeFormat = this.longDateFormat + ' ' + this.shortTimeFormat;

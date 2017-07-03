@@ -37,12 +37,12 @@
 		</thead>
 		<tbody>
 	<# foreach (var appointment in Model.User.PsychometristAppointments) {
-		var timezone = TimeZoneInfo.FindSystemTimeZoneById(Model.DisplayTimezoneId);
-		var timezoneTime = TimeZoneInfo.ConvertTimeFromUtc(appointment.AppointmentTime, timezone);
+		var timezone = Model.TimezoneService.GetTimeZoneInfo(Model.DisplayTimezoneId);
+		var timeOffset = Model.TimezoneService.GetDateTimeOffset(appointment.AppointmentTime, timezone);
 	#>
 			<tr>
-				<td><#= string.Format("{0:MMMM d, yyyy}", timezoneTime) #></td>
-				<td><#= string.Format("{0:hh:mmtt}", timezoneTime) #></td>
+				<td><#= string.Format("{0:MMMM d, yyyy}", timeOffset.LocalDateTime) #></td>
+				<td><#= string.Format("{0:hh:mmtt}", timeOffset.LocalDateTime) #></td>
 				<td>
 					<ul class="list-unstyled">
 						<li title="Location Name" class="smaller-siblings">

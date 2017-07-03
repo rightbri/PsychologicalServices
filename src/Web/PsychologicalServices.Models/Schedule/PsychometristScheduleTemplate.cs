@@ -64,8 +64,8 @@ namespace PsychologicalServices.Models.Schedule
             
             #line 39 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  foreach (var appointment in Model.User.PsychometristAppointments) {
-		var timezone = TimeZoneInfo.FindSystemTimeZoneById(Model.DisplayTimezoneId);
-		var timezoneTime = TimeZoneInfo.ConvertTimeFromUtc(appointment.AppointmentTime, timezone);
+		var timezone = Model.TimezoneService.GetTimeZoneInfo(Model.DisplayTimezoneId);
+		var timeOffset = Model.TimezoneService.GetDateTimeOffset(appointment.AppointmentTime, timezone);
 	
             
             #line default
@@ -73,14 +73,14 @@ namespace PsychologicalServices.Models.Schedule
             this.Write("\t\t\t<tr>\r\n\t\t\t\t<td>");
             
             #line 44 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", timezoneTime)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", timeOffset.LocalDateTime)));
             
             #line default
             #line hidden
             this.Write("</td>\r\n\t\t\t\t<td>");
             
             #line 45 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:hh:mmtt}", timezoneTime)));
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:hh:mmtt}", timeOffset.LocalDateTime)));
             
             #line default
             #line hidden

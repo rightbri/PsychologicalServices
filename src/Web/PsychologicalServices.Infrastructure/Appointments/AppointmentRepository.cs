@@ -17,15 +17,18 @@ namespace PsychologicalServices.Infrastructure.Appointments
     {
         private readonly IDate _date = null;
         private readonly ICompanyRepository _companyRepository = null;
+        private readonly ITimezoneService _timezoneService = null;
 
         public AppointmentRepository(
             IDataAccessAdapterFactory adapterFactory,
             IDate date,
-            ICompanyRepository companyRepository
+            ICompanyRepository companyRepository,
+            ITimezoneService timezoneService
         ) : base(adapterFactory)
         {
             _date = date;
             _companyRepository = companyRepository;
+            _timezoneService = timezoneService;
         }
 
         #region Prefetch Paths
@@ -133,15 +136,17 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 throw new ArgumentOutOfRangeException("companyId");
             }
 
-            var appointmentTime = appointmentDate.Add(
-                company.NewAppointmentTime.HasValue
-                    ? company.NewAppointmentTime.Value
-                    : new TimeSpan(9, 0, 0)
-                ).ToUniversalTime();
+            var day = appointmentDate.Date;
+            var timezone = _timezoneService.GetTimeZoneInfo(company.Timezone);
+
+            var appointmentTime = new DateTime(day.Year, day.Month, day.Day, 0, 0, 0, DateTimeKind.Unspecified)
+                .Add(company.NewAppointmentTime);
+
+            var appointmentTimeOffset = _timezoneService.GetDateTimeOffset(appointmentTime, timezone);
 
             return new Appointment
             {
-                AppointmentTime = appointmentTime,
+                AppointmentTime = appointmentTimeOffset.UtcDateTime,
                 Location = company.NewAppointmentLocation,
                 AppointmentStatus = company.NewAppointmentStatus,
                 Psychologist = company.NewAppointmentPsychologist,

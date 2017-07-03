@@ -15,6 +15,8 @@ export class Schedule {
 		
 		this.users = null;
 		
+		this.searched = false;
+		
 		let now = new Date();
 		
 		this.searchStart = this.weekStart(now);
@@ -36,7 +38,10 @@ export class Schedule {
 			'startDate': this.searchStart,
 			'endDate': this.searchEnd,
 			'companyId': this.user.company.companyId
-		}).then(data => this.users = data);
+		}).then(data => {
+			this.users = data;
+			this.searched = true;
+		});
 	}
 	
 	sendSchedule(user) {

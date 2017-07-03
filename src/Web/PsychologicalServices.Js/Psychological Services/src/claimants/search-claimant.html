@@ -1,43 +1,46 @@
 <template>
 	<require from="resources/value-converters/gender"></require>
 	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/attributes/cancel-enter"></require>
 	
 <div class="uk-container">
 
 	<div class="uk-margin">
 		<form class="uk-search uk-search-default">
 			<span class="uk-search-icon-flip" uk-search-icon></span>
-			<input type="search" class="uk-search-input" placeholder="Claimant Name" value.bind="claimantSearch" input.delegate="search() & debounce:200"/>
+			<input type="search" class="uk-search-input" placeholder="Claimant Name" value.bind="claimantSearch" input.delegate="search() & debounce:200" cancel-enter/>
 		</form>
 	</div>
 
-	<table class="uk-table uk-table-divider" if.bind="showResults">
-		<thead>
-			<tr>
-				<th>First</th>
-				<th>Last</th>
-				<th>Date of Birth</th>
-				<th>Age</th>
-				<th>Gender</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr repeat.for="claimant of claimants">
-				<td>${claimant.firstName}</td>
-				<td>${claimant.lastName}</td>
-				<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>
-				<td>${claimant.age}</td>
-				<td>${claimant.gender | gender}</td>
-				<td>
-					<button type="button" class="uk-button uk-button-default" click.delegate="selectClaimant(claimant)">
-						Select
-					</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
+	<div class="uk-margin">
+		<table class="uk-table uk-table-divider" if.bind="showResults">
+			<thead>
+				<tr>
+					<th>First</th>
+					<th>Last</th>
+					<th>Date of Birth</th>
+					<th>Age</th>
+					<th>Gender</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr repeat.for="claimant of claimants">
+					<td>${claimant.firstName}</td>
+					<td>${claimant.lastName}</td>
+					<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>
+					<td>${claimant.age}</td>
+					<td>${claimant.gender | gender}</td>
+					<td>
+						<button type="button" class="uk-button uk-button-default" click.delegate="selectClaimant(claimant)">
+							Select
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
 </div>
 	
 </template>

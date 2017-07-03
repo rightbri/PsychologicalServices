@@ -757,6 +757,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAssessmentSummaryNoteText);}
 		}
+		/// <summary>Creates a new CompanyEntity.Timezone field instance</summary>
+		public static EntityField2 Timezone
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.Timezone);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CompanyAttributeEntity</summary>

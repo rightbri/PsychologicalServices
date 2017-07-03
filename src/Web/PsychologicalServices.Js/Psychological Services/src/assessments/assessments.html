@@ -1,5 +1,6 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="claimants/search-claimant"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
@@ -55,6 +56,7 @@
 				<th>Assessment Type</th>
 				<th>Referral Source</th>
 				<th>Claimant</th>
+				<th>Appointments</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -65,7 +67,7 @@
 					</a>
 				</td>
 				<td>
-					<button class="uk-button uk-button-danger" click.delegate="deleteAssessment(assessment)">
+					<button class="uk-button uk-button-default" click.delegate="deleteAssessment(assessment)">
 						Delete
 					</button>
 				</td>
@@ -75,6 +77,13 @@
 					<ul class="list-unstyled" repeat.for="claim of assessment.claims">
 						<li if.bind="claim.claimant" class="smaller-siblings">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
 						<li if.bind="claim.claimant">${claim.claimant.dateOfBirth | dateFormat:config.longDateFormat}</li>
+					</ul>
+				</td>
+				<td>
+					<ul class="list-unstyled">
+						<li repeat.for="appointment of assessment.appointments | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
+							${appointment.appointmentTime | dateFormat:config.longDateFormat}
+						</li>
 					</ul>
 				</td>
 			</tr>

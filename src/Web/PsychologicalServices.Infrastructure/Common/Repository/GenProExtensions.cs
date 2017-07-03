@@ -16,7 +16,6 @@ using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Roles;
 using PsychologicalServices.Models.Users;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace PsychologicalServices.Infrastructure.Common.Repository
@@ -658,7 +657,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Fax = company.Fax,
                     Email = company.Email,
                     TaxId = company.TaxId,
-                    NewAppointmentTime = company.NewAppointmentTime.HasValue ? TimeSpan.FromTicks(company.NewAppointmentTime.Value) : TimeSpan.Zero,
+                    Timezone = company.Timezone,
+                    NewAppointmentTime = TimeSpan.FromTicks(company.NewAppointmentTime),
                     NewAppointmentLocation = company.NewAppointmentLocation.ToAddress(),
                     NewAppointmentPsychologist = company.NewAppointmentPsychologist.ToUser(),
                     NewAppointmentPsychometrist = company.NewAppointmentPsychometrist.ToUser(),
@@ -746,7 +746,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Email = user.Email,
                     IsActive = user.IsActive,
                     Company = user.Company.ToCompany(),
-                    Roles = user.UserRoles.Select(userRole => userRole.Role.ToRole()).ToList(),   
+                    Roles = user.UserRoles.Select(userRole => userRole.Role.ToRole()).ToList(),
+                    Unavailability = user.UserUnavailabilities.Select(userUnavailability => userUnavailability.ToUnavailability()),
                 }
                 : null;
         }

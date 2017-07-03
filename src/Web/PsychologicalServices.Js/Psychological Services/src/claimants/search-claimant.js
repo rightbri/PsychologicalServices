@@ -8,7 +8,7 @@ import {EventHelper} from 'services/eventHelper';
 @inject(Element, DataRepository, Config, EventHelper)
 export class SearchClaimantCustomElement {
 	@bindable({ defaultBindingMode: bindingMode.twoWay }) claimant;
-	@bindable claimants;
+	@bindable({ defaultBindingMode: bindingMode.twoWay }) claimants;
 	
 	constructor(element, dataRepository, config, eventHelper) {
 		this.element = element;

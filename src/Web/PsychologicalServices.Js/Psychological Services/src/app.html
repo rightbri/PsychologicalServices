@@ -29,15 +29,17 @@
 
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 
-			<ul class="uk-nav" if.bind="context.loggedIn">
+			<ul class="uk-nav uk-nav-default" if.bind="context.loggedIn">
 				<li class="uk-parent">
-					<span class="uk-text-primary">${context.username}</span>
+					<span class="uk-text-large">${context.username}</span>
 					<ul class="uk-nav-sub uk-text-small">
 						<li>
 							<a href="#" click.delegate="context.logout()" uk-toggle="target: #offCanvasNav">Logout</a>
 						</li>
 					</ul>
 				</li>
+				
+				<li class="uk-nav-divider"></li>
 				
 				<li class="uk-parent">
 					<a href="/#/calendar" uk-toggle="target: #offCanvasNav">Assessments</a>

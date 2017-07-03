@@ -41,8 +41,8 @@ export class EditAssessment {
 				
 				if (id) {
 					return this.dataRepository.getAssessment(id)
-						.then(data => {
-							this.assessment = data;
+						.then(assessment => {
+							this.assessment = assessment;
 							
 							this.checkMedRehab();
 							
@@ -50,26 +50,7 @@ export class EditAssessment {
 								this.claimant = this.assessment.claims[0].claimant;
 							}
 							
-							var firstAppointmentDate = null;
-							
-							if (this.assessment.appointments && this.assessment.appointments.length > 0) {
-								this.assessment.appointments.sort((a, b) => {
-									if (a.appointmentTime < b.appointmentTime) {
-										return -1;
-									}
-									else if (a.appointmentTime > b.appointmentTime) {
-										return 1;
-									}
-									
-									return 0;
-								});
-								
-								let appointmentTime = new Date(this.assessment.appointments[0].appointmentTime);
-								firstAppointmentDate = new Date(appointmentTime.getFullYear(), appointmentTime.getMonth(), appointmentTime.getDate());
-							}
-							
-							return this.getData(firstAppointmentDate)
-								.then(() => this.scroller.scrollTo(0));
+							return this.getData().then(() => this.scroller.scrollTo(0));
 						});
 				}
 				else {
@@ -77,20 +58,17 @@ export class EditAssessment {
 						.then(assessment => {
 							this.assessment = assessment;
 							
-							return this.getData(this.assessment.appointments[0].appointmentTime)
-								.then(() => this.scroller.scrollTo(0));
+							return this.getData().then(() => this.scroller.scrollTo(0));
 						});
 				}
 			});
 	}
 	/*
 	canDeactivate() {
-		
 		return this.dirtyPrompter.confirm('Exit without saving?');
-		
 	}
 	*/
-	getData(firstAppointmentDate) {
+	getData() {
 		return Promise.all([
 			this.dataRepository.getAssessmentTypes().then(data => this.assessmentTypes = data),
 			this.dataRepository.getReferralTypes().then(data => this.referralTypes = data),
@@ -102,13 +80,11 @@ export class EditAssessment {
 			this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId,
 				rightId: this.config.rights.WriteDocList,
-				availableDate: firstAppointmentDate,
 			}).then(data => this.docListWriters = data),
 			
 			this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId,
 				rightId: this.config.rights.WriteNotes,
-				availableDate: firstAppointmentDate,
 			}).then(data => this.notesWriters = data),
 			
 			this.dataRepository.searchAttributes({
@@ -120,13 +96,11 @@ export class EditAssessment {
 			this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId,
 				rightId: this.config.rights.Psychometrist,
-				availableDate: firstAppointmentDate
 			}).then(data => this.psychometrists = data),
 			
 			this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId,
 				rightId: this.config.rights.Psychologist,
-				availableDate: firstAppointmentDate
 			}).then(data => this.psychologists = data),
 			
 			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
@@ -310,6 +284,19 @@ export class EditAssessment {
 		this.assessment.claims.splice(this.assessment.claims.indexOf(claim), 1);
 	}
 	
+	dateIsWithinUnavailability(date, unavailability) {
+		return unavailability.startDate <= date && unavailability.endDate >= date;
+	}
+	
+	userIsAvailable(user, date) {
+		return !user.unavailability ||
+			!user.unavailability.some(unavailability => this.dateIsWithinUnavailability(date, unavailability));
+	}
+	
+	availableUsers(users, date) {
+		return users.filter(psychometrist => this.userIsAvailable(psychometrist, date));	
+	}
+	
 	newAppointment() {
 		this.dataRepository.getNewAppointment(this.assessment.company.companyId)
 			.then(data => {
@@ -321,7 +308,7 @@ export class EditAssessment {
 	editAppointment(appointment) {
 		this.appointmentEditModel = {
 			'appointment': appointment,
-			'psychometrists': this.psychometrists,
+			'psychometrists': this.availableUsers(this.psychometrists, appointment.appointmentTime),
 			'psychologists': this.psychologists,
 			'appointmentStatuses': this.appointmentStatuses,
 			'addresses': this.appointmentAddresses,

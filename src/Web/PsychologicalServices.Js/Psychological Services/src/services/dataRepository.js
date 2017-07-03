@@ -12,12 +12,9 @@ export class DataRepository {
 		this.notifier = notifier;
 		this.cache = {};
 		
-		var self = this;
+		this.retryRequest = true;
 		
-		var defaultHeaders = {
-			'Accept': 'application/json',
-			'X-Requested-With': 'Fetch'
-		};
+		var self = this;
 		
 		this.httpFetch.configure(config => {
 			config
@@ -44,13 +41,16 @@ export class DataRepository {
 					},
 					response(response) {
 						if (!response.ok) {
-							self.notifier.error('[API]: ' + response.status + ' - ' + response.statusText);
+							self.notifier.error(response.status + ' - ' + response.statusText);
 							
-							if (response.status === 401) {
-								return self.authContext.logout()
-									.then(() => self.authContext.login())
-									.then(() => self.retry(self.lastRequest));
+							if (response.status === 401 && self.retryRequest) {
+								return self.authContext.refresh().then(() => self.retry(self.lastRequest));
+									
+								self.retryRequest = false;
 							}
+						}
+						else {
+							self.retryRequest = true;
 						}
 						return response;
 					}

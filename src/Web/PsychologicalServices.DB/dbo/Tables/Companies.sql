@@ -7,13 +7,14 @@
     [Fax]                           NVARCHAR (50)  NULL,
     [Email]                         NVARCHAR (100) NULL,
     [TaxId]                         NVARCHAR (50)  NULL,
-    [NewAppointmentTime]            BIGINT         NULL,
+    [NewAppointmentTime]            BIGINT         NOT NULL,
     [NewAppointmentLocationId]      INT            NULL,
     [NewAppointmentPsychologistId]  INT            NULL,
     [NewAppointmentPsychometristId] INT            NULL,
     [NewAppointmentStatusId]        INT            NULL,
     [NewAssessmentReportStatusId]   INT            NULL,
     [NewAssessmentSummaryNoteText]  NVARCHAR (MAX) NULL,
+    [Timezone]                      NVARCHAR (50)  NOT NULL,
     CONSTRAINT [PK_Companies] PRIMARY KEY CLUSTERED ([CompanyId] ASC),
     CONSTRAINT [FK_Companies_Addresses] FOREIGN KEY ([AddressId]) REFERENCES [dbo].[Addresses] ([AddressId]),
     CONSTRAINT [FK_Companies_Addresses1] FOREIGN KEY ([NewAppointmentLocationId]) REFERENCES [dbo].[Addresses] ([AddressId]),
@@ -22,6 +23,8 @@
     CONSTRAINT [FK_Companies_Users] FOREIGN KEY ([NewAppointmentPsychologistId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Companies_Users1] FOREIGN KEY ([NewAppointmentPsychometristId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

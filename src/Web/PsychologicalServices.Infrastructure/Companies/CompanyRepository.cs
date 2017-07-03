@@ -92,7 +92,8 @@ namespace PsychologicalServices.Infrastructure.Companies
                 entity.Fax = company.Fax;
                 entity.Email = company.Email;
                 entity.TaxId = company.TaxId;
-                entity.NewAppointmentTime = company.NewAppointmentTime.HasValue ? company.NewAppointmentTime.Value.Ticks : 0;
+                entity.Timezone = company.Timezone;
+                entity.NewAppointmentTime = company.NewAppointmentTime.Ticks;
                 entity.NewAppointmentLocationId = null != company.NewAppointmentLocation ? company.NewAppointmentLocation.AddressId : (int?)null;
                 entity.NewAppointmentPsychologistId = null != company.NewAppointmentPsychologist ? company.NewAppointmentPsychologist.UserId : (int?)null;
                 entity.NewAppointmentPsychometristId = null != company.NewAppointmentPsychometrist ? company.NewAppointmentPsychometrist.UserId : (int?)null;

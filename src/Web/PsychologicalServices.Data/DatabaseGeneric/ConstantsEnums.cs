@@ -497,6 +497,8 @@ namespace PsychologicalServices.Data
 		NewAssessmentReportStatusId,
 		///<summary>NewAssessmentSummaryNoteText. </summary>
 		NewAssessmentSummaryNoteText,
+		///<summary>Timezone. </summary>
+		Timezone,
 		/// <summary></summary>
 		AmountOfFields
 	}

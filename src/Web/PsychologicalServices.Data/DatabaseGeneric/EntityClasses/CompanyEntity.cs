@@ -983,6 +983,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("NewAssessmentSummaryNoteText", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Timezone", fieldHashtable);
 		}
 		#endregion
 
@@ -1451,10 +1454,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Companies"."NewAppointmentTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): BigInt, 19, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int64> NewAppointmentTime
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int64 NewAppointmentTime
 		{
-			get { return (Nullable<System.Int64>)GetValue((int)CompanyFieldIndex.NewAppointmentTime, false); }
+			get { return (System.Int64)GetValue((int)CompanyFieldIndex.NewAppointmentTime, true); }
 			set	{ SetValue((int)CompanyFieldIndex.NewAppointmentTime, value); }
 		}
 
@@ -1522,6 +1525,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.String)GetValue((int)CompanyFieldIndex.NewAssessmentSummaryNoteText, true); }
 			set	{ SetValue((int)CompanyFieldIndex.NewAssessmentSummaryNoteText, value); }
+		}
+
+		/// <summary> The Timezone property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."Timezone"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.String Timezone
+		{
+			get { return (System.String)GetValue((int)CompanyFieldIndex.Timezone, true); }
+			set	{ SetValue((int)CompanyFieldIndex.Timezone, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.

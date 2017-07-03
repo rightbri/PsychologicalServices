@@ -126,10 +126,12 @@
     <Compile Include="Common\Utility\IDate.cs" />
     <Compile Include="Common\Utility\IEmailAddressValidator.cs" />
     <Compile Include="Common\Utility\IMailService.cs" />
+    <Compile Include="Common\Utility\ITimezoneService.cs" />
     <Compile Include="Common\Utility\MailResult.cs" />
     <Compile Include="Common\Utility\MailService.cs" />
     <Compile Include="Common\Utility\ModelExtensions.cs" />
     <Compile Include="Common\Utility\Date.cs" />
+    <Compile Include="Common\Utility\TimezoneService.cs" />
     <Compile Include="Common\Validation\IValidationError.cs" />
     <Compile Include="Common\Validation\IValidationResult.cs" />
     <Compile Include="Common\Validation\IValidator.cs" />

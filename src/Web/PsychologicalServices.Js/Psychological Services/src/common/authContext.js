@@ -72,4 +72,8 @@ export class AuthContext {
 			console.log(err);
         });
 	}
+	
+	refresh() {
+		return this.logout().then(() => this.login());
+	}
 }

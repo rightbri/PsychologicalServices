@@ -339,7 +339,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits CompanyEntity's mappings</summary>
 		private void InitCompanyEntityMappings()
 		{
-			base.AddElementMapping( "CompanyEntity", "PsychologicalServices", @"dbo", "Companies", 15 );
+			base.AddElementMapping( "CompanyEntity", "PsychologicalServices", @"dbo", "Companies", 16 );
 			base.AddElementFieldMapping( "CompanyEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "CompanyEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "CompanyEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
@@ -348,13 +348,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "CompanyEntity", "Fax", "Fax", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 5 );
 			base.AddElementFieldMapping( "CompanyEntity", "Email", "Email", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 6 );
 			base.AddElementFieldMapping( "CompanyEntity", "TaxId", "TaxId", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 7 );
-			base.AddElementFieldMapping( "CompanyEntity", "NewAppointmentTime", "NewAppointmentTime", true, (int)SqlDbType.BigInt, 0, 0, 19, false, "", null, typeof(System.Int64), 8 );
+			base.AddElementFieldMapping( "CompanyEntity", "NewAppointmentTime", "NewAppointmentTime", false, (int)SqlDbType.BigInt, 0, 0, 19, false, "", null, typeof(System.Int64), 8 );
 			base.AddElementFieldMapping( "CompanyEntity", "NewAppointmentLocationId", "NewAppointmentLocationId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 9 );
 			base.AddElementFieldMapping( "CompanyEntity", "NewAppointmentPsychologistId", "NewAppointmentPsychologistId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 10 );
 			base.AddElementFieldMapping( "CompanyEntity", "NewAppointmentPsychometristId", "NewAppointmentPsychometristId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 11 );
 			base.AddElementFieldMapping( "CompanyEntity", "NewAppointmentStatusId", "NewAppointmentStatusId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 12 );
 			base.AddElementFieldMapping( "CompanyEntity", "NewAssessmentReportStatusId", "NewAssessmentReportStatusId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 13 );
 			base.AddElementFieldMapping( "CompanyEntity", "NewAssessmentSummaryNoteText", "NewAssessmentSummaryNoteText", true, (int)SqlDbType.NVarChar, 2147483647, 0, 0, false, "", null, typeof(System.String), 14 );
+			base.AddElementFieldMapping( "CompanyEntity", "Timezone", "Timezone", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 15 );
 		}
 		/// <summary>Inits CompanyAttributeEntity's mappings</summary>
 		private void InitCompanyAttributeEntityMappings()

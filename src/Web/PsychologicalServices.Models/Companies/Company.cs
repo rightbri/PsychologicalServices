@@ -25,7 +25,9 @@ namespace PsychologicalServices.Models.Companies
 
         public string TaxId { get; set; }
 
-        public TimeSpan? NewAppointmentTime { get; set; }
+        public string Timezone { get; set; }
+
+        public TimeSpan NewAppointmentTime { get; set; }
 
         public Address NewAppointmentLocation { get; set; }
 

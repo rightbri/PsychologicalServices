@@ -1,6 +1,7 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/attribute-types"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/date-mask"></require>
 	
 <div class="uk-container">
@@ -24,8 +25,8 @@
 				</div>
 			</div>
 			
-			<div class="uk-width-1-3@s">
-				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">Search</button>
+			<div class="uk-width-1-3@s uk-inline">
+				<button type="button" class="uk-button uk-button-primary uk-position-bottom uk-margin-left" click.delegate="search()">Search</button>
 			</div>
 		</form>
 		
@@ -33,8 +34,11 @@
 	
 </div>
 
-<div class="uk-overflow-auto" if.bind="users">
-	<table class="uk-table uk-table-divider" fixed-header>
+<div class="uk-overflow-auto">
+	<p if.bind="(!users || !users.length) && searched">
+		No schedules found in the selected date range
+	</p>
+	<table class="uk-table uk-table-divider" fixed-header if.bind="users && users.length">
 		<thead>
 			<tr>
 				<th>Psychometrist</th>
@@ -49,18 +53,18 @@
 		</thead>
 		<tbody>
 			<template repeat.for="user of users">
-				<tr class="info">
+				<tr class="uk-background-muted">
 					<td>
-						${user.firstName}
+						${user.firstName} ${user.lastName}
 					</td>
 					<td colspan="6">&nbsp;</td>
 					<td>
 						<button class="uk-button uk-button-default" click.delegate="sendSchedule(user)">
-							<i class="fa fa-envelope-o"></i>&nbsp;Send Schedule
+							Send
 						</button>
 					</td>
 				</tr>
-				<tr repeat.for="appointment of user.psychometristAppointments">
+				<tr repeat.for="appointment of user.psychometristAppointments | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
 					<td>&nbsp;</td>
 					<td>${appointment.appointmentTime | dateFormat:config.longDateFormat}</td>
 					<td>${appointment.appointmentTime | dateFormat:config.shortTimeFormat}</td>

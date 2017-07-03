@@ -10,16 +10,23 @@
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
 
-<form class="uk-padding-small">
-	<div class="uk-form-controls">
-		<input type="text" class="uk-input uk-form-width-medium" date-picker.bind="config.monthPickerOptions" monthchanged.delegate="monthChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
-		
-		<div class="uk-button-group">
+<div class="uk-child-width-1-2@s uk-padding-small" uk-grid>
+	<div>
+		<div class="uk-form-controls">
+			<a href="#" uk-slidenav-previous click.delegate="addMonths(-1)" title="Previous month" uk-tooltip="pos: top"></a>
+			
+			<input type="text" class="uk-input uk-form-width-medium" date-picker.bind="config.monthPickerOptions" monthchanged.delegate="monthChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
+			
+			<a href="#" uk-slidenav-next click.delegate="addMonths(1)" title="Next month" uk-tooltip="pos: top"></a>
+		</div>
+	</div>
+	<div>
+		<div class="uk-button-group uk-align-right">
 			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-primary' : 'uk-button-default'}" click.delegate="setView('schedule')">Schedule</button>
 			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-default' : 'uk-button-primary'}" click.delegate="setView('up to date')">Up to date</button>
 		</div>
 	</div>
-</form>
+</div>
 
 <div class="uk-overflow-auto">
 	<table class="uk-table uk-table-divider" if.bind="currentView === 'schedule'" fixed-header>
@@ -136,7 +143,9 @@
 	<table class="uk-table uk-table-divider" if.bind="currentView === 'up to date'" fixed-header>
 	<thead>
 		<tr>
-			<th></th>
+			<th>
+				<a href="#" uk-totop uk-scroll style="display: none;"></a>
+			</th>
 			<th>Location</th>
 			<th>Claimant</th>
 			<th>Source</th>
