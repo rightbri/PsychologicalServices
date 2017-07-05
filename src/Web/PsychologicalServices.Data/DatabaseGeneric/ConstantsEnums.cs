@@ -101,6 +101,22 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentSequence.
+	/// </summary>
+	public enum AppointmentSequenceFieldIndex:int
+	{
+		///<summary>AppointmentSequenceId. </summary>
+		AppointmentSequenceId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentStatus.
 	/// </summary>
 	public enum AppointmentStatusFieldIndex:int
@@ -751,6 +767,14 @@ namespace PsychologicalServices.Data
 		InvoiceTypeId,
 		///<summary>InvoiceRate. </summary>
 		InvoiceRate,
+		///<summary>AppointmentSequenceId. </summary>
+		AppointmentSequenceId,
+		///<summary>InvoiceFee. </summary>
+		InvoiceFee,
+		///<summary>ApplyTravelFee. </summary>
+		ApplyTravelFee,
+		///<summary>ApplyLargeFileFee. </summary>
+		ApplyLargeFileFee,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1002,6 +1026,8 @@ namespace PsychologicalServices.Data
 		AppointmentEntity,
 		///<summary>AppointmentAttribute</summary>
 		AppointmentAttributeEntity,
+		///<summary>AppointmentSequence</summary>
+		AppointmentSequenceEntity,
 		///<summary>AppointmentStatus</summary>
 		AppointmentStatusEntity,
 		///<summary>Assessment</summary>

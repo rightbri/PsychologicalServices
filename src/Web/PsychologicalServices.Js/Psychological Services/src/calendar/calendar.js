@@ -2,22 +2,20 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {Context} from 'common/context';
+import {UserSettings} from 'services/userSettings';
 import {Config} from 'common/config';
 import moment from 'moment';
 
-@inject(Router, DataRepository, Config, Context)
+@inject(Router, DataRepository, Config, Context, UserSettings)
 export class Calendar {
-	constructor(router, dataRepository, config, context) {
+	constructor(router, dataRepository, config, context, userSettings) {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.config = config;
 		this.context = context;
-		
-		this.searchDate = this.context.calendarMonth || new Date();
+		this.userSettings = userSettings;
 		
 		this.searchStatus = null;
-		this.searchStart = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth(), 1);
-		this.searchEnd = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth() + 1, 0);
 		this.searchPsychometrist = null;
 		this.searchPsychologist = null;
 		this.searchCompany = 0;
@@ -29,7 +27,13 @@ export class Calendar {
 		this.calendarNotes = null;
 		this.editCalendarNoteModel = null;
 		
-		this.days = this.getDays(this.searchStart, this.searchEnd);
+		this.userSettings.setting('selectedCalendarMonth')
+			.then(value => {
+				this.searchDate = value ? new Date(value) : new Date();
+				this.searchStart = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth(), 1);
+				this.searchEnd = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth() + 1, 0);
+				this.days = this.getDays(this.searchStart, this.searchEnd);
+			});
 	}
 	
 	activate(params) {
@@ -43,6 +47,8 @@ export class Calendar {
 	
 	addMonths(numberOfMonths) {
 		let searchDate = moment.utc(this.searchDate).add(numberOfMonths || 0, 'months').toDate();
+		
+		this.userSettings.setting('selectedCalendarMonth', searchDate);
 		
 		this.refreshAppointments(searchDate)
 	}
@@ -61,6 +67,12 @@ export class Calendar {
 				psychometristId: this.searchPsychometrist,
 				psychologistId: this.searchPsychologist,
 				companyId: this.searchCompany
+			}).then(appointments => {
+				appointments.forEach(appointment => {
+					appointment.summaryModalContainerId = this.getSummaryModalContainerId(appointment);
+					
+					appointment.summaryModalToggleValue = this.getSummaryModalToggleValue(appointment);
+				});
 			})
 		]);	
 	}
@@ -107,8 +119,9 @@ export class Calendar {
 	}
 	
 	monthChanged(e) {
-		this.context.calendarMonth = e.detail;
-		this.refreshAppointments(e.detail);
+		this.context.calendarMonth = e.detail.date;
+		this.refreshAppointments(e.detail.date);
+		this.userSettings.setting('selectedCalendarMonth', e.detail.date);
 	}
 	
 	refreshAppointments(searchDate) {
@@ -117,6 +130,14 @@ export class Calendar {
 			.then(data => {
 				this.days = this.getDays(this.searchStart, this.searchEnd);
 			});
+	}
+	
+	getSummaryModalToggleValue(appointment) {
+		return '#' + this.getSummaryModalContainerId(appointment);
+	}
+	
+	getSummaryModalContainerId(appointment) {
+		return `assessment-summary-${appointment.appointmentId}`;
 	}
 	
 	addedCalendarNote(e) {
@@ -146,13 +167,5 @@ export class Calendar {
 		this.calendarNoteEditModel = {
 			'calendarNote': calendarNote
 		};
-	}
-	
-	summaryModalToggleValue(appointment) {
-		return '#' + this.summaryModalContainerId(appointment);
-	}
-	
-	summaryModalContainerId(appointment) {
-		return `assessment-summary-${appointment.appointmentId}`;
 	}
 }

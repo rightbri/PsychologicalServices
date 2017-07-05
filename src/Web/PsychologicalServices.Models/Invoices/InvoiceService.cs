@@ -3,6 +3,7 @@ using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace PsychologicalServices.Models.Invoices
     public class InvoiceService : IInvoiceService
     {
         private readonly IAppointmentRepository _appointmentRepository = null;
+        private readonly ICompanyRepository _companyRepository = null;
         private readonly IUserService _userService = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IInvoiceValidator _invoiceValidator = null;
@@ -20,19 +22,23 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IMailService _mailService = null;
         private readonly IDate _date = null;
         private readonly ILog _log = null;
+        private readonly ITimezoneService _timezoneService = null;
 
         public InvoiceService(
             IAppointmentRepository appointmentRepository,
+            ICompanyRepository companyRepository,
             IUserService userService,
             IInvoiceRepository invoiceRepository,
             IInvoiceValidator invoiceValidator,
             IInvoiceGenerator invoiceGenerator,
             IMailService mailService,
             IDate date,
-            ILog log
+            ILog log,
+            ITimezoneService timezoneService
         )
         {
             _appointmentRepository = appointmentRepository;
+            _companyRepository = companyRepository;
             _userService = userService;
             _invoiceRepository = invoiceRepository;
             _invoiceValidator = invoiceValidator;
@@ -40,6 +46,7 @@ namespace PsychologicalServices.Models.Invoices
             _mailService = mailService;
             _date = date;
             _log = log;
+            _timezoneService = timezoneService;
         }
         
         public Invoice GetInvoice(int id)
@@ -101,8 +108,8 @@ namespace PsychologicalServices.Models.Invoices
         public IEnumerable<Invoice> CreatePsychometristInvoices(int companyId, DateTime invoiceMonth)
         {
             var users = _userService.GetPsychometrists(companyId);
-
-            var lastDayOfMonth = new DateTime(invoiceMonth.Year, invoiceMonth.Month, 1).AddMonths(1).AddDays(-1);
+            
+            var invoiceDate = GetInvoiceDate(companyId, invoiceMonth);
 
             var invoices = new List<Invoice>();
 
@@ -111,7 +118,7 @@ namespace PsychologicalServices.Models.Invoices
                 new InvoiceSearchCriteria
                 {
                     InvoiceTypeId = InvoiceType.Psychometrist,
-                    InvoiceDate = lastDayOfMonth,
+                    InvoiceDate = invoiceDate,
                     CompanyId = companyId,
                 })
             );
@@ -134,7 +141,7 @@ namespace PsychologicalServices.Models.Invoices
 
             foreach (var user in usersWithoutInvoices)
             {
-                var invoice = _invoiceGenerator.CreatePsychometristInvoice(user, lastDayOfMonth);
+                var invoice = _invoiceGenerator.CreatePsychometristInvoice(user, invoiceDate);
 
                 var invoiceId = _invoiceRepository.SaveInvoice(invoice);
 
@@ -176,5 +183,19 @@ namespace PsychologicalServices.Models.Invoices
             return result;
         }
 
+        private DateTime GetInvoiceDate(int companyId, DateTime invoiceMonth)
+        {
+            var company = _companyRepository.GetCompany(companyId);
+
+            var lastDayOfMonth = new DateTime(invoiceMonth.Year, invoiceMonth.Month, 1, 0, 0, 0, DateTimeKind.Unspecified)
+                .AddMonths(1)
+                .AddDays(-1);
+
+            var timezone = _timezoneService.GetTimeZoneInfo(company.Timezone);
+
+            var invoiceDate = _timezoneService.GetDateTimeOffset(lastDayOfMonth, timezone).UtcDateTime;
+
+            return invoiceDate;
+        }
     }
 }

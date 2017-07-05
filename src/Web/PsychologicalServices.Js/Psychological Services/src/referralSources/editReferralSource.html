@@ -1,7 +1,11 @@
 <template>
 	<require from="common/validation-summary.html"></require>
+	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/money"></require>
 	<require from="resources/value-converters/numeric"></require>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
 
 	<div class="uk-container">
 	
@@ -60,13 +64,6 @@
 				</div>
 				
 				<div class="uk-width-1-2@s">
-					<label class="uk-form-label" for="lateCancellationRate">Late Cancellation Rate</label>
-					<div class="uk-form-controls">
-						<input id="lateCancellationRate" type="number" pattern="\d+([.]\d{1,4})" class="uk-input" value.bind="referralSource.lateCancellationRate | numeric:'0.00' & updateTrigger:'blur'" />
-					</div>
-				</div>
-				
-				<div class="uk-width-1-2@s">
 					<label class="uk-form-label">Status</label>
 					<div class="uk-form-controls">
 						<label class="uk-form-label">
@@ -78,7 +75,7 @@
 				<div class="uk-width-1-1">
 					<label class="uk-form-label">Invoice Amounts</label>
 					<div class="uk-form-controls">
-						<table class="uk-table uk-table-divider">
+						<table class="uk-table uk-table-divider" fixed-header>
 							<thead>
 								<tr>
 									<th>Report Type</th>
@@ -86,17 +83,43 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr repeat.for="invoiceAmount of referralSource.reportTypeInvoiceAmounts">
+								<tr repeat.for="invoiceAmount of referralSource.reportTypeInvoiceAmounts | sortArray:{ property: 'reportType.name', direction: 'asc' }">
 									<td>${invoiceAmount.reportType.name}</td>
 									<td>
-										<input type="text" class="uk-input" value.bind="invoiceAmount.invoiceAmount | money:'0'" />
+										<input type="number" class="uk-input" min="0.00" step="0.01" value.bind="invoiceAmount.invoiceAmount | money:'0.00' & updateTrigger:'blur'" />
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
-				
+				<!--
+				<div class="uk-width-1-1">
+					<label class="uk-form-label">Appointment Status Invoice Rates</label>
+					<div class="uk-form-controls">
+						<table class="uk-table uk-table-divider" fixed-header>
+							<thead>
+								<tr>
+									<th>Appointment Status</th>
+									<th>Can Invoice?</th>
+									<th>Invoice Type</th>
+									<th>Invoice Rate</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr repeat.for="appointmentStatusSetting of referralSource.appointmentStatusSettings | sortArray: [{property: 'invoiceType.name', direction: 'desc'},{property: 'appointmentStatus.sort', direction: 'asc'}]">
+									<td>${appointmentStatusSetting.appointmentStatus.name}</td>
+									<td>${appointmentStatusSetting.appointmentStatus.canInvoice | boolean}</td>
+									<td>${appointmentStatusSetting.invoiceType.name}</td>
+									<td>
+										<input type="number" class="uk-input" min="0.00" step="0.01" value.bind="appointmentStatusSetting.invoiceRate | numeric:'0.00' & updateTrigger:'blur'" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				-->
 				<div class="uk-width-1-1">
 					<button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
 						<i class="fa fa-arrow-left"></i>&nbsp;Back

@@ -26,7 +26,7 @@ export class DatePickerCustomAttribute {
 				this.eventHelper.fireEvent(e.target, 'datechanged', e);
 			})
 			.on('changeMonth', e => {
-				this.eventHelper.fireEvent(e.target, 'monthchanged', e.date);
+				this.eventHelper.fireEvent(e.target, 'monthchanged', e);
 			})
 			.on('clearDate', e => {
 				this.eventHelper.fireEvent(e.target, 'datecleared', e);

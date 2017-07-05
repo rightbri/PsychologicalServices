@@ -68,7 +68,7 @@
 						</a>
 					</li>
 					<li if.bind="appointment.assessment.summary">
-						<a href.one-time="summaryModalToggleValue(appointment)" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
+						<a href.bind="appointment.summaryModalToggleValue" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
 							<i class="fa fa-info"></i>
 						</a>
 					</li>
@@ -83,6 +83,7 @@
 			<td>
 				<ul class="uk-list">
 					<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
+					<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
 					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6]">
 						${attribute.name}
 					</li>
@@ -147,6 +148,7 @@
 				<a href="#" uk-totop uk-scroll style="display: none;"></a>
 			</th>
 			<th>Location</th>
+			<th>Type</th>
 			<th>Claimant</th>
 			<th>Source</th>
 			<th>Psychiatrist</th>
@@ -167,7 +169,7 @@
 					${day | dateFormat:'ddd MMM D'}
 				</a>
 			</td>
-			<td colspan="11"></td>
+			<td colspan="12"></td>
 		</tr>
 		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
 			<td class="uk-table-shrink">
@@ -178,13 +180,19 @@
 						</a>
 					</li>
 					<li if.bind="appointment.assessment.summary">
-						<a href.one-time="summaryModalToggleValue(appointment)" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
+						<a href.bind="appointment.summaryModalToggleValue" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
 							<i class="fa fa-info"></i>
 						</a>
 					</li>
 				</ul>
 			</td>
 			<td>${appointment.location.name}</td>
+			<td>
+				<ul class="uk-list">
+					<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
+					<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
+				</ul>
+			</td>
 			<td>
 				<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
 					<li if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
@@ -227,6 +235,6 @@
 	</tbody>
 </table>
 </div>
-<view-assessment-summary model.bind="appointment" container-id.bind="summaryModalContainerId(appointment)" repeat.for="appointment of appointments"></view-assessment-summary>
+<view-assessment-summary model.bind="appointment" container-id.bind="appointment.summaryModalContainerId" repeat.for="appointment of appointments"></view-assessment-summary>
 <edit-calendar-note model.bind="calendarNoteEditModel" addedCalendarNote.delegate="addedCalendarNote($event)" hide.delegate="hidCalendarNote($event)" if.bind="calendarNoteEditModel"></edit-calendar-note>
 </template>

@@ -5,9 +5,8 @@
 	<require from="resources/value-converters/time-ago"></require>
 	<require from="resources/value-converters/gender"></require>
 	<require from="resources/value-converters/attribute-types"></require>
-	<require from="resources/value-converters/note-for-user"></require>
-	<require from="resources/value-converters/filter"></require>
 	<require from="resources/value-converters/sort-array"></require>
+	<require from="resources/value-converters/note-for-user"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-mask"></require>
 	<require from="appointments/edit-appointment"></require>
@@ -53,7 +52,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="appointment of assessment.appointments | sortArray:{ property: 'appointmentTime', direction: 'desc' }">
+							<tr repeat.for="appointment of assessment.appointments | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
 								<td>
 									<button type="button" class="uk-button uk-button-default" click.delegate="editAppointment(appointment)">
 										Edit

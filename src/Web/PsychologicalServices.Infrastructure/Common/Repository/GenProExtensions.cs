@@ -16,6 +16,7 @@ using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Roles;
 using PsychologicalServices.Models.Users;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PsychologicalServices.Infrastructure.Common.Repository
@@ -39,9 +40,25 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
             return null != referralSourceAppointmentStatusSetting
                 ? new AppointmentStatusSetting
                 {
-                    ReferralSource = referralSourceAppointmentStatusSetting.ReferralSource.ToReferralSource(),
+                    AppointmentStatus = referralSourceAppointmentStatusSetting.AppointmentStatus.ToAppointmentStatus(),
+                    AppointmentSequence = referralSourceAppointmentStatusSetting.AppointmentSequence.ToAppointmentSequence(),
                     InvoiceType = referralSourceAppointmentStatusSetting.InvoiceType.ToInvoiceType(),
                     InvoiceRate = referralSourceAppointmentStatusSetting.InvoiceRate,
+                    InvoiceFee = referralSourceAppointmentStatusSetting.InvoiceFee,
+                    ApplyLargeFileFee = referralSourceAppointmentStatusSetting.ApplyLargeFileFee,
+                    ApplyTravelFee = referralSourceAppointmentStatusSetting.ApplyTravelFee,
+                }
+                : null;
+        }
+
+        public static AppointmentSequence ToAppointmentSequence(this AppointmentSequenceEntity appointmentSequence)
+        {
+            return null != appointmentSequence
+                ? new AppointmentSequence
+                {
+                    AppointmentSequenceId = appointmentSequence.AppointmentSequenceId,
+                    Name = appointmentSequence.Name,
+                    IsActive = appointmentSequence.IsActive,
                 }
                 : null;
         }
@@ -454,6 +471,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
                     Address = referralSource.Address.ToAddress(),
                     ReportTypeInvoiceAmounts = referralSource.ReportTypeInvoiceAmounts.Select(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ToReportTypeInvoiceAmount()),
+                    AppointmentStatusSettings = referralSource.ReferralSourceAppointmentStatusSettings.Select(appointmentStatusSetting => appointmentStatusSetting.ToAppointmentStatusSetting()),
                 }
                 : null;
         }
@@ -589,7 +607,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NotifyReferralSource = appointmentStatus.NotifyReferralSource,
                     CanInvoice = appointmentStatus.CanInvoice,
                     IsActive = appointmentStatus.IsActive,
-                    AppointmentStatusSettings = appointmentStatus.ReferralSourceAppointmentStatusSettings.Select(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ToAppointmentStatusSetting()),
+                    Sort = appointmentStatus.Sort,
                 }
                 : null;
         }
@@ -611,10 +629,32 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CreateUser = appointment.CreateUser.ToUser(),
                     UpdateDate = appointment.UpdateDate,
                     UpdateUser = appointment.UpdateUser.ToUser(),
+                    IsCompletion = appointment.IsCompletion(),
                 }
                 : null;
         }
-
+        
+        public static bool IsCompletion(this AppointmentEntity appointment)
+        {
+            return
+                null != appointment &&
+                null != appointment.Assessment &&
+                null != appointment.Assessment.Appointments &&
+                appointment.IsCompletion(appointment.Assessment.Appointments);
+        }
+        
+        public static bool IsCompletion(this AppointmentEntity appointment, IEnumerable<AppointmentEntity> appointments)
+        {
+            return
+                null != appointment &&
+                null != appointments &&
+                appointments.Any(appt =>
+                    appt.AssessmentId == appointment.AssessmentId &&
+                    appt.AppointmentStatusId == AppointmentStatus.Incomplete &&
+                    appt.AppointmentTime < appointment.AppointmentTime
+                );
+        }
+        
         public static AddressType ToAddressType(this AddressTypeEntity addressType)
         {
             return null != addressType

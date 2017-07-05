@@ -47,6 +47,11 @@ namespace PsychologicalServices.Models.Invoices
                 throw new InvalidOperationException("An invoice already exists for this appointment.");
             }
 
+            var invoiceType = new InvoiceType
+            {
+                InvoiceTypeId = InvoiceType.Psychologist,
+            };
+
             var invoice = new Invoice
             {
                 Identifier = string.Format("{0:yy-MM-}{1:00#}",
@@ -55,10 +60,7 @@ namespace PsychologicalServices.Models.Invoices
                 ),
                 InvoiceDate = appointment.AppointmentTime.Date,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
-                InvoiceType = new InvoiceType
-                {
-                    InvoiceTypeId = InvoiceType.Psychologist,
-                },
+                InvoiceType = invoiceType,
                 PayableTo = appointment.Psychologist,
                 Appointments = new List<InvoiceAppointment>(new[]
                     {
@@ -66,7 +68,11 @@ namespace PsychologicalServices.Models.Invoices
                         {
                             Appointment = appointment,
                             Lines = GetPsychologistInvoiceLines(appointment),
-                            InvoiceRate = GetAppointmentStatusInvoiceRate(appointment),
+                            InvoiceRate = GetAppointmentStatusInvoiceRate(
+                                appointment,
+                                invoiceType,
+                                appointment.AppointmentSequence(appointment.Assessment.Appointments)
+                            ),
                         }
                     }),
                 TaxRate = _invoiceRepository.GetTaxRate(),
@@ -98,13 +104,32 @@ namespace PsychologicalServices.Models.Invoices
                 AppointmentTimeEnd = invoiceDate.EndOfMonth(),
             };
 
+            var invoiceType = new InvoiceType
+            {
+                InvoiceTypeId = InvoiceType.Psychometrist,
+            };
+            
             var appointments = _appointmentRepository.GetAppointments(criteria)
                 .Where(appointment => appointment.AppointmentStatus.CanInvoice)
-                .Select(appointment => new InvoiceAppointment
+                .Select(appointment =>
                 {
-                    Appointment = appointment,
-                    Lines = GetPsychometristInvoiceLines(appointment),
-                    InvoiceRate = GetAppointmentStatusInvoiceRate(appointment),
+                    var invoiceRate =
+                        GetAppointmentStatusInvoiceRate(
+                            appointment,
+                            invoiceType,
+                            appointment.AppointmentSequence(appointment.Assessment.Appointments)
+                        );
+
+                    return new InvoiceAppointment
+                    {
+                        Appointment = appointment,
+                        Lines = GetPsychometristInvoiceLines(
+                            appointment,
+                            invoiceRate,
+                            appointment.IsCompletion(appointment.Assessment.Appointments)
+                        ),
+                        InvoiceRate = invoiceRate,
+                    };
                 });
 
             var invoice = new Invoice
@@ -112,10 +137,7 @@ namespace PsychologicalServices.Models.Invoices
                 Identifier = string.Format("{0}-{1:00#}", psychometrist.UserId, _invoiceRepository.GetInvoiceCount(psychometrist.UserId) + 1),
                 InvoiceDate = invoiceDate,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
-                InvoiceType = new InvoiceType
-                {
-                    InvoiceTypeId = InvoiceType.Psychometrist,
-                },
+                InvoiceType = invoiceType,
                 PayableTo = psychometrist,
                 Appointments = appointments,
                 TaxRate = _invoiceRepository.GetTaxRate(),
@@ -130,10 +152,16 @@ namespace PsychologicalServices.Models.Invoices
         public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
         {
             var invoiceAppointments = new List<InvoiceAppointment>();
-            var incompleteStatusId = 6;
             
             foreach (var invoiceAppointment in invoice.Appointments)
             {
+                var invoiceRate =
+                    GetAppointmentStatusInvoiceRate(
+                        invoiceAppointment.Appointment,
+                        invoice.InvoiceType,
+                        invoiceAppointment.Appointment.AppointmentSequence(invoice.Appointments.Select(ia => ia.Appointment))
+                    );
+                
                 switch (invoice.InvoiceType.InvoiceTypeId)
                 {
                     case InvoiceType.Psychologist:
@@ -144,7 +172,7 @@ namespace PsychologicalServices.Models.Invoices
                                 Appointment = invoiceAppointment.Appointment,
                                 Lines = GetPsychologistInvoiceLines(invoiceAppointment.Appointment)
                                     .Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
-                                InvoiceRate = GetAppointmentStatusInvoiceRate(invoiceAppointment.Appointment),
+                                InvoiceRate = invoiceRate,
                             });
                         break;
                     case InvoiceType.Psychometrist:
@@ -153,15 +181,12 @@ namespace PsychologicalServices.Models.Invoices
                             {
                                 InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
                                 Appointment = invoiceAppointment.Appointment,
-                                Lines = GetPsychometristInvoiceLines(invoiceAppointment.Appointment,
-                                    //is completion?
-                                    invoice.Appointments.Any(ia =>
-                                        ia.Appointment.Assessment.AssessmentId == invoiceAppointment.Appointment.Assessment.AssessmentId &&
-                                        ia.Appointment.AppointmentTime < invoiceAppointment.Appointment.AppointmentTime &&
-                                        ia.Appointment.AppointmentStatus.AppointmentStatusId == incompleteStatusId
-                                    )
+                                Lines = GetPsychometristInvoiceLines(
+                                    invoiceAppointment.Appointment,
+                                    invoiceRate,
+                                    invoiceAppointment.Appointment.IsCompletion(invoice.Appointments.Select(ia => ia.Appointment))
                                 ).Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
-                                InvoiceRate = GetAppointmentStatusInvoiceRate(invoiceAppointment.Appointment),
+                                InvoiceRate = invoiceRate,
                             }
                         );
                         break;
@@ -173,15 +198,14 @@ namespace PsychologicalServices.Models.Invoices
             return invoiceAppointments;
         }
 
-        private List<InvoiceLine> GetPsychometristInvoiceLines(Appointment appointment, bool isCompletion = false)
+        private List<InvoiceLine> GetPsychometristInvoiceLines(Appointment appointment, decimal invoiceRate, bool isCompletion)
         {
-            var normalRate = 1.0m;
-            var completionRate = 0.5m;
+            var normalRate = 100;
+            var completionRate = 50;
             var lines = new List<InvoiceLine>();
 
             var description = appointment.Assessment.AssessmentType.Description;
-            decimal amount = appointment.Assessment.AssessmentType.InvoiceAmount;
-            decimal invoiceRate = GetAppointmentStatusInvoiceRate(appointment);
+            var amount = appointment.Assessment.AssessmentType.InvoiceAmount;
             
             if (isCompletion)
             {
@@ -190,7 +214,7 @@ namespace PsychologicalServices.Models.Invoices
 
             if (invoiceRate != normalRate)
             {
-                amount = amount * invoiceRate;
+                amount = amount * Convert.ToInt16(invoiceRate * 100);
 
                 description = description + " - " + appointment.AppointmentStatus.Name;
             }
@@ -212,22 +236,8 @@ namespace PsychologicalServices.Models.Invoices
             return lines;
         }
 
-        private List<InvoiceLine> GetPsychologistInvoiceLines(Appointment appointment, bool isCompletion = false)
+        private List<InvoiceLine> GetPsychologistInvoiceLines(Appointment appointment)
         {
-            /*
-             *  Appointment
-             *      Psychologist
-             *          TravelFees
-             *              City
-             *      Location
-             *          City
-             *      Assessment
-             *          ReferralSource
-             *          Reports
-             *              ReportType
-             *              IssuesInDispute
-             *      
-             */
             var lines = new List<InvoiceLine>();
 
             var psychologist = _userRepository.GetUserById(appointment.Psychologist.UserId);
@@ -239,10 +249,9 @@ namespace PsychologicalServices.Models.Invoices
                 var reportAmount = referralSource.ReportTypeInvoiceAmounts.SingleOrDefault(invoiceAmount => invoiceAmount.ReportType.ReportTypeId == report.ReportType.ReportTypeId);
 
                 var description =
-                    string.Format("{0}{1} Assessment Report Addressing {2}",
+                    string.Format("{0}{1} Assessment Report",
                         report.IsAdditional ? "Additional " : "",
-                        report.ReportType.Name,
-                        string.Join(", ", report.IssuesInDispute.Select(issueInDispute => issueInDispute.Name))
+                        report.ReportType.Name
                     );
 
                 var amount = report.IsAdditional
@@ -296,7 +305,7 @@ namespace PsychologicalServices.Models.Invoices
             return lines;
         }
 
-        public decimal GetInvoiceTotal(Invoice invoice)
+        public int GetInvoiceTotal(Invoice invoice)
         {
             var total = 0.0m;
 
@@ -304,15 +313,17 @@ namespace PsychologicalServices.Models.Invoices
 
             foreach (var invoiceAppointment in invoice.Appointments)
             {
-                var appointmentTotal = invoiceAppointment.Lines.Select(line => line.Amount).Sum();
+                decimal appointmentTotal = invoiceAppointment.Lines.Select(line => line.Amount).Sum();
                 
                 var appointment = invoiceAppointment.Appointment;
 
+                //TODO: fix this .. it is wrong
                 var appointmentStatusSetting =
                         appointment.AppointmentStatus.AppointmentStatusSettings
                             .SingleOrDefault(setting =>
                                 setting.InvoiceType.InvoiceTypeId == invoice.InvoiceType.InvoiceTypeId &&
-                                setting.ReferralSource.ReferralSourceId == appointment.Assessment.ReferralSource.ReferralSourceId);
+                                setting.ReferralSource.ReferralSourceId == appointment.Assessment.ReferralSource.ReferralSourceId
+                            );
 
                 if (null != appointmentStatusSetting)
                 {
@@ -322,21 +333,29 @@ namespace PsychologicalServices.Models.Invoices
                 subtotal += appointmentTotal;
             }
 
-            total = subtotal * (1 + invoice.TaxRate);
+            var taxRate = Convert.ToInt32(invoice.TaxRate * 100);
 
-            return total;
+            total = subtotal * (100 + invoice.TaxRate);
+
+            return Convert.ToInt32(total / 100);
         }
 
-        private decimal GetAppointmentStatusInvoiceRate(Appointment appointment)
+        private decimal GetAppointmentStatusInvoiceRate(Appointment appointment, InvoiceType invoiceType, AppointmentSequence appointmentSequence)
         {
-            var rate = 1.0m;
+            var rate = 100;
 
-            var statusSetting = appointment.AppointmentStatus.AppointmentStatusSettings
-                .SingleOrDefault(appointmentStatusSetting => appointmentStatusSetting.ReferralSource.ReferralSourceId == appointment.Assessment.ReferralSource.ReferralSourceId);
+            var referralSource = _referralRepository.GetReferralSource(appointment.Assessment.ReferralSource.ReferralSourceId);
 
+            var statusSetting = referralSource.AppointmentStatusSettings
+                .Where(appointmentStatusSetting =>
+                    appointmentStatusSetting.AppointmentSequence.AppointmentSequenceId == appointmentSequence.AppointmentSequenceId &&
+                    appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == appointment.AppointmentStatus.AppointmentStatusId &&
+                    appointmentStatusSetting.InvoiceType.InvoiceTypeId == invoiceType.InvoiceTypeId
+                ).SingleOrDefault();
+            
             if (null != statusSetting)
             {
-                rate = statusSetting.InvoiceRate;
+                rate = Convert.ToInt32(statusSetting.InvoiceRate * 100);
             }
 
             return rate;

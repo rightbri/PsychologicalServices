@@ -10,7 +10,7 @@ namespace PsychologicalServices.Models.Claims
 
         public bool IsActive { get; set; }
 
-        public decimal AdditionalFee { get; set; }
+        public int AdditionalFee { get; set; }
 
         public bool IsNew()
         {

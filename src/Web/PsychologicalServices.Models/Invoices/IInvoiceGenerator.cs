@@ -13,6 +13,6 @@ namespace PsychologicalServices.Models.Invoices
 
         IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
 
-        decimal GetInvoiceTotal(Invoice invoice);
+        int GetInvoiceTotal(Invoice invoice);
     }
 }

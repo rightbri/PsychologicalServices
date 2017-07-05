@@ -32,6 +32,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public User UpdateUser { get; set; }
 
+        public bool IsCompletion { get; set; }
+
         public bool IsNew()
         {
             return AppointmentId == 0;

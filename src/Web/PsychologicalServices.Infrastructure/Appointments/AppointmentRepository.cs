@@ -60,6 +60,10 @@ namespace PsychologicalServices.Infrastructure.Appointments
                         )
                     .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
                         .SubPath(assessmentPath => assessmentPath
+                            .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
+                                .SubPath(assessmentAppointmentPath => assessmentAppointmentPath
+                                    .Prefetch<AppointmentStatusEntity>(assessmentAppointment => assessmentAppointment.AppointmentStatus)
+                                )
                             .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
                                 .SubPath(assessmentTypePath => assessmentTypePath
                                     .Prefetch<AssessmentTypeReportTypeEntity>(assessmentType => assessmentType.AssessmentTypeReportTypes)
@@ -333,6 +337,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentStatusEntity.Description = appointmentStatus.Description;
                 appointmentStatusEntity.NotifyReferralSource = appointmentStatus.NotifyReferralSource;
                 appointmentStatusEntity.CanInvoice = appointmentStatus.CanInvoice;
+                appointmentStatusEntity.Sort = appointmentStatus.Sort;
                 appointmentStatusEntity.IsActive = appointmentStatus.IsActive;
                 
                 adapter.SaveEntity(appointmentStatusEntity, false);

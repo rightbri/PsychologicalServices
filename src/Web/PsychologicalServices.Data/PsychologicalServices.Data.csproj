@@ -178,6 +178,9 @@
     <Compile Include="DatabaseGeneric\EntityClasses\ReferralTypeIssueInDisputeEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\AssessmentReportIssueInDisputeEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\ClaimRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -355,7 +358,10 @@
     <Compile Include="DatabaseGeneric\RelationClasses\UserUnavailabilityRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\AssessmentReportIssueInDisputeEntity.cs">
+    <Compile Include="DatabaseGeneric\EntityClasses\AppointmentSequenceEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\RelationClasses\AppointmentSequenceRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\Linq\LinqMetaData.cs">

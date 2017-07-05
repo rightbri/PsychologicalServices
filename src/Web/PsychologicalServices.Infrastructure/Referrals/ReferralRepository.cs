@@ -35,6 +35,7 @@ namespace PsychologicalServices.Infrastructure.Referrals
                         )
                     .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(referralSource => referralSource.ReferralSourceAppointmentStatusSettings)
                         .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
+                            .Prefetch<AppointmentSequenceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.AppointmentSequence)
                             .Prefetch<AppointmentStatusEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.AppointmentStatus)
                             .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
                         )
@@ -190,6 +191,8 @@ namespace PsychologicalServices.Infrastructure.Referrals
 
                     prefetch.Add(ReferralSourceEntity.PrefetchPathReportTypeInvoiceAmounts);
 
+                    prefetch.Add(ReferralSourceEntity.PrefetchPathReferralSourceAppointmentStatusSettings);
+
                     adapter.FetchEntity(entity, prefetch);
                 }
 
@@ -207,6 +210,66 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 {
                     entity.AddressId = referralSource.Address.AddressId;
                 }
+
+                #region appointment status settings
+
+                //var appointmentStatusSettingsToAdd = referralSource.AppointmentStatusSettings
+                //    .Where(appointmentStatusSetting =>
+                //        !entity.ReferralSourceAppointmentStatusSettings.Any(appointmentStatusSettingEntity =>
+                //            appointmentStatusSettingEntity.AppointmentStatusId == appointmentStatusSetting.AppointmentStatus.AppointmentStatusId &&
+                //            appointmentStatusSettingEntity.InvoiceTypeId == appointmentStatusSetting.InvoiceType.InvoiceTypeId
+                //        )
+                //    );
+
+                //var appointmentStatusSettingsToRemove = entity.ReferralSourceAppointmentStatusSettings
+                //    .Where(appointmentStatusSettingEntity =>
+                //        !referralSource.AppointmentStatusSettings.Any(appointmentStatusSetting =>
+                //            appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == appointmentStatusSettingEntity.AppointmentStatusId &&
+                //            appointmentStatusSetting.InvoiceType.InvoiceTypeId == appointmentStatusSettingEntity.InvoiceTypeId
+                //        )
+                //    );
+
+                //var appointmentStatusSettingsToUpdate = referralSource.AppointmentStatusSettings
+                //    .Where(appointmentStatusSetting =>
+                //        entity.ReferralSourceAppointmentStatusSettings.Any(appointmentStatusSettingEntity =>
+                //            appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == appointmentStatusSettingEntity.AppointmentStatusId &&
+                //            appointmentStatusSetting.InvoiceType.InvoiceTypeId == appointmentStatusSettingEntity.InvoiceTypeId &&
+                //            appointmentStatusSetting.InvoiceRate != appointmentStatusSettingEntity.InvoiceRate
+                //        )
+                //    );
+
+                //foreach (var appointmentStatusSetting in appointmentStatusSettingsToRemove)
+                //{
+                //    uow.AddForDelete(appointmentStatusSetting);
+                //}
+
+                //foreach (var appointmentStatusSetting in appointmentStatusSettingsToUpdate)
+                //{
+                //    var appointmentStatusSettingEntity = entity.ReferralSourceAppointmentStatusSettings
+                //        .Where(referralSourceAppointmentStatusSetting =>
+                //            appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == referralSourceAppointmentStatusSetting.AppointmentStatusId &&
+                //            appointmentStatusSetting.InvoiceType.InvoiceTypeId == referralSourceAppointmentStatusSetting.InvoiceTypeId
+                //        )
+                //        .SingleOrDefault();
+
+                //    if (null != appointmentStatusSettingEntity)
+                //    {
+                //        appointmentStatusSettingEntity.InvoiceRate = appointmentStatusSetting.InvoiceRate;
+                //    }
+                //}
+
+                //entity.ReferralSourceAppointmentStatusSettings.AddRange(
+                //    appointmentStatusSettingsToAdd.Select(appointmentStatusSetting =>
+                //    new ReferralSourceAppointmentStatusSettingEntity
+                //    {
+                //        AppointmentStatusId = appointmentStatusSetting.AppointmentStatus.AppointmentStatusId,
+                //        InvoiceTypeId = appointmentStatusSetting.InvoiceType.InvoiceTypeId,
+                //        InvoiceRate = appointmentStatusSetting.InvoiceRate,
+                        
+                //    })
+                //);
+
+                #endregion
 
                 #region report type invoice amounts
 

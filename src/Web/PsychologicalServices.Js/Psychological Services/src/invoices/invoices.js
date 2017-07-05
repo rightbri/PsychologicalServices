@@ -39,6 +39,23 @@ export class Invoices {
 			'invoiceTypeId': this.searchType ? this.searchType.invoiceTypeId : null,
 			'payableToId': this.searchPayableTo ? this.searchPayableTo.userId : null,
 			'companyId': this.user.company.companyId
-		}).then(data => this.invoices = data);
+		})
+		.then(invoices => this.invoices = invoices)
+		.then(invoices => {
+			invoices.forEach(invoice => {
+				if (invoice.invoiceType.name === 'Psychologist') {
+					let appointment = invoice.appointments[0].appointment;
+					let assessment = appointment.assessment;
+					
+					invoice.referralSource = appointment.assessment.referralSource;
+					
+					if (assessment.claims) {
+						assessment.claims.forEach(claim => {
+							invoice.claimant = claim.claimant;
+						});
+					}
+				}
+			})
+		});
 	}
 }

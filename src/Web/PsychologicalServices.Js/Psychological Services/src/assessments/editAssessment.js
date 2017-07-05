@@ -76,7 +76,7 @@ export class EditAssessment {
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
 			this.dataRepository.getColors().then(data => this.colors = data),
 			this.dataRepository.getGenders().then(data => this.genders = data),
-			
+
 			this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId,
 				rightId: this.config.rights.WriteDocList,

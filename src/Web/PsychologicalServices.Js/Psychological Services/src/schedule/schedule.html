@@ -45,6 +45,7 @@
 				<th>Date</th>
 				<th>Time</th>
 				<th>Location</th>
+				<th>Type</th>
 				<th>Referral Source</th>
 				<th>Claimant</th>
 				<th>Info</th>
@@ -59,7 +60,7 @@
 					</td>
 					<td colspan="6">&nbsp;</td>
 					<td>
-						<button class="uk-button uk-button-default" click.delegate="sendSchedule(user)">
+						<button class="uk-button uk-button-secondary" click.delegate="sendSchedule(user)">
 							Send
 						</button>
 					</td>
@@ -74,6 +75,12 @@
 							<li title="Street" if.bind="street">${street}</li>
 							<li title="Suite" if.bind="suite">${suite}</li>
 							<li title="City, Province, Postal Code" if.bind="street || suite">${city.name}, ${city.province} ${postalCode}</li>
+						</ul>
+					</td>
+					<td>
+						<ul class="uk-list">
+							<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
+							<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
 						</ul>
 					</td>
 					<td>${appointment.assessment.referralSource.name}</td>

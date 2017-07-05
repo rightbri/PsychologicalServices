@@ -10,7 +10,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public string Description { get; set; }
 
-        public decimal Amount { get; set; }
+        public int Amount { get; set; }
 
         public bool IsCustom { get; set; }
     }

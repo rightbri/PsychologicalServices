@@ -621,11 +621,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The Amount property of the Entity InvoiceLine<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "InvoiceLines"."Amount"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Decimal, 18, 4, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Decimal Amount
+		public virtual System.Int32 Amount
 		{
-			get { return (System.Decimal)GetValue((int)InvoiceLineFieldIndex.Amount, true); }
+			get { return (System.Int32)GetValue((int)InvoiceLineFieldIndex.Amount, true); }
 			set	{ SetValue((int)InvoiceLineFieldIndex.Amount, value); }
 		}
 

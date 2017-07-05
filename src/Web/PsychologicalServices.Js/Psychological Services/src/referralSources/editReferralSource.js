@@ -65,8 +65,17 @@ export class EditReferralSource {
 				
 				this.referralSource.reportTypeInvoiceAmounts = this.referralSource.reportTypeInvoiceAmounts.concat(
 					getMissingInvoiceAmounts(data, this.referralSource.reportTypeInvoiceAmounts)
-				).sort((a, b) => a.reportType.name < b.reportType.name);
-			})
+				);
+			})/*,
+			this.dataRepository.getAppointmentStatuses().then(appointmentStatuses => {
+
+				return this.dataRepository.getInvoiceTypes().then(invoiceTypes => {
+					
+					this.referralSource.appointmentStatusSettings = this.referralSource.appointmentStatusSettings.concat(
+						getMissingAppointmentStatusSettings(appointmentStatuses, invoiceTypes, this.referralSource.appointmentStatusSettings)
+					);
+				});
+			})*/
 		]);
 	}
 	
@@ -117,3 +126,20 @@ function getMissingInvoiceAmounts(reportTypes, invoiceAmounts) {
 		!invoiceAmounts.some(invoiceAmount => invoiceAmount.reportType.reportTypeId === reportType.reportTypeId)
 	).map(function(reportType) { return { reportType: reportType, invoiceAmount: 0 };});
 }
+/*
+function getMissingAppointmentStatusSettings(appointmentStatuses, invoiceTypes, appointmentStatusSettings) {
+	return appointmentStatuses.map(function (appointmentStatus) {
+		return invoiceTypes.map(function (invoiceType) {
+			return {
+				'appointmentStatus': appointmentStatus,
+				'invoiceType': invoiceType,
+				'invoiceRate': 0
+			};
+		});
+	}).reduce((a, b) => a.concat(b))
+	.filter(item => !appointmentStatusSettings.some(appointmentStatusSetting =>
+		appointmentStatusSetting.appointmentStatus.appointmentStatusId === item.appointmentStatus.appointmentStatusId &&
+		appointmentStatusSetting.invoiceType.invoiceTypeId === item.invoiceType.invoiceTypeId
+	));
+}
+*/

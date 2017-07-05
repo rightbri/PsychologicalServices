@@ -31,6 +31,6 @@ namespace PsychologicalServices.Models.Invoices
 
         decimal GetTaxRate();
 
-        decimal GetAdditionalReportAmount(int referralSourceId, int reportTypeId);
+        int GetAdditionalReportAmount(int referralSourceId, int reportTypeId);
     }
 }

@@ -646,11 +646,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The AdditionalFee property of the Entity IssueInDispute<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "IssuesInDispute"."AdditionalFee"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Decimal, 18, 4, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Decimal AdditionalFee
+		public virtual System.Int32 AdditionalFee
 		{
-			get { return (System.Decimal)GetValue((int)IssueInDisputeFieldIndex.AdditionalFee, true); }
+			get { return (System.Int32)GetValue((int)IssueInDisputeFieldIndex.AdditionalFee, true); }
 			set	{ SetValue((int)IssueInDisputeFieldIndex.AdditionalFee, value); }
 		}
 

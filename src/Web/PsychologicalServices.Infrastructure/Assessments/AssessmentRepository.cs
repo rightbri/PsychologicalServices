@@ -550,6 +550,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         UpdateDate = _date.UtcNow,
                         UpdateUserId = assessment.UpdateUser.UserId,
                     };
+
                     if (appointment.AppointmentStatus.CanInvoice)
                     {
                         appointment.Assessment = assessment;

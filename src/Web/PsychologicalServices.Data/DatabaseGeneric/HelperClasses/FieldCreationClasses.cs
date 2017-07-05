@@ -154,6 +154,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AppointmentSequenceEntity</summary>
+	public partial class AppointmentSequenceFields
+	{
+		/// <summary>Creates a new AppointmentSequenceEntity.AppointmentSequenceId field instance</summary>
+		public static EntityField2 AppointmentSequenceId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentSequenceFieldIndex.AppointmentSequenceId);}
+		}
+		/// <summary>Creates a new AppointmentSequenceEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentSequenceFieldIndex.Name);}
+		}
+		/// <summary>Creates a new AppointmentSequenceEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentSequenceFieldIndex.IsActive);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AppointmentStatusEntity</summary>
 	public partial class AppointmentStatusFields
 	{
@@ -1131,6 +1151,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 InvoiceRate
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceRate);}
+		}
+		/// <summary>Creates a new ReferralSourceAppointmentStatusSettingEntity.AppointmentSequenceId field instance</summary>
+		public static EntityField2 AppointmentSequenceId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceAppointmentStatusSettingFieldIndex.AppointmentSequenceId);}
+		}
+		/// <summary>Creates a new ReferralSourceAppointmentStatusSettingEntity.InvoiceFee field instance</summary>
+		public static EntityField2 InvoiceFee
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceAppointmentStatusSettingFieldIndex.InvoiceFee);}
+		}
+		/// <summary>Creates a new ReferralSourceAppointmentStatusSettingEntity.ApplyTravelFee field instance</summary>
+		public static EntityField2 ApplyTravelFee
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceAppointmentStatusSettingFieldIndex.ApplyTravelFee);}
+		}
+		/// <summary>Creates a new ReferralSourceAppointmentStatusSettingEntity.ApplyLargeFileFee field instance</summary>
+		public static EntityField2 ApplyLargeFileFee
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceAppointmentStatusSettingFieldIndex.ApplyLargeFileFee);}
 		}
 	}
 

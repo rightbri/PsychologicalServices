@@ -59,6 +59,8 @@
     <Compile Include="Addresses\IAddressRepository.cs" />
     <Compile Include="Addresses\IAddressValidator.cs" />
     <Compile Include="Appointments\Appointment.cs" />
+    <Compile Include="Appointments\AppointmentExtensions.cs" />
+    <Compile Include="Appointments\AppointmentSequence.cs" />
     <Compile Include="Appointments\AppointmentStatusNotFoundException.cs" />
     <Compile Include="Appointments\AppointmentSearchCriteria.cs" />
     <Compile Include="Appointments\AppointmentService.cs" />

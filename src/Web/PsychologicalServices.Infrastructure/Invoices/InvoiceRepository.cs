@@ -525,12 +525,11 @@ namespace PsychologicalServices.Infrastructure.Invoices
         public decimal GetTaxRate()
         {
             return 0.13m;   //TODO: retrieve from DB
-            throw new NotImplementedException();
         }
 
-        public decimal GetAdditionalReportAmount(int referralSourceId, int reportTypeId)
+        public int GetAdditionalReportAmount(int referralSourceId, int reportTypeId)
         {
-            return 50000m;
+            return 50000;
         }
 
         public InvoiceDocument GetInvoiceDocument(int invoiceDocumentId)

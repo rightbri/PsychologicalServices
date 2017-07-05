@@ -12,6 +12,14 @@ namespace PsychologicalServices.Models.Referrals
 
         public InvoiceType InvoiceType { get; set; }
 
+        public AppointmentSequence AppointmentSequence { get; set; }
+
         public decimal InvoiceRate { get; set; }
+
+        public int InvoiceFee { get; set; }
+
+        public bool ApplyTravelFee { get; set; }
+
+        public bool ApplyLargeFileFee { get; set; }
     }
 }

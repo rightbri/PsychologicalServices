@@ -1000,11 +1000,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The Total property of the Entity Invoice<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Invoices"."Total"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Decimal, 18, 4, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Decimal Total
+		public virtual System.Int32 Total
 		{
-			get { return (System.Decimal)GetValue((int)InvoiceFieldIndex.Total, true); }
+			get { return (System.Int32)GetValue((int)InvoiceFieldIndex.Total, true); }
 			set	{ SetValue((int)InvoiceFieldIndex.Total, value); }
 		}
 
