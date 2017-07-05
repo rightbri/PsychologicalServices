@@ -121,6 +121,7 @@
     <Build Include="dbo\Tables\InvoiceStatusPaths.sql" />
     <Build Include="dbo\Tables\InvoiceAppointments.sql" />
     <Build Include="dbo\Stored Procedures\DeleteAssessment.sql" />
+    <Build Include="dbo\Tables\AppointmentSequences.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

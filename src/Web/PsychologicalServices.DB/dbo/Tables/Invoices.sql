@@ -5,7 +5,7 @@
     [InvoiceStatusId] INT             NOT NULL,
     [UpdateDate]      DATETIME        CONSTRAINT [DF_Invoices_UpdateDate] DEFAULT (getutcdate()) NOT NULL,
     [TaxRate]         DECIMAL (18, 4) NOT NULL,
-    [Total]           DECIMAL (18, 4) NOT NULL,
+    [Total]           INT             NOT NULL,
     [InvoiceTypeId]   INT             NOT NULL,
     [PayableToId]     INT             NOT NULL,
     CONSTRAINT [PK_Invoices] PRIMARY KEY CLUSTERED ([InvoiceId] ASC),
@@ -13,6 +13,8 @@
     CONSTRAINT [FK_Invoices_InvoiceTypes] FOREIGN KEY ([InvoiceTypeId]) REFERENCES [dbo].[InvoiceTypes] ([InvoiceTypeId]),
     CONSTRAINT [FK_Invoices_Users] FOREIGN KEY ([PayableToId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 
