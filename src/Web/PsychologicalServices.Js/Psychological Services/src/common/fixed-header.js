@@ -133,7 +133,7 @@ $(document).ready(function(){
 			setTimeout(function() {
 				resizeFixed();
 				scrollFixed();
-			}, 0);
+			}, 100);
 		});
 	  
       hook('onInit');

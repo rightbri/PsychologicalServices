@@ -89,6 +89,14 @@ namespace PsychologicalServices.Infrastructure.Attributes
                             );
                     }
 
+                    if (null != criteria.AssessmentTypeIds && criteria.AssessmentTypeIds.Any())
+                    {
+                        attributes = attributes
+                            .Where(attribute => attribute.AttributeType.AssessmentTypeAttributeTypes
+                                .Any(assessmentTypeAttributeType => criteria.AssessmentTypeIds.Contains(assessmentTypeAttributeType.AssessmentTypeId))
+                            );
+                    }
+
                     if (criteria.IsActive.HasValue)
                     {
                         attributes = attributes.Where(attribute => attribute.IsActive == criteria.IsActive.Value);

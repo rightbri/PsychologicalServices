@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Attributes
 
         public IEnumerable<int> CompanyIds { get; set; }
 
+        public IEnumerable<int> AssessmentTypeIds { get; set; }
+
         public bool? IsActive { get; set; }
     }
 }

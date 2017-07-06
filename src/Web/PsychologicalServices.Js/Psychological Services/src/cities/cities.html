@@ -1,0 +1,36 @@
+<template>
+	<require from="resources/value-converters/boolean"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+	<a route-href="route: addCity" class="uk-button uk-button-secondary">
+		<i class="fa fa-plus"></i>&nbsp;Add
+	</a>
+				
+<div class="uk-overflow-auto">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Province</th>
+				<th>Country</th>
+				<th>Is Active?</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="city of cities">
+				<td>
+					<a route-href="route: editCity; params.bind: { id: city.cityId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${city.name}</td>
+				<td>${city.province}</td>
+				<td>${city.country}</td>
+				<td>${city.isActive | boolean}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</template>

@@ -42,15 +42,16 @@ export class DataRepository {
 					response(response) {
 						if (!response.ok) {
 							self.notifier.error(response.status + ' - ' + response.statusText);
-							
+							/*
 							if (response.status === 401 && self.retryRequest) {
 								return self.authContext.refresh().then(() => self.retry(self.lastRequest));
 									
 								self.retryRequest = false;
 							}
+							*/
 						}
 						else {
-							self.retryRequest = true;
+							//self.retryRequest = true;
 						}
 						return response;
 					}
@@ -164,7 +165,15 @@ export class DataRepository {
 	}
 	
 	getCities() {
-		return this.getManyBasic('city', true);
+		return this.getManyBasic('city');
+	}
+	
+	getCity(id) {
+		return this.getSingleBasic(id, 'city');
+	}
+	
+	saveCity(city) {
+		return this.saveBasic(city, 'city');
 	}
 	
 	searchAttributes(criteria) {

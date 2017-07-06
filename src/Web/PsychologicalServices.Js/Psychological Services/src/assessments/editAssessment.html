@@ -92,7 +92,7 @@
 				<div class="uk-form-controls">
 					<select id="assessmentType" class="uk-select" value.bind="assessment.assessmentType" matcher.bind="assessmentTypeMatcher">
 						<option></option>
-						<option repeat.for="assessmentType of assessmentTypes" model.bind="assessmentType">
+						<option repeat.for="assessmentType of assessmentTypes | sortArray:{ property: 'name', direction: 'asc' }" model.bind="assessmentType">
 							${assessmentType.name}
 						</option>
 					</select>
@@ -104,7 +104,7 @@
 				<div class="uk-form-controls">
 					<select id="referralSource" class="uk-select" value.bind="assessment.referralSource" matcher.bind="referralSourceMatcher">
 						<option></option>
-						<option repeat.for="referralSource of referralSources" model.bind="referralSource">
+						<option repeat.for="referralSource of referralSources | sortArray:{ property: 'name', direction: 'asc' }" model.bind="referralSource">
 							${referralSource.name}
 						</option>
 					</select>
@@ -123,7 +123,7 @@
 				<div class="uk-form-controls">
 					<select id="referralType" class="uk-select" value.bind="assessment.referralType" matcher.bind="referralTypeMatcher">
 						<option></option>
-						<option repeat.for="referralType of referralTypes" model.bind="referralType">
+						<option repeat.for="referralType of referralTypes | sortArray:{ property: 'name', direction: 'asc' }" model.bind="referralType">
 							${referralType.name}
 						</option>
 					</select>
@@ -147,7 +147,7 @@
 			<div class="uk-width-1-1">
 				<label class="uk-form-label"></label>
 				<div class="uk-form-controls">
-					<label class="uk-form-label" repeat.for="attribute of attributes | attributeTypes:getAttributeTypeIds(assessment.assessmentType.attributeTypes)">
+					<label class="uk-form-label" repeat.for="attribute of attributes | attributeTypes:getAttributeTypeIds(assessment.assessmentType.attributeTypes) | attributeTypes:config.assessmentDefaults.attributeTypeIds">
 						<input type="checkbox" class="uk-checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
 					</label>
 				</div>
@@ -192,7 +192,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="claim of assessment.claims">
+							<tr repeat.for="claim of assessment.claims | sortArray:{ property: 'dateOfLoss', direction: 'asc' }">
 								<td>
 									<button type="button" class="uk-button uk-button-default" click.delegate="editClaim(claim)">
 										Edit
@@ -221,7 +221,7 @@
 				<div class="uk-form-controls">
 					<select id="docListWriter" class="uk-select" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
 						<option></option>
-						<option repeat.for="user of docListWriters" model.bind="user">
+						<option repeat.for="user of docListWriters | sortArray:{ property: 'firstName', direction: 'asc' }" model.bind="user">
 							${user.firstName}
 						</option>
 					</select>
@@ -246,7 +246,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="report of assessment.reports">
+							<tr repeat.for="report of assessment.reports | sortArray:{ property: 'reportType.name', direction: 'asc' }">
 								<td>
 									<button type="button" class="uk-button uk-button-default" click.delegate="editReport(report)">
 										Edit
@@ -281,7 +281,7 @@
 				<div class="uk-form-controls">
 					<select id="notesWriter" class="uk-select" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
 						<option></option>
-						<option repeat.for="user of notesWriters" model.bind="user">
+						<option repeat.for="user of notesWriters | sortArray:{ property: 'firstName', direction: 'asc' }" model.bind="user">
 							${user.firstName}
 						</option>
 					</select>
@@ -307,7 +307,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="medRehab of assessment.medRehabs">
+							<tr repeat.for="medRehab of assessment.medRehabs | sortArray:{ property: 'date', direction: 'asc' }">
 								<td>
 									<button type="button" class="uk-button uk-button-default" click.delegate="editMedRehab(medRehab)">
 										Edit
@@ -356,6 +356,9 @@
 					<label class="uk-form-label">
 						<input type="checkbox" class="uk-checkbox" checked.bind="assessment.isLargeFile" />&nbsp;Large?
 					</label>
+					<label class="uk-form-label" repeat.for="attribute of attributes | attributeTypes:getAttributeTypeIds(assessment.assessmentType.attributeTypes) | attributeTypes:config.assessmentDefaults.medicalFileAttributeTypeIds">
+						<input type="checkbox" class="uk-checkbox" model.bind="attribute" checked.bind="assessment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
+					</label>
 				</div>
 			</div>
 			
@@ -377,7 +380,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="note of assessment.notes"><!--  | noteForUser:user-->
+							<tr repeat.for="note of assessment.notes">
 								<td>
 									<button type="button" class="uk-button uk-button-default" click.delegate="editNote(note)">
 										Edit
@@ -401,14 +404,14 @@
 				<edit-note model.bind="noteEditModel" edited.delegate="noteEdited($event)" canceled.delegate="noteCanceled($event)"></edit-note>
 			</div>
 			
-			<div class="uk-width-3-4@s">
+			<div class="uk-width-2-3@s">
 				<label class="uk-form-label" for="summary">Summary</label>
 				<div class="uk-form-controls">
 					<textarea id="summary" class="uk-textarea" rows="10" value.bind="assessment.summary.noteText"></textarea>
 				</div>
 			</div>
 			
-			<div class="uk-width-1-4@s">
+			<div class="uk-width-1-3@s">
 				<label class="uk-form-label">Colors</label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label" repeat.for="color of colors">

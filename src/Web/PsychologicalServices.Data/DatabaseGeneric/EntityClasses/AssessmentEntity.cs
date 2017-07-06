@@ -2015,7 +2015,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The ReferralSourceContactEmail property of the Entity Assessment<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Assessments"."ReferralSourceContactEmail"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4000<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String ReferralSourceContactEmail
 		{

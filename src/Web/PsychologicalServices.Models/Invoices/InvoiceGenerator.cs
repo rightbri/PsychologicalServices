@@ -317,18 +317,25 @@ namespace PsychologicalServices.Models.Invoices
                 
                 var appointment = invoiceAppointment.Appointment;
 
-                //TODO: fix this .. it is wrong
-                var appointmentStatusSetting =
-                        appointment.AppointmentStatus.AppointmentStatusSettings
-                            .SingleOrDefault(setting =>
-                                setting.InvoiceType.InvoiceTypeId == invoice.InvoiceType.InvoiceTypeId &&
-                                setting.ReferralSource.ReferralSourceId == appointment.Assessment.ReferralSource.ReferralSourceId
-                            );
+                var invoiceRate = GetAppointmentStatusInvoiceRate(
+                    appointment,
+                    invoice.InvoiceType,
+                    appointment.AppointmentSequence(invoice.Appointments.Select(ia => ia.Appointment))
+                );
 
-                if (null != appointmentStatusSetting)
-                {
-                    appointmentTotal = appointmentTotal * appointmentStatusSetting.InvoiceRate;
-                }
+                //var appointmentStatusSetting =
+                //        appointment.AppointmentStatus.AppointmentStatusSettings
+                //            .SingleOrDefault(setting =>
+                //                setting.InvoiceType.InvoiceTypeId == invoice.InvoiceType.InvoiceTypeId &&
+                //                setting.ReferralSource.ReferralSourceId == appointment.Assessment.ReferralSource.ReferralSourceId
+                //            );
+
+                //if (null != appointmentStatusSetting)
+                //{
+                //    appointmentTotal = appointmentTotal * appointmentStatusSetting.InvoiceRate;
+                //}
+
+                appointmentTotal = appointmentTotal * invoiceRate;
 
                 subtotal += appointmentTotal;
             }

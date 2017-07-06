@@ -50,7 +50,7 @@ export class EditAssessment {
 								this.claimant = this.assessment.claims[0].claimant;
 							}
 							
-							return this.getData().then(() => this.scroller.scrollTo(0));
+							return this.getData(assessment).then(() => this.scroller.scrollTo(0));
 						});
 				}
 				else {
@@ -58,7 +58,7 @@ export class EditAssessment {
 						.then(assessment => {
 							this.assessment = assessment;
 							
-							return this.getData().then(() => this.scroller.scrollTo(0));
+							return this.getData(assessment).then(() => this.scroller.scrollTo(0));
 						});
 				}
 			});
@@ -89,7 +89,6 @@ export class EditAssessment {
 			
 			this.dataRepository.searchAttributes({
 				companyIds: [this.user.company.companyId],
-				attributeTypeIds: this.config.assessmentDefaults.attributeTypeIds,
 				isActive: true
 			}).then(data => this.attributes = data),
 

@@ -5,6 +5,7 @@
 	<require from="resources/value-converters/note-for-day"></require>
 	<require from="resources/value-converters/appointment-for-day"></require>
 	<require from="resources/value-converters/attribute-types"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="calendarNotes/edit-calendar-note"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
@@ -84,7 +85,7 @@
 				<ul class="uk-list">
 					<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
 					<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6]">
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6] | sortArray:{ property: 'name', direction: 'asc' }">
 						${attribute.name}
 					</li>
 				</ul>
@@ -116,20 +117,20 @@
 			<td>
 				<ul class="uk-list">
 					<li title="Psychometrist" class="smaller-siblings">${appointment.psychometrist.firstName}</li>
-					<li repeat.for="attribute of appointment.attributes | attributeTypes:[1]">
+					<li repeat.for="attribute of appointment.attributes | attributeTypes:[1] | sortArray:{ property: 'name', direction: 'asc' }">
 						${attribute.name}
 					</li>
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5]">
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5] | sortArray:{ property: 'name', direction: 'asc' }">
 						${attribute.name}
 					</li>
 				</ul>
 			</td>
 			<td>
 				<ul class="uk-list smaller-children">
-					<li repeat.for="attribute of appointment.attributes | attributeTypes:[3]">
+					<li repeat.for="attribute of appointment.attributes | attributeTypes:[3] | sortArray:{ property: 'name', direction: 'asc' }">
 						${attribute.name}
 					</li>
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4]">
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4] | sortArray:{ property: 'name', direction: 'asc' }">
 						${attribute.name}
 					</li>
 				</ul>
@@ -201,7 +202,7 @@
 			<td>${appointment.assessment.referralSource.name}</td>
 			<td>
 				<ul class="uk-list">
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[6]">
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[6] | sortArray:{ property: 'name', direction: 'asc' }">
 						${attribute.name === 'Psychiatrist' | boolean}
 					</li>
 				</ul>
@@ -225,7 +226,7 @@
 			</td>
 			<td>
 				<ul class="uk-list smaller-children">
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5]">
+					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5,9] | sortArray:{ property: 'name', direction: 'asc' }">
 						${attribute.name}
 					</li>
 				</ul>

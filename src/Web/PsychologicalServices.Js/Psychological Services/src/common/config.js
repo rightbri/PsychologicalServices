@@ -70,7 +70,8 @@ export class Config {
 		};
 		
 		this.assessmentDefaults = {
-			'attributeTypeIds': [2,4,5,6,7,8]
+			'attributeTypeIds': [2,4,5,6,7,8],
+			'medicalFileAttributeTypeIds': [9]
 		};
 		
 		this.assessmentSummaryDefaults = {

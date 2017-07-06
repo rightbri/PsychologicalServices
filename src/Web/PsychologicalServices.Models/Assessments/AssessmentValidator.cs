@@ -272,11 +272,16 @@ namespace PsychologicalServices.Models.Assessments
             
             if (!string.IsNullOrEmpty(item.ReferralSourceContactEmail))
             {
-                if (!_emailAddressValidator.IsValid(item.ReferralSourceContactEmail))
+                var emailAddresses = item.ReferralSourceContactEmail.Split(',', ';');
+                
+                foreach (var emailAddress in emailAddresses)
                 {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "ReferralSourceContactEmail", Message = string.Format("'{0}' is not a valid email address", item.ReferralSourceContactEmail) }
-                    );
+                    if (!string.IsNullOrWhiteSpace(emailAddress) && !_emailAddressValidator.IsValid(emailAddress.Trim()))
+                    {
+                        result.ValidationErrors.Add(
+                            new ValidationError { PropertyName = "ReferralSourceContactEmail", Message = string.Format("'{0}' is not a valid email address", emailAddress) }
+                        );
+                    }
                 }
             }
 

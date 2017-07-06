@@ -181,7 +181,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.CompanyId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "ReportStatusId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.ReportStatusId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "FileSize", typeof(Nullable<System.Int32>), false, false, false, true,  (int)AssessmentFieldIndex.FileSize, 0, 0, 10);
-			base.AddElementFieldInfo("AssessmentEntity", "ReferralSourceContactEmail", typeof(System.String), false, false, false, true,  (int)AssessmentFieldIndex.ReferralSourceContactEmail, 100, 0, 0);
+			base.AddElementFieldInfo("AssessmentEntity", "ReferralSourceContactEmail", typeof(System.String), false, false, false, true,  (int)AssessmentFieldIndex.ReferralSourceContactEmail, 4000, 0, 0);
 			base.AddElementFieldInfo("AssessmentEntity", "DocListWriterId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.DocListWriterId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "NotesWriterId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.NotesWriterId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "MedicalFileReceivedDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)AssessmentFieldIndex.MedicalFileReceivedDate, 0, 0, 0);
