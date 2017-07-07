@@ -169,12 +169,11 @@
 			"export": "$"
 		  },
 		  {
-			"name": "bootstrap-datepicker",
-			"path": "../node_modules/bootstrap-datepicker/dist",
-			"main": "js/bootstrap-datepicker.min",
-			"deps": ["jquery"],
+			"name": "flatpickr",
+			"path": "../node_modules/flatpickr/dist",
+			"main": "flatpickr",
 			"resources": [
-				"css/bootstrap-datepicker3.standalone.css"
+				"flatpickr.css"
 			]
 		  },
 		  {

@@ -1,5 +1,4 @@
 ﻿using log4net;
-using PsychologicalServices.Models.Common.Configuration;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Users;
 using System;
@@ -13,7 +12,6 @@ namespace PsychologicalServices.Models.Schedule
         private readonly IUserRepository _userRepository = null;
         private readonly IScheduleHtmlGenerator _scheduleHtmlGenerator = null;
         private readonly IMailService _mailService = null;
-        private readonly IConfigurationService _configurationService = null;
         private readonly ITimezoneService _timezoneService = null;
         private readonly ILog _log = null;
 
@@ -21,7 +19,6 @@ namespace PsychologicalServices.Models.Schedule
             IUserRepository userRepository,
             IScheduleHtmlGenerator scheduleHtmlGenerator,
             IMailService mailService,
-            IConfigurationService configurationService,
             ITimezoneService timezoneService,
             ILog log
         )
@@ -29,7 +26,6 @@ namespace PsychologicalServices.Models.Schedule
             _userRepository = userRepository;
             _scheduleHtmlGenerator = scheduleHtmlGenerator;
             _mailService = mailService;
-            _configurationService = configurationService;
             _timezoneService = timezoneService;
             _log = log;
         }
@@ -61,7 +57,7 @@ namespace PsychologicalServices.Models.Schedule
                     var model = new ScheduleModel
                     {
                         User = user,
-                        DisplayTimezoneId = _configurationService.AppSettingValue("DisplayTimezoneId"),
+                        DisplayTimezoneId = user.Company.Timezone,
                         TimezoneService = _timezoneService,
                     };
 

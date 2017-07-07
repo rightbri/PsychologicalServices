@@ -13,6 +13,11 @@ namespace PsychologicalServices.Models.Common.Utility
             return dateTimeOffset;
         }
 
+        public DateTime ConvertFromUtc(DateTime utcDateTime, TimeZoneInfo timeZoneInfo)
+        {
+            return TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZoneInfo);
+        }
+
         public TimeZoneInfo GetTimeZoneInfo(string timezone)
         {
             return TimeZoneInfo.FindSystemTimeZoneById(timezone);

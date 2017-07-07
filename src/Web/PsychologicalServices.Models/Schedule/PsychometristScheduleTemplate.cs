@@ -41,14 +41,37 @@ namespace PsychologicalServices.Models.Schedule
 	-->
     <style>
 		body {
-			font-family: 'Martel', serif;
+			font-family: 'Martel', Helvetica, sans-serif;
 			
-			font-size: 12pt;
+			font-size: 16px;
+		}
+
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+			width: 100%;
+		}
+
+		th {
+			padding: 16px 12px;
+			text-align: left;
+			vertical-align: bottom;
+			font-weight: normal;
+			color: #999;
+			text-transform: uppercase;
+		}
+
+		tr:not(:first-child) {
+			border-top: 1px solid #e5e5e5;
+		}
+
+		.list-unstyled {
+			list-style-type: none;
 		}
 	</style>
 </head>
 <body>
-	<table class=""table table-condensed"">
+	<table>
 		<thead>
 			<tr>
 				<th>Date</th>
@@ -62,232 +85,252 @@ namespace PsychologicalServices.Models.Schedule
 		<tbody>
 	");
             
-            #line 39 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 62 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  foreach (var appointment in Model.User.PsychometristAppointments) {
 		var timezone = Model.TimezoneService.GetTimeZoneInfo(Model.DisplayTimezoneId);
-		var timeOffset = Model.TimezoneService.GetDateTimeOffset(appointment.AppointmentTime, timezone);
+		var time = Model.TimezoneService.ConvertFromUtc(appointment.AppointmentTime, timezone);
 	
             
             #line default
             #line hidden
             this.Write("\t\t\t<tr>\r\n\t\t\t\t<td>");
             
-            #line 44 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", timeOffset.LocalDateTime)));
+            #line 67 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", time)));
             
             #line default
             #line hidden
             this.Write("</td>\r\n\t\t\t\t<td>");
             
-            #line 45 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:hh:mmtt}", timeOffset.LocalDateTime)));
+            #line 68 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:hh:mmtt}", time)));
             
             #line default
             #line hidden
-            this.Write("</td>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t<ul class=\"list-unstyled\">\r\n\t\t\t\t\t\t<li title=\"Location Name\"" +
-                    " class=\"smaller-siblings\">\r\n\t\t\t\t\t\t\t");
+            this.Write("</td>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t");
             
-            #line 49 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 70 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Name));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t");
             
-            #line 51 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 71 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t<li title=\"Street\">\r\n\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t<br>");
             
-            #line 53 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 72 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Street));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t");
             
-            #line 55 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 73 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t");
             
-            #line 56 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 74 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t<li title=\"Suite\">\r\n\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t<br>");
             
-            #line 58 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 75 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Suite));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t");
             
-            #line 60 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 76 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t");
+            
+            #line 77 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ if (
+						!string.IsNullOrWhiteSpace(appointment.Location.City.Name) ||
+						!string.IsNullOrWhiteSpace(appointment.Location.City.Province) ||
+						!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)
+					) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t<br>\r\n\t\t\t\t\t");
+            
+            #line 83 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(appointment.Location.City.Name)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t");
             
-            #line 61 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
- if (
-							!string.IsNullOrWhiteSpace(appointment.Location.City.Name) ||
-							!string.IsNullOrWhiteSpace(appointment.Location.City.Province) ||
-							!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)
-						) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t<li title=\"City, Province, Postal Code\">\r\n\t\t\t\t\t\t\t");
-            
-            #line 67 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
- if (!string.IsNullOrWhiteSpace(appointment.Location.City.Name)) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t\t");
-            
-            #line 68 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 84 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.City.Name));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t");
             
-            #line 69 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 85 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t");
             
-            #line 70 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 86 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  if (!string.IsNullOrWhiteSpace(appointment.Location.City.Province)) { 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t\t");
             
-            #line 71 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 87 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.City.Province));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t");
             
-            #line 72 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 88 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t");
             
-            #line 73 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 89 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  if (!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)) { 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t\t");
             
-            #line 74 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 90 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.PostalCode));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t");
-            
-            #line 75 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t");
-            
-            #line 77 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t</ul>\r\n\t\t\t\t</td>\r\n\t\t\t\t<td>");
-            
-            #line 80 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.ReferralSource.Name));
-            
-            #line default
-            #line hidden
-            this.Write("</td>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t<ul class=\"list-unstyled\">\r\n\t\t\t\t\t");
-            
-            #line 83 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
- foreach (var claim in appointment.Assessment.Claims) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t<li>\r\n\t\t\t\t\t\t");
-            
-            #line 85 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.FirstName));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t&nbsp;");
-            
-            #line 86 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.LastName));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t&nbsp;&#45;\r\n\t\t\t\t\t\t&nbsp;");
-            
-            #line 88 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.Age));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t&nbsp;");
-            
-            #line 89 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.Gender));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t");
             
             #line 91 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t</ul>\r\n\t\t\t\t</td>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t<ul class=\"list-unstyled\">\r\n\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t");
+            
+            #line 92 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t</td>\r\n\t\t\t\t<td>");
+            
+            #line 94 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.ReferralSource.Name));
+            
+            #line default
+            #line hidden
+            this.Write("</td>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t");
             
             #line 96 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
- foreach (var attribute in appointment.Attributes.Where(attribute => new[] { 1,5,6 }.Contains(attribute.AttributeType.AttributeTypeId))) { 
+ foreach (var claim in appointment.Assessment.Claims) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t<p>\r\n\t\t\t\t\t\t");
+            
+            #line 98 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.FirstName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t&nbsp;");
+            
+            #line 99 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.LastName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t&nbsp;&#45;\r\n\t\t\t\t\t\t&nbsp;");
+            
+            #line 101 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.Age));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t&nbsp;");
+            
+            #line 102 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.Gender));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t</p>\r\n\t\t\t\t\t");
+            
+            #line 104 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t</td>\r\n\t\t\t\t<td>\r\n\t\t\t\t\t<ul class=\"list-unstyled\">\r\n\t\t\t\t\t\t");
+            
+            #line 108 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ foreach (var attribute in appointment.Attributes.Where(attribute => new[] { 1 }.Contains(attribute.AttributeType.AttributeTypeId))) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li>");
             
-            #line 97 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 109 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
             
             #line default
             #line hidden
             this.Write("</li>\r\n\t\t\t\t\t\t");
             
-            #line 98 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 110 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t");
+            
+            #line 111 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ foreach (var attribute in appointment.Assessment.Attributes.Where(attribute => new[] { 5, 6 }.Contains(attribute.AttributeType.AttributeTypeId))) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t<li>");
+            
+            #line 112 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
+            
+            #line default
+            #line hidden
+            this.Write("</li>\r\n\t\t\t\t\t\t");
+            
+            #line 113 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t</ul>\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t");
             
-            #line 102 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 117 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
             
             #line default

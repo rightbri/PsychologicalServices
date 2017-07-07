@@ -6,6 +6,8 @@ namespace PsychologicalServices.Models.Common.Utility
     {
         DateTimeOffset GetDateTimeOffset(DateTime dateTime, TimeZoneInfo timeZoneInfo);
 
+        DateTime ConvertFromUtc(DateTime utcDateTime, TimeZoneInfo timeZoneInfo);
+
         TimeZoneInfo GetTimeZoneInfo(string timezone);
     }
 }

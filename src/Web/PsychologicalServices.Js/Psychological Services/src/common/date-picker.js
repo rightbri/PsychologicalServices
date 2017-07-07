@@ -1,12 +1,11 @@
 import {bindable, bindingMode, inject} from 'aurelia-framework';
 import {EventHelper} from 'services/eventHelper'
-import {jquery} from 'jquery';
-import datepicker from 'bootstrap-datepicker';
+import flatpickr from 'flatpickr';
 
 @inject(Element, EventHelper)
 export class DatePickerCustomAttribute {
 	@bindable({ defaultBindingMode: bindingMode.twoWay }) dates;
-	@bindable({ primaryProperty: true }) options;
+	@bindable({ primaryProperty: true }) options = {};
 	
 	constructor(element, eventHelper) {
 		this.element = element;
@@ -14,30 +13,32 @@ export class DatePickerCustomAttribute {
 	}
 
 	attached() {
-		let $datepicker = $(this.element).datepicker(this.options);
+		
+		let eventOptions = {
+			'onChange' : (selectedDates, dateStr, instance) =>
+				this.eventHelper.fireEvent(this.element, 'datechanged', { dates: selectedDates }),
+			'onMonthChange': (selectedDates, dateStr, instance) =>
+				this.eventHelper.fireEvent(this.element, 'monthchanged', { dates: selectedDates })
+		};
+		
+		copyValues(eventOptions, this.options);
+		
+		this.flatpickr = flatpickr(this.element, this.options);
 		
 		if (this.dates) {
-			$datepicker.datepicker('setDates', this.dates);
+			this.flatpickr.setDate(this.dates);
 		}
-
-		$datepicker
-			.on('change', e => this.eventHelper.fireEvent(e.target, 'input'))
-			.on('changeDate', e => {
-				this.eventHelper.fireEvent(e.target, 'datechanged', e);
-			})
-			.on('changeMonth', e => {
-				this.eventHelper.fireEvent(e.target, 'monthchanged', e);
-			})
-			.on('clearDate', e => {
-				this.eventHelper.fireEvent(e.target, 'datecleared', e);
-			});
 	}
 
 	detached() {
-		$(this.element).datepicker('destroy')
-			.off('change')
-			.off('changeDate')
-			.off('changeMonth')
-			.off('clearDate');
+		this.flatpickr.destroy();
+	}
+}
+
+function copyValues(copyFrom, copyTo) {
+	for (var prop in copyFrom) {
+		if (copyFrom.hasOwnProperty(prop)) {
+			copyTo[prop] = copyFrom[prop];
+		}
 	}
 }

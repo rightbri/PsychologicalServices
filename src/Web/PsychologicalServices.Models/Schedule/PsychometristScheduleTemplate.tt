@@ -17,14 +17,37 @@
 	-->
     <style>
 		body {
-			font-family: 'Martel', serif;
+			font-family: 'Martel', Helvetica, sans-serif;
 			
-			font-size: 12pt;
+			font-size: 16px;
+		}
+
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+			width: 100%;
+		}
+
+		th {
+			padding: 16px 12px;
+			text-align: left;
+			vertical-align: bottom;
+			font-weight: normal;
+			color: #999;
+			text-transform: uppercase;
+		}
+
+		tr:not(:first-child) {
+			border-top: 1px solid #e5e5e5;
+		}
+
+		.list-unstyled {
+			list-style-type: none;
 		}
 	</style>
 </head>
 <body>
-	<table class="table table-condensed">
+	<table>
 		<thead>
 			<tr>
 				<th>Date</th>
@@ -38,62 +61,54 @@
 		<tbody>
 	<# foreach (var appointment in Model.User.PsychometristAppointments) {
 		var timezone = Model.TimezoneService.GetTimeZoneInfo(Model.DisplayTimezoneId);
-		var timeOffset = Model.TimezoneService.GetDateTimeOffset(appointment.AppointmentTime, timezone);
+		var time = Model.TimezoneService.ConvertFromUtc(appointment.AppointmentTime, timezone);
 	#>
 			<tr>
-				<td><#= string.Format("{0:MMMM d, yyyy}", timeOffset.LocalDateTime) #></td>
-				<td><#= string.Format("{0:hh:mmtt}", timeOffset.LocalDateTime) #></td>
+				<td><#= string.Format("{0:MMMM d, yyyy}", time) #></td>
+				<td><#= string.Format("{0:hh:mmtt}", time) #></td>
 				<td>
-					<ul class="list-unstyled">
-						<li title="Location Name" class="smaller-siblings">
-							<#= appointment.Location.Name #>
-						</li>
-						<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
-						<li title="Street">
-							<#= appointment.Location.Street #>
-						</li>
-						<# } #>
-						<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
-						<li title="Suite">
-							<#= appointment.Location.Suite #>
-						</li>
-						<# } #>
-						<# if (
-							!string.IsNullOrWhiteSpace(appointment.Location.City.Name) ||
-							!string.IsNullOrWhiteSpace(appointment.Location.City.Province) ||
-							!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)
-						) { #>
-						<li title="City, Province, Postal Code">
-							<# if (!string.IsNullOrWhiteSpace(appointment.Location.City.Name)) { #>
-								<#= appointment.Location.City.Name #>
-							<# } #>
-							<# if (!string.IsNullOrWhiteSpace(appointment.Location.City.Province)) { #>
-								<#= appointment.Location.City.Province #>
-							<# } #>
-							<# if (!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)) { #>
-								<#= appointment.Location.PostalCode #>
-							<# } #>
-						</li>
-						<# } #>
-					</ul>
+					<#= appointment.Location.Name #>
+					<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
+					<br><#= appointment.Location.Street #>
+					<# } #>
+					<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
+					<br><#= appointment.Location.Suite #>
+					<# } #>
+					<# if (
+						!string.IsNullOrWhiteSpace(appointment.Location.City.Name) ||
+						!string.IsNullOrWhiteSpace(appointment.Location.City.Province) ||
+						!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)
+					) { #>
+					<br>
+					<# if (!string.IsNullOrWhiteSpace(appointment.Location.City.Name)) { #>
+						<#= appointment.Location.City.Name #>
+					<# } #>
+					<# if (!string.IsNullOrWhiteSpace(appointment.Location.City.Province)) { #>
+						<#= appointment.Location.City.Province #>
+					<# } #>
+					<# if (!string.IsNullOrWhiteSpace(appointment.Location.PostalCode)) { #>
+						<#= appointment.Location.PostalCode #>
+					<# } #>
+					<# } #>
 				</td>
 				<td><#= appointment.Assessment.ReferralSource.Name #></td>
 				<td>
-					<ul class="list-unstyled">
 					<# foreach (var claim in appointment.Assessment.Claims) { #>
-						<li>
+						<p>
 						<#= claim.Claimant.FirstName #>
 						&nbsp;<#= claim.Claimant.LastName #>
 						&nbsp;&#45;
 						&nbsp;<#= claim.Claimant.Age #>
 						&nbsp;<#= claim.Claimant.Gender #>
-						</li>
+						</p>
 					<# } #>
-					</ul>
 				</td>
 				<td>
 					<ul class="list-unstyled">
-						<# foreach (var attribute in appointment.Attributes.Where(attribute => new[] { 1,5,6 }.Contains(attribute.AttributeType.AttributeTypeId))) { #>
+						<# foreach (var attribute in appointment.Attributes.Where(attribute => new[] { 1 }.Contains(attribute.AttributeType.AttributeTypeId))) { #>
+							<li><#= attribute.Name #></li>
+						<# } #>
+						<# foreach (var attribute in appointment.Assessment.Attributes.Where(attribute => new[] { 5, 6 }.Contains(attribute.AttributeType.AttributeTypeId))) { #>
 							<li><#= attribute.Name #></li>
 						<# } #>
 					</ul>

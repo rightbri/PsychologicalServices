@@ -141,6 +141,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
             }
 
             var day = appointmentDate.Date;
+            
             var timezone = _timezoneService.GetTimeZoneInfo(company.Timezone);
 
             var appointmentTime = new DateTime(day.Year, day.Month, day.Day, 0, 0, 0, DateTimeKind.Unspecified)

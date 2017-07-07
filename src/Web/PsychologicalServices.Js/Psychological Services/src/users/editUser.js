@@ -21,14 +21,14 @@ export class EditUser {
 		this.unavailableDates = [];
 		
 		this.datepickerOptions = {
-			'multidate': true,
-			clearBtn: true
+			dateFormat: "d-m-Y",
+			inline: true,
+			mode: "multiple"
 		};
 		
 		this.roleMatcher = (a, b) => a !== null && b !== null && a.roleId === b.roleId;
 		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
 		
-		this.error = null;
 		this.validationErrors = null;
 	}
 	

@@ -13,7 +13,7 @@
     "aurelia-bootstrapper": "^2.1.0",
     "aurelia-fetch-client": "^1.1.2",
     "bluebird": "^3.4.1",
-    "bootstrap-datepicker": "^1.6.4",
+    "flatpickr": "^3.0.6",
     "inputmask": "^3.3.7",
     "jquery": "^3.2.1",
     "js-snackbar": "^0.3.1",
