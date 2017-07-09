@@ -14,28 +14,17 @@ export class Config {
 		this.longDateFormat = 'MMMM D, YYYY';
 		this.longDateTimeFormat = this.longDateFormat + ' ' + this.shortTimeFormat;
 		
-		this.dateRangePickerOptions = {
-			'autoApply': true,
-			'showDropdowns': true,
-			'linkedCalendars': false
-		};
+		this.datepickerShortDateFormat = 'd/m/Y';
 		
 		this.datepickerOptions = {
-			'autoclose': true,
-			'clearBtn': true,
-			'format': 'MM d, yyyy',
-			'showOnFocus': true,
-			'toggleActive': true
+			'altFormat': 'F j, Y',
+			'altInput': true
 		};
 		
 		this.monthPickerOptions = {
-			'autoclose': true,
-			'clearBtn': true,
-			'format': 'MM, yyyy',
-			'startView': 'months',
-			'minViewMode': 'months',
-			'showOnFocus': true,
-			'toggleActive': true
+			'altFormat': 'F, Y',
+			'altInput': true
+			
 		};
 		
 		this.datemaskOptions = {

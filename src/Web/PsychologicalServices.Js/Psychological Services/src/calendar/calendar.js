@@ -29,10 +29,11 @@ export class Calendar {
 		
 		this.userSettings.setting('selectedCalendarMonth')
 			.then(value => {
-				this.searchDate = value ? new Date(value) : new Date();
-				this.searchStart = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth(), 1);
-				this.searchEnd = new Date(this.searchDate.getFullYear(), this.searchDate.getMonth() + 1, 0);
-				this.days = this.getDays(this.searchStart, this.searchEnd);
+				this.searchDate = this.toUtcDate(value ? new Date(value) : new Date());
+				
+				this.setSearchRange(this.searchDate);
+				
+				this.days = this.getDays(this.searchDate.getMonth());
 			});
 	}
 	
@@ -46,11 +47,11 @@ export class Calendar {
 	}
 	
 	addMonths(numberOfMonths) {
-		let searchDate = moment.utc(this.searchDate).add(numberOfMonths || 0, 'months').toDate();
+		this.searchDate = this.toUtcDate(moment(this.searchDate).add(numberOfMonths || 0, 'months').toDate());
 		
-		this.userSettings.setting('selectedCalendarMonth', searchDate);
+		this.userSettings.setting('selectedCalendarMonth', this.searchDate);
 		
-		this.refreshAppointments(searchDate)
+		this.refreshAppointments(this.searchDate)
 	}
 	
 	setView(viewType) {
@@ -97,38 +98,41 @@ export class Calendar {
 	}
 	
 	setSearchRange(date) {
-		this.searchDate = date;
-		this.searchStart = moment.utc(new Date(this.searchDate.getFullYear(), this.searchDate.getMonth(), 1)).toDate();
-		this.searchEnd = moment.utc(new Date(this.searchDate.getFullYear(), this.searchDate.getMonth() + 1, 0)).toDate();
+		let start = new Date(date.getFullYear(), date.getMonth(), 1);
+		let end = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+		
+		this.searchStart = this.toUtcDate(start);
+		this.searchEnd = this.toUtcDate(end);
 	}
 	
-	getDays(min, max) {
-		var maxDays = max.getDate();
-		
-		var d = min;
+	getDays(month) {
+		let endOfMonth = new Date(new Date().getFullYear(), month + 1, 0);
 		
 		var days = [];
 		
-		for (var i = 1; i <= maxDays; i++) {
+		for (var i = 1; i <= endOfMonth.getDate(); i++) {
 			days.push(
-				new Date(min.getFullYear(), min.getMonth(), i)
+				new Date(endOfMonth.getFullYear(), endOfMonth.getMonth(), i)
 			);
 		}
 		
 		return days;
 	}
 	
-	monthChanged(e) {
-		this.context.calendarMonth = e.detail.date;
-		this.refreshAppointments(e.detail.date);
-		this.userSettings.setting('selectedCalendarMonth', e.detail.date);
+	dateChanged(e) {
+		//this.searchDate = e.detail.dates[0];
+		
+		this.refreshAppointments(this.searchDate);
+		
+		this.userSettings.setting('selectedCalendarMonth', this.searchDate);
 	}
 	
 	refreshAppointments(searchDate) {
 		this.setSearchRange(searchDate);
+		
 		this.getData()
 			.then(data => {
-				this.days = this.getDays(this.searchStart, this.searchEnd);
+				this.days = this.getDays(searchDate.getMonth());
 			});
 	}
 	
@@ -167,5 +171,9 @@ export class Calendar {
 		this.calendarNoteEditModel = {
 			'calendarNote': calendarNote
 		};
+	}
+	
+	toUtcDate(date) {
+		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
 	}
 }

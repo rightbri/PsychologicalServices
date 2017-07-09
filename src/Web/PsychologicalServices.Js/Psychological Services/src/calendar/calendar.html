@@ -10,15 +10,18 @@
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
+	<require from="flatpickr/flatpickr.css"></require>
 
 <div class="uk-child-width-1-2@s uk-padding-small" uk-grid>
 	<div>
 		<div class="uk-form-controls">
+			<!--
 			<a href="#" uk-slidenav-previous click.delegate="addMonths(-1)" title="Previous month" uk-tooltip="pos: top"></a>
-			
-			<input type="text" class="uk-input uk-form-width-medium" date-picker.bind="config.monthPickerOptions" monthchanged.delegate="monthChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
-			
+			-->
+			<input type="text" class="uk-input uk-form-width-medium" date-picker="options.bind: config.monthPickerOptions; dates.bind: searchDate" datechanged.delegate="dateChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
+			<!--
 			<a href="#" uk-slidenav-next click.delegate="addMonths(1)" title="Next month" uk-tooltip="pos: top"></a>
+			-->
 		</div>
 	</div>
 	<div>
@@ -60,7 +63,7 @@
 				</p>
 			</td>
 		</tr>
-		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
+		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
 			<td class="uk-table-shrink">
 				<ul class="uk-list">
 					<li>
@@ -148,14 +151,11 @@
 			<th>
 				<a href="#" uk-totop uk-scroll style="display: none;"></a>
 			</th>
-			<th>Location</th>
-			<th>Type</th>
-			<th>Claimant</th>
-			<th>Source</th>
-			<th>Psychiatrist</th>
+			<th>Location / Type / Claimant / Source</th>
+			<th title="Psychiatrist">Psych?</th>
 			<th>Psychometrist</th>
-			<th>Doc List Writer</th>
-			<th>Notes Writer</th>
+			<th>Doc List</th>
+			<th>Notes</th>
 			<th>Report Status</th>
 			<th>File Size</th>
 			<th>Reports</th>
@@ -170,7 +170,7 @@
 					${day | dateFormat:'ddd MMM D'}
 				</a>
 			</td>
-			<td colspan="12"></td>
+			<td colspan="9"></td>
 		</tr>
 		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
 			<td class="uk-table-shrink">
@@ -187,19 +187,19 @@
 					</li>
 				</ul>
 			</td>
-			<td>${appointment.location.name}</td>
-			<td>
-				<ul class="uk-list">
-					<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
-					<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
-				</ul>
+			<td class="uk-table-shrink">
+				${appointment.location.name}
+				<br>${appointment.assessment.assessmentType.name}
+				<template if.bind="appointment.isCompletion">
+				<br>Completion
+				</template>
+				<template repeat.for="claim of appointment.assessment.claims">
+					<template if.bind="claim.claimant">
+					<br>${claim.claimant.firstName} ${claim.claimant.lastName}
+					</template>
+				</template>
+				<br>${appointment.assessment.referralSource.name}
 			</td>
-			<td>
-				<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
-					<li if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
-				</ul>
-			</td>
-			<td>${appointment.assessment.referralSource.name}</td>
 			<td>
 				<ul class="uk-list">
 					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[6] | sortArray:{ property: 'name', direction: 'asc' }">

@@ -12,8 +12,6 @@ export class DataRepository {
 		this.notifier = notifier;
 		this.cache = {};
 		
-		this.retryRequest = true;
-		
 		var self = this;
 		
 		this.httpFetch.configure(config => {
@@ -32,9 +30,7 @@ export class DataRepository {
 						self.lastRequest = request.clone();
 						
 						if (!request.headers.has('Authorization')) {
-							if (self.authContext.authToken) {
-								request.headers.append('Authorization','Token ' + self.authContext.authToken);
-							}
+							request.headers.append('Authorization','Token ' + self.authContext.authToken);
 						}
 						
 						return request;
@@ -42,17 +38,12 @@ export class DataRepository {
 					response(response) {
 						if (!response.ok) {
 							self.notifier.error(response.status + ' - ' + response.statusText);
-							/*
-							if (response.status === 401 && self.retryRequest) {
+							
+							if (response.status === 401) {
 								return self.authContext.refresh().then(() => self.retry(self.lastRequest));
-									
-								self.retryRequest = false;
 							}
-							*/
 						}
-						else {
-							//self.retryRequest = true;
-						}
+						
 						return response;
 					}
 				});

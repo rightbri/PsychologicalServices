@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IdentityModel.Tokens;
 using System.Security.Cryptography;
 using Google.Apis.Services;
 using Google.Apis.Oauth2.v2;
@@ -56,7 +55,7 @@ namespace PsychologicalServices.Web.Infrastructure.Services
             var certificates = oauthService.GetCertForOpenIdConnect().Execute();
             
             var keys = certificates.Keys.Select(CreateSecurityKeyFromPublicKey);
-
+            
             return keys;
         }
 
