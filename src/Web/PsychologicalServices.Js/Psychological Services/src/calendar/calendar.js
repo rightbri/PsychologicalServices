@@ -120,7 +120,7 @@ export class Calendar {
 	}
 	
 	dateChanged(e) {
-		//this.searchDate = e.detail.dates[0];
+		this.searchDate = e.detail.dates[0];
 		
 		this.refreshAppointments(this.searchDate);
 		

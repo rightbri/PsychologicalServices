@@ -52,7 +52,9 @@ export class DataRepository {
 	
 	retry(request) {
 		console.log('retrying request: ' + request.url);
-		var promise = new Promise((resolve, reject) => this.httpFetch.fetch(request));
+		var promise = new Promise((resolve, reject) =>
+			this.httpFetch.fetch(request).then(response => resolve(response))
+		);
 		return promise;
 	}
 

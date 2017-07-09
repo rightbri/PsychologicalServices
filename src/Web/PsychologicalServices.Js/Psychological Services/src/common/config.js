@@ -78,6 +78,6 @@ export class Config {
 			'WriteNotes': 4
 		};
 		
-		this.authTokenKey = 'firebaseAuthToken';
+		this.authTokenKey = 'authToken';
 	}
 }
