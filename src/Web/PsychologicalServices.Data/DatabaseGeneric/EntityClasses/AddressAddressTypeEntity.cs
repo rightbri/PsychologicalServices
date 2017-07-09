@@ -26,24 +26,28 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'AddressType'.<br/><br/>
+	/// Entity class which represents the entity 'AddressAddressType'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class AddressTypeEntity : CommonEntityBase, ISerializable
+	public partial class AddressAddressTypeEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
-		private EntityCollection<AddressAddressTypeEntity> _addressAddressTypes;
 
 
+		private AddressEntity _address;
+		private AddressTypeEntity _addressType;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -53,22 +57,24 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
+			/// <summary>Member name Address</summary>
+			public static readonly string Address = "Address";
+			/// <summary>Member name AddressType</summary>
+			public static readonly string AddressType = "AddressType";
 
-			/// <summary>Member name AddressAddressTypes</summary>
-			public static readonly string AddressAddressTypes = "AddressAddressTypes";
 
 
 		}
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static AddressTypeEntity()
+		static AddressAddressTypeEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public AddressTypeEntity():base("AddressTypeEntity")
+		public AddressAddressTypeEntity():base("AddressAddressTypeEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -76,35 +82,39 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public AddressTypeEntity(IEntityFields2 fields):base("AddressTypeEntity")
+		public AddressAddressTypeEntity(IEntityFields2 fields):base("AddressAddressTypeEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this AddressTypeEntity</param>
-		public AddressTypeEntity(IValidator validator):base("AddressTypeEntity")
+		/// <param name="validator">The custom validator object for this AddressAddressTypeEntity</param>
+		public AddressAddressTypeEntity(IValidator validator):base("AddressAddressTypeEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="addressTypeId">PK value for AddressType which data should be fetched into this AddressType object</param>
+		/// <param name="addressId">PK value for AddressAddressType which data should be fetched into this AddressAddressType object</param>
+		/// <param name="addressTypeId">PK value for AddressAddressType which data should be fetched into this AddressAddressType object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AddressTypeEntity(System.Int32 addressTypeId):base("AddressTypeEntity")
+		public AddressAddressTypeEntity(System.Int32 addressId, System.Int32 addressTypeId):base("AddressAddressTypeEntity")
 		{
 			InitClassEmpty(null, CreateFields());
+			this.AddressId = addressId;
 			this.AddressTypeId = addressTypeId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="addressTypeId">PK value for AddressType which data should be fetched into this AddressType object</param>
-		/// <param name="validator">The custom validator object for this AddressTypeEntity</param>
+		/// <param name="addressId">PK value for AddressAddressType which data should be fetched into this AddressAddressType object</param>
+		/// <param name="addressTypeId">PK value for AddressAddressType which data should be fetched into this AddressAddressType object</param>
+		/// <param name="validator">The custom validator object for this AddressAddressTypeEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AddressTypeEntity(System.Int32 addressTypeId, IValidator validator):base("AddressTypeEntity")
+		public AddressAddressTypeEntity(System.Int32 addressId, System.Int32 addressTypeId, IValidator validator):base("AddressAddressTypeEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
+			this.AddressId = addressId;
 			this.AddressTypeId = addressTypeId;
 		}
 
@@ -112,19 +122,29 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected AddressTypeEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected AddressAddressTypeEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_addressAddressTypes = (EntityCollection<AddressAddressTypeEntity>)info.GetValue("_addressAddressTypes", typeof(EntityCollection<AddressAddressTypeEntity>));
 
 
+				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
+				if(_address!=null)
+				{
+					_address.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_addressType = (AddressTypeEntity)info.GetValue("_addressType", typeof(AddressTypeEntity));
+				if(_addressType!=null)
+				{
+					_addressType.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -132,8 +152,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((AddressTypeFieldIndex)fieldIndex)
+			switch((AddressAddressTypeFieldIndex)fieldIndex)
 			{
+				case AddressAddressTypeFieldIndex.AddressId:
+					DesetupSyncAddress(true, false);
+					break;
+				case AddressAddressTypeFieldIndex.AddressTypeId:
+					DesetupSyncAddressType(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -156,10 +182,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-
-				case "AddressAddressTypes":
-					this.AddressAddressTypes.Add((AddressAddressTypeEntity)entity);
+				case "Address":
+					this.Address = (AddressEntity)entity;
 					break;
+				case "AddressType":
+					this.AddressType = (AddressTypeEntity)entity;
+					break;
+
 
 
 				default:
@@ -172,7 +201,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return AddressTypeEntity.GetRelationsForField(fieldName);
+			return AddressAddressTypeEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -183,10 +212,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-
-				case "AddressAddressTypes":
-					toReturn.Add(AddressTypeEntity.Relations.AddressAddressTypeEntityUsingAddressTypeId);
+				case "Address":
+					toReturn.Add(AddressAddressTypeEntity.Relations.AddressEntityUsingAddressId);
 					break;
+				case "AddressType":
+					toReturn.Add(AddressAddressTypeEntity.Relations.AddressTypeEntityUsingAddressTypeId);
+					break;
+
 
 
 				default:
@@ -211,6 +243,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -224,10 +257,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
-				case "AddressAddressTypes":
-					this.AddressAddressTypes.Add((AddressAddressTypeEntity)relatedEntity);
+				case "Address":
+					SetupSyncAddress(relatedEntity);
 					break;
+				case "AddressType":
+					SetupSyncAddressType(relatedEntity);
+					break;
+
 
 				default:
 					break;
@@ -243,10 +279,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
-				case "AddressAddressTypes":
-					base.PerformRelatedEntityRemoval(this.AddressAddressTypes, relatedEntity, signalRelatedEntityManyToOne);
+				case "Address":
+					DesetupSyncAddress(false, true);
 					break;
+				case "AddressType":
+					DesetupSyncAddressType(false, true);
+					break;
+
 
 				default:
 					break;
@@ -268,7 +307,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-
+			if(_address!=null)
+			{
+				toReturn.Add(_address);
+			}
+			if(_addressType!=null)
+			{
+				toReturn.Add(_addressType);
+			}
 
 			return toReturn;
 		}
@@ -278,7 +324,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.AddressAddressTypes);
+
 
 			return toReturn;
 		}
@@ -293,14 +339,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_addressAddressTypes", ((_addressAddressTypes!=null) && (_addressAddressTypes.Count>0) && !this.MarkedForDeletion)?_addressAddressTypes:null);
 
 
+				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
+				info.AddValue("_addressType", (!this.MarkedForDeletion?_addressType:null));
 
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -308,7 +356,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(AddressTypeFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(AddressAddressTypeFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -317,7 +365,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(AddressTypeFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(AddressAddressTypeFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -327,28 +375,38 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new AddressTypeRelations().GetAllRelations();
+			return new AddressAddressTypeRelations().GetAllRelations();
 		}
 		
 
+
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'AddressAddressType' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAddressAddressTypes()
+		public virtual IRelationPredicateBucket GetRelationInfoAddress()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressAddressTypeFields.AddressTypeId, null, ComparisonOperator.Equal, this.AddressTypeId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.AddressId));
 			return bucket;
 		}
 
-
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'AddressType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAddressType()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressTypeFields.AddressTypeId, null, ComparisonOperator.Equal, this.AddressTypeId));
+			return bucket;
+		}
 
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.AddressTypeEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.AddressAddressTypeEntity);
 		}
 
 		/// <summary>
@@ -363,7 +421,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(AddressTypeEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(AddressAddressTypeEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -371,7 +429,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._addressAddressTypes);
+
 
 		}
 		
@@ -380,7 +438,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._addressAddressTypes = (EntityCollection<AddressAddressTypeEntity>) collectionsQueue.Dequeue();
+
 
 		}
 		
@@ -388,10 +446,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-			if (this._addressAddressTypes != null)
-			{
-				return true;
-			}
+
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -402,7 +457,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AddressAddressTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressAddressTypeEntityFactory))) : null);
+
 
 		}
 #endif
@@ -413,8 +468,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("Address", _address);
+			toReturn.Add("AddressType", _addressType);
 
-			toReturn.Add("AddressAddressTypes", _addressAddressTypes);
 
 
 			return toReturn;
@@ -423,12 +479,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			if(_addressAddressTypes!=null)
+
+
+			if(_address!=null)
 			{
-				_addressAddressTypes.ActiveContext = base.ActiveContext;
+				_address.ActiveContext = base.ActiveContext;
 			}
-
-
+			if(_addressType!=null)
+			{
+				_addressType.ActiveContext = base.ActiveContext;
+			}
 
 		}
 
@@ -436,14 +496,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-			_addressAddressTypes = null;
 
 
+			_address = null;
+			_addressType = null;
 
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -457,20 +519,82 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
+			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
 			_fieldsCustomProperties.Add("AddressTypeId", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Name", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
 		}
 		#endregion
 
+		/// <summary> Removes the sync logic for member _address</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", AddressAddressTypeEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "AddressAddressTypes", resetFKFields, new int[] { (int)AddressAddressTypeFieldIndex.AddressId } );		
+			_address = null;
+		}
+
+		/// <summary> setups the sync logic for member _address</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAddress(IEntity2 relatedEntity)
+		{
+			if(_address!=relatedEntity)
+			{
+				DesetupSyncAddress(true, true);
+				_address = (AddressEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", AddressAddressTypeEntity.Relations.AddressEntityUsingAddressId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _addressType</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAddressType(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _addressType, new PropertyChangedEventHandler( OnAddressTypePropertyChanged ), "AddressType", AddressAddressTypeEntity.Relations.AddressTypeEntityUsingAddressTypeId, true, signalRelatedEntity, "AddressAddressTypes", resetFKFields, new int[] { (int)AddressAddressTypeFieldIndex.AddressTypeId } );		
+			_addressType = null;
+		}
+
+		/// <summary> setups the sync logic for member _addressType</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAddressType(IEntity2 relatedEntity)
+		{
+			if(_addressType!=relatedEntity)
+			{
+				DesetupSyncAddressType(true, true);
+				_addressType = (AddressTypeEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _addressType, new PropertyChangedEventHandler( OnAddressTypePropertyChanged ), "AddressType", AddressAddressTypeEntity.Relations.AddressTypeEntityUsingAddressTypeId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAddressTypePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this AddressTypeEntity</param>
+		/// <param name="validator">The validator object for this AddressAddressTypeEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -483,15 +607,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static AddressTypeRelations Relations
+		public  static AddressAddressTypeRelations Relations
 		{
-			get	{ return new AddressTypeRelations(); }
+			get	{ return new AddressAddressTypeRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -501,19 +626,31 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AddressAddressType' 
+
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAddressAddressTypes
+		public static IPrefetchPathElement2 PrefetchPathAddress
 		{
 			get
 			{
-				return new PrefetchPathElement2( new EntityCollection<AddressAddressTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressAddressTypeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("AddressAddressTypes")[0], (int)PsychologicalServices.Data.EntityType.AddressTypeEntity, (int)PsychologicalServices.Data.EntityType.AddressAddressTypeEntity, 0, null, null, null, null, "AddressAddressTypes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Address")[0], (int)PsychologicalServices.Data.EntityType.AddressAddressTypeEntity, (int)PsychologicalServices.Data.EntityType.AddressEntity, 0, null, null, null, null, "Address", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
-
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AddressType' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAddressType
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AddressTypeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AddressType")[0], (int)PsychologicalServices.Data.EntityType.AddressAddressTypeEntity, (int)PsychologicalServices.Data.EntityType.AddressTypeEntity, 0, null, null, null, null, "AddressType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
 
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
@@ -521,7 +658,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return AddressTypeEntity.CustomProperties;}
+			get { return AddressAddressTypeEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -537,59 +674,102 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return AddressTypeEntity.FieldsCustomProperties;}
+			get { return AddressAddressTypeEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The AddressTypeId property of the Entity AddressType<br/><br/>
+		/// <summary> The AddressId property of the Entity AddressAddressType<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AddressTypes"."AddressTypeId"<br/>
+		/// <remarks>Mapped on  table field: "AddressAddressTypes"."AddressId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual System.Int32 AddressId
+		{
+			get { return (System.Int32)GetValue((int)AddressAddressTypeFieldIndex.AddressId, true); }
+			set	{ SetValue((int)AddressAddressTypeFieldIndex.AddressId, value); }
+		}
+
+		/// <summary> The AddressTypeId property of the Entity AddressAddressType<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AddressAddressTypes"."AddressTypeId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
 		public virtual System.Int32 AddressTypeId
 		{
-			get { return (System.Int32)GetValue((int)AddressTypeFieldIndex.AddressTypeId, true); }
-			set	{ SetValue((int)AddressTypeFieldIndex.AddressTypeId, value); }
+			get { return (System.Int32)GetValue((int)AddressAddressTypeFieldIndex.AddressTypeId, true); }
+			set	{ SetValue((int)AddressAddressTypeFieldIndex.AddressTypeId, value); }
 		}
 
-		/// <summary> The Name property of the Entity AddressType<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "AddressTypes"."Name"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Name
-		{
-			get { return (System.String)GetValue((int)AddressTypeFieldIndex.Name, true); }
-			set	{ SetValue((int)AddressTypeFieldIndex.Name, value); }
-		}
 
-		/// <summary> The IsActive property of the Entity AddressType<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "AddressTypes"."IsActive"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean IsActive
-		{
-			get { return (System.Boolean)GetValue((int)AddressTypeFieldIndex.IsActive, true); }
-			set	{ SetValue((int)AddressTypeFieldIndex.IsActive, value); }
-		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'AddressAddressTypeEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(AddressAddressTypeEntity))]
-		public virtual EntityCollection<AddressAddressTypeEntity> AddressAddressTypes
+		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual AddressEntity Address
 		{
 			get
 			{
-				if(_addressAddressTypes==null)
+				return _address;
+			}
+			set
+			{
+				if(base.IsDeserializing)
 				{
-					_addressAddressTypes = new EntityCollection<AddressAddressTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressAddressTypeEntityFactory)));
-					_addressAddressTypes.SetContainingEntityInfo(this, "AddressType");
+					SetupSyncAddress(value);
 				}
-				return _addressAddressTypes;
+				else
+				{
+					if(value==null)
+					{
+						if(_address != null)
+						{
+							_address.UnsetRelatedEntity(this, "AddressAddressTypes");
+						}
+					}
+					else
+					{
+						if(_address!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "AddressAddressTypes");
+						}
+					}
+				}
 			}
 		}
 
-
+		/// <summary> Gets / sets related entity of type 'AddressTypeEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual AddressTypeEntity AddressType
+		{
+			get
+			{
+				return _addressType;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncAddressType(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_addressType != null)
+						{
+							_addressType.UnsetRelatedEntity(this, "AddressAddressTypes");
+						}
+					}
+					else
+					{
+						if(_addressType!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "AddressAddressTypes");
+						}
+					}
+				}
+			}
+		}
 
 	
 		
@@ -609,7 +789,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.AddressTypeEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.AddressAddressTypeEntity; }
 		}
 		#endregion
 
@@ -618,6 +798,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

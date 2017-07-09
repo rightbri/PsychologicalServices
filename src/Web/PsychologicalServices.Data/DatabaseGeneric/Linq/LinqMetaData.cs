@@ -64,6 +64,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.AddressEntity:
 					toReturn = this.Address;
 					break;
+				case PsychologicalServices.Data.EntityType.AddressAddressTypeEntity:
+					toReturn = this.AddressAddressType;
+					break;
 				case PsychologicalServices.Data.EntityType.AddressTypeEntity:
 					toReturn = this.AddressType;
 					break;
@@ -228,6 +231,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<AddressEntity> Address
 		{
 			get { return new DataSource2<AddressEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting AddressAddressTypeEntity instances in the database.</summary>
+		public DataSource2<AddressAddressTypeEntity> AddressAddressType
+		{
+			get { return new DataSource2<AddressAddressTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting AddressTypeEntity instances in the database.</summary>

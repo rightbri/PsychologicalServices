@@ -30,7 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.AddressEntityUsingAddressTypeId);
+			toReturn.Add(this.AddressAddressTypeEntityUsingAddressTypeId);
 
 
 			return toReturn;
@@ -38,17 +38,17 @@ namespace PsychologicalServices.Data.RelationClasses
 
 		#region Class Property Declarations
 
-		/// <summary>Returns a new IEntityRelation object, between AddressTypeEntity and AddressEntity over the 1:n relation they have, using the relation between the fields:
-		/// AddressType.AddressTypeId - Address.AddressTypeId
+		/// <summary>Returns a new IEntityRelation object, between AddressTypeEntity and AddressAddressTypeEntity over the 1:n relation they have, using the relation between the fields:
+		/// AddressType.AddressTypeId - AddressAddressType.AddressTypeId
 		/// </summary>
-		public virtual IEntityRelation AddressEntityUsingAddressTypeId
+		public virtual IEntityRelation AddressAddressTypeEntityUsingAddressTypeId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Addresses" , true);
-				relation.AddEntityFieldPair(AddressTypeFields.AddressTypeId, AddressFields.AddressTypeId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AddressAddressTypes" , true);
+				relation.AddEntityFieldPair(AddressTypeFields.AddressTypeId, AddressAddressTypeFields.AddressTypeId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressTypeEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressAddressTypeEntity", false);
 				return relation;
 			}
 		}

@@ -29,10 +29,22 @@ namespace PsychologicalServices.Data
 		CityId,
 		///<summary>PostalCode. </summary>
 		PostalCode,
-		///<summary>AddressTypeId. </summary>
-		AddressTypeId,
 		///<summary>IsActive. </summary>
 		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AddressAddressType.
+	/// </summary>
+	public enum AddressAddressTypeFieldIndex:int
+	{
+		///<summary>AddressId. </summary>
+		AddressId,
+		///<summary>AddressTypeId. </summary>
+		AddressTypeId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1020,6 +1032,8 @@ namespace PsychologicalServices.Data
 	{
 		///<summary>Address</summary>
 		AddressEntity,
+		///<summary>AddressAddressType</summary>
+		AddressAddressTypeEntity,
 		///<summary>AddressType</summary>
 		AddressTypeEntity,
 		///<summary>Appointment</summary>

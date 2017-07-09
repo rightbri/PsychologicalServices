@@ -47,15 +47,25 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.PostalCode);}
 		}
-		/// <summary>Creates a new AddressEntity.AddressTypeId field instance</summary>
-		public static EntityField2 AddressTypeId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.AddressTypeId);}
-		}
 		/// <summary>Creates a new AddressEntity.IsActive field instance</summary>
 		public static EntityField2 IsActive
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AddressFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity AddressAddressTypeEntity</summary>
+	public partial class AddressAddressTypeFields
+	{
+		/// <summary>Creates a new AddressAddressTypeEntity.AddressId field instance</summary>
+		public static EntityField2 AddressId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AddressAddressTypeFieldIndex.AddressId);}
+		}
+		/// <summary>Creates a new AddressAddressTypeEntity.AddressTypeId field instance</summary>
+		public static EntityField2 AddressTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AddressAddressTypeFieldIndex.AddressTypeId);}
 		}
 	}
 

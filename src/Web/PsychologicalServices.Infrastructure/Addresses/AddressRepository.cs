@@ -1,8 +1,10 @@
-﻿using PsychologicalServices.Data.EntityClasses;
+﻿using PsychologicalServices.Data;
+using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Addresses;
 using SD.LLBLGen.Pro.LinqSupportClasses;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,6 @@ namespace PsychologicalServices.Infrastructure.Addresses
 {
     public class AddressRepository : RepositoryBase, IAddressRepository
     {
-
         public AddressRepository(
             IDataAccessAdapterFactory adapterFactory
         ) : base(adapterFactory)
@@ -23,7 +24,10 @@ namespace PsychologicalServices.Infrastructure.Addresses
         private static readonly Func<IPathEdgeRootParser<AddressEntity>, IPathEdgeRootParser<AddressEntity>>
             AddressPath =
                 (aPath => aPath
-                    .Prefetch<AddressTypeEntity>(address => address.AddressType)
+                    .Prefetch<AddressAddressTypeEntity>(address => address.AddressAddressTypes)
+                        .SubPath(addressAddressTypePath => addressAddressTypePath
+                            .Prefetch<AddressTypeEntity>(addressAddressType => addressAddressType.AddressType)
+                        )
                     .Prefetch<CityEntity>(address => address.City)
                 );
 
@@ -84,7 +88,11 @@ namespace PsychologicalServices.Infrastructure.Addresses
 
                     if (null != criteria.AddressTypeIds && criteria.AddressTypeIds.Any())
                     {
-                        addresses = addresses.Where(address => criteria.AddressTypeIds.Contains(address.AddressTypeId));
+                        addresses = addresses.Where(address => 
+                            address.AddressAddressTypes.Any(addressAddressType =>
+                                criteria.AddressTypeIds.Contains(addressAddressType.AddressTypeId)
+                            )
+                        );
                     }
 
                     if (criteria.IsActive.HasValue)
@@ -132,6 +140,8 @@ namespace PsychologicalServices.Infrastructure.Addresses
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var uow = new UnitOfWork2();
+
                 var isNew = address.IsNew();
 
                 var addressEntity = new AddressEntity
@@ -142,18 +152,54 @@ namespace PsychologicalServices.Infrastructure.Addresses
 
                 if (!isNew)
                 {
-                    adapter.FetchEntity(addressEntity);
+                    var prefetch = new PrefetchPath2(EntityType.AddressEntity);
+
+                    prefetch.Add(AddressEntity.PrefetchPathAddressAddressTypes);
+
+                    adapter.FetchEntity(addressEntity, prefetch);
                 }
 
                 addressEntity.Street = address.Street;
                 addressEntity.Suite = address.Suite;
                 addressEntity.CityId = address.City.CityId;
                 addressEntity.PostalCode = address.PostalCode;
-                addressEntity.AddressTypeId = address.AddressType.AddressTypeId;
                 addressEntity.Name = address.Name;
                 addressEntity.IsActive = address.IsActive;
 
-                var saved = adapter.SaveEntity(addressEntity, false);
+                #region address types
+
+                var addressTypesToRemove = addressEntity.AddressAddressTypes
+                    .Where(addressAddressType =>
+                        !address.AddressTypes.Any(addressType =>
+                            addressType.AddressTypeId == addressAddressType.AddressTypeId
+                        )
+                    );
+
+                foreach (var addressType in addressTypesToRemove)
+                {
+                    uow.AddForDelete(addressType);
+                }
+
+                var addressTypesToAdd = address.AddressTypes
+                    .Where(addressType =>
+                        !addressEntity.AddressAddressTypes.Any(addressAddressType =>
+                            addressAddressType.AddressTypeId == addressType.AddressTypeId
+                        )
+                    );
+
+                addressEntity.AddressAddressTypes.AddRange(
+                    addressTypesToAdd.Select(addressType =>
+                    new AddressAddressTypeEntity
+                    {
+                        AddressTypeId = addressType.AddressTypeId,
+                    })
+                );
+
+                #endregion
+
+                uow.AddForSave(addressEntity);
+
+                uow.Commit(adapter);
 
                 return addressEntity.AddressId;
             }

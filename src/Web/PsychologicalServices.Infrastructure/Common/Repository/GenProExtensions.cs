@@ -678,7 +678,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Suite = address.Suite,
                     City = address.City.ToCity(),
                     PostalCode = address.PostalCode,
-                    AddressType = address.AddressType.ToAddressType(),
+                    AddressTypes = address.AddressAddressTypes.Select(addressAddressType => addressAddressType.AddressType.ToAddressType()),
                     IsActive = address.IsActive,
                 }
                 : null;

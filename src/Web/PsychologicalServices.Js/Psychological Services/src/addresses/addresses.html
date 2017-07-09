@@ -78,7 +78,7 @@
 				<th>Province</th>
 				<th>Postal Code</th>
 				<th>Country</th>
-				<th>Type</th>
+				<th>Types</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -95,10 +95,15 @@
 				<td>${address.city.province}</td>
 				<td>${address.postalCode}</td>
 				<td>${address.city.country}</td>
-				<td>${address.addressType.name}</td>
+				<td>
+					<ul class="uk-list">
+						<li repeat.for="addressType of address.addressTypes">
+							${addressType.name}
+						</li>
+					</ul>
+				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-
 </template>

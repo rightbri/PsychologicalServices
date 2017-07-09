@@ -43,7 +43,9 @@ namespace PsychologicalServices.Models.Addresses
 
             if (string.IsNullOrWhiteSpace(address.PostalCode))
             {
-
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "PostalCode", Message = "Postal Code is required" }
+                );
             }
             else
             {
@@ -73,21 +75,20 @@ namespace PsychologicalServices.Models.Addresses
 
             var addressTypes = _addressRepository.GetAddressTypes();
 
-            var addressType = addressTypes.SingleOrDefault(at => at.AddressTypeId == address.AddressType.AddressTypeId);
+            var invalidAddressTypes =
+                null != address.AddressTypes
+                ? address.AddressTypes
+                    .Where(addressType => !addressTypes.Any(at => at.AddressTypeId == addressType.AddressTypeId))
+                : Enumerable.Empty<AddressType>();
 
-            if (null == addressType)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "AddressTypeId", Message = "Invalid address type" }
-                );
-            }
-            else if (!addressType.IsActive)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "AddressTypeId", Message = "The selected address type is not active." }
-                );
-            }
-
+            result.ValidationErrors.AddRange(
+                invalidAddressTypes.Select(addressType => new ValidationError
+                {
+                    PropertyName = "AddressTypeId",
+                    Message = $"Invalid address type: {addressType.Name}"
+                })
+            );
+            
             result.IsValid = !result.ValidationErrors.Any();
 
             return result;

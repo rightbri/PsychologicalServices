@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.Cities;
 using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Addresses
 {
@@ -19,7 +20,7 @@ namespace PsychologicalServices.Models.Addresses
 
         public bool IsActive { get; set; }
 
-        public AddressType AddressType { get; set; }
+        public IEnumerable<AddressType> AddressTypes { get; set; }
 
         public bool IsNew()
         {

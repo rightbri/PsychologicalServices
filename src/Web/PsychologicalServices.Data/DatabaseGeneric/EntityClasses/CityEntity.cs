@@ -42,7 +42,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -60,7 +59,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Addresses = "Addresses";
 			/// <summary>Member name UserTravelFees</summary>
 			public static readonly string UserTravelFees = "UserTravelFees";
-
 
 
 		}
@@ -126,7 +124,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -172,7 +169,6 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 
 
-
 				default:
 					break;
 			}
@@ -201,7 +197,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserTravelFees":
 					toReturn.Add(CityEntity.Relations.UserTravelFeeEntityUsingCityId);
 					break;
-
 
 
 				default:
@@ -320,7 +315,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -377,7 +371,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -409,7 +402,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._addresses);
 			collectionsQueue.Enqueue(this._userTravelFees);
 
-
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -419,7 +411,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._addresses = (EntityCollection<AddressEntity>) collectionsQueue.Dequeue();
 			this._userTravelFees = (EntityCollection<UserTravelFeeEntity>) collectionsQueue.Dequeue();
-
 
 		}
 		
@@ -436,7 +427,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				return true;
 			}
 
-
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -448,7 +438,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AddressEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AddressEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))) : null);
-
 
 		}
 #endif
@@ -462,7 +451,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			toReturn.Add("Addresses", _addresses);
 			toReturn.Add("UserTravelFees", _userTravelFees);
-
 
 
 			return toReturn;
@@ -482,7 +470,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -491,7 +478,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_addresses = null;
 			_userTravelFees = null;
-
 
 
 
@@ -584,7 +570,6 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("UserTravelFees")[0], (int)PsychologicalServices.Data.EntityType.CityEntity, (int)PsychologicalServices.Data.EntityType.UserTravelFeeEntity, 0, null, null, null, null, "UserTravelFees", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
-
 
 
 
@@ -699,7 +684,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _userTravelFees;
 			}
 		}
-
 
 
 

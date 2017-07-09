@@ -51,14 +51,11 @@
 			</div>
 		
 			<div class="uk-width-1-2@s">
-				<label for="type" class="uk-form-label">Type</label>
+				<label for="type" class="uk-form-label">Types</label>
 				<div class="uk-form-controls">
-					<select class="uk-select" value.bind="address.addressType" matcher.bind="addressTypeMatcher">
-						<option></option>
-						<option repeat.for="addressType of addressTypes" model.bind="addressType">
-							${addressType.name}
-						</option>
-					</select>
+					<label class="uk-form-label" repeat.for="addressType of addressTypes">
+						<input type="checkbox" class="uk-checkbox" model.bind="addressType" checked.bind="address.addressTypes" matcher.bind="addressTypeMatcher" />&nbsp;${addressType.name}
+					</label>
 				</div>
 			</div>
 		

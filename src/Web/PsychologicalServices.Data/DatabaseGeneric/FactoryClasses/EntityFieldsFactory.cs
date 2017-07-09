@@ -35,6 +35,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AddressEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AddressEntity");
 					break;
+				case PsychologicalServices.Data.EntityType.AddressAddressTypeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AddressAddressTypeEntity");
+					break;
 				case PsychologicalServices.Data.EntityType.AddressTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, "AddressTypeEntity");
 					break;

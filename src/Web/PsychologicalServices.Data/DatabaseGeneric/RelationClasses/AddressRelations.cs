@@ -30,18 +30,33 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.AddressAddressTypeEntityUsingAddressId);
 			toReturn.Add(this.AppointmentEntityUsingLocationId);
 			toReturn.Add(this.CompanyEntityUsingNewAppointmentLocationId);
 			toReturn.Add(this.CompanyEntityUsingAddressId);
 			toReturn.Add(this.ReferralSourceEntityUsingAddressId);
 			toReturn.Add(this.UserEntityUsingAddressId);
 
-			toReturn.Add(this.AddressTypeEntityUsingAddressTypeId);
 			toReturn.Add(this.CityEntityUsingCityId);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between AddressEntity and AddressAddressTypeEntity over the 1:n relation they have, using the relation between the fields:
+		/// Address.AddressId - AddressAddressType.AddressId
+		/// </summary>
+		public virtual IEntityRelation AddressAddressTypeEntityUsingAddressId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AddressAddressTypes" , true);
+				relation.AddEntityFieldPair(AddressFields.AddressId, AddressAddressTypeFields.AddressId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressAddressTypeEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between AddressEntity and AppointmentEntity over the 1:n relation they have, using the relation between the fields:
 		/// Address.AddressId - Appointment.LocationId
@@ -119,20 +134,6 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 
-		/// <summary>Returns a new IEntityRelation object, between AddressEntity and AddressTypeEntity over the m:1 relation they have, using the relation between the fields:
-		/// Address.AddressTypeId - AddressType.AddressTypeId
-		/// </summary>
-		public virtual IEntityRelation AddressTypeEntityUsingAddressTypeId
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "AddressType", false);
-				relation.AddEntityFieldPair(AddressTypeFields.AddressTypeId, AddressFields.AddressTypeId);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressTypeEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
-				return relation;
-			}
-		}
 		/// <summary>Returns a new IEntityRelation object, between AddressEntity and CityEntity over the m:1 relation they have, using the relation between the fields:
 		/// Address.CityId - City.CityId
 		/// </summary>

@@ -55,8 +55,9 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((52 + 0));
+			base.InitClass((53 + 0));
 			InitAddressEntityMappings();
+			InitAddressAddressTypeEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
 			InitAppointmentAttributeEntityMappings();
@@ -115,15 +116,21 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AddressEntity's mappings</summary>
 		private void InitAddressEntityMappings()
 		{
-			base.AddElementMapping( "AddressEntity", "PsychologicalServices", @"dbo", "Addresses", 8 );
+			base.AddElementMapping( "AddressEntity", "PsychologicalServices", @"dbo", "Addresses", 7 );
 			base.AddElementFieldMapping( "AddressEntity", "AddressId", "AddressId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AddressEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "AddressEntity", "Street", "Street", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "AddressEntity", "Suite", "Suite", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 3 );
 			base.AddElementFieldMapping( "AddressEntity", "CityId", "CityId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
 			base.AddElementFieldMapping( "AddressEntity", "PostalCode", "PostalCode", false, (int)SqlDbType.NVarChar, 10, 0, 0, false, "", null, typeof(System.String), 5 );
-			base.AddElementFieldMapping( "AddressEntity", "AddressTypeId", "AddressTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
-			base.AddElementFieldMapping( "AddressEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 7 );
+			base.AddElementFieldMapping( "AddressEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 6 );
+		}
+		/// <summary>Inits AddressAddressTypeEntity's mappings</summary>
+		private void InitAddressAddressTypeEntityMappings()
+		{
+			base.AddElementMapping( "AddressAddressTypeEntity", "PsychologicalServices", @"dbo", "AddressAddressTypes", 2 );
+			base.AddElementFieldMapping( "AddressAddressTypeEntity", "AddressId", "AddressId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AddressAddressTypeEntity", "AddressTypeId", "AddressTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 		}
 		/// <summary>Inits AddressTypeEntity's mappings</summary>
 		private void InitAddressTypeEntityMappings()

@@ -56,8 +56,9 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (52 + 0));
+			base.InitClass( (53 + 0));
 			InitAddressEntityInfos();
+			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
 			InitAppointmentAttributeEntityInfos();
@@ -122,8 +123,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AddressEntity", "Suite", typeof(System.String), false, false, false, true,  (int)AddressFieldIndex.Suite, 100, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "CityId", typeof(System.Int32), false, true, false, false,  (int)AddressFieldIndex.CityId, 0, 0, 10);
 			base.AddElementFieldInfo("AddressEntity", "PostalCode", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.PostalCode, 10, 0, 0);
-			base.AddElementFieldInfo("AddressEntity", "AddressTypeId", typeof(System.Int32), false, true, false, false,  (int)AddressFieldIndex.AddressTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("AddressEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AddressFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits AddressAddressTypeEntity's FieldInfo objects</summary>
+		private void InitAddressAddressTypeEntityInfos()
+		{
+			base.AddElementFieldInfo("AddressAddressTypeEntity", "AddressId", typeof(System.Int32), true, true, false, false,  (int)AddressAddressTypeFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("AddressAddressTypeEntity", "AddressTypeId", typeof(System.Int32), true, true, false, false,  (int)AddressAddressTypeFieldIndex.AddressTypeId, 0, 0, 10);
 		}
 		/// <summary>Inits AddressTypeEntity's FieldInfo objects</summary>
 		private void InitAddressTypeEntityInfos()

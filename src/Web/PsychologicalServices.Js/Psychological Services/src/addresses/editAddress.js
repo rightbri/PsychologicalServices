@@ -18,10 +18,9 @@ export class EditAddress {
 		this.cities = null;
 		this.addressTypes = null;
 		
-		this.cityMatcher = (a, b) => a !== null && b !== null && a.cityId === b.cityId;
-		this.addressTypeMatcher = (a, b) => a !== null && b !== null && a.addressTypeId === b.addressTypeId;
+		this.cityMatcher = (a, b) => a && b && a.cityId === b.cityId;
+		this.addressTypeMatcher = (a, b) => a && b && a.addressTypeId === b.addressTypeId;
 		
-		this.error = null;
 		this.validationErrors = null;
 	}
 	
@@ -40,13 +39,10 @@ export class EditAddress {
 		else {
 			this.editType = 'Add';
 			
-			this.address = { id: 0, isActive: true };
+			this.address = { addressId: 0, addressTypes: [], isActive: true };
 			
 			return this.getData();
 		}
-		return Promise.all([
-			this.dataRepository.getAddress(id).then(data => this.address = data)
-		]);
 	}
 	
 	getData() {
