@@ -241,9 +241,10 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AssessmentNoteEntity's mappings</summary>
 		private void InitAssessmentNoteEntityMappings()
 		{
-			base.AddElementMapping( "AssessmentNoteEntity", "PsychologicalServices", @"dbo", "AssessmentNotes", 2 );
+			base.AddElementMapping( "AssessmentNoteEntity", "PsychologicalServices", @"dbo", "AssessmentNotes", 3 );
 			base.AddElementFieldMapping( "AssessmentNoteEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentNoteEntity", "NoteId", "NoteId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "AssessmentNoteEntity", "ShowOnCalendar", "ShowOnCalendar", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
 		}
 		/// <summary>Inits AssessmentReportEntity's mappings</summary>
 		private void InitAssessmentReportEntityMappings()

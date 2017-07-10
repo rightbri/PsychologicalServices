@@ -271,6 +271,8 @@ namespace PsychologicalServices.Data
 		AssessmentId,
 		///<summary>NoteId. </summary>
 		NoteId,
+		///<summary>ShowOnCalendar. </summary>
+		ShowOnCalendar,
 		/// <summary></summary>
 		AmountOfFields
 	}

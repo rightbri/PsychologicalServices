@@ -341,7 +341,11 @@ export class EditAssessment {
 	}
 	
 	newNote() {
-		let note = { createUser: this.user, createDate: new Date(), updateUser: this.user, updateDate: new Date(), isAdd: true };
+		let note = {
+			isAdd: true,
+			showOnCalendar: false,
+			note: { createUser: this.user, createDate: new Date(), updateUser: this.user, updateDate: new Date() }
+		}
 		this.editNote(note);
 	}
 	
@@ -350,18 +354,18 @@ export class EditAssessment {
 	}
 		
 	noteEdited(e) {
-		let note = e.detail.note;
+		let note = e.detail.assessmentNote;
 		
 		if (note.isAdd) {
 			delete note['isAdd'];
-			this.assessment.notes.push(note);
+			this.assessment.assessmentNotes.push(note);
 		}
 		
 		this.noteEditModel = null;
 	}
 	
 	noteCanceled(e) {
-		let note = e.detail.note;
+		let note = e.detail.assessmentNote;
 
 		if (!note.isAdd) {
 			copyValues(note, this.noteEditModel);
@@ -371,7 +375,7 @@ export class EditAssessment {
 	}
 	
 	removeNote(note) {
-		this.assessment.notes.splice(this.assessment.notes.indexOf(note), 1);
+		this.assessment.assessmentNotes.splice(this.assessment.assessmentNotes.indexOf(note), 1);
 	}
 	
 	newReport() {

@@ -15,7 +15,7 @@
 	<require from="claims/edit-claim"></require>
 	<require from="reports/edit-report"></require>
 	<require from="medRehab/edit-med-rehab"></require>
-	<require from="notes/edit-note"></require>
+	<require from="assessments/edit-assessment-note"></require>
 	
 <div id="editAssessment" class="uk-container">
 	
@@ -376,19 +376,21 @@
 								<th>Note</th>
 								<th>Update Date</th>
 								<th>Updated By</th>
+								<th>Show on calendar?</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="note of assessment.notes">
+							<tr repeat.for="note of assessment.assessmentNotes">
 								<td>
 									<button type="button" class="uk-button uk-button-default" click.delegate="editNote(note)">
 										Edit
 									</button>
 								</td>
-								<td>${note.noteText}</td>
-								<td>${note.updateDate | timeAgo}</td>
-								<td>${note.updateUser.firstName} ${note.updateUser.lastName}</td>
+								<td>${note.note.noteText}</td>
+								<td>${note.note.updateDate | timeAgo}</td>
+								<td>${note.note.updateUser.firstName} ${note.note.updateUser.lastName}</td>
+								<td>${note.showOnCalendar | boolean}</td>
 								<td>
 									<button type="button" class="uk-button uk-button-link" click.delegate="removeNote(note)" title="Remove note" uk-tooltip>
 										<i class="fa fa-times"></i>
@@ -401,7 +403,7 @@
 			</div>
 			
 			<div class="uk-width-1-1 uk-background-muted" if.bind="noteEditModel">
-				<edit-note model.bind="noteEditModel" edited.delegate="noteEdited($event)" canceled.delegate="noteCanceled($event)"></edit-note>
+				<edit-assessment-note model.bind="noteEditModel" edited.delegate="noteEdited($event)" canceled.delegate="noteCanceled($event)"></edit-assessment-note>
 			</div>
 			
 			<div class="uk-width-2-3@s">

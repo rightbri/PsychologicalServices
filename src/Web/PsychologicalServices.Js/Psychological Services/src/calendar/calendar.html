@@ -50,95 +50,107 @@
 	</thead>
 	<tbody>
 		<template repeat.for="day of days">
-		<tr>
-			<td class="uk-table-shrink">
-				<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
-					${day | dateFormat:'ddd MMM D'}
-				</a>
-			</td>
-			<td colspan="6"></td>
-			<td>
-				<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day" click.delegate="editCalendarNote(calendarNote)" uk-toggle="target: #calendar-note-form">
-					<small>${calendarNote.note.noteText}</small>
-				</p>
-			</td>
-		</tr>
-		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
-			<td class="uk-table-shrink">
-				<ul class="uk-list">
-					<li>
-						<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="uk-link-text" title="Edit assessment" uk-tooltip="pos: right">
-							<i class="fa fa-pencil"></i>
-						</a>
-					</li>
-					<li if.bind="appointment.assessment.summary">
-						<a href.bind="appointment.summaryModalToggleValue" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
-							<i class="fa fa-info"></i>
-						</a>
-					</li>
-				</ul>
-			</td>
-			<td>
-				<ul class="uk-list">
-					<li title="Appointment Time" class="smaller-siblings">${appointment.appointmentTime | dateFormat:config.shortTimeFormat}</li>
-					<li title="Appointment Status">${appointment.appointmentStatus.name}</li>
-				</ul>
-			</td>
-			<td>
-				<ul class="uk-list">
-					<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
-					<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.name}
-					</li>
-				</ul>
-			</td>
-			<td>
-				<ul class="uk-list">
-					<li title="Referral Source" class="smaller-siblings">${appointment.assessment.referralSource.name}</li>
-					<li title="Report Status">${appointment.assessment.reportStatus.name}</li>
-					<li title="Medical File Received Date" if.bind="appointment.assessment.medicalFileReceivedDate">Received: ${appointment.assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat}</li>
-					<li title="Medical File Number" if.bind="appointment.assessment.referralSourceFileNumber">File No: ${appointment.assessment.referralSourceFileNumber}</li>
-				</ul>
-			</td>
-			<td with.bind="appointment.location">
-				<ul class="uk-list">
-					<li title="Location Name" class="smaller-siblings" if.bind="name">${name}</li>
-					<li title="Street" if.bind="street">${street}</li>
-					<li title="Suite" if.bind="suite">${suite}</li>
-					<li title="City, Province, Postal Code" if.bind="street || suite">${city.name}, ${city.province} ${postalCode}</li>
-				</ul>
-			</td>
-			<td>
-				<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
-					<li title="Claimant Name" class="smaller-siblings" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
-					<li title="Claimant Age, Gender" if.bind="claim.claimant">${claim.claimant.age} ${claim.claimant.gender}</li>
-					<li title="Date of Loss">DOL: ${claim.dateOfLoss | dateFormat:config.shortDateFormat}</li>
-					<li title="Claim Number">Claim No: ${claim.claimNumber}</li>
-				</ul>
-			</td>
-			<td>
-				<ul class="uk-list">
-					<li title="Psychometrist" class="smaller-siblings">${appointment.psychometrist.firstName}</li>
-					<li repeat.for="attribute of appointment.attributes | attributeTypes:[1] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.name}
-					</li>
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.name}
-					</li>
-				</ul>
-			</td>
-			<td>
-				<ul class="uk-list smaller-children">
-					<li repeat.for="attribute of appointment.attributes | attributeTypes:[3] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.name}
-					</li>
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.name}
-					</li>
-				</ul>
-			</td>
-		</tr>
+			<tr>
+				<td class="uk-table-shrink">
+					<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
+						${day | dateFormat:'ddd MMM D'}
+					</a>
+				</td>
+				<td colspan="6"></td>
+				<td>
+					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day" click.delegate="editCalendarNote(calendarNote)" uk-toggle="target: #calendar-note-form">
+						<small>${calendarNote.note.noteText}</small>
+					</p>
+				</td>
+			</tr>
+			<template repeat.for="appointment of appointments | appointmentForDay:day | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
+			<tr class="appointment">
+				<td class="uk-table-shrink">
+					<ul class="uk-list">
+						<li>
+							<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="uk-link-text" title="Edit assessment" uk-tooltip="pos: right">
+								<i class="fa fa-pencil"></i>
+							</a>
+						</li>
+						<li if.bind="appointment.assessment.summary">
+							<a href.bind="appointment.summaryModalToggleValue" class="uk-link-text" uk-toggle title="View summary" uk-tooltip="pos: right">
+								<i class="fa fa-info"></i>
+							</a>
+						</li>
+					</ul>
+				</td>
+				<td>
+					<ul class="uk-list">
+						<li title="Appointment Time" class="smaller-siblings">${appointment.appointmentTime | dateFormat:config.shortTimeFormat}</li>
+						<li title="Appointment Status">${appointment.appointmentStatus.name}</li>
+					</ul>
+				</td>
+				<td>
+					<ul class="uk-list">
+						<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
+						<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
+						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6] | sortArray:{ property: 'name', direction: 'asc' }">
+							${attribute.name}
+						</li>
+					</ul>
+				</td>
+				<td>
+					<ul class="uk-list">
+						<li title="Referral Source" class="smaller-siblings">${appointment.assessment.referralSource.name}</li>
+						<li title="Report Status">${appointment.assessment.reportStatus.name}</li>
+						<li title="Medical File Received Date" if.bind="appointment.assessment.medicalFileReceivedDate">Received: ${appointment.assessment.medicalFileReceivedDate | dateFormat:config.shortDateFormat}</li>
+						<li title="Medical File Number" if.bind="appointment.assessment.referralSourceFileNumber">File No: ${appointment.assessment.referralSourceFileNumber}</li>
+					</ul>
+				</td>
+				<td with.bind="appointment.location">
+					<ul class="uk-list">
+						<li title="Location Name" class="smaller-siblings" if.bind="name">${name}</li>
+						<li title="Street" if.bind="street">${street}</li>
+						<li title="Suite" if.bind="suite">${suite}</li>
+						<li title="City, Province, Postal Code" if.bind="street || suite">${city.name}, ${city.province} ${postalCode}</li>
+					</ul>
+				</td>
+				<td>
+					<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
+						<li title="Claimant Name" class="smaller-siblings" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
+						<li title="Claimant Age, Gender" if.bind="claim.claimant">${claim.claimant.age} ${claim.claimant.gender}</li>
+						<li title="Date of Loss">DOL: ${claim.dateOfLoss | dateFormat:config.shortDateFormat}</li>
+						<li title="Claim Number">Claim No: ${claim.claimNumber}</li>
+					</ul>
+				</td>
+				<td>
+					<ul class="uk-list">
+						<li title="Psychometrist" class="smaller-siblings">${appointment.psychometrist.firstName}</li>
+						<li repeat.for="attribute of appointment.attributes | attributeTypes:[1] | sortArray:{ property: 'name', direction: 'asc' }">
+							${attribute.name}
+						</li>
+						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5] | sortArray:{ property: 'name', direction: 'asc' }">
+							${attribute.name}
+						</li>
+					</ul>
+				</td>
+				<td>
+					<ul class="uk-list smaller-children">
+						<li repeat.for="attribute of appointment.attributes | attributeTypes:[3] | sortArray:{ property: 'name', direction: 'asc' }">
+							${attribute.name}
+						</li>
+						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4] | sortArray:{ property: 'name', direction: 'asc' }">
+							${attribute.name}
+						</li>
+					</ul>
+				</td>
+			</tr>
+			<tr class="appointment-notes uk-text-small" if.bind="appointment.assessment.assessmentNotes.length">
+				<td></td>
+				<td colspan="7">
+					<ul class="uk-list">
+						<li repeat.for="note of appointment.assessment.assessmentNotes">
+							${note.note.noteText}
+						</li>
+					</ul>
+				</td>
+			</tr>
+			</template>
 		</template>
 	</tbody>
 </table>

@@ -232,6 +232,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("AssessmentNoteEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentNoteFieldIndex.AssessmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentNoteEntity", "NoteId", typeof(System.Int32), true, true, false, false,  (int)AssessmentNoteFieldIndex.NoteId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentNoteEntity", "ShowOnCalendar", typeof(System.Boolean), false, false, false, false,  (int)AssessmentNoteFieldIndex.ShowOnCalendar, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentReportEntity's FieldInfo objects</summary>
 		private void InitAssessmentReportEntityInfos()

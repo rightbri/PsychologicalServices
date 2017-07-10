@@ -103,6 +103,12 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                             .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
                                         )
                                 )
+                            .Prefetch<AssessmentNoteEntity>(assessment => assessment.AssessmentNotes)
+                                //only pull notes that should show on the calendar
+                                .FilterOn(assessmentNote => assessmentNote.ShowOnCalendar)
+                                .SubPath(assessmentNotePath => assessmentNotePath
+                                    .Prefetch<NoteEntity>(assessmentNote => assessmentNote.Note)
+                                )
                             .Prefetch<AssessmentColorEntity>(assessment => assessment.AssessmentColors)
                                 .SubPath(assessmentColorPath => assessmentColorPath
                                     .Prefetch<ColorEntity>(assessmentColor => assessmentColor.Color)

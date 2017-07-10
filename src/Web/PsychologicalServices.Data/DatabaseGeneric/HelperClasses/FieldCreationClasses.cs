@@ -412,6 +412,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentNoteFieldIndex.NoteId);}
 		}
+		/// <summary>Creates a new AssessmentNoteEntity.ShowOnCalendar field instance</summary>
+		public static EntityField2 ShowOnCalendar
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentNoteFieldIndex.ShowOnCalendar);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentReportEntity</summary>

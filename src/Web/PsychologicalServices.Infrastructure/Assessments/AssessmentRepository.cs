@@ -102,10 +102,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 .SubPath(notePath => notePath
                                     .Prefetch<UserEntity>(note => note.CreateUser)
                                     .Prefetch<UserEntity>(note => note.UpdateUser)
-                                    .Prefetch<UserNoteEntity>(note => note.UserNotes)
-                                        .SubPath(userNotePath => userNotePath
-                                            .Prefetch<UserEntity>(userNote => userNote.User)
-                                        )
+                                    //.Prefetch<UserNoteEntity>(note => note.UserNotes)
+                                    //    .SubPath(userNotePath => userNotePath
+                                    //        .Prefetch<UserEntity>(userNote => userNote.User)
+                                    //    )
                                 )
                         )
                     .Prefetch<AssessmentColorEntity>(assessment => assessment.AssessmentColors)
@@ -179,7 +179,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 Colors = Enumerable.Empty<Models.Colors.Color>(),
                 Company = company,
                 MedRehabs = Enumerable.Empty<Models.Claims.MedRehab>(),
-                Notes = Enumerable.Empty<Models.Notes.Note>(),
+                AssessmentNotes = Enumerable.Empty<Models.Assessments.AssessmentNote>(),
                 Reports = Enumerable.Empty<Models.Reports.Report>(),
                 ReportStatus = company.NewAssessmentReportStatus,
                 Summary = company.NewAssessmentSummary,
@@ -726,23 +726,26 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                 #region notes
 
-                var notesToAdd = assessment.Notes
+                var notesToAdd = assessment.AssessmentNotes
                     .Where(note =>
-                        !assessmentEntity.AssessmentNotes.Any(assessmentNote => assessmentNote.NoteId == note.NoteId)
+                        !assessmentEntity.AssessmentNotes.Any(assessmentNote => assessmentNote.NoteId == note.Note.NoteId)
                     )
                     .ToList();
 
                 var notesToRemove = assessmentEntity.AssessmentNotes
                     .Where(assessmentNote =>
-                        !assessment.Notes.Any(note => note.NoteId == assessmentNote.NoteId)
+                        !assessment.AssessmentNotes.Any(note => note.Note.NoteId == assessmentNote.NoteId)
                     )
                     .ToList();
 
-                var notesToUpdate = assessment.Notes
+                var notesToUpdate = assessment.AssessmentNotes
                     .Where(note => assessmentEntity.AssessmentNotes
                         .Any(assessmentNote =>
-                            assessmentNote.NoteId == note.NoteId &&
-                            assessmentNote.Note.Note != note.NoteText
+                            assessmentNote.NoteId == note.Note.NoteId &&
+                            (
+                            assessmentNote.Note.Note != note.Note.NoteText ||
+                            assessmentNote.ShowOnCalendar != note.ShowOnCalendar
+                            )
                         )
                     )
                     .ToList();
@@ -756,26 +759,27 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 foreach (var note in notesToUpdate)
                 {
                     var noteEntity = assessmentEntity.AssessmentNotes
-                        .Where(assessmentNote => assessmentNote.NoteId == note.NoteId)
-                        .Select(assessmentNote => assessmentNote.Note)
+                        .Where(assessmentNote => assessmentNote.NoteId == note.Note.NoteId)
                         .SingleOrDefault();
 
                     if (null != noteEntity)
                     {
-                        noteEntity.Note = note.NoteText;
-                        noteEntity.UpdateUserId = note.UpdateUser.UserId;
-                        noteEntity.UpdateDate = _date.UtcNow;
+                        noteEntity.Note.Note = note.Note.NoteText;
+                        noteEntity.ShowOnCalendar = note.ShowOnCalendar;
+                        noteEntity.Note.UpdateUserId = note.Note.UpdateUser.UserId;
+                        noteEntity.Note.UpdateDate = _date.UtcNow;
                     }
                 }
 
                 assessmentEntity.AssessmentNotes.AddRange(
                     notesToAdd.Select(note => new AssessmentNoteEntity
                     {
+                        ShowOnCalendar = note.ShowOnCalendar,
                         Note = new NoteEntity
                         {
-                            CreateUserId = note.CreateUser.UserId,
-                            Note = note.NoteText,
-                            UpdateUserId = note.UpdateUser.UserId,
+                            CreateUserId = note.Note.CreateUser.UserId,
+                            Note = note.Note.NoteText,
+                            UpdateUserId = note.Note.UpdateUser.UserId,
                         }
                     })
                 );

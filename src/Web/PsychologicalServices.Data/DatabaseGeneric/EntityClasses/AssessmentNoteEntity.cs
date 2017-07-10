@@ -517,6 +517,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("NoteId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("ShowOnCalendar", fieldHashtable);
 		}
 		#endregion
 
@@ -690,6 +693,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AssessmentNoteFieldIndex.NoteId, true); }
 			set	{ SetValue((int)AssessmentNoteFieldIndex.NoteId, value); }
+		}
+
+		/// <summary> The ShowOnCalendar property of the Entity AssessmentNote<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AssessmentNotes"."ShowOnCalendar"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean ShowOnCalendar
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentNoteFieldIndex.ShowOnCalendar, true); }
+			set	{ SetValue((int)AssessmentNoteFieldIndex.ShowOnCalendar, value); }
 		}
 
 

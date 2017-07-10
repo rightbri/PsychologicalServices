@@ -317,16 +317,18 @@ namespace PsychologicalServices.Models.Assessments
                 }
             }
 
-            if (null != item.Notes)
+            if (null != item.AssessmentNotes)
             {
-                foreach (var note in item.Notes)
+                foreach (var assessmentNote in item.AssessmentNotes)
                 {
+                    var note = assessmentNote.Note;
+
                     result.ValidationErrors.AddRange(
                         _noteValidator.Validate(note).ValidationErrors
                     );
                 }
             }
-
+            
             if (null != item.Colors)
             {
                 foreach (var color in item.Colors)

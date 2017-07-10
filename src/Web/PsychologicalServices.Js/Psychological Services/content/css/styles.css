@@ -8,6 +8,11 @@
 .smaller-children * {
 	font-size: smaller;
 }
+
+.uk-table-divider tr.appointment-notes {
+	border-top-color: #ffffff;
+}
+
 .color-swatch {
 	display: inline-block;
 	width: 13px;

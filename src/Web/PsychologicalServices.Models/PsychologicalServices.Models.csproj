@@ -70,6 +70,7 @@
     <Compile Include="Appointments\IAppointmentRepository.cs" />
     <Compile Include="Appointments\IAppointmentService.cs" />
     <Compile Include="Appointments\IAppointmentValidator.cs" />
+    <Compile Include="Assessments\AssessmentNote.cs" />
     <Compile Include="Assessments\AssessmentTypeNotFoundException.cs" />
     <Compile Include="Assessments\AssessmentNotFoundException.cs" />
     <Compile Include="Assessments\AssessmentSearchCriteria.cs" />

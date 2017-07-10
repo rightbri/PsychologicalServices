@@ -141,7 +141,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddressAddressType
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -153,7 +152,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddressAddressTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		

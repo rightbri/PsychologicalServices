@@ -530,6 +530,17 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
+        public static AssessmentNote ToAssessmentNote(this AssessmentNoteEntity assessmentNote)
+        {
+            return null != assessmentNote
+                ? new AssessmentNote
+                {
+                    ShowOnCalendar = assessmentNote.ShowOnCalendar,
+                    Note = assessmentNote.Note.ToNote(),
+                }
+                : null;
+        }
+
         public static Assessment ToAssessment(this AssessmentEntity assessment)
         {
             return null != assessment
@@ -551,7 +562,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
                     MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
-                    Notes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.Note.ToNote()),
+                    AssessmentNotes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.ToAssessmentNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
@@ -585,11 +596,12 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
+                    AssessmentNotes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.ToAssessmentNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Summary = assessment.Summary.ToNote(),
                     //Appointments
                     //MedRehabs
-                    //Notes
+                    //AssessmentNotes
                     //CreateUser
                     //UpdateUser
                 }

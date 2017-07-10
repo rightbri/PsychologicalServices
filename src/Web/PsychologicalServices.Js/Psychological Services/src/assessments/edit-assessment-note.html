@@ -1,0 +1,21 @@
+<template>
+	<require from="resources/elements/edit-panel"></require>
+	
+	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
+		<div class="uk-grid-medium uk-child-width-1-1" uk-grid>
+			<div>
+				<label class="uk-form-label" for="noteText">Note</label>
+				<div class="uk-form-controls">
+					<textarea id="noteText" class="uk-textarea" value.bind="model.note.noteText"></textarea>
+				</div>
+			</div>
+			<div>
+				<div class="uk-form-controls">
+					<label class="uk-form-label">
+						<input type="checkbox" class="uk-checkbox" checked.bind="model.showOnCalendar" />&nbsp;Show on calendar?
+					</label>
+				</div>
+			</div>
+		</div>
+	</edit-panel>
+</template>

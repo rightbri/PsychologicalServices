@@ -47,8 +47,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public IEnumerable<MedRehab> MedRehabs { get; set; }
 
-        public IEnumerable<Note> Notes { get; set; }
-
+        public IEnumerable<AssessmentNote> AssessmentNotes { get; set; }
+        
         public IEnumerable<Color> Colors { get; set; }
 
         public IEnumerable<Models.Attributes.Attribute> Attributes { get; set; }
