@@ -130,8 +130,12 @@ namespace PsychologicalServices.Infrastructure.Users
                         .FilterOn(appointment =>
                             null == criteria ||
                             (
-                            appointment.AppointmentTime >= criteria.StartDate &&
-                            appointment.AppointmentTime <= criteria.EndDate
+                                appointment.AppointmentTime >= criteria.StartDate &&
+                                appointment.AppointmentTime <= criteria.EndDate &&
+                                (
+                                    appointment.AppointmentStatusId == AppointmentStatus.OnHold ||
+                                    appointment.AppointmentStatusId == AppointmentStatus.Confirmed
+                                )
                             )
                         )
                 );
