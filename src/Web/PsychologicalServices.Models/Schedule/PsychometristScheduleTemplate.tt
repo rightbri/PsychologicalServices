@@ -65,7 +65,10 @@
 	#>
 			<tr>
 				<td><#= string.Format("{0:MMMM d, yyyy}", time) #></td>
-				<td><#= string.Format("{0:hh:mmtt}", time) #></td>
+				<td>
+					<#= string.Format("{0:hh:mmtt}", time) #>
+					<br><#= appointment.AppointmentStatus.Name #>
+				</td>
 				<td>
 					<#= appointment.Location.Name #>
 					<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>

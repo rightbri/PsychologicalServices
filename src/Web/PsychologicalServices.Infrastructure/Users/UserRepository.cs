@@ -3,6 +3,7 @@ using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.HelperClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
+using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Common.Configuration;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
@@ -94,6 +95,7 @@ namespace PsychologicalServices.Infrastructure.Users
                     .Prefetch<CompanyEntity>(user => user.Company)
                     .Prefetch<AppointmentEntity>(user => user.PsychometristAppointments)
                         .SubPath(appointmentPath => appointmentPath
+                            .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
                             .Prefetch<AddressEntity>(appointment => appointment.Location)
                                 .SubPath(addressPath => addressPath
                                     .Prefetch<CityEntity>(address => address.City)
@@ -371,7 +373,14 @@ namespace PsychologicalServices.Infrastructure.Users
                             user.CompanyId == criteria.CompanyId &&
                             user.PsychometristAppointments.Any(appointment =>
                                 appointment.AppointmentTime >= criteria.StartDate &&
-                                appointment.AppointmentTime <= criteria.EndDate
+                                appointment.AppointmentTime <= criteria.EndDate &&
+                                (
+                                    new[]
+                                    {
+                                        AppointmentStatus.OnHold,
+                                        AppointmentStatus.Confirmed
+                                    }.Contains(appointment.AppointmentStatusId)
+                                )
                             )
                         );
 

@@ -22,6 +22,15 @@
 	border-style: solid;
 }
 
+.appointment.cancelled,
+.appointment.canceled,
+.appointment-notes.cancelled,
+.appointment-notes.canceled {
+	text-decoration: line-through;
+	color: #aaa;
+	background-color: #f8f8f8;
+}
+
 .assessment-summary .uk-panel {
 	border-style: solid;
 	border-width: 0 0 2px 0;

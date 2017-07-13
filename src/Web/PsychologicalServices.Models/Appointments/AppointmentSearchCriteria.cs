@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Appointments
 {
@@ -12,7 +13,7 @@ namespace PsychologicalServices.Models.Appointments
 
         public int? PsychologistId { get; set; }
 
-        public int? AppointmentStatusId { get; set; }
+        public IEnumerable<int> AppointmentStatusIds { get; set; }
 
         public DateTime? AppointmentTimeStart { get; set; }
 

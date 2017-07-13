@@ -1,21 +1,24 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {DataRepository} from 'services/dataRepository';
 import {Context} from 'common/context';
 import {UserSettings} from 'services/userSettings';
 import {Config} from 'common/config';
 import moment from 'moment';
 
-@inject(Router, DataRepository, Config, Context, UserSettings)
+@inject(Router, BindingSignaler, DataRepository, Config, Context, UserSettings)
 export class Calendar {
-	constructor(router, dataRepository, config, context, userSettings) {
+	constructor(router, bindingSignaler, dataRepository, config, context, userSettings) {
 		this.router = router;
+		this.bindingSignaler = bindingSignaler;
 		this.dataRepository = dataRepository;
 		this.config = config;
 		this.context = context;
 		this.userSettings = userSettings;
 		
-		this.searchStatus = null;
+		this.filter = false;
+		this.searchStatuses = [];
 		this.searchPsychometrist = null;
 		this.searchPsychologist = null;
 		this.searchCompany = 0;
@@ -26,6 +29,11 @@ export class Calendar {
 		this.appointments = null;
 		this.calendarNotes = null;
 		this.editCalendarNoteModel = null;
+		
+		this.userSettings.setting('calendarAppointmentStatusIds')
+			.then(value => {
+				this.appointmentStatusIds = value || this.config.calendarDefaults.appointmentStatusIds;
+			});
 		
 		this.userSettings.setting('selectedCalendarMonth')
 			.then(value => {
@@ -46,6 +54,16 @@ export class Calendar {
 			});
 	}
 	
+	toggleFilter() {
+		this.filter = !this.filter;
+	}
+	
+	appointmentStatusClicked(e) {
+		this.bindingSignaler.signal('appointment-status-filter');
+		
+		this.userSettings.setting('calendarAppointmentStatusIds', this.appointmentStatusIds)
+	}
+	
 	addMonths(numberOfMonths) {
 		this.searchDate = this.toUtcDate(moment(this.searchDate).add(numberOfMonths || 0, 'months').toDate());
 		
@@ -60,9 +78,10 @@ export class Calendar {
 	
 	getData() {
 		return Promise.all([
+			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
 			this.dataRepository.getCalendarNotes(this.searchStart, this.searchEnd).then(data => this.calendarNotes = data),
 			this.searchAppointments({
-				appointmentStatusId: this.searchStatus,
+				appointmentStatusIds: this.searchStatuses,
 				appointmentTimeStart: this.searchStart,
 				appointmentTimeEnd: this.searchEnd,
 				psychometristId: this.searchPsychometrist,

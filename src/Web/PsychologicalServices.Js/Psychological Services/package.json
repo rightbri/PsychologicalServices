@@ -23,7 +23,8 @@
     "requirejs": "^2.3.2",
     "smoothscroll": "^0.3.0",
     "text": "github:requirejs/text#latest",
-    "uikit": "^3.0.0-beta.25"
+    "uikit": "^3.0.0-beta.25",
+    "whatwg-fetch": "^2.0.3"
   },
   "peerDependencies": {},
   "devDependencies": {

@@ -203,9 +203,11 @@ namespace PsychologicalServices.Infrastructure.Appointments
                         appointments = appointments.Where(appointment => appointment.Assessment.CompanyId == criteria.CompanyId.Value);
                     }
 
-                    if (criteria.AppointmentStatusId.HasValue)
+                    if (null != criteria.AppointmentStatusIds && criteria.AppointmentStatusIds.Any())
                     {
-                        appointments = appointments.Where(appointment => appointment.AppointmentStatusId == criteria.AppointmentStatusId.Value);
+                        appointments = appointments.Where(appointment =>
+                            criteria.AppointmentStatusIds.Contains(appointment.AppointmentStatusId)
+                        );
                     }
 
                     if (criteria.AppointmentTimeEnd.HasValue)

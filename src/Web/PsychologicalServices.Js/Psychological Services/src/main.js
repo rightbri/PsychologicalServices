@@ -1,7 +1,8 @@
 import environment from './environment';
+import 'fetch';
 
 export function configure(aurelia) {
-  let apiRoot = environment.debug ? 'http://localhost:44301/' : 'https://psychologicalservices-test1.azurewebsites.net/';
+  let apiRoot = environment.debug ? 'http://localhost:44301/' : 'https://watsonpsychologicalserviceswebapisql.azurewebsites.net/';
 
   aurelia.use
     .instance('apiRoot', apiRoot)

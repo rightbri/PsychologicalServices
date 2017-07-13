@@ -93,7 +93,7 @@
       {
         "name": "vendor-bundle.js",
         "prepend": [
-          "node_modules/bluebird/js/browser/bluebird.core.js",
+		  "node_modules/bluebird/js/browser/bluebird.core.js",
           "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
           "node_modules/requirejs/require.js"
         ],
@@ -123,7 +123,8 @@
 		  {
 			"name": "aurelia-fetch-client",
 			"path": "../node_modules/aurelia-fetch-client/dist/amd",
-			"main": "aurelia-fetch-client"
+			"main": "aurelia-fetch-client",
+			"deps": ["fetch"]
 		  },
           {
             "name": "aurelia-templating-resources",
@@ -141,6 +142,11 @@
             "main": "aurelia-testing",
             "env": "dev"
           },
+		  {
+			"name": "fetch",
+			"path": "../node_modules/whatwg-fetch",
+			"main": "fetch"
+		  },
 		  {
 			"name": "moment",
 			"path": "../node_modules/moment",

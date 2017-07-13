@@ -35,6 +35,10 @@ export class Config {
 			'alias': 'hh:mm t'
 		};
 		
+		this.calendarDefaults = {
+			appointmentStatusIds: [1,2,4,5,6,7,8]	//all except canceled
+		};
+		
 		this.referralSourceDefaults = {
 			largeFileSize: 1000,
 			largeFileFeeAmount: 25000,

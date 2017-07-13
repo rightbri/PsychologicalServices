@@ -58,6 +58,6 @@ export class ViewAssessmentSummaryCustomElement {
 			}
 		}
 	
-		this.summary = appointment.assessment.summary.noteText;
+		this.summary = appointment.assessment.summary ? appointment.assessment.summary.noteText : '';
 	}
 }

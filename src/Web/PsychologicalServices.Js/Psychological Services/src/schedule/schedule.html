@@ -68,7 +68,10 @@
 				<tr repeat.for="appointment of user.psychometristAppointments | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
 					<td>&nbsp;</td>
 					<td>${appointment.appointmentTime | dateFormat:config.longDateFormat}</td>
-					<td>${appointment.appointmentTime | dateFormat:config.shortTimeFormat}</td>
+					<td>
+						${appointment.appointmentTime | dateFormat:config.shortTimeFormat}
+						<br>${appointment.appointmentStatus.name}
+					</td>
 					<td with.bind="appointment.location">
 						<ul class="uk-list">
 							<li title="Location Name" class="smaller-siblings" if.bind="name">${name}</li>

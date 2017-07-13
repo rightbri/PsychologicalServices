@@ -1,18 +1,19 @@
 <template>
 	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/date-format"></require>
-	<require from="assessments/view-assessment-summary"></require>
 	<require from="resources/value-converters/note-for-day"></require>
 	<require from="resources/value-converters/appointment-for-day"></require>
 	<require from="resources/value-converters/attribute-types"></require>
 	<require from="resources/value-converters/sort-array"></require>
+	<require from="resources/value-converters/appointment-in-statuses"></require>
+	<require from="assessments/view-assessment-summary"></require>
 	<require from="calendarNotes/edit-calendar-note"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
 	<require from="flatpickr/flatpickr.css"></require>
 
-<div class="uk-child-width-1-2@s uk-padding-small" uk-grid>
+<div class="uk-form-stacked uk-child-width-1-2@s uk-padding-small" uk-grid>
 	<div>
 		<div class="uk-form-controls">
 			<!--
@@ -25,10 +26,31 @@
 		</div>
 	</div>
 	<div>
+		<div class="uk-align-left">
+			<span class="${filter ? 'uk-text-primary' : 'uk-text-muted'}" click.delegate="toggleFilter()">
+				<i class="fa fa-filter"></i>
+			</span>
+		</div>
 		<div class="uk-button-group uk-align-right">
 			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-primary' : 'uk-button-default'}" click.delegate="setView('schedule')">Schedule</button>
 			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-default' : 'uk-button-primary'}" click.delegate="setView('up to date')">Up to date</button>
 		</div>
+	</div>
+	<div id="filters" class="uk-child-width-1-1" if.bind="filter">
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Filters</legend>
+			
+			<form class="uk-form-stacked">
+				<div class="uk-margin">
+					<label class="uk-form-label">Appointment Statuses</label>
+					<div class="uk-form-controls">
+						<label class="uk-form-label" repeat.for="appointmentStatus of appointmentStatuses">
+							<input class="uk-checkbox" type="checkbox" model.bind="appointmentStatus.appointmentStatusId" checked.bind="appointmentStatusIds" change.delegate="appointmentStatusClicked($event)" />&nbsp;${appointmentStatus.name}
+						</label>
+					</div>
+				</div>
+			</form>
+		</fieldset>
 	</div>
 </div>
 
@@ -63,8 +85,8 @@
 					</p>
 				</td>
 			</tr>
-			<template repeat.for="appointment of appointments | appointmentForDay:day | sortArray:{ property: 'appointmentTime', direction: 'asc' }">
-			<tr class="appointment">
+			<template repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
+			<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()}">
 				<td class="uk-table-shrink">
 					<ul class="uk-list">
 						<li>
@@ -140,12 +162,14 @@
 					</ul>
 				</td>
 			</tr>
-			<tr class="appointment-notes uk-text-small" if.bind="appointment.assessment.assessmentNotes.length">
+			<tr class="appointment-notes ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()} uk-text-small" if.bind="appointment.assessment.assessmentNotes.length">
 				<td></td>
 				<td colspan="7">
 					<ul class="uk-list">
 						<li repeat.for="note of appointment.assessment.assessmentNotes">
-							${note.note.noteText}
+						<template if.bind="note.note">
+						${note.note.noteText}
+						</template>
 						</li>
 					</ul>
 				</td>
@@ -184,7 +208,7 @@
 			</td>
 			<td colspan="9"></td>
 		</tr>
-		<tr class="appointment" repeat.for="appointment of appointments | appointmentForDay:day">
+		<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()}" repeat.for="appointment of appointments | appointmentForDay:day">
 			<td class="uk-table-shrink">
 				<ul class="uk-list">
 					<li>

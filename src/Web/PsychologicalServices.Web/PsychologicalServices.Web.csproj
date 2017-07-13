@@ -336,6 +336,7 @@
     <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
     <Content Include="apiapp.json" />
     <None Include="Properties\PublishProfiles\PsychologicalServices-test1 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\WatsonPsychologicalServicesWebApiSql - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
