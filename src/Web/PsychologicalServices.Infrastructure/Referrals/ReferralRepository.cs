@@ -127,6 +127,10 @@ namespace PsychologicalServices.Infrastructure.Referrals
                         sources = sources
                             .Where(source => source.IsActive == criteria.IsActive.Value);
                     }
+                    else
+                    {
+                        sources = sources.Where(source => source.IsActive);
+                    }
                 }
 
                 return Execute<ReferralSourceEntity>(

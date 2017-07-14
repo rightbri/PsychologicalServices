@@ -1,6 +1,7 @@
 <template>
 	<require from="resources/value-converters/gender"></require>
 	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="resources/attributes/cancel-enter"></require>
 	
 <div class="uk-container">
@@ -25,7 +26,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr repeat.for="claimant of claimants">
+				<tr repeat.for="claimant of claimants | sortArray:[{ property: 'lastName', direction: 'asc' },{ property: 'firstName', direction: 'asc' }]">
 					<td>${claimant.firstName}</td>
 					<td>${claimant.lastName}</td>
 					<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>

@@ -1,6 +1,7 @@
 <template>
 	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/date-mask"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
@@ -82,7 +83,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr repeat.for="user of users">
+				<tr repeat.for="user of users | sortArray:[{ property: 'lastName', direction: 'asc' },{ property: 'firstName', direction: 'asc' }]">
 					<td>
 						<a route-href="route: editUser; params.bind: { id: user.userId }" class="uk-button uk-button-default">
 							Edit
