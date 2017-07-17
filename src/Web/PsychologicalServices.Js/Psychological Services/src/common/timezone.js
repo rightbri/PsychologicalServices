@@ -7,8 +7,12 @@ export class Timezone {
 		moment.tz.add(this.getTimezones());
 	}
 	
-	convert(moment, timezone) {
-		return moment.tz(timezone);
+	convert(m, timezone) {
+		return m.tz(timezone);
+	}
+	
+	fromUtc(date, timezone) {
+		return moment.utc(date).tz(timezone).toDate();
 	}
 	
 	getTimezones() {

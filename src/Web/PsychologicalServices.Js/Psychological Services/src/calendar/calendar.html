@@ -13,27 +13,21 @@
 	<require from="../../content/css/fixed-header.css"></require>
 	<require from="flatpickr/flatpickr.css"></require>
 
-<div class="uk-form-stacked uk-child-width-1-2@s uk-padding-small" uk-grid>
+<div id="top" class="uk-form-stacked uk-child-width-1-2@s uk-padding-small" uk-grid>
 	<div>
 		<div class="uk-form-controls">
-			<!--
-			<a href="#" uk-slidenav-previous click.delegate="addMonths(-1)" title="Previous month" uk-tooltip="pos: top"></a>
-			-->
-			<input type="text" class="uk-input uk-form-width-medium" date-picker="options.bind: config.monthPickerOptions; dates.bind: searchDate" datechanged.delegate="dateChanged($event)" value.bind="searchDate | dateFormat:'MMMM, YYYY'" />
-			<!--
-			<a href="#" uk-slidenav-next click.delegate="addMonths(1)" title="Next month" uk-tooltip="pos: top"></a>
-			-->
+			<input type="text" class="uk-input uk-form-width-medium" date-picker="options.bind: config.monthPickerOptions; dates.bind: calendarDate" datechanged.delegate="dateChanged($event)" value.bind="calendarDate | dateFormat:'MMMM, YYYY'" />
+			
+			<button type="button" class="uk-button uk-button-primary" click.delegate="today(now)">Today</button>
 		</div>
 	</div>
 	<div>
-		<div class="uk-align-left">
-			<span class="${filter ? 'uk-text-primary' : 'uk-text-muted'}" click.delegate="toggleFilter()">
+		<div class="uk-align-right">
+			<span class="uk-margin-right ${filter ? '' : 'uk-text-muted'}" click.delegate="toggleFilter()" title="Toggle filters" uk-tooltip="pos: left">
 				<i class="fa fa-filter"></i>
 			</span>
-		</div>
-		<div class="uk-button-group uk-align-right">
-			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-primary' : 'uk-button-default'}" click.delegate="setView('schedule')">Schedule</button>
-			<button type="button" class="uk-button ${currentView === 'schedule' ? 'uk-button-default' : 'uk-button-primary'}" click.delegate="setView('up to date')">Up to date</button>
+			<button type="button" class="uk-button ${scheduleView ? 'uk-button-secondary' : 'uk-button-default'}" click.delegate="setView('schedule')">Schedule</button>
+			<button type="button" class="uk-button ${scheduleView ? 'uk-button-default' : 'uk-button-secondary'}" click.delegate="setView('uptodate')">Up to date</button>
 		</div>
 	</div>
 	<div id="filters" class="uk-child-width-1-1" if.bind="filter">
@@ -44,9 +38,12 @@
 				<div class="uk-margin">
 					<label class="uk-form-label">Appointment Statuses</label>
 					<div class="uk-form-controls">
-						<label class="uk-form-label" repeat.for="appointmentStatus of appointmentStatuses">
+						<template repeat.for="appointmentStatus of appointmentStatuses">
+						<label>
 							<input class="uk-checkbox" type="checkbox" model.bind="appointmentStatus.appointmentStatusId" checked.bind="appointmentStatusIds" change.delegate="appointmentStatusClicked($event)" />&nbsp;${appointmentStatus.name}
 						</label>
+						<br if.bind="!$last">
+						</template>
 					</div>
 				</div>
 			</form>
@@ -55,7 +52,7 @@
 </div>
 
 <div class="uk-overflow-auto">
-	<table class="uk-table uk-table-divider" if.bind="currentView === 'schedule'" fixed-header>
+	<table class="uk-table uk-table-divider" if.bind="scheduleView" fixed-header>
 	<thead>
 		<tr>
 			<th>
@@ -72,20 +69,20 @@
 	</thead>
 	<tbody>
 		<template repeat.for="day of days">
-			<tr>
+			<tr id="_${day.year}${day.month}${day.day}">
 				<td class="uk-table-shrink">
-					<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
-						${day | dateFormat:'ddd MMM D'}
+					<a route-href="route: addAssessment; params.bind: {'year': day.year, 'month': day.month, 'day': day.day }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
+						${day.date | dateFormat:'ddd MMM D'}
 					</a>
 				</td>
 				<td colspan="6"></td>
 				<td>
-					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day" click.delegate="editCalendarNote(calendarNote)" uk-toggle="target: #calendar-note-form">
+					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day.date" click.delegate="editCalendarNote(calendarNote)" uk-toggle="target: #calendar-note-form">
 						<small>${calendarNote.note.noteText}</small>
 					</p>
 				</td>
 			</tr>
-			<template repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
+			<template repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
 			<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()}">
 				<td class="uk-table-shrink">
 					<ul class="uk-list">
@@ -181,7 +178,7 @@
 </div>
 
 <div class="uk-overflow-auto">
-	<table class="uk-table uk-table-divider" if.bind="currentView === 'up to date'" fixed-header>
+	<table class="uk-table uk-table-divider" if.bind="uptodateView" fixed-header>
 	<thead>
 		<tr>
 			<th>
@@ -200,15 +197,15 @@
 	</thead>
 	<tbody>
 		<template repeat.for="day of days">
-		<tr>
+		<tr id="_${day.year}${day.month}${day.day}">
 			<td class="uk-table-shrink">
-				<a route-href="route: addAssessment; params.bind: {'year': day.getFullYear(), 'month': day.getMonth() + 1, 'day': day.getDate() }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
-					${day | dateFormat:'ddd MMM D'}
+				<a route-href="route: addAssessment; params.bind: {'year': day.year, 'month': day.month, 'day': day.day }" class="uk-text-primary uk-text-nowrap date-display" title="Create new assessment" uk-tooltip="pos: right">
+					${day.date | dateFormat:'ddd MMM D'}
 				</a>
 			</td>
 			<td colspan="9"></td>
 		</tr>
-		<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()}" repeat.for="appointment of appointments | appointmentForDay:day">
+		<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()}" repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
 			<td class="uk-table-shrink">
 				<ul class="uk-list">
 					<li>

@@ -36,7 +36,8 @@ export class Config {
 		};
 		
 		this.calendarDefaults = {
-			appointmentStatusIds: [1,2,4,5,6,7,8]	//all except canceled
+			appointmentStatusIds: [1,2,4,5,6,7,8],	//all except canceled
+			defaultView: 'schedule'
 		};
 		
 		this.referralSourceDefaults = {

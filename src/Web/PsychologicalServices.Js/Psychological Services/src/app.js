@@ -1,20 +1,38 @@
 import {inject} from 'aurelia-framework';
 import {Context} from 'common/context';
+import {Config} from 'common/config';
+import {DateService} from 'common/dateService';
 import {UIkit} from 'uikit';
 
-@inject(Context)
+@inject(Context, Config, DateService)
 export class App {
-  constructor(context) {
+  constructor(context, config, dateService) {
     this.context = context;
+	this.config = config;
+	this.dateService = dateService;
+	
+	this.title = "Psychological Services";
   }
   
   configureRouter(config, router) {
 		this.router = router;
 		
-		config.title = "Psychological Services";
+		config.title = this.title;
+		
+		config.options.pushState = true;
+		config.options.root = '/';
+		
+		var calendarNavigationStrategy = (instruction) => {
+			let appTime = this.dateService.timezoneNow(this.config.timezone);
+
+			let route = getCalendarRoute(appTime);
+			
+			instruction.config.redirect = route;
+		};
 		
 		config.map([
-			{ route: ['', 'calendar'], name: 'calendar', moduleId: 'calendar/calendar', title: 'Calendar', nav: true },
+			{ route: ['', 'calendar'], navigationStrategy: calendarNavigationStrategy, nav: true },
+			{ route: 'calendar/:year/:month/:day?', moduleId: 'calendar/calendar', title: 'Calendar', nav: false },
 			{ route: 'assessments', name: 'assessments', moduleId: 'assessments/assessments', title: 'Assessments', nav: true },
 			{ route: 'assessments/:id', name: 'editAssessment', moduleId: 'assessments/editAssessment', title: 'Edit Assessment', nav: false },
 			{ route: 'assessments/add/:year/:month/:day', name: 'addAssessment', moduleId: 'assessments/editAssessment', title: 'Add Assessment', nav: false },
@@ -37,4 +55,11 @@ export class App {
 			{ route: 'users/add', name: 'addUser', moduleId: 'users/editUser', title: 'Add User', nav: false }
 		]);
 	}
+}
+
+function getCalendarRoute(date) {
+	let year = date.getFullYear();
+	let month = date.getMonth() + 1;
+	
+	return `calendar/${year}/${month}`;
 }

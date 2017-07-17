@@ -37,14 +37,13 @@ export class DatePickerCustomAttribute {
 	detached() {
 		this.flatpickr.destroy();
 	}
-	/*
+	
 	datesChanged(newValue, oldValue) {
-		console.log('old: ' + oldValue + ', new: ' + newValue);
+		//console.log('old: ' + oldValue + ', new: ' + newValue);
 		if (this.flatpickr && isDate(newValue)) {
 			this.flatpickr.setDate(newValue);
 		}
 	}
-	*/
 }
 
 function copyValues(copyFrom, copyTo) {
