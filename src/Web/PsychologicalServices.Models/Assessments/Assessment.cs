@@ -51,7 +51,7 @@ namespace PsychologicalServices.Models.Assessments
         
         public IEnumerable<Color> Colors { get; set; }
 
-        public IEnumerable<Models.Attributes.Attribute> Attributes { get; set; }
+        public IEnumerable<Models.Attributes.AttributeValue> Attributes { get; set; }
 
         public IEnumerable<Report> Reports { get; set; }
 

@@ -11,24 +11,24 @@ export class ViewAssessmentSummaryCustomElement {
 		this.config = config;
 	}
 	
-	modelChanged(oldValue, newValue) {
-		let appointment = oldValue;
+	modelChanged(newValue, oldValue) {
+		let appointment = newValue;
 		
 		this.modalId = `assessment-summary-${appointment.appointmentId}`;
 		
 		this.psychiatrist = appointment.assessment.attributes.some(attr =>
-			attr.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.psychiatrist &&
-			attr.name.indexOf('Psychiatrist') > -1
+			attr.attribute.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.psychiatrist &&
+			attr.attribute.name.indexOf('Psychiatrist') > -1
 		);
 		
 		this.reader = appointment.attributes.some(attr =>
-			attr.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.reader &&
-			attr.name.indexOf('Reader') > -1
+			attr.attribute.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.reader &&
+			attr.attribute.name.indexOf('Reader') > -1
 		);
 		
 		this.translator = appointment.attributes.some(attr =>
-			attr.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.translator &&
-			attr.name.indexOf('Translator') > -1
+			attr.attribute.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.translator &&
+			attr.attribute.name.indexOf('Translator') > -1
 		);
 		
 		this.colors = appointment.assessment.colors;

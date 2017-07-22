@@ -35,9 +35,9 @@ namespace PsychologicalServices.Web.Controllers
         [Route("send")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<SendScheduleResult>))]
-        public IHttpActionResult Send(ScheduleSearchCriteria criteria)
+        public IHttpActionResult Send(ScheduleSendParameters parameters)
         {
-            var results = _scheduleService.SendSchedule(criteria);
+            var results = _scheduleService.SendSchedule(parameters);
 
             return Ok(results);
         }

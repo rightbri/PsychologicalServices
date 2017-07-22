@@ -108,11 +108,19 @@
 				</td>
 				<td>
 					<ul class="list-unstyled">
-						<# foreach (var attribute in appointment.Attributes.Where(attribute => new[] { 1 }.Contains(attribute.AttributeType.AttributeTypeId))) { #>
-							<li><#= attribute.Name #></li>
+						<# foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 1 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<li>
+								<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+									<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+								<# } #>
+							</li>
 						<# } #>
-						<# foreach (var attribute in appointment.Assessment.Attributes.Where(attribute => new[] { 5, 6 }.Contains(attribute.AttributeType.AttributeTypeId))) { #>
-							<li><#= attribute.Name #></li>
+						<# foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 5, 6 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<li>
+								<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+									<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+								<# } #>
+							</li>
 						<# } #>
 					</ul>
 				</td>

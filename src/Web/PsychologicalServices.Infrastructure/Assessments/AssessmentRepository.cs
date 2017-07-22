@@ -5,6 +5,7 @@ using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.Attributes;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Invoices;
@@ -20,6 +21,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
     {
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
+        private readonly IAttributeRepository _attributeRepository = null;
         private readonly IInvoiceGenerator _invoiceGenerator = null;
         private readonly IDate _date = null;
 
@@ -170,11 +172,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
             }
 
             var appointment = _appointmentRepository.NewAppointment(companyId, appointmentTime);
-            
+
+            var attributes = _attributeRepository.SearchAttributes(new AttributeSearchCriteria
+            {
+                AttributeTypeIds = new[] { 2, 4, 5, 6, 7, 8, 9 },   //TODO: don't hard-code
+            });
+
             return new Assessment
             {
                 Appointments = new List<Appointment>(new[] { appointment }),
-                Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
+                Attributes = attributes.Select(attribute => new AttributeValue { Attribute = attribute }),
                 Claims = Enumerable.Empty<Models.Claims.Claim>(),
                 Colors = Enumerable.Empty<Models.Colors.Color>(),
                 Company = company,
@@ -323,8 +330,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 {
                     IsNew = isNew,
                     AssessmentId = assessment.AssessmentId,
-                    CreateDate = _date.UtcNow,
-                    CreateUserId = assessment.CreateUser.UserId,
                 };
 
                 if (!isNew)
@@ -364,6 +369,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .SubPath.Add(AssessmentReportIssueInDisputeEntity.PrefetchPathIssueInDispute);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
+                }
+                else
+                {
+                    assessmentEntity.CreateDate = _date.UtcNow;
+                    assessmentEntity.CreateUserId = assessment.CreateUser.UserId;
                 }
 
                 assessmentEntity.AssessmentTypeId = assessment.AssessmentType.AssessmentTypeId;
@@ -465,14 +475,20 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 appointmentEntity.PsychometristId != appointment.Psychometrist.UserId ||
                                 //appointment attributes removed
                                 appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
-                                    !appointment.Attributes.Any(attribute =>
-                                        attribute.AttributeId == appointmentAttribute.AttributeId
+                                    !appointment.Attributes.Any(attributeValue =>
+                                        attributeValue.Attribute.AttributeId == appointmentAttribute.AttributeId
                                     )
                                 ) ||
                                 //appointment attributes added
-                                appointment.Attributes.Any(attribute =>
+                                appointment.Attributes.Any(attributeValue =>
                                     !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
-                                        appointmentAttribute.AttributeId == attribute.AttributeId
+                                        appointmentAttribute.AttributeId == attributeValue.Attribute.AttributeId
+                                    )
+                                ) ||
+                                appointment.Attributes.Any(attributeValue =>
+                                    appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
+                                        appointmentAttribute.AttributeId == attributeValue.Attribute.AttributeId &&
+                                        appointmentAttribute.Value != attributeValue.Value
                                     )
                                 )
                             )
@@ -501,7 +517,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
                     appointmentEntity.UpdateDate = _date.UtcNow;
                     appointmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
-                    
+
                     //if (appointment.AppointmentStatus.CanInvoice &&
                     //    !appointmentEntity.InvoiceAppointments.Any())
                     //{
@@ -517,14 +533,13 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
-                            appointmentAttribute.AttributeId == attribute.AttributeId
+                            appointmentAttribute.AttributeId == attribute.Attribute.AttributeId
                         )
                     )
                     .ToList();
-
+                    
                     var appointmentAttributesToRemove = appointmentEntity.AppointmentAttributes.Where(appointmentAttribute =>
-                        !appointment.Attributes.Any(attribute =>
-                            attribute.AttributeId == appointmentAttribute.AttributeId)
+                        !appointment.Attributes.Any(attribute => attribute.Attribute.AttributeId == appointmentAttribute.AttributeId)
                     )
                     .ToList();
 
@@ -533,10 +548,36 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         uow.AddForDelete(attribute);
                     }
 
+                    var appointmentAttributesToUpdate = appointment.Attributes
+                        .Where(attribute =>
+                            appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
+                                appointmentAttribute.AttributeId == attribute.Attribute.AttributeId &&
+                                appointmentAttribute.Value != attribute.Value
+                        )
+                    )
+                    .ToList();
+
+                    foreach (var attribute in appointmentAttributesToUpdate)
+                    {
+                        var appointmentAttribute = appointmentEntity.AppointmentAttributes.SingleOrDefault(aa => aa.AttributeId == attribute.Attribute.AttributeId);
+                        if (null != appointmentAttribute)
+                        {
+                            if (null == attribute.Value)
+                            {
+                                appointmentAttribute.SetNewFieldValue((int)AppointmentAttributeFieldIndex.Value, null);
+                            }
+                            else
+                            {
+                                appointmentAttribute.Value = attribute.Value;
+                            }
+                        }
+                    }
+
                     appointmentEntity.AppointmentAttributes.AddRange(
                         appointmentAttributesToAdd.Select(attribute => new AppointmentAttributeEntity
                         {
-                            AttributeId = attribute.AttributeId,
+                            AttributeId = attribute.Attribute.AttributeId,
+                            Value = attribute.Value,
                         })
                     );
                 }
@@ -567,7 +608,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         appointment.Attributes.Select(attribute =>
                             new AppointmentAttributeEntity
                             {
-                                AttributeId = attribute.AttributeId,
+                                AttributeId = attribute.Attribute.AttributeId,
+                                Value = attribute.Value,
                             }
                         )
                     );
@@ -817,29 +859,58 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                 #region attributes
 
-                var assessmentAttributesToAdd = assessment.Attributes.Where(attribute =>
-                        !assessmentEntity.AssessmentAttributes.Any(assessmentAttribute =>
-                            assessmentAttribute.AttributeId == attribute.AttributeId
-                        )
-                    )
-                    .ToList();
-
-                var assessmentAttributesToRemove = assessmentEntity.AssessmentAttributes.Where(assessmentAttribute =>
-                        !assessment.Attributes.Any(attribute =>
-                            attribute.AttributeId == assessmentAttribute.AttributeId
-                        )
-                    )
-                    .ToList();
-
-                foreach (var attribute in assessmentAttributesToRemove)
+                if (!isNew)
                 {
-                    uow.AddForDelete(attribute);
+                    var assessmentAttributesToRemove = assessmentEntity.AssessmentAttributes.Where(assessmentAttribute =>
+                            !assessment.Attributes.Any(attributeValue =>
+                                attributeValue.Attribute.AttributeId == assessmentAttribute.AttributeId
+                            )
+                        )
+                        .ToList();
+
+                    foreach (var attribute in assessmentAttributesToRemove)
+                    {
+                        uow.AddForDelete(attribute);
+                    }
+
+                    var attributesToUpdate = assessment.Attributes
+                        .Where(attribute =>
+                            assessmentEntity.AssessmentAttributes.Any(assessmentAttribute =>
+                                assessmentAttribute.AttributeId == attribute.Attribute.AttributeId &&
+                                assessmentAttribute.Value != attribute.Value
+                        )
+                    )
+                    .ToList();
+
+                    foreach (var attribute in attributesToUpdate)
+                    {
+                        var assessmentAttribute = assessmentEntity.AssessmentAttributes.SingleOrDefault(aa => aa.AttributeId == attribute.Attribute.AttributeId);
+                        if (null != assessmentAttribute)
+                        {
+                            if (null == attribute.Value)
+                            {
+                                assessmentAttribute.SetNewFieldValue((int)AssessmentAttributeFieldIndex.Value, null);
+                            }
+                            else
+                            {
+                                assessmentAttribute.Value = attribute.Value;
+                            }
+                        }
+                    }
                 }
+                
+                var assessmentAttributesToAdd = assessment.Attributes.Where(attributeValue =>
+                        !assessmentEntity.AssessmentAttributes.Any(assessmentAttribute =>
+                            assessmentAttribute.AttributeId == attributeValue.Attribute.AttributeId
+                        )
+                    )
+                    .ToList();
 
                 assessmentEntity.AssessmentAttributes.AddRange(
-                    assessmentAttributesToAdd.Select(attribute => new AssessmentAttributeEntity
+                    assessmentAttributesToAdd.Select(attributeValue => new AssessmentAttributeEntity
                     {
-                        AttributeId = attribute.AttributeId,
+                        AttributeId = attributeValue.Attribute.AttributeId,
+                        Value = attributeValue.Value,
                     })
                 );
 

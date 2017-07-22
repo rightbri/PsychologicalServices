@@ -159,9 +159,10 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AppointmentAttributeEntity's mappings</summary>
 		private void InitAppointmentAttributeEntityMappings()
 		{
-			base.AddElementMapping( "AppointmentAttributeEntity", "PsychologicalServices", @"dbo", "AppointmentAttributes", 2 );
+			base.AddElementMapping( "AppointmentAttributeEntity", "PsychologicalServices", @"dbo", "AppointmentAttributes", 3 );
 			base.AddElementFieldMapping( "AppointmentAttributeEntity", "AppointmentId", "AppointmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AppointmentAttributeEntity", "AttributeId", "AttributeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "AppointmentAttributeEntity", "Value", "Value", true, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
 		}
 		/// <summary>Inits AppointmentSequenceEntity's mappings</summary>
 		private void InitAppointmentSequenceEntityMappings()
@@ -209,9 +210,10 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AssessmentAttributeEntity's mappings</summary>
 		private void InitAssessmentAttributeEntityMappings()
 		{
-			base.AddElementMapping( "AssessmentAttributeEntity", "PsychologicalServices", @"dbo", "AssessmentAttributes", 2 );
+			base.AddElementMapping( "AssessmentAttributeEntity", "PsychologicalServices", @"dbo", "AssessmentAttributes", 3 );
 			base.AddElementFieldMapping( "AssessmentAttributeEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentAttributeEntity", "AttributeId", "AttributeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "AssessmentAttributeEntity", "Value", "Value", true, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
 		}
 		/// <summary>Inits AssessmentClaimEntity's mappings</summary>
 		private void InitAssessmentClaimEntityMappings()

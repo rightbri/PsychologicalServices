@@ -233,6 +233,10 @@ namespace PsychologicalServices.Infrastructure.Users
                     {
                         users = users.Where(user => user.IsActive == criteria.IsActive.Value);
                     }
+                    else
+                    {
+                        users = users.Where(user => user.IsActive);
+                    }
 
                     if (criteria.AvailableDate.HasValue)
                     {

@@ -158,6 +158,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("AppointmentAttributeEntity", "AppointmentId", typeof(System.Int32), true, true, false, false,  (int)AppointmentAttributeFieldIndex.AppointmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AppointmentAttributeEntity", "AttributeId", typeof(System.Int32), true, true, false, false,  (int)AppointmentAttributeFieldIndex.AttributeId, 0, 0, 10);
+			base.AddElementFieldInfo("AppointmentAttributeEntity", "Value", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)AppointmentAttributeFieldIndex.Value, 0, 0, 0);
 		}
 		/// <summary>Inits AppointmentSequenceEntity's FieldInfo objects</summary>
 		private void InitAppointmentSequenceEntityInfos()
@@ -204,6 +205,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("AssessmentAttributeEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentAttributeFieldIndex.AssessmentId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentAttributeEntity", "AttributeId", typeof(System.Int32), true, true, false, false,  (int)AssessmentAttributeFieldIndex.AttributeId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentAttributeEntity", "Value", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)AssessmentAttributeFieldIndex.Value, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentClaimEntity's FieldInfo objects</summary>
 		private void InitAssessmentClaimEntityInfos()

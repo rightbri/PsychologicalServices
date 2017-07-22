@@ -517,6 +517,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("AttributeId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Value", fieldHashtable);
 		}
 		#endregion
 
@@ -690,6 +693,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AssessmentAttributeFieldIndex.AttributeId, true); }
 			set	{ SetValue((int)AssessmentAttributeFieldIndex.AttributeId, value); }
+		}
+
+		/// <summary> The Value property of the Entity AssessmentAttribute<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AssessmentAttributes"."Value"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Boolean> Value
+		{
+			get { return (Nullable<System.Boolean>)GetValue((int)AssessmentAttributeFieldIndex.Value, false); }
+			set	{ SetValue((int)AssessmentAttributeFieldIndex.Value, value); }
 		}
 
 

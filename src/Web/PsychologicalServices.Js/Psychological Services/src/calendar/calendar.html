@@ -1,4 +1,5 @@
 <template>
+	<require from="resources/value-converters/attribute-value"></require>
 	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/note-for-day"></require>
@@ -141,20 +142,20 @@
 					<ul class="uk-list">
 						<li title="Psychometrist" class="smaller-siblings">${appointment.psychometrist.firstName}</li>
 						<li repeat.for="attribute of appointment.attributes | attributeTypes:[1] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute.name}
+							${attribute | attributeValue}
 						</li>
 						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute.name}
+							${attribute | attributeValue}
 						</li>
 					</ul>
 				</td>
 				<td>
 					<ul class="uk-list smaller-children">
 						<li repeat.for="attribute of appointment.attributes | attributeTypes:[3] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute.name}
+							${attribute | attributeValue}
 						</li>
 						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute.name}
+							${attribute | attributeValue}
 						</li>
 					</ul>
 				</td>
@@ -184,7 +185,8 @@
 			<th>
 				<a href="#" uk-totop uk-scroll style="display: none;"></a>
 			</th>
-			<th>Location / Type / Claimant / Source</th>
+			<th>Location / Source</th>
+			<th>Claimant / Type</th>
 			<th title="Psychiatrist">Psych?</th>
 			<th>Psychometrist</th>
 			<th>Doc List</th>
@@ -192,7 +194,7 @@
 			<th>Report Status</th>
 			<th>File Size</th>
 			<th>Reports</th>
-			<th>Info</th>
+			<th class="uk-width-small">Info</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -203,10 +205,10 @@
 					${day.date | dateFormat:'ddd MMM D'}
 				</a>
 			</td>
-			<td colspan="9"></td>
+			<td colspan="10"></td>
 		</tr>
-		<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()}" repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
-			<td class="uk-table-shrink">
+		<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()} uk-child-width-auto" repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
+			<td>
 				<ul class="uk-list">
 					<li>
 						<a route-href="route: editAssessment; params.bind: { id: appointment.assessment.assessmentId }" class="uk-link-text" title="Edit assessment" uk-tooltip="pos: right">
@@ -220,23 +222,25 @@
 					</li>
 				</ul>
 			</td>
-			<td class="uk-table-shrink">
+			<td>
 				${appointment.location.name}
-				<br>${appointment.assessment.assessmentType.name}
-				<template if.bind="appointment.isCompletion">
-				<br>Completion
-				</template>
+				<br>${appointment.assessment.referralSource.name}
+			</td>
+			<td>
 				<template repeat.for="claim of appointment.assessment.claims">
 					<template if.bind="claim.claimant">
-					<br>${claim.claimant.firstName} ${claim.claimant.lastName}
+					${claim.claimant.firstName} ${claim.claimant.lastName}<br>
 					</template>
 				</template>
-				<br>${appointment.assessment.referralSource.name}
+				${appointment.assessment.assessmentType.name}<br>
+				<template if.bind="appointment.isCompletion">
+				Completion
+				</template>
 			</td>
 			<td>
 				<ul class="uk-list">
 					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[6] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.name === 'Psychiatrist' | boolean}
+						${attribute.value === true | boolean}
 					</li>
 				</ul>
 			</td>
@@ -257,10 +261,10 @@
 					</li>
 				</ul>
 			</td>
-			<td>
+			<td class="uk-width-small">
 				<ul class="uk-list smaller-children">
 					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5,9] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.name}
+						${attribute | attributeValue}
 					</li>
 				</ul>
 			</td>

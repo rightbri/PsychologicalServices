@@ -13,14 +13,21 @@ export class Schedule {
 		this.config = config;
 		this.notifier = notifier;
 		
-		this.users = null;
+		this.scheduleUsers = null;
 		
+		this.selectedUser = null;
 		this.searched = false;
+		
+		this.recipients = [];
+		this.cc = [];
+		this.bcc = [];
 		
 		let now = new Date();
 		
 		this.searchStart = this.weekStart(now);
 		this.searchEnd = this.weekEnd(now);
+		
+		this.userMatcher = (a, b) => a && b && a.userId === b.userId;
 	}
 	
 	activate() {
@@ -28,7 +35,8 @@ export class Schedule {
 			this.user = user;
 	
 			return Promise.all([
-				this.search()
+				this.search(),
+				this.dataRepository.searchUsers({}).then(data => this.users = data)
 			]);
 		});
 	}
@@ -39,19 +47,35 @@ export class Schedule {
 			'endDate': this.searchEnd,
 			'companyId': this.user.company.companyId
 		}).then(data => {
-			this.users = data;
+			this.scheduleUsers = data;
 			this.searched = true;
 		});
 	}
 	
-	sendSchedule(user) {
+	selectUser(user) {
+		this.selectedUser = user;
+		this.recipients = [user];
+		this.cc = [];
+		this.bcc = [];
+		
+		//scroll to schedule send parameters
+	}
+	
+	sendSchedule() {
+		let user = this.selectedUser;
+		
 		this.notifier.info('Sending schedule to ' + user.firstName);
 		
 		return this.dataRepository.sendSchedule({
-			'startDate': this.searchStart,
-			'endDate': this.searchEnd,
-			'companyId': this.user.company.companyId,
-			'psychometristId': user.userId
+			recipients: getUsersEmailList(this.recipients),
+			courtesyCopy: getUsersEmailList(this.cc),
+			blindCourtesyCopy: getUsersEmailList(this.bcc),
+			criteria: {
+				'startDate': this.searchStart,
+				'endDate': this.searchEnd,
+				'companyId': this.user.company.companyId,
+				'psychometristId': user.userId
+			}
 		}).then(results => {
 			
 			for (var result of results) {
@@ -74,4 +98,8 @@ export class Schedule {
 	weekEnd(date) {
 		return moment().endOf('week').format();
 	}
+}
+
+function getUsersEmailList(users) {
+	return users.map(user => user.email);
 }

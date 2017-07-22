@@ -3,6 +3,7 @@ using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 
 namespace PsychologicalServices.Models.Schedule
@@ -37,9 +38,9 @@ namespace PsychologicalServices.Models.Schedule
             return users;
         }
 
-        public IEnumerable<SendScheduleResult> SendSchedule(ScheduleSearchCriteria criteria)
+        public IEnumerable<SendScheduleResult> SendSchedule(ScheduleSendParameters parameters)
         {
-            var users = Search(criteria);
+            var users = Search(parameters.Criteria);
 
             var results = new List<SendScheduleResult>();
 
@@ -52,7 +53,7 @@ namespace PsychologicalServices.Models.Schedule
 
                 try
                 {
-                    var subject = string.Format("Assessment schedule: {0:MMMM d, yyyy} - {1:MMMM d, yyyy}", criteria.StartDate, criteria.EndDate);
+                    var subject = string.Format("Assessment schedule: {0:MMMM d, yyyy} - {1:MMMM d, yyyy}", parameters.Criteria.StartDate, parameters.Criteria.EndDate);
 
                     var model = new ScheduleModel
                     {
@@ -63,10 +64,28 @@ namespace PsychologicalServices.Models.Schedule
 
                     var body = _scheduleHtmlGenerator.GeneratePsychometristScheduleHtml(model);
 
-                    var message = new MailMessage(user.Company.Email, user.Email, subject, body)
+                    var recipients = null != parameters.Recipients && parameters.Recipients.Any()
+                        ? string.Join(",", parameters.Recipients)
+                        : user.Email;
+
+                    var message = new MailMessage(user.Company.Email, recipients, subject, body)
                         {
                             IsBodyHtml = true,
                         };
+                    
+                    if (null != parameters.CourtesyCopy && parameters.CourtesyCopy.Any())
+                    {
+                        message.CC.Add(
+                            string.Join(",", parameters.CourtesyCopy)
+                        );
+                    }
+
+                    if (null != parameters.BlindCourtesyCopy && parameters.BlindCourtesyCopy.Any())
+                    {
+                        message.Bcc.Add(
+                            string.Join(",", parameters.BlindCourtesyCopy)
+                        );
+                    }
 
                     var mailResult = _mailService.Send(message);
                     
@@ -77,8 +96,18 @@ namespace PsychologicalServices.Models.Schedule
                 catch (Exception ex)
                 {
                     _log.Error(
-                        string.Format("An error occurred while attempting to send a psychometrist schedule with criteria: psychometristId = {0}, companyId = {1}, startDate = {2}, endDate = {3}", criteria.PsychometristId, criteria.CompanyId, criteria.StartDate, criteria.EndDate), 
-                        ex);
+                        string.Format(
+                            "An error occurred while attempting to send a psychometrist schedule with criteria: psychometristId = {0}, companyId = {1}, startDate = {2}, endDate = {3} to recipients = {4}, cc = {5}, bcc = {6}",
+                            parameters.Criteria.PsychometristId,
+                            parameters.Criteria.CompanyId,
+                            parameters.Criteria.StartDate,
+                            parameters.Criteria.EndDate,
+                            parameters.Recipients,
+                            parameters.CourtesyCopy,
+                            parameters.BlindCourtesyCopy
+                        ), 
+                    ex);
+
                     result.IsError = true;
                     result.ErrorDetails = ex.Message;
                 }

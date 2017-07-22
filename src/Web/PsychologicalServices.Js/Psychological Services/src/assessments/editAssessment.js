@@ -25,7 +25,7 @@ export class EditAssessment {
 		this.referralTypeMatcher = (a, b) => a != null && b != null && a.referralTypeId === b.referralTypeId;
 		this.colorMatcher = (a, b) => a != null && b != null && a.colorId === b.colorId;
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
-		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attributeId === b.attributeId;
+		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attribute.attributeId === b.attribute.attributeId;
 		
 		this.validationErrors = null;
 	}

@@ -3,6 +3,8 @@
 	<require from="resources/value-converters/attribute-types"></require>
 	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/date-mask"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
 	
 <div class="uk-container">
 
@@ -32,13 +34,61 @@
 		
 	</fieldset>
 	
+	<hr if.bind="selectedUser">
+	
+	<fieldset id="sendParameters" class="uk-fieldset" if.bind="selectedUser">
+		<legend class="uk-legend">Send Schedule</legend>
+		
+		<form class="uk-form-stacked uk-grid-medium" uk-grid>
+		
+			<div class="uk-width-1-1">
+				Schedule for ${selectedUser.firstName} ${selectedUser.lastName}
+			</div>
+		
+			<div class="uk-width-1-4@s">
+				<label class="uk-form-label">Recipients</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="user of users">
+						<input type="checkbox" class="uk-checkbox" model.bind="user" checked.bind="recipients" matcher.bind="userMatcher" />&nbsp;${user.firstName} ${user.lastName}
+					</label>
+				</div>
+			</div>
+			
+			<div class="uk-width-1-4@s">
+				<label class="uk-form-label">CC</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="user of users">
+						<input type="checkbox" class="uk-checkbox" model.bind="user" checked.bind="cc" matcher.bind="userMatcher" />&nbsp;${user.firstName} ${user.lastName}
+					</label>
+				</div>
+			</div>
+			
+			<div class="uk-width-1-4@s">
+				<label class="uk-form-label">BCC</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="user of users">
+						<input type="checkbox" class="uk-checkbox" model.bind="user" checked.bind="bcc" matcher.bind="userMatcher" />&nbsp;${user.firstName} ${user.lastName}
+					</label>
+				</div>
+			</div>
+			
+			<div class="uk-width-1-4@s">
+				<button class="uk-button uk-button-secondary" click.delegate="sendSchedule()">Send</button>
+			</div>
+		
+		</form>
+		
+	</fieldset>
+	
+	<hr if.bind="selectedUser">
+
 </div>
 
 <div class="uk-overflow-auto">
-	<p if.bind="(!users || !users.length) && searched">
+	<p if.bind="(!scheduleUsers || !scheduleUsers.length) && searched">
 		No schedules found in the selected date range
 	</p>
-	<table class="uk-table uk-table-divider" fixed-header if.bind="users && users.length">
+	<table class="uk-table uk-table-divider" fixed-header if.bind="scheduleUsers && scheduleUsers.length">
 		<thead>
 			<tr>
 				<th>Psychometrist</th>
@@ -53,16 +103,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<template repeat.for="user of users">
+			<template repeat.for="user of scheduleUsers | sortArray:{ property: 'lastName', direction: 'asc' }">
 				<tr class="uk-background-muted">
 					<td>
 						${user.firstName} ${user.lastName}
 					</td>
-					<td colspan="6">&nbsp;</td>
+					<td colspan="7">&nbsp;</td>
 					<td>
-						<button class="uk-button uk-button-secondary" click.delegate="sendSchedule(user)">
-							Send
-						</button>
+						<a href="#sendParameters" class="uk-button uk-button-secondary" click.delegate="selectUser(user)" uk-scroll>Select</a>
 					</td>
 				</tr>
 				<tr repeat.for="appointment of user.psychometristAppointments | sortArray:{ property: 'appointmentTime', direction: 'asc' }">

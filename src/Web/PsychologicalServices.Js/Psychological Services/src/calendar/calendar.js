@@ -61,7 +61,6 @@ export class Calendar {
 
 		if (day) {
 			this.scrollToId = `#_${year}${month}${day}`;
-			//this.setDayState(year, month, day);
 		}
 		
 		return this.refreshAppointments(this.searchDate);

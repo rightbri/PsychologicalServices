@@ -85,6 +85,7 @@
     <Compile Include="Attributes\AttributeType.cs" />
     <Compile Include="Attributes\AttributeTypeValidator.cs" />
     <Compile Include="Attributes\AttributeValidator.cs" />
+    <Compile Include="Attributes\AttributeValue.cs" />
     <Compile Include="Attributes\IAttributeRepository.cs" />
     <Compile Include="Attributes\IAttributeService.cs" />
     <Compile Include="Attributes\IAttributeTypeValidator.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Schedule\ScheduleHtmlGenerator.cs" />
     <Compile Include="Schedule\ScheduleModel.cs" />
     <Compile Include="Schedule\ScheduleSearchCriteria.cs" />
+    <Compile Include="Schedule\ScheduleSendParameters.cs" />
     <Compile Include="Schedule\ScheduleService.cs" />
     <Compile Include="Schedule\SendScheduleResult.cs" />
     <Compile Include="Users\IUnavailabilityValidator.cs" />

@@ -162,6 +162,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentAttributeFieldIndex.AttributeId);}
 		}
+		/// <summary>Creates a new AppointmentAttributeEntity.Value field instance</summary>
+		public static EntityField2 Value
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentAttributeFieldIndex.Value);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AppointmentSequenceEntity</summary>
@@ -331,6 +336,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 AttributeId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentAttributeFieldIndex.AttributeId);}
+		}
+		/// <summary>Creates a new AssessmentAttributeEntity.Value field instance</summary>
+		public static EntityField2 Value
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentAttributeFieldIndex.Value);}
 		}
 	}
 

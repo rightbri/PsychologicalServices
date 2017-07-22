@@ -3,6 +3,7 @@ using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Attributes;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -17,6 +18,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
     {
         private readonly IDate _date = null;
         private readonly ICompanyRepository _companyRepository = null;
+        private readonly IAttributeRepository _attributeRepository = null;
         private readonly ITimezoneService _timezoneService = null;
 
         public AppointmentRepository(
@@ -158,6 +160,11 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
             var appointmentTimeOffset = _timezoneService.GetDateTimeOffset(appointmentTime, timezone);
 
+            var attributes = _attributeRepository.SearchAttributes(new AttributeSearchCriteria
+            {
+                AttributeTypeIds = new[] { 1, 3 },  //TODO: don't hard-code
+            });
+
             return new Appointment
             {
                 AppointmentTime = appointmentTimeOffset.UtcDateTime,
@@ -165,7 +172,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 AppointmentStatus = company.NewAppointmentStatus,
                 Psychologist = company.NewAppointmentPsychologist,
                 Psychometrist = company.NewAppointmentPsychometrist,
-                Attributes = Enumerable.Empty<Models.Attributes.Attribute>(),
+                Attributes = attributes.Select(attribute => new AttributeValue { Attribute = attribute }),
             };
         }
 
@@ -284,6 +291,11 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
                     adapter.FetchEntity(appointmentEntity, prefetch);
                 }
+                else
+                {
+                    appointmentEntity.CreateDate = _date.UtcNow;
+                    appointmentEntity.CreateUserId = appointment.CreateUser.UserId;
+                }
 
                 appointmentEntity.LocationId = appointment.Location.AddressId;
                 appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
@@ -296,27 +308,55 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 {
                     var attributesToRemove = appointmentEntity.AppointmentAttributes
                         .Where(appointmentAttribute =>
-                            !appointment.Attributes.Any(attribute => attribute.AttributeId == appointmentAttribute.AttributeId
+                            !appointment.Attributes.Any(attribute => attribute.Attribute.AttributeId == appointmentAttribute.AttributeId
                         )
-                    );
+                    )
+                    .ToList();
 
                     foreach (var attribute in attributesToRemove)
                     {
                         uow.AddForDelete(attribute);
+                    }
+
+                    var attributesToUpdate = appointment.Attributes
+                        .Where(attribute =>
+                            appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
+                                appointmentAttribute.AttributeId == attribute.Attribute.AttributeId &&
+                                appointmentAttribute.Value != attribute.Value
+                        )
+                    )
+                    .ToList();
+
+                    foreach (var attribute in attributesToUpdate)
+                    {
+                        var appointmentAttribute = appointmentEntity.AppointmentAttributes.SingleOrDefault(aa => aa.AttributeId == attribute.Attribute.AttributeId);
+                        if (null != appointmentAttribute)
+                        {
+                            if (null == attribute.Value)
+                            {
+                                appointmentAttribute.SetNewFieldValue((int)AppointmentAttributeFieldIndex.Value, null);
+                            }
+                            else
+                            {
+                                appointmentAttribute.Value = attribute.Value;
+                            }
+                        }
                     }
                 }
 
                 var attributesToAdd = appointment.Attributes
                     .Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
-                            appointmentAttribute.AttributeId == attribute.AttributeId
+                            appointmentAttribute.AttributeId == attribute.Attribute.AttributeId
                         )
-                    );
+                    )
+                    .ToList();
 
                 appointmentEntity.AppointmentAttributes.AddRange(
                     attributesToAdd.Select(attribute => new AppointmentAttributeEntity
                     {
-                        AttributeId = attribute.AttributeId,
+                        AttributeId = attribute.Attribute.AttributeId,
+                        Value = attribute.Value,
                     })
                 );
 

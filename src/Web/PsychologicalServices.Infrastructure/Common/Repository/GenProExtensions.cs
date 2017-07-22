@@ -321,6 +321,28 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
+        public static AttributeValue ToAttributeValue(this AppointmentAttributeEntity appointmentAttribute)
+        {
+            return null != appointmentAttribute
+                ? new AttributeValue
+                {
+                    Attribute = appointmentAttribute.Attribute.ToAttribute(),
+                    Value = appointmentAttribute.Value,
+                }
+                : null;
+        }
+
+        public static AttributeValue ToAttributeValue(this AssessmentAttributeEntity assessmentAttribute)
+        {
+            return null != assessmentAttribute
+                ? new AttributeValue
+                {
+                    Attribute = assessmentAttribute.Attribute.ToAttribute(),
+                    Value = assessmentAttribute.Value,
+                }
+                : null;
+        }
+
         public static Models.Attributes.Attribute ToAttribute(this AttributeEntity attribute)
         {
             return null != attribute
@@ -564,7 +586,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
                     AssessmentNotes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.ToAssessmentNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
-                    Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
+                    Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.ToAttributeValue()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
                     CreateDate = assessment.CreateDate,
                     CreateUser = assessment.CreateUser.ToUser(),
@@ -594,7 +616,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NotesWriter = assessment.NotesWriter.ToUser(),
                     Company = assessment.Company.ToCompany(),
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
-                    Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.Attribute.ToAttribute()),
+                    Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.ToAttributeValue()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
                     AssessmentNotes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.ToAssessmentNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
@@ -636,7 +658,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Psychologist = appointment.Psychologist.ToUser(),
                     AppointmentStatus = appointment.AppointmentStatus.ToAppointmentStatus(),
                     Assessment = appointment.Assessment.ToAppointmentAssessment(),
-                    Attributes = appointment.AppointmentAttributes.Select(appointmentAttribute => appointmentAttribute.Attribute.ToAttribute()),
+                    Attributes = appointment.AppointmentAttributes.Select(appointmentAttribute => appointmentAttribute.ToAttributeValue()),
                     CreateDate = appointment.CreateDate,
                     CreateUser = appointment.CreateUser.ToUser(),
                     UpdateDate = appointment.UpdateDate,

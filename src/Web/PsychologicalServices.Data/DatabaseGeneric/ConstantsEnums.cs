@@ -107,6 +107,8 @@ namespace PsychologicalServices.Data
 		AppointmentId,
 		///<summary>AttributeId. </summary>
 		AttributeId,
+		///<summary>Value. </summary>
+		Value,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -207,6 +209,8 @@ namespace PsychologicalServices.Data
 		AssessmentId,
 		///<summary>AttributeId. </summary>
 		AttributeId,
+		///<summary>Value. </summary>
+		Value,
 		/// <summary></summary>
 		AmountOfFields
 	}
