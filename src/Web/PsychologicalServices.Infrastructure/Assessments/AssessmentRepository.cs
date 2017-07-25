@@ -29,12 +29,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
             IDataAccessAdapterFactory adapterFactory,
             IAppointmentRepository appointmentRepository,
             ICompanyRepository companyRepository,
+            IAttributeRepository attributeRepository,
             IInvoiceGenerator invoiceGenerator,
             IDate date
         ) : base(adapterFactory)
         {
             _appointmentRepository = appointmentRepository;
             _companyRepository = companyRepository;
+            _attributeRepository = attributeRepository;
             _invoiceGenerator = invoiceGenerator;
             _date = date;
         }
@@ -176,6 +178,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
             var attributes = _attributeRepository.SearchAttributes(new AttributeSearchCriteria
             {
                 AttributeTypeIds = new[] { 2, 4, 5, 6, 7, 8, 9 },   //TODO: don't hard-code
+                IsActive = true,
             });
 
             return new Assessment

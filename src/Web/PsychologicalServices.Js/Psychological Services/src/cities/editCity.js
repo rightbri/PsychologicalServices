@@ -16,6 +16,7 @@ export class EditCity {
 		
 		this.city = null;
 		
+		this.saveDisabled = false;
 		this.validationErrors = null;
 	}
 	
@@ -37,6 +38,8 @@ export class EditCity {
 	}
 	
 	save() {
+		this.saveDisabled = true;
+		
 		var isNew = this.city.cityId === 0;
 		
 		this.dataRepository.saveCity(this.city)
@@ -69,7 +72,12 @@ export class EditCity {
 				if (data.isError) {
 					this.notifier.error(data.errorDetails);
 				}
-            });
+				
+				this.saveDisabled = false;
+            })
+			.catch(err => {
+				this.saveDisabled = false;
+			});
     }
 	
 	back() {

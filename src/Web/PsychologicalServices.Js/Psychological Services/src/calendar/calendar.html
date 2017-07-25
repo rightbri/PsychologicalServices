@@ -109,9 +109,11 @@
 					<ul class="uk-list">
 						<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
 						<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
-						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute.name}
-						</li>
+						<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6] | sortArray:{ property: 'name', direction: 'asc' }">
+							<li if.bind="attribute.value !== false">
+								${attribute | attributeValue}
+							</li>
+						</template>
 					</ul>
 				</td>
 				<td>
@@ -141,22 +143,30 @@
 				<td>
 					<ul class="uk-list">
 						<li title="Psychometrist" class="smaller-siblings">${appointment.psychometrist.firstName}</li>
-						<li repeat.for="attribute of appointment.attributes | attributeTypes:[1] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute | attributeValue}
-						</li>
-						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute | attributeValue}
-						</li>
+						<template repeat.for="attribute of appointment.attributes | attributeTypes:[1] | sortArray:{ property: 'name', direction: 'asc' }">
+							<li if.bind="attribute.value !== false">
+								${attribute | attributeValue}
+							</li>
+						</template>
+						<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[5] | sortArray:{ property: 'name', direction: 'asc' }">
+							<li if.bind="attribute.value !== false">
+								${attribute | attributeValue}
+							</li>
+						</template>
 					</ul>
 				</td>
 				<td>
 					<ul class="uk-list smaller-children">
-						<li repeat.for="attribute of appointment.attributes | attributeTypes:[3] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute | attributeValue}
-						</li>
-						<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4] | sortArray:{ property: 'name', direction: 'asc' }">
-							${attribute | attributeValue}
-						</li>
+						<template repeat.for="attribute of appointment.attributes | attributeTypes:[3] | sortArray:{ property: 'name', direction: 'asc' }">
+							<li if.bind="attribute.value !== false">
+								${attribute | attributeValue}
+							</li>							
+						</template>
+						<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4] | sortArray:{ property: 'name', direction: 'asc' }">
+							<li if.bind="attribute.value !== false">
+								${attribute | attributeValue}
+							</li>
+						</template>
 					</ul>
 				</td>
 			</tr>
@@ -240,7 +250,7 @@
 			<td>
 				<ul class="uk-list">
 					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[6] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute.value === true | boolean}
+						${attribute.value | boolean:'Unknown'}
 					</li>
 				</ul>
 			</td>
@@ -263,9 +273,11 @@
 			</td>
 			<td class="uk-width-small">
 				<ul class="uk-list smaller-children">
-					<li repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5,9] | sortArray:{ property: 'name', direction: 'asc' }">
-						${attribute | attributeValue}
-					</li>
+					<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5,9] | sortArray:{ property: 'name', direction: 'asc' }">
+						<li if.bind="attribute.value !== false">
+							${attribute | attributeValue}
+						</li>
+					</template>
 				</ul>
 			</td>
 		</tr>

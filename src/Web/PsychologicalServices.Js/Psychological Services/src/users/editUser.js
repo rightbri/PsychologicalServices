@@ -29,6 +29,7 @@ export class EditUser {
 		this.roleMatcher = (a, b) => a !== null && b !== null && a.roleId === b.roleId;
 		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
 		
+		this.saveDisabled = false;
 		this.validationErrors = null;
 	}
 	
@@ -88,6 +89,8 @@ export class EditUser {
 	}
 	
 	save() {
+		this.saveDisabled = true;
+		
 		var isNew = this.user.userId === 0;
 
 		this.dataRepository.saveUser(this.user)
@@ -120,7 +123,12 @@ export class EditUser {
 				if (data.isError) {
 					this.notifier.error(data.errorDetails);
 				}
-            });
+				
+				this.saveDisabled = false;
+            })
+			.catch(err => {
+				this.saveDisabled = false;
+			});
 	}
 	
 	back() {

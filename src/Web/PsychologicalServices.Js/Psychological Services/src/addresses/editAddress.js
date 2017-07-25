@@ -21,6 +21,7 @@ export class EditAddress {
 		this.cityMatcher = (a, b) => a && b && a.cityId === b.cityId;
 		this.addressTypeMatcher = (a, b) => a && b && a.addressTypeId === b.addressTypeId;
 		
+		this.saveDisabled = false;
 		this.validationErrors = null;
 	}
 	
@@ -53,6 +54,8 @@ export class EditAddress {
 	}
 	
 	save() {
+		this.saveDisabled = true;
+		
 		var isNew = this.address.addressId === 0;
 		
 		this.dataRepository.saveAddress(this.address)
@@ -85,7 +88,12 @@ export class EditAddress {
 				if (data.isError) {
 					this.notifier.error(data.errorDetails);
 				}
-            });
+				
+				this.saveDisabled = false;
+            })
+			.catch(err => {
+				this.saveDisabled = false;
+			});
     }
 	
 	back() {

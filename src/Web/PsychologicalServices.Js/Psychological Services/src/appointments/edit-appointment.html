@@ -72,19 +72,26 @@
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-1">
 					<div class="uk-form-controls">
-						<label class="uk-form-label" repeat.for="attribute of attributes | attributeTypes:[3]">
-							<input type="checkbox" class="uk-checkbox" model.bind="attribute" checked.bind="model.appointment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
-						</label>
-					</div>
-				</div>
-				
-				<div>
-					<div class="uk-form-controls">
-						<label class="uk-form-label" repeat.for="attribute of attributes | attributeTypes:[1]">
-							<input type="checkbox" class="uk-checkbox" model.bind="attribute" checked.bind="model.appointment.attributes" matcher.bind="attributeMatcher" />&nbsp;${attribute.name}
-						</label>
+						<table class="uk-table uk-table-divider uk-table-small">
+							<tbody>
+								<tr repeat.for="attributeValue of model.appointment.attributes">
+									<td>
+										${attributeValue.attribute.name}
+									</td>
+									<td>
+										<label><input type="radio" name="appointmentAttributes${$index}" class="uk-radio" model.bind="null" checked.bind="attributeValue.value" />&nbsp;Unknown</label>
+									</td>
+									<td>
+										<label><input type="radio" name="appointmentAttributes${$index}" class="uk-radio" model.bind="true" checked.bind="attributeValue.value" />&nbsp;Yes</label>
+									</td>
+									<td>
+										<label><input type="radio" name="appointmentAttributes${$index}" class="uk-radio" model.bind="false" checked.bind="attributeValue.value" />&nbsp;No</label>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				

@@ -64,8 +64,9 @@ export class Config {
 		};
 		
 		this.assessmentDefaults = {
-			'attributeTypeIds': [2,4,5,6,7,8],
-			'medicalFileAttributeTypeIds': [9]
+			'attributeTypeIds': [2,4,5,6],
+			'medicalFileAttributeTypeIds': [9],
+			'resultsAttributeTypeIds': [7,8]
 		};
 		
 		this.assessmentSummaryDefaults = {

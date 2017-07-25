@@ -25,10 +25,19 @@
 .appointment.cancelled,
 .appointment.canceled,
 .appointment-notes.cancelled,
-.appointment-notes.canceled {
+.appointment-notes.canceled,
+.appointment.late-cancellation,
+.appointment.late-cancellation,
+.appointment-notes.late-cancellation,
+.appointment-notes.late-cancellation {
 	text-decoration: line-through;
 	color: #aaa;
 	background-color: #f8f8f8;
+}
+
+.uk-table-divider tr.appointment-notes.cancelled,
+.uk-table-divider tr.appointment-notes.late-cancellation {
+	border-top: 1px solid #f8f8f8;
 }
 
 .assessment-summary .uk-panel {

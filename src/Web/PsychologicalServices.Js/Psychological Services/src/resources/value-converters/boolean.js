@@ -1,6 +1,10 @@
 
 export class BooleanValueConverter {
-	toView(value) {
+	toView(value, displayIfNull) {
+		if (value === null) {
+			return displayIfNull || '';
+		}
+		
 		return value ? 'Yes' : 'No';
 	}
 	

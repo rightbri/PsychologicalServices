@@ -27,6 +27,7 @@ export class EditAssessment {
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
 		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attribute.attributeId === b.attribute.attributeId;
 		
+		this.saveDisabled = false;
 		this.validationErrors = null;
 	}
 	
@@ -117,6 +118,7 @@ export class EditAssessment {
 	}
 	
 	save() {
+		this.saveDisabled = true;
 		
 		var isNew = this.assessment.assessmentId === 0;
 		
@@ -156,7 +158,12 @@ export class EditAssessment {
 				if (data.isError) {
 					this.notifier.error(data.errorDetails);
 				}
-            });
+				
+				this.saveDisabled = false;
+            })
+			.catch(err => {
+				this.saveDisabled = false;
+			});
 	}
 	
 	back() {

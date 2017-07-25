@@ -25,11 +25,13 @@ namespace PsychologicalServices.Infrastructure.Appointments
             IDataAccessAdapterFactory adapterFactory,
             IDate date,
             ICompanyRepository companyRepository,
+            IAttributeRepository attributeRepository,
             ITimezoneService timezoneService
         ) : base(adapterFactory)
         {
             _date = date;
             _companyRepository = companyRepository;
+            _attributeRepository = attributeRepository;
             _timezoneService = timezoneService;
         }
 
