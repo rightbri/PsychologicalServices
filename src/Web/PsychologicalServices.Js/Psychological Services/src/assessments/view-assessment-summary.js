@@ -16,25 +16,31 @@ export class ViewAssessmentSummaryCustomElement {
 		
 		this.modalId = `assessment-summary-${appointment.appointmentId}`;
 		
-		this.psychiatrist = appointment.assessment.attributes.some(attr =>
+		let psychiatristAttributes = appointment.assessment.attributes.filter(attr =>
 			attr.attribute.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.psychiatrist &&
 			attr.attribute.name.indexOf('Psychiatrist') > -1
 		);
 		
-		this.reader = appointment.attributes.some(attr =>
+		this.psychiatrist = psychiatristAttributes.length > 0 ? psychiatristAttributes[0] : { value: null };
+		
+		let readerAttributes = appointment.attributes.filter(attr =>
 			attr.attribute.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.reader &&
 			attr.attribute.name.indexOf('Reader') > -1
 		);
 		
-		this.translator = appointment.attributes.some(attr =>
+		this.reader = readerAttributes.length > 0 ? readerAttributes[0] : { value: null };
+		
+		let translatorAttributes = appointment.attributes.filter(attr =>
 			attr.attribute.attributeType.attributeTypeId === this.config.assessmentSummaryDefaults.attributeTypeIds.translator &&
 			attr.attribute.name.indexOf('Translator') > -1
 		);
 		
+		this.translator = translatorAttributes.length > 0 ? translatorAttributes[0] : { value: null };
+		
 		this.colors = appointment.assessment.colors;
 		
 		if (this.colors.length === 0) {
-			this.colors.push({ 'hexCode': '#666666'});
+			this.colors.push({ 'hexCode': '#666666' });
 		}
 		
 		while (this.colors.length < 3) {
