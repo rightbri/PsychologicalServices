@@ -63,6 +63,8 @@ export class ViewAssessmentSummaryCustomElement {
 				}
 			}
 		}
+		
+		this.medRehabs = appointment.assessment.medRehabs;
 	
 		this.summary = appointment.assessment.summary ? appointment.assessment.summary.noteText : '';
 	}

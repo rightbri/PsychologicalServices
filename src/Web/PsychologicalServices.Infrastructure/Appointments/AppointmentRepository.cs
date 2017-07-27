@@ -107,6 +107,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                             .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
                                         )
                                 )
+                            .Prefetch<AssessmentMedRehabEntity>(assessment => assessment.AssessmentMedRehabs)
                             .Prefetch<AssessmentNoteEntity>(assessment => assessment.AssessmentNotes)
                                 //only pull notes that should show on the calendar
                                 .FilterOn(assessmentNote => assessmentNote.ShowOnCalendar)

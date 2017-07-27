@@ -618,12 +618,11 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.ToAttributeValue()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
+                    MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
                     AssessmentNotes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.ToAssessmentNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Summary = assessment.Summary.ToNote(),
                     //Appointments
-                    //MedRehabs
-                    //AssessmentNotes
                     //CreateUser
                     //UpdateUser
                 }
