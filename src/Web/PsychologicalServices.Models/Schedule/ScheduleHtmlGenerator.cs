@@ -5,7 +5,7 @@ namespace PsychologicalServices.Models.Schedule
 {
     public class ScheduleHtmlGenerator : IScheduleHtmlGenerator
     {
-        public string GeneratePsychometristScheduleHtml(ScheduleModel model)
+        public string GeneratePsychometristScheduleHtml(PsychometristScheduleModel model)
         {
             var psychometristScheduleTemplate =
                         new PsychometristScheduleTemplate();
@@ -18,6 +18,22 @@ namespace PsychologicalServices.Models.Schedule
             psychometristScheduleTemplate.Initialize();
 
             var html = psychometristScheduleTemplate.TransformText();
+
+            return html;
+        }
+
+        public string GenerateWeekScheduleHtml(WeekScheduleModel model)
+        {
+            var weekScheduleTemplate = new WeekScheduleTemplate();
+
+            weekScheduleTemplate.Session = new Dictionary<string, object>()
+            {
+                { "Model", model }
+            };
+
+            weekScheduleTemplate.Initialize();
+
+            var html = weekScheduleTemplate.TransformText();
 
             return html;
         }

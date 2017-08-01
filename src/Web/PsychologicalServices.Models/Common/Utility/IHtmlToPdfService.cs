@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PsychologicalServices.Infrastructure.Common.Utility
+namespace PsychologicalServices.Models.Common.Utility
 {
     public interface IHtmlToPdfService
     {

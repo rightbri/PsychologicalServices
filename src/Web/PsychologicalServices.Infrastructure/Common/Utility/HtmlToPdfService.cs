@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Common.Configuration;
+using PsychologicalServices.Models.Common.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -115,6 +116,25 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
                 arguments.Add(string.Format("--javascript-delay {0}", parameters.JavascriptDelay.Value));
             }
 
+            if (parameters.MarginTop.HasValue)
+            {
+                arguments.Add(string.Format("--margin-top {0}", parameters.MarginTop.Value));
+            }
+
+            if (parameters.MarginRight.HasValue)
+            {
+                arguments.Add(string.Format("--margin-right {0}", parameters.MarginRight.Value));
+            }
+
+            if (parameters.MarginBottom.HasValue)
+            {
+                arguments.Add(string.Format("--margin-bottom {0}", parameters.MarginBottom.Value));
+            }
+
+            if (parameters.MarginLeft.HasValue)
+            {
+                arguments.Add(string.Format("--margin-left {0}", parameters.MarginLeft.Value));
+            }
             return string.Join(" ", arguments);
         }
     }

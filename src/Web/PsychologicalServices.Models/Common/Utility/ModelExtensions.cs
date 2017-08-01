@@ -38,5 +38,31 @@ namespace PsychologicalServices.Models.Common.Utility
         {
             return new DateTime(date.Year, date.Month, 1).AddMonths(1).AddDays(-1);
         }
+
+        public static DateTime StartOfWeek(this DateTime date, DayOfWeek firstDayOfWeek = DayOfWeek.Monday)
+        {
+            DateTime start = date.Date;
+            
+            while (start.DayOfWeek != firstDayOfWeek)
+            {
+                start = start.AddDays(-1);
+            }
+
+            return start;
+        }
+
+        public static DateTime EndOfWeek(this DateTime date, DayOfWeek firstDayOfWeek = DayOfWeek.Monday, DayOfWeek lastDayOfWeek = DayOfWeek.Friday)
+        {
+            DateTime end = date.Date;
+
+            var direction = end.DayOfWeek < firstDayOfWeek ? -1 : 1;
+
+            while (end.DayOfWeek != lastDayOfWeek)
+            {
+                end = end.AddDays(direction);
+            }
+
+            return end;
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace PsychologicalServices.Models.Schedule
         IEnumerable<User> Search(ScheduleSearchCriteria criteria);
 
         IEnumerable<SendScheduleResult> SendSchedule(ScheduleSendParameters parameters);
+
+        WeekScheduleResult GetWeekSchedule(WeekScheduleParameters parameters);
     }
 }

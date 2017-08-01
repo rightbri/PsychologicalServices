@@ -15,7 +15,7 @@
 					</h1>
 				</div>
 				
-				<div class="uk-panel uk-padding" css="border-color: ${colors[0].hexCode}">
+				<div class="uk-padding-small">
 					<div>
 						<label class="uk-form-label">Claimant</label>
 						<div class="uk-form-controls">
@@ -39,7 +39,15 @@
 					
 				</div>
 				
-				<div class="uk-panel uk-padding" css="border-color: ${colors[1].hexCode}">
+				<div class="uk-padding-small">
+					
+					<div>
+						<label class="uk-form-label">Lawyer</label>
+						<div class="uk-form-controls">
+							<p>${claim.lawyer}</p>
+						</div>
+					</div>
+					
 					<div>
 						<label class="uk-form-label">Issues in Dispute</label>
 						<div class="uk-form-controls">
@@ -51,37 +59,9 @@
 						</div>
 					</div>
 					
-					<div if.bind="medRehabs">
-						<label class="uk-form-label">OCF-18s</label>
-						<div class="uk-form-controls">
-							<table class="uk-table uk-table-divider uk-table-small">
-								<thead>
-									<tr>
-										<th>Date</th>
-										<th>Amount</th>
-										<th>Description</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr repeat.for="medRehab of medRehabs">
-										<td>${medRehab.date | dateFormat:config.longDateFormat}</td>
-										<td>${medRehab.amount | money}</td>
-										<td>${medRehab.description}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					
-					<div>
-						<label class="uk-form-label">Lawyer</label>
-						<div class="uk-form-controls">
-							<p>${claim.lawyer}</p>
-						</div>
-					</div>
 				</div>
 				
-				<div class="uk-panel uk-padding" css="border-color: ${colors[2].hexCode}">
+				<div class="uk-padding-small">
 					<div>
 						<label class="uk-form-label">Psychiatrist</label>
 						<div class="uk-form-controls">
@@ -104,7 +84,39 @@
 					</div>
 				</div>
 				
-				<div class="uk-width-1-1 uk-padding">
+				<div class="uk-width-1-1 uk-padding-small" if.bind="medRehabs.length">
+					<label class="uk-form-label">OCF-18s</label>
+					<div class="uk-form-controls">
+						<table class="uk-table uk-table-divider uk-table-small">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Amount</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr repeat.for="medRehab of medRehabs">
+									<td>${medRehab.date | dateFormat:config.longDateFormat}</td>
+									<td>${medRehab.amount | money}</td>
+									<td>${medRehab.description}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div css="border-style: solid; border-width: 2px; border-color: ${colors[0].hexCode}">
+
+				</div>
+				<div css="border-style: solid; border-width: 2px; border-color: ${colors[1].hexCode}">
+
+				</div>
+				<div css="border-style: solid; border-width: 2px; border-color: ${colors[2].hexCode}">
+
+				</div>
+				
+				<div class="uk-width-1-1 uk-padding-small">
 					<p preserve-breaks.bind="summary"></p>
 				</div>
 			</div>

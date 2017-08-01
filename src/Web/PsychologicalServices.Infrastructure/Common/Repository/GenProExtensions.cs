@@ -639,6 +639,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Description = appointmentStatus.Description,
                     NotifyReferralSource = appointmentStatus.NotifyReferralSource,
                     CanInvoice = appointmentStatus.CanInvoice,
+                    ShowOnSchedule = appointmentStatus.ShowOnSchedule,
                     IsActive = appointmentStatus.IsActive,
                     Sort = appointmentStatus.Sort,
                 }

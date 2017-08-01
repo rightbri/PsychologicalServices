@@ -392,6 +392,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentStatusEntity.Description = appointmentStatus.Description;
                 appointmentStatusEntity.NotifyReferralSource = appointmentStatus.NotifyReferralSource;
                 appointmentStatusEntity.CanInvoice = appointmentStatus.CanInvoice;
+                appointmentStatusEntity.ShowOnSchedule = appointmentStatus.ShowOnSchedule;
                 appointmentStatusEntity.Sort = appointmentStatus.Sort;
                 appointmentStatusEntity.IsActive = appointmentStatus.IsActive;
                 

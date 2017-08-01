@@ -3,78 +3,60 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-
-<#@ parameter type="PsychologicalServices.Models.Schedule.ScheduleModel" name="Model" #>
+<#@ import namespace="PsychologicalServices.Models.Addresses" #>
+<#@ parameter type="PsychologicalServices.Models.Schedule.PsychometristScheduleModel" name="Model" #>
 
 <!doctype html>
 <html lang="en">
 <head>
     <title></title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!--
 	<link href="https://fonts.googleapis.com/css?family=Martel" rel="stylesheet">
 	-->
-    <style>
-		body {
-			font-family: 'Martel', Helvetica, sans-serif;
-			
-			font-size: 16px;
-		}
-
-		table {
-			border-collapse: collapse;
-			border-spacing: 0;
-			width: 100%;
-		}
-
-		th {
-			padding: 16px 12px;
-			text-align: left;
-			vertical-align: bottom;
-			font-weight: normal;
-			color: #999;
-			text-transform: uppercase;
-		}
-
-		tr:not(:first-child) {
-			border-top: 1px solid #e5e5e5;
-		}
-
-		.list-unstyled {
-			list-style-type: none;
-		}
-	</style>
 </head>
-<body>
-	<table>
+<body style="font-family: 'Martel', Helvetica, sans-serif; font-size: 16px;">
+	<table style="border-collapse: collapse; border-spacing: 0; border-style: solid; border-width: 1px; border-color: #e0e0e0;  color: #444444;">
 		<thead>
+		<#
+		var headerCellStyles = "padding: 10px; text-align: left; vertical-align: top; text-transform: uppercase; background-color: #f8f8f8; font-weight: normal; border-style: none none solid none; border-width: 2px; border-color: #d8d8d8;";
+		#>
 			<tr>
-				<th>Date</th>
-				<th>Time</th>
-				<th>Location</th>
-				<th>Referral Source</th>
-				<th>Claimant</th>
-				<th>Info</th>
+				<th style="<#= headerCellStyles #>">Date</th>
+				<th style="<#= headerCellStyles #>">Time</th>
+				<th style="<#= headerCellStyles #>">Location</th>
+				<th style="<#= headerCellStyles #>">Referral Source</th>
+				<th style="<#= headerCellStyles #>">Claimant</th>
+				<th style="<#= headerCellStyles #>">Info</th>
 			</tr>
 		</thead>
 		<tbody>
-	<# foreach (var appointment in Model.User.PsychometristAppointments) {
+		<#
+		var bodyCellStyles = "padding: 10px; white-space: nowrap; vertical-align: top; border-style: none none solid none; border-width: 2px; border-color: #d8d8d8;";
+		#>
+	<# foreach (var appointment in Model.User.PsychometristAppointments.OrderBy(a => a.AppointmentTime)) {
 		var timezone = Model.TimezoneService.GetTimeZoneInfo(Model.DisplayTimezoneId);
 		var time = Model.TimezoneService.ConvertFromUtc(appointment.AppointmentTime, timezone);
 	#>
 			<tr>
-				<td><#= string.Format("{0:MMMM d, yyyy}", time) #></td>
-				<td>
-					<#= string.Format("{0:hh:mmtt}", time) #>
-					<br><#= appointment.AppointmentStatus.Name #>
+				<td style="<#= bodyCellStyles #>">
+					<#= string.Format("{0:dddd}", time) #>
+					<br><#= string.Format("{0:MMMM d, yyyy}", time) #>
 				</td>
-				<td>
+				<td style="<#= bodyCellStyles #>">
+					<#= string.Format("{0:hh:mmtt}", time) #>
+					<br><#= appointment.Assessment.AssessmentType.Name #>
+					<# if (appointment.AppointmentStatus.ShowOnSchedule) { #>
+					<br><#= appointment.AppointmentStatus.Name #>
+					<# } #>
+				</td>
+				<td style="<#= bodyCellStyles #>">
 					<#= appointment.Location.Name #>
 					<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
 					<br><#= appointment.Location.Street #>
 					<# } #>
-					<# if (!string.IsNullOrWhiteSpace(appointment.Location.Street)) { #>
+					<# if (!string.IsNullOrWhiteSpace(appointment.Location.Suite)) { #>
 					<br><#= appointment.Location.Suite #>
 					<# } #>
 					<# if (
@@ -93,9 +75,12 @@
 						<#= appointment.Location.PostalCode #>
 					<# } #>
 					<# } #>
+					<br><a href="<#= appointment.Location.ToGoogleMapsAddressString() #>">Map</a>
 				</td>
-				<td><#= appointment.Assessment.ReferralSource.Name #></td>
-				<td>
+				<td style="<#= bodyCellStyles #>">
+					<#= appointment.Assessment.ReferralSource.Name #>
+				</td>
+				<td style="<#= bodyCellStyles #>">
 					<# foreach (var claim in appointment.Assessment.Claims) { #>
 						<p>
 						<#= claim.Claimant.FirstName #>
@@ -106,21 +91,21 @@
 						</p>
 					<# } #>
 				</td>
-				<td>
-					<ul class="list-unstyled">
+				<td style="<#= bodyCellStyles #>">
+					<ul style="padding: 0; list-style-type: none;">
 						<# foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 1 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
 							<li>
-								<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
-									<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
-								<# } #>
+								<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
 							</li>
+							<# } #>
 						<# } #>
 						<# foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 5, 6 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
 							<li>
-								<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
-									<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
-								<# } #>
+								<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
 							</li>
+							<# } #>
 						<# } #>
 					</ul>
 				</td>

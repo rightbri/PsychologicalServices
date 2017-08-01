@@ -321,6 +321,55 @@ export class DataRepository {
 		return this.saveBasic(calendarNote, 'calendarNote');
 	}
 	
+	getWeekScheduleDocument(parameters) {
+		var promise = new Promise((resolve, reject) => {
+			
+			this.httpFetch.fetch(this.apiRoot + 'api/schedule/week', {
+				method: 'POST',
+				body: json(parameters || {})
+			})
+			.then(response => {
+				if (response.ok) {
+					
+					var defaultFileName = parameters.defaultFilename || 'week-schedule.pdf';
+				
+					var disposition = response.headers.has('content-disposition')
+						? response.headers.get('content-disposition')
+						: response.headers.get('Content-Disposition');
+						
+					if (disposition) {
+						var match = disposition.match(/.*filename=\"?([^;\"]+)\"?.*/);
+					
+						if (match[1]) {
+							defaultFileName = match[1];
+						}
+					}
+					
+					defaultFileName = defaultFileName.replace(/[<>:"\/\\|?*]+/g, '_');
+					
+					return response.blob()
+						.then(blob => {
+							if (navigator.msSaveBlob) {
+								return navigator.msSaveBlob(blob, defaultFileName);
+							}
+							
+							var blobUrl = window.URL.createObjectURL(blob);
+							var anchor = document.createElement('a');
+							anchor.download = defaultFileName;
+							anchor.href = blobUrl;
+							document.body.appendChild(anchor);
+							anchor.click();
+							document.body.removeChild(anchor);
+						});
+				}
+				throw new Error({ status: response.status, statusText: response.statusText });
+			})
+			.catch(err => reject(err));
+		});
+		
+		return promise;
+	}
+	
 	getInvoiceDocument(invoiceDocument) {
 		var promise = new Promise((resolve, reject) => {
 			

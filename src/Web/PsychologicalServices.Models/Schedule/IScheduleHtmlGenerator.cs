@@ -4,6 +4,8 @@ namespace PsychologicalServices.Models.Schedule
 {
     public interface IScheduleHtmlGenerator
     {
-        string GeneratePsychometristScheduleHtml(ScheduleModel model);
+        string GeneratePsychometristScheduleHtml(PsychometristScheduleModel model);
+
+        string GenerateWeekScheduleHtml(WeekScheduleModel model);
     }
 }

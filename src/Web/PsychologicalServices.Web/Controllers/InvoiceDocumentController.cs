@@ -23,7 +23,7 @@ namespace PsychologicalServices.Web.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        [ResponseType(typeof(InvoiceDocument))]
+        [ResponseType(typeof(BinaryFileResult))]
         public IHttpActionResult GetDocument(int id)
         {
             var invoiceDocument = _invoiceService.GetInvoiceDocument(id);

@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addresses\Address.cs" />
+    <Compile Include="Addresses\AddressExtensions.cs" />
     <Compile Include="Addresses\AddressService.cs" />
     <Compile Include="Addresses\AddressNotFoundException.cs" />
     <Compile Include="Addresses\IAddressService.cs" />
@@ -126,9 +127,11 @@
     <Compile Include="Common\Configuration\IConfigurationService.cs" />
     <Compile Include="Common\DeleteResult.cs" />
     <Compile Include="Common\Utility\EmailAddressValidator.cs" />
+    <Compile Include="Common\Utility\HtmlToPdfParameters.cs" />
     <Compile Include="Common\Utility\ICacheService.cs" />
     <Compile Include="Common\Utility\IDate.cs" />
     <Compile Include="Common\Utility\IEmailAddressValidator.cs" />
+    <Compile Include="Common\Utility\IHtmlToPdfService.cs" />
     <Compile Include="Common\Utility\IMailService.cs" />
     <Compile Include="Common\Utility\ITimezoneService.cs" />
     <Compile Include="Common\Utility\MailResult.cs" />
@@ -226,11 +229,19 @@
       <DependentUpon>PsychometristScheduleTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Schedule\ScheduleHtmlGenerator.cs" />
-    <Compile Include="Schedule\ScheduleModel.cs" />
+    <Compile Include="Schedule\PsychometristScheduleModel.cs" />
     <Compile Include="Schedule\ScheduleSearchCriteria.cs" />
     <Compile Include="Schedule\ScheduleSendParameters.cs" />
     <Compile Include="Schedule\ScheduleService.cs" />
     <Compile Include="Schedule\SendScheduleResult.cs" />
+    <Compile Include="Schedule\WeekScheduleModel.cs" />
+    <Compile Include="Schedule\WeekScheduleParameters.cs" />
+    <Compile Include="Schedule\WeekScheduleResult.cs" />
+    <Compile Include="Schedule\WeekScheduleTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeekScheduleTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Users\IUnavailabilityValidator.cs" />
     <Compile Include="Users\IUserRepository.cs" />
     <Compile Include="Users\IUserService.cs" />
@@ -260,6 +271,10 @@
     <Content Include="Schedule\PsychometristScheduleTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PsychometristScheduleTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Schedule\WeekScheduleTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>WeekScheduleTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

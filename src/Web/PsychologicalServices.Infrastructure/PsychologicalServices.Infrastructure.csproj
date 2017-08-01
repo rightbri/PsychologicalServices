@@ -81,12 +81,10 @@
     <Compile Include="Common\Utility\FileReader.cs" />
     <Compile Include="Common\Utility\FileWriter.cs" />
     <Compile Include="Common\Utility\HtmlToPdfExecutablePathService.cs" />
-    <Compile Include="Common\Utility\HtmlToPdfParameters.cs" />
     <Compile Include="Common\Utility\HtmlToPdfService.cs" />
     <Compile Include="Common\Utility\IFileReader.cs" />
     <Compile Include="Common\Utility\IFileWriter.cs" />
     <Compile Include="Common\Utility\IHtmlToPdfExecutablePathService.cs" />
-    <Compile Include="Common\Utility\IHtmlToPdfService.cs" />
     <Compile Include="Common\Utility\IRunProcess.cs" />
     <Compile Include="Common\Utility\ITempDirectory.cs" />
     <Compile Include="Common\Utility\ITempDirectoryFactory.cs" />

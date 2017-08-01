@@ -149,6 +149,8 @@ namespace PsychologicalServices.Data
 		CanInvoice,
 		///<summary>Sort. </summary>
 		Sort,
+		///<summary>ShowOnSchedule. </summary>
+		ShowOnSchedule,
 		/// <summary></summary>
 		AmountOfFields
 	}

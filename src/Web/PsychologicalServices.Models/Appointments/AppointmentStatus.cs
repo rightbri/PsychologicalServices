@@ -25,6 +25,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public bool CanInvoice { get; set; }
 
+        public bool ShowOnSchedule { get; set; }
+
         public int Sort { get; set; }
 
         public bool IsActive { get; set; }

@@ -6,7 +6,7 @@ import {Notifier} from 'services/notifier';
 import moment from 'moment';
 
 @inject(DataRepository, Context, Config, Notifier)
-export class Schedule {
+export class PsychometristSchedule {
 	constructor(dataRepository, context, config, notifier) {
 		this.dataRepository = dataRepository;
 		this.context = context;

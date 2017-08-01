@@ -6,8 +6,11 @@
     [NotifyReferralSource] BIT            CONSTRAINT [DF_AppointmentStatuses_NotifyImeCompany] DEFAULT ((0)) NOT NULL,
     [CanInvoice]           BIT            CONSTRAINT [DF_AppointmentStatuses_CanInvoice] DEFAULT ((0)) NOT NULL,
     [Sort]                 INT            NOT NULL,
+    [ShowOnSchedule]       BIT            CONSTRAINT [DF_AppointmentStatuses_ShowOnSchedule] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_AppointmentStatuses] PRIMARY KEY CLUSTERED ([AppointmentStatusId] ASC)
 );
+
+
 
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PsychologicalServices.Infrastructure.Common.Utility
+namespace PsychologicalServices.Models.Common.Utility
 {
     public class HtmlToPdfParameters
     {
@@ -20,6 +20,14 @@ namespace PsychologicalServices.Infrastructure.Common.Utility
         /// Milliseconds to wait for javascript to run
         /// </summary>
         public int? JavascriptDelay { get; set; }
+
+        public double? MarginTop { get; set; }
+
+        public double? MarginRight { get; set; }
+
+        public double? MarginBottom { get; set; }
+
+        public double? MarginLeft { get; set; }
 
         /*
          * https://wkhtmltopdf.org/usage/wkhtmltopdf.txt
