@@ -93,6 +93,7 @@
     <Compile Include="Attributes\IAttributeValidator.cs" />
     <Compile Include="CalendarNotes\CalendarNote.cs" />
     <Compile Include="CalendarNotes\CalendarNoteNotFoundException.cs" />
+    <Compile Include="CalendarNotes\CalendarNoteSearchCriteria.cs" />
     <Compile Include="CalendarNotes\CalendarNoteService.cs" />
     <Compile Include="CalendarNotes\CalendarNoteValidator.cs" />
     <Compile Include="CalendarNotes\ICalendarNoteRepository.cs" />

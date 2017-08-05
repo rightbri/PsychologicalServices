@@ -5,7 +5,6 @@ import {Context} from 'common/context';
 import {Notifier} from 'services/notifier';
 import {EventHelper} from 'services/eventHelper';
 import moment from 'moment';
-import 'uikit';
 
 @inject(Element, DataRepository, Config, Context, Notifier, EventHelper)
 export class EditCalendarNoteCustomElement {
@@ -23,10 +22,16 @@ export class EditCalendarNoteCustomElement {
 	}
 	
 	modelChanged(newValue, oldValue) {
+		let show = !!newValue;
+		
 		this.backup = newValue ? getBackup(newValue.calendarNote) : null;
 		
 		if (!this.user) {
 			this.context.getUser().then(user => this.user = user);
+		}
+		
+		if (show) {
+			
 		}
 	}
 	

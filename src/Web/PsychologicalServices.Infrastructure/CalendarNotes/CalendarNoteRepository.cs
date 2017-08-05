@@ -68,12 +68,12 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
 
                 if (fromDate.HasValue)
                 {
-                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.FromDate <= toDate.Value);
+                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.FromDate <= toDate);
                 }
 
                 if (toDate.HasValue)
                 {
-                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.ToDate >= fromDate.Value);
+                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.ToDate >= fromDate);
                 }
 
                 return Execute<CalendarNoteEntity>(

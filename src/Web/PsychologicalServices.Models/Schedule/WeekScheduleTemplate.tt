@@ -16,7 +16,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-<body style="font-family: 'Martel', Helvetica, sans-serif; font-size: medium; margin: 0; padding: 0;">
+<body style="font-family: 'Martel', Helvetica, sans-serif; font-size: large; margin: 0; padding: 0;">
 	<# 
 		var fitToPageStyles = "padding:0 !important; margin:0 !important; height:25.7cm !important; overflow:hidden !important;";
 	#>

@@ -10,6 +10,12 @@ export class DateService {
 		this.timezone = timezone;
 	}
 	
+	today() {
+		let now = this.now();
+		
+		return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+	}
+	
 	now() {
 		return new Date();
 	}

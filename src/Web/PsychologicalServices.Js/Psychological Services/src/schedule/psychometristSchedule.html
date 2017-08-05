@@ -118,7 +118,12 @@
 					<td>${appointment.appointmentTime | dateFormat:config.longDateFormat}</td>
 					<td>
 						${appointment.appointmentTime | dateFormat:config.shortTimeFormat}
+						<template if.bind="appointment.appointmentStatus.showOnSchedule">
 						<br>${appointment.appointmentStatus.name}
+						</template>
+						<template if.bind="appointment.isCompletion">
+						<br>Completion
+						</template>
 					</td>
 					<td with.bind="appointment.location">
 						<ul class="uk-list">

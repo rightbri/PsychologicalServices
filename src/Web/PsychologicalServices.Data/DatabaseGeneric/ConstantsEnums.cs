@@ -535,6 +535,8 @@ namespace PsychologicalServices.Data
 		NewAssessmentSummaryNoteText,
 		///<summary>Timezone. </summary>
 		Timezone,
+		///<summary>ReplyToEmail. </summary>
+		ReplyToEmail,
 		/// <summary></summary>
 		AmountOfFields
 	}

@@ -45,7 +45,7 @@ namespace PsychologicalServices.Models.Schedule
     <meta charset=""utf-8"">
     <meta name=""viewport"" content=""width=device-width, initial-scale=1"" />
 </head>
-<body style=""font-family: 'Martel', Helvetica, sans-serif; font-size: medium; margin: 0; padding: 0;"">
+<body style=""font-family: 'Martel', Helvetica, sans-serif; font-size: large; margin: 0; padding: 0;"">
 	");
             
             #line 20 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\WeekScheduleTemplate.tt"

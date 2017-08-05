@@ -33,11 +33,12 @@ namespace PsychologicalServices.Web.Controllers
             return Ok(calendarNote);
         }
 
-        [HttpGet]
+        [Route("search")]
+        [HttpPost]
         [ResponseType(typeof(IEnumerable<CalendarNote>))]
-        public IHttpActionResult Get(DateTime? fromDate, DateTime? toDate)
+        public IHttpActionResult Search(CalendarNoteSearchCriteria criteria)
         {
-            var calendarNotes = _calendarNoteService.GetCalendarNotes(fromDate, toDate);
+            var calendarNotes = _calendarNoteService.GetCalendarNotes(criteria.FromDate, criteria.ToDate);
 
             return Ok(calendarNotes);
         }

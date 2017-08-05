@@ -42,10 +42,12 @@ namespace PsychologicalServices.Models.Common.Utility
         public static DateTime StartOfWeek(this DateTime date, DayOfWeek firstDayOfWeek = DayOfWeek.Monday)
         {
             DateTime start = date.Date;
-            
+
+            var direction = start.DayOfWeek < firstDayOfWeek ? 1 : -1;
+
             while (start.DayOfWeek != firstDayOfWeek)
             {
-                start = start.AddDays(-1);
+                start = start.AddDays(direction);
             }
 
             return start;
@@ -55,7 +57,7 @@ namespace PsychologicalServices.Models.Common.Utility
         {
             DateTime end = date.Date;
 
-            var direction = end.DayOfWeek < firstDayOfWeek ? -1 : 1;
+            var direction = end.DayOfWeek > lastDayOfWeek ? -1 : 1;
 
             while (end.DayOfWeek != lastDayOfWeek)
             {

@@ -730,6 +730,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Phone = company.Phone,
                     Fax = company.Fax,
                     Email = company.Email,
+                    ReplyToEmail = company.ReplyToEmail,
                     TaxId = company.TaxId,
                     Timezone = company.Timezone,
                     NewAppointmentTime = TimeSpan.FromTicks(company.NewAppointmentTime),

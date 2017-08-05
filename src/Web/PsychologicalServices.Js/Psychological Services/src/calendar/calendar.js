@@ -148,7 +148,10 @@ export class Calendar {
 	getData() {
 		return Promise.all([
 			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
-			this.dataRepository.getCalendarNotes(this.searchStart, this.searchEnd).then(data => this.calendarNotes = data),
+			this.dataRepository.getCalendarNotes({
+				'fromDate': this.searchStart,
+				'toDate': this.searchEnd
+			}).then(data => this.calendarNotes = data),
 			this.userSettings.setting('calendarAppointmentStatusIds').then(value => this.appointmentStatusIds = value || this.config.calendarDefaults.appointmentStatusIds),
 			this.context.getUser().then(user => {
 				this.user = user;

@@ -50,6 +50,9 @@
 					<# if (appointment.AppointmentStatus.ShowOnSchedule) { #>
 					<br><#= appointment.AppointmentStatus.Name #>
 					<# } #>
+					<# if (appointment.IsCompletion) { #>
+					<br>Completion
+					<# } #>
 				</td>
 				<td style="<#= bodyCellStyles #>">
 					<#= appointment.Location.Name #>

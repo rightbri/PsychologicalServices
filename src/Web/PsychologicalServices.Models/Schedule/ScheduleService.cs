@@ -83,7 +83,12 @@ namespace PsychologicalServices.Models.Schedule
                         {
                             IsBodyHtml = true,
                         };
-                    
+
+                    if (!string.IsNullOrWhiteSpace(user.Company.ReplyToEmail))
+                    {
+                        message.ReplyToList.Add(user.Company.ReplyToEmail);
+                    }
+
                     if (null != parameters.CourtesyCopy && parameters.CourtesyCopy.Any())
                     {
                         message.CC.Add(

@@ -313,8 +313,8 @@ export class DataRepository {
 		return this.getSingleBasic(id, 'calendarNote');
 	}
 	
-	getCalendarNotes(fromDate, toDate) {
-		return this.getManyBasic('calendarNote?fromDate=' + fromDate + '&toDate=' + toDate);
+	getCalendarNotes(criteria) {
+		return this.searchBasic(criteria, 'calendarNote');
 	}
 	
 	saveCalendarNote(calendarNote) {

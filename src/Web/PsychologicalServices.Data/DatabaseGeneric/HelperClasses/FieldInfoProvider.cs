@@ -351,6 +351,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("CompanyEntity", "NewAssessmentReportStatusId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAssessmentReportStatusId, 0, 0, 10);
 			base.AddElementFieldInfo("CompanyEntity", "NewAssessmentSummaryNoteText", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.NewAssessmentSummaryNoteText, 2147483647, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "Timezone", typeof(System.String), false, false, false, false,  (int)CompanyFieldIndex.Timezone, 50, 0, 0);
+			base.AddElementFieldInfo("CompanyEntity", "ReplyToEmail", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.ReplyToEmail, 100, 0, 0);
 		}
 		/// <summary>Inits CompanyAttributeEntity's FieldInfo objects</summary>
 		private void InitCompanyAttributeEntityInfos()

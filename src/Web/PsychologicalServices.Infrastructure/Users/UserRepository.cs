@@ -125,6 +125,7 @@ namespace PsychologicalServices.Infrastructure.Users
                                                     .Prefetch<AttributeTypeEntity>(attribute => attribute.AttributeType)
                                                 )
                                         )
+                                    .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                                 )
                         )
                         .FilterOn(appointment =>

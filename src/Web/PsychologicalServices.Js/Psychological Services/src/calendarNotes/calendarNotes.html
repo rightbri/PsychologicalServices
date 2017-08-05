@@ -1,0 +1,72 @@
+<template>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="common/date-picker"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	<require from="flatpickr/flatpickr.css"></require>
+	
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Calendar Notes</legend>
+		
+		<form class="uk-form-stacked">
+		
+			<div class="uk-margin">
+				<label class="uk-form-label">From Date</label>
+				<div class="uk-form-controls">
+					<input type="text" class="uk-input" date-picker="options.bind: config.datepickerOptions; dates.bind: fromDate" value.bind="fromDate | dateFormat:config.longDateFormat" datechanged.delegate="fromDateChanged($event)" /><!----> 
+				</div>
+			</div>
+		
+			<div class="uk-margin">
+				<label class="uk-form-label">To Date</label>
+				<div class="uk-form-controls">
+					<input type="text" class="uk-input" date-picker="options.bind: config.datepickerOptions; dates.bind: toDate" value.bind="toDate | dateFormat:config.longDateFormat" datechanged.delegate="toDateChanged($event)" /><!-- --> 
+				</div>
+			</div>
+		
+			<div class="uk-margin">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+					Search
+				</button>
+				<a route-href="route: addCalendarNote" class="uk-button uk-button-secondary">
+					<i class="fa fa-plus"></i>&nbsp;Add
+				</a>
+			</div>
+			
+		</form>
+		
+	</fieldset>
+
+</div>
+
+<div class="uk-overflow-auto" if.bind="calendarNotes">
+
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>From</th>
+				<th>To</th>
+				<th>Note</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="calendarNote of calendarNotes | sortArray:[{ property: 'fromDate', direction: 'asc' },{ property: 'toDate', direction: 'asc' }]">
+				<td>
+					<a route-href="route: editCalendarNote; params.bind: { id: calendarNote.calendarNoteId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${calendarNote.fromDate | dateFormat:config.longDateFormat}</td>
+				<td>${calendarNote.toDate | dateFormat:config.longDateFormat}</td>
+				<td>${calendarNote.note.noteText}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+</div>
+
+</template>

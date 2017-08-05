@@ -812,6 +812,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.Timezone);}
 		}
+		/// <summary>Creates a new CompanyEntity.ReplyToEmail field instance</summary>
+		public static EntityField2 ReplyToEmail
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.ReplyToEmail);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CompanyAttributeEntity</summary>

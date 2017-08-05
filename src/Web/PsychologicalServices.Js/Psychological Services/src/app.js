@@ -53,7 +53,10 @@ export class App {
 			{ route: 'schedule/week', name: 'weekSchedule', moduleId: 'schedule/weekSchedule', title: 'Week Schedule', nav: true },
 			{ route: 'users', name: 'users', moduleId: 'users/users', title: 'Users', nav: true },
 			{ route: 'users/:id', name: 'editUser', moduleId: 'users/editUser', title: 'Edit User', nav: false },
-			{ route: 'users/add', name: 'addUser', moduleId: 'users/editUser', title: 'Add User', nav: false }
+			{ route: 'users/add', name: 'addUser', moduleId: 'users/editUser', title: 'Add User', nav: false },
+			{ route: 'calendarNotes', name: 'calendarNotes', moduleId: 'calendarNotes/calendarNotes', title: 'Calendar Notes', nav: true },
+			{ route: 'calendarNotes/:id', name: 'editCalendarNote', moduleId: 'calendarNotes/editCalendarNote', title: 'Edit Calendar Note', nav: false },
+			{ route: 'calendarNotes/add', name: 'addCalendarNote', moduleId: 'calendarNotes/editCalendarNote', title: 'Add Calendar Note', nav: false }
 		]);
 	}
 }

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.DataD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Web", "PsychologicalServices.Web\PsychologicalServices.Web.csproj", "{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Models.Test", "PsychologicalServices.Models.Test\PsychologicalServices.Models.Test.csproj", "{A334CFEB-DC6B-4C78-9D35-849FA8907849}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A334CFEB-DC6B-4C78-9D35-849FA8907849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A334CFEB-DC6B-4C78-9D35-849FA8907849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A334CFEB-DC6B-4C78-9D35-849FA8907849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A334CFEB-DC6B-4C78-9D35-849FA8907849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
