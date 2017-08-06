@@ -26,33 +26,33 @@ namespace PsychologicalServices.Web.Controllers
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<User>))]
-        public IHttpActionResult Search(ScheduleSearchCriteria criteria)
+        public IHttpActionResult PsychometristSearch(PsychometristScheduleSearchCriteria criteria)
         {
-            var users = _scheduleService.Search(criteria);
+            var users = _scheduleService.SearchPsychometristSchedules(criteria);
 
             return Ok(users);
         }
 
         [Route("send")]
         [HttpPost]
-        [ResponseType(typeof(IEnumerable<SendScheduleResult>))]
-        public IHttpActionResult Send(ScheduleSendParameters parameters)
+        [ResponseType(typeof(IEnumerable<PsychometristScheduleSendResult>))]
+        public IHttpActionResult PsychometristSend(PsychometristScheduleSendParameters parameters)
         {
-            var results = _scheduleService.SendSchedule(parameters);
+            var results = _scheduleService.SendPsychometristSchedule(parameters);
 
             return Ok(results);
         }
 
-        [Route("week")]
+        [Route("psychologist")]
         [HttpPost]
         [ResponseType(typeof(BinaryFileResult))]
-        public IHttpActionResult Week(WeekScheduleParameters parameters)
+        public IHttpActionResult Psychologist(PsychologistScheduleParameters parameters)
         {
-            var result = _scheduleService.GetWeekSchedule(parameters);
+            var result = _scheduleService.GetPsychologistSchedule(parameters);
 
-            var companyName = System.Text.RegularExpressions.Regex.Replace(result.Company.Name, "[^A-Za-z0-9 ]", "").Replace(' ','-');
+            var companyName = System.Text.RegularExpressions.Regex.Replace(result.Psychologist.Company.Name, "[^A-Za-z0-9 ]", "").Replace(' ','-');
 
-            var filename = string.Format("{0}-Schedule-{1:dd-MM-yyyy}-to-{2:dd-MM-yyyy}.pdf", companyName, result.WeekStart, result.WeekEnd);
+            var filename = string.Format("{0}-Schedule-{1:dd-MM-yyyy}-to-{2:dd-MM-yyyy}.pdf", companyName, result.FromDate, result.ToDate);
 
             return new BinaryFileResult(result.Content, filename);
         }

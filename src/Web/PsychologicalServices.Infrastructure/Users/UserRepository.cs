@@ -88,7 +88,7 @@ namespace PsychologicalServices.Infrastructure.Users
                 );
 
         private Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>> GetPsychometristSchedulePath(
-            ScheduleSearchCriteria criteria
+            PsychometristScheduleSearchCriteria criteria
         )
         {
             return (uPath => uPath
@@ -364,7 +364,7 @@ namespace PsychologicalServices.Infrastructure.Users
             }
         }
 
-        public IEnumerable<User> GetPsychometristSchedules(ScheduleSearchCriteria criteria)
+        public IEnumerable<User> GetPsychometristSchedules(PsychometristScheduleSearchCriteria criteria)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {

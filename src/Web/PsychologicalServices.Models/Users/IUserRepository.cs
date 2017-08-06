@@ -20,7 +20,7 @@ namespace PsychologicalServices.Models.Users
 
         IEnumerable<User> GetPsychologists(int? companyId = null);
 
-        IEnumerable<User> GetPsychometristSchedules(ScheduleSearchCriteria criteria);
+        IEnumerable<User> GetPsychometristSchedules(PsychometristScheduleSearchCriteria criteria);
 
         int SaveUser(User user);
     }

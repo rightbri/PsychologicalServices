@@ -224,6 +224,7 @@
     <Compile Include="Roles\RoleService.cs" />
     <Compile Include="Schedule\IScheduleHtmlGenerator.cs" />
     <Compile Include="Schedule\IScheduleService.cs" />
+    <Compile Include="Schedule\PsychologistScheduleWeek.cs" />
     <Compile Include="Schedule\PsychometristScheduleTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -231,17 +232,17 @@
     </Compile>
     <Compile Include="Schedule\ScheduleHtmlGenerator.cs" />
     <Compile Include="Schedule\PsychometristScheduleModel.cs" />
-    <Compile Include="Schedule\ScheduleSearchCriteria.cs" />
-    <Compile Include="Schedule\ScheduleSendParameters.cs" />
+    <Compile Include="Schedule\PsychometristScheduleSearchCriteria.cs" />
+    <Compile Include="Schedule\PsychometristScheduleSendParameters.cs" />
     <Compile Include="Schedule\ScheduleService.cs" />
-    <Compile Include="Schedule\SendScheduleResult.cs" />
-    <Compile Include="Schedule\WeekScheduleModel.cs" />
-    <Compile Include="Schedule\WeekScheduleParameters.cs" />
-    <Compile Include="Schedule\WeekScheduleResult.cs" />
-    <Compile Include="Schedule\WeekScheduleTemplate.cs">
+    <Compile Include="Schedule\PsychometristScheduleSendResult.cs" />
+    <Compile Include="Schedule\PsychologistScheduleModel.cs" />
+    <Compile Include="Schedule\PsychologistScheduleParameters.cs" />
+    <Compile Include="Schedule\PsychologistScheduleResult.cs" />
+    <Compile Include="Schedule\PsychologistScheduleTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WeekScheduleTemplate.tt</DependentUpon>
+      <DependentUpon>PsychologistScheduleTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Users\IUnavailabilityValidator.cs" />
     <Compile Include="Users\IUserRepository.cs" />
@@ -273,9 +274,9 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PsychometristScheduleTemplate.cs</LastGenOutput>
     </Content>
-    <Content Include="Schedule\WeekScheduleTemplate.tt">
+    <Content Include="Schedule\PsychologistScheduleTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>WeekScheduleTemplate.cs</LastGenOutput>
+      <LastGenOutput>PsychologistScheduleTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

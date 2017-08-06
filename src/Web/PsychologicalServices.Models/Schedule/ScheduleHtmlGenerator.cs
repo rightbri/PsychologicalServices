@@ -22,18 +22,18 @@ namespace PsychologicalServices.Models.Schedule
             return html;
         }
 
-        public string GenerateWeekScheduleHtml(WeekScheduleModel model)
+        public string GeneratePsychologistScheduleHtml(PsychologistScheduleModel model)
         {
-            var weekScheduleTemplate = new WeekScheduleTemplate();
+            var psychologistScheduleTemplate = new PsychologistScheduleTemplate();
 
-            weekScheduleTemplate.Session = new Dictionary<string, object>()
+            psychologistScheduleTemplate.Session = new Dictionary<string, object>()
             {
                 { "Model", model }
             };
 
-            weekScheduleTemplate.Initialize();
+            psychologistScheduleTemplate.Initialize();
 
-            var html = weekScheduleTemplate.TransformText();
+            var html = psychologistScheduleTemplate.TransformText();
 
             return html;
         }

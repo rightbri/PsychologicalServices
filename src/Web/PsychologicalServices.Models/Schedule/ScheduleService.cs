@@ -42,22 +42,22 @@ namespace PsychologicalServices.Models.Schedule
             _log = log;
         }
 
-        public IEnumerable<User> Search(ScheduleSearchCriteria criteria)
+        public IEnumerable<User> SearchPsychometristSchedules(PsychometristScheduleSearchCriteria criteria)
         {
             var users = _userRepository.GetPsychometristSchedules(criteria);
 
             return users;
         }
 
-        public IEnumerable<SendScheduleResult> SendSchedule(ScheduleSendParameters parameters)
+        public IEnumerable<PsychometristScheduleSendResult> SendPsychometristSchedule(PsychometristScheduleSendParameters parameters)
         {
-            var users = Search(parameters.Criteria);
+            var users = SearchPsychometristSchedules(parameters.Criteria);
 
-            var results = new List<SendScheduleResult>();
+            var results = new List<PsychometristScheduleSendResult>();
 
             foreach (var user in users)
             {
-                var result = new SendScheduleResult
+                var result = new PsychometristScheduleSendResult
                 {
                     User = user,
                 };
@@ -136,20 +136,20 @@ namespace PsychologicalServices.Models.Schedule
             return results;
         }
 
-        public WeekScheduleResult GetWeekSchedule(WeekScheduleParameters parameters)
+        public PsychologistScheduleResult GetPsychologistSchedule(PsychologistScheduleParameters parameters)
         {
-            var result = new WeekScheduleResult
+            var result = new PsychologistScheduleResult
             {
-                Company = _companyRepository.GetCompany(parameters.CompanyId),
-                WeekStart = parameters.WeekDate.StartOfWeek(),
-                WeekEnd = parameters.WeekDate.EndOfWeek(),
+                Psychologist = _userRepository.GetUserById(parameters.PsychologistId),
+                FromDate = parameters.FromDate,
+                ToDate = parameters.ToDate,
             };
 
             var appointmentSearchCriteria = new AppointmentSearchCriteria
             {
-                CompanyId = parameters.CompanyId,
-                AppointmentTimeStart = result.WeekStart,
-                AppointmentTimeEnd = result.WeekEnd.AddDays(1),
+                PsychologistId = parameters.PsychologistId,
+                AppointmentTimeStart = result.FromDate,
+                AppointmentTimeEnd = result.ToDate.AddDays(1),
                 AppointmentStatusIds = new[]
                 {
                     AppointmentStatus.Complete,
@@ -162,17 +162,17 @@ namespace PsychologicalServices.Models.Schedule
                 },
             };
 
-            var model = new WeekScheduleModel
+            var model = new PsychologistScheduleModel
             {
                 Appointments = _appointmentRepository.GetAppointments(appointmentSearchCriteria),
-                Company = result.Company,
-                WeekStart = result.WeekStart,
-                WeekEnd = result.WeekEnd,
-                DisplayTimezoneId = result.Company.Timezone,
+                Psychologist = _userRepository.GetUserById(parameters.PsychologistId),
+                FromDate = result.FromDate,
+                ToDate = result.ToDate,
+                DisplayTimezoneId = result.Psychologist.Company.Timezone,
                 TimezoneService = _timezoneService,
             };
 
-            var html = _scheduleHtmlGenerator.GenerateWeekScheduleHtml(model);
+            var html = _scheduleHtmlGenerator.GeneratePsychologistScheduleHtml(model);
 
             var htmlToPdfParameters = new HtmlToPdfParameters
             {

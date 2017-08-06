@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Schedule
 {
-    public class ScheduleSendParameters
+    public class PsychometristScheduleSendParameters
     {
-        public ScheduleSearchCriteria Criteria { get; set; }
+        public PsychometristScheduleSearchCriteria Criteria { get; set; }
 
         public IEnumerable<string> Recipients { get; set; }
 

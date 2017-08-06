@@ -6,6 +6,6 @@ namespace PsychologicalServices.Models.Schedule
     {
         string GeneratePsychometristScheduleHtml(PsychometristScheduleModel model);
 
-        string GenerateWeekScheduleHtml(WeekScheduleModel model);
+        string GeneratePsychologistScheduleHtml(PsychologistScheduleModel model);
     }
 }

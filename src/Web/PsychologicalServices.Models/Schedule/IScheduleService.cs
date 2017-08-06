@@ -1,15 +1,14 @@
 ﻿using PsychologicalServices.Models.Users;
-using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Schedule
 {
     public interface IScheduleService
     {
-        IEnumerable<User> Search(ScheduleSearchCriteria criteria);
+        IEnumerable<User> SearchPsychometristSchedules(PsychometristScheduleSearchCriteria criteria);
 
-        IEnumerable<SendScheduleResult> SendSchedule(ScheduleSendParameters parameters);
+        IEnumerable<PsychometristScheduleSendResult> SendPsychometristSchedule(PsychometristScheduleSendParameters parameters);
 
-        WeekScheduleResult GetWeekSchedule(WeekScheduleParameters parameters);
+        PsychologistScheduleResult GetPsychologistSchedule(PsychologistScheduleParameters parameters);
     }
 }

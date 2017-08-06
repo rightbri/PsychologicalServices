@@ -324,14 +324,13 @@ export class DataRepository {
 	getWeekScheduleDocument(parameters) {
 		var promise = new Promise((resolve, reject) => {
 			
-			this.httpFetch.fetch(this.apiRoot + 'api/schedule/week', {
+			this.httpFetch.fetch(this.apiRoot + 'api/schedule/psychologist', {
 				method: 'POST',
 				body: json(parameters || {})
 			})
 			.then(response => {
 				if (response.ok) {
-					
-					var defaultFileName = parameters.defaultFilename || 'week-schedule.pdf';
+					var defaultFileName = parameters.defaultFilename || 'schedule.pdf';
 				
 					var disposition = response.headers.has('content-disposition')
 						? response.headers.get('content-disposition')

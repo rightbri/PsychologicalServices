@@ -50,7 +50,7 @@ export class App {
 			{ route: 'referralSources/:id', name: 'editReferralSource', moduleId: 'referralSources/editReferralSource', title: 'Edit Referral Source', nav: false },
 			{ route: 'referralSources/add', name: 'addReferralSource', moduleId: 'referralSources/editReferralSource', title: 'Add Referral Source', nav: false },
 			{ route: 'schedule/psychometrist', name: 'psychometristSchedule', moduleId: 'schedule/psychometristSchedule', title: 'Psychometrist Schedule', nav: true },
-			{ route: 'schedule/week', name: 'weekSchedule', moduleId: 'schedule/weekSchedule', title: 'Week Schedule', nav: true },
+			{ route: 'schedule/psychologist', name: 'psychologistSchedule', moduleId: 'schedule/psychologistSchedule', title: 'Psychologist Schedule', nav: true },
 			{ route: 'users', name: 'users', moduleId: 'users/users', title: 'Users', nav: true },
 			{ route: 'users/:id', name: 'editUser', moduleId: 'users/editUser', title: 'Edit User', nav: false },
 			{ route: 'users/add', name: 'addUser', moduleId: 'users/editUser', title: 'Add User', nav: false },

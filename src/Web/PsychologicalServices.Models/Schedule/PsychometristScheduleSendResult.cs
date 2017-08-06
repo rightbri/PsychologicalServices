@@ -3,7 +3,7 @@ using System;
 
 namespace PsychologicalServices.Models.Schedule
 {
-    public class SendScheduleResult
+    public class PsychometristScheduleSendResult
     {
         public User User { get; set; }
 

@@ -1,0 +1,206 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="PsychologicalServices.Models.Addresses" #>
+<#@ parameter type="PsychologicalServices.Models.Schedule.PsychologistScheduleModel" name="Model" #>
+<#
+	var timezone = Model.TimezoneService.GetTimeZoneInfo(Model.DisplayTimezoneId);
+#>
+<!doctype html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body style="font-family: 'Martel', Helvetica, sans-serif; font-size: large; margin: 0; padding: 0;">
+	<# foreach (var week in Model.Weeks) { #>
+		<table style="border-collapse: collapse; border-spacing: 0; border-style: solid; border-width: 1px; border-color: #e0e0e0; color: #444444; width: 100%; page-break-after: always;">
+			<thead>
+			<#
+			var headerCellStyles = "padding: 6px; text-align: left; vertical-align: top; text-transform: uppercase; background-color: #f8f8f8; font-weight: normal; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8;";
+			var dayCellStyles = "padding: 6px; white-space: nowrap; vertical-align: middle; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8; color: #0000ff;";
+			var bodyCellStyles = "padding: 6px; white-space: nowrap; vertical-align: top; border-style: none none solid none; border-width: 2px; border-color: #d8d8d8;";
+			var noteCellStyles = "padding: 6px; white-space: nowrap; vertical-align: top; border-style: dotted none solid none; border-width: 1px 0 2px 0; border-color: #d8d8d8;";
+			var listStyles = "list-style-type: none; padding: 0; margin: 0;";
+			var listItemStyles = "font-size: medium;";
+			var smallListItemStyles = "font-size: smaller;";
+			#>
+				<tr>
+					<th style="<#= headerCellStyles #>">Time</th>
+					<th style="<#= headerCellStyles #>">Type</th>
+					<th style="<#= headerCellStyles #>">Source</th>
+					<th style="<#= headerCellStyles #>">Location</th>
+					<th style="<#= headerCellStyles #>">Claimant</th>
+					<th style="<#= headerCellStyles #>">Psychometrist</th>
+					<th style="<#= headerCellStyles #>">Info</th>
+				</tr>
+			</thead>
+			<tbody>
+			<# foreach (var day in week.Days) { #>
+				<tr>
+					<td colspan="7" style="<#= dayCellStyles #>"><!-- Day -->
+						<#= string.Format("{0:dddd MMMM d, yyyy}", day) #>
+					</td>
+				</tr>
+				<#
+				var appointments = Model.Appointments.Where(app => app.AppointmentTime > day && app.AppointmentTime < day.AddDays(1));
+
+				foreach (var appointment in appointments) {
+					var time = Model.TimezoneService.ConvertFromUtc(appointment.AppointmentTime, timezone);
+					var hasNotes = appointment.Assessment.AssessmentNotes.Any();
+					var bodyCellBorderStyles = hasNotes ? "border-style: none;" : "border-style: none none solid none;";
+				#>
+				<tr class="appointment">
+					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Time -->
+						<ul style="<#= listStyles #>">
+							<li style="<#= listItemStyles #>">
+								<#= string.Format("{0:hh:mmtt}", time) #>
+							</li>
+							<li style="<#= smallListItemStyles #>">
+								<#= appointment.AppointmentStatus.Name #>
+							</li>
+						</ul>
+					</td>
+					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Type -->
+						<ul style="<#= listStyles #>">
+							<li style="<#= listItemStyles #>">
+								<#= appointment.Assessment.AssessmentType.Name #>
+							</li>
+							<# if (appointment.IsCompletion) { #>
+							<li style="<#= smallListItemStyles #>">Completion</li>
+							<# } #>
+							<# foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 2, 6 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId)).OrderBy(attributeValue => attributeValue.Attribute.Name)) { #>
+								<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+								<li style="<#= smallListItemStyles #>">
+									<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+								</li>
+								<# } #>
+							<# } #>
+						</ul>
+					</td>
+					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Source -->
+						<ul style="<#= listStyles #>">
+							<li style="<#= listItemStyles #>">
+								<#= appointment.Assessment.ReferralSource.Name #>
+							</li>
+							<# if (null != appointment.Assessment.ReportStatus) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= appointment.Assessment.ReportStatus.Name #>
+							</li>
+							<# } #>
+							<# if (null != appointment.Assessment.MedicalFileReceivedDate) { #>
+							<li style="<#= smallListItemStyles #>">
+								Received:&nbsp;<#= string.Format("{0:dd/MM/yyyy}", appointment.Assessment.MedicalFileReceivedDate) #>
+							</li>
+							<# } #>
+							<# if (!string.IsNullOrEmpty(appointment.Assessment.ReferralSourceFileNumber)) { #>
+							<li style="<#= smallListItemStyles #>">
+								File No:&nbsp;<#= appointment.Assessment.ReferralSourceFileNumber #>
+							</li>
+							<# } #>
+						</ul>
+					</td>
+					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Location -->
+						<ul style="<#= listStyles #>">
+							<li style="<#= listItemStyles #>">
+								<#= appointment.Location.Name #>
+							</li>
+							<li style="<#= smallListItemStyles #>">
+								<#= appointment.Location.Street #>
+							</li>
+							<# if (!string.IsNullOrWhiteSpace(appointment.Location.Suite)) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= appointment.Location.Suite #>
+							</li>
+							<# } #>
+							<li style="<#= smallListItemStyles #>">
+								<#= appointment.Location.City.Name #>, <#= appointment.Location.City.Province #> <#= appointment.Location.PostalCode #>
+							</li>
+						</ul>
+					</td>
+					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Claimant -->
+						<ul style="<#= listStyles #>">
+						<# foreach (var claim in appointment.Assessment.Claims) { #>
+							<li style="<#= listItemStyles #>">
+								<#= claim.Claimant.FirstName #> <#= claim.Claimant.LastName #>
+							</li>
+							<li style="<#= smallListItemStyles #>">
+								<#= claim.Claimant.Age #> <#= claim.Claimant.Gender #>
+							</li>
+							<li style="<#= smallListItemStyles #>">
+								DOL: <#= string.Format("{0:dd/MM/yyyy}", claim.DateOfLoss) #>
+							</li>
+							<li style="<#= smallListItemStyles #>">
+								Claim No: <#= claim.ClaimNumber #>
+							</li>
+						<# } #>
+						</ul>
+					</td>
+					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Psychometrist -->
+						<ul style="<#= listStyles #>">
+							<li style="<#= listItemStyles #>">
+								<#= appointment.Psychometrist.FirstName #>
+							</li>
+						<# foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 1 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+							</li>
+							<# } #>
+						<# } #>
+						<# foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 5 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+							</li>
+							<# } #>
+						<# } #>
+						</ul>
+					</td>
+					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Info -->
+						<ul style="<#= listStyles #>">
+						<# foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 3 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+							</li>
+							<# } #>
+						<# } #>
+						<# foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 4 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { #>
+							<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+							</li>
+							<# } #>
+						<# } #>
+						</ul>
+					</td>
+				</tr>
+					<# if (hasNotes) { #>
+						<tr class="notes">
+							<td style="<#= noteCellStyles #>">&nbsp;</td>
+							<td colspan="6" style="<#= noteCellStyles #>">
+								<ul style="<#= listStyles #>">
+								<# foreach (var note in appointment.Assessment.AssessmentNotes) {
+									if (note.ShowOnCalendar) {
+								#>
+									<li style="<#= smallListItemStyles #>">
+										<#= note.Note.NoteText #>
+									</li>
+								<#	}
+								} #>
+							</td>
+						</tr>
+					<# } #>
+				<# } #><!-- appointment -->
+			<# } #><!-- day -->
+			</tbody>
+		</table>
+
+	<# } #>
+
+</body>
+</html>

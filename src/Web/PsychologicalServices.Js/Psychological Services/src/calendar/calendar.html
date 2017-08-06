@@ -1,5 +1,6 @@
 <template>
 	<require from="resources/value-converters/attribute-value"></require>
+	<require from="resources/value-converters/appointment-classes"></require>
 	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/note-for-day"></require>
@@ -84,7 +85,7 @@
 				</td>
 			</tr>
 			<template repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
-			<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()}">
+			<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()} ${appointment | appointmentClasses}">
 				<td class="uk-table-shrink">
 					<ul class="uk-list">
 						<li>
@@ -217,7 +218,7 @@
 			</td>
 			<td colspan="10"></td>
 		</tr>
-		<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()} uk-child-width-auto" repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
+		<tr class="appointment ${appointment.appointmentStatus.name.replace(' ','-').toLowerCase()} ${appointment | appointmentClasses} uk-child-width-auto" repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">
 			<td>
 				<ul class="uk-list">
 					<li>
@@ -255,7 +256,7 @@
 				</ul>
 			</td>
 			<td>${appointment.psychometrist.firstName}</td>
-			<td>${appointment.assessment.docListWriter.firstName}</td>
+			<td class="doc-list-writer">${appointment.assessment.docListWriter.firstName}</td>
 			<td>${appointment.assessment.notesWriter.firstName}</td>
 			<td>${appointment.assessment.reportStatus.name}</td>
 			<td>${appointment.assessment.fileSize}<span if.bind="appointment.assessment.isLargeFile">(L)</span></td>

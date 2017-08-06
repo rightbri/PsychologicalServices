@@ -2,7 +2,7 @@
 
 namespace PsychologicalServices.Models.Schedule
 {
-    public class ScheduleSearchCriteria
+    public class PsychometristScheduleSearchCriteria
     {
         public DateTime StartDate { get; set; }
 
