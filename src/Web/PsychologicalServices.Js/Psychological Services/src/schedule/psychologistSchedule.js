@@ -38,7 +38,7 @@ export class PsychologistSchedule {
 	getWeekScheduleDocument() {
 		this.notifier.info('Downloading schedule');
 		
-		let filename = this.user.company.name.toLowerCase().replace(/[^A-Za-z0-9 ]/g, '') + '-Schedule-' + this.fromDate.getDate() + '-' + (this.fromDate.getMonth() + 1) + '-' + this.fromDate.getFullYear() + '-to-' + this.toDate.getDate() + '-' + (this.toDate.getMonth() + 1) + '-' + this.toDate.getFullYear() + '.pdf';
+		let filename = this.user.company.name.replace(/[^A-Za-z0-9 ]/g, '') + '-Schedule-' + this.fromDate.getDate() + '-' + (this.fromDate.getMonth() + 1) + '-' + this.fromDate.getFullYear() + '-to-' + this.toDate.getDate() + '-' + (this.toDate.getMonth() + 1) + '-' + this.toDate.getFullYear() + '.pdf';
 
 		this.dataRepository.getWeekScheduleDocument({
 			'psychologistId': this.psychologists[0].userId,
