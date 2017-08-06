@@ -72,7 +72,7 @@
 	opacity: 0.7;
 }
 
-.has-doc-list-writer.sent-to-doc-list-writer-yes.back-from-doc-list-writer-no .doc-list-writer,
-.has-doc-list-writer.sent-to-doc-list-writer-yes.back-from-doc-list-writer-unknown .doc-list-writer {
+.has-doc-list-writer.sent-to-doc-list-writer-yes.doc-list-completed-no .doc-list-writer,
+.has-doc-list-writer.sent-to-doc-list-writer-yes.doc-list-completed-unknown .doc-list-writer {
 	color: #f0506e;
 }
