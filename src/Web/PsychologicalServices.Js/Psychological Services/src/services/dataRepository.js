@@ -321,6 +321,14 @@ export class DataRepository {
 		return this.saveBasic(calendarNote, 'calendarNote');
 	}
 	
+	deleteCalendarNote(id) {
+		return this.deleteBasic(id, 'calendarNote');
+	}
+	
+	getDateToday() {
+		return this.getBasic('date/today');
+	}
+	
 	getWeekScheduleDocument(parameters) {
 		var promise = new Promise((resolve, reject) => {
 			

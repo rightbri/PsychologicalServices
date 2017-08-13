@@ -8,10 +8,10 @@ export class NoteForDayValueConverter {
 			
 			let forDay = !item.note.deleted && (
 				item.fromDate === null || 
-				!moment.utc(item.fromDate).isAfter(compareDay.clone().endOf('day'))
+				!moment(item.fromDate).isAfter(compareDay.clone().endOf('day'))
 			) && (
 				item.ToDate === null ||
-				moment.utc(item.toDate).isAfter(compareDay.clone().startOf('day'))
+				moment(item.toDate).isSameOrAfter(compareDay.clone().startOf('day'))
 			);
 
 			return forDay;

@@ -956,11 +956,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The InvoiceDate property of the Entity Invoice<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Invoices"."InvoiceDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime InvoiceDate
+		public virtual System.DateTimeOffset InvoiceDate
 		{
-			get { return (System.DateTime)GetValue((int)InvoiceFieldIndex.InvoiceDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)InvoiceFieldIndex.InvoiceDate, true); }
 			set	{ SetValue((int)InvoiceFieldIndex.InvoiceDate, value); }
 		}
 
@@ -978,11 +978,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The UpdateDate property of the Entity Invoice<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Invoices"."UpdateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime UpdateDate
+		public virtual System.DateTimeOffset UpdateDate
 		{
-			get { return (System.DateTime)GetValue((int)InvoiceFieldIndex.UpdateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)InvoiceFieldIndex.UpdateDate, true); }
 			set	{ SetValue((int)InvoiceFieldIndex.UpdateDate, value); }
 		}
 

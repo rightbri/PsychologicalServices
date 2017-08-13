@@ -1,11 +1,7 @@
 ﻿using PsychologicalServices.Models.Schedule;
 using PsychologicalServices.Models.Users;
 using PsychologicalServices.Web.Infrastructure.Results;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -50,7 +46,7 @@ namespace PsychologicalServices.Web.Controllers
         {
             var result = _scheduleService.GetPsychologistSchedule(parameters);
 
-            var companyName = System.Text.RegularExpressions.Regex.Replace(result.Psychologist.Company.Name, "[^A-Za-z0-9 ]", "").Replace(' ','-');
+            var companyName = System.Text.RegularExpressions.Regex.Replace(result.Psychologist.Company.Name, "[^A-Za-z0-9]", "").Replace(' ','-');
 
             var filename = string.Format("{0}-Schedule-{1:dd-MM-yyyy}-to-{2:dd-MM-yyyy}.pdf", companyName, result.FromDate, result.ToDate);
 

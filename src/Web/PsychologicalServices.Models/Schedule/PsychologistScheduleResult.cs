@@ -7,9 +7,9 @@ namespace PsychologicalServices.Models.Schedule
     {
         public User Psychologist { get; set; }
 
-        public DateTime FromDate { get; set; }
+        public DateTimeOffset FromDate { get; set; }
 
-        public DateTime ToDate { get; set; }
+        public DateTimeOffset ToDate { get; set; }
 
         public byte[] Content { get; set; }
     }

@@ -15,9 +15,9 @@ namespace PsychologicalServices.Models.Appointments
 
         public IEnumerable<int> AppointmentStatusIds { get; set; }
 
-        public DateTime? AppointmentTimeStart { get; set; }
+        public DateTimeOffset? AppointmentTimeStart { get; set; }
 
-        public DateTime? AppointmentTimeEnd { get; set; }
+        public DateTimeOffset? AppointmentTimeEnd { get; set; }
 
         public int? CompanyId { get; set; }
     }

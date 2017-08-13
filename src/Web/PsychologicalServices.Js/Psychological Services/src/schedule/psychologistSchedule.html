@@ -1,7 +1,6 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
-	<require from="common/date-picker"></require>
-	<require from="flatpickr/flatpickr.css"></require>
+	<require from="common/date-mask"></require>
 	
 <div class="uk-container">
 
@@ -13,14 +12,14 @@
 			<div class="uk-width-1-2@s">
 				<label for="fromDate" class="uk-form-label">From</label>
 				<div class="uk-form-controls">
-					<input id="fromDate" type="text" class="uk-input uk-form-width-medium" date-picker="options.bind: config.datepickerOptions; dates.bind: searchFromDate" datechanged.delegate="fromDateChanged($event)" value.bind="searchFromDate | dateFormat:config.shortDateFormat" />
+					<input id="fromDate" type="text" class="uk-input uk-form-width-medium" value.bind="fromDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions" />
 				</div>
 			</div>
 
 			<div class="uk-width-1-2@s">
 				<label for="toDate" class="uk-form-label">To</label>
 				<div class="uk-form-controls">
-					<input id="toDate" type="text" class="uk-input uk-form-width-medium" date-picker="options.bind: config.datepickerOptions; dates.bind: searchToDate" datechanged.delegate="toDateChanged($event)" value.bind="searchToDate | dateFormat:config.shortDateFormat" />
+					<input id="toDate" type="text" class="uk-input uk-form-width-medium" value.bind="toDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions" />
 				</div>
 			</div>
 

@@ -613,11 +613,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The Date property of the Entity AssessmentMedRehab<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "AssessmentMedRehabs"."Date"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime Date
+		public virtual System.DateTimeOffset Date
 		{
-			get { return (System.DateTime)GetValue((int)AssessmentMedRehabFieldIndex.Date, true); }
+			get { return (System.DateTimeOffset)GetValue((int)AssessmentMedRehabFieldIndex.Date, true); }
 			set	{ SetValue((int)AssessmentMedRehabFieldIndex.Date, value); }
 		}
 

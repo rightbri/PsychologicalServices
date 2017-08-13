@@ -38,7 +38,7 @@ namespace PsychologicalServices.Web.Controllers
         [ResponseType(typeof(IEnumerable<CalendarNote>))]
         public IHttpActionResult Search(CalendarNoteSearchCriteria criteria)
         {
-            var calendarNotes = _calendarNoteService.GetCalendarNotes(criteria.FromDate, criteria.ToDate);
+            var calendarNotes = _calendarNoteService.GetCalendarNotes(criteria);
 
             return Ok(calendarNotes);
         }
@@ -49,6 +49,16 @@ namespace PsychologicalServices.Web.Controllers
         public IHttpActionResult Save(CalendarNote calendarNote)
         {
             var result = _calendarNoteService.SaveCalendarNote(calendarNote);
+
+            return Ok(result);
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        [ResponseType(typeof(DeleteResult))]
+        public IHttpActionResult Delete([FromUri]int id)
+        {
+            var result = _calendarNoteService.DeleteCalendarNote(id);
 
             return Ok(result);
         }

@@ -645,11 +645,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The DateOfLoss property of the Entity Claim<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Claims"."DateOfLoss"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTime> DateOfLoss
+		public virtual Nullable<System.DateTimeOffset> DateOfLoss
 		{
-			get { return (Nullable<System.DateTime>)GetValue((int)ClaimFieldIndex.DateOfLoss, false); }
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ClaimFieldIndex.DateOfLoss, false); }
 			set	{ SetValue((int)ClaimFieldIndex.DateOfLoss, value); }
 		}
 

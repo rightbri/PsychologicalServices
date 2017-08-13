@@ -4,10 +4,10 @@ namespace PsychologicalServices.Models.Common.Utility
 {
     public static class ModelExtensions
     {
-        public static int YearsFrom(this DateTime d1, DateTime d2)
+        public static int YearsFrom(this DateTimeOffset d1, DateTimeOffset d2)
         {
-            DateTime earlier = d1 < d2 ? d1 : d2;
-            DateTime later = d1 < d2 ? d2 : d1;
+            DateTimeOffset earlier = d1 < d2 ? d1 : d2;
+            DateTimeOffset later = d1 < d2 ? d2 : d1;
 
             var years = later.Year - earlier.Year;
 
@@ -65,6 +65,16 @@ namespace PsychologicalServices.Models.Common.Utility
             }
 
             return end;
+        }
+        
+        public static DateTime StartOfDay(this DateTime date)
+        {
+            return date.Date;
+        }
+
+        public static DateTime EndOfDay(this DateTime date)
+        {
+            return StartOfDay(date).AddDays(1).AddSeconds(-1);
         }
     }
 }

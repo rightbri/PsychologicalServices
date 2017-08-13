@@ -10,7 +10,7 @@ namespace PsychologicalServices.Models.Appointments
     {
         public int AppointmentId { get; set; }
 
-        public DateTime AppointmentTime { get; set; }
+        public DateTimeOffset AppointmentTime { get; set; }
 
         public Address Location { get; set; }
 
@@ -24,11 +24,11 @@ namespace PsychologicalServices.Models.Appointments
 
         public Assessment Assessment { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
 
         public User CreateUser { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         public User UpdateUser { get; set; }
 

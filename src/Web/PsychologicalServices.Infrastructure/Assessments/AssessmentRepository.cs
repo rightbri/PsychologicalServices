@@ -174,17 +174,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
             }
 
             var appointment = _appointmentRepository.NewAppointment(companyId, appointmentTime);
-
-            var attributes = _attributeRepository.SearchAttributes(new AttributeSearchCriteria
-            {
-                AttributeTypeIds = new[] { 2, 4, 5, 6, 7, 8, 9 },   //TODO: don't hard-code
-                IsActive = true,
-            });
-
+            
             return new Assessment
             {
                 Appointments = new List<Appointment>(new[] { appointment }),
-                Attributes = attributes.Select(attribute => new AttributeValue { Attribute = attribute }),
+                Attributes = Enumerable.Empty<Models.Attributes.AttributeValue>(),
                 Claims = Enumerable.Empty<Models.Claims.Claim>(),
                 Colors = Enumerable.Empty<Models.Colors.Color>(),
                 Company = company,

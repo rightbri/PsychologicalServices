@@ -146,14 +146,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "AppointmentEntity", "PsychologicalServices", @"dbo", "Appointments", 11 );
 			base.AddElementFieldMapping( "AppointmentEntity", "AppointmentId", "AppointmentId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AppointmentEntity", "LocationId", "LocationId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-			base.AddElementFieldMapping( "AppointmentEntity", "AppointmentTime", "AppointmentTime", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+			base.AddElementFieldMapping( "AppointmentEntity", "AppointmentTime", "AppointmentTime", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
 			base.AddElementFieldMapping( "AppointmentEntity", "PsychometristId", "PsychometristId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
 			base.AddElementFieldMapping( "AppointmentEntity", "PsychologistId", "PsychologistId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
 			base.AddElementFieldMapping( "AppointmentEntity", "AppointmentStatusId", "AppointmentStatusId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
 			base.AddElementFieldMapping( "AppointmentEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
-			base.AddElementFieldMapping( "AppointmentEntity", "CreateDate", "CreateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 7 );
+			base.AddElementFieldMapping( "AppointmentEntity", "CreateDate", "CreateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 7 );
 			base.AddElementFieldMapping( "AppointmentEntity", "CreateUserId", "CreateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
-			base.AddElementFieldMapping( "AppointmentEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 9 );
+			base.AddElementFieldMapping( "AppointmentEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 9 );
 			base.AddElementFieldMapping( "AppointmentEntity", "UpdateUserId", "UpdateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 10 );
 		}
 		/// <summary>Inits AppointmentAttributeEntity's mappings</summary>
@@ -199,12 +199,12 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AssessmentEntity", "ReferralSourceContactEmail", "ReferralSourceContactEmail", true, (int)SqlDbType.NVarChar, 4000, 0, 0, false, "", null, typeof(System.String), 7 );
 			base.AddElementFieldMapping( "AssessmentEntity", "DocListWriterId", "DocListWriterId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
 			base.AddElementFieldMapping( "AssessmentEntity", "NotesWriterId", "NotesWriterId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 9 );
-			base.AddElementFieldMapping( "AssessmentEntity", "MedicalFileReceivedDate", "MedicalFileReceivedDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 10 );
+			base.AddElementFieldMapping( "AssessmentEntity", "MedicalFileReceivedDate", "MedicalFileReceivedDate", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 10 );
 			base.AddElementFieldMapping( "AssessmentEntity", "IsLargeFile", "IsLargeFile", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 11 );
 			base.AddElementFieldMapping( "AssessmentEntity", "ReferralSourceFileNumber", "ReferralSourceFileNumber", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 12 );
-			base.AddElementFieldMapping( "AssessmentEntity", "CreateDate", "CreateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 13 );
+			base.AddElementFieldMapping( "AssessmentEntity", "CreateDate", "CreateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 13 );
 			base.AddElementFieldMapping( "AssessmentEntity", "CreateUserId", "CreateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 14 );
-			base.AddElementFieldMapping( "AssessmentEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 15 );
+			base.AddElementFieldMapping( "AssessmentEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 15 );
 			base.AddElementFieldMapping( "AssessmentEntity", "UpdateUserId", "UpdateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 16 );
 			base.AddElementFieldMapping( "AssessmentEntity", "SummaryNoteId", "SummaryNoteId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 17 );
 		}
@@ -236,7 +236,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "AssessmentMedRehabEntity", "PsychologicalServices", @"dbo", "AssessmentMedRehabs", 6 );
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "MedRehabId", "MedRehabId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Date", "Date", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Date", "Date", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Amount", "Amount", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 4 );
 			base.AddElementFieldMapping( "AssessmentMedRehabEntity", "Deleted", "Deleted", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 5 );
@@ -309,11 +309,12 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits CalendarNoteEntity's mappings</summary>
 		private void InitCalendarNoteEntityMappings()
 		{
-			base.AddElementMapping( "CalendarNoteEntity", "PsychologicalServices", @"dbo", "CalendarNotes", 4 );
+			base.AddElementMapping( "CalendarNoteEntity", "PsychologicalServices", @"dbo", "CalendarNotes", 5 );
 			base.AddElementFieldMapping( "CalendarNoteEntity", "CalendarNoteId", "CalendarNoteId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "CalendarNoteEntity", "FromDate", "FromDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 1 );
-			base.AddElementFieldMapping( "CalendarNoteEntity", "ToDate", "ToDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+			base.AddElementFieldMapping( "CalendarNoteEntity", "FromDate", "FromDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 1 );
+			base.AddElementFieldMapping( "CalendarNoteEntity", "ToDate", "ToDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
 			base.AddElementFieldMapping( "CalendarNoteEntity", "NoteId", "NoteId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
+			base.AddElementFieldMapping( "CalendarNoteEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
 		}
 		/// <summary>Inits CityEntity's mappings</summary>
 		private void InitCityEntityMappings()
@@ -331,7 +332,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "ClaimEntity", "PsychologicalServices", @"dbo", "Claims", 5 );
 			base.AddElementFieldMapping( "ClaimEntity", "ClaimId", "ClaimId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ClaimEntity", "ClaimantId", "ClaimantId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-			base.AddElementFieldMapping( "ClaimEntity", "DateOfLoss", "DateOfLoss", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+			base.AddElementFieldMapping( "ClaimEntity", "DateOfLoss", "DateOfLoss", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
 			base.AddElementFieldMapping( "ClaimEntity", "ClaimNumber", "ClaimNumber", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 3 );
 			base.AddElementFieldMapping( "ClaimEntity", "Lawyer", "Lawyer", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 4 );
 		}
@@ -345,7 +346,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "ClaimantEntity", "Age", "Age", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
 			base.AddElementFieldMapping( "ClaimantEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
 			base.AddElementFieldMapping( "ClaimantEntity", "Gender", "Gender", false, (int)SqlDbType.NChar, 1, 0, 0, false, "", null, typeof(System.String), 5 );
-			base.AddElementFieldMapping( "ClaimantEntity", "DateOfBirth", "DateOfBirth", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 6 );
+			base.AddElementFieldMapping( "ClaimantEntity", "DateOfBirth", "DateOfBirth", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 6 );
 		}
 		/// <summary>Inits ColorEntity's mappings</summary>
 		private void InitColorEntityMappings()
@@ -391,9 +392,9 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "InvoiceEntity", "PsychologicalServices", @"dbo", "Invoices", 9 );
 			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceId", "InvoiceId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "InvoiceEntity", "Identifier", "Identifier", false, (int)SqlDbType.NVarChar, 20, 0, 0, false, "", null, typeof(System.String), 1 );
-			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceDate", "InvoiceDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceDate", "InvoiceDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
 			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceStatusId", "InvoiceStatusId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
-			base.AddElementFieldMapping( "InvoiceEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 4 );
+			base.AddElementFieldMapping( "InvoiceEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 4 );
 			base.AddElementFieldMapping( "InvoiceEntity", "TaxRate", "TaxRate", false, (int)SqlDbType.Decimal, 0, 4, 18, false, "", null, typeof(System.Decimal), 5 );
 			base.AddElementFieldMapping( "InvoiceEntity", "Total", "Total", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
 			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceTypeId", "InvoiceTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 7 );
@@ -479,9 +480,9 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "NoteEntity", "NoteId", "NoteId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "NoteEntity", "Note", "Note", false, (int)SqlDbType.NVarChar, 2147483647, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "NoteEntity", "UpdateUserId", "UpdateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
-			base.AddElementFieldMapping( "NoteEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
+			base.AddElementFieldMapping( "NoteEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3 );
 			base.AddElementFieldMapping( "NoteEntity", "CreateUserId", "CreateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
-			base.AddElementFieldMapping( "NoteEntity", "CreateDate", "CreateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 5 );
+			base.AddElementFieldMapping( "NoteEntity", "CreateDate", "CreateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5 );
 		}
 		/// <summary>Inits ReferralSourceEntity's mappings</summary>
 		private void InitReferralSourceEntityMappings()
@@ -620,8 +621,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "UserUnavailabilityEntity", "PsychologicalServices", @"dbo", "UserUnavailabilities", 4 );
 			base.AddElementFieldMapping( "UserUnavailabilityEntity", "Id", "Id", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "UserUnavailabilityEntity", "UserId", "UserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-			base.AddElementFieldMapping( "UserUnavailabilityEntity", "StartDate", "StartDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
-			base.AddElementFieldMapping( "UserUnavailabilityEntity", "EndDate", "EndDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
+			base.AddElementFieldMapping( "UserUnavailabilityEntity", "StartDate", "StartDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
+			base.AddElementFieldMapping( "UserUnavailabilityEntity", "EndDate", "EndDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3 );
 		}
 
 	}

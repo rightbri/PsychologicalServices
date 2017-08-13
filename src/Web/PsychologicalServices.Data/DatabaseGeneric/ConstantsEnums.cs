@@ -411,6 +411,8 @@ namespace PsychologicalServices.Data
 		ToDate,
 		///<summary>NoteId. </summary>
 		NoteId,
+		///<summary>CompanyId. </summary>
+		CompanyId,
 		/// <summary></summary>
 		AmountOfFields
 	}

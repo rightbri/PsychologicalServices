@@ -607,22 +607,22 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The StartDate property of the Entity UserUnavailability<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "UserUnavailabilities"."StartDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime StartDate
+		public virtual System.DateTimeOffset StartDate
 		{
-			get { return (System.DateTime)GetValue((int)UserUnavailabilityFieldIndex.StartDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)UserUnavailabilityFieldIndex.StartDate, true); }
 			set	{ SetValue((int)UserUnavailabilityFieldIndex.StartDate, value); }
 		}
 
 		/// <summary> The EndDate property of the Entity UserUnavailability<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "UserUnavailabilities"."EndDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime EndDate
+		public virtual System.DateTimeOffset EndDate
 		{
-			get { return (System.DateTime)GetValue((int)UserUnavailabilityFieldIndex.EndDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)UserUnavailabilityFieldIndex.EndDate, true); }
 			set	{ SetValue((int)UserUnavailabilityFieldIndex.EndDate, value); }
 		}
 

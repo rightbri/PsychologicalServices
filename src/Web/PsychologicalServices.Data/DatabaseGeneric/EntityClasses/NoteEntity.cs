@@ -52,6 +52,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		private UserEntity _updateUser;
 		private UserEntity _createUser;
 
@@ -79,6 +80,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string CalendarNote = "CalendarNote";
 			/// <summary>Member name UserNotes</summary>
 			public static readonly string UserNotes = "UserNotes";
+
 
 
 
@@ -153,6 +155,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_assessmentNotes = (EntityCollection<AssessmentNoteEntity>)info.GetValue("_assessmentNotes", typeof(EntityCollection<AssessmentNoteEntity>));
 				_calendarNote = (EntityCollection<CalendarNoteEntity>)info.GetValue("_calendarNote", typeof(EntityCollection<CalendarNoteEntity>));
 				_userNotes = (EntityCollection<UserNoteEntity>)info.GetValue("_userNotes", typeof(EntityCollection<UserNoteEntity>));
+
 
 
 
@@ -247,6 +250,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					break;
 			}
@@ -286,6 +290,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserNotes":
 					toReturn.Add(NoteEntity.Relations.UserNoteEntityUsingNoteId);
 					break;
+
 
 
 
@@ -456,6 +461,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				info.AddValue("_updateUser", (!this.MarkedForDeletion?_updateUser:null));
 				info.AddValue("_createUser", (!this.MarkedForDeletion?_createUser:null));
 
@@ -544,6 +550,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
@@ -607,6 +614,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -618,6 +626,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessmentNotes = (EntityCollection<AssessmentNoteEntity>) collectionsQueue.Dequeue();
 			this._calendarNote = (EntityCollection<CalendarNoteEntity>) collectionsQueue.Dequeue();
 			this._userNotes = (EntityCollection<UserNoteEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -662,6 +671,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -675,6 +685,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CalendarNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CalendarNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserNoteEntityFactory))) : null);
+
 
 
 
@@ -701,6 +712,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("AssessmentNotes", _assessmentNotes);
 			toReturn.Add("CalendarNote", _calendarNote);
 			toReturn.Add("UserNotes", _userNotes);
+
 
 
 
@@ -746,6 +758,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			if(_updateUser!=null)
 			{
 				_updateUser.ActiveContext = base.ActiveContext;
@@ -765,6 +778,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessmentNotes = null;
 			_calendarNote = null;
 			_userNotes = null;
+
 
 
 
@@ -970,6 +984,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1055,11 +1070,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The UpdateDate property of the Entity Note<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Notes"."UpdateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime UpdateDate
+		public virtual System.DateTimeOffset UpdateDate
 		{
-			get { return (System.DateTime)GetValue((int)NoteFieldIndex.UpdateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)NoteFieldIndex.UpdateDate, true); }
 			set	{ SetValue((int)NoteFieldIndex.UpdateDate, value); }
 		}
 
@@ -1077,11 +1092,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The CreateDate property of the Entity Note<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Notes"."CreateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime CreateDate
+		public virtual System.DateTimeOffset CreateDate
 		{
-			get { return (System.DateTime)GetValue((int)NoteFieldIndex.CreateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)NoteFieldIndex.CreateDate, true); }
 			set	{ SetValue((int)NoteFieldIndex.CreateDate, value); }
 		}
 
@@ -1148,6 +1163,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _userNotes;
 			}
 		}
+
 
 
 

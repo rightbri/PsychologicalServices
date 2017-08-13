@@ -57,8 +57,6 @@ export class PsychometristSchedule {
 		this.recipients = [user];
 		this.cc = [];
 		this.bcc = [];
-		
-		//scroll to schedule send parameters
 	}
 	
 	sendSchedule() {

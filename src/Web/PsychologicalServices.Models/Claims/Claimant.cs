@@ -10,7 +10,7 @@ namespace PsychologicalServices.Models.Claims
 
         public string LastName { get; set; }
 
-        public DateTime? DateOfBirth { get; set; }
+        public DateTimeOffset? DateOfBirth { get; set; }
 
         public int? Age { get; set; }
 

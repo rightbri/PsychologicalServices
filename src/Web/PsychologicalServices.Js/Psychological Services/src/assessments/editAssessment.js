@@ -425,17 +425,26 @@ export class EditAssessment {
 		this.assessment.reports.splice(this.assessment.reports.indexOf(report), 1);
 		this.checkMedRehab();
 	}
-
-	getAttributeTypeIds(attributeTypes)
-	{
-		if (attributeTypes)
-		{
-			return attributeTypes.map(at => at.attributeTypeId);
-		}
+	
+	assessmentTypeChanged() {
 		
-		return [];
+		let selectedAttributeTypes = (this.assessment && this.assessment.assessmentType) ? this.assessment.assessmentType.attributeTypes : [];
+		
+		//filter assessment attributes based on selected assessment type
+		let existingAttributes = this.assessment.attributes.filter(att => {
+			return selectedAttributeTypes.some(at => at.attributeTypeId === att.attribute.attributeType.attributeTypeId);
+		});
+		
+		//add new attributes to assessment from this.attributes where not present already in assessment.attributes collection
+		let newAttributes = this.attributes.filter(attribute => {
+			return !existingAttributes.some(existingAttributeValue => existingAttributeValue.attribute.attributeId === attribute.attributeId) &&
+				selectedAttributeTypes.some(attributeType => attributeType.attributeTypeId === attribute.attributeType.attributeTypeId);
+		}).map(function (attribute, index, array) {
+			return { 'attribute': attribute, 'value': null };
+		});
+		
+		this.assessment.attributes = existingAttributes.concat(newAttributes);
 	}
-
 }
 
 function copyValues(copyFrom, copyTo) {

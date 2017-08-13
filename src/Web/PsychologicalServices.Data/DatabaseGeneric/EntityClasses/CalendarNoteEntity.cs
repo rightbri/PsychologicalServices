@@ -39,6 +39,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		#region Class Member Declarations
 
 
+		private CompanyEntity _company;
 		private NoteEntity _note;
 
 		
@@ -53,6 +54,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
+			/// <summary>Member name Company</summary>
+			public static readonly string Company = "Company";
 			/// <summary>Member name Note</summary>
 			public static readonly string Note = "Note";
 
@@ -118,6 +121,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
+				_company = (CompanyEntity)info.GetValue("_company", typeof(CompanyEntity));
+				if(_company!=null)
+				{
+					_company.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_note = (NoteEntity)info.GetValue("_note", typeof(NoteEntity));
 				if(_note!=null)
 				{
@@ -141,6 +149,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case CalendarNoteFieldIndex.NoteId:
 					DesetupSyncNote(true, false);
 					break;
+				case CalendarNoteFieldIndex.CompanyId:
+					DesetupSyncCompany(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -163,6 +174,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
+				case "Company":
+					this.Company = (CompanyEntity)entity;
+					break;
 				case "Note":
 					this.Note = (NoteEntity)entity;
 					break;
@@ -190,6 +204,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
+				case "Company":
+					toReturn.Add(CalendarNoteEntity.Relations.CompanyEntityUsingCompanyId);
+					break;
 				case "Note":
 					toReturn.Add(CalendarNoteEntity.Relations.NoteEntityUsingNoteId);
 					break;
@@ -211,11 +228,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0;
+			int numberOfOneWayRelations = 0+1;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
+				case "Company":
+					return true;
 
 
 				default:
@@ -231,6 +250,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Company":
+					SetupSyncCompany(relatedEntity);
+					break;
 				case "Note":
 					SetupSyncNote(relatedEntity);
 					break;
@@ -250,6 +272,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Company":
+					DesetupSyncCompany(false, true);
+					break;
 				case "Note":
 					DesetupSyncNote(false, true);
 					break;
@@ -275,6 +300,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
+			if(_company!=null)
+			{
+				toReturn.Add(_company);
+			}
 			if(_note!=null)
 			{
 				toReturn.Add(_note);
@@ -305,6 +334,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
+				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
 				info.AddValue("_note", (!this.MarkedForDeletion?_note:null));
 
 			}
@@ -342,6 +372,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 
 
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'Company' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoCompany()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CompanyFields.CompanyId, null, ComparisonOperator.Equal, this.CompanyId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Note' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
@@ -420,6 +460,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("Company", _company);
 			toReturn.Add("Note", _note);
 
 
@@ -432,6 +473,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 
+			if(_company!=null)
+			{
+				_company.ActiveContext = base.ActiveContext;
+			}
 			if(_note!=null)
 			{
 				_note.ActiveContext = base.ActiveContext;
@@ -445,6 +490,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			_company = null;
 			_note = null;
 
 			PerformDependencyInjection();
@@ -474,8 +520,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("NoteId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CompanyId", fieldHashtable);
 		}
 		#endregion
+
+		/// <summary> Removes the sync logic for member _company</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncCompany(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", CalendarNoteEntity.Relations.CompanyEntityUsingCompanyId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)CalendarNoteFieldIndex.CompanyId } );		
+			_company = null;
+		}
+
+		/// <summary> setups the sync logic for member _company</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncCompany(IEntity2 relatedEntity)
+		{
+			if(_company!=relatedEntity)
+			{
+				DesetupSyncCompany(true, true);
+				_company = (CompanyEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", CalendarNoteEntity.Relations.CompanyEntityUsingCompanyId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCompanyPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 		/// <summary> Removes the sync logic for member _note</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
@@ -545,6 +627,18 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCompany
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Company")[0], (int)PsychologicalServices.Data.EntityType.CalendarNoteEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, null, null, "Company", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -596,22 +690,22 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The FromDate property of the Entity CalendarNote<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "CalendarNotes"."FromDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTime> FromDate
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.DateTimeOffset FromDate
 		{
-			get { return (Nullable<System.DateTime>)GetValue((int)CalendarNoteFieldIndex.FromDate, false); }
+			get { return (System.DateTimeOffset)GetValue((int)CalendarNoteFieldIndex.FromDate, true); }
 			set	{ SetValue((int)CalendarNoteFieldIndex.FromDate, value); }
 		}
 
 		/// <summary> The ToDate property of the Entity CalendarNote<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "CalendarNotes"."ToDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTime> ToDate
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.DateTimeOffset ToDate
 		{
-			get { return (Nullable<System.DateTime>)GetValue((int)CalendarNoteFieldIndex.ToDate, false); }
+			get { return (System.DateTimeOffset)GetValue((int)CalendarNoteFieldIndex.ToDate, true); }
 			set	{ SetValue((int)CalendarNoteFieldIndex.ToDate, value); }
 		}
 
@@ -626,7 +720,53 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)CalendarNoteFieldIndex.NoteId, value); }
 		}
 
+		/// <summary> The CompanyId property of the Entity CalendarNote<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "CalendarNotes"."CompanyId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 CompanyId
+		{
+			get { return (System.Int32)GetValue((int)CalendarNoteFieldIndex.CompanyId, true); }
+			set	{ SetValue((int)CalendarNoteFieldIndex.CompanyId, value); }
+		}
 
+
+
+		/// <summary> Gets / sets related entity of type 'CompanyEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual CompanyEntity Company
+		{
+			get
+			{
+				return _company;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncCompany(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_company != null)
+						{
+							UnsetRelatedEntity(_company, "Company");
+						}
+					}
+					else
+					{
+						if(_company!=value)
+						{
+							SetRelatedEntity((IEntity2)value, "Company");
+						}
+					}
+				}
+			}
+		}
 
 		/// <summary> Gets / sets related entity of type 'NoteEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>

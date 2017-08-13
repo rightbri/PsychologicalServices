@@ -24,7 +24,7 @@ namespace PsychologicalServices.Models.CalendarNotes
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            if (item.FromDate.HasValue && item.ToDate.HasValue && item.FromDate.Value > item.ToDate.Value)
+            if (item.FromDate > item.ToDate)
             {
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "ToDate", Message = "To-Date must be after From-Date" }

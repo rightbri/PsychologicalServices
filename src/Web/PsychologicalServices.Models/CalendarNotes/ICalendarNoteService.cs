@@ -8,8 +8,10 @@ namespace PsychologicalServices.Models.CalendarNotes
     {
         CalendarNote GetCalendarNote(int id);
 
-        IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate);
+        IEnumerable<CalendarNote> GetCalendarNotes(CalendarNoteSearchCriteria criteria);
 
         SaveResult<CalendarNote> SaveCalendarNote(CalendarNote calendarNote);
+
+        DeleteResult DeleteCalendarNote(int id);
     }
 }

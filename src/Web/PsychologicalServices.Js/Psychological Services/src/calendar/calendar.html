@@ -9,7 +9,6 @@
 	<require from="resources/value-converters/sort-array"></require>
 	<require from="resources/value-converters/appointment-in-statuses"></require>
 	<require from="assessments/view-assessment-summary"></require>
-	<require from="calendarNotes/edit-calendar-note"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
@@ -77,8 +76,7 @@
 						${day.date | dateFormat:'ddd MMM D'}
 					</a>
 				</td>
-				<td colspan="6"></td>
-				<td>
+				<td colspan="7">
 					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day.date" click.delegate="editCalendarNote(calendarNote)" uk-toggle="target: #calendar-note-form">
 						<small>${calendarNote.note.noteText}</small>
 					</p>

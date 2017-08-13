@@ -1,39 +1,39 @@
 import {inject} from 'aurelia-framework';
-import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
-import {Context} from 'common/context';
 import {Config} from 'common/config';
-import {DateService} from 'common/dateService';
+import {Notifier} from 'services/notifier';
 
-@inject(Router, DataRepository, Config, Context, DateService)
+@inject(DataRepository, Config, Notifier)
 export class CalendarNotes {
-
-	constructor(router, dataRepository, config, context, dateService) {
-		this.router = router;
+	
+	constructor(dataRepository, config, notifier) {
 		this.dataRepository = dataRepository;
 		this.config = config;
-		this.context = context;
-		this.dateService = dateService;
-		
-		this.searchFromDate = this.dateService.today();
-		this.searchToDate = this.dateService.addDays(this.searchFromDate, 1);
-		this.fromDate = this.searchFromDate;
-		this.toDate = this.searchToDate;
+		this.notifier = notifier;
 	}
 
 	search() {
 		this.dataRepository.getCalendarNotes({
-			'fromDate': this.searchFromDate,
-			'toDate': this.searchToDate
+			'fromDate': this.fromDate,
+			'toDate': this.toDate
 		})
 		.then(calendarNotes => this.calendarNotes = calendarNotes);
 	}
-
-	fromDateChanged(e) {
-		this.searchFromDate = e.detail.dates[0];
-	}
 	
-	toDateChanged(e) {
-		this.searchToDate = e.detail.dates[0];
+	deleteCalendarNote(calendarNote) {
+		this.notifier.info('Deleting calendar note');
+		
+		this.dataRepository.deleteCalendarNote(calendarNote.calendarNoteId)
+			.then(result => {
+				if (result.isDeleted) {
+					
+					this.calendarNotes.splice(this.calendarNotes.indexOf(calendarNote), 1);
+					
+					this.notifier.info('Calendar note deleted');
+				}
+				else if (result.isError) {
+					this.notifier.error(result.errorDetails);
+				}
+			});
 	}
 }

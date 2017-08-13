@@ -108,7 +108,7 @@ namespace PsychologicalServices.Models.Schedule
             #line 38 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  foreach (var appointment in Model.User.PsychometristAppointments.OrderBy(a => a.AppointmentTime)) {
 		var timezone = Model.TimezoneService.GetTimeZoneInfo(Model.DisplayTimezoneId);
-		var time = Model.TimezoneService.ConvertFromUtc(appointment.AppointmentTime, timezone);
+		var time = Model.TimezoneService.ConvertTime(appointment.AppointmentTime, timezone);
 	
             
             #line default

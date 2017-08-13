@@ -7,7 +7,7 @@ namespace PsychologicalServices.Models.Claims
     {
         public int MedRehabId { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
 
         public int Amount { get; set; }
 

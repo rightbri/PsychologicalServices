@@ -2,8 +2,7 @@
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-mask"></require>
 	<require from="resources/value-converters/date-format"></require>
-	<require from="common/validation-summary.html"></require>
-	
+	 
 	<div class="uk-container">
 	
 		<fieldset class="uk-fieldset">
@@ -15,17 +14,17 @@
 					<validation-summary errors.bind="validationErrors"></validation-summary>
 				</div>
 
-				<div class="uk-width-1-@2s">
+				<div class="uk-width-1-2@s">
 					<label class="uk-form-label" for="fromDate">From Date</label>
 					<div class="uk-form-controls">
-						<input id="fromDate" type="text" class="uk-input" value.bind="calendarNote.fromDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions"/>
+						<input id="fromDate" type="text" class="uk-input" value.bind="calendarNote.fromDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions" />
 					</div>
 				</div>
 				
-				<div class="uk-width-1-@2s">
+				<div class="uk-width-1-2@s">
 					<label class="uk-form-label" for="toDate">To Date</label>
 					<div class="uk-form-controls">
-						<input id="toDate" type="text" class="uk-input" value.bind="calendarNote.toDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions"/>
+						<input id="toDate" type="text" class="uk-input" value.bind="calendarNote.toDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions" />
 					</div>
 				</div>
 				

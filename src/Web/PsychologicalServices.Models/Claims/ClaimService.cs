@@ -176,9 +176,9 @@ namespace PsychologicalServices.Models.Claims
             }
         }
         
-        private int GetAge(DateTime date)
+        private int GetAge(DateTimeOffset date)
         {
-            return _date.Today.YearsFrom(date);
+            return new DateTimeOffset(_date.Today).YearsFrom(date);
         }
 
         private DateTime GetDateOfBirth(IDate date, int age)

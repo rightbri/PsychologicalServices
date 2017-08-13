@@ -1,5 +1,5 @@
-﻿using PsychologicalServices.Models.Notes;
-using PsychologicalServices.Models.Users;
+﻿using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Notes;
 using System;
 
 namespace PsychologicalServices.Models.CalendarNotes
@@ -8,11 +8,13 @@ namespace PsychologicalServices.Models.CalendarNotes
     {
         public int CalendarNoteId { get; set; }
 
-        public DateTime? FromDate { get; set; }
+        public DateTimeOffset FromDate { get; set; }
 
-        public DateTime? ToDate { get; set; }
+        public DateTimeOffset ToDate { get; set; }
 
         public Note Note { get; set; }
+
+        public Company Company { get; set; }
 
         public bool IsNew()
         {

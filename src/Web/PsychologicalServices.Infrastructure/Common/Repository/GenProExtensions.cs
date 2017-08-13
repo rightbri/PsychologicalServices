@@ -405,6 +405,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CalendarNoteId = calendarNote.CalendarNoteId,
                     FromDate = calendarNote.FromDate,
                     ToDate = calendarNote.ToDate,
+                    Company = calendarNote.Company.ToCompany(),
                     Note = calendarNote.Note.ToNote(),
                 }
                 : null;

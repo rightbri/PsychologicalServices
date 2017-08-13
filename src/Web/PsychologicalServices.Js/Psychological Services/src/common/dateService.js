@@ -20,6 +20,12 @@ export class DateService {
 		return new Date();
 	}
 	
+	utcToday() {
+		let date = this.today();
+		
+		return this.toUtc(date);
+	}
+	
 	utcNow() {
 		let date = this.now();
 		
@@ -27,7 +33,19 @@ export class DateService {
 	}
 	
 	timezoneNow(timezone) {
-		return this.timezone.fromUtc(this.utcNow(), timezone);
+		return this.utcToTimezone(this.utcNow(), timezone);
+	}
+	
+	utcToTimezone(utcDate, timezone) {
+		return this.timezone.fromUtc(utcDate, timezone);
+	}
+	
+	toZone(date, timezone) {
+		let date1 = this.timezone.convertDate(date, timezone);
+		
+		let date2 = this.timezone.getDatetimeInZone(date, timezone);
+		
+		return date2;
 	}
 	
 	toUtc(date) {

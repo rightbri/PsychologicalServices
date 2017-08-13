@@ -13,9 +13,9 @@ namespace PsychologicalServices.Models.Schedule
 
         public User Psychologist { get; set; }
 
-        public DateTime FromDate { get; set; }
+        public DateTimeOffset FromDate { get; set; }
 
-        public DateTime ToDate { get; set; }
+        public DateTimeOffset ToDate { get; set; }
 
         public IEnumerable<Appointment> Appointments { get; set; }
 
@@ -32,7 +32,7 @@ namespace PsychologicalServices.Models.Schedule
                 return Days
                     .Select(day => new
                     {
-                        Week = calendar.GetWeekOfYear(day, System.Globalization.CalendarWeekRule.FirstFullWeek, DayOfWeek.Sunday),
+                        Week = calendar.GetWeekOfYear(day.Date, System.Globalization.CalendarWeekRule.FirstFullWeek, DayOfWeek.Sunday),
                         Day = day
                     })
                     .GroupBy(keySelector => keySelector.Week)
@@ -58,9 +58,9 @@ namespace PsychologicalServices.Models.Schedule
                 {
                     _days = new List<DateTime>();
 
-                    var day = FromDate;
+                    var day = FromDate.DateTime;
 
-                    while (day <= ToDate)
+                    while (day <= ToDate.DateTime)
                     {
                         _days.Add(day);
 

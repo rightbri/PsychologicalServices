@@ -38,14 +38,13 @@ export class EditCalendarNote {
 						});
 				}
 				else {
-					let today = this.dateService.today();
-					
-					this.calendarNote = {
+					return this.calendarNote = {
 						calendarNoteId: 0,
-						fromDate: today,
-						toDate: this.dateService.addDays(today, 1),
+						company: this.user.company,
+						fromDate: null,
+						toDate: null,
 						note: {
-							noteText: 'hello world!'
+							noteText: ''
 						},
 						isActive: true
 					};

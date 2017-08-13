@@ -3,16 +3,18 @@ import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {Context} from 'common/context';
 import {Config} from 'common/config';
+import {DateService} from 'common/dateService';
 import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
 import moment from 'moment';
 
-@inject(DataRepository, Context, Config, Router, Notifier, Scroller)
+@inject(DataRepository, Context, Config, DateService, Router, Notifier, Scroller)
 export class EditUser {
-	constructor(dataRepository, context, config, router, notifier, scroller) {
+	constructor(dataRepository, context, config, dateService, router, notifier, scroller) {
 		this.dataRepository = dataRepository;
 		this.context = context;
 		this.config = config;
+		this.dateService = dateService;
 		this.router = router;
 		this.scroller = scroller;
 		this.notifier = notifier;
@@ -42,8 +44,13 @@ export class EditUser {
 			return this.dataRepository.getUser(id)
 				.then(user => {
 					this.user = user;
-					this.unavailableDates = this.user.unavailability.map(u => new Date(u.startDate));
-
+					
+					this.unavailableDates =
+						this.user.unavailability.map(u => {
+							let startDate = new Date(u.startDate);
+							return startDate;
+						});
+					
 					return this.getData();
 				});
 		}
@@ -142,8 +149,8 @@ export class EditUser {
 				'endDate': moment(d).add(1, 'days').subtract(1, 'seconds').toDate()
 			};
 		});
-		this.unavailableDates = e.detail.dates;
 	}
+	
 }
 
 function getMissingTravelFees(cities, travelFees) {

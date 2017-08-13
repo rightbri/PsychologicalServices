@@ -2048,11 +2048,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The MedicalFileReceivedDate property of the Entity Assessment<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Assessments"."MedicalFileReceivedDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTime> MedicalFileReceivedDate
+		public virtual Nullable<System.DateTimeOffset> MedicalFileReceivedDate
 		{
-			get { return (Nullable<System.DateTime>)GetValue((int)AssessmentFieldIndex.MedicalFileReceivedDate, false); }
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)AssessmentFieldIndex.MedicalFileReceivedDate, false); }
 			set	{ SetValue((int)AssessmentFieldIndex.MedicalFileReceivedDate, value); }
 		}
 
@@ -2081,11 +2081,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The CreateDate property of the Entity Assessment<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Assessments"."CreateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime CreateDate
+		public virtual System.DateTimeOffset CreateDate
 		{
-			get { return (System.DateTime)GetValue((int)AssessmentFieldIndex.CreateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)AssessmentFieldIndex.CreateDate, true); }
 			set	{ SetValue((int)AssessmentFieldIndex.CreateDate, value); }
 		}
 
@@ -2103,11 +2103,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The UpdateDate property of the Entity Assessment<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Assessments"."UpdateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime UpdateDate
+		public virtual System.DateTimeOffset UpdateDate
 		{
-			get { return (System.DateTime)GetValue((int)AssessmentFieldIndex.UpdateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)AssessmentFieldIndex.UpdateDate, true); }
 			set	{ SetValue((int)AssessmentFieldIndex.UpdateDate, value); }
 		}
 

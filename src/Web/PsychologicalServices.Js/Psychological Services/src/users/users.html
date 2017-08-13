@@ -38,9 +38,9 @@
 				</div>
 				
 				<div class="uk-width-1-2@s">
-					<label class="uk-form-label" for="searchActive">Is Active?</label>
+					<label class="uk-form-label" for="isActive">Is Active?</label>
 					<div class="uk-form-controls">
-						<select class="uk-select" value.bind="searchIsActive">
+						<select id="isActive" class="uk-select" value.bind="searchIsActive">
 							<option></option>
 							<option value="true">yes</option>
 							<option value="false">no</option>
@@ -49,7 +49,7 @@
 				</div>
 				
 				<div class="uk-width-1-1">
-					<label class="uk-form-label" for="availabileDate">Available Date</label>
+					<label class="uk-form-label" for="availableDate">Available Date</label>
 					<div class="uk-form-controls">
 						<input id="availableDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="searchAvailableDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
 					</div>

@@ -9,8 +9,6 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PsychologicalServices.Infrastructure.CalendarNotes
 {
@@ -31,6 +29,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
         private static readonly Func<IPathEdgeRootParser<CalendarNoteEntity>, IPathEdgeRootParser<CalendarNoteEntity>>
             CalendarNotePath =
                 (calendarNotePath => calendarNotePath
+                    .Prefetch<CompanyEntity>(calendarNote => calendarNote.Company)
                     .Prefetch<NoteEntity>(calendarNote => calendarNote.Note)
                         .SubPath(notePath => notePath
                             .Prefetch<UserEntity>(note => note.CreateUser)
@@ -58,7 +57,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
             }
         }
 
-        public IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate)
+        public IEnumerable<CalendarNote> GetCalendarNotes(CalendarNoteSearchCriteria criteria)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
@@ -66,14 +65,19 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
 
                 var calendarNotes = meta.CalendarNote.WithPath(CalendarNotePath);
 
-                if (fromDate.HasValue)
+                if (criteria.FromDate.HasValue)
                 {
-                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.FromDate <= toDate);
+                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.FromDate <= criteria.ToDate);
                 }
 
-                if (toDate.HasValue)
+                if (criteria.ToDate.HasValue)
                 {
-                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.ToDate >= fromDate);
+                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.ToDate >= criteria.FromDate);
+                }
+
+                if (criteria.CompanyId.HasValue)
+                {
+                    calendarNotes = calendarNotes.Where(calendarNote => calendarNote.CompanyId == criteria.CompanyId);
                 }
 
                 return Execute<CalendarNoteEntity>(
@@ -116,6 +120,7 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
 
                 calendarNoteEntity.FromDate = calendarNote.FromDate;
                 calendarNoteEntity.ToDate = calendarNote.ToDate;
+                calendarNoteEntity.CompanyId = calendarNote.Company.CompanyId;
                 calendarNoteEntity.Note.Note = calendarNote.Note.NoteText;
                 calendarNoteEntity.Note.UpdateUserId = calendarNote.Note.UpdateUser.UserId;
                 calendarNoteEntity.Note.UpdateDate = _now.UtcNow;
@@ -123,6 +128,40 @@ namespace PsychologicalServices.Infrastructure.CalendarNotes
                 adapter.SaveEntity(calendarNoteEntity, false);
 
                 return calendarNoteEntity.CalendarNoteId;
+            }
+        }
+
+        public bool DeleteCalendarNote(int id)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var calendarNote = new CalendarNoteEntity
+                {
+                    CalendarNoteId = id,
+                };
+
+                var fetched = adapter.FetchEntity(calendarNote);
+
+                if (!fetched)
+                {
+                    return false;
+                }
+
+                var calendarNoteDeleted = adapter.DeleteEntity(new CalendarNoteEntity
+                {
+                    CalendarNoteId = calendarNote.CalendarNoteId,
+                });
+
+                var noteDeleted = adapter.DeleteEntity(new NoteEntity
+                {
+                    NoteId = calendarNote.NoteId,
+                });
+
+                var success = calendarNoteDeleted && noteDeleted;
+
+                return success;
             }
         }
     }

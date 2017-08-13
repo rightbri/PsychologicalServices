@@ -10,9 +10,9 @@ namespace PsychologicalServices.Models.Notes
 
         public string NoteText { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         public User CreateUser { get; set; }
 

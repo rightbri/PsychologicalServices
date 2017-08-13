@@ -3,7 +3,8 @@ import 'moment-timezone';
 
 export class Timezone {
 	
-	constructor() {
+	constructor(config) {
+		
 		moment.tz.add(this.getTimezones());
 	}
 	
@@ -11,8 +12,29 @@ export class Timezone {
 		return m.tz(timezone);
 	}
 	
+	convertDate(d, timezone) {
+		let date = moment.default(d);
+		return new Date(date.tz(timezone).format());
+	}
+	
 	fromUtc(date, timezone) {
 		return moment.utc(date).tz(timezone).toDate();
+	}
+	
+	getDatetimeInZone(date, timezone) {
+		
+		let localOffset = date.getTimezoneOffset();
+		
+		let formatted = new Date(moment.tz(date, timezone).format());
+		
+		let offset = moment.default(date).tz(timezone).utcOffset();
+		
+		date.setMinutes(date.getMinutes() - offset);
+		
+		date.setMinutes(date.getMinutes() - localOffset);
+		
+		
+		return date;
 	}
 	
 	getTimezones() {

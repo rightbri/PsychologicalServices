@@ -9,14 +9,9 @@ namespace PsychologicalServices.Models.Common.Utility
             get { return DateTime.Today; }
         }
 
-        public DateTime Now
+        public DateTimeOffset UtcNow
         {
-            get { return DateTime.Now; }
-        }
-
-        public DateTime UtcNow
-        {
-            get { return DateTime.UtcNow; }
+            get { return DateTimeOffset.UtcNow; }
         }
     }
 }

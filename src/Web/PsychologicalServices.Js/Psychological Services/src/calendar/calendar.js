@@ -11,6 +11,7 @@ import moment from 'moment';
 
 @inject(Router, BindingSignaler, DataRepository, Config, Context, UserSettings, DateService, Scroller)
 export class Calendar {
+	
 	constructor(router, bindingSignaler, dataRepository, config, context, userSettings, dateService, scroller) {
 		this.router = router;
 		this.bindingSignaler = bindingSignaler;
@@ -146,18 +147,19 @@ export class Calendar {
 	}
 	
 	getData() {
-		return Promise.all([
-			this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
-			this.dataRepository.getCalendarNotes({
-				'fromDate': this.searchStart,
-				'toDate': this.searchEnd
-			}).then(data => this.calendarNotes = data),
-			this.userSettings.setting('calendarAppointmentStatusIds').then(value => this.appointmentStatusIds = value || this.config.calendarDefaults.appointmentStatusIds),
-			this.context.getUser().then(user => {
-				this.user = user;
-				this.searchCompany = user.company.companyId;
+		return this.context.getUser().then(user => {
+			this.user = user;
+			this.searchCompany = user.company.companyId;
 				
-				return this.dataRepository.searchAppointments({
+			return Promise.all([
+				this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
+				this.userSettings.setting('calendarAppointmentStatusIds').then(value => this.appointmentStatusIds = value || this.config.calendarDefaults.appointmentStatusIds),
+				this.dataRepository.getCalendarNotes({
+					'fromDate': this.searchStart,
+					'toDate': this.searchEnd,
+					'companyId': this.user.company.companyId
+				}).then(data => this.calendarNotes = data),
+				this.dataRepository.searchAppointments({
 					appointmentStatusIds: this.searchStatuses,
 					appointmentTimeStart: this.searchStart,
 					appointmentTimeEnd: this.searchEnd,
@@ -174,8 +176,8 @@ export class Calendar {
 					
 					this.days = this.getDays(this.searchDate.getFullYear(), this.searchDate.getMonth());
 				})
-			})
-		]);
+			]);
+		});
 	}
 
 	calendarDateChanged(date, addToHistory = true) {
@@ -278,33 +280,6 @@ export class Calendar {
 	
 	getSummaryModalContainerId(appointment) {
 		return `assessment-summary-${appointment.appointmentId}`;
-	}
-	
-	addedCalendarNote(e) {
-		let calendarNote = e.detail.calendarNote;
-		
-		this.calendarNotes.push(calendarNote);
-	}
-	
-	hidCalendarNote(e) {
-		this.calendarNoteEditModel.calendarNote = null;
-		this.calendarNoteEditModel = null;
-	}
-	
-	addCalendarNote(fromDay) {
-		this.calendarNoteEditModel = {
-			'calendarNote': {
-				'fromDate': fromDay,
-				'note': {},
-				'isAdd': true
-			}
-		};
-	}
-	
-	editCalendarNote(calendarNote) {
-		this.calendarNoteEditModel = {
-			'calendarNote': calendarNote
-		};
 	}
 }
 

@@ -15,7 +15,7 @@ namespace PsychologicalServices.Models.Assessments
     {
         public int AssessmentId { get; set; }
 
-        public DateTime? MedicalFileReceivedDate { get; set; }
+        public DateTimeOffset? MedicalFileReceivedDate { get; set; }
 
         public int? FileSize { get; set; }
 
@@ -55,11 +55,11 @@ namespace PsychologicalServices.Models.Assessments
 
         public IEnumerable<Report> Reports { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
 
         public User CreateUser { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         public User UpdateUser { get; set; }
 

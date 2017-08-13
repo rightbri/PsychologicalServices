@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Common.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -34,9 +35,9 @@ namespace PsychologicalServices.Models.CalendarNotes
             return calendarNote;
         }
 
-        public IEnumerable<CalendarNote> GetCalendarNotes(DateTime? fromDate, DateTime? toDate)
+        public IEnumerable<CalendarNote> GetCalendarNotes(CalendarNoteSearchCriteria criteria)
         {
-            var calendarNotes = _calendarNoteRepository.GetCalendarNotes(fromDate, toDate);
+            var calendarNotes = _calendarNoteRepository.GetCalendarNotes(criteria);
 
             return calendarNotes;
         }
@@ -62,6 +63,24 @@ namespace PsychologicalServices.Models.CalendarNotes
             catch (Exception ex)
             {
                 _log.Error("SaveCalendarNote", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
+
+        public DeleteResult DeleteCalendarNote(int id)
+        {
+            var result = new DeleteResult();
+
+            try
+            {
+                result.IsDeleted = _calendarNoteRepository.DeleteCalendarNote(id);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("DeleteCalendarNote", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

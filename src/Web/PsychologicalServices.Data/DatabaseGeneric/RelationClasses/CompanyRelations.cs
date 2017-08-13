@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AssessmentEntityUsingCompanyId);
+			toReturn.Add(this.CalendarNoteEntityUsingCompanyId);
 			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
 			toReturn.Add(this.UserEntityUsingCompanyId);
 
@@ -56,6 +57,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, AssessmentFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and CalendarNoteEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - CalendarNote.CompanyId
+		/// </summary>
+		public virtual IEntityRelation CalendarNoteEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, CalendarNoteFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CalendarNoteEntity", false);
 				return relation;
 			}
 		}

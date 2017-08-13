@@ -1273,11 +1273,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The AppointmentTime property of the Entity Appointment<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Appointments"."AppointmentTime"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime AppointmentTime
+		public virtual System.DateTimeOffset AppointmentTime
 		{
-			get { return (System.DateTime)GetValue((int)AppointmentFieldIndex.AppointmentTime, true); }
+			get { return (System.DateTimeOffset)GetValue((int)AppointmentFieldIndex.AppointmentTime, true); }
 			set	{ SetValue((int)AppointmentFieldIndex.AppointmentTime, value); }
 		}
 
@@ -1328,11 +1328,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The CreateDate property of the Entity Appointment<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Appointments"."CreateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime CreateDate
+		public virtual System.DateTimeOffset CreateDate
 		{
-			get { return (System.DateTime)GetValue((int)AppointmentFieldIndex.CreateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)AppointmentFieldIndex.CreateDate, true); }
 			set	{ SetValue((int)AppointmentFieldIndex.CreateDate, value); }
 		}
 
@@ -1350,11 +1350,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The UpdateDate property of the Entity Appointment<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Appointments"."UpdateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime UpdateDate
+		public virtual System.DateTimeOffset UpdateDate
 		{
-			get { return (System.DateTime)GetValue((int)AppointmentFieldIndex.UpdateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)AppointmentFieldIndex.UpdateDate, true); }
 			set	{ SetValue((int)AppointmentFieldIndex.UpdateDate, value); }
 		}
 

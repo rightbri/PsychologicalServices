@@ -12,7 +12,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public string Identifier { get; set; }
 
-        public DateTime InvoiceDate { get; set; }
+        public DateTimeOffset InvoiceDate { get; set; }
 
         public InvoiceStatus InvoiceStatus { get; set; }
 
@@ -20,7 +20,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public User PayableTo { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         public decimal TaxRate { get; set; }
 

@@ -602,6 +602,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CalendarNoteFieldIndex.NoteId);}
 		}
+		/// <summary>Creates a new CalendarNoteEntity.CompanyId field instance</summary>
+		public static EntityField2 CompanyId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CalendarNoteFieldIndex.CompanyId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CityEntity</summary>

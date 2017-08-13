@@ -38,13 +38,13 @@ namespace PsychologicalServices.Models.Schedule
             #line default
             #line hidden
             this.Write(@"<!doctype html>
-<html lang=""en"">
+<html lang=""en"" style=""font-size: 16px;"">
 <head>
     <title></title>
     <meta charset=""utf-8"">
     <meta name=""viewport"" content=""width=device-width, initial-scale=1"" />
 </head>
-<body style=""font-family: 'Martel', Helvetica, sans-serif; font-size: large; margin: 0; padding: 0;"">
+<body style=""font-family: 'Martel', Helvetica, sans-serif; font-size: 1rem; margin: 0; padding: 0;"">
 	");
             
             #line 19 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
@@ -58,13 +58,13 @@ namespace PsychologicalServices.Models.Schedule
             
             #line 22 "C:\Users\DEY9875\Documents\Visual Studio 2013\Projects\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
 
-			var headerCellStyles = "padding: 6px; text-align: left; vertical-align: top; text-transform: uppercase; background-color: #f8f8f8; font-weight: normal; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8;";
-			var dayCellStyles = "padding: 6px; white-space: nowrap; vertical-align: middle; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8; color: #0000ff;";
-			var bodyCellStyles = "padding: 6px; white-space: nowrap; vertical-align: top; border-style: none none solid none; border-width: 2px; border-color: #d8d8d8;";
-			var noteCellStyles = "padding: 6px; white-space: nowrap; vertical-align: top; border-style: dotted none solid none; border-width: 1px 0 2px 0; border-color: #d8d8d8;";
+			var headerCellStyles = "padding: 4px; text-align: left; vertical-align: top; text-transform: uppercase; background-color: #f8f8f8; font-weight: normal; font-size: 1.25rem; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8;";
+			var dayCellStyles = "padding: 4px; white-space: nowrap; vertical-align: middle; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8; color: #0000ff; font-size: 1.25rem;";
+			var bodyCellStyles = "padding: 4px; white-space: nowrap; vertical-align: top; border-style: none none solid none; border-width: 2px; border-color: #d8d8d8;";
+			var noteCellStyles = "padding: 4px; white-space: nowrap; vertical-align: top; border-style: dotted none solid none; border-width: 1px 0 2px 0; border-color: #d8d8d8;";
 			var listStyles = "list-style-type: none; padding: 0; margin: 0;";
-			var listItemStyles = "font-size: medium;";
-			var smallListItemStyles = "font-size: smaller;";
+			var listItemStyles = "font-size: 1.1rem; padding: 2px 0 0 0";
+			var smallListItemStyles = "font-size: 1rem; padding: 2px 0 0 0";
 			
             
             #line default
@@ -146,7 +146,7 @@ namespace PsychologicalServices.Models.Schedule
 				var appointments = Model.Appointments.Where(app => app.AppointmentTime > day && app.AppointmentTime < day.AddDays(1));
 
 				foreach (var appointment in appointments) {
-					var time = Model.TimezoneService.ConvertFromUtc(appointment.AppointmentTime, timezone);
+					var time = Model.TimezoneService.ConvertTime(appointment.AppointmentTime, timezone);
 					var hasNotes = appointment.Assessment.AssessmentNotes.Any();
 					var bodyCellBorderStyles = hasNotes ? "border-style: none;" : "border-style: none none solid none;";
 				

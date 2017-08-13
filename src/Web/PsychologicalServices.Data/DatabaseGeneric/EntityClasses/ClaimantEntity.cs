@@ -621,11 +621,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The DateOfBirth property of the Entity Claimant<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Claimants"."DateOfBirth"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTime> DateOfBirth
+		public virtual Nullable<System.DateTimeOffset> DateOfBirth
 		{
-			get { return (Nullable<System.DateTime>)GetValue((int)ClaimantFieldIndex.DateOfBirth, false); }
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ClaimantFieldIndex.DateOfBirth, false); }
 			set	{ SetValue((int)ClaimantFieldIndex.DateOfBirth, value); }
 		}
 
