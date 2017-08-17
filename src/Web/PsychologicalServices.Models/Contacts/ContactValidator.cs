@@ -69,13 +69,7 @@ namespace PsychologicalServices.Models.Contacts
                 }
             }
 
-            if (null == item.Employer)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "EmployerId", Message = "Employer is required" }
-                );
-            }
-            else
+            if (null != item.Employer)
             {
                 var employer = _employerRepository.GetEmployer(item.Employer.EmployerId);
                 if (null == employer)
@@ -86,13 +80,7 @@ namespace PsychologicalServices.Models.Contacts
                 }
             }
 
-            if (null == item.Address)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "AddressId", Message = "Address is required" }
-                );
-            }
-            else
+            if (null != item.Address)
             {
                 var address = _addressRepository.GetAddress(item.Address.AddressId);
                 if (null == address)
