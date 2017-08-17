@@ -559,6 +559,82 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Contact.
+	/// </summary>
+	public enum ContactFieldIndex:int
+	{
+		///<summary>ContactId. </summary>
+		ContactId,
+		///<summary>FirstName. </summary>
+		FirstName,
+		///<summary>LastName. </summary>
+		LastName,
+		///<summary>Email. </summary>
+		Email,
+		///<summary>ContactTypeId. </summary>
+		ContactTypeId,
+		///<summary>AddressId. </summary>
+		AddressId,
+		///<summary>EmployerId. </summary>
+		EmployerId,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ContactType.
+	/// </summary>
+	public enum ContactTypeFieldIndex:int
+	{
+		///<summary>ContactTypeId. </summary>
+		ContactTypeId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Employer.
+	/// </summary>
+	public enum EmployerFieldIndex:int
+	{
+		///<summary>EmployerId. </summary>
+		EmployerId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>EmployerTypeId. </summary>
+		EmployerTypeId,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: EmployerType.
+	/// </summary>
+	public enum EmployerTypeFieldIndex:int
+	{
+		///<summary>EmployerTypeId. </summary>
+		EmployerTypeId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Invoice.
 	/// </summary>
 	public enum InvoiceFieldIndex:int
@@ -1096,6 +1172,14 @@ namespace PsychologicalServices.Data
 		CompanyEntity,
 		///<summary>CompanyAttribute</summary>
 		CompanyAttributeEntity,
+		///<summary>Contact</summary>
+		ContactEntity,
+		///<summary>ContactType</summary>
+		ContactTypeEntity,
+		///<summary>Employer</summary>
+		EmployerEntity,
+		///<summary>EmployerType</summary>
+		EmployerTypeEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
 		///<summary>InvoiceAppointment</summary>

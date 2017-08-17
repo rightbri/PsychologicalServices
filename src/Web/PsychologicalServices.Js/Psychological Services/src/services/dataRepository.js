@@ -237,6 +237,42 @@ export class DataRepository {
 		return this.getManyBasic('referraltype', true);
 	}
 	
+	searchEmployers(criteria) {
+		return this.searchBasic(criteria, 'employer');
+	}
+	
+	getEmployer(id) {
+		return this.getSingleBasic(id, 'employer');
+	}
+	
+	saveEmployer(employer) {
+		return this.saveBasic(employer, 'employer');
+	}
+	
+	getEmployerTypes() {
+		return this.getManyBasic('employertype', true);
+	}
+	
+	searchContacts(criteria) {
+		return this.searchBasic(criteria, 'contact');
+	}
+	
+	getContactByEmail(email) {
+		return this.postBasic('contact/byEmail', email);
+	}
+	
+	getContact(id) {
+		return this.getSingleBasic(id, 'contact');
+	}
+	
+	saveContact(contact) {
+		return this.saveBasic(contact, 'contact');
+	}
+	
+	getContactTypes() {
+		return this.getManyBasic('contacttype', true);
+	}
+	
 	getReportStatuses() {
 		return this.getManyBasic('reportstatus', true);
 	}

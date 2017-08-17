@@ -142,6 +142,18 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.CompanyAttributeEntity:
 					toReturn = this.CompanyAttribute;
 					break;
+				case PsychologicalServices.Data.EntityType.ContactEntity:
+					toReturn = this.Contact;
+					break;
+				case PsychologicalServices.Data.EntityType.ContactTypeEntity:
+					toReturn = this.ContactType;
+					break;
+				case PsychologicalServices.Data.EntityType.EmployerEntity:
+					toReturn = this.Employer;
+					break;
+				case PsychologicalServices.Data.EntityType.EmployerTypeEntity:
+					toReturn = this.EmployerType;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
@@ -387,6 +399,30 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<CompanyAttributeEntity> CompanyAttribute
 		{
 			get { return new DataSource2<CompanyAttributeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting ContactEntity instances in the database.</summary>
+		public DataSource2<ContactEntity> Contact
+		{
+			get { return new DataSource2<ContactEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting ContactTypeEntity instances in the database.</summary>
+		public DataSource2<ContactTypeEntity> ContactType
+		{
+			get { return new DataSource2<ContactTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting EmployerEntity instances in the database.</summary>
+		public DataSource2<EmployerEntity> Employer
+		{
+			get { return new DataSource2<EmployerEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting EmployerTypeEntity instances in the database.</summary>
+		public DataSource2<EmployerTypeEntity> EmployerType
+		{
+			get { return new DataSource2<EmployerTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceEntity instances in the database.</summary>

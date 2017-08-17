@@ -839,6 +839,116 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity ContactEntity</summary>
+	public partial class ContactFields
+	{
+		/// <summary>Creates a new ContactEntity.ContactId field instance</summary>
+		public static EntityField2 ContactId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.ContactId);}
+		}
+		/// <summary>Creates a new ContactEntity.FirstName field instance</summary>
+		public static EntityField2 FirstName
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.FirstName);}
+		}
+		/// <summary>Creates a new ContactEntity.LastName field instance</summary>
+		public static EntityField2 LastName
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.LastName);}
+		}
+		/// <summary>Creates a new ContactEntity.Email field instance</summary>
+		public static EntityField2 Email
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.Email);}
+		}
+		/// <summary>Creates a new ContactEntity.ContactTypeId field instance</summary>
+		public static EntityField2 ContactTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.ContactTypeId);}
+		}
+		/// <summary>Creates a new ContactEntity.AddressId field instance</summary>
+		public static EntityField2 AddressId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.AddressId);}
+		}
+		/// <summary>Creates a new ContactEntity.EmployerId field instance</summary>
+		public static EntityField2 EmployerId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.EmployerId);}
+		}
+		/// <summary>Creates a new ContactEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ContactTypeEntity</summary>
+	public partial class ContactTypeFields
+	{
+		/// <summary>Creates a new ContactTypeEntity.ContactTypeId field instance</summary>
+		public static EntityField2 ContactTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactTypeFieldIndex.ContactTypeId);}
+		}
+		/// <summary>Creates a new ContactTypeEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactTypeFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ContactTypeEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ContactTypeFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity EmployerEntity</summary>
+	public partial class EmployerFields
+	{
+		/// <summary>Creates a new EmployerEntity.EmployerId field instance</summary>
+		public static EntityField2 EmployerId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EmployerFieldIndex.EmployerId);}
+		}
+		/// <summary>Creates a new EmployerEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EmployerFieldIndex.Name);}
+		}
+		/// <summary>Creates a new EmployerEntity.EmployerTypeId field instance</summary>
+		public static EntityField2 EmployerTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EmployerFieldIndex.EmployerTypeId);}
+		}
+		/// <summary>Creates a new EmployerEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EmployerFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity EmployerTypeEntity</summary>
+	public partial class EmployerTypeFields
+	{
+		/// <summary>Creates a new EmployerTypeEntity.EmployerTypeId field instance</summary>
+		public static EntityField2 EmployerTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EmployerTypeFieldIndex.EmployerTypeId);}
+		}
+		/// <summary>Creates a new EmployerTypeEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EmployerTypeFieldIndex.Name);}
+		}
+		/// <summary>Creates a new EmployerTypeEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EmployerTypeFieldIndex.IsActive);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity InvoiceEntity</summary>
 	public partial class InvoiceFields
 	{

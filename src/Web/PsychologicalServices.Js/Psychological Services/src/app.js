@@ -56,7 +56,13 @@ export class App {
 			{ route: 'users/add', name: 'addUser', moduleId: 'users/editUser', title: 'Add User', nav: false },
 			{ route: 'calendarNotes', name: 'calendarNotes', moduleId: 'calendarNotes/calendarNotes', title: 'Calendar Notes', nav: true },
 			{ route: 'calendarNotes/:id', name: 'editCalendarNote', moduleId: 'calendarNotes/editCalendarNote', title: 'Edit Calendar Note', nav: false },
-			{ route: 'calendarNotes/add', name: 'addCalendarNote', moduleId: 'calendarNotes/editCalendarNote', title: 'Add Calendar Note', nav: false }
+			{ route: 'calendarNotes/add', name: 'addCalendarNote', moduleId: 'calendarNotes/editCalendarNote', title: 'Add Calendar Note', nav: false },
+			{ route: 'employers', name: 'employers', moduleId: 'employers/employers', title: 'Employers', nav: true },
+			{ route: 'employers/:id', name: 'editEmployer', moduleId: 'employers/editEmployer', title: 'Edit Employer', nav: false },
+			{ route: 'employers/add', name: 'addEmployer', moduleId: 'employers/editEmployer', title: 'Add Employer', nav: false },
+			{ route: 'contacts', name: 'contacts', moduleId: 'contacts/contacts', title: 'Contacts', nav: true },
+			{ route: 'contacts/:id', name: 'editContact', moduleId: 'contacts/editContact', title: 'Edit Contact', nav: false },
+			{ route: 'contacts/add', name: 'addContact', moduleId: 'contacts/editContact', title: 'Add Contact', nav: false }
 		]);
 	}
 }

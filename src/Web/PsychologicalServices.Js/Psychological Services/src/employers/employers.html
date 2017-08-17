@@ -1,0 +1,80 @@
+<template>
+	<require from="resources/value-converters/boolean"></require>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Search Employers</legend>
+		
+		<form class="uk-form-stacked">
+		
+			<div class="uk-margin">
+				<label class="uk-form-label" for="searchName">Name</label>
+				<div class="uk-form-controls">
+					<input id="searchName" type="text" class="uk-input" value.bind="searchName" />
+				</div>
+			</div>
+		
+			<div class="uk-margin">
+				<label class="uk-form-label">Employer Types</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="employerType of employerTypes">
+						<input type="checkbox" class="uk-checkbox" value.bind="employerType.employerTypeId" checked.bind="searchEmployerTypeIds" />&nbsp;${employerType.name}
+					</label>
+				</div>
+			</div>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="searchActive">Is Active?</label>
+				<div class="uk-form-controls">
+					<select class="uk-select" value.bind="searchActive">
+						<option></option>
+						<option value="true">yes</option>
+						<option value="false">no</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="uk-margin">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+					Search
+				</button>
+				<a route-href="route: addEmployer" class="uk-button uk-button-secondary">
+					<i class="fa fa-plus"></i>&nbsp;Add
+				</a>
+			</div>
+			
+		</form>
+		
+	</fieldset>
+	
+</div>
+
+<div class="uk-overflow-auto" if.bind="employers && employers.length">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Active?</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="employer of employers | sortArray:{ property: 'name', direction: 'asc' }">
+				<td>
+					<a route-href="route: editEmployer; params.bind: { id: employer.employerId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${employer.name}</td>
+				<td>${employer.employerType.name}</td>
+				<td>${employer.isActive | boolean}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</template>

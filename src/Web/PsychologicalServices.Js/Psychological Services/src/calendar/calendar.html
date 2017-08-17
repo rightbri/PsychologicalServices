@@ -77,7 +77,7 @@
 					</a>
 				</td>
 				<td colspan="7">
-					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day.date" click.delegate="editCalendarNote(calendarNote)" uk-toggle="target: #calendar-note-form">
+					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day.date">
 						<small>${calendarNote.note.noteText}</small>
 					</p>
 				</td>

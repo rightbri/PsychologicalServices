@@ -8,6 +8,8 @@ using PsychologicalServices.Models.Cities;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Contacts;
+using PsychologicalServices.Models.Employers;
 using PsychologicalServices.Models.Invoices;
 using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Referrals;
@@ -23,6 +25,60 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Contact ToContact(this ContactEntity contact)
+        {
+            return null != contact
+                ? new Contact
+                {
+                    ContactId = contact.ContactId,
+                    FirstName = contact.FirstName,
+                    LastName = contact.LastName,
+                    Email = contact.Email,
+                    IsActive = contact.IsActive,
+                    ContactType = contact.ContactType.ToContactType(),
+                    Employer = contact.Employer.ToEmployer(),
+                    Address = contact.Address.ToAddress(),
+                }
+                : null;
+        }
+
+        public static ContactType ToContactType(this ContactTypeEntity contactType)
+        {
+            return null != contactType
+                ? new ContactType
+                {
+                    ContactTypeId = contactType.ContactTypeId,
+                    Name = contactType.Name,
+                    IsActive = contactType.IsActive,
+                }
+                : null;
+        }
+
+        public static Employer ToEmployer(this EmployerEntity employer)
+        {
+            return null != employer
+                ? new Employer
+                {
+                    EmployerId = employer.EmployerId,
+                    Name = employer.Name,
+                    EmployerType = employer.EmployerType.ToEmployerType(),
+                    IsActive = employer.IsActive,
+                }
+                : null;
+        }
+
+        public static EmployerType ToEmployerType(this EmployerTypeEntity employerType)
+        {
+            return null != employerType
+                ? new EmployerType
+                {
+                    EmployerTypeId = employerType.EmployerTypeId,
+                    Name = employerType.Name,
+                    IsActive = employerType.IsActive,
+                }
+                : null;
+        }
+        
         public static InvoiceType ToInvoiceType(this InvoiceTypeEntity invoiceType)
         {
             return null != invoiceType

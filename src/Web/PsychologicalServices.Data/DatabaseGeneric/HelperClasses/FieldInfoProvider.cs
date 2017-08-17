@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (53 + 0));
+			base.InitClass( (57 + 0));
 			InitAddressEntityInfos();
 			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
@@ -84,6 +84,10 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitColorEntityInfos();
 			InitCompanyEntityInfos();
 			InitCompanyAttributeEntityInfos();
+			InitContactEntityInfos();
+			InitContactTypeEntityInfos();
+			InitEmployerEntityInfos();
+			InitEmployerTypeEntityInfos();
 			InitInvoiceEntityInfos();
 			InitInvoiceAppointmentEntityInfos();
 			InitInvoiceDocumentEntityInfos();
@@ -359,6 +363,40 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("CompanyAttributeEntity", "CompanyId", typeof(System.Int32), true, true, false, false,  (int)CompanyAttributeFieldIndex.CompanyId, 0, 0, 10);
 			base.AddElementFieldInfo("CompanyAttributeEntity", "AttributeId", typeof(System.Int32), true, true, false, false,  (int)CompanyAttributeFieldIndex.AttributeId, 0, 0, 10);
+		}
+		/// <summary>Inits ContactEntity's FieldInfo objects</summary>
+		private void InitContactEntityInfos()
+		{
+			base.AddElementFieldInfo("ContactEntity", "ContactId", typeof(System.Int32), true, false, true, false,  (int)ContactFieldIndex.ContactId, 0, 0, 10);
+			base.AddElementFieldInfo("ContactEntity", "FirstName", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.FirstName, 50, 0, 0);
+			base.AddElementFieldInfo("ContactEntity", "LastName", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.LastName, 50, 0, 0);
+			base.AddElementFieldInfo("ContactEntity", "Email", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.Email, 100, 0, 0);
+			base.AddElementFieldInfo("ContactEntity", "ContactTypeId", typeof(System.Int32), false, true, false, false,  (int)ContactFieldIndex.ContactTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("ContactEntity", "AddressId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ContactFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("ContactEntity", "EmployerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ContactFieldIndex.EmployerId, 0, 0, 10);
+			base.AddElementFieldInfo("ContactEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ContactFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits ContactTypeEntity's FieldInfo objects</summary>
+		private void InitContactTypeEntityInfos()
+		{
+			base.AddElementFieldInfo("ContactTypeEntity", "ContactTypeId", typeof(System.Int32), true, false, true, false,  (int)ContactTypeFieldIndex.ContactTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("ContactTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)ContactTypeFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("ContactTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ContactTypeFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits EmployerEntity's FieldInfo objects</summary>
+		private void InitEmployerEntityInfos()
+		{
+			base.AddElementFieldInfo("EmployerEntity", "EmployerId", typeof(System.Int32), true, false, true, false,  (int)EmployerFieldIndex.EmployerId, 0, 0, 10);
+			base.AddElementFieldInfo("EmployerEntity", "Name", typeof(System.String), false, false, false, false,  (int)EmployerFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("EmployerEntity", "EmployerTypeId", typeof(System.Int32), false, true, false, false,  (int)EmployerFieldIndex.EmployerTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("EmployerEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)EmployerFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits EmployerTypeEntity's FieldInfo objects</summary>
+		private void InitEmployerTypeEntityInfos()
+		{
+			base.AddElementFieldInfo("EmployerTypeEntity", "EmployerTypeId", typeof(System.Int32), true, false, true, false,  (int)EmployerTypeFieldIndex.EmployerTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("EmployerTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)EmployerTypeFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("EmployerTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)EmployerTypeFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits InvoiceEntity's FieldInfo objects</summary>
 		private void InitInvoiceEntityInfos()

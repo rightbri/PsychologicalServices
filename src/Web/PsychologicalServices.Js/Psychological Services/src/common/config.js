@@ -55,7 +55,8 @@ export class Config {
 		this.addressDefaults = {
 			'province': 'ON',
 			'country': 'Canada',
-			'userAddressTypeId': 4
+			'userAddressTypeId': 4,
+			'contactAddressTypeId': 5
 		};
 		
 		this.appointmentDefaults = {

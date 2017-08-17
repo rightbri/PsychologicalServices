@@ -34,6 +34,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AppointmentEntityUsingLocationId);
 			toReturn.Add(this.CompanyEntityUsingNewAppointmentLocationId);
 			toReturn.Add(this.CompanyEntityUsingAddressId);
+			toReturn.Add(this.ContactEntityUsingAddressId);
 			toReturn.Add(this.ReferralSourceEntityUsingAddressId);
 			toReturn.Add(this.UserEntityUsingAddressId);
 
@@ -99,6 +100,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(AddressFields.AddressId, CompanyFields.AddressId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AddressEntity and ContactEntity over the 1:n relation they have, using the relation between the fields:
+		/// Address.AddressId - Contact.AddressId
+		/// </summary>
+		public virtual IEntityRelation ContactEntityUsingAddressId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Contacts" , true);
+				relation.AddEntityFieldPair(AddressFields.AddressId, ContactFields.AddressId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
 				return relation;
 			}
 		}

@@ -1,0 +1,105 @@
+<template>
+	<require from="resources/value-converters/boolean"></require>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	
+	<div class="uk-container">
+	
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Search Contacts</legend>
+			
+			<form class="uk-form-stacked uk-grid-medium" uk-grid>
+			
+				<div class="uk-width-1-2@s">
+					<label class="uk-form-label" for="firstName">First Name</label>
+					<div class="uk-form-controls">
+						<input id="firstName" type="text" class="uk-input" value.bind="searchFirstName" />
+					</div>
+				</div>
+				
+				<div class="uk-width-1-2@s">
+					<label class="uk-form-label" for="lastName">Last Name</label>
+					<div class="uk-form-controls">
+						<input id="lastName" type="text" class="uk-input" value.bind="searchLastName" />
+					</div>
+				</div>
+				
+				<div class="uk-width-1-2@s">
+					<label class="uk-form-label" for="contactType">Contact Type</label>
+					<div class="uk-form-controls">
+						<select id="contactType" class="uk-select" value.bind="searchContactTypeId">
+							<option></option>
+							<option repeat.for="contactType of contactTypes" value.bind="contactType.contactTypeId">${contactType.name}</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="uk-width-1-2@s">
+					<label class="uk-form-label" for="employer">Employer</label>
+					<div class="uk-form-controls">
+						<select id="employer" class="uk-select" value.bind="searchEmployerId">
+							<option></option>
+							<option repeat.for="employer of employers" value.bind="employer.employerId">${employer.name}</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="uk-width-1-2@s">
+					<label class="uk-form-label" for="isActive">Is Active?</label>
+					<div class="uk-form-controls">
+						<select id="isActive" class="uk-select" value.bind="searchIsActive">
+							<option></option>
+							<option value="true">yes</option>
+							<option value="false">no</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="uk-width-1-1">
+					<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+						Search
+					</button>
+					
+					<a route-href="route: addContact" class="uk-button uk-button-secondary">
+						<i class="fa fa-plus"></i>&nbsp;Add
+					</a>
+				</div>
+
+			</form>
+			
+		</fieldset>
+
+	</div>
+	
+	<div class="uk-overflow-auto" if.bind="contacts && contacts.length">
+		<table class="uk-table uk-table-divider" fixed-header>
+			<thead>
+				<tr>
+					<th></th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Type</th>
+					<th>Employer</th>
+					<th>Is Active?</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr repeat.for="contact of contacts | sortArray:[{ property: 'lastName', direction: 'asc' },{ property: 'firstName', direction: 'asc' }]">
+					<td>
+						<a route-href="route: editContact; params.bind: { id: contact.contactId }" class="uk-button uk-button-default">
+							Edit
+						</a>
+					</td>
+					<td>${contact.firstName}</td>
+					<td>${contact.lastName}</td>
+					<td>${contact.email}</td>
+					<td>${contact.contactType.name}</td>
+					<td>${contact.employer.name}</td>
+					<td>${contact.isActive | boolean}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</template>

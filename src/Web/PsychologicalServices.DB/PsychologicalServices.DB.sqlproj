@@ -123,6 +123,10 @@
     <Build Include="dbo\Stored Procedures\DeleteAssessment.sql" />
     <Build Include="dbo\Tables\AppointmentSequences.sql" />
     <Build Include="dbo\Tables\AddressAddressTypes.sql" />
+    <Build Include="dbo\Tables\EmployerTypes.sql" />
+    <Build Include="dbo\Tables\Employers.sql" />
+    <Build Include="dbo\Tables\ContactTypes.sql" />
+    <Build Include="dbo\Tables\Contacts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

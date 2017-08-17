@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((53 + 0));
+			base.InitClass((57 + 0));
 			InitAddressEntityMappings();
 			InitAddressAddressTypeEntityMappings();
 			InitAddressTypeEntityMappings();
@@ -83,6 +83,10 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitColorEntityMappings();
 			InitCompanyEntityMappings();
 			InitCompanyAttributeEntityMappings();
+			InitContactEntityMappings();
+			InitContactTypeEntityMappings();
+			InitEmployerEntityMappings();
+			InitEmployerTypeEntityMappings();
 			InitInvoiceEntityMappings();
 			InitInvoiceAppointmentEntityMappings();
 			InitInvoiceDocumentEntityMappings();
@@ -385,6 +389,44 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementMapping( "CompanyAttributeEntity", "PsychologicalServices", @"dbo", "CompanyAttributes", 2 );
 			base.AddElementFieldMapping( "CompanyAttributeEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "CompanyAttributeEntity", "AttributeId", "AttributeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+		}
+		/// <summary>Inits ContactEntity's mappings</summary>
+		private void InitContactEntityMappings()
+		{
+			base.AddElementMapping( "ContactEntity", "PsychologicalServices", @"dbo", "Contacts", 8 );
+			base.AddElementFieldMapping( "ContactEntity", "ContactId", "ContactId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "ContactEntity", "FirstName", "FirstName", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "ContactEntity", "LastName", "LastName", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "ContactEntity", "Email", "Email", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 3 );
+			base.AddElementFieldMapping( "ContactEntity", "ContactTypeId", "ContactTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
+			base.AddElementFieldMapping( "ContactEntity", "AddressId", "AddressId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
+			base.AddElementFieldMapping( "ContactEntity", "EmployerId", "EmployerId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
+			base.AddElementFieldMapping( "ContactEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 7 );
+		}
+		/// <summary>Inits ContactTypeEntity's mappings</summary>
+		private void InitContactTypeEntityMappings()
+		{
+			base.AddElementMapping( "ContactTypeEntity", "PsychologicalServices", @"dbo", "ContactTypes", 3 );
+			base.AddElementFieldMapping( "ContactTypeEntity", "ContactTypeId", "ContactTypeId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "ContactTypeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "ContactTypeEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
+		}
+		/// <summary>Inits EmployerEntity's mappings</summary>
+		private void InitEmployerEntityMappings()
+		{
+			base.AddElementMapping( "EmployerEntity", "PsychologicalServices", @"dbo", "Employers", 4 );
+			base.AddElementFieldMapping( "EmployerEntity", "EmployerId", "EmployerId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "EmployerEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "EmployerEntity", "EmployerTypeId", "EmployerTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
+			base.AddElementFieldMapping( "EmployerEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
+		}
+		/// <summary>Inits EmployerTypeEntity's mappings</summary>
+		private void InitEmployerTypeEntityMappings()
+		{
+			base.AddElementMapping( "EmployerTypeEntity", "PsychologicalServices", @"dbo", "EmployerTypes", 3 );
+			base.AddElementFieldMapping( "EmployerTypeEntity", "EmployerTypeId", "EmployerTypeId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "EmployerTypeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "EmployerTypeEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
 		}
 		/// <summary>Inits InvoiceEntity's mappings</summary>
 		private void InitInvoiceEntityMappings()
