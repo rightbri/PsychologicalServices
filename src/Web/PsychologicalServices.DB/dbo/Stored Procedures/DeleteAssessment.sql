@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE DeleteAssessment
+CREATE PROCEDURE [dbo].[DeleteAssessment]
 	@AssessmentId INT
 AS
 BEGIN
@@ -93,6 +93,8 @@ BEGIN
 	DELETE FROM dbo.Invoices WHERE InvoiceId IN (
 		SELECT * FROM @invoiceIds
 	)
+
+	DELETE FROM dbo.Arbitrations WHERE AssessmentId = @AssessmentId
 
 	DELETE FROM dbo.Appointments WHERE AssessmentId = @AssessmentId
 
