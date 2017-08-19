@@ -157,6 +157,30 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Arbitration.
+	/// </summary>
+	public enum ArbitrationFieldIndex:int
+	{
+		///<summary>ArbitrationId. </summary>
+		ArbitrationId,
+		///<summary>AssessmentId. </summary>
+		AssessmentId,
+		///<summary>StartDate. </summary>
+		StartDate,
+		///<summary>EndDate. </summary>
+		EndDate,
+		///<summary>AvailableDate. </summary>
+		AvailableDate,
+		///<summary>DefenseLawyerId. </summary>
+		DefenseLawyerId,
+		///<summary>DefenseFileNumber. </summary>
+		DefenseFileNumber,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Assessment.
 	/// </summary>
 	public enum AssessmentFieldIndex:int
@@ -1132,6 +1156,8 @@ namespace PsychologicalServices.Data
 		AppointmentSequenceEntity,
 		///<summary>AppointmentStatus</summary>
 		AppointmentStatusEntity,
+		///<summary>Arbitration</summary>
+		ArbitrationEntity,
 		///<summary>Assessment</summary>
 		AssessmentEntity,
 		///<summary>AssessmentAttribute</summary>

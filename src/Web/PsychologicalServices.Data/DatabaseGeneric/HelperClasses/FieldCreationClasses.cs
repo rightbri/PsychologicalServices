@@ -234,6 +234,46 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity ArbitrationEntity</summary>
+	public partial class ArbitrationFields
+	{
+		/// <summary>Creates a new ArbitrationEntity.ArbitrationId field instance</summary>
+		public static EntityField2 ArbitrationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ArbitrationId);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.AssessmentId);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.StartDate field instance</summary>
+		public static EntityField2 StartDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.StartDate);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.EndDate field instance</summary>
+		public static EntityField2 EndDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.EndDate);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.AvailableDate field instance</summary>
+		public static EntityField2 AvailableDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.AvailableDate);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.DefenseLawyerId field instance</summary>
+		public static EntityField2 DefenseLawyerId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.DefenseLawyerId);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.DefenseFileNumber field instance</summary>
+		public static EntityField2 DefenseFileNumber
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.DefenseFileNumber);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AssessmentEntity</summary>
 	public partial class AssessmentFields
 	{

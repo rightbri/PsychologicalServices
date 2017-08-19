@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (57 + 0));
+			base.InitClass( (58 + 0));
 			InitAddressEntityInfos();
 			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
@@ -64,6 +64,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAppointmentAttributeEntityInfos();
 			InitAppointmentSequenceEntityInfos();
 			InitAppointmentStatusEntityInfos();
+			InitArbitrationEntityInfos();
 			InitAssessmentEntityInfos();
 			InitAssessmentAttributeEntityInfos();
 			InitAssessmentClaimEntityInfos();
@@ -182,6 +183,17 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AppointmentStatusEntity", "CanInvoice", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.CanInvoice, 0, 0, 0);
 			base.AddElementFieldInfo("AppointmentStatusEntity", "Sort", typeof(System.Int32), false, false, false, false,  (int)AppointmentStatusFieldIndex.Sort, 0, 0, 10);
 			base.AddElementFieldInfo("AppointmentStatusEntity", "ShowOnSchedule", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.ShowOnSchedule, 0, 0, 0);
+		}
+		/// <summary>Inits ArbitrationEntity's FieldInfo objects</summary>
+		private void InitArbitrationEntityInfos()
+		{
+			base.AddElementFieldInfo("ArbitrationEntity", "ArbitrationId", typeof(System.Int32), true, false, true, false,  (int)ArbitrationFieldIndex.ArbitrationId, 0, 0, 10);
+			base.AddElementFieldInfo("ArbitrationEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.AssessmentId, 0, 0, 10);
+			base.AddElementFieldInfo("ArbitrationEntity", "StartDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)ArbitrationFieldIndex.StartDate, 0, 0, 0);
+			base.AddElementFieldInfo("ArbitrationEntity", "EndDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)ArbitrationFieldIndex.EndDate, 0, 0, 0);
+			base.AddElementFieldInfo("ArbitrationEntity", "AvailableDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)ArbitrationFieldIndex.AvailableDate, 0, 0, 0);
+			base.AddElementFieldInfo("ArbitrationEntity", "DefenseLawyerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.DefenseLawyerId, 0, 0, 10);
+			base.AddElementFieldInfo("ArbitrationEntity", "DefenseFileNumber", typeof(System.String), false, false, false, true,  (int)ArbitrationFieldIndex.DefenseFileNumber, 50, 0, 0);
 		}
 		/// <summary>Inits AssessmentEntity's FieldInfo objects</summary>
 		private void InitAssessmentEntityInfos()

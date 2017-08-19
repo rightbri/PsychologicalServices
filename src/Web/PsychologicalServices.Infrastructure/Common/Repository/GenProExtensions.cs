@@ -1,6 +1,7 @@
 ﻿using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Models.Addresses;
 using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Attributes;
 using PsychologicalServices.Models.CalendarNotes;
@@ -25,6 +26,22 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Arbitration ToArbitration(this ArbitrationEntity arbitration)
+        {
+            return null != arbitration
+                ? new Arbitration
+                {
+                    ArbitrationId = arbitration.ArbitrationId,
+                    Assessment = arbitration.Assessment.ToAppointmentAssessment(),
+                    StartDate = arbitration.StartDate,
+                    EndDate = arbitration.EndDate,
+                    AvailableDate = arbitration.AvailableDate,
+                    DefenseLawyer = arbitration.DefenseLawyer.ToContact(),
+                    DefenseFileNumber = arbitration.DefenseFileNumber,
+                }
+                : null;
+        }
+
         public static Contact ToContact(this ContactEntity contact)
         {
             return null != contact
@@ -645,6 +662,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.ToAttributeValue()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
+                    Arbitrations = assessment.Arbitrations.Select(arbitration => arbitration.ToArbitration()),
                     CreateDate = assessment.CreateDate,
                     CreateUser = assessment.CreateUser.ToUser(),
                     UpdateDate = assessment.UpdateDate,
@@ -680,6 +698,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Summary = assessment.Summary.ToNote(),
                     //Appointments
+                    //Arbitrations
                     //CreateUser
                     //UpdateUser
                 }

@@ -47,6 +47,10 @@ export class Config {
 			'addressTypeIds': [2]
 		};
 
+		this.contactTypes = {
+			'lawyer': 1
+		};
+		
 		this.invoiceTypes = {
 			'psychologist': 1,
 			'psychometrist': 2

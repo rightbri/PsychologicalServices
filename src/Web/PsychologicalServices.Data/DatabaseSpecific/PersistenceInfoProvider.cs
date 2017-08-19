@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((57 + 0));
+			base.InitClass((58 + 0));
 			InitAddressEntityMappings();
 			InitAddressAddressTypeEntityMappings();
 			InitAddressTypeEntityMappings();
@@ -63,6 +63,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAppointmentAttributeEntityMappings();
 			InitAppointmentSequenceEntityMappings();
 			InitAppointmentStatusEntityMappings();
+			InitArbitrationEntityMappings();
 			InitAssessmentEntityMappings();
 			InitAssessmentAttributeEntityMappings();
 			InitAssessmentClaimEntityMappings();
@@ -188,6 +189,18 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AppointmentStatusEntity", "CanInvoice", "CanInvoice", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 5 );
 			base.AddElementFieldMapping( "AppointmentStatusEntity", "Sort", "Sort", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
 			base.AddElementFieldMapping( "AppointmentStatusEntity", "ShowOnSchedule", "ShowOnSchedule", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 7 );
+		}
+		/// <summary>Inits ArbitrationEntity's mappings</summary>
+		private void InitArbitrationEntityMappings()
+		{
+			base.AddElementMapping( "ArbitrationEntity", "PsychologicalServices", @"dbo", "Arbitrations", 7 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "ArbitrationId", "ArbitrationId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "StartDate", "StartDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "EndDate", "EndDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "AvailableDate", "AvailableDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 4 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "DefenseLawyerId", "DefenseLawyerId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "DefenseFileNumber", "DefenseFileNumber", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 6 );
 		}
 		/// <summary>Inits AssessmentEntity's mappings</summary>
 		private void InitAssessmentEntityMappings()

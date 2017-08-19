@@ -30,7 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-
+			toReturn.Add(this.ArbitrationEntityUsingDefenseLawyerId);
 
 			toReturn.Add(this.AddressEntityUsingAddressId);
 			toReturn.Add(this.ContactTypeEntityUsingContactTypeId);
@@ -40,6 +40,20 @@ namespace PsychologicalServices.Data.RelationClasses
 
 		#region Class Property Declarations
 
+		/// <summary>Returns a new IEntityRelation object, between ContactEntity and ArbitrationEntity over the 1:n relation they have, using the relation between the fields:
+		/// Contact.ContactId - Arbitration.DefenseLawyerId
+		/// </summary>
+		public virtual IEntityRelation ArbitrationEntityUsingDefenseLawyerId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Arbitrations" , true);
+				relation.AddEntityFieldPair(ContactFields.ContactId, ArbitrationFields.DefenseLawyerId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", false);
+				return relation;
+			}
+		}
 
 
 		/// <summary>Returns a new IEntityRelation object, between ContactEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:

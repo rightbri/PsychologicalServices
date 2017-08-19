@@ -26,7 +26,6 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>
 	/// Entity class which represents the entity 'Contact'.<br/><br/>
@@ -35,11 +34,10 @@ namespace PsychologicalServices.Data.EntityClasses
 	[Serializable]
 	public partial class ContactEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
+		private EntityCollection<ArbitrationEntity> _arbitrations;
 
 		private AddressEntity _address;
 		private ContactTypeEntity _contactType;
@@ -48,7 +46,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -64,7 +61,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ContactType = "ContactType";
 			/// <summary>Member name Employer</summary>
 			public static readonly string Employer = "Employer";
-
+			/// <summary>Member name Arbitrations</summary>
+			public static readonly string Arbitrations = "Arbitrations";
 
 
 		}
@@ -125,7 +123,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				_arbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations", typeof(EntityCollection<ArbitrationEntity>));
 
 				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
 				if(_address!=null)
@@ -148,7 +146,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -198,7 +195,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					this.Employer = (EmployerEntity)entity;
 					break;
-
+				case "Arbitrations":
+					this.Arbitrations.Add((ArbitrationEntity)entity);
+					break;
 
 
 				default:
@@ -231,7 +230,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					toReturn.Add(ContactEntity.Relations.EmployerEntityUsingEmployerId);
 					break;
-
+				case "Arbitrations":
+					toReturn.Add(ContactEntity.Relations.ArbitrationEntityUsingDefenseLawyerId);
+					break;
 
 
 				default:
@@ -280,7 +281,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					SetupSyncEmployer(relatedEntity);
 					break;
-
+				case "Arbitrations":
+					this.Arbitrations.Add((ArbitrationEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -305,7 +308,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					DesetupSyncEmployer(false, true);
 					break;
-
+				case "Arbitrations":
+					base.PerformRelatedEntityRemoval(this.Arbitrations, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 
 				default:
 					break;
@@ -348,7 +353,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.Arbitrations);
 
 			return toReturn;
 		}
@@ -363,7 +368,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
+				info.AddValue("_arbitrations", ((_arbitrations!=null) && (_arbitrations.Count>0) && !this.MarkedForDeletion)?_arbitrations:null);
 
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_contactType", (!this.MarkedForDeletion?_contactType:null));
@@ -373,7 +378,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -404,6 +408,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 		
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Arbitration' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoArbitrations()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.DefenseLawyerId, null, ComparisonOperator.Equal, this.ContactId));
+			return bucket;
+		}
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
@@ -464,7 +477,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._arbitrations);
 
 		}
 		
@@ -473,7 +486,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._arbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -481,7 +494,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._arbitrations != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -492,7 +508,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
 
 		}
 #endif
@@ -506,7 +522,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Address", _address);
 			toReturn.Add("ContactType", _contactType);
 			toReturn.Add("Employer", _employer);
-
+			toReturn.Add("Arbitrations", _arbitrations);
 
 
 			return toReturn;
@@ -515,7 +531,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
+			if(_arbitrations!=null)
+			{
+				_arbitrations.ActiveContext = base.ActiveContext;
+			}
 
 			if(_address!=null)
 			{
@@ -536,7 +555,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-
+			_arbitrations = null;
 
 			_address = null;
 			_contactType = null;
@@ -546,7 +565,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -699,7 +717,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -718,6 +735,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathArbitrations
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Arbitrations")[0], (int)PsychologicalServices.Data.EntityType.ContactEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
@@ -869,6 +897,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(ArbitrationEntity))]
+		public virtual EntityCollection<ArbitrationEntity> Arbitrations
+		{
+			get
+			{
+				if(_arbitrations==null)
+				{
+					_arbitrations = new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory)));
+					_arbitrations.SetContainingEntityInfo(this, "DefenseLawyer");
+				}
+				return _arbitrations;
+			}
+		}
 
 
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity
@@ -1003,7 +1046,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

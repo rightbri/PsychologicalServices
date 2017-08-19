@@ -82,10 +82,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                         .SubPath(appointmentPath => appointmentPath
                             .Prefetch<AddressEntity>(appointment => appointment.Location)
-                                //.SubPath(addressPath => addressPath
-                                //    .Prefetch<AddressTypeEntity>(address => address.AddressType)
-                                //    .Prefetch<CityEntity>(address => address.City)
-                                //)
                             .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                             .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
@@ -129,6 +125,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .Prefetch<AssessmentReportIssueInDisputeEntity>(assessmentReport => assessmentReport.AssessmentReportIssuesInDispute)
                                 .SubPath(assessmentReportIssueInDisputePath => assessmentReportIssueInDisputePath
                                     .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
+                                )
+                        )
+                    .Prefetch<ArbitrationEntity>(assessment => assessment.Arbitrations)
+                        .SubPath(arbitrationPath => arbitrationPath
+                            .Prefetch<ContactEntity>(arbitration => arbitration.DefenseLawyer)
+                                .SubPath(contactPath => contactPath
+                                    .Prefetch<ContactTypeEntity>(contact => contact.ContactType)
+                                    .Prefetch<EmployerEntity>(contact => contact.Employer)
+                                    .Prefetch<AddressEntity>(contact => contact.Address)
                                 )
                         )
                     .Prefetch<NoteEntity>(assessment => assessment.Summary)
@@ -178,6 +183,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
             return new Assessment
             {
                 Appointments = new List<Appointment>(new[] { appointment }),
+                Arbitrations = Enumerable.Empty<Models.Arbitrations.Arbitration>(),
                 Attributes = Enumerable.Empty<Models.Attributes.AttributeValue>(),
                 Claims = Enumerable.Empty<Models.Claims.Claim>(),
                 Colors = Enumerable.Empty<Models.Colors.Color>(),
@@ -364,6 +370,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentReports)
                         .SubPath.Add(AssessmentReportEntity.PrefetchPathAssessmentReportIssuesInDispute)
                             .SubPath.Add(AssessmentReportIssueInDisputeEntity.PrefetchPathIssueInDispute);
+
+                    prefetch.Add(AssessmentEntity.PrefetchPathArbitrations);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
@@ -1014,6 +1022,95 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     )
                 );
 
+                #endregion
+
+                #region arbitrations
+
+                var arbitrationsToAdd = assessment.Arbitrations
+                    .Where(arbitration =>
+                        !assessmentEntity.Arbitrations.Any(assessmentArbitration => assessmentArbitration.ArbitrationId == arbitration.ArbitrationId)
+                    )
+                    .ToList();
+
+                var arbitrationsToRemove = assessmentEntity.Arbitrations
+                    .Where(assessmentArbitration =>
+                        !assessment.Arbitrations.Any(arbitration => arbitration.ArbitrationId == assessmentArbitration.ArbitrationId)
+                    )
+                    .ToList();
+
+                var arbitrationsToUpdate = assessment.Arbitrations
+                    .Where(arbitration =>
+                        assessmentEntity.Arbitrations.Any(assessmentArbitration =>
+                            arbitration.ArbitrationId == assessmentArbitration.ArbitrationId &&
+                            (
+                                arbitration.Assessment.AssessmentId != assessmentArbitration.AssessmentId ||
+                                (
+                                    null != arbitration.DefenseLawyer &&
+                                    arbitration.DefenseLawyer.ContactId != assessmentArbitration.DefenseLawyerId
+                                ) ||
+                                arbitration.DefenseFileNumber != assessmentArbitration.DefenseFileNumber ||
+                                arbitration.StartDate != assessmentArbitration.StartDate ||
+                                arbitration.EndDate != assessmentArbitration.EndDate ||
+                                arbitration.AvailableDate != assessmentArbitration.AvailableDate
+                            )
+                        )
+                    )
+                    .ToList();
+
+                foreach (var arbitration in arbitrationsToRemove)
+                {
+                    uow.AddForDelete(arbitration);
+                }
+
+                foreach (var arbitration in arbitrationsToUpdate)
+                {
+                    var arbitrationEntity = assessmentEntity.Arbitrations.SingleOrDefault(assessmentArbitration => assessmentArbitration.ArbitrationId == arbitration.ArbitrationId);
+
+                    if (null != arbitrationEntity)
+                    {
+                        arbitrationEntity.AssessmentId = arbitration.Assessment.AssessmentId;
+                        arbitrationEntity.StartDate = arbitration.StartDate;
+                        arbitrationEntity.AvailableDate = arbitration.AvailableDate;
+
+                        if (null == arbitration.EndDate)
+                        {
+                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.EndDate, null);
+                        }
+                        else
+                        {
+                            arbitrationEntity.EndDate = arbitration.EndDate;
+                        }
+
+                        if (null == arbitration.DefenseLawyer)
+                        {
+                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.DefenseLawyerId, null);
+                        }
+                        else
+                        {
+                            arbitrationEntity.DefenseLawyerId = arbitration.DefenseLawyer.ContactId;
+                        }
+                        
+                        if (string.IsNullOrWhiteSpace(arbitration.DefenseFileNumber))
+                        {
+                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.DefenseFileNumber, null);
+                        }
+                        else
+                        {
+                            arbitrationEntity.DefenseFileNumber = arbitration.DefenseFileNumber;
+                        }
+                    }
+                }
+
+                assessmentEntity.Arbitrations.AddRange(
+                    arbitrationsToAdd.Select(arbitration => new ArbitrationEntity
+                    {
+                        StartDate = arbitration.StartDate,
+                        EndDate = arbitration.EndDate,
+                        AvailableDate = arbitration.EndDate,
+                        DefenseLawyerId = (null != arbitration.DefenseLawyer ? arbitration.DefenseLawyer.ContactId : (int?) null),
+                        DefenseFileNumber = arbitration.DefenseFileNumber,
+                    })
+                );
                 #endregion
 
                 #region summary

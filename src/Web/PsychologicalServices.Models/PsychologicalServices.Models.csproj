@@ -71,6 +71,13 @@
     <Compile Include="Appointments\IAppointmentRepository.cs" />
     <Compile Include="Appointments\IAppointmentService.cs" />
     <Compile Include="Appointments\IAppointmentValidator.cs" />
+    <Compile Include="Arbitrations\ArbitrationSearchCriteria.cs" />
+    <Compile Include="Arbitrations\ArbitrationService.cs" />
+    <Compile Include="Arbitrations\ArbitrationValidator.cs" />
+    <Compile Include="Arbitrations\IArbitrationRepository.cs" />
+    <Compile Include="Arbitrations\IArbitrationService.cs" />
+    <Compile Include="Arbitrations\IArbitrationValidator.cs" />
+    <Compile Include="Arbitrations\Arbitration.cs" />
     <Compile Include="Assessments\AssessmentNote.cs" />
     <Compile Include="Assessments\AssessmentTypeNotFoundException.cs" />
     <Compile Include="Assessments\AssessmentNotFoundException.cs" />

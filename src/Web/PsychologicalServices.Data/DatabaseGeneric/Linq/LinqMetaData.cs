@@ -82,6 +82,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.AppointmentStatusEntity:
 					toReturn = this.AppointmentStatus;
 					break;
+				case PsychologicalServices.Data.EntityType.ArbitrationEntity:
+					toReturn = this.Arbitration;
+					break;
 				case PsychologicalServices.Data.EntityType.AssessmentEntity:
 					toReturn = this.Assessment;
 					break;
@@ -279,6 +282,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<AppointmentStatusEntity> AppointmentStatus
 		{
 			get { return new DataSource2<AppointmentStatusEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting ArbitrationEntity instances in the database.</summary>
+		public DataSource2<ArbitrationEntity> Arbitration
+		{
+			get { return new DataSource2<ArbitrationEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting AssessmentEntity instances in the database.</summary>

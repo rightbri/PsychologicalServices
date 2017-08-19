@@ -38,12 +38,14 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentEntity> _appointments;
+		private EntityCollection<ArbitrationEntity> _arbitrations;
 		private EntityCollection<AssessmentAttributeEntity> _assessmentAttributes;
 		private EntityCollection<AssessmentClaimEntity> _assessmentClaims;
 		private EntityCollection<AssessmentColorEntity> _assessmentColors;
 		private EntityCollection<AssessmentMedRehabEntity> _assessmentMedRehabs;
 		private EntityCollection<AssessmentNoteEntity> _assessmentNotes;
 		private EntityCollection<AssessmentReportEntity> _assessmentReports;
+
 
 
 
@@ -100,6 +102,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string NotesWriter = "NotesWriter";
 			/// <summary>Member name Appointments</summary>
 			public static readonly string Appointments = "Appointments";
+			/// <summary>Member name Arbitrations</summary>
+			public static readonly string Arbitrations = "Arbitrations";
 			/// <summary>Member name AssessmentAttributes</summary>
 			public static readonly string AssessmentAttributes = "AssessmentAttributes";
 			/// <summary>Member name AssessmentClaims</summary>
@@ -112,6 +116,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AssessmentNotes = "AssessmentNotes";
 			/// <summary>Member name AssessmentReports</summary>
 			public static readonly string AssessmentReports = "AssessmentReports";
+
 
 
 
@@ -183,12 +188,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointments = (EntityCollection<AppointmentEntity>)info.GetValue("_appointments", typeof(EntityCollection<AppointmentEntity>));
+				_arbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations", typeof(EntityCollection<ArbitrationEntity>));
 				_assessmentAttributes = (EntityCollection<AssessmentAttributeEntity>)info.GetValue("_assessmentAttributes", typeof(EntityCollection<AssessmentAttributeEntity>));
 				_assessmentClaims = (EntityCollection<AssessmentClaimEntity>)info.GetValue("_assessmentClaims", typeof(EntityCollection<AssessmentClaimEntity>));
 				_assessmentColors = (EntityCollection<AssessmentColorEntity>)info.GetValue("_assessmentColors", typeof(EntityCollection<AssessmentColorEntity>));
 				_assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>)info.GetValue("_assessmentMedRehabs", typeof(EntityCollection<AssessmentMedRehabEntity>));
 				_assessmentNotes = (EntityCollection<AssessmentNoteEntity>)info.GetValue("_assessmentNotes", typeof(EntityCollection<AssessmentNoteEntity>));
 				_assessmentReports = (EntityCollection<AssessmentReportEntity>)info.GetValue("_assessmentReports", typeof(EntityCollection<AssessmentReportEntity>));
+
 
 
 
@@ -350,6 +357,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)entity);
 					break;
+				case "Arbitrations":
+					this.Arbitrations.Add((ArbitrationEntity)entity);
+					break;
 				case "AssessmentAttributes":
 					this.AssessmentAttributes.Add((AssessmentAttributeEntity)entity);
 					break;
@@ -368,6 +378,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReports":
 					this.AssessmentReports.Add((AssessmentReportEntity)entity);
 					break;
+
 
 
 
@@ -434,6 +445,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					toReturn.Add(AssessmentEntity.Relations.AppointmentEntityUsingAssessmentId);
 					break;
+				case "Arbitrations":
+					toReturn.Add(AssessmentEntity.Relations.ArbitrationEntityUsingAssessmentId);
+					break;
 				case "AssessmentAttributes":
 					toReturn.Add(AssessmentEntity.Relations.AssessmentAttributeEntityUsingAssessmentId);
 					break;
@@ -452,6 +466,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReports":
 					toReturn.Add(AssessmentEntity.Relations.AssessmentReportEntityUsingAssessmentId);
 					break;
+
 
 
 
@@ -545,6 +560,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)relatedEntity);
 					break;
+				case "Arbitrations":
+					this.Arbitrations.Add((ArbitrationEntity)relatedEntity);
+					break;
 				case "AssessmentAttributes":
 					this.AssessmentAttributes.Add((AssessmentAttributeEntity)relatedEntity);
 					break;
@@ -610,6 +628,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Appointments":
 					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "Arbitrations":
+					base.PerformRelatedEntityRemoval(this.Arbitrations, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "AssessmentAttributes":
 					base.PerformRelatedEntityRemoval(this.AssessmentAttributes, relatedEntity, signalRelatedEntityManyToOne);
@@ -700,6 +721,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Appointments);
+			toReturn.Add(this.Arbitrations);
 			toReturn.Add(this.AssessmentAttributes);
 			toReturn.Add(this.AssessmentClaims);
 			toReturn.Add(this.AssessmentColors);
@@ -721,12 +743,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointments", ((_appointments!=null) && (_appointments.Count>0) && !this.MarkedForDeletion)?_appointments:null);
+				info.AddValue("_arbitrations", ((_arbitrations!=null) && (_arbitrations.Count>0) && !this.MarkedForDeletion)?_arbitrations:null);
 				info.AddValue("_assessmentAttributes", ((_assessmentAttributes!=null) && (_assessmentAttributes.Count>0) && !this.MarkedForDeletion)?_assessmentAttributes:null);
 				info.AddValue("_assessmentClaims", ((_assessmentClaims!=null) && (_assessmentClaims.Count>0) && !this.MarkedForDeletion)?_assessmentClaims:null);
 				info.AddValue("_assessmentColors", ((_assessmentColors!=null) && (_assessmentColors.Count>0) && !this.MarkedForDeletion)?_assessmentColors:null);
 				info.AddValue("_assessmentMedRehabs", ((_assessmentMedRehabs!=null) && (_assessmentMedRehabs.Count>0) && !this.MarkedForDeletion)?_assessmentMedRehabs:null);
 				info.AddValue("_assessmentNotes", ((_assessmentNotes!=null) && (_assessmentNotes.Count>0) && !this.MarkedForDeletion)?_assessmentNotes:null);
 				info.AddValue("_assessmentReports", ((_assessmentReports!=null) && (_assessmentReports.Count>0) && !this.MarkedForDeletion)?_assessmentReports:null);
+
 
 
 
@@ -794,6 +818,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Arbitration' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoArbitrations()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'AssessmentAttribute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoAssessmentAttributes()
@@ -852,6 +886,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentReportFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
 			return bucket;
 		}
+
 
 
 
@@ -993,12 +1028,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointments);
+			collectionsQueue.Enqueue(this._arbitrations);
 			collectionsQueue.Enqueue(this._assessmentAttributes);
 			collectionsQueue.Enqueue(this._assessmentClaims);
 			collectionsQueue.Enqueue(this._assessmentColors);
 			collectionsQueue.Enqueue(this._assessmentMedRehabs);
 			collectionsQueue.Enqueue(this._assessmentNotes);
 			collectionsQueue.Enqueue(this._assessmentReports);
+
 
 
 
@@ -1018,12 +1055,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
+			this._arbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 			this._assessmentAttributes = (EntityCollection<AssessmentAttributeEntity>) collectionsQueue.Dequeue();
 			this._assessmentClaims = (EntityCollection<AssessmentClaimEntity>) collectionsQueue.Dequeue();
 			this._assessmentColors = (EntityCollection<AssessmentColorEntity>) collectionsQueue.Dequeue();
 			this._assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>) collectionsQueue.Dequeue();
 			this._assessmentNotes = (EntityCollection<AssessmentNoteEntity>) collectionsQueue.Dequeue();
 			this._assessmentReports = (EntityCollection<AssessmentReportEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -1042,6 +1081,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
 			if (this._appointments != null)
+			{
+				return true;
+			}
+			if (this._arbitrations != null)
 			{
 				return true;
 			}
@@ -1080,6 +1123,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -1090,12 +1134,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentAttributeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentAttributeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentClaimEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentColorEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentColorEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentMedRehabEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentMedRehabEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory))) : null);
+
 
 
 
@@ -1127,12 +1173,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("DocListWriter", _docListWriter);
 			toReturn.Add("NotesWriter", _notesWriter);
 			toReturn.Add("Appointments", _appointments);
+			toReturn.Add("Arbitrations", _arbitrations);
 			toReturn.Add("AssessmentAttributes", _assessmentAttributes);
 			toReturn.Add("AssessmentClaims", _assessmentClaims);
 			toReturn.Add("AssessmentColors", _assessmentColors);
 			toReturn.Add("AssessmentMedRehabs", _assessmentMedRehabs);
 			toReturn.Add("AssessmentNotes", _assessmentNotes);
 			toReturn.Add("AssessmentReports", _assessmentReports);
+
 
 
 
@@ -1154,6 +1202,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(_appointments!=null)
 			{
 				_appointments.ActiveContext = base.ActiveContext;
+			}
+			if(_arbitrations!=null)
+			{
+				_arbitrations.ActiveContext = base.ActiveContext;
 			}
 			if(_assessmentAttributes!=null)
 			{
@@ -1179,6 +1231,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_assessmentReports.ActiveContext = base.ActiveContext;
 			}
+
 
 
 
@@ -1238,12 +1291,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointments = null;
+			_arbitrations = null;
 			_assessmentAttributes = null;
 			_assessmentClaims = null;
 			_assessmentColors = null;
 			_assessmentMedRehabs = null;
 			_assessmentNotes = null;
 			_assessmentReports = null;
+
 
 
 
@@ -1712,6 +1767,17 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("Appointments")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "Appointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathArbitrations
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Arbitrations")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentAttribute' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1778,6 +1844,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("AssessmentReports")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, 0, null, null, null, null, "AssessmentReports", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
 
 
 
@@ -2149,6 +2216,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(ArbitrationEntity))]
+		public virtual EntityCollection<ArbitrationEntity> Arbitrations
+		{
+			get
+			{
+				if(_arbitrations==null)
+				{
+					_arbitrations = new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory)));
+					_arbitrations.SetContainingEntityInfo(this, "Assessment");
+				}
+				return _arbitrations;
+			}
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentAttributeEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AssessmentAttributeEntity))]
@@ -2244,6 +2327,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _assessmentReports;
 			}
 		}
+
 
 
 

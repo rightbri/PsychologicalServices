@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
@@ -54,6 +55,8 @@ namespace PsychologicalServices.Models.Assessments
         public IEnumerable<Models.Attributes.AttributeValue> Attributes { get; set; }
 
         public IEnumerable<Report> Reports { get; set; }
+
+        public IEnumerable<Arbitration> Arbitrations { get; set; }
 
         public DateTimeOffset CreateDate { get; set; }
 

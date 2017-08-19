@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Addresses\AddressRepository.cs" />
     <Compile Include="Appointments\AppointmentRepository.cs" />
+    <Compile Include="Arbitrations\ArbitrationRepository.cs" />
     <Compile Include="Assessments\AssessmentRepository.cs" />
     <Compile Include="Attributes\AttributeRepository.cs" />
     <Compile Include="CalendarNotes\CalendarNoteRepository.cs" />
@@ -130,6 +131,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

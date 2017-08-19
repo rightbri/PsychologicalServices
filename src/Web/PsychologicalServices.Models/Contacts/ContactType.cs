@@ -4,6 +4,8 @@ namespace PsychologicalServices.Models.Contacts
 {
     public class ContactType
     {
+        public const int Lawyer = 1;
+
         public int ContactTypeId { get; set; }
 
         public string Name { get; set; }

@@ -273,6 +273,10 @@ export class DataRepository {
 		return this.getManyBasic('contacttype', true);
 	}
 	
+	getNewArbitration(assessmentId) {
+		return this.getBasic(`arbitration/assessment/${assessmentId}`);
+	}
+	
 	getReportStatuses() {
 		return this.getManyBasic('reportstatus', true);
 	}
@@ -351,6 +355,10 @@ export class DataRepository {
 	
 	getCalendarNotes(criteria) {
 		return this.searchBasic(criteria, 'calendarNote');
+	}
+	
+	getArbitrations(criteria) {
+		return this.searchBasic(criteria, 'arbitration');
 	}
 	
 	saveCalendarNote(calendarNote) {

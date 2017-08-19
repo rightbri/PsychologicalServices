@@ -113,7 +113,11 @@ export class EditAssessment {
 				companyIds: [this.user.company.companyId],
 				attributeTypeIds: this.config.appointmentDefaults.attributeTypeIds,
 				isActive: true
-			}).then(data => this.appointmentAttributes = data)
+			}).then(data => this.appointmentAttributes = data),
+			
+			this.dataRepository.searchContacts({
+				contactTypeId: this.config.contactTypes.lawyer
+			}).then(data => this.defenseLawyers = data)
 		]);
 	}
 	
@@ -250,7 +254,7 @@ export class EditAssessment {
 		let claimant = e.detail.claimant;
 		
 		if (!claimant.isAdd) {
-			copyValues(claimant, this.claimantEditModel);
+			copyValues(claimant, this.claimantEditModel.claimant);
 		}
 		
 		this.claimantEditModel = null;
@@ -337,7 +341,7 @@ export class EditAssessment {
 		let appointment = e.detail.appointment;
 
 		if (!appointment.isAdd) {
-			copyValues(appointment, this.appointmentEditModel);
+			copyValues(appointment, this.appointmentEditModel.appointment);
 		}
 		
 		this.appointmentEditModel = null;
@@ -345,6 +349,46 @@ export class EditAssessment {
 	
 	removeAppointment(appointment) {
 		this.assessment.appointments.splice(this.assessment.appointments.indexOf(appointment), 1);
+	}
+	
+	newArbitration() {
+		this.dataRepository.getNewArbitration(this.assessment.assessmentId)
+			.then(data => {
+				data.isAdd = true;
+				this.editArbitration(data);
+			});
+	}
+	
+	editArbitration(arbitration) {
+		this.arbitrationEditModel = {
+			'arbitration': arbitration,
+			'defenseLawyers': this.defenseLawyers
+		};
+	}
+	
+	arbitrationEdited(e) {
+		let arbitration = e.detail.arbitration;
+		
+		if (arbitration.isAdd) {
+			delete arbitration['isAdd'];
+			this.assessment.arbitrations.push(arbitration);
+		}
+		
+		this.arbitrationEditModel = null;
+	}
+	
+	arbitrationCanceled(e) {
+		let arbitration = e.detail.arbitration;
+
+		if (!arbitration.isAdd) {
+			copyValues(arbitration, this.arbitrationEditModel.arbitration);
+		}
+		
+		this.arbitrationEditModel = null;
+	}
+	
+	removeArbitration(arbitration) {
+		this.assessment.arbitrations.splice(this.assessment.arbitrations.indexOf(arbitration), 1);
 	}
 	
 	newNote() {

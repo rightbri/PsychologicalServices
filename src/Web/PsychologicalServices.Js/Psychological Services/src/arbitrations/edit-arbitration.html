@@ -1,0 +1,56 @@
+<template>
+	<require from="common/date-mask"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/elements/edit-panel"></require>
+	
+	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Arbitration</legend>
+			
+			<div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
+			
+				<div>
+					<label class="uk-form-label" for="startDate">Start Date</label>
+					<div class="uk-form-controls">
+						<input id="startDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.arbitration.startDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+					</div>
+				</div>
+			
+				<div>
+					<label class="uk-form-label" for="endDate">End Date</label>
+					<div class="uk-form-controls">
+						<input id="endDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.arbitration.endDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+					</div>
+				</div>
+			
+				<div class="uk-width-1-1">
+					<label class="uk-form-label" for="availableDate">Available Date</label>
+					<div class="uk-form-controls">
+						<input id="availableDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.arbitration.availableDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+					</div>
+				</div>
+			
+				<div>
+					<label class="uk-form-label" for="defenseLawyer">Defense Lawyer</label>
+					<div class="uk-form-controls">
+						<select id="defenseLawyer" class="uk-select" value.bind="model.arbitration.defenseLawyer" matcher.bind="contactMatcher">
+							<option></option>
+							<option repeat.for="defenseLawyer of defenseLawyers" model.bind="defenseLawyer">
+								${defenseLawyer.firstName} ${defenseLawyer.lastName} ${defenseLawyer.employer.name}
+							</option>
+						</select>
+					</div>
+				</div>
+				
+				<div>
+					<label class="uk-form-label" for="defenseFileNumber">Defense File Number</label>
+					<div class="uk-form-controls">
+						<input id="defenseFileNumber" type="text" class="uk-input" value.bind="model.arbitration.defenseFileNumber" />
+					</div>
+				</div>
+				
+			</div>
+			
+		</fieldset>
+	</edit-panel>
+</template>
