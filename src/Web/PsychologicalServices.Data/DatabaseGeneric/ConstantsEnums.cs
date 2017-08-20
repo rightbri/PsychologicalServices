@@ -175,6 +175,8 @@ namespace PsychologicalServices.Data
 		DefenseLawyerId,
 		///<summary>DefenseFileNumber. </summary>
 		DefenseFileNumber,
+		///<summary>Title. </summary>
+		Title,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -355,6 +357,8 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>InvoiceAmount. </summary>
 		InvoiceAmount,
+		///<summary>ShowOnSchedule. </summary>
+		ShowOnSchedule,
 		/// <summary></summary>
 		AmountOfFields
 	}

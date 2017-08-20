@@ -22,11 +22,13 @@
 			<#
 			var headerCellStyles = "padding: 4px; text-align: left; vertical-align: top; text-transform: uppercase; background-color: #f8f8f8; font-weight: normal; font-size: 1.25rem; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8;";
 			var dayCellStyles = "padding: 4px; white-space: nowrap; vertical-align: middle; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8; color: #0000ff; font-size: 1.25rem;";
+			var dayNoteCellStyles = "padding: 4px; vertical-align: top; border-style: none none solid none; border-width: 1px; border-color: #d8d8d8;";
 			var bodyCellStyles = "padding: 4px; white-space: nowrap; vertical-align: top; border-style: none none solid none; border-width: 2px; border-color: #d8d8d8;";
-			var noteCellStyles = "padding: 4px; white-space: nowrap; vertical-align: top; border-style: dotted none solid none; border-width: 1px 0 2px 0; border-color: #d8d8d8;";
+			var noteCellStyles = "padding: 4px; vertical-align: top; border-style: dotted none solid none; border-width: 1px 0 2px 0; border-color: #d8d8d8;";
 			var listStyles = "list-style-type: none; padding: 0; margin: 0;";
-			var listItemStyles = "font-size: 1.1rem; padding: 2px 0 0 0";
-			var smallListItemStyles = "font-size: 1rem; padding: 2px 0 0 0";
+			var listItemStyles = "font-size: 1.25rem; padding: 2px 0 0 0";
+			var smallListItemStyles = "font-size: 1.1rem; padding: 2px 0 0 0";
+			var arbitrationLabelStyles = "text-transform: uppercase; background-color: #1e87f0; border-radius: 2px; color: #fff; padding: 1px 10px;";
 			#>
 				<tr>
 					<th style="<#= headerCellStyles #>">Time</th>
@@ -40,13 +42,45 @@
 			</thead>
 			<tbody>
 			<# foreach (var day in week.Days) { #>
-				<tr>
-					<td colspan="7" style="<#= dayCellStyles #>"><!-- Day -->
+				<#
+				var arbitrationStarts = Model.Arbitrations
+					.Where(arbitration =>
+						arbitration.StartDate >= day &&
+						arbitration.StartDate < day.AddDays(1)
+					);
+
+				var arbitrationAvailables = Model.Arbitrations
+					.Where(arbitration =>
+						arbitration.AvailableDate >= day &&
+						arbitration.AvailableDate < day.AddDays(1)
+					);
+				#>
+				<tr><!-- Day -->
+					<td style="<#= dayCellStyles #>">
 						<#= string.Format("{0:dddd MMMM d, yyyy}", day) #>
+					</td>
+					<td colspan="6" style="<#= dayNoteCellStyles #>">
+						<ul style="<#= listStyles #>">
+						<# foreach (var arbitration in arbitrationStarts) { #>
+							<li style="<#= smallListItemStyles #>">
+								<span style="<#= arbitrationLabelStyles #>">Arbitration</span> <#= arbitration.Title #> starting
+							</li>
+						<# } #>
+						<# foreach (var arbitration in arbitrationAvailables) { #>
+							<li style="<#= smallListItemStyles #>">
+								<span style="<#= arbitrationLabelStyles #>">Arbitration</span> <#= arbitration.Title #> date given
+							</li>
+						<# } #>
+						</ul>
 					</td>
 				</tr>
 				<#
-				var appointments = Model.Appointments.Where(app => app.AppointmentTime > day && app.AppointmentTime < day.AddDays(1));
+				var appointments = Model.Appointments
+					.Where(app =>
+						app.AppointmentTime > day &&
+						app.AppointmentTime < day.AddDays(1) &&
+						app.Assessment.AssessmentType.ShowOnSchedule
+					);
 
 				foreach (var appointment in appointments) {
 					var time = Model.TimezoneService.ConvertTime(appointment.AppointmentTime, timezone);
@@ -192,6 +226,7 @@
 									</li>
 								<#	}
 								} #>
+								</ul>
 							</td>
 						</tr>
 					<# } #>

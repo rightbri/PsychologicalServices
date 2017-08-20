@@ -10,6 +10,8 @@ namespace PsychologicalServices.Models.Arbitrations
 
         public Assessment Assessment { get; set; }
 
+        public string Title { get; set; }
+
         public DateTimeOffset StartDate { get; set; }
 
         public DateTimeOffset EndDate { get; set; }

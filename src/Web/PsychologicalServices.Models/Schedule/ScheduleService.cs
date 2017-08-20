@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Users;
@@ -14,6 +15,7 @@ namespace PsychologicalServices.Models.Schedule
     {
         private readonly IUserRepository _userRepository = null;
         private readonly IAppointmentRepository _appointmentRepository = null;
+        private readonly IArbitrationRepository _arbitrationRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
         private readonly IScheduleHtmlGenerator _scheduleHtmlGenerator = null;
         private readonly IHtmlToPdfService _htmlToPdfService = null;
@@ -24,6 +26,7 @@ namespace PsychologicalServices.Models.Schedule
         public ScheduleService(
             IUserRepository userRepository,
             IAppointmentRepository appointmentRepository,
+            IArbitrationRepository arbitrationRepository,
             ICompanyRepository companyRepository,
             IScheduleHtmlGenerator scheduleHtmlGenerator,
             IHtmlToPdfService htmlToPdfService,
@@ -34,6 +37,7 @@ namespace PsychologicalServices.Models.Schedule
         {
             _userRepository = userRepository;
             _appointmentRepository = appointmentRepository;
+            _arbitrationRepository = arbitrationRepository;
             _companyRepository = companyRepository;
             _scheduleHtmlGenerator = scheduleHtmlGenerator;
             _htmlToPdfService = htmlToPdfService;
@@ -162,9 +166,17 @@ namespace PsychologicalServices.Models.Schedule
                 },
             };
 
+            var arbitrationSearchCriteria = new ArbitrationSearchCriteria
+            {
+                CompanyId = result.Psychologist.Company.CompanyId,
+                StartDate = parameters.FromDate,
+                EndDate = parameters.ToDate,
+            };
+
             var model = new PsychologistScheduleModel
             {
                 Appointments = _appointmentRepository.GetAppointments(appointmentSearchCriteria),
+                Arbitrations = _arbitrationRepository.GetArbitrations(arbitrationSearchCriteria),
                 Psychologist = _userRepository.GetUserById(parameters.PsychologistId),
                 FromDate = result.FromDate,
                 ToDate = result.ToDate,

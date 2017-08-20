@@ -6,8 +6,6 @@ using SD.LLBLGen.Pro.LinqSupportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PsychologicalServices.Infrastructure.Arbitrations
 {
@@ -37,36 +35,27 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
 
         #endregion
 
-        //public IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria)
-        //{
-        //    using (var adapter = AdapterFactory.CreateAdapter())
-        //    {
-        //        var meta = new LinqMetaData(adapter);
+        public IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
 
-        //        var calendarNotes = meta.CalendarNote.WithPath(CalendarNotePath);
+                var arbitrations = meta.Arbitration
+                    .Where(arbitration => arbitration.StartDate <= criteria.EndDate && arbitration.EndDate >= criteria.StartDate);
 
-        //        if (criteria.FromDate.HasValue)
-        //        {
-        //            calendarNotes = calendarNotes.Where(calendarNote => calendarNote.FromDate <= criteria.ToDate);
-        //        }
-
-        //        if (criteria.ToDate.HasValue)
-        //        {
-        //            calendarNotes = calendarNotes.Where(calendarNote => calendarNote.ToDate >= criteria.FromDate);
-        //        }
-
-        //        if (criteria.CompanyId.HasValue)
-        //        {
-        //            calendarNotes = calendarNotes.Where(calendarNote => calendarNote.CompanyId == criteria.CompanyId);
-        //        }
-
-        //        return Execute<CalendarNoteEntity>(
-        //                (ILLBLGenProQuery)
-        //                calendarNotes
-        //            )
-        //            .Select(calendarNote => calendarNote.ToCalendarNote())
-        //            .ToList();
-        //    }
-        //}
+                if (criteria.CompanyId.HasValue)
+                {
+                    arbitrations = arbitrations.Where(arbitration => arbitration.Assessment.CompanyId == criteria.CompanyId);
+                }
+                
+                return Execute<ArbitrationEntity>(
+                        (ILLBLGenProQuery)
+                        arbitrations
+                    )
+                    .Select(arbitration => arbitration.ToArbitration())
+                    .ToList();
+            }
+        }
     }
 }

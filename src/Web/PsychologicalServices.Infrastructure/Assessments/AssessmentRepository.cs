@@ -1043,11 +1043,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         assessmentEntity.Arbitrations.Any(assessmentArbitration =>
                             arbitration.ArbitrationId == assessmentArbitration.ArbitrationId &&
                             (
-                                arbitration.Assessment.AssessmentId != assessmentArbitration.AssessmentId ||
-                                (
-                                    null != arbitration.DefenseLawyer &&
-                                    arbitration.DefenseLawyer.ContactId != assessmentArbitration.DefenseLawyerId
-                                ) ||
+                                arbitration.Title != assessmentArbitration.Title ||
                                 arbitration.DefenseFileNumber != assessmentArbitration.DefenseFileNumber ||
                                 arbitration.StartDate != assessmentArbitration.StartDate ||
                                 arbitration.EndDate != assessmentArbitration.EndDate ||
@@ -1068,7 +1064,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     if (null != arbitrationEntity)
                     {
-                        arbitrationEntity.AssessmentId = arbitration.Assessment.AssessmentId;
+                        arbitrationEntity.Title = arbitration.Title;
                         arbitrationEntity.StartDate = arbitration.StartDate;
                         arbitrationEntity.AvailableDate = arbitration.AvailableDate;
 
@@ -1104,6 +1100,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.Arbitrations.AddRange(
                     arbitrationsToAdd.Select(arbitration => new ArbitrationEntity
                     {
+                        Title = arbitration.Title,
                         StartDate = arbitration.StartDate,
                         EndDate = arbitration.EndDate,
                         AvailableDate = arbitration.EndDate,
@@ -1178,6 +1175,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentTypeEntity.Name = assessmentType.Name;
                 assessmentTypeEntity.Description = assessmentType.Description;
                 assessmentTypeEntity.IsActive = assessmentType.IsActive;
+                assessmentTypeEntity.ShowOnSchedule = assessmentType.ShowOnSchedule;
 
                 var reportTypesToAdd = assessmentType.ReportTypes.Where(reportType => !assessmentTypeEntity.AssessmentTypeReportTypes.Any(assessmentTypeReportType => assessmentTypeReportType.ReportTypeId == reportType.ReportTypeId));
 

@@ -33,6 +33,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     ArbitrationId = arbitration.ArbitrationId,
                     Assessment = arbitration.Assessment.ToAppointmentAssessment(),
+                    Title = arbitration.Title,
                     StartDate = arbitration.StartDate,
                     EndDate = arbitration.EndDate,
                     AvailableDate = arbitration.AvailableDate,
@@ -620,6 +621,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Description = assessmentType.Description,
                     IsActive = assessmentType.IsActive,
                     InvoiceAmount = assessmentType.InvoiceAmount,
+                    ShowOnSchedule = assessmentType.ShowOnSchedule,
                     ReportTypes = assessmentType.AssessmentTypeReportTypes.Select(assessmentTypeReportType => assessmentTypeReportType.ReportType.ToReportType()),
                     AttributeTypes = assessmentType.AssessmentTypeAttributeTypes.Select(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType.ToAttributeType()),
                 }

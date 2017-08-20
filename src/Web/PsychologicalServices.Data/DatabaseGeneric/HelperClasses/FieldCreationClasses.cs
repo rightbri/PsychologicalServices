@@ -272,6 +272,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.DefenseFileNumber);}
 		}
+		/// <summary>Creates a new ArbitrationEntity.Title field instance</summary>
+		public static EntityField2 Title
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.Title);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentEntity</summary>
@@ -541,6 +546,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 InvoiceAmount
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.InvoiceAmount);}
+		}
+		/// <summary>Creates a new AssessmentTypeEntity.ShowOnSchedule field instance</summary>
+		public static EntityField2 ShowOnSchedule
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.ShowOnSchedule);}
 		}
 	}
 

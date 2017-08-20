@@ -17,6 +17,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public int InvoiceAmount { get; set; }
 
+        public bool ShowOnSchedule { get; set; }
+
         public IEnumerable<ReportType> ReportTypes { get; set; }
 
         public IEnumerable<AttributeType> AttributeTypes { get; set; }

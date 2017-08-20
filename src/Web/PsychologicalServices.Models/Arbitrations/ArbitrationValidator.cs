@@ -45,6 +45,13 @@ namespace PsychologicalServices.Models.Arbitrations
                 }
             }
 
+            if (string.IsNullOrWhiteSpace(item.Title))
+            {
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "Title", Message = GetValidationMessage(item, "Title is required") }
+                );
+            }
+
             if (item.StartDate > item.EndDate)
             {
                 result.ValidationErrors.Add(

@@ -4,6 +4,8 @@
 	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/note-for-day"></require>
+	<require from="resources/value-converters/arbitration-starting"></require>
+	<require from="resources/value-converters/arbitration-availability"></require>
 	<require from="resources/value-converters/appointment-for-day"></require>
 	<require from="resources/value-converters/attribute-types"></require>
 	<require from="resources/value-converters/sort-array"></require>
@@ -77,6 +79,18 @@
 					</a>
 				</td>
 				<td colspan="7">
+					<p class="arbitration" repeat.for="arbitration of arbitrations | arbitrationStarting:day.date">
+						<small>
+							<span class="uk-label">Arbitration</span>
+							${arbitration.title} starting
+						</small>
+					</p>
+					<p class="arbitration" repeat.for="arbitration of arbitrations | arbitrationAvailability:day.date">
+						<small>
+							<span class="uk-label">Arbitration</span>
+							${arbitration.title} date given
+						</small>
+					</p>
 					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day.date">
 						<small>${calendarNote.note.noteText}</small>
 					</p>

@@ -528,6 +528,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("DefenseFileNumber", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Title", fieldHashtable);
 		}
 		#endregion
 
@@ -756,6 +759,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.String)GetValue((int)ArbitrationFieldIndex.DefenseFileNumber, true); }
 			set	{ SetValue((int)ArbitrationFieldIndex.DefenseFileNumber, value); }
+		}
+
+		/// <summary> The Title property of the Entity Arbitration<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Arbitrations"."Title"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.String Title
+		{
+			get { return (System.String)GetValue((int)ArbitrationFieldIndex.Title, true); }
+			set	{ SetValue((int)ArbitrationFieldIndex.Title, value); }
 		}
 
 

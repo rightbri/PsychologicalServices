@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Users;
 using System;
@@ -18,6 +19,8 @@ namespace PsychologicalServices.Models.Schedule
         public DateTimeOffset ToDate { get; set; }
 
         public IEnumerable<Appointment> Appointments { get; set; }
+
+        public IEnumerable<Arbitration> Arbitrations { get; set; }
 
         public string DisplayTimezoneId { get; set; }
 

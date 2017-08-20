@@ -245,11 +245,10 @@
 										<i class="fa fa-plus"></i>
 									</button>
 								</th>
+								<th>Title</th>
 								<th>Start Date</th>
 								<th>End Date</th>
-								<th>Available Date</th>
 								<th>Defense Lawyer</th>
-								<th>Defense File Number</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -260,11 +259,10 @@
 										Edit
 									</button>
 								</td>
+								<td>${arbitration.title}</td>
 								<td>${arbitration.startDate | dateFormat:config.longDateFormat}</td>
 								<td>${arbitration.endDate | dateFormat:config.longDateFormat}</td>
-								<td>${arbitration.availableDate | dateFormat:config.longDateFormat}</td>
 								<td>${arbitration.defenseLawyer.firstName} ${arbitration.defenseLawyer.lastName}</td>
-								<td>${arbitration.defenseFileNumber}</td>
 								<td>
 									<button type="button" class="uk-button uk-button-link" click.delegate="removeArbitration(arbitration)" title="Remove arbitration" uk-tooltip>
 										<i class="fa fa-times"></i>

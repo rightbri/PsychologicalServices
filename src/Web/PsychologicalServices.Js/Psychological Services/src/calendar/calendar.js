@@ -24,8 +24,6 @@ export class Calendar {
 		
 		this.filter = false;
 		this.searchStatuses = [];
-		this.searchPsychometrist = null;
-		this.searchPsychologist = null;
 		this.searchCompany = 0;
 		
 		this.now = this.dateService.now();
@@ -159,12 +157,15 @@ export class Calendar {
 					'toDate': this.searchEnd,
 					'companyId': this.user.company.companyId
 				}).then(data => this.calendarNotes = data),
+				this.dataRepository.getArbitrations({
+					'startDate': this.searchStart,
+					'endDate': this.searchEnd,
+					'companyId': this.user.company.companyId
+				}).then(data => this.arbitrations = data),
 				this.dataRepository.searchAppointments({
 					appointmentStatusIds: this.searchStatuses,
 					appointmentTimeStart: this.searchStart,
 					appointmentTimeEnd: this.searchEnd,
-					psychometristId: this.searchPsychometrist,
-					psychologistId: this.searchPsychologist,
 					companyId: this.searchCompany
 				}).then(data => this.appointments = data)
 				.then(appointments => {

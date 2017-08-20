@@ -692,6 +692,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("InvoiceAmount", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("ShowOnSchedule", fieldHashtable);
 		}
 		#endregion
 
@@ -853,6 +856,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AssessmentTypeFieldIndex.InvoiceAmount, true); }
 			set	{ SetValue((int)AssessmentTypeFieldIndex.InvoiceAmount, value); }
+		}
+
+		/// <summary> The ShowOnSchedule property of the Entity AssessmentType<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AssessmentTypes"."ShowOnSchedule"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean ShowOnSchedule
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentTypeFieldIndex.ShowOnSchedule, true); }
+			set	{ SetValue((int)AssessmentTypeFieldIndex.ShowOnSchedule, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.
