@@ -29,6 +29,10 @@ export class EditAssessment {
 		
 		this.saveDisabled = false;
 		this.validationErrors = null;
+
+		this.summaryCollapseRows = 4;
+		this.summaryExpandRows = 20;
+		this.summaryEditRows = this.summaryCollapseRows;
 	}
 	
 	activate(params) {
@@ -488,6 +492,16 @@ export class EditAssessment {
 		});
 		
 		this.assessment.attributes = existingAttributes.concat(newAttributes);
+	}
+
+	summaryEditFocus(e) {
+		this.summaryEditRows = this.summaryExpandRows;
+
+		this.scroller.scrollTo(e.target);
+	}
+
+	summaryEditBlur(e) {
+		this.summaryEditRows = this.summaryCollapseRows;
 	}
 }
 

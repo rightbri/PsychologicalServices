@@ -308,7 +308,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="report of assessment.reports | sortArray:{ property: 'reportType.name', direction: 'asc' }">
+							<tr repeat.for="report of assessment.reports">
 								<td>
 									<button type="button" class="uk-button uk-button-default" click.delegate="editReport(report)">
 										Edit
@@ -490,16 +490,19 @@
 			<div class="uk-width-2-3@s">
 				<label class="uk-form-label" for="summary">Summary</label>
 				<div class="uk-form-controls">
-					<textarea id="summary" class="uk-textarea" rows="10" value.bind="assessment.summary.noteText"></textarea>
+					<textarea id="summary" class="uk-textarea" rows="${summaryEditRows}" value.bind="assessment.summary.noteText" focus.trigger="summaryEditFocus($event)" blur.trigger="summaryEditBlur($event)"></textarea>
 				</div>
 			</div>
 			
 			<div class="uk-width-1-3@s">
 				<label class="uk-form-label">Colors</label>
 				<div class="uk-form-controls">
-					<label class="uk-form-label" repeat.for="color of colors">
-						<input type="checkbox" class="uk-checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span class="color-swatch" css="background-color: ${color.hexCode};"></span>
-					</label>
+					<template repeat.for="color of colors">
+						<label>
+							<input type="checkbox" class="uk-checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span class="color-swatch" css="background-color: ${color.hexCode};"></span>
+						</label>
+						<br if.bind="!$last">
+					</template>
 				</div>
 			</div>
 			
