@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addresses\AddressRepository.cs" />
+    <Compile Include="Analysis\AnalysisRepository.cs" />
     <Compile Include="Appointments\AppointmentRepository.cs" />
     <Compile Include="Arbitrations\ArbitrationRepository.cs" />
     <Compile Include="Assessments\AssessmentRepository.cs" />

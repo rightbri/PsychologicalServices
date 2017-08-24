@@ -1,0 +1,171 @@
+<template>
+    <require from="resources/value-converters/boolean"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Completion Statistics</legend>
+
+        <form class="uk-form-stacked">
+            
+            <div class="uk-margin">
+                <label class="uk-form-label" for="months">Past X Months (not counting the current month) (YTD if blank)</label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" value.bind="searchMonths | numeric:'0'" />
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div class="uk-container" if.bind="completionData">
+
+    <h3>Completions Summary</h3>
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-striped uk-table-hover uk-table-middle" fixed-header>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>&nbsp;</th>
+                    <th># Assessments</th>
+                    <th># Incomplete</th>
+                    <th># First Time Seen Complete</th>
+                    <th>% Incomplete</th>
+                    <th>% First Time Seen Complete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="uk-text-bold">
+                    <td>Grand Total</td>
+                    <td>&nbsp;</td>
+                    <td>${summary.assessmentCount | numeric:'0,0'}</td>
+                    <td>${summary.incompleteCount | numeric:'0,0'}</td>
+                    <td>${summary.completeCount | numeric:'0,0'}</td>
+                    <td>${summary.percentIncomplete | numeric:'0.00%'}</td>
+                    <td>${summary.percentComplete | numeric:'0.00%'}</td>
+                </tr>
+
+                <tr repeat.for="reader of readerSummary | sortArray:[{ property: 'hasReader', direction: 'desc' }]">
+                    <td rowspan="2" if.bind="$first">Reader</td>
+                    <td>${reader.hasReader | boolean}</td>
+                    <td>${reader.assessmentCount | numeric:'0,0'}</td>
+                    <td>${reader.incompleteCount | numeric:'0,0'}</td>
+                    <td>${reader.completeCount | numeric:'0,0'}</td>
+                    <td>${reader.percentIncomplete | numeric:'0.00%'}</td>
+                    <td>${reader.percentComplete | numeric:'0.00%'}</td>
+                </tr>
+        
+                <tr repeat.for="translator of translatorSummary | sortArray:[{ property: 'hasTranslator', direction: 'desc' }]">
+                    <td rowspan="2" if.bind="$first">Translator</td>
+                    <td>${translator.hasTranslator | boolean}</td>
+                    <td>${translator.assessmentCount | numeric:'0,0'}</td>
+                    <td>${translator.incompleteCount | numeric:'0,0'}</td>
+                    <td>${translator.completeCount | numeric:'0,0'}</td>
+                    <td>${translator.percentIncomplete | numeric:'0.00%'}</td>
+                    <td>${translator.percentComplete | numeric:'0.00%'}</td>
+                </tr>
+
+                <tr repeat.for="psychiatrist of psychiatristSummary | sortArray:[{ property: 'hasPsychiatrist', direction: 'desc' }]">
+                    <td rowspan="2" if.bind="$first">Psychiatrist</td>
+                    <td>${psychiatrist.hasPsychiatrist | boolean}</td>
+                    <td>${psychiatrist.assessmentCount | numeric:'0,0'}</td>
+                    <td>${psychiatrist.incompleteCount | numeric:'0,0'}</td>
+                    <td>${psychiatrist.completeCount | numeric:'0,0'}</td>
+                    <td>${psychiatrist.percentIncomplete | numeric:'0.00%'}</td>
+                    <td>${psychiatrist.percentComplete | numeric:'0.00%'}</td>
+                </tr>
+
+                <tr repeat.for="gender of femaleClaimantSummary | sortArray:[{ property: 'isFemaleClaimant', direction: 'desc' }]">
+                    <td rowspan="2" if.bind="$first">Female Claimant</td>
+                    <td>${gender.isFemaleClaimant | boolean}</td>
+                    <td>${gender.assessmentCount | numeric:'0,0'}</td>
+                    <td>${gender.incompleteCount | numeric:'0,0'}</td>
+                    <td>${gender.completeCount | numeric:'0,0'}</td>
+                    <td>${gender.percentIncomplete | numeric:'0.00%'}</td>
+                    <td>${gender.percentComplete | numeric:'0.00%'}</td>
+                </tr>
+                    
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <h3>Completions by Psychometrist</h3>
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+            <thead> 
+                <tr>
+                    <th class="uk-table-shrink">Psychometrist</th>
+                    <th># Assessments</th>
+                    <th># Incomplete</th>
+                    <th># First Time Seen Complete</th>
+                    <th>% Incomplete</th>
+                    <th>% First Time Seen Complete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="psychometrist of psychometrists | sortArray:[{ property: 'psychometrist', direction: 'asc' }]">
+                    <td class="uk-table-shrink">${psychometrist.psychometrist}</td>
+                    <td>${psychometrist.assessmentCount | numeric:'0,0'}</td>
+                    <td>${psychometrist.incompleteCount | numeric:'0,0'}</td>
+                    <td>${psychometrist.completeCount | numeric:'0,0'}</td>
+                    <td>${psychometrist.percentIncomplete | numeric:'0.00%'}</td>
+                    <td>${psychometrist.percentComplete | numeric:'0.00%'}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <h3>Completions by Psychometrist by Month</h3>
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+            <thead>
+                <tr>
+                    <th>Psychometrist</th>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th># Assessments</th>
+                    <th># Incomplete</th>
+                    <th># First Time Seen Complete</th>
+                    <th>% Incomplete</th>
+                    <th>% First Time Seen Complete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="psychometrist of psychometristsByMonth | sortArray:[{ property: 'psychometrist', direction: 'asc' },{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                    <td class="uk-table-shrink">${psychometrist.psychometrist}</td>
+                    <td>${psychometrist.year}</td>
+                    <td>${psychometrist.month}</td>
+                    <td>${psychometrist.assessmentCount | numeric:'0,0'}</td>
+                    <td>${psychometrist.incompleteCount | numeric:'0,0'}</td>
+                    <td>${psychometrist.completeCount | numeric:'0,0'}</td>
+                    <td>${psychometrist.percentIncomplete | numeric:'0.00%'}</td>
+                    <td>${psychometrist.percentComplete | numeric:'0.00%'}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</template>

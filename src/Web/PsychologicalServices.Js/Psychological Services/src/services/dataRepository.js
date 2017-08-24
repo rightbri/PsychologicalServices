@@ -141,6 +141,18 @@ export class DataRepository {
 		return this.getManyBasic('assessmenttype', true);
 	}
 
+	searchBookingData(criteria) {
+		return this.searchBasic(criteria, 'bookingdata');
+	}
+
+	searchCancellationData(criteria) {
+		return this.searchBasic(criteria, 'cancellationdata');
+	}
+
+	searchCompletionData(criteria) {
+		return this.searchBasic(criteria, 'completiondata');
+	}
+
 	getAddress(id) {
 		return this.getSingleBasic(id, 'address');
 	}

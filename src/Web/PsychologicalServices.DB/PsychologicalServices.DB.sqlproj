@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{02cfbd10-6601-4b68-9580-434eec1cc5a8}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureDatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -128,6 +128,9 @@
     <Build Include="dbo\Tables\ContactTypes.sql" />
     <Build Include="dbo\Tables\Contacts.sql" />
     <Build Include="dbo\Tables\Arbitrations.sql" />
+    <Build Include="dbo\Stored Procedures\CompletionData.sql" />
+    <Build Include="dbo\Stored Procedures\CancellationData.sql" />
+    <Build Include="dbo\Stored Procedures\BookingData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

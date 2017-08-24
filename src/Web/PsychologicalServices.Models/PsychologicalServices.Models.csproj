@@ -59,6 +59,15 @@
     <Compile Include="Addresses\AddressValidator.cs" />
     <Compile Include="Addresses\IAddressRepository.cs" />
     <Compile Include="Addresses\IAddressValidator.cs" />
+    <Compile Include="Analysis\AnalysisService.cs" />
+    <Compile Include="Analysis\BookingData.cs" />
+    <Compile Include="Analysis\CancellationData.cs" />
+    <Compile Include="Analysis\BookingDataSearchCriteria.cs" />
+    <Compile Include="Analysis\CancellationDataSearchCriteria.cs" />
+    <Compile Include="Analysis\IAnalysisRepository.cs" />
+    <Compile Include="Analysis\IAnalysisService.cs" />
+    <Compile Include="Analysis\CompletionData.cs" />
+    <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
     <Compile Include="Appointments\Appointment.cs" />
     <Compile Include="Appointments\AppointmentExtensions.cs" />
     <Compile Include="Appointments\AppointmentSequence.cs" />
@@ -309,6 +318,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

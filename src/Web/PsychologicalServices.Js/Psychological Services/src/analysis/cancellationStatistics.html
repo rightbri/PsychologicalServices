@@ -1,0 +1,131 @@
+<template>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Cancellation Statistics</legend>
+
+        <form class="uk-form-stacked">
+            
+            <div class="uk-margin">
+                <label class="uk-form-label" for="months">Past X Months (not counting the current month) (YTD if blank)</label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" value.bind="searchMonths | numeric:'0'" />
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div class="uk-container" if.bind="cancellationData">
+
+    <h3>Cancellations Summary</h3>
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th># Bookings</th>
+                    <th># Billable</th>
+                    <th># Canceled</th>
+                    <th>% Billable</th>
+                    <th>% Canceled</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${summary.appointmentCount | numeric:'0,0'}</td>
+                    <td>${summary.billableCount | numeric:'0,0'}</td>
+                    <td>${summary.canceledCount | numeric:'0,0'}</td>
+                    <td>${summary.percentBillable | numeric:'0.00%'}</td>
+                    <td>${summary.percentCanceled | numeric:'0.00%'}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <h3>Cancellations by Referral Source</h3>
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+            <thead>
+                <tr>
+                    <th class="uk-table-shrink">Referral Source</th>
+                    <th># Bookings</th>
+                    <th># Billable</th>
+                    <th># Canceled</th>
+                    <th>% Billable</th>
+                    <th>% Canceled</th>
+                    <th>Overall % Bookings</th>
+                    <th>Overall % Billable</th>
+                    <th>Overall % Canceled</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="referralSource of referralSources | sortArray:[{ property: 'referralSource', direction: 'asc' }]">
+                    <td class="uk-table-shrink">${referralSource.referralSource}</td>
+                    <td>${referralSource.appointmentCount | numeric:'0,0'}</td>
+                    <td>${referralSource.billableCount | numeric:'0,0'}</td>
+                    <td>${referralSource.canceledCount | numeric:'0,0'}</td>
+                    <td>${referralSource.percentBillable | numeric:'0.00%'}</td>
+                    <td>${referralSource.percentCanceled | numeric:'0.00%'}</td>
+                    <td>${referralSource.overallPercentAppointments | numeric:'0.00%'}</td>
+                    <td>${referralSource.overallPercentBillable | numeric:'0.00%'}</td>
+                    <td>${referralSource.overallPercentCanceled | numeric:'0.00%'}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <h3>Cancellations by Referral Source by Month</h3>
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+            <thead>
+                <tr>
+                    <th>Referral Source</th>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th># Bookings</th>
+                    <th># Billable</th>
+                    <th># Canceled</th>
+                    <th>% Billable</th>
+                    <th>% Canceled</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="referralSource of referralSourcesByMonth | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                    <td class="uk-table-shrink">${referralSource.referralSource}</td>
+                    <td>${referralSource.year}</td>
+                    <td>${referralSource.month}</td>
+                    <td>${referralSource.appointmentCount | numeric:'0,0'}</td>
+                    <td>${referralSource.billableCount | numeric:'0,0'}</td>
+                    <td>${referralSource.canceledCount | numeric:'0,0'}</td>
+                    <td>${referralSource.percentBillable | numeric:'0.00%'}</td>
+                    <td>${referralSource.percentCanceled | numeric:'0.00%'}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</template>
