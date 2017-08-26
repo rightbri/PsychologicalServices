@@ -774,10 +774,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("InvoiceAmount", fieldHashtable);
+			_fieldsCustomProperties.Add("ShowOnSchedule", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ShowOnSchedule", fieldHashtable);
+			_fieldsCustomProperties.Add("PsychometristCanInvoice", fieldHashtable);
 		}
 		#endregion
 
@@ -944,17 +944,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AssessmentTypeFieldIndex.IsActive, value); }
 		}
 
-		/// <summary> The InvoiceAmount property of the Entity AssessmentType<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentTypes"."InvoiceAmount"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 InvoiceAmount
-		{
-			get { return (System.Int32)GetValue((int)AssessmentTypeFieldIndex.InvoiceAmount, true); }
-			set	{ SetValue((int)AssessmentTypeFieldIndex.InvoiceAmount, value); }
-		}
-
 		/// <summary> The ShowOnSchedule property of the Entity AssessmentType<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "AssessmentTypes"."ShowOnSchedule"<br/>
@@ -964,6 +953,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AssessmentTypeFieldIndex.ShowOnSchedule, true); }
 			set	{ SetValue((int)AssessmentTypeFieldIndex.ShowOnSchedule, value); }
+		}
+
+		/// <summary> The PsychometristCanInvoice property of the Entity AssessmentType<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AssessmentTypes"."PsychometristCanInvoice"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean PsychometristCanInvoice
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentTypeFieldIndex.PsychometristCanInvoice, true); }
+			set	{ SetValue((int)AssessmentTypeFieldIndex.PsychometristCanInvoice, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.

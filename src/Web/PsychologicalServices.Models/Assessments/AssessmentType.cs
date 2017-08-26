@@ -15,9 +15,9 @@ namespace PsychologicalServices.Models.Assessments
 
         public bool IsActive { get; set; }
 
-        public int InvoiceAmount { get; set; }
-
         public bool ShowOnSchedule { get; set; }
+
+        public bool PsychometristCanInvoice { get; set; }
 
         public IEnumerable<ReportType> ReportTypes { get; set; }
 

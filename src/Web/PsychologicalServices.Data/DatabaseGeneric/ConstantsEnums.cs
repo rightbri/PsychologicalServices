@@ -355,10 +355,10 @@ namespace PsychologicalServices.Data
 		Description,
 		///<summary>IsActive. </summary>
 		IsActive,
-		///<summary>InvoiceAmount. </summary>
-		InvoiceAmount,
 		///<summary>ShowOnSchedule. </summary>
 		ShowOnSchedule,
+		///<summary>PsychometristCanInvoice. </summary>
+		PsychometristCanInvoice,
 		/// <summary></summary>
 		AmountOfFields
 	}

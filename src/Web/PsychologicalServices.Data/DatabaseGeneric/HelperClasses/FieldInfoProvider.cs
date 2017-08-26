@@ -276,8 +276,8 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)AssessmentTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("AssessmentTypeEntity", "Description", typeof(System.String), false, false, false, true,  (int)AssessmentTypeFieldIndex.Description, 100, 0, 0);
 			base.AddElementFieldInfo("AssessmentTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AssessmentTypeFieldIndex.IsActive, 0, 0, 0);
-			base.AddElementFieldInfo("AssessmentTypeEntity", "InvoiceAmount", typeof(System.Int32), false, false, false, false,  (int)AssessmentTypeFieldIndex.InvoiceAmount, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentTypeEntity", "ShowOnSchedule", typeof(System.Boolean), false, false, false, false,  (int)AssessmentTypeFieldIndex.ShowOnSchedule, 0, 0, 0);
+			base.AddElementFieldInfo("AssessmentTypeEntity", "PsychometristCanInvoice", typeof(System.Boolean), false, false, false, false,  (int)AssessmentTypeFieldIndex.PsychometristCanInvoice, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentTypeAttributeTypeEntity's FieldInfo objects</summary>
 		private void InitAssessmentTypeAttributeTypeEntityInfos()

@@ -52,7 +52,7 @@ BEGIN
 	) c ON ass.AssessmentId = c.AssessmentId
 	WHERE 
 	apps.CanInvoice = 1
-	AND t.ShowOnSchedule = 1
+	AND t.PsychometristCanInvoice = 1
 	AND NOT EXISTS (
 		SELECT
 		*

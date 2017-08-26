@@ -110,65 +110,12 @@ namespace PsychologicalServices.Models.Invoices
                                 InvoiceRate = invoiceRate,
                             });
                         break;
-                    case InvoiceType.Psychometrist:
-                        invoiceAppointments.Add(
-                            new InvoiceAppointment
-                            {
-                                InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
-                                Appointment = invoiceAppointment.Appointment,
-                                Lines = GetPsychometristInvoiceLines(
-                                    invoiceAppointment.Appointment,
-                                    invoiceRate,
-                                    invoiceAppointment.Appointment.IsCompletion(invoice.Appointments.Select(ia => ia.Appointment))
-                                ).Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
-                                InvoiceRate = invoiceRate,
-                            }
-                        );
-                        break;
                     default:
                         break;
                 }
             }
             
             return invoiceAppointments;
-        }
-
-        private List<InvoiceLine> GetPsychometristInvoiceLines(Appointment appointment, decimal invoiceRate, bool isCompletion)
-        {
-            var normalRate = 100;
-            var completionRate = 50;
-            var lines = new List<InvoiceLine>();
-
-            var description = appointment.Assessment.AssessmentType.Description;
-            var amount = appointment.Assessment.AssessmentType.InvoiceAmount;
-            
-            if (isCompletion)
-            {
-                invoiceRate = completionRate;
-            }
-
-            if (invoiceRate != normalRate)
-            {
-                amount = amount * Convert.ToInt16(invoiceRate * 100);
-
-                description = description + " - " + appointment.AppointmentStatus.Name;
-            }
-
-            lines.Add(new InvoiceLine { Amount = amount, Description = description });
-
-            var travelFee = appointment.Psychometrist.TravelFees
-                .Where(fee =>
-                    fee.City.CityId == appointment.Location.City.CityId &&
-                    fee.Amount > 0)
-                .SingleOrDefault();
-            if (null != travelFee)
-            {
-                lines.Add(
-                    new InvoiceLine { Amount = travelFee.Amount, Description = string.Format("Travel to {0}", appointment.Location.City.Name) }
-                );
-            }
-
-            return lines;
         }
 
         private List<InvoiceLine> GetPsychologistInvoiceLines(Appointment appointment)

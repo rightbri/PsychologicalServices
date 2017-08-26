@@ -542,15 +542,15 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.IsActive);}
 		}
-		/// <summary>Creates a new AssessmentTypeEntity.InvoiceAmount field instance</summary>
-		public static EntityField2 InvoiceAmount
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.InvoiceAmount);}
-		}
 		/// <summary>Creates a new AssessmentTypeEntity.ShowOnSchedule field instance</summary>
 		public static EntityField2 ShowOnSchedule
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.ShowOnSchedule);}
+		}
+		/// <summary>Creates a new AssessmentTypeEntity.PsychometristCanInvoice field instance</summary>
+		public static EntityField2 PsychometristCanInvoice
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTypeFieldIndex.PsychometristCanInvoice);}
 		}
 	}
 

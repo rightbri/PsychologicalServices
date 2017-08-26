@@ -634,8 +634,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = assessmentType.Name,
                     Description = assessmentType.Description,
                     IsActive = assessmentType.IsActive,
-                    InvoiceAmount = assessmentType.InvoiceAmount,
                     ShowOnSchedule = assessmentType.ShowOnSchedule,
+                    PsychometristCanInvoice = assessmentType.PsychometristCanInvoice,
                     ReportTypes = assessmentType.AssessmentTypeReportTypes.Select(assessmentTypeReportType => assessmentTypeReportType.ReportType.ToReportType()),
                     AttributeTypes = assessmentType.AssessmentTypeAttributeTypes.Select(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType.ToAttributeType()),
                 }
