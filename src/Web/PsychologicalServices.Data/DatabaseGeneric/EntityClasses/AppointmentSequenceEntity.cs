@@ -37,7 +37,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private EntityCollection<PsychometristInvoiceAmountEntity> _psychometristInvoiceAmounts;
 		private EntityCollection<ReferralSourceAppointmentStatusSettingEntity> _referralSourceAppointmentStatusSettings;
+
+
+
 
 
 
@@ -56,8 +60,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
+			/// <summary>Member name PsychometristInvoiceAmounts</summary>
+			public static readonly string PsychometristInvoiceAmounts = "PsychometristInvoiceAmounts";
 			/// <summary>Member name ReferralSourceAppointmentStatusSettings</summary>
 			public static readonly string ReferralSourceAppointmentStatusSettings = "ReferralSourceAppointmentStatusSettings";
+
+
+
 
 
 
@@ -120,7 +129,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>)info.GetValue("_psychometristInvoiceAmounts", typeof(EntityCollection<PsychometristInvoiceAmountEntity>));
 				_referralSourceAppointmentStatusSettings = (EntityCollection<ReferralSourceAppointmentStatusSettingEntity>)info.GetValue("_referralSourceAppointmentStatusSettings", typeof(EntityCollection<ReferralSourceAppointmentStatusSettingEntity>));
+
+
+
 
 
 
@@ -163,9 +176,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
+				case "PsychometristInvoiceAmounts":
+					this.PsychometristInvoiceAmounts.Add((PsychometristInvoiceAmountEntity)entity);
+					break;
 				case "ReferralSourceAppointmentStatusSettings":
 					this.ReferralSourceAppointmentStatusSettings.Add((ReferralSourceAppointmentStatusSettingEntity)entity);
 					break;
+
+
+
 
 
 
@@ -192,9 +211,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
+				case "PsychometristInvoiceAmounts":
+					toReturn.Add(AppointmentSequenceEntity.Relations.PsychometristInvoiceAmountEntityUsingAppointmentSequenceId);
+					break;
 				case "ReferralSourceAppointmentStatusSettings":
 					toReturn.Add(AppointmentSequenceEntity.Relations.ReferralSourceAppointmentStatusSettingEntityUsingAppointmentSequenceId);
 					break;
+
+
+
 
 
 
@@ -235,6 +260,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
+				case "PsychometristInvoiceAmounts":
+					this.PsychometristInvoiceAmounts.Add((PsychometristInvoiceAmountEntity)relatedEntity);
+					break;
 				case "ReferralSourceAppointmentStatusSettings":
 					this.ReferralSourceAppointmentStatusSettings.Add((ReferralSourceAppointmentStatusSettingEntity)relatedEntity);
 					break;
@@ -254,6 +282,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
+				case "PsychometristInvoiceAmounts":
+					base.PerformRelatedEntityRemoval(this.PsychometristInvoiceAmounts, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "ReferralSourceAppointmentStatusSettings":
 					base.PerformRelatedEntityRemoval(this.ReferralSourceAppointmentStatusSettings, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -288,6 +319,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+			toReturn.Add(this.PsychometristInvoiceAmounts);
 			toReturn.Add(this.ReferralSourceAppointmentStatusSettings);
 
 			return toReturn;
@@ -303,7 +335,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_psychometristInvoiceAmounts", ((_psychometristInvoiceAmounts!=null) && (_psychometristInvoiceAmounts.Count>0) && !this.MarkedForDeletion)?_psychometristInvoiceAmounts:null);
 				info.AddValue("_referralSourceAppointmentStatusSettings", ((_referralSourceAppointmentStatusSettings!=null) && (_referralSourceAppointmentStatusSettings.Count>0) && !this.MarkedForDeletion)?_referralSourceAppointmentStatusSettings:null);
+
+
+
 
 
 
@@ -344,6 +380,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'PsychometristInvoiceAmount' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPsychometristInvoiceAmounts()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(PsychometristInvoiceAmountFields.AppointmentSequenceId, null, ComparisonOperator.Equal, this.AppointmentSequenceId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'ReferralSourceAppointmentStatusSetting' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoReferralSourceAppointmentStatusSettings()
@@ -352,6 +398,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralSourceAppointmentStatusSettingFields.AppointmentSequenceId, null, ComparisonOperator.Equal, this.AppointmentSequenceId));
 			return bucket;
 		}
+
+
+
 
 
 
@@ -385,7 +434,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
+			collectionsQueue.Enqueue(this._psychometristInvoiceAmounts);
 			collectionsQueue.Enqueue(this._referralSourceAppointmentStatusSettings);
+
+
+
 
 
 
@@ -396,7 +449,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+			this._psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>) collectionsQueue.Dequeue();
 			this._referralSourceAppointmentStatusSettings = (EntityCollection<ReferralSourceAppointmentStatusSettingEntity>) collectionsQueue.Dequeue();
+
+
+
 
 
 
@@ -406,10 +463,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
+			if (this._psychometristInvoiceAmounts != null)
+			{
+				return true;
+			}
 			if (this._referralSourceAppointmentStatusSettings != null)
 			{
 				return true;
 			}
+
+
+
 
 
 
@@ -422,7 +486,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceAppointmentStatusSettingEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceAppointmentStatusSettingEntityFactory))) : null);
+
+
+
 
 
 
@@ -436,7 +504,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
+			toReturn.Add("PsychometristInvoiceAmounts", _psychometristInvoiceAmounts);
 			toReturn.Add("ReferralSourceAppointmentStatusSettings", _referralSourceAppointmentStatusSettings);
+
+
+
 
 
 
@@ -447,10 +519,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+			if(_psychometristInvoiceAmounts!=null)
+			{
+				_psychometristInvoiceAmounts.ActiveContext = base.ActiveContext;
+			}
 			if(_referralSourceAppointmentStatusSettings!=null)
 			{
 				_referralSourceAppointmentStatusSettings.ActiveContext = base.ActiveContext;
 			}
+
+
+
 
 
 
@@ -462,7 +541,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+			_psychometristInvoiceAmounts = null;
 			_referralSourceAppointmentStatusSettings = null;
+
+
+
 
 
 
@@ -529,6 +612,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'PsychometristInvoiceAmount' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPsychometristInvoiceAmounts
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))),
+					(IEntityRelation)GetRelationsForField("PsychometristInvoiceAmounts")[0], (int)PsychologicalServices.Data.EntityType.AppointmentSequenceEntity, (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, 0, null, null, null, null, "PsychometristInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReferralSourceAppointmentStatusSetting' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -540,6 +634,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("ReferralSourceAppointmentStatusSettings")[0], (int)PsychologicalServices.Data.EntityType.AppointmentSequenceEntity, (int)PsychologicalServices.Data.EntityType.ReferralSourceAppointmentStatusSettingEntity, 0, null, null, null, null, "ReferralSourceAppointmentStatusSettings", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
+
 
 
 
@@ -603,6 +700,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AppointmentSequenceFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'PsychometristInvoiceAmountEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(PsychometristInvoiceAmountEntity))]
+		public virtual EntityCollection<PsychometristInvoiceAmountEntity> PsychometristInvoiceAmounts
+		{
+			get
+			{
+				if(_psychometristInvoiceAmounts==null)
+				{
+					_psychometristInvoiceAmounts = new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory)));
+					_psychometristInvoiceAmounts.SetContainingEntityInfo(this, "AppointmentSequence");
+				}
+				return _psychometristInvoiceAmounts;
+			}
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'ReferralSourceAppointmentStatusSettingEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(ReferralSourceAppointmentStatusSettingEntity))]
@@ -618,6 +731,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _referralSourceAppointmentStatusSettings;
 			}
 		}
+
+
+
 
 
 

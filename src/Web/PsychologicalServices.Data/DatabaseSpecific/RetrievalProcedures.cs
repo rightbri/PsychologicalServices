@@ -314,6 +314,110 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		}
 	
 
+		/// <summary>
+		/// Calls stored procedure 'InvoiceableAppointmentData'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
+		/// <param name="startSearch">Input parameter of stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return InvoiceableAppointmentData(companyId, invoiceTypeId, startSearch,  adapter);
+			}
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'InvoiceableAppointmentData'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
+		/// <param name="startSearch">Input parameter of stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch, DataAccessAdapter adapter)
+		{
+			SqlParameter[] parameters = new SqlParameter[3];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+			parameters[1] = new SqlParameter("@invoiceTypeId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceTypeId);
+			parameters[2] = new SqlParameter("@startSearch", SqlDbType.DateTimeOffset, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, startSearch);
+
+			DataTable toReturn = new DataTable("InvoiceableAppointmentData");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[InvoiceableAppointmentData]", parameters, toReturn);
+
+			return toReturn;
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'InvoiceableAppointmentData'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
+		/// <param name="startSearch">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch, ref System.Int32 returnValue)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return InvoiceableAppointmentData(companyId, invoiceTypeId, startSearch, ref returnValue, adapter);
+			}
+		}
+	
+	
+		/// <summary>
+		/// Calls stored procedure 'InvoiceableAppointmentData'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
+		/// <param name="startSearch">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch, ref System.Int32 returnValue, DataAccessAdapter adapter)
+		{
+			// create parameters. Add 1 to make room for the return value parameter.
+			SqlParameter[] parameters = new SqlParameter[3 + 1];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+			parameters[1] = new SqlParameter("@invoiceTypeId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceTypeId);
+			parameters[2] = new SqlParameter("@startSearch", SqlDbType.DateTimeOffset, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, startSearch);
+
+			parameters[3] = new SqlParameter("RETURNVALUE", SqlDbType.Int, 0, ParameterDirection.ReturnValue, true, 10, 0, "",  DataRowVersion.Current, returnValue);
+			DataTable toReturn = new DataTable("InvoiceableAppointmentData");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[InvoiceableAppointmentData]", parameters, toReturn);
+
+
+			returnValue = (int)parameters[3].Value;
+			return toReturn;
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'InvoiceableAppointmentData'.
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
+		/// <param name="startSearch">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetInvoiceableAppointmentDataCallAsQuery( System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch)
+		{
+			RetrievalQuery toReturn = new RetrievalQuery( new SqlCommand("[PsychologicalServices].[dbo].[InvoiceableAppointmentData]" ) );
+			toReturn.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId));
+			toReturn.Parameters.Add(new SqlParameter("@invoiceTypeId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceTypeId));
+			toReturn.Parameters.Add(new SqlParameter("@startSearch", SqlDbType.DateTimeOffset, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, startSearch));
+
+			toReturn.Command.CommandType = CommandType.StoredProcedure;
+			return toReturn;
+		}
+	
+
 		#region Included Code
 
 		#endregion

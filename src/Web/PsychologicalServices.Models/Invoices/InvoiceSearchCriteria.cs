@@ -8,9 +8,9 @@ namespace PsychologicalServices.Models.Invoices
 
         public string Identifier { get; set; }
 
-        public DateTime? InvoiceDate { get; set; }
+        public DateTimeOffset? InvoiceDate { get; set; }
 
-        public DateTime? InvoiceMonth { get; set; }
+        public DateTimeOffset? InvoiceMonth { get; set; }
 
         public int? InvoiceStatusId { get; set; }
 
@@ -18,6 +18,6 @@ namespace PsychologicalServices.Models.Invoices
 
         public int? PayableToId { get; set; }
 
-        public int? CompanyId { get; set; }
+        public int CompanyId { get; set; }
     }
 }

@@ -40,7 +40,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<AssessmentEntity> _assessments;
 
 		private EntityCollection<CompanyAttributeEntity> _companyAttributes;
+		private EntityCollection<PsychometristInvoiceAmountEntity> _psychometristInvoiceAmounts;
 		private EntityCollection<UserEntity> _users;
+
+
+
 
 
 
@@ -89,8 +93,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			/// <summary>Member name CompanyAttributes</summary>
 			public static readonly string CompanyAttributes = "CompanyAttributes";
+			/// <summary>Member name PsychometristInvoiceAmounts</summary>
+			public static readonly string PsychometristInvoiceAmounts = "PsychometristInvoiceAmounts";
 			/// <summary>Member name Users</summary>
 			public static readonly string Users = "Users";
+
+
+
 
 
 
@@ -165,7 +174,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
 
 				_companyAttributes = (EntityCollection<CompanyAttributeEntity>)info.GetValue("_companyAttributes", typeof(EntityCollection<CompanyAttributeEntity>));
+				_psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>)info.GetValue("_psychometristInvoiceAmounts", typeof(EntityCollection<PsychometristInvoiceAmountEntity>));
 				_users = (EntityCollection<UserEntity>)info.GetValue("_users", typeof(EntityCollection<UserEntity>));
+
+
+
 
 
 
@@ -288,9 +301,15 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CompanyAttributes":
 					this.CompanyAttributes.Add((CompanyAttributeEntity)entity);
 					break;
+				case "PsychometristInvoiceAmounts":
+					this.PsychometristInvoiceAmounts.Add((PsychometristInvoiceAmountEntity)entity);
+					break;
 				case "Users":
 					this.Users.Add((UserEntity)entity);
 					break;
+
+
+
 
 
 
@@ -350,9 +369,15 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CompanyAttributes":
 					toReturn.Add(CompanyEntity.Relations.CompanyAttributeEntityUsingCompanyId);
 					break;
+				case "PsychometristInvoiceAmounts":
+					toReturn.Add(CompanyEntity.Relations.PsychometristInvoiceAmountEntityUsingCompanyId);
+					break;
 				case "Users":
 					toReturn.Add(CompanyEntity.Relations.UserEntityUsingCompanyId);
 					break;
+
+
+
 
 
 
@@ -436,6 +461,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CompanyAttributes":
 					this.CompanyAttributes.Add((CompanyAttributeEntity)relatedEntity);
 					break;
+				case "PsychometristInvoiceAmounts":
+					this.PsychometristInvoiceAmounts.Add((PsychometristInvoiceAmountEntity)relatedEntity);
+					break;
 				case "Users":
 					this.Users.Add((UserEntity)relatedEntity);
 					break;
@@ -478,6 +506,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 				case "CompanyAttributes":
 					base.PerformRelatedEntityRemoval(this.CompanyAttributes, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "PsychometristInvoiceAmounts":
+					base.PerformRelatedEntityRemoval(this.PsychometristInvoiceAmounts, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "Users":
 					base.PerformRelatedEntityRemoval(this.Users, relatedEntity, signalRelatedEntityManyToOne);
@@ -539,6 +570,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.Assessments);
 
 			toReturn.Add(this.CompanyAttributes);
+			toReturn.Add(this.PsychometristInvoiceAmounts);
 			toReturn.Add(this.Users);
 
 			return toReturn;
@@ -557,7 +589,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_assessments", ((_assessments!=null) && (_assessments.Count>0) && !this.MarkedForDeletion)?_assessments:null);
 
 				info.AddValue("_companyAttributes", ((_companyAttributes!=null) && (_companyAttributes.Count>0) && !this.MarkedForDeletion)?_companyAttributes:null);
+				info.AddValue("_psychometristInvoiceAmounts", ((_psychometristInvoiceAmounts!=null) && (_psychometristInvoiceAmounts.Count>0) && !this.MarkedForDeletion)?_psychometristInvoiceAmounts:null);
 				info.AddValue("_users", ((_users!=null) && (_users.Count>0) && !this.MarkedForDeletion)?_users:null);
+
+
+
 
 
 
@@ -633,6 +669,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'PsychometristInvoiceAmount' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPsychometristInvoiceAmounts()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(PsychometristInvoiceAmountFields.CompanyId, null, ComparisonOperator.Equal, this.CompanyId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'User' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoUsers()
@@ -641,6 +687,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.CompanyId, null, ComparisonOperator.Equal, this.CompanyId));
 			return bucket;
 		}
+
+
+
 
 
 
@@ -745,7 +794,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._assessments);
 
 			collectionsQueue.Enqueue(this._companyAttributes);
+			collectionsQueue.Enqueue(this._psychometristInvoiceAmounts);
 			collectionsQueue.Enqueue(this._users);
+
+
+
 
 
 
@@ -768,7 +821,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 
 			this._companyAttributes = (EntityCollection<CompanyAttributeEntity>) collectionsQueue.Dequeue();
+			this._psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>) collectionsQueue.Dequeue();
 			this._users = (EntityCollection<UserEntity>) collectionsQueue.Dequeue();
+
+
+
 
 
 
@@ -796,10 +853,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._psychometristInvoiceAmounts != null)
+			{
+				return true;
+			}
 			if (this._users != null)
 			{
 				return true;
 			}
+
+
+
 
 
 
@@ -824,7 +888,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyAttributeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyAttributeEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))) : null);
+
+
+
 
 
 
@@ -855,7 +923,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Assessments", _assessments);
 
 			toReturn.Add("CompanyAttributes", _companyAttributes);
+			toReturn.Add("PsychometristInvoiceAmounts", _psychometristInvoiceAmounts);
 			toReturn.Add("Users", _users);
+
+
+
 
 
 
@@ -884,10 +956,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_companyAttributes.ActiveContext = base.ActiveContext;
 			}
+			if(_psychometristInvoiceAmounts!=null)
+			{
+				_psychometristInvoiceAmounts.ActiveContext = base.ActiveContext;
+			}
 			if(_users!=null)
 			{
 				_users.ActiveContext = base.ActiveContext;
 			}
+
+
+
 
 
 
@@ -934,7 +1013,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessments = null;
 
 			_companyAttributes = null;
+			_psychometristInvoiceAmounts = null;
 			_users = null;
+
+
+
 
 
 
@@ -1276,6 +1359,17 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("CompanyAttributes")[0], (int)PsychologicalServices.Data.EntityType.CompanyEntity, (int)PsychologicalServices.Data.EntityType.CompanyAttributeEntity, 0, null, null, null, null, "CompanyAttributes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'PsychometristInvoiceAmount' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPsychometristInvoiceAmounts
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))),
+					(IEntityRelation)GetRelationsForField("PsychometristInvoiceAmounts")[0], (int)PsychologicalServices.Data.EntityType.CompanyEntity, (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, 0, null, null, null, null, "PsychometristInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1287,6 +1381,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("Users")[0], (int)PsychologicalServices.Data.EntityType.CompanyEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "Users", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
+
 
 
 
@@ -1617,6 +1714,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'PsychometristInvoiceAmountEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(PsychometristInvoiceAmountEntity))]
+		public virtual EntityCollection<PsychometristInvoiceAmountEntity> PsychometristInvoiceAmounts
+		{
+			get
+			{
+				if(_psychometristInvoiceAmounts==null)
+				{
+					_psychometristInvoiceAmounts = new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory)));
+					_psychometristInvoiceAmounts.SetContainingEntityInfo(this, "Company");
+				}
+				return _psychometristInvoiceAmounts;
+			}
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'UserEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(UserEntity))]
@@ -1632,6 +1745,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _users;
 			}
 		}
+
+
+
 
 
 

@@ -1,14 +1,18 @@
 import {inject} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
+import {Config} from 'common/config';
 import {Context} from 'common/context';
 
-@inject(DataRepository, Context)
+@inject(DataRepository, Config, Context)
 export class CancellationStatistics {
 
-    constructor(dataRepository, context) {
+    constructor(dataRepository, config, context) {
         this.dataRepository = dataRepository;
+        this.config = config;
         this.context = context;
 
+        this.searchMonths = null;
+        this.visibleTab = 0;
     }
 
     activate() {
@@ -34,6 +38,7 @@ export class CancellationStatistics {
                         'referralSource': currentValue.referralSource,
                         'year': currentValue.year,
                         'month': currentValue.month,
+                        'monthName': this.config.months[currentValue.month],
                         'appointmentCount': 0,
                         'billableCount': 0,
                         'canceledCount': 0
@@ -47,7 +52,7 @@ export class CancellationStatistics {
                 referralSourceMonth.canceledCount += currentValue.canceledCount;
 
                 return accumulator;
-            }, []);
+            }.bind(this), []);
 
             this.referralSources = this.referralSourcesByMonth.reduce(function(accumulator, currentValue) {
                 let referralSource = accumulator.find(element => element.referralSource === currentValue.referralSource);
@@ -90,10 +95,6 @@ export class CancellationStatistics {
 
                 rs.percentBillable = rs.billableCount / rs.appointmentCount;
                 rs.percentCanceled = rs.canceledCount / rs.appointmentCount;
-
-                rs.overallPercentAppointments = rs.appointmentCount / this.summary.appointmentCount;
-                rs.overallPercentBillable = rs.billableCount / this.summary.billableCount;
-                rs.overallPercentCanceled = rs.canceledCount / this.summary.canceledCount;
             }
 
             for (let i = 0; i < this.referralSourcesByMonth.length; i++) {
@@ -105,5 +106,9 @@ export class CancellationStatistics {
 
         });
         
+    }
+    
+    showTab(index) {
+        this.visibleTab = index;
     }
 }

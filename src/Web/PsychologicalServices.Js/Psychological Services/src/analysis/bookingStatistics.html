@@ -15,7 +15,7 @@
             <div class="uk-margin">
                 <label class="uk-form-label" for="months">Past X Months (not counting the current month) (YTD if blank)</label>
                 <div class="uk-form-controls">
-                    <input type="text" class="uk-input" value.bind="searchMonths | numeric:'0'" />
+                    <input type="number" min="0" class="uk-input" value.bind="searchMonths" />
                 </div>
             </div>
 
@@ -41,143 +41,138 @@
 
     <hr>
 
-    <h3>Bookings by Month</h3>
-    <div class="uk-overflow-auto">
-        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-            <thead>
-                <tr>
-                    <th>Year</th>
-                    <th>Month</th>
-                    <th># Bookings</th>
-                    <th>% Bookings</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr repeat.for="month of bookingsByMonth | sortArray:[{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
-                    <td>${month.year}</td>
-                    <td>${month.month}</td>
-                    <td>${month.bookingCount | numeric:'0,0'}</td>
-                    <td>${month.percentBookings | numeric:'0.00%'}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <ul uk-tab>
+        <li>
+            <a href="#" click.delegate="showTab(0)">By Month</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(1)">By Referral Source</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(2)">By Referral Source by Month</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(3)">By P vs non-P</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(4)">By Referral Source by P vs non-P</a>
+        </li>
+    </ul>
 
-    <hr>
-
-    <h3>Bookings by Referral Source</h3>
-    <div class="uk-overflow-auto">
-        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-            <thead>
-                <tr>
-                    <th>Referral Source</th>
-                    <th># Bookings</th>
-                    <th>Overall % Bookings</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr repeat.for="referralSource of bookingsByReferralSource | sortArray:[{ property: 'referralSource', direction: 'asc' }]">
-                    <td class="uk-table-shrink">${referralSource.referralSource}</td>
-                    <td>${referralSource.bookingCount | numeric:'0,0'}</td>
-                    <td>${referralSource.percentBookings | numeric:'0.00%'}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <hr>
-
-    <h3>Bookings by Referral Source by Month</h3>
-    <div class="uk-overflow-auto">
-        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-            <thead>
-                <tr>
-                    <th>Referral Source</th>
-                    <th>Year</th>
-                    <th>Month</th>
-                    <th># Bookings</th>
-                    <th>% Bookings</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr repeat.for="referralSource of bookingsByReferralSourceByMonth | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
-                    <td class="uk-table-shrink">${referralSource.referralSource}</td>
-                    <td>${referralSource.year}</td>
-                    <td>${referralSource.month}</td>
-                    <td>${referralSource.bookingCount | numeric:'0,0'}</td>
-                    <td>${referralSource.percentBookings | numeric:'0.00%'}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <hr>
-
-    <h3>Bookings by Psychological vs Everything else</h3>
-    <div class="uk-overflow-auto">
-        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-            <thead>
-                <tr>
-                    <th>Psychological</th>
-                    <th># Bookings</th>
-                    <th>% Bookings</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr repeat.for="psychological of bookingsByIsPsychological | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
-                    <td class="uk-table-shrink">${psychological.isPsychological | boolean}</td>
-                    <td>${psychological.bookingCount | numeric:'0,0'}</td>
-                    <td>${psychological.percentBookings | numeric:'0.00%'}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <hr>
-
-    <h3>Bookings by Referral Source by Psychological vs Everything else</h3>
-    <div class="uk-overflow-auto">
-        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-            <thead>
-                <tr>
-                    <th>Referral Source</th>
-                    <th>Psychological</th>
-                    <th># Bookings</th>
-                    <th>% Bookings</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr repeat.for="referralSource of bookingsByReferralSourceByIsPsychological | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'isPsychological', direction: 'asc' }]">
-                    <td class="uk-table-shrink">${referralSource.referralSource}</td>
-                    <td>${referralSource.isPsychological | boolean}</td>
-                    <td>${referralSource.bookingCount | numeric:'0,0'}</td>
-                    <td>${referralSource.percentBookings | numeric:'0.00%'}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <h3>Bookings by Referral Source by Large file</h3>
-    <div class="uk-overflow-auto">
-        <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-            <thead>
-                <tr>
-                    <th>Referral Source</th>
-                    <th>Large File</th>
-                    <th># Bookings</th>
-                    <th>% Bookings</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr repeat.for="referralSource of bookingsByReferralSourceByIsLargeFile | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'isLargeFile', direction: 'asc' }]">
-                    <td class="uk-table-shrink">${referralSource.referralSource}</td>
-                    <td>${referralSource.isLargeFile | boolean}</td>
-                    <td>${referralSource.bookingCount | numeric:'0,0'}</td>
-                    <td>${referralSource.percentBookings | numeric:'0.00%'}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <ul class="uk-switcher">
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 0">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th># Bookings</th>
+                            <th>% Bookings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="month of bookingsByMonth | sortArray:[{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                            <td>${month.year}</td>
+                            <td>${month.monthName}</td>
+                            <td>${month.bookingCount | numeric:'0,0'}</td>
+                            <td>${month.percentBookings | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 1">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Referral Source</th>
+                            <th># Bookings</th>
+                            <th>Overall % Bookings</th>
+                            <th># Large Files</th>
+                            <th>% Large Files</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="referralSource of bookingsByReferralSource | sortArray:[{ property: 'referralSource', direction: 'asc' }]">
+                            <td class="uk-table-shrink">${referralSource.referralSource}</td>
+                            <td>${referralSource.bookingCount | numeric:'0,0'}</td>
+                            <td>${referralSource.percentBookings | numeric:'0.00%'}</td>
+                            <td>${referralSource.largeFileCount | numeric:'0,0'}</td>
+                            <td>${referralSource.percentLargeFile | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 2">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Referral Source</th>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th># Bookings</th>
+                            <th>% Bookings of Month</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="referralSource of bookingsByReferralSourceByMonth | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                            <td class="uk-table-shrink">${referralSource.previous.referralSource != referralSource.referralSource ? referralSource.referralSource : ''}</td>
+                            <td>${referralSource.year}</td>
+                            <td>${referralSource.monthName}</td>
+                            <td>${referralSource.bookingCount | numeric:'0,0'}</td>
+                            <td>${referralSource.percentBookings | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 3">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Psychological</th>
+                            <th># Bookings</th>
+                            <th>% Bookings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="psychological of bookingsByIsPsychological | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                            <td class="uk-table-shrink">${psychological.isPsychological | boolean}</td>
+                            <td>${psychological.bookingCount | numeric:'0,0'}</td>
+                            <td>${psychological.percentBookings | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 4">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Referral Source</th>
+                            <th>Psychological</th>
+                            <th># Bookings</th>
+                            <th>% Bookings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="referralSource of bookingsByReferralSourceByIsPsychological | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'isPsychological', direction: 'asc' }]">
+                            <td class="uk-table-shrink">${referralSource.referralSource}</td>
+                            <td>${referralSource.isPsychological | boolean}</td>
+                            <td>${referralSource.bookingCount | numeric:'0,0'}</td>
+                            <td>${referralSource.percentBookings | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
     
 </div>
 

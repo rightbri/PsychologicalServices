@@ -1,14 +1,18 @@
 import {inject} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
+import {Config} from 'common/config';
 import {Context} from 'common/context';
 
-@inject(DataRepository, Context)
+@inject(DataRepository, Config, Context)
 export class BookingStatistics {
 
-    constructor(dataRepository, context) {
+    constructor(dataRepository, config, context) {
         this.dataRepository = dataRepository;
+        this.config = config;
         this.context = context;
 
+        this.searchMonths = null;
+        this.visibleTab = 0;
     }
 
     activate() {
@@ -21,14 +25,6 @@ export class BookingStatistics {
             'months': this.searchMonths
         }).then(data => {
             this.bookingData = data;
-/*
-% bookings by Referral Source (over last X months)
-% bookings by Referral Source by Month
-
-% bookings by P vs anything else
-
-% bookings by Referral Source by P vs anything else
-*/
 
             this.bookingsByReferralSourceByMonth = this.bookingData.reduce(function(accumulator, currentValue) {
                 let referralSourceMonth = accumulator.find(element =>
@@ -42,6 +38,7 @@ export class BookingStatistics {
                         'referralSource': currentValue.referralSource,
                         'year': currentValue.year,
                         'month': currentValue.month,
+                        'monthName': this.config.months[currentValue.month],
                         'bookingCount': 0
                     };
 
@@ -51,22 +48,24 @@ export class BookingStatistics {
                 referralSourceMonth.bookingCount += 1;
 
                 return accumulator;
-            }, []);
+            }.bind(this), []);
 
-            this.bookingsByReferralSource = this.bookingsByReferralSourceByMonth.reduce(function(accumulator, currentValue) {
+            this.bookingsByReferralSource = this.bookingData.reduce(function(accumulator, currentValue) {
                 let referralSource = accumulator.find(element => element.referralSource === currentValue.referralSource);
 
                 if (referralSource === undefined) {
                     referralSource = {
                         'referralSource': currentValue.referralSource,
-                        'bookingCount': 0
+                        'bookingCount': 0,
+                        'largeFileCount': 0
                     };
 
                     accumulator.push(referralSource);
                 }
 
-                referralSource.bookingCount += currentValue.bookingCount;
-                
+                referralSource.bookingCount += 1;
+                referralSource.largeFileCount += currentValue.isLargeFile ? 1 : 0;
+
                 return accumulator;
             }, []);
 
@@ -110,27 +109,6 @@ export class BookingStatistics {
                 return accumulator;
             }, []);
 
-            this.bookingsByReferralSourceByIsLargeFile = this.bookingData.reduce(function(accumulator, currentValue) {
-                let referralSourceLargeFile = accumulator.find(element =>
-                    element.referralSource === currentValue.referralSource &&
-                    element.isLargeFile === currentValue.isLargeFile
-                );
-                
-                if (referralSourceLargeFile === undefined) {
-                    referralSourceLargeFile = {
-                        'referralSource': currentValue.referralSource,
-                        'isLargeFile': currentValue.isLargeFile,
-                        'bookingCount': 0
-                    };
-
-                    accumulator.push(referralSourceLargeFile);
-                }
-
-                referralSourceLargeFile.bookingCount += 1;
-
-                return accumulator;
-            }, []);
-
             this.bookingsByMonth = this.bookingsByReferralSourceByMonth.reduce(function(accumulator, currentValue) {
                 let month = accumulator.find(element =>
                     element.year === currentValue.year &&
@@ -141,6 +119,7 @@ export class BookingStatistics {
                     month = {
                         'year': currentValue.year,
                         'month': currentValue.month,
+                        'monthName': this.config.months[currentValue.month],
                         'bookingCount': 0
                     };
 
@@ -150,7 +129,7 @@ export class BookingStatistics {
                 month.bookingCount += currentValue.bookingCount;
                 
                 return accumulator;
-            }, []);
+            }.bind(this), []);
 
             this.bookingTotal = this.bookingsByIsPsychological.reduce(function(accumulator, currentValue) {
                 return accumulator + currentValue.bookingCount;
@@ -168,6 +147,7 @@ export class BookingStatistics {
                     monthTotal = {
                         'year': x.year,
                         'month': x.month,
+                        'monthName': this.config.months[x.month],
                         'bookingCount': 0
                     };
                 }
@@ -179,27 +159,11 @@ export class BookingStatistics {
                 let x = this.bookingsByReferralSource[i];
 
                 x.percentBookings = x.bookingCount / this.bookingTotal;
+                x.percentLargeFile = x.largeFileCount / x.bookingCount;
             }
 
             for (let i = 0; i < this.bookingsByReferralSourceByIsPsychological.length; i++) {
                 let x = this.bookingsByReferralSourceByIsPsychological[i];
-
-                let referralSourceTotal = this.bookingsByReferralSource.find(element =>
-                    element.referralSource === x.referralSource
-                );
-
-                if (referralSourceTotal === undefined) {
-                    referralSourceTotal = {
-                        'referralSource': x.referralSource,
-                        'bookingCount': 0
-                    };
-                }
-
-                x.percentBookings = x.bookingCount / referralSourceTotal.bookingCount;
-            }
-
-            for (let i = 0; i < this.bookingsByReferralSourceByIsLargeFile.length; i++) {
-                let x = this.bookingsByReferralSourceByIsLargeFile[i];
 
                 let referralSourceTotal = this.bookingsByReferralSource.find(element =>
                     element.referralSource === x.referralSource
@@ -228,5 +192,9 @@ export class BookingStatistics {
             }
         });
         
+    }
+    
+    showTab(index) {
+        this.visibleTab = index;
     }
 }

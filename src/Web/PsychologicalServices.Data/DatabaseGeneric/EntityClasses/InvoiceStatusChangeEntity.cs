@@ -708,11 +708,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The UpdateDate property of the Entity InvoiceStatusChange<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "InvoiceStatusChanges"."UpdateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime UpdateDate
+		public virtual System.DateTimeOffset UpdateDate
 		{
-			get { return (System.DateTime)GetValue((int)InvoiceStatusChangeFieldIndex.UpdateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)InvoiceStatusChangeFieldIndex.UpdateDate, true); }
 			set	{ SetValue((int)InvoiceStatusChangeFieldIndex.UpdateDate, value); }
 		}
 

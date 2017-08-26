@@ -40,6 +40,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<AssessmentEntity> _assessments;
 		private EntityCollection<AssessmentTypeAttributeTypeEntity> _assessmentTypeAttributeTypes;
 		private EntityCollection<AssessmentTypeReportTypeEntity> _assessmentTypeReportTypes;
+		private EntityCollection<PsychometristInvoiceAmountEntity> _psychometristInvoiceAmounts;
+
+
+
 
 
 
@@ -72,6 +76,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AssessmentTypeAttributeTypes = "AssessmentTypeAttributeTypes";
 			/// <summary>Member name AssessmentTypeReportTypes</summary>
 			public static readonly string AssessmentTypeReportTypes = "AssessmentTypeReportTypes";
+			/// <summary>Member name PsychometristInvoiceAmounts</summary>
+			public static readonly string PsychometristInvoiceAmounts = "PsychometristInvoiceAmounts";
+
+
+
 
 
 
@@ -145,6 +154,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
 				_assessmentTypeAttributeTypes = (EntityCollection<AssessmentTypeAttributeTypeEntity>)info.GetValue("_assessmentTypeAttributeTypes", typeof(EntityCollection<AssessmentTypeAttributeTypeEntity>));
 				_assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>)info.GetValue("_assessmentTypeReportTypes", typeof(EntityCollection<AssessmentTypeReportTypeEntity>));
+				_psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>)info.GetValue("_psychometristInvoiceAmounts", typeof(EntityCollection<PsychometristInvoiceAmountEntity>));
+
+
+
 
 
 
@@ -204,6 +217,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTypeReportTypes":
 					this.AssessmentTypeReportTypes.Add((AssessmentTypeReportTypeEntity)entity);
 					break;
+				case "PsychometristInvoiceAmounts":
+					this.PsychometristInvoiceAmounts.Add((PsychometristInvoiceAmountEntity)entity);
+					break;
+
+
+
 
 
 
@@ -247,6 +266,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTypeReportTypes":
 					toReturn.Add(AssessmentTypeEntity.Relations.AssessmentTypeReportTypeEntityUsingAssessmentTypeId);
 					break;
+				case "PsychometristInvoiceAmounts":
+					toReturn.Add(AssessmentTypeEntity.Relations.PsychometristInvoiceAmountEntityUsingAssessmentTypeId);
+					break;
+
+
+
 
 
 
@@ -304,6 +329,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTypeReportTypes":
 					this.AssessmentTypeReportTypes.Add((AssessmentTypeReportTypeEntity)relatedEntity);
 					break;
+				case "PsychometristInvoiceAmounts":
+					this.PsychometristInvoiceAmounts.Add((PsychometristInvoiceAmountEntity)relatedEntity);
+					break;
 
 				default:
 					break;
@@ -328,6 +356,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AssessmentTypeReportTypes":
 					base.PerformRelatedEntityRemoval(this.AssessmentTypeReportTypes, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "PsychometristInvoiceAmounts":
+					base.PerformRelatedEntityRemoval(this.PsychometristInvoiceAmounts, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -363,6 +394,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.Assessments);
 			toReturn.Add(this.AssessmentTypeAttributeTypes);
 			toReturn.Add(this.AssessmentTypeReportTypes);
+			toReturn.Add(this.PsychometristInvoiceAmounts);
 
 			return toReturn;
 		}
@@ -380,6 +412,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_assessments", ((_assessments!=null) && (_assessments.Count>0) && !this.MarkedForDeletion)?_assessments:null);
 				info.AddValue("_assessmentTypeAttributeTypes", ((_assessmentTypeAttributeTypes!=null) && (_assessmentTypeAttributeTypes.Count>0) && !this.MarkedForDeletion)?_assessmentTypeAttributeTypes:null);
 				info.AddValue("_assessmentTypeReportTypes", ((_assessmentTypeReportTypes!=null) && (_assessmentTypeReportTypes.Count>0) && !this.MarkedForDeletion)?_assessmentTypeReportTypes:null);
+				info.AddValue("_psychometristInvoiceAmounts", ((_psychometristInvoiceAmounts!=null) && (_psychometristInvoiceAmounts.Count>0) && !this.MarkedForDeletion)?_psychometristInvoiceAmounts:null);
+
+
+
 
 
 
@@ -457,6 +493,19 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'PsychometristInvoiceAmount' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPsychometristInvoiceAmounts()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(PsychometristInvoiceAmountFields.AssessmentTypeId, null, ComparisonOperator.Equal, this.AssessmentTypeId));
+			return bucket;
+		}
+
+
+
+
 
 
 
@@ -500,6 +549,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._assessments);
 			collectionsQueue.Enqueue(this._assessmentTypeAttributeTypes);
 			collectionsQueue.Enqueue(this._assessmentTypeReportTypes);
+			collectionsQueue.Enqueue(this._psychometristInvoiceAmounts);
+
+
+
 
 
 
@@ -521,6 +574,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._assessmentTypeAttributeTypes = (EntityCollection<AssessmentTypeAttributeTypeEntity>) collectionsQueue.Dequeue();
 			this._assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>) collectionsQueue.Dequeue();
+			this._psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>) collectionsQueue.Dequeue();
+
+
+
 
 
 
@@ -550,6 +607,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._psychometristInvoiceAmounts != null)
+			{
+				return true;
+			}
+
+
+
 
 
 
@@ -573,6 +637,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeAttributeTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeAttributeTypeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeReportTypeEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))) : null);
+
+
+
 
 
 
@@ -597,6 +665,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("AssessmentTypeAttributeTypes", _assessmentTypeAttributeTypes);
 			toReturn.Add("AssessmentTypeReportTypes", _assessmentTypeReportTypes);
+			toReturn.Add("PsychometristInvoiceAmounts", _psychometristInvoiceAmounts);
+
+
+
 
 
 
@@ -627,6 +699,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_assessmentTypeReportTypes.ActiveContext = base.ActiveContext;
 			}
+			if(_psychometristInvoiceAmounts!=null)
+			{
+				_psychometristInvoiceAmounts.ActiveContext = base.ActiveContext;
+			}
+
+
+
 
 
 
@@ -649,6 +728,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessments = null;
 			_assessmentTypeAttributeTypes = null;
 			_assessmentTypeReportTypes = null;
+			_psychometristInvoiceAmounts = null;
+
+
+
 
 
 
@@ -765,6 +848,20 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("AssessmentTypeReportTypes")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity, 0, null, null, null, null, "AssessmentTypeReportTypes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'PsychometristInvoiceAmount' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPsychometristInvoiceAmounts
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))),
+					(IEntityRelation)GetRelationsForField("PsychometristInvoiceAmounts")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, 0, null, null, null, null, "PsychometristInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
+
+
+
 
 
 
@@ -916,6 +1013,25 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _assessmentTypeReportTypes;
 			}
 		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'PsychometristInvoiceAmountEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(PsychometristInvoiceAmountEntity))]
+		public virtual EntityCollection<PsychometristInvoiceAmountEntity> PsychometristInvoiceAmounts
+		{
+			get
+			{
+				if(_psychometristInvoiceAmounts==null)
+				{
+					_psychometristInvoiceAmounts = new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory)));
+					_psychometristInvoiceAmounts.SetContainingEntityInfo(this, "AssessmentType");
+				}
+				return _psychometristInvoiceAmounts;
+			}
+		}
+
+
+
 
 
 

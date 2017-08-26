@@ -186,6 +186,8 @@
     <Compile Include="Employers\IEmployerService.cs" />
     <Compile Include="Employers\IEmployerTypeValidator.cs" />
     <Compile Include="Employers\IEmployerValidator.cs" />
+    <Compile Include="Invoices\InvoiceableAppointmentData.cs" />
+    <Compile Include="Invoices\InvoiceableAppointmentDataSearchCriteria.cs" />
     <Compile Include="Invoices\InvoiceAppointment.cs" />
     <Compile Include="Invoices\IInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceHtmlGenerator.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Invoices\InvoiceService.cs" />
     <Compile Include="Invoices\InvoiceStatus.cs" />
     <Compile Include="Invoices\InvoiceStatusChange.cs" />
+    <Compile Include="Invoices\IPsychometristInvoiceGenerator.cs" />
     <Compile Include="Invoices\PsychologistInvoiceTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -208,7 +211,9 @@
     </Compile>
     <Compile Include="Invoices\InvoiceType.cs" />
     <Compile Include="Invoices\InvoiceValidator.cs" />
+    <Compile Include="Invoices\PsychometristInvoiceAmount.cs" />
     <Compile Include="Invoices\PsychometristInvoiceCreationParameters.cs" />
+    <Compile Include="Invoices\PsychometristInvoiceGenerator.cs" />
     <Compile Include="Invoices\PsychometristInvoiceTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

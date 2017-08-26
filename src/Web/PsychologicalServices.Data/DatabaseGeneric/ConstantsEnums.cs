@@ -859,6 +859,26 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: PsychometristInvoiceAmount.
+	/// </summary>
+	public enum PsychometristInvoiceAmountFieldIndex:int
+	{
+		///<summary>AssessmentTypeId. </summary>
+		AssessmentTypeId,
+		///<summary>AppointmentStatusId. </summary>
+		AppointmentStatusId,
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>AppointmentSequenceId. </summary>
+		AppointmentSequenceId,
+		///<summary>InvoiceAmount. </summary>
+		InvoiceAmount,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ReferralSource.
 	/// </summary>
 	public enum ReferralSourceFieldIndex:int
@@ -1230,6 +1250,8 @@ namespace PsychologicalServices.Data
 		IssueInDisputeEntity,
 		///<summary>Note</summary>
 		NoteEntity,
+		///<summary>PsychometristInvoiceAmount</summary>
+		PsychometristInvoiceAmountEntity,
 		///<summary>ReferralSource</summary>
 		ReferralSourceEntity,
 		///<summary>ReferralSourceAppointmentStatusSetting</summary>

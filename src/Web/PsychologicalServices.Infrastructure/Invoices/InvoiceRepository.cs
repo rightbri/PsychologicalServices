@@ -1,17 +1,17 @@
 ﻿using PsychologicalServices.Data;
+using PsychologicalServices.Data.DatabaseSpecific;
 using PsychologicalServices.Data.EntityClasses;
-using PsychologicalServices.Data.HelperClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
-using PsychologicalServices.Infrastructure.Common.Utility;
 using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Invoices;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace PsychologicalServices.Infrastructure.Invoices
 {
@@ -20,17 +20,20 @@ namespace PsychologicalServices.Infrastructure.Invoices
         private readonly IDate _date = null;
         private readonly IInvoiceHtmlGenerator _invoiceHtmlGenerator = null;
         private readonly IHtmlToPdfService _htmlToPdfService = null;
+        private readonly ICompanyRepository _companyRepository = null;
 
         public InvoiceRepository(
             IDataAccessAdapterFactory adapterFactory,
             IDate date,
             IInvoiceHtmlGenerator invoiceHtmlGenerator,
-            IHtmlToPdfService htmlToPdfService
+            IHtmlToPdfService htmlToPdfService,
+            ICompanyRepository companyRepository
         ) : base(adapterFactory)
         {
             _date = date;
             _invoiceHtmlGenerator = invoiceHtmlGenerator;
             _htmlToPdfService = htmlToPdfService;
+            _companyRepository = companyRepository;
         }
 
         #region Prefetch Paths
@@ -208,17 +211,14 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     
                 if (null != criteria)
                 {
+                    invoices = invoices.Where(invoice => invoice.PayableTo.CompanyId == criteria.CompanyId);
+
                     if (criteria.AppointmentId.HasValue)
                     {
                         invoices = invoices
                             .Where(invoice => invoice.InvoiceAppointments
                                 .Any(invoiceAppointment => invoiceAppointment.AppointmentId == criteria.AppointmentId.Value)
                             );
-                    }
-
-                    if (criteria.CompanyId.HasValue)
-                    {
-                        invoices = invoices.Where(invoice => invoice.PayableTo.CompanyId == criteria.CompanyId);
                     }
 
                     if (!string.IsNullOrWhiteSpace(criteria.Identifier))
@@ -233,11 +233,16 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                     if (criteria.InvoiceMonth.HasValue)
                     {
-                        var monthBegin = new DateTime(criteria.InvoiceMonth.Value.Year, criteria.InvoiceMonth.Value.Month, 1);
+                        var company = _companyRepository.GetCompany(criteria.CompanyId);
                         
-                        var monthEnd = monthBegin.AddMonths(1);
+                        if (null != company)
+                        {
+                            var monthStart = criteria.InvoiceMonth.Value.StartOfMonth(company.Timezone);
 
-                        invoices = invoices.Where(invoice => invoice.InvoiceDate >= monthBegin && invoice.InvoiceDate < monthEnd);
+                            var monthEnd = monthStart.AddMonths(1);
+
+                            invoices = invoices.Where(invoice => invoice.InvoiceDate >= monthStart && invoice.InvoiceDate < monthEnd);
+                        }
                     }
 
                     if (criteria.InvoiceStatusId.HasValue)
@@ -571,6 +576,52 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 )
                 .Select(invoiceType => invoiceType.ToInvoiceType())
                 .ToList();
+            }
+        }
+
+        public PsychometristInvoiceAmount GetPsychometristInvoiceAmount(int assessmentTypeId, int appointmentStatusId, int appointmentSequenceId, int companyId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return meta.PsychometristInvoiceAmount
+                    .Where(psychometristInvoiceAmount =>
+                        psychometristInvoiceAmount.AssessmentTypeId == assessmentTypeId &&
+                        psychometristInvoiceAmount.AppointmentStatusId == appointmentStatusId &&
+                        psychometristInvoiceAmount.AppointmentSequenceId == appointmentSequenceId &&
+                        psychometristInvoiceAmount.CompanyId == companyId
+                    )
+                    .SingleOrDefault()
+                    .ToPsychometristInvoiceAmount();
+            }
+        }
+
+        public IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.InvoiceableAppointmentData(criteria.CompanyId, criteria.InvoiceTypeId, criteria.StartSearch, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new InvoiceableAppointmentData
+                        {
+                            Year = Convert.ToInt32(row["Year"]),
+                            Month = Convert.ToInt32(row["Month"]),
+                            AssessmentId = Convert.ToInt32(row["AssessmentId"]),
+                            AppointmentId = Convert.ToInt32(row["AppointmentId"]),
+                            AppointmentTime = (DateTimeOffset)row["AppointmentTime"],
+                            AppointmentStatus = Convert.ToString(row["AppointmentStatus"]),
+                            PayableTo = Convert.ToString(row["PayableTo"]),
+                            PayableToId = Convert.ToInt32(row["PayableToId"]),
+                            InvoiceTypeId = Convert.ToInt32(row["InvoiceTypeId"]),
+                            AssessmentType = Convert.ToString(row["AssessmentType"]),
+                            ReferralSource = Convert.ToString(row["ReferralSource"]),
+                            Claimant = Convert.ToString(row["Claimant"]),
+                        })
+                    .ToList();
             }
         }
     }

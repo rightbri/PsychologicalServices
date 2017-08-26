@@ -8,6 +8,6 @@ namespace PsychologicalServices.Models.Invoices
 
         public InvoiceStatus InvoiceStatus { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
     }
 }

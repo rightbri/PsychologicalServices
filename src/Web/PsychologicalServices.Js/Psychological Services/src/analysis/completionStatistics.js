@@ -1,14 +1,18 @@
 import {inject} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
+import {Config} from 'common/config';
 import {Context} from 'common/context';
 
-@inject(DataRepository, Context)
+@inject(DataRepository, Config, Context)
 export class CompletionStatistics {
 
-    constructor(dataRepository, context) {
+    constructor(dataRepository, config, context) {
         this.dataRepository = dataRepository;
+        this.config = config;
         this.context = context;
 
+        this.searchMonths = null;
+        this.visibleTab = 0;
     }
 
     activate() {
@@ -118,6 +122,7 @@ export class CompletionStatistics {
                         'psychometrist': currentValue.psychometrist,
                         'year': currentValue.year,
                         'month': currentValue.month,
+                        'monthName': this.config.months[currentValue.month],
                         'assessmentCount': 0,
                         'incompleteCount': 0,
                         'completeCount': 0
@@ -131,7 +136,7 @@ export class CompletionStatistics {
                 psychometristMonth.completeCount += currentValue.completeCount;
 
                 return accumulator;
-            }, []);
+            }.bind(this), []);
 
             this.psychometrists = this.psychometristsByMonth.reduce(function(accumulator, currentValue) {
                 let psychometrist = accumulator.find(element => element.psychometrist === currentValue.psychometrist);
@@ -213,5 +218,9 @@ export class CompletionStatistics {
 
         });
         
+    }
+    
+    showTab(index) {
+        this.visibleTab = index;
     }
 }

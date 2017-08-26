@@ -2,7 +2,7 @@
 using System;
 using PsychologicalServices.Models.Common.Utility;
 
-namespace PsychologicalServices.Models.Test
+namespace PsychologicalServices.Models.Test.Common.Utility
 {
     [TestClass]
     public class CommonUtilityModelExtensionsTests

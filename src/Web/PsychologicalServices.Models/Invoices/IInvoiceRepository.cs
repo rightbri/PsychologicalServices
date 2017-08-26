@@ -32,5 +32,10 @@ namespace PsychologicalServices.Models.Invoices
         decimal GetTaxRate();
 
         int GetAdditionalReportAmount(int referralSourceId, int reportTypeId);
+
+
+        IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria);
+
+        PsychometristInvoiceAmount GetPsychometristInvoiceAmount(int assessmentTypeId, int appointmentStatusId, int appointmentSequenceId, int companyId);
     }
 }

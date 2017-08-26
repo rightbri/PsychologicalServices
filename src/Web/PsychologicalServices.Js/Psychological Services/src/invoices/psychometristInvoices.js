@@ -10,40 +10,62 @@ export class PsychometristInvoices {
 		this.context = context;
 		this.config = config;
 		
-		this.invoices = null;
-		
 		this.invoiceTypeId = this.config.invoiceTypes.psychometrist;
-		this.invoiceMonth = new Date();
 	}
 
 	activate() {
-		return this.context.getUser()
-			.then(user => {
-				this.user = user;
-				
-				return Promise.all([
-					this.searchInvoices(user.company.companyId, this.invoiceTypeId, this.invoiceMonth).then(data => this.invoices = data)
-				]);
+		return this.context.getUser().then(user => this.user = user);
+	}
+	
+	createInvoice(psychometristMonth) {
+		this.dataRepository.createPsychometristInvoice(this.user.company.companyId, psychometristMonth.payableToId, psychometristMonth.year, psychometristMonth.month)
+			.then(data => {
+				let invoice = data;
+
+				psychometristMonth.invoiceId = invoice.invoiceId;
+				psychometristMonth.canCreateInvoice = false;
 			});
 	}
 	
-	createInvoices() {
-		this.dataRepository.createPsychometristInvoices(this.user.company.companyId, this.invoiceMonth)
-			.then(data => this.invoices = data);
-	}
+	searchInvoices() {
+		return this.dataRepository.searchInvoiceableAppointmentData({
+				'companyId': this.user.company.companyId,
+				'invoiceTypeId': this.invoiceTypeId,
+				'startSearch': this.startSearch
+			}).then(data => {
+
+				this.invoiceableAppointmentData = data;
+
+				this.invoiceablePsychometristMonths = this.invoiceableAppointmentData.reduce(function(accumulator, currentValue) {
+					let psychometristMonth = accumulator.find(element =>
+						element.payableToId === currentValue.payableToId &&
+						element.year === currentValue.year &&
+						element.month === currentValue.month
+					);
+					
+					if (psychometristMonth === undefined) {
+						psychometristMonth = {
+							'payableTo': currentValue.payableTo,
+							'payableToId': currentValue.payableToId,
+							'year': currentValue.year,
+							'month': currentValue.month,
+							'monthName': this.config.months[currentValue.month],
+							'appointmentCount': 0,
+							'canCreateInvoice': true
+						};
 	
-	searchInvoices(companyId, invoiceTypeId, invoiceMonth) {
-		return this.dataRepository.getInvoices({
-				'companyId': companyId,
-				'invoiceTypeId': invoiceTypeId,
-				'invoiceMonth': invoiceMonth
+						accumulator.push(psychometristMonth);
+					}
+	
+					psychometristMonth.appointmentCount += 1;
+	
+					return accumulator;
+				}.bind(this), []);
+
 			});
 	}
 	
-	monthChanged(e) {
-		this.invoiceMonth = e.detail;
-		
-		this.searchInvoices(this.user.company.companyId, this.invoiceTypeId, this.invoiceMonth)
-			.then(data => this.invoices = data);
+	dateChanged(e) {
+		this.startSearch = e.detail.dates[0];
 	}
 }

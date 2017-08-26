@@ -1,6 +1,11 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
 	<require from="common/date-picker"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	<require from="flatpickr/flatpickr.css"></require>
 	
 	<div class="uk-container">
 	
@@ -10,14 +15,14 @@
 			<form class="uk-form-stacked">
 			
 				<div class="uk-margin">
-					<label class="uk-form-label" for="invoiceMonth">Month</label>
+					<label class="uk-form-label" for="startSearch">Search for invoices to create based on appointments on or after: (Beginning of prior month if blank)</label>
 					<div class="uk-form-controls">
-						<input id="invoiceMonth" type="text" class="uk-input" date-picker.bind="config.monthPickerOptions" monthchanged.delegate="monthChanged($event)" value.bind="invoiceMonth | dateFormat:'MMMM, YYYY'" />
+						<input id="startSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="dateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
 					</div>
 				</div>
 			
 				<div class="uk-margin">
-					<button class="uk-button uk-button-primary" click.delegate="createInvoices()">Create Invoices</button>
+					<button class="uk-button uk-button-primary" click.delegate="searchInvoices()">Search</button>
 				</div>
 				
 			</form>
@@ -26,20 +31,34 @@
 
 	</div>
 
-	<div class="uk-overflow-auto" if.bind="invoices">
+	<div class="uk-overflow-auto" if.bind="invoiceablePsychometristMonths">
 		<table class="uk-table uk-table-divider" fixed-header>
 			<thead>
 				<tr>
-					<th>Identifier</th>
+					<th></th>
+					<th>Year</th>
+					<th>Month</th>
 					<th>Payable To</th>
+					<th># Appointments</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr repeat.for="invoice of invoices">
-					<td>${invoice.identifier}</td>
-					<td>${invoice.payableTo.firstName} ${invoice.payableTo.lastName}</td>
+				<tr repeat.for="psychometristMonth of invoiceablePsychometristMonths | sortArray:[{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' },{ property: 'payableTo', direction: 'asc' }]">
+					<td>
+						<button type="button" class="uk-button uk-button-primary" click.delegate="createInvoice(psychometristMonth)" if.bind="psychometristMonth.canCreateInvoice">
+							Create Invoice
+						</button>
+						<a route-href="route: editInvoice; params.bind: {'id': psychometristMonth.invoiceId }" class="uk-button uk-button-secondary" if.bind="psychometristMonth.invoiceId">
+							Edit Invoice
+						</a>
+					</td>
+					<td>${psychometristMonth.year}</td>
+					<td>${psychometristMonth.monthName}</td>
+					<td>${psychometristMonth.payableTo}</td>
+					<td>${psychometristMonth.appointmentCount | numeric:'0,0'}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+
 </template>

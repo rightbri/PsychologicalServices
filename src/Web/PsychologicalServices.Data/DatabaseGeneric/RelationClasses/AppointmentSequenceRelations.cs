@@ -30,6 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.PsychometristInvoiceAmountEntityUsingAppointmentSequenceId);
 			toReturn.Add(this.ReferralSourceAppointmentStatusSettingEntityUsingAppointmentSequenceId);
 
 
@@ -37,6 +38,21 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between AppointmentSequenceEntity and PsychometristInvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
+		/// AppointmentSequence.AppointmentSequenceId - PsychometristInvoiceAmount.AppointmentSequenceId
+		/// </summary>
+		public virtual IEntityRelation PsychometristInvoiceAmountEntityUsingAppointmentSequenceId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PsychometristInvoiceAmounts" , true);
+				relation.AddEntityFieldPair(AppointmentSequenceFields.AppointmentSequenceId, PsychometristInvoiceAmountFields.AppointmentSequenceId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentSequenceEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PsychometristInvoiceAmountEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between AppointmentSequenceEntity and ReferralSourceAppointmentStatusSettingEntity over the 1:n relation they have, using the relation between the fields:
 		/// AppointmentSequence.AppointmentSequenceId - ReferralSourceAppointmentStatusSetting.AppointmentSequenceId

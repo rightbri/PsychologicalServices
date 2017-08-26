@@ -29,26 +29,18 @@ BEGIN
 	,DATEPART(YEAR, app.AppointmentTime) AS [Year]
 	,DATEPART(MONTH, app.AppointmentTime) AS [Month]
 	,1 AS AppointmentCount
-	,app.BillableCount
-	,app.CanceledCount
+	,CASE
+		WHEN AppointmentStatusId IN ( @showedStatusId , @noShowStatusId , @incompleteStatusId , @completeStatusId , @lateCancellationStatusId) THEN 1
+		ELSE 0
+	END AS BillableCount
+	,CASE
+		WHEN AppointmentStatusId = @canceledStatusId THEN 1
+		ELSE 0
+	END AS CanceledCount
 	FROM dbo.Assessments ass
-	INNER JOIN (
-		SELECT
-		 AssessmentId
-		,AppointmentTime
-		,AppointmentStatusId
-		,CASE
-			WHEN AppointmentStatusId IN ( @showedStatusId , @noShowStatusId , @incompleteStatusId , @completeStatusId , @lateCancellationStatusId) THEN 1
-			ELSE 0
-		END AS BillableCount
-		,CASE
-			WHEN AppointmentStatusId = @canceledStatusId THEN 1
-			ELSE 0
-		END AS CanceledCount
-		FROM dbo.Appointments
-	) app ON ass.AssessmentId = app.AssessmentId
 	INNER JOIN dbo.ReferralSources rs ON ass.ReferralSourceId = rs.ReferralSourceId
 	INNER JOIN dbo.AssessmentTypes t ON ass.AssessmentTypeId = t.AssessmentTypeId
+	INNER JOIN dbo.Appointments app ON ass.AssessmentId = app.AssessmentId
 	WHERE
 	app.AppointmentTime < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 0)
 	AND (

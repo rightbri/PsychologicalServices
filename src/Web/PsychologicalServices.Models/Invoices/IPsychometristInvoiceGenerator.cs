@@ -1,11 +1,12 @@
-﻿using PsychologicalServices.Models.Appointments;
+﻿using PsychologicalServices.Models.Users;
+using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
 {
-    public interface IInvoiceGenerator
+    public interface IPsychometristInvoiceGenerator
     {
-        Invoice CreatePsychologistInvoice(Appointment appointment);
+        Invoice CreateInvoice(User psychometrist, DateTimeOffset invoiceDate);
 
         IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
 

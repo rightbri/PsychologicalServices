@@ -83,72 +83,7 @@ namespace PsychologicalServices.Models.Invoices
 
             return invoice;
         }
-
-        public Invoice CreatePsychometristInvoice(User psychometrist, DateTime invoiceDate)
-        {
-            if (_invoiceRepository.GetInvoices(new InvoiceSearchCriteria
-            {
-                PayableToId = psychometrist.UserId,
-                InvoiceTypeId = InvoiceType.Psychometrist,
-                InvoiceDate = invoiceDate,
-            }).Any()
-            )
-            {
-                throw new InvalidOperationException("An invoice already exists for this psychometrist and invoice date.");
-            }
-
-            var criteria = new AppointmentSearchCriteria
-            {
-                PsychometristId = psychometrist.UserId,
-                AppointmentTimeStart = invoiceDate.FirstDayOfMonth(),
-                AppointmentTimeEnd = invoiceDate.EndOfMonth(),
-            };
-
-            var invoiceType = new InvoiceType
-            {
-                InvoiceTypeId = InvoiceType.Psychometrist,
-            };
-            
-            var appointments = _appointmentRepository.GetAppointments(criteria)
-                .Where(appointment => appointment.AppointmentStatus.CanInvoice)
-                .Select(appointment =>
-                {
-                    var invoiceRate =
-                        GetAppointmentStatusInvoiceRate(
-                            appointment,
-                            invoiceType,
-                            appointment.AppointmentSequence(appointment.Assessment.Appointments)
-                        );
-
-                    return new InvoiceAppointment
-                    {
-                        Appointment = appointment,
-                        Lines = GetPsychometristInvoiceLines(
-                            appointment,
-                            invoiceRate,
-                            appointment.IsCompletion(appointment.Assessment.Appointments)
-                        ),
-                        InvoiceRate = invoiceRate,
-                    };
-                });
-
-            var invoice = new Invoice
-            {
-                Identifier = string.Format("{0}-{1:00#}", psychometrist.UserId, _invoiceRepository.GetInvoiceCount(psychometrist.UserId) + 1),
-                InvoiceDate = invoiceDate,
-                InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
-                InvoiceType = invoiceType,
-                PayableTo = psychometrist,
-                Appointments = appointments,
-                TaxRate = _invoiceRepository.GetTaxRate(),
-                UpdateDate = _date.UtcNow,
-            };
-
-            invoice.Total = GetInvoiceTotal(invoice);
-
-            return invoice;
-        }
-
+        
         public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
         {
             var invoiceAppointments = new List<InvoiceAppointment>();

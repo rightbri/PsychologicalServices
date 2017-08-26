@@ -10,6 +10,6 @@ namespace PsychologicalServices.Models.Invoices
 
         public byte[] Content { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
     }
 }

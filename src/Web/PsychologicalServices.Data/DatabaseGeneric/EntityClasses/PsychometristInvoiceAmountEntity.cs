@@ -28,17 +28,18 @@ namespace PsychologicalServices.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 
 	/// <summary>
-	/// Entity class which represents the entity 'AssessmentTypeInvoiceAmount'.<br/><br/>
+	/// Entity class which represents the entity 'PsychometristInvoiceAmount'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class AssessmentTypeInvoiceAmountEntity : CommonEntityBase, ISerializable
+	public partial class PsychometristInvoiceAmountEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 
 
+		private AppointmentSequenceEntity _appointmentSequence;
 		private AppointmentStatusEntity _appointmentStatus;
 		private AssessmentTypeEntity _assessmentType;
 		private CompanyEntity _company;
@@ -55,6 +56,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
+			/// <summary>Member name AppointmentSequence</summary>
+			public static readonly string AppointmentSequence = "AppointmentSequence";
 			/// <summary>Member name AppointmentStatus</summary>
 			public static readonly string AppointmentStatus = "AppointmentStatus";
 			/// <summary>Member name AssessmentType</summary>
@@ -68,13 +71,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static AssessmentTypeInvoiceAmountEntity()
+		static PsychometristInvoiceAmountEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public AssessmentTypeInvoiceAmountEntity():base("AssessmentTypeInvoiceAmountEntity")
+		public PsychometristInvoiceAmountEntity():base("PsychometristInvoiceAmountEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -82,56 +85,65 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public AssessmentTypeInvoiceAmountEntity(IEntityFields2 fields):base("AssessmentTypeInvoiceAmountEntity")
+		public PsychometristInvoiceAmountEntity(IEntityFields2 fields):base("PsychometristInvoiceAmountEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this AssessmentTypeInvoiceAmountEntity</param>
-		public AssessmentTypeInvoiceAmountEntity(IValidator validator):base("AssessmentTypeInvoiceAmountEntity")
+		/// <param name="validator">The custom validator object for this PsychometristInvoiceAmountEntity</param>
+		public PsychometristInvoiceAmountEntity(IValidator validator):base("PsychometristInvoiceAmountEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="assessmentTypeId">PK value for AssessmentTypeInvoiceAmount which data should be fetched into this AssessmentTypeInvoiceAmount object</param>
-		/// <param name="appointmentStatusId">PK value for AssessmentTypeInvoiceAmount which data should be fetched into this AssessmentTypeInvoiceAmount object</param>
-		/// <param name="companyId">PK value for AssessmentTypeInvoiceAmount which data should be fetched into this AssessmentTypeInvoiceAmount object</param>
+		/// <param name="assessmentTypeId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
+		/// <param name="appointmentStatusId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
+		/// <param name="companyId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
+		/// <param name="appointmentSequenceId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AssessmentTypeInvoiceAmountEntity(System.Int32 assessmentTypeId, System.Int32 appointmentStatusId, System.Int32 companyId):base("AssessmentTypeInvoiceAmountEntity")
+		public PsychometristInvoiceAmountEntity(System.Int32 assessmentTypeId, System.Int32 appointmentStatusId, System.Int32 companyId, System.Int32 appointmentSequenceId):base("PsychometristInvoiceAmountEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 			this.AssessmentTypeId = assessmentTypeId;
 			this.AppointmentStatusId = appointmentStatusId;
 			this.CompanyId = companyId;
+			this.AppointmentSequenceId = appointmentSequenceId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="assessmentTypeId">PK value for AssessmentTypeInvoiceAmount which data should be fetched into this AssessmentTypeInvoiceAmount object</param>
-		/// <param name="appointmentStatusId">PK value for AssessmentTypeInvoiceAmount which data should be fetched into this AssessmentTypeInvoiceAmount object</param>
-		/// <param name="companyId">PK value for AssessmentTypeInvoiceAmount which data should be fetched into this AssessmentTypeInvoiceAmount object</param>
-		/// <param name="validator">The custom validator object for this AssessmentTypeInvoiceAmountEntity</param>
+		/// <param name="assessmentTypeId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
+		/// <param name="appointmentStatusId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
+		/// <param name="companyId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
+		/// <param name="appointmentSequenceId">PK value for PsychometristInvoiceAmount which data should be fetched into this PsychometristInvoiceAmount object</param>
+		/// <param name="validator">The custom validator object for this PsychometristInvoiceAmountEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public AssessmentTypeInvoiceAmountEntity(System.Int32 assessmentTypeId, System.Int32 appointmentStatusId, System.Int32 companyId, IValidator validator):base("AssessmentTypeInvoiceAmountEntity")
+		public PsychometristInvoiceAmountEntity(System.Int32 assessmentTypeId, System.Int32 appointmentStatusId, System.Int32 companyId, System.Int32 appointmentSequenceId, IValidator validator):base("PsychometristInvoiceAmountEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 			this.AssessmentTypeId = assessmentTypeId;
 			this.AppointmentStatusId = appointmentStatusId;
 			this.CompanyId = companyId;
+			this.AppointmentSequenceId = appointmentSequenceId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected AssessmentTypeInvoiceAmountEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected PsychometristInvoiceAmountEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 
 
+				_appointmentSequence = (AppointmentSequenceEntity)info.GetValue("_appointmentSequence", typeof(AppointmentSequenceEntity));
+				if(_appointmentSequence!=null)
+				{
+					_appointmentSequence.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_appointmentStatus = (AppointmentStatusEntity)info.GetValue("_appointmentStatus", typeof(AppointmentStatusEntity));
 				if(_appointmentStatus!=null)
 				{
@@ -160,16 +172,19 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((AssessmentTypeInvoiceAmountFieldIndex)fieldIndex)
+			switch((PsychometristInvoiceAmountFieldIndex)fieldIndex)
 			{
-				case AssessmentTypeInvoiceAmountFieldIndex.AssessmentTypeId:
+				case PsychometristInvoiceAmountFieldIndex.AssessmentTypeId:
 					DesetupSyncAssessmentType(true, false);
 					break;
-				case AssessmentTypeInvoiceAmountFieldIndex.AppointmentStatusId:
+				case PsychometristInvoiceAmountFieldIndex.AppointmentStatusId:
 					DesetupSyncAppointmentStatus(true, false);
 					break;
-				case AssessmentTypeInvoiceAmountFieldIndex.CompanyId:
+				case PsychometristInvoiceAmountFieldIndex.CompanyId:
 					DesetupSyncCompany(true, false);
+					break;
+				case PsychometristInvoiceAmountFieldIndex.AppointmentSequenceId:
+					DesetupSyncAppointmentSequence(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -193,6 +208,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
+				case "AppointmentSequence":
+					this.AppointmentSequence = (AppointmentSequenceEntity)entity;
+					break;
 				case "AppointmentStatus":
 					this.AppointmentStatus = (AppointmentStatusEntity)entity;
 					break;
@@ -215,7 +233,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return AssessmentTypeInvoiceAmountEntity.GetRelationsForField(fieldName);
+			return PsychometristInvoiceAmountEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -226,14 +244,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
+				case "AppointmentSequence":
+					toReturn.Add(PsychometristInvoiceAmountEntity.Relations.AppointmentSequenceEntityUsingAppointmentSequenceId);
+					break;
 				case "AppointmentStatus":
-					toReturn.Add(AssessmentTypeInvoiceAmountEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId);
+					toReturn.Add(PsychometristInvoiceAmountEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId);
 					break;
 				case "AssessmentType":
-					toReturn.Add(AssessmentTypeInvoiceAmountEntity.Relations.AssessmentTypeEntityUsingAssessmentTypeId);
+					toReturn.Add(PsychometristInvoiceAmountEntity.Relations.AssessmentTypeEntityUsingAssessmentTypeId);
 					break;
 				case "Company":
-					toReturn.Add(AssessmentTypeInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId);
+					toReturn.Add(PsychometristInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId);
 					break;
 
 
@@ -262,6 +283,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -275,6 +297,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "AppointmentSequence":
+					SetupSyncAppointmentSequence(relatedEntity);
+					break;
 				case "AppointmentStatus":
 					SetupSyncAppointmentStatus(relatedEntity);
 					break;
@@ -300,6 +325,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "AppointmentSequence":
+					DesetupSyncAppointmentSequence(false, true);
+					break;
 				case "AppointmentStatus":
 					DesetupSyncAppointmentStatus(false, true);
 					break;
@@ -331,6 +359,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
+			if(_appointmentSequence!=null)
+			{
+				toReturn.Add(_appointmentSequence);
+			}
 			if(_appointmentStatus!=null)
 			{
 				toReturn.Add(_appointmentStatus);
@@ -369,6 +401,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
+				info.AddValue("_appointmentSequence", (!this.MarkedForDeletion?_appointmentSequence:null));
 				info.AddValue("_appointmentStatus", (!this.MarkedForDeletion?_appointmentStatus:null));
 				info.AddValue("_assessmentType", (!this.MarkedForDeletion?_assessmentType:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
@@ -384,7 +417,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(AssessmentTypeInvoiceAmountFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(PsychometristInvoiceAmountFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -393,7 +426,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(AssessmentTypeInvoiceAmountFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(PsychometristInvoiceAmountFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -403,11 +436,21 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new AssessmentTypeInvoiceAmountRelations().GetAllRelations();
+			return new PsychometristInvoiceAmountRelations().GetAllRelations();
 		}
 		
 
 
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'AppointmentSequence' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAppointmentSequence()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentSequenceFields.AppointmentSequenceId, null, ComparisonOperator.Equal, this.AppointmentSequenceId));
+			return bucket;
+		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'AppointmentStatus' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
@@ -444,7 +487,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity);
 		}
 
 		/// <summary>
@@ -459,7 +502,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeInvoiceAmountEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -506,6 +549,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("AppointmentSequence", _appointmentSequence);
 			toReturn.Add("AppointmentStatus", _appointmentStatus);
 			toReturn.Add("AssessmentType", _assessmentType);
 			toReturn.Add("Company", _company);
@@ -520,6 +564,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 
+			if(_appointmentSequence!=null)
+			{
+				_appointmentSequence.ActiveContext = base.ActiveContext;
+			}
 			if(_appointmentStatus!=null)
 			{
 				_appointmentStatus.ActiveContext = base.ActiveContext;
@@ -541,6 +589,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+			_appointmentSequence = null;
 			_appointmentStatus = null;
 			_assessmentType = null;
 			_company = null;
@@ -571,16 +620,52 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("CompanyId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
+			_fieldsCustomProperties.Add("AppointmentSequenceId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
 			_fieldsCustomProperties.Add("InvoiceAmount", fieldHashtable);
 		}
 		#endregion
+
+		/// <summary> Removes the sync logic for member _appointmentSequence</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAppointmentSequence(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _appointmentSequence, new PropertyChangedEventHandler( OnAppointmentSequencePropertyChanged ), "AppointmentSequence", PsychometristInvoiceAmountEntity.Relations.AppointmentSequenceEntityUsingAppointmentSequenceId, true, signalRelatedEntity, "PsychometristInvoiceAmounts", resetFKFields, new int[] { (int)PsychometristInvoiceAmountFieldIndex.AppointmentSequenceId } );		
+			_appointmentSequence = null;
+		}
+
+		/// <summary> setups the sync logic for member _appointmentSequence</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAppointmentSequence(IEntity2 relatedEntity)
+		{
+			if(_appointmentSequence!=relatedEntity)
+			{
+				DesetupSyncAppointmentSequence(true, true);
+				_appointmentSequence = (AppointmentSequenceEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _appointmentSequence, new PropertyChangedEventHandler( OnAppointmentSequencePropertyChanged ), "AppointmentSequence", PsychometristInvoiceAmountEntity.Relations.AppointmentSequenceEntityUsingAppointmentSequenceId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAppointmentSequencePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 		/// <summary> Removes the sync logic for member _appointmentStatus</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAppointmentStatus(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _appointmentStatus, new PropertyChangedEventHandler( OnAppointmentStatusPropertyChanged ), "AppointmentStatus", AssessmentTypeInvoiceAmountEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId, true, signalRelatedEntity, "AssessmentTypeInvoiceAmounts", resetFKFields, new int[] { (int)AssessmentTypeInvoiceAmountFieldIndex.AppointmentStatusId } );		
+			base.PerformDesetupSyncRelatedEntity( _appointmentStatus, new PropertyChangedEventHandler( OnAppointmentStatusPropertyChanged ), "AppointmentStatus", PsychometristInvoiceAmountEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId, true, signalRelatedEntity, "PsychometristInvoiceAmounts", resetFKFields, new int[] { (int)PsychometristInvoiceAmountFieldIndex.AppointmentStatusId } );		
 			_appointmentStatus = null;
 		}
 
@@ -592,7 +677,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				DesetupSyncAppointmentStatus(true, true);
 				_appointmentStatus = (AppointmentStatusEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _appointmentStatus, new PropertyChangedEventHandler( OnAppointmentStatusPropertyChanged ), "AppointmentStatus", AssessmentTypeInvoiceAmountEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId, true, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _appointmentStatus, new PropertyChangedEventHandler( OnAppointmentStatusPropertyChanged ), "AppointmentStatus", PsychometristInvoiceAmountEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId, true, new string[] {  } );
 			}
 		}
 		
@@ -613,7 +698,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAssessmentType(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _assessmentType, new PropertyChangedEventHandler( OnAssessmentTypePropertyChanged ), "AssessmentType", AssessmentTypeInvoiceAmountEntity.Relations.AssessmentTypeEntityUsingAssessmentTypeId, true, signalRelatedEntity, "AssessmentTypeInvoiceAmounts", resetFKFields, new int[] { (int)AssessmentTypeInvoiceAmountFieldIndex.AssessmentTypeId } );		
+			base.PerformDesetupSyncRelatedEntity( _assessmentType, new PropertyChangedEventHandler( OnAssessmentTypePropertyChanged ), "AssessmentType", PsychometristInvoiceAmountEntity.Relations.AssessmentTypeEntityUsingAssessmentTypeId, true, signalRelatedEntity, "PsychometristInvoiceAmounts", resetFKFields, new int[] { (int)PsychometristInvoiceAmountFieldIndex.AssessmentTypeId } );		
 			_assessmentType = null;
 		}
 
@@ -625,7 +710,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				DesetupSyncAssessmentType(true, true);
 				_assessmentType = (AssessmentTypeEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _assessmentType, new PropertyChangedEventHandler( OnAssessmentTypePropertyChanged ), "AssessmentType", AssessmentTypeInvoiceAmountEntity.Relations.AssessmentTypeEntityUsingAssessmentTypeId, true, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _assessmentType, new PropertyChangedEventHandler( OnAssessmentTypePropertyChanged ), "AssessmentType", PsychometristInvoiceAmountEntity.Relations.AssessmentTypeEntityUsingAssessmentTypeId, true, new string[] {  } );
 			}
 		}
 		
@@ -646,7 +731,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncCompany(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", AssessmentTypeInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId, true, signalRelatedEntity, "AssessmentTypeInvoiceAmounts", resetFKFields, new int[] { (int)AssessmentTypeInvoiceAmountFieldIndex.CompanyId } );		
+			base.PerformDesetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", PsychometristInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId, true, signalRelatedEntity, "PsychometristInvoiceAmounts", resetFKFields, new int[] { (int)PsychometristInvoiceAmountFieldIndex.CompanyId } );		
 			_company = null;
 		}
 
@@ -658,7 +743,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				DesetupSyncCompany(true, true);
 				_company = (CompanyEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", AssessmentTypeInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId, true, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", PsychometristInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId, true, new string[] {  } );
 			}
 		}
 		
@@ -676,7 +761,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this AssessmentTypeInvoiceAmountEntity</param>
+		/// <param name="validator">The validator object for this PsychometristInvoiceAmountEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -695,9 +780,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static AssessmentTypeInvoiceAmountRelations Relations
+		public  static PsychometristInvoiceAmountRelations Relations
 		{
-			get	{ return new AssessmentTypeInvoiceAmountRelations(); }
+			get	{ return new PsychometristInvoiceAmountRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -709,6 +794,18 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AppointmentSequence' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAppointmentSequence
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentSequenceEntityFactory))),
+					(IEntityRelation)GetRelationsForField("AppointmentSequence")[0], (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.AppointmentSequenceEntity, 0, null, null, null, null, "AppointmentSequence", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AppointmentStatus' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -717,7 +814,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentStatusEntityFactory))),
-					(IEntityRelation)GetRelationsForField("AppointmentStatus")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.AppointmentStatusEntity, 0, null, null, null, null, "AppointmentStatus", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("AppointmentStatus")[0], (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.AppointmentStatusEntity, 0, null, null, null, null, "AppointmentStatus", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -729,7 +826,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("AssessmentType")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, 0, null, null, null, null, "AssessmentType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("AssessmentType")[0], (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, 0, null, null, null, null, "AssessmentType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -741,7 +838,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Company")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, null, null, "Company", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("Company")[0], (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, null, null, "Company", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -751,7 +848,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return AssessmentTypeInvoiceAmountEntity.CustomProperties;}
+			get { return PsychometristInvoiceAmountEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -767,54 +864,100 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return AssessmentTypeInvoiceAmountEntity.FieldsCustomProperties;}
+			get { return PsychometristInvoiceAmountEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The AssessmentTypeId property of the Entity AssessmentTypeInvoiceAmount<br/><br/>
+		/// <summary> The AssessmentTypeId property of the Entity PsychometristInvoiceAmount<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentTypeInvoiceAmounts"."AssessmentTypeId"<br/>
+		/// <remarks>Mapped on  table field: "PsychometristInvoiceAmounts"."AssessmentTypeId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
 		public virtual System.Int32 AssessmentTypeId
 		{
-			get { return (System.Int32)GetValue((int)AssessmentTypeInvoiceAmountFieldIndex.AssessmentTypeId, true); }
-			set	{ SetValue((int)AssessmentTypeInvoiceAmountFieldIndex.AssessmentTypeId, value); }
+			get { return (System.Int32)GetValue((int)PsychometristInvoiceAmountFieldIndex.AssessmentTypeId, true); }
+			set	{ SetValue((int)PsychometristInvoiceAmountFieldIndex.AssessmentTypeId, value); }
 		}
 
-		/// <summary> The AppointmentStatusId property of the Entity AssessmentTypeInvoiceAmount<br/><br/>
+		/// <summary> The AppointmentStatusId property of the Entity PsychometristInvoiceAmount<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentTypeInvoiceAmounts"."AppointmentStatusId"<br/>
+		/// <remarks>Mapped on  table field: "PsychometristInvoiceAmounts"."AppointmentStatusId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
 		public virtual System.Int32 AppointmentStatusId
 		{
-			get { return (System.Int32)GetValue((int)AssessmentTypeInvoiceAmountFieldIndex.AppointmentStatusId, true); }
-			set	{ SetValue((int)AssessmentTypeInvoiceAmountFieldIndex.AppointmentStatusId, value); }
+			get { return (System.Int32)GetValue((int)PsychometristInvoiceAmountFieldIndex.AppointmentStatusId, true); }
+			set	{ SetValue((int)PsychometristInvoiceAmountFieldIndex.AppointmentStatusId, value); }
 		}
 
-		/// <summary> The CompanyId property of the Entity AssessmentTypeInvoiceAmount<br/><br/>
+		/// <summary> The CompanyId property of the Entity PsychometristInvoiceAmount<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentTypeInvoiceAmounts"."CompanyId"<br/>
+		/// <remarks>Mapped on  table field: "PsychometristInvoiceAmounts"."CompanyId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
 		public virtual System.Int32 CompanyId
 		{
-			get { return (System.Int32)GetValue((int)AssessmentTypeInvoiceAmountFieldIndex.CompanyId, true); }
-			set	{ SetValue((int)AssessmentTypeInvoiceAmountFieldIndex.CompanyId, value); }
+			get { return (System.Int32)GetValue((int)PsychometristInvoiceAmountFieldIndex.CompanyId, true); }
+			set	{ SetValue((int)PsychometristInvoiceAmountFieldIndex.CompanyId, value); }
 		}
 
-		/// <summary> The InvoiceAmount property of the Entity AssessmentTypeInvoiceAmount<br/><br/>
+		/// <summary> The AppointmentSequenceId property of the Entity PsychometristInvoiceAmount<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "AssessmentTypeInvoiceAmounts"."InvoiceAmount"<br/>
+		/// <remarks>Mapped on  table field: "PsychometristInvoiceAmounts"."AppointmentSequenceId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual System.Int32 AppointmentSequenceId
+		{
+			get { return (System.Int32)GetValue((int)PsychometristInvoiceAmountFieldIndex.AppointmentSequenceId, true); }
+			set	{ SetValue((int)PsychometristInvoiceAmountFieldIndex.AppointmentSequenceId, value); }
+		}
+
+		/// <summary> The InvoiceAmount property of the Entity PsychometristInvoiceAmount<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "PsychometristInvoiceAmounts"."InvoiceAmount"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Int32 InvoiceAmount
 		{
-			get { return (System.Int32)GetValue((int)AssessmentTypeInvoiceAmountFieldIndex.InvoiceAmount, true); }
-			set	{ SetValue((int)AssessmentTypeInvoiceAmountFieldIndex.InvoiceAmount, value); }
+			get { return (System.Int32)GetValue((int)PsychometristInvoiceAmountFieldIndex.InvoiceAmount, true); }
+			set	{ SetValue((int)PsychometristInvoiceAmountFieldIndex.InvoiceAmount, value); }
 		}
 
 
+
+		/// <summary> Gets / sets related entity of type 'AppointmentSequenceEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual AppointmentSequenceEntity AppointmentSequence
+		{
+			get
+			{
+				return _appointmentSequence;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncAppointmentSequence(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_appointmentSequence != null)
+						{
+							_appointmentSequence.UnsetRelatedEntity(this, "PsychometristInvoiceAmounts");
+						}
+					}
+					else
+					{
+						if(_appointmentSequence!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "PsychometristInvoiceAmounts");
+						}
+					}
+				}
+			}
+		}
 
 		/// <summary> Gets / sets related entity of type 'AppointmentStatusEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
@@ -837,14 +980,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_appointmentStatus != null)
 						{
-							_appointmentStatus.UnsetRelatedEntity(this, "AssessmentTypeInvoiceAmounts");
+							_appointmentStatus.UnsetRelatedEntity(this, "PsychometristInvoiceAmounts");
 						}
 					}
 					else
 					{
 						if(_appointmentStatus!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "AssessmentTypeInvoiceAmounts");
+							((IEntity2)value).SetRelatedEntity(this, "PsychometristInvoiceAmounts");
 						}
 					}
 				}
@@ -872,14 +1015,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_assessmentType != null)
 						{
-							_assessmentType.UnsetRelatedEntity(this, "AssessmentTypeInvoiceAmounts");
+							_assessmentType.UnsetRelatedEntity(this, "PsychometristInvoiceAmounts");
 						}
 					}
 					else
 					{
 						if(_assessmentType!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "AssessmentTypeInvoiceAmounts");
+							((IEntity2)value).SetRelatedEntity(this, "PsychometristInvoiceAmounts");
 						}
 					}
 				}
@@ -907,14 +1050,14 @@ namespace PsychologicalServices.Data.EntityClasses
 					{
 						if(_company != null)
 						{
-							_company.UnsetRelatedEntity(this, "AssessmentTypeInvoiceAmounts");
+							_company.UnsetRelatedEntity(this, "PsychometristInvoiceAmounts");
 						}
 					}
 					else
 					{
 						if(_company!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "AssessmentTypeInvoiceAmounts");
+							((IEntity2)value).SetRelatedEntity(this, "PsychometristInvoiceAmounts");
 						}
 					}
 				}
@@ -939,7 +1082,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity; }
 		}
 		#endregion
 

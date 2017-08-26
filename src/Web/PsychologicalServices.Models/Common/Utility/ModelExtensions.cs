@@ -19,24 +19,20 @@ namespace PsychologicalServices.Models.Common.Utility
             return years;
         }
 
-        public static DateTime StartOfMonth(this DateTime date)
+        public static DateTimeOffset StartOfMonth(this DateTimeOffset date, string timezoneId)
         {
-            return new DateTime(date.Year, date.Month, 1);
+            return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
+                new DateTimeOffset(date.Year, date.Month, 1, 0, 0, 0, 0, TimeSpan.Zero),
+                timezoneId);
         }
 
-        public static DateTime EndOfMonth(this DateTime date)
+        public static DateTimeOffset EndOfMonth(this DateTimeOffset date, string timezoneId)
         {
-            return new DateTime(date.Year, date.Month, 1).AddMonths(1).AddSeconds(-1);
-        }
-
-        public static DateTime FirstDayOfMonth(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, 1);
-        }
-
-        public static DateTime LastDayOfMonth(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, 1).AddMonths(1).AddDays(-1);
+            return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
+                new DateTimeOffset(date.Year, date.Month, 1, 0, 0, 0, 0, TimeSpan.Zero)
+                    .AddMonths(1)
+                    .AddSeconds(-1),
+                timezoneId);
         }
 
         public static DateTime StartOfWeek(this DateTime date, DayOfWeek firstDayOfWeek = DayOfWeek.Monday)

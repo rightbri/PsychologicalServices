@@ -109,15 +109,15 @@ export class EditInvoice {
                 .map(line => line.amount)
                 .reduce((accumulator, value) => accumulator + value, 0);
 
-			appointmentSubtotal = appointmentSubtotal * invoiceAppointment.invoiceRate;
+			//appointmentSubtotal = appointmentSubtotal * invoiceAppointment.invoiceRate;
 			
-			invoiceAppointment.showStatusLine = invoiceAppointment.invoiceRate !== 1.0;
+			//invoiceAppointment.showStatusLine = invoiceAppointment.invoiceRate !== 1.0;
 			invoiceAppointment.subtotal = appointmentSubtotal;
 			
 			this.subtotal += appointmentSubtotal;
 		});
 
-        this.invoice.total = this.subtotal * (1 + this.invoice.taxRate);
+        this.invoice.total = Math.round(this.subtotal * (1 + this.invoice.taxRate));
     }
 	
 	setStatus(nextStatus) {

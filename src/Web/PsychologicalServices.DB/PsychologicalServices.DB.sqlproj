@@ -131,6 +131,8 @@
     <Build Include="dbo\Stored Procedures\CompletionData.sql" />
     <Build Include="dbo\Stored Procedures\CancellationData.sql" />
     <Build Include="dbo\Stored Procedures\BookingData.sql" />
+    <Build Include="dbo\Tables\PsychometristInvoiceAmounts.sql" />
+    <Build Include="dbo\Stored Procedures\InvoiceableAppointmentData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

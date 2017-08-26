@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentEntityUsingCompanyId);
 			toReturn.Add(this.CalendarNoteEntityUsingCompanyId);
 			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
+			toReturn.Add(this.PsychometristInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.UserEntityUsingCompanyId);
 
 			toReturn.Add(this.AddressEntityUsingNewAppointmentLocationId);
@@ -87,6 +88,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, CompanyAttributeFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyAttributeEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and PsychometristInvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - PsychometristInvoiceAmount.CompanyId
+		/// </summary>
+		public virtual IEntityRelation PsychometristInvoiceAmountEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PsychometristInvoiceAmounts" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, PsychometristInvoiceAmountFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PsychometristInvoiceAmountEntity", false);
 				return relation;
 			}
 		}

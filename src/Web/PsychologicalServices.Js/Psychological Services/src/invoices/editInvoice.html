@@ -44,6 +44,13 @@
 						</button>
 					</template>
 				</div>
+
+				<div class="uk-width-1-1">
+					<label class="uk-form-label">Payable To</label>
+					<div class="uk-form-controls">
+						<p>${invoice.payableTo.firstName} ${invoice.payableTo.lastName}</p>
+					</div>
+				</div>
 				
 				<div class="uk-width-1-1">
 					<label class="uk-form-label">Appointments</label>
@@ -62,7 +69,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<template repeat.for="invoiceAppointment of invoice.appointments">
+								<template repeat.for="invoiceAppointment of invoice.appointments | sortArray:[{ 'property': 'appointment.appointmentTime', 'direction': 'asc' }]">
 									<tr class="uk-background-muted">
 										<td colspan="2">
 											${invoiceAppointment.appointment.appointmentTime | dateFormat:config.longDateFormat},
@@ -91,13 +98,6 @@
 											</a>
 										</td>
 									</tr>
-									
-									<tr if.bind="invoiceAppointment.showStatusLine">
-										<td class="uk-text-warning" uk-leader>${invoiceAppointment.appointment.appointmentStatus.name}</td>
-										<td>${invoiceAppointment.subtotal | money}</td>
-										<td></td>
-									</tr>
-									
 								</template>
 							
 								<tr>
@@ -106,7 +106,6 @@
 									<td></td>
 								</tr>
 
-								<!-- Total Invoice Amount -->
 								<tr>
 									<td uk-leader>Total Invoice Amount</td>
 									<td>${invoice.total | money}</td>

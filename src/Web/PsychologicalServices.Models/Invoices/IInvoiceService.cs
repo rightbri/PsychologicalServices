@@ -1,6 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Common;
-using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
@@ -10,6 +9,8 @@ namespace PsychologicalServices.Models.Invoices
         Invoice GetInvoice(int id);
 
         Invoice NewInvoice(Appointment appointment);
+
+        Invoice CreatePsychometristInvoice(PsychometristInvoiceCreationParameters parameters);
 
         InvoiceDocument GetInvoiceDocument(int invoiceDocumentId);
 
@@ -23,7 +24,7 @@ namespace PsychologicalServices.Models.Invoices
 
         IEnumerable<Invoice> GetInvoices(InvoiceSearchCriteria criteria);
 
-        IEnumerable<Invoice> CreatePsychometristInvoices(int companyId, DateTime invoiceMonth);
+        IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria);
 
         SaveResult<Invoice> SaveInvoice(Invoice invoice);
     }

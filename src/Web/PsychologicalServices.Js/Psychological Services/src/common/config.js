@@ -81,6 +81,22 @@ export class Config {
 				'translator': 1
 			}
 		};
+
+		this.months = [
+            '',//skip index 0, use 1-based indexing
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ];
 		
 		this.rights = {
 			'Psychologist': 1,

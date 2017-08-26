@@ -66,10 +66,16 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'invoice');
 	}
 	
-	createPsychometristInvoices(companyId, invoiceMonth) {
-		return this.postBasic('invoice/createpsychometristinvoices', {
+	searchInvoiceableAppointmentData(criteria) {
+		return this.searchBasic(criteria, 'invoiceableappointmentdata');
+	}
+
+	createPsychometristInvoice(companyId, psychometristId, year, month) {
+		return this.postBasic('psychometristinvoice/create', {
 			'companyId': companyId,
-			'invoiceMonth': invoiceMonth
+			'psychometristId': psychometristId,
+			'year': year,
+			'month': month
 		});
 	}
 	
@@ -77,8 +83,8 @@ export class DataRepository {
 		return this.saveBasic(invoice, 'invoice');
 	}
 	
-	refreshInvoiceLines(appointment) {
-		return this.postBasic('invoice/refresh', appointment);
+	refreshInvoiceLines(invoice) {
+		return this.postBasic('invoice/refresh', invoice);
 	}
 	
 	getInvoiceStatuses() {

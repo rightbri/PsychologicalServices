@@ -1,9 +1,11 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/money"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
+	<require from="flatpickr/flatpickr.css"></require>
 
 <div class="uk-container">
 
@@ -55,7 +57,7 @@
 				<div class="uk-form-controls">
 					<select id="searchPayableTo" class="uk-select" value.bind="searchPayableTo" matcher.bind="payableToMatcher">
 						<option></option>
-						<option repeat.for="payableTo of payableTos" model.bind="payableTo">
+						<option repeat.for="payableTo of payableTos | sortArray:[{ 'property': 'firstName', 'direction': 'asc' },{ 'property': 'lastName', 'direction': 'asc' }]" model.bind="payableTo">
 							${payableTo.firstName} ${payableTo.lastName}
 						</option>
 					</select>

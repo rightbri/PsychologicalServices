@@ -6,6 +6,10 @@ namespace PsychologicalServices.Models.Invoices
     {
         public int CompanyId { get; set; }
 
-        public DateTime InvoiceMonth { get; set; }
+        public int PsychometristId { get; set; }
+
+        public int Year { get; set; }
+
+        public int Month { get; set; }
     }
 }

@@ -119,6 +119,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                     .Prefetch<ColorEntity>(assessmentColor => assessmentColor.Color)
                                 )
                             .Prefetch<NoteEntity>(assessment => assessment.Summary)
+                            .Prefetch<CompanyEntity>(assessment => assessment.Company)
                         )
                     .Prefetch<UserEntity>(appointment => appointment.CreateUser)
                     .Prefetch<UserEntity>(appointment => appointment.UpdateUser)

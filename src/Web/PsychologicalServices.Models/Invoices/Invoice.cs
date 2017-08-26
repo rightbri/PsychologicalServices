@@ -1,6 +1,4 @@
-﻿using PsychologicalServices.Models.Appointments;
-using PsychologicalServices.Models.Assessments;
-using PsychologicalServices.Models.Users;
+﻿using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
 

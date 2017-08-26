@@ -26,6 +26,20 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static PsychometristInvoiceAmount ToPsychometristInvoiceAmount(this PsychometristInvoiceAmountEntity psychometristInvoiceAmount)
+        {
+            return psychometristInvoiceAmount != null
+                ? new PsychometristInvoiceAmount
+                {
+                    AssessmentTypeId = psychometristInvoiceAmount.AssessmentTypeId,
+                    AppointmentStatusId = psychometristInvoiceAmount.AppointmentStatusId,
+                    AppointmentSequenceId = psychometristInvoiceAmount.AppointmentSequenceId,
+                    CompanyId = psychometristInvoiceAmount.CompanyId,
+                    InvoiceAmount = psychometristInvoiceAmount.InvoiceAmount,
+                }
+                : null;
+        }
+
         public static Arbitration ToArbitration(this ArbitrationEntity arbitration)
         {
             return null != arbitration

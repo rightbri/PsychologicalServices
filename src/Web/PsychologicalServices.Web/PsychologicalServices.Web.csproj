@@ -250,7 +250,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\PsychometristInvoiceController.cs" />
     <Compile Include="Controllers\ArbitrationController.cs" />
+    <Compile Include="Controllers\InvoiceableAppointmentDataController.cs" />
     <Compile Include="Controllers\BookingDataController.cs" />
     <Compile Include="Controllers\CompletionDataController.cs" />
     <Compile Include="Controllers\CancellationDataController.cs" />

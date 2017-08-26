@@ -621,11 +621,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The CreateDate property of the Entity InvoiceDocument<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "InvoiceDocuments"."CreateDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime CreateDate
+		public virtual System.DateTimeOffset CreateDate
 		{
-			get { return (System.DateTime)GetValue((int)InvoiceDocumentFieldIndex.CreateDate, true); }
+			get { return (System.DateTimeOffset)GetValue((int)InvoiceDocumentFieldIndex.CreateDate, true); }
 			set	{ SetValue((int)InvoiceDocumentFieldIndex.CreateDate, value); }
 		}
 

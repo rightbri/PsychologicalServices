@@ -1289,6 +1289,36 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity PsychometristInvoiceAmountEntity</summary>
+	public partial class PsychometristInvoiceAmountFields
+	{
+		/// <summary>Creates a new PsychometristInvoiceAmountEntity.AssessmentTypeId field instance</summary>
+		public static EntityField2 AssessmentTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PsychometristInvoiceAmountFieldIndex.AssessmentTypeId);}
+		}
+		/// <summary>Creates a new PsychometristInvoiceAmountEntity.AppointmentStatusId field instance</summary>
+		public static EntityField2 AppointmentStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PsychometristInvoiceAmountFieldIndex.AppointmentStatusId);}
+		}
+		/// <summary>Creates a new PsychometristInvoiceAmountEntity.CompanyId field instance</summary>
+		public static EntityField2 CompanyId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PsychometristInvoiceAmountFieldIndex.CompanyId);}
+		}
+		/// <summary>Creates a new PsychometristInvoiceAmountEntity.AppointmentSequenceId field instance</summary>
+		public static EntityField2 AppointmentSequenceId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PsychometristInvoiceAmountFieldIndex.AppointmentSequenceId);}
+		}
+		/// <summary>Creates a new PsychometristInvoiceAmountEntity.InvoiceAmount field instance</summary>
+		public static EntityField2 InvoiceAmount
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PsychometristInvoiceAmountFieldIndex.InvoiceAmount);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity ReferralSourceEntity</summary>
 	public partial class ReferralSourceFields
 	{
