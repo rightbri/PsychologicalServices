@@ -41,7 +41,8 @@ export class CancellationStatistics {
                         'monthName': this.config.months[currentValue.month],
                         'appointmentCount': 0,
                         'billableCount': 0,
-                        'canceledCount': 0
+                        'canceledCount': 0,
+                        'lateCanceledCount': 0
                     };
 
                     accumulator.push(referralSourceMonth);
@@ -50,6 +51,7 @@ export class CancellationStatistics {
                 referralSourceMonth.appointmentCount += currentValue.appointmentCount;
                 referralSourceMonth.billableCount += currentValue.billableCount;
                 referralSourceMonth.canceledCount += currentValue.canceledCount;
+                referralSourceMonth.lateCanceledCount += currentValue.lateCanceledCount;
 
                 return accumulator;
             }.bind(this), []);
@@ -62,7 +64,8 @@ export class CancellationStatistics {
                         'referralSource': currentValue.referralSource,
                         'appointmentCount': 0,
                         'billableCount': 0,
-                        'canceledCount': 0
+                        'canceledCount': 0,
+                        'lateCanceledCount': 0
                     };
 
                     accumulator.push(referralSource);
@@ -71,6 +74,7 @@ export class CancellationStatistics {
                 referralSource.appointmentCount += currentValue.appointmentCount;
                 referralSource.billableCount += currentValue.billableCount;
                 referralSource.canceledCount += currentValue.canceledCount;
+                referralSource.lateCanceledCount += currentValue.lateCanceledCount;
 
                 return accumulator;
             }, []);
@@ -79,22 +83,26 @@ export class CancellationStatistics {
                 accumulator.appointmentCount += currentValue.appointmentCount;
                 accumulator.billableCount += currentValue.billableCount;
                 accumulator.canceledCount += currentValue.canceledCount;
+                accumulator.lateCanceledCount += currentValue.lateCanceledCount;
 
                 return accumulator;
             }, {
                 'appointmentCount': 0,
                 'billableCount': 0,
-                'canceledCount': 0
+                'canceledCount': 0,
+                'lateCanceledCount': 0
             });
 
             this.summary.percentBillable = this.summary.billableCount / this.summary.appointmentCount;
-            this.summary.percentCanceled = this.summary.canceledCount / this.summary.appointmentCount; 
+            this.summary.percentCanceled = this.summary.canceledCount / this.summary.appointmentCount;
+            this.summary.percentLateCanceled = this.summary.lateCanceledCount / this.summary.appointmentCount;
 
             for (let i = 0; i < this.referralSources.length; i++) {
                 let rs = this.referralSources[i];
 
                 rs.percentBillable = rs.billableCount / rs.appointmentCount;
                 rs.percentCanceled = rs.canceledCount / rs.appointmentCount;
+                rs.percentLateCanceled = rs.lateCanceledCount / rs.appointmentCount;
             }
 
             for (let i = 0; i < this.referralSourcesByMonth.length; i++) {
@@ -102,6 +110,7 @@ export class CancellationStatistics {
 
                 rsm.percentBillable = rsm.billableCount / rsm.appointmentCount;
                 rsm.percentCanceled = rsm.canceledCount / rsm.appointmentCount;
+                rsm.percentLateCanceled = rsm.lateCanceledCount / rsm.appointmentCount;
             }
 
         });

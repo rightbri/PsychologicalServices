@@ -37,6 +37,10 @@ BEGIN
 		WHEN AppointmentStatusId = @canceledStatusId THEN 1
 		ELSE 0
 	END AS CanceledCount
+	,CASE
+		WHEN AppointmentStatusId = @lateCancellationStatusId THEN 1
+		ELSE 0
+	END AS LateCanceledCount
 	FROM dbo.Assessments ass
 	INNER JOIN dbo.ReferralSources rs ON ass.ReferralSourceId = rs.ReferralSourceId
 	INNER JOIN dbo.AssessmentTypes t ON ass.AssessmentTypeId = t.AssessmentTypeId

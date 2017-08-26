@@ -19,7 +19,10 @@ BEGIN
 		END
 
 	DECLARE @psychologistInvoiceTypeId INT = 1,
-			@psychometristInvoiceTypeId INT = 2
+			@psychometristInvoiceTypeId INT = 2,
+			@localCompanyId INT = @companyId,
+			@localInvoiceTypeId INT = @invoiceTypeId,
+			@localStartSearch DATETIMEOFFSET = @startSearch
 
     --psychometrist months that need invoices
 	SELECT
@@ -63,9 +66,9 @@ BEGIN
 		AND i.PayableToId = psychometrists.UserId
 	)
 	AND (c.RowNum IS NULL OR c.RowNum = 1)
-	AND ass.CompanyId = @companyId
-	AND app.AppointmentTime >= @startSearch
-	AND (@invoiceTypeId IS NULL OR @invoiceTypeId = @psychometristInvoiceTypeId)
+	AND ass.CompanyId = @localCompanyId
+	AND app.AppointmentTime >= @localStartSearch
+	AND (@localInvoiceTypeId IS NULL OR @localInvoiceTypeId = @psychometristInvoiceTypeId)
 
 
 	UNION ALL
@@ -113,8 +116,8 @@ BEGIN
 		AND i.PayableToId = psychologists.UserId
 	)
 	AND (c.RowNum IS NULL OR c.RowNum = 1)
-	AND ass.CompanyId = @companyId
-	AND app.AppointmentTime >= @startSearch
-	AND (@invoiceTypeId IS NULL OR @invoiceTypeId = @psychologistInvoiceTypeId)
+	AND ass.CompanyId = @localCompanyId
+	AND app.AppointmentTime >= @localStartSearch
+	AND (@localInvoiceTypeId IS NULL OR @localInvoiceTypeId = @psychologistInvoiceTypeId)
 
 END

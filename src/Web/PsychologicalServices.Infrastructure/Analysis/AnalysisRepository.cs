@@ -58,6 +58,7 @@ namespace PsychologicalServices.Infrastructure.Analysis
                             AppointmentCount = Convert.ToInt32(row["AppointmentCount"]),
                             BillableCount = Convert.ToInt32(row["BillableCount"]),
                             CanceledCount = Convert.ToInt32(row["CanceledCount"]),
+                            LateCanceledCount = Convert.ToInt32(row["LateCanceledCount"]),
                         })
                     .ToList();
             }

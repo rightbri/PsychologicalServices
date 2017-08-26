@@ -19,5 +19,7 @@ namespace PsychologicalServices.Models.Analysis
         public int BillableCount { get; set; }
 
         public int CanceledCount { get; set; }
+
+        public int LateCanceledCount { get; set; }
     }
 }
