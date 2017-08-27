@@ -66,6 +66,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'invoice');
 	}
 	
+	searchOutstandingReports(criteria) {
+		return this.searchBasic(criteria, 'outstandingreport');
+	}
+
 	searchInvoiceableAppointmentData(criteria) {
 		return this.searchBasic(criteria, 'invoiceableappointmentdata');
 	}

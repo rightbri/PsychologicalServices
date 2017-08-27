@@ -1,0 +1,74 @@
+<template>
+	<require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/date-picker"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	<require from="flatpickr/flatpickr.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Outstanding Reports</legend>
+
+        <form class="uk-form-stacked">
+            
+            <div class="uk-margin">
+                <label class="uk-form-label" for="searchStart">Search for completed assessments on or after: (YTD if left blank)</label>
+                <div class="uk-form-controls">
+                    <input id="searchStart" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="dateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="daysOutstanding">Days outstanding (60 days if left blank)</label>
+                <div class="uk-form-controls">
+                    <input id="daysOutstanding" type="number" min="0" class="uk-input" value.bind="daysOutstanding" />
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div if.bind="outstandingReports">
+
+    <table class="uk-table uk-table-divider uk-table-striped" fixed-header>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Assessment Completed Date</th>
+                <th>Claimant</th>
+                <th>Referral Source</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="report of outstandingReports | sortArray:[{ property: 'appointmentTime', direction: 'asc' }]">
+                <td>
+                    <a route-href="route: editAssessment; params.bind: {'id': report.assessmentId }" class="uk-button uk-button-primary">
+                        Edit Assessment
+                    </a>
+                </td>
+                <td>${report.appointmentTime | dateFormat:config.longDateFormat}</td>
+                <td>${report.claimant}</td>
+                <td>${report.referralSource}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</template>

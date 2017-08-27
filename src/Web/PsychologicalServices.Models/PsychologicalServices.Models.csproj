@@ -68,6 +68,10 @@
     <Compile Include="Analysis\IAnalysisService.cs" />
     <Compile Include="Analysis\CompletionData.cs" />
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
+    <Compile Include="Outstanding\IOutstandingRepository.cs" />
+    <Compile Include="Outstanding\IOutstandingService.cs" />
+    <Compile Include="Outstanding\OutstandingReport.cs" />
+    <Compile Include="Outstanding\OutstandingReportSearchCriteria.cs" />
     <Compile Include="Appointments\Appointment.cs" />
     <Compile Include="Appointments\AppointmentExtensions.cs" />
     <Compile Include="Appointments\AppointmentSequence.cs" />
@@ -222,6 +226,7 @@
     <Compile Include="Notes\INoteValidator.cs" />
     <Compile Include="Notes\Note.cs" />
     <Compile Include="Notes\NoteValidator.cs" />
+    <Compile Include="Outstanding\OutstandingService.cs" />
     <Compile Include="Referrals\AppointmentStatusSetting.cs" />
     <Compile Include="Referrals\IReferralRepository.cs" />
     <Compile Include="Referrals\IReferralService.cs" />

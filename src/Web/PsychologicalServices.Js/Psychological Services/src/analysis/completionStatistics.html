@@ -35,9 +35,9 @@
 
 <hr>
 
-<div class="uk-container" if.bind="completionData">
+<div if.bind="completionData">
 
-    <ul uk-tab>
+    <ul uk-tab="swiping: false">
         <li>
             <a href="#" click.delegate="showTab(0)">Summary</a>
         </li>

@@ -35,13 +35,13 @@
 
 <hr>
 
-<div class="uk-container" if.bind="bookingData">
+<div if.bind="bookingData">
 
     <h3>Total bookings: ${bookingTotal}</h3>
 
     <hr>
 
-    <ul uk-tab>
+    <ul uk-tab="swiping: false">
         <li>
             <a href="#" click.delegate="showTab(0)">By Month</a>
         </li>

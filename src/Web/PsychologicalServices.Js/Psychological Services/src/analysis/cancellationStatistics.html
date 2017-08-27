@@ -34,9 +34,9 @@
 
 <hr>
 
-<div class="uk-container" if.bind="cancellationData">
+<div if.bind="cancellationData">
 
-    <ul uk-tab>
+    <ul uk-tab="swiping: false">
         <li>
             <a href="#" click.delegate="showTab(0)">Summary</a>
         </li>

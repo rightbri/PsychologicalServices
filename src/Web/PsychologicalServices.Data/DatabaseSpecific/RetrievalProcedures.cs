@@ -418,6 +418,110 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		}
 	
 
+		/// <summary>
+		/// Calls stored procedure 'OutstandingReports'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="daysOutstanding">Input parameter of stored procedure</param>
+		/// <param name="searchStart">Input parameter of stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable OutstandingReports(System.Int32 companyId, Nullable<System.Int32> daysOutstanding, Nullable<System.DateTimeOffset> searchStart)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return OutstandingReports(companyId, daysOutstanding, searchStart,  adapter);
+			}
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'OutstandingReports'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="daysOutstanding">Input parameter of stored procedure</param>
+		/// <param name="searchStart">Input parameter of stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable OutstandingReports(System.Int32 companyId, Nullable<System.Int32> daysOutstanding, Nullable<System.DateTimeOffset> searchStart, DataAccessAdapter adapter)
+		{
+			SqlParameter[] parameters = new SqlParameter[3];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+			parameters[1] = new SqlParameter("@daysOutstanding", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, daysOutstanding);
+			parameters[2] = new SqlParameter("@searchStart", SqlDbType.DateTimeOffset, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, searchStart);
+
+			DataTable toReturn = new DataTable("OutstandingReports");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[OutstandingReports]", parameters, toReturn);
+
+			return toReturn;
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'OutstandingReports'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="daysOutstanding">Input parameter of stored procedure</param>
+		/// <param name="searchStart">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable OutstandingReports(System.Int32 companyId, Nullable<System.Int32> daysOutstanding, Nullable<System.DateTimeOffset> searchStart, ref System.Int32 returnValue)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return OutstandingReports(companyId, daysOutstanding, searchStart, ref returnValue, adapter);
+			}
+		}
+	
+	
+		/// <summary>
+		/// Calls stored procedure 'OutstandingReports'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="daysOutstanding">Input parameter of stored procedure</param>
+		/// <param name="searchStart">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable OutstandingReports(System.Int32 companyId, Nullable<System.Int32> daysOutstanding, Nullable<System.DateTimeOffset> searchStart, ref System.Int32 returnValue, DataAccessAdapter adapter)
+		{
+			// create parameters. Add 1 to make room for the return value parameter.
+			SqlParameter[] parameters = new SqlParameter[3 + 1];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+			parameters[1] = new SqlParameter("@daysOutstanding", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, daysOutstanding);
+			parameters[2] = new SqlParameter("@searchStart", SqlDbType.DateTimeOffset, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, searchStart);
+
+			parameters[3] = new SqlParameter("RETURNVALUE", SqlDbType.Int, 0, ParameterDirection.ReturnValue, true, 10, 0, "",  DataRowVersion.Current, returnValue);
+			DataTable toReturn = new DataTable("OutstandingReports");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[OutstandingReports]", parameters, toReturn);
+
+
+			returnValue = (int)parameters[3].Value;
+			return toReturn;
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'OutstandingReports'.
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="daysOutstanding">Input parameter of stored procedure</param>
+		/// <param name="searchStart">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetOutstandingReportsCallAsQuery( System.Int32 companyId, Nullable<System.Int32> daysOutstanding, Nullable<System.DateTimeOffset> searchStart)
+		{
+			RetrievalQuery toReturn = new RetrievalQuery( new SqlCommand("[PsychologicalServices].[dbo].[OutstandingReports]" ) );
+			toReturn.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId));
+			toReturn.Parameters.Add(new SqlParameter("@daysOutstanding", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, daysOutstanding));
+			toReturn.Parameters.Add(new SqlParameter("@searchStart", SqlDbType.DateTimeOffset, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, searchStart));
+
+			toReturn.Command.CommandType = CommandType.StoredProcedure;
+			return toReturn;
+		}
+	
+
 		#region Included Code
 
 		#endregion
