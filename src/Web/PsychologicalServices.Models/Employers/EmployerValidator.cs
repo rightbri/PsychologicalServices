@@ -30,13 +30,21 @@ namespace PsychologicalServices.Models.Employers
                 );
             }
 
-            var employerTypes = _employerRepository.GetEmployerTypes(null);
-
-            if (!employerTypes.Any(et => et.EmployerTypeId == item.EmployerType.EmployerTypeId))
+            if (null == item.EmployerType)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "EmployerTypeId", Message = string.Format("Employer type '{0}' is not valid", item.EmployerType.EmployerTypeId) }
+                    new ValidationError { PropertyName = "EmployerTypeId", Message = "Employer type is required" }
                 );
+            }
+            else
+            {
+                var employerType = _employerRepository.GetEmployerType(item.EmployerType.EmployerTypeId);
+                if (null == employerType)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "EmployerTypeId", Message = string.Format("Employer type '{0}' is not valid", item.EmployerType.EmployerTypeId) }
+                    );
+                }
             }
             
             result.IsValid = !result.ValidationErrors.Any();

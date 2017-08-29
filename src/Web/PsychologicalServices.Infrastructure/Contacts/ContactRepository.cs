@@ -178,8 +178,25 @@ namespace PsychologicalServices.Infrastructure.Contacts
                 entity.LastName = contact.LastName;
                 entity.Email = contact.Email;
                 entity.ContactTypeId = contact.ContactType.ContactTypeId;
-                entity.EmployerId = contact.Employer.EmployerId;
-                entity.AddressId = contact.Address.AddressId;
+
+                if (null == contact.Employer)
+                {
+                    entity.SetNewFieldValue((int)ContactFieldIndex.EmployerId, null);
+                }
+                else
+                {
+                    entity.EmployerId = contact.Employer.EmployerId;
+                }
+                
+                if (null == contact.Address)
+                {
+                    entity.SetNewFieldValue((int)ContactFieldIndex.AddressId, null);
+                }
+                else
+                {
+                    entity.AddressId = contact.Address.AddressId;
+                }
+                
                 entity.IsActive = contact.IsActive;
                 
                 uow.AddForSave(entity);
