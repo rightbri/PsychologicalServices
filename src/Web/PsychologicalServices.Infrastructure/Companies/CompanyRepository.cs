@@ -33,6 +33,17 @@ namespace PsychologicalServices.Infrastructure.Companies
                     .Prefetch<UserEntity>(company => company.NewAppointmentPsychologist)
                     .Prefetch<UserEntity>(company => company.NewAppointmentPsychometrist)
                     .Prefetch<AppointmentStatusEntity>(company => company.NewAppointmentStatus)
+                    .Prefetch<AssessmentTypeEntity>(company => company.NewAssessmentAssessmentType)
+                        .SubPath(assessmentTypePath => assessmentTypePath
+                            .Prefetch<AssessmentTypeReportTypeEntity>(assessmentType => assessmentType.AssessmentTypeReportTypes)
+                                .SubPath(assessmentTypeReportTypePath => assessmentTypeReportTypePath
+                                    .Prefetch<ReportTypeEntity>(assessmentTypeReportType => assessmentTypeReportType.ReportType)
+                                )
+                            .Prefetch<AssessmentTypeAttributeTypeEntity>(assessmentType => assessmentType.AssessmentTypeAttributeTypes)
+                                .SubPath(assessmentTypeAttributeTypePath => assessmentTypeAttributeTypePath
+                                    .Prefetch<AttributeTypeEntity>(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType)
+                                )
+                        )
                     .Prefetch<ReportStatusEntity>(company => company.NewAssessmentReportStatus)
                 );
 
@@ -98,6 +109,7 @@ namespace PsychologicalServices.Infrastructure.Companies
                 entity.NewAppointmentPsychologistId = null != company.NewAppointmentPsychologist ? company.NewAppointmentPsychologist.UserId : (int?)null;
                 entity.NewAppointmentPsychometristId = null != company.NewAppointmentPsychometrist ? company.NewAppointmentPsychometrist.UserId : (int?)null;
                 entity.NewAppointmentStatusId = null != company.NewAppointmentStatus ? company.NewAppointmentStatus.AppointmentStatusId : (int?)null;
+                entity.NewAssessmentAssessmentTypeId = null != company.NewAssessmentAssessmentType ? company.NewAssessmentAssessmentType.AssessmentTypeId : (int?)null;
                 entity.NewAssessmentReportStatusId = null != company.NewAssessmentReportStatus ? company.NewAssessmentReportStatus.ReportStatusId : (int?)null;
                 entity.NewAssessmentSummaryNoteText = null != company.NewAssessmentSummary ? company.NewAssessmentSummary.NoteText : null;
 

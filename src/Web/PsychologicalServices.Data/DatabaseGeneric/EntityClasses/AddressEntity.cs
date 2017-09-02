@@ -50,8 +50,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		private EntityCollection<ContactTypeEntity> _contactTypesCollectionViaContacts;
-		private EntityCollection<EmployerEntity> _employerCollectionViaContacts;
+
+
+
+
 
 
 
@@ -98,10 +100,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			/// <summary>Member name ContactTypesCollectionViaContacts</summary>
-			public static readonly string ContactTypesCollectionViaContacts = "ContactTypesCollectionViaContacts";
-			/// <summary>Member name EmployerCollectionViaContacts</summary>
-			public static readonly string EmployerCollectionViaContacts = "EmployerCollectionViaContacts";
+
+
+
+
 
 
 
@@ -185,8 +187,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				_contactTypesCollectionViaContacts = (EntityCollection<ContactTypeEntity>)info.GetValue("_contactTypesCollectionViaContacts", typeof(EntityCollection<ContactTypeEntity>));
-				_employerCollectionViaContacts = (EntityCollection<EmployerEntity>)info.GetValue("_employerCollectionViaContacts", typeof(EntityCollection<EmployerEntity>));
+
+
+
+
 
 
 
@@ -271,16 +275,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				case "ContactTypesCollectionViaContacts":
-					this.ContactTypesCollectionViaContacts.IsReadOnly = false;
-					this.ContactTypesCollectionViaContacts.Add((ContactTypeEntity)entity);
-					this.ContactTypesCollectionViaContacts.IsReadOnly = true;
-					break;
-				case "EmployerCollectionViaContacts":
-					this.EmployerCollectionViaContacts.IsReadOnly = false;
-					this.EmployerCollectionViaContacts.Add((EmployerEntity)entity);
-					this.EmployerCollectionViaContacts.IsReadOnly = true;
-					break;
+
+
+
+
 
 
 
@@ -342,14 +340,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				case "ContactTypesCollectionViaContacts":
-					toReturn.Add(AddressEntity.Relations.ContactEntityUsingAddressId, "AddressEntity__", "Contact_", JoinHint.None);
-					toReturn.Add(ContactEntity.Relations.ContactTypeEntityUsingContactTypeId, "Contact_", string.Empty, JoinHint.None);
-					break;
-				case "EmployerCollectionViaContacts":
-					toReturn.Add(AddressEntity.Relations.ContactEntityUsingAddressId, "AddressEntity__", "Contact_", JoinHint.None);
-					toReturn.Add(ContactEntity.Relations.EmployerEntityUsingEmployerId, "Contact_", string.Empty, JoinHint.None);
-					break;
+
+
+
+
 
 
 
@@ -524,8 +518,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				info.AddValue("_contactTypesCollectionViaContacts", ((_contactTypesCollectionViaContacts!=null) && (_contactTypesCollectionViaContacts.Count>0) && !this.MarkedForDeletion)?_contactTypesCollectionViaContacts:null);
-				info.AddValue("_employerCollectionViaContacts", ((_employerCollectionViaContacts!=null) && (_employerCollectionViaContacts.Count>0) && !this.MarkedForDeletion)?_employerCollectionViaContacts:null);
+
+
+
+
 
 
 
@@ -640,27 +636,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'ContactType' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoContactTypesCollectionViaContacts()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("ContactTypesCollectionViaContacts"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.AddressId, "AddressEntity__"));
-			return bucket;
-		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Employer' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoEmployerCollectionViaContacts()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("EmployerCollectionViaContacts"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AddressFields.AddressId, null, ComparisonOperator.Equal, this.AddressId, "AddressEntity__"));
-			return bucket;
-		}
+
+
 
 
 
@@ -724,8 +702,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			collectionsQueue.Enqueue(this._contactTypesCollectionViaContacts);
-			collectionsQueue.Enqueue(this._employerCollectionViaContacts);
+
+
+
+
 
 
 
@@ -757,8 +737,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			this._contactTypesCollectionViaContacts = (EntityCollection<ContactTypeEntity>) collectionsQueue.Dequeue();
-			this._employerCollectionViaContacts = (EntityCollection<EmployerEntity>) collectionsQueue.Dequeue();
+
+
+
+
 
 
 
@@ -807,14 +789,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			if (this._contactTypesCollectionViaContacts != null)
-			{
-				return true;
-			}
-			if (this._employerCollectionViaContacts != null)
-			{
-				return true;
-			}
+
+
+
+
 
 
 
@@ -848,8 +826,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ContactTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ContactTypeEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<EmployerEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployerEntityFactory))) : null);
+
+
+
+
 
 
 
@@ -884,8 +864,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			toReturn.Add("ContactTypesCollectionViaContacts", _contactTypesCollectionViaContacts);
-			toReturn.Add("EmployerCollectionViaContacts", _employerCollectionViaContacts);
+
+
+
+
 
 
 
@@ -935,14 +917,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			if(_contactTypesCollectionViaContacts!=null)
-			{
-				_contactTypesCollectionViaContacts.ActiveContext = base.ActiveContext;
-			}
-			if(_employerCollectionViaContacts!=null)
-			{
-				_employerCollectionViaContacts.ActiveContext = base.ActiveContext;
-			}
+
+
+
+
 
 
 
@@ -978,8 +956,10 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-			_contactTypesCollectionViaContacts = null;
-			_employerCollectionViaContacts = null;
+
+
+
+
 
 
 
@@ -1171,33 +1151,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ContactType' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathContactTypesCollectionViaContacts
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = AddressEntity.Relations.ContactEntityUsingAddressId;
-				intermediateRelation.SetAliases(string.Empty, "Contact_");
-				return new PrefetchPathElement2(new EntityCollection<ContactTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ContactTypeEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.ContactTypeEntity, 0, null, null, GetRelationsForField("ContactTypesCollectionViaContacts"), null, "ContactTypesCollectionViaContacts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Employer' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathEmployerCollectionViaContacts
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = AddressEntity.Relations.ContactEntityUsingAddressId;
-				intermediateRelation.SetAliases(string.Empty, "Contact_");
-				return new PrefetchPathElement2(new EntityCollection<EmployerEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployerEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.AddressEntity, (int)PsychologicalServices.Data.EntityType.EmployerEntity, 0, null, null, GetRelationsForField("EmployerCollectionViaContacts"), null, "EmployerCollectionViaContacts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
+
+
 
 
 
@@ -1427,37 +1383,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'ContactTypeEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(ContactTypeEntity))]
-		public virtual EntityCollection<ContactTypeEntity> ContactTypesCollectionViaContacts
-		{
-			get
-			{
-				if(_contactTypesCollectionViaContacts==null)
-				{
-					_contactTypesCollectionViaContacts = new EntityCollection<ContactTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ContactTypeEntityFactory)));
-					_contactTypesCollectionViaContacts.IsReadOnly=true;
-				}
-				return _contactTypesCollectionViaContacts;
-			}
-		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'EmployerEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(EmployerEntity))]
-		public virtual EntityCollection<EmployerEntity> EmployerCollectionViaContacts
-		{
-			get
-			{
-				if(_employerCollectionViaContacts==null)
-				{
-					_employerCollectionViaContacts = new EntityCollection<EmployerEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployerEntityFactory)));
-					_employerCollectionViaContacts.IsReadOnly=true;
-				}
-				return _employerCollectionViaContacts;
-			}
-		}
+
+
 
 
 

@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.Addresses;
 using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Reports;
 using PsychologicalServices.Models.Users;
@@ -38,6 +39,8 @@ namespace PsychologicalServices.Models.Companies
         public User NewAppointmentPsychometrist { get; set; }
 
         public AppointmentStatus NewAppointmentStatus { get; set; }
+
+        public AssessmentType NewAssessmentAssessmentType { get; set; }
 
         public ReportStatus NewAssessmentReportStatus { get; set; }
 

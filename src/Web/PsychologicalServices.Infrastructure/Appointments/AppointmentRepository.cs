@@ -163,12 +163,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 .Add(company.NewAppointmentTime);
 
             var appointmentTimeOffset = _timezoneService.GetDateTimeOffset(appointmentTime, timezone);
-
-            var attributes = _attributeRepository.SearchAttributes(new AttributeSearchCriteria
-            {
-                AttributeTypeIds = new[] { 1, 3 },  //TODO: don't hard-code
-            });
-
+            
             return new Appointment
             {
                 AppointmentTime = appointmentTimeOffset.UtcDateTime,
@@ -176,7 +171,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 AppointmentStatus = company.NewAppointmentStatus,
                 Psychologist = company.NewAppointmentPsychologist,
                 Psychometrist = company.NewAppointmentPsychometrist,
-                Attributes = attributes.Select(attribute => new AttributeValue { Attribute = attribute }),
+                Attributes = Enumerable.Empty<AttributeValue>(),
             };
         }
 

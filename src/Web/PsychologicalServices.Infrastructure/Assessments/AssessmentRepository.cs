@@ -182,6 +182,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
             
             return new Assessment
             {
+                AssessmentType = company.NewAssessmentAssessmentType,
                 Appointments = new List<Appointment>(new[] { appointment }),
                 Arbitrations = Enumerable.Empty<Models.Arbitrations.Arbitration>(),
                 Attributes = Enumerable.Empty<Models.Attributes.AttributeValue>(),

@@ -211,6 +211,7 @@ namespace PsychologicalServices.Infrastructure.Attributes
                 }
 
                 attributeTypeEntity.Name = attributeType.Name;
+                attributeTypeEntity.ShowOnAppointment = attributeType.ShowOnAppointment;
                 attributeTypeEntity.IsActive = attributeType.IsActive;
 
                 var saved = adapter.SaveEntity(attributeTypeEntity, false);

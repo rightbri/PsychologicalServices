@@ -10,6 +10,8 @@ namespace PsychologicalServices.Models.Attributes
 
         public bool IsActive { get; set; }
 
+        public bool ShowOnAppointment { get; set; }
+
         public bool IsNew()
         {
             return AttributeTypeId == 0;

@@ -321,10 +321,11 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AttributeTypeEntity's mappings</summary>
 		private void InitAttributeTypeEntityMappings()
 		{
-			base.AddElementMapping( "AttributeTypeEntity", "PsychologicalServices", @"dbo", "AttributeTypes", 3 );
+			base.AddElementMapping( "AttributeTypeEntity", "PsychologicalServices", @"dbo", "AttributeTypes", 4 );
 			base.AddElementFieldMapping( "AttributeTypeEntity", "AttributeTypeId", "AttributeTypeId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AttributeTypeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "AttributeTypeEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
+			base.AddElementFieldMapping( "AttributeTypeEntity", "ShowOnAppointment", "ShowOnAppointment", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
 		}
 		/// <summary>Inits CalendarNoteEntity's mappings</summary>
 		private void InitCalendarNoteEntityMappings()
@@ -380,7 +381,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits CompanyEntity's mappings</summary>
 		private void InitCompanyEntityMappings()
 		{
-			base.AddElementMapping( "CompanyEntity", "PsychologicalServices", @"dbo", "Companies", 17 );
+			base.AddElementMapping( "CompanyEntity", "PsychologicalServices", @"dbo", "Companies", 18 );
 			base.AddElementFieldMapping( "CompanyEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "CompanyEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "CompanyEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
@@ -398,6 +399,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "CompanyEntity", "NewAssessmentSummaryNoteText", "NewAssessmentSummaryNoteText", true, (int)SqlDbType.NVarChar, 2147483647, 0, 0, false, "", null, typeof(System.String), 14 );
 			base.AddElementFieldMapping( "CompanyEntity", "Timezone", "Timezone", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 15 );
 			base.AddElementFieldMapping( "CompanyEntity", "ReplyToEmail", "ReplyToEmail", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 16 );
+			base.AddElementFieldMapping( "CompanyEntity", "NewAssessmentAssessmentTypeId", "NewAssessmentAssessmentTypeId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 17 );
 		}
 		/// <summary>Inits CompanyAttributeEntity's mappings</summary>
 		private void InitCompanyAttributeEntityMappings()

@@ -505,6 +505,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("ShowOnAppointment", fieldHashtable);
 		}
 		#endregion
 
@@ -623,6 +626,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AttributeTypeFieldIndex.IsActive, true); }
 			set	{ SetValue((int)AttributeTypeFieldIndex.IsActive, value); }
+		}
+
+		/// <summary> The ShowOnAppointment property of the Entity AttributeType<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AttributeTypes"."ShowOnAppointment"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean ShowOnAppointment
+		{
+			get { return (System.Boolean)GetValue((int)AttributeTypeFieldIndex.ShowOnAppointment, true); }
+			set	{ SetValue((int)AttributeTypeFieldIndex.ShowOnAppointment, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentTypeAttributeTypeEntity' which are related to this entity via a relation of type '1:n'.

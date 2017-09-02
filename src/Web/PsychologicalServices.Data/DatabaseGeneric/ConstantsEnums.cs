@@ -421,6 +421,8 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
+		///<summary>ShowOnAppointment. </summary>
+		ShowOnAppointment,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -567,6 +569,8 @@ namespace PsychologicalServices.Data
 		Timezone,
 		///<summary>ReplyToEmail. </summary>
 		ReplyToEmail,
+		///<summary>NewAssessmentAssessmentTypeId. </summary>
+		NewAssessmentAssessmentTypeId,
 		/// <summary></summary>
 		AmountOfFields
 	}

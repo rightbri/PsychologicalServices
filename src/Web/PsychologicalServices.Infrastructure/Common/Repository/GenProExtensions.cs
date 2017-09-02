@@ -452,6 +452,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     AttributeTypeId = attributeType.AttributeTypeId,
                     Name = attributeType.Name,
+                    ShowOnAppointment = attributeType.ShowOnAppointment,
                     IsActive = attributeType.IsActive,
                 }
                 : null;
@@ -830,6 +831,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NewAppointmentPsychologist = company.NewAppointmentPsychologist.ToUser(),
                     NewAppointmentPsychometrist = company.NewAppointmentPsychometrist.ToUser(),
                     NewAppointmentStatus = company.NewAppointmentStatus.ToAppointmentStatus(),
+                    NewAssessmentAssessmentType = company.NewAssessmentAssessmentType.ToAssessmentType(),
                     NewAssessmentReportStatus = company.NewAssessmentReportStatus.ToReportStatus(),
                     NewAssessmentSummary = new Note
                     {

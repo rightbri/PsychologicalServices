@@ -627,6 +627,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AttributeTypeFieldIndex.IsActive);}
 		}
+		/// <summary>Creates a new AttributeTypeEntity.ShowOnAppointment field instance</summary>
+		public static EntityField2 ShowOnAppointment
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AttributeTypeFieldIndex.ShowOnAppointment);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CalendarNoteEntity</summary>
@@ -871,6 +876,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 ReplyToEmail
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.ReplyToEmail);}
+		}
+		/// <summary>Creates a new CompanyEntity.NewAssessmentAssessmentTypeId field instance</summary>
+		public static EntityField2 NewAssessmentAssessmentTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAssessmentAssessmentTypeId);}
 		}
 	}
 

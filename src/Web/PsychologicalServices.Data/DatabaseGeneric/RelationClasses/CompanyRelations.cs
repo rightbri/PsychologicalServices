@@ -39,6 +39,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AddressEntityUsingNewAppointmentLocationId);
 			toReturn.Add(this.AddressEntityUsingAddressId);
 			toReturn.Add(this.AppointmentStatusEntityUsingNewAppointmentStatusId);
+			toReturn.Add(this.AssessmentTypeEntityUsingNewAssessmentAssessmentTypeId);
 			toReturn.Add(this.ReportStatusEntityUsingNewAssessmentReportStatusId);
 			toReturn.Add(this.UserEntityUsingNewAppointmentPsychometristId);
 			toReturn.Add(this.UserEntityUsingNewAppointmentPsychologistId);
@@ -161,6 +162,20 @@ namespace PsychologicalServices.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NewAppointmentStatus", false);
 				relation.AddEntityFieldPair(AppointmentStatusFields.AppointmentStatusId, CompanyFields.NewAppointmentStatusId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentStatusEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AssessmentTypeEntity over the m:1 relation they have, using the relation between the fields:
+		/// Company.NewAssessmentAssessmentTypeId - AssessmentType.AssessmentTypeId
+		/// </summary>
+		public virtual IEntityRelation AssessmentTypeEntityUsingNewAssessmentAssessmentTypeId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NewAssessmentAssessmentType", false);
+				relation.AddEntityFieldPair(AssessmentTypeFields.AssessmentTypeId, CompanyFields.NewAssessmentAssessmentTypeId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				return relation;
 			}

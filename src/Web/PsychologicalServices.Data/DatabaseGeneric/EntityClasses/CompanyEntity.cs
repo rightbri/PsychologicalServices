@@ -60,6 +60,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private AddressEntity _newAppointmentLocation;
 		private AddressEntity _address;
 		private AppointmentStatusEntity _newAppointmentStatus;
+		private AssessmentTypeEntity _newAssessmentAssessmentType;
 		private ReportStatusEntity _newAssessmentReportStatus;
 		private UserEntity _newAppointmentPsychometrist;
 		private UserEntity _newAppointmentPsychologist;
@@ -82,6 +83,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Address = "Address";
 			/// <summary>Member name NewAppointmentStatus</summary>
 			public static readonly string NewAppointmentStatus = "NewAppointmentStatus";
+			/// <summary>Member name NewAssessmentAssessmentType</summary>
+			public static readonly string NewAssessmentAssessmentType = "NewAssessmentAssessmentType";
 			/// <summary>Member name NewAssessmentReportStatus</summary>
 			public static readonly string NewAssessmentReportStatus = "NewAssessmentReportStatus";
 			/// <summary>Member name NewAppointmentPsychometrist</summary>
@@ -206,6 +209,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_newAppointmentStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_newAssessmentAssessmentType = (AssessmentTypeEntity)info.GetValue("_newAssessmentAssessmentType", typeof(AssessmentTypeEntity));
+				if(_newAssessmentAssessmentType!=null)
+				{
+					_newAssessmentAssessmentType.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_newAssessmentReportStatus = (ReportStatusEntity)info.GetValue("_newAssessmentReportStatus", typeof(ReportStatusEntity));
 				if(_newAssessmentReportStatus!=null)
 				{
@@ -254,6 +262,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case CompanyFieldIndex.NewAssessmentReportStatusId:
 					DesetupSyncNewAssessmentReportStatus(true, false);
 					break;
+				case CompanyFieldIndex.NewAssessmentAssessmentTypeId:
+					DesetupSyncNewAssessmentAssessmentType(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -284,6 +295,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "NewAppointmentStatus":
 					this.NewAppointmentStatus = (AppointmentStatusEntity)entity;
+					break;
+				case "NewAssessmentAssessmentType":
+					this.NewAssessmentAssessmentType = (AssessmentTypeEntity)entity;
 					break;
 				case "NewAssessmentReportStatus":
 					this.NewAssessmentReportStatus = (ReportStatusEntity)entity;
@@ -353,6 +367,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "NewAppointmentStatus":
 					toReturn.Add(CompanyEntity.Relations.AppointmentStatusEntityUsingNewAppointmentStatusId);
 					break;
+				case "NewAssessmentAssessmentType":
+					toReturn.Add(CompanyEntity.Relations.AssessmentTypeEntityUsingNewAssessmentAssessmentTypeId);
+					break;
 				case "NewAssessmentReportStatus":
 					toReturn.Add(CompanyEntity.Relations.ReportStatusEntityUsingNewAssessmentReportStatusId);
 					break;
@@ -416,6 +433,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 				case "NewAppointmentStatus":
 					return true;
+
 				case "NewAssessmentReportStatus":
 					return true;
 				case "NewAppointmentPsychometrist":
@@ -444,6 +462,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "NewAppointmentStatus":
 					SetupSyncNewAppointmentStatus(relatedEntity);
+					break;
+				case "NewAssessmentAssessmentType":
+					SetupSyncNewAssessmentAssessmentType(relatedEntity);
 					break;
 				case "NewAssessmentReportStatus":
 					SetupSyncNewAssessmentReportStatus(relatedEntity);
@@ -490,6 +511,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "NewAppointmentStatus":
 					DesetupSyncNewAppointmentStatus(false, true);
+					break;
+				case "NewAssessmentAssessmentType":
+					DesetupSyncNewAssessmentAssessmentType(false, true);
 					break;
 				case "NewAssessmentReportStatus":
 					DesetupSyncNewAssessmentReportStatus(false, true);
@@ -545,6 +569,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(_newAppointmentStatus!=null)
 			{
 				toReturn.Add(_newAppointmentStatus);
+			}
+			if(_newAssessmentAssessmentType!=null)
+			{
+				toReturn.Add(_newAssessmentAssessmentType);
 			}
 			if(_newAssessmentReportStatus!=null)
 			{
@@ -609,6 +637,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_newAppointmentLocation", (!this.MarkedForDeletion?_newAppointmentLocation:null));
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_newAppointmentStatus", (!this.MarkedForDeletion?_newAppointmentStatus:null));
+				info.AddValue("_newAssessmentAssessmentType", (!this.MarkedForDeletion?_newAssessmentAssessmentType:null));
 				info.AddValue("_newAssessmentReportStatus", (!this.MarkedForDeletion?_newAssessmentReportStatus:null));
 				info.AddValue("_newAppointmentPsychometrist", (!this.MarkedForDeletion?_newAppointmentPsychometrist:null));
 				info.AddValue("_newAppointmentPsychologist", (!this.MarkedForDeletion?_newAppointmentPsychologist:null));
@@ -730,6 +759,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentStatusFields.AppointmentStatusId, null, ComparisonOperator.Equal, this.NewAppointmentStatusId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'AssessmentType' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoNewAssessmentAssessmentType()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTypeFields.AssessmentTypeId, null, ComparisonOperator.Equal, this.NewAssessmentAssessmentTypeId));
 			return bucket;
 		}
 
@@ -917,6 +956,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("NewAppointmentLocation", _newAppointmentLocation);
 			toReturn.Add("Address", _address);
 			toReturn.Add("NewAppointmentStatus", _newAppointmentStatus);
+			toReturn.Add("NewAssessmentAssessmentType", _newAssessmentAssessmentType);
 			toReturn.Add("NewAssessmentReportStatus", _newAssessmentReportStatus);
 			toReturn.Add("NewAppointmentPsychometrist", _newAppointmentPsychometrist);
 			toReturn.Add("NewAppointmentPsychologist", _newAppointmentPsychologist);
@@ -991,6 +1031,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_newAppointmentStatus.ActiveContext = base.ActiveContext;
 			}
+			if(_newAssessmentAssessmentType!=null)
+			{
+				_newAssessmentAssessmentType.ActiveContext = base.ActiveContext;
+			}
 			if(_newAssessmentReportStatus!=null)
 			{
 				_newAssessmentReportStatus.ActiveContext = base.ActiveContext;
@@ -1033,6 +1077,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_newAppointmentLocation = null;
 			_address = null;
 			_newAppointmentStatus = null;
+			_newAssessmentAssessmentType = null;
 			_newAssessmentReportStatus = null;
 			_newAppointmentPsychometrist = null;
 			_newAppointmentPsychologist = null;
@@ -1103,6 +1148,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ReplyToEmail", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("NewAssessmentAssessmentTypeId", fieldHashtable);
 		}
 		#endregion
 
@@ -1197,6 +1245,39 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnNewAppointmentStatusPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _newAssessmentAssessmentType</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncNewAssessmentAssessmentType(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _newAssessmentAssessmentType, new PropertyChangedEventHandler( OnNewAssessmentAssessmentTypePropertyChanged ), "NewAssessmentAssessmentType", CompanyEntity.Relations.AssessmentTypeEntityUsingNewAssessmentAssessmentTypeId, true, signalRelatedEntity, "Company", resetFKFields, new int[] { (int)CompanyFieldIndex.NewAssessmentAssessmentTypeId } );		
+			_newAssessmentAssessmentType = null;
+		}
+
+		/// <summary> setups the sync logic for member _newAssessmentAssessmentType</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncNewAssessmentAssessmentType(IEntity2 relatedEntity)
+		{
+			if(_newAssessmentAssessmentType!=relatedEntity)
+			{
+				DesetupSyncNewAssessmentAssessmentType(true, true);
+				_newAssessmentAssessmentType = (AssessmentTypeEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _newAssessmentAssessmentType, new PropertyChangedEventHandler( OnNewAssessmentAssessmentTypePropertyChanged ), "NewAssessmentAssessmentType", CompanyEntity.Relations.AssessmentTypeEntityUsingNewAssessmentAssessmentTypeId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnNewAssessmentAssessmentTypePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1430,6 +1511,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentStatusEntityFactory))),
 					(IEntityRelation)GetRelationsForField("NewAppointmentStatus")[0], (int)PsychologicalServices.Data.EntityType.CompanyEntity, (int)PsychologicalServices.Data.EntityType.AppointmentStatusEntity, 0, null, null, null, null, "NewAppointmentStatus", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentType' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathNewAssessmentAssessmentType
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeEntityFactory))),
+					(IEntityRelation)GetRelationsForField("NewAssessmentAssessmentType")[0], (int)PsychologicalServices.Data.EntityType.CompanyEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, 0, null, null, null, null, "NewAssessmentAssessmentType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -1681,6 +1774,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)CompanyFieldIndex.ReplyToEmail, value); }
 		}
 
+		/// <summary> The NewAssessmentAssessmentTypeId property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."NewAssessmentAssessmentTypeId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> NewAssessmentAssessmentTypeId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)CompanyFieldIndex.NewAssessmentAssessmentTypeId, false); }
+			set	{ SetValue((int)CompanyFieldIndex.NewAssessmentAssessmentTypeId, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AssessmentEntity))]
@@ -1860,6 +1964,41 @@ namespace PsychologicalServices.Data.EntityClasses
 						if(_newAppointmentStatus!=value)
 						{
 							SetRelatedEntity((IEntity2)value, "NewAppointmentStatus");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'AssessmentTypeEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual AssessmentTypeEntity NewAssessmentAssessmentType
+		{
+			get
+			{
+				return _newAssessmentAssessmentType;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncNewAssessmentAssessmentType(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_newAssessmentAssessmentType != null)
+						{
+							_newAssessmentAssessmentType.UnsetRelatedEntity(this, "Company");
+						}
+					}
+					else
+					{
+						if(_newAssessmentAssessmentType!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Company");
 						}
 					}
 				}

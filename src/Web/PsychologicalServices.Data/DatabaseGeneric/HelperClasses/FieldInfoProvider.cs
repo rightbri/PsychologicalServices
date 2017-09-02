@@ -305,6 +305,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AttributeTypeEntity", "AttributeTypeId", typeof(System.Int32), true, false, true, false,  (int)AttributeTypeFieldIndex.AttributeTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("AttributeTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)AttributeTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("AttributeTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AttributeTypeFieldIndex.IsActive, 0, 0, 0);
+			base.AddElementFieldInfo("AttributeTypeEntity", "ShowOnAppointment", typeof(System.Boolean), false, false, false, false,  (int)AttributeTypeFieldIndex.ShowOnAppointment, 0, 0, 0);
 		}
 		/// <summary>Inits CalendarNoteEntity's FieldInfo objects</summary>
 		private void InitCalendarNoteEntityInfos()
@@ -372,6 +373,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("CompanyEntity", "NewAssessmentSummaryNoteText", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.NewAssessmentSummaryNoteText, 2147483647, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "Timezone", typeof(System.String), false, false, false, false,  (int)CompanyFieldIndex.Timezone, 50, 0, 0);
 			base.AddElementFieldInfo("CompanyEntity", "ReplyToEmail", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.ReplyToEmail, 100, 0, 0);
+			base.AddElementFieldInfo("CompanyEntity", "NewAssessmentAssessmentTypeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAssessmentAssessmentTypeId, 0, 0, 10);
 		}
 		/// <summary>Inits CompanyAttributeEntity's FieldInfo objects</summary>
 		private void InitCompanyAttributeEntityInfos()

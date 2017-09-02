@@ -63,7 +63,11 @@ export class EditAssessment {
 						.then(assessment => {
 							this.assessment = assessment;
 							
-							return this.getData(assessment).then(() => this.scroller.scrollTo(0));
+							return this.getData(assessment).then(() => {
+								this.assessmentTypeChanged();
+								
+								this.scroller.scrollTo(0);
+							});
 						});
 				}
 			});
@@ -479,19 +483,51 @@ export class EditAssessment {
 		let selectedAttributeTypes = (this.assessment && this.assessment.assessmentType) ? this.assessment.assessmentType.attributeTypes : [];
 		
 		//filter assessment attributes based on selected assessment type
-		let existingAttributes = this.assessment.attributes.filter(att => {
-			return selectedAttributeTypes.some(at => at.attributeTypeId === att.attribute.attributeType.attributeTypeId);
+		let existingAssessmentAttributes = this.assessment.attributes.filter(att => {
+			return selectedAttributeTypes.some(at =>
+				at.attributeTypeId === att.attribute.attributeType.attributeTypeId &&
+				!at.showOnAppointment
+			);
 		});
 		
 		//add new attributes to assessment from this.attributes where not present already in assessment.attributes collection
-		let newAttributes = this.attributes.filter(attribute => {
-			return !existingAttributes.some(existingAttributeValue => existingAttributeValue.attribute.attributeId === attribute.attributeId) &&
-				selectedAttributeTypes.some(attributeType => attributeType.attributeTypeId === attribute.attributeType.attributeTypeId);
+		let newAssessmentAttributes = this.attributes.filter(attribute => {
+			return !existingAssessmentAttributes.some(existingAttributeValue => existingAttributeValue.attribute.attributeId === attribute.attributeId) &&
+				selectedAttributeTypes.some(attributeType =>
+					attributeType.attributeTypeId === attribute.attributeType.attributeTypeId &&
+					!attributeType.showOnAppointment
+				);
 		}).map(function (attribute, index, array) {
 			return { 'attribute': attribute, 'value': null };
 		});
 		
-		this.assessment.attributes = existingAttributes.concat(newAttributes);
+		this.assessment.attributes = existingAssessmentAttributes.concat(newAssessmentAttributes);
+
+		//filter appointment attributes based on selected assessment type
+		for (let i = 0; i < this.assessment.appointments.length; i++) {
+			let appointment = this.assessment.appointments[i];
+
+			let existingAppointmentAttributes = appointment.attributes.filter(att => {
+				return selectedAttributeTypes.some(at =>
+					at.attributeTypeId === att.attribute.attributeType.attributeTypeId &&
+					at.showOnAppointment
+				);
+			});
+	
+			//add new attributes to appointment from this.attributes where not present already in appointment.attributes collection
+			let newAppointmentAttributes = this.attributes.filter(attribute => {
+				return !existingAppointmentAttributes.some(existingAttributeValue => existingAttributeValue.attribute.attributeId === attribute.attributeId) &&
+					selectedAttributeTypes.some(attributeType =>
+						attributeType.attributeTypeId === attribute.attributeType.attributeTypeId &&
+						attributeType.showOnAppointment
+					);
+			}).map(function (attribute, index, array) {
+				return { 'attribute': attribute, 'value': null };
+			});
+
+			appointment.attributes = existingAppointmentAttributes.concat(newAppointmentAttributes);
+		}
+		
 	}
 
 	summaryEditFocus(e) {

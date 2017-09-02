@@ -55,6 +55,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -70,6 +71,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			/// <summary>Member name Assessments</summary>
 			public static readonly string Assessments = "Assessments";
+
 
 
 
@@ -162,6 +164,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -218,6 +221,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					break;
 			}
@@ -243,6 +247,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessments":
 					toReturn.Add(ReportStatusEntity.Relations.AssessmentEntityUsingReportStatusId);
 					break;
+
 
 
 
@@ -384,6 +389,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -427,6 +433,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.ReportStatusId, null, ComparisonOperator.Equal, this.ReportStatusId));
 			return bucket;
 		}
+
 
 
 
@@ -488,6 +495,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -496,6 +504,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -536,6 +545,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -546,6 +556,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
+
 
 
 
@@ -572,6 +583,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
 			toReturn.Add("Assessments", _assessments);
+
 
 
 
@@ -615,6 +627,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -622,6 +635,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_assessments = null;
+
 
 
 
@@ -728,6 +742,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
@@ -800,6 +815,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _assessments;
 			}
 		}
+
 
 
 
