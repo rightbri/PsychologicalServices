@@ -68,6 +68,8 @@ export class App {
 			{ route: 'analysis/completion-statistics', name: 'completionStatistics', moduleId: 'analysis/completionStatistics', title: 'Completion Statistics', nav: true },
 			{ route: 'outstanding/reports', name: 'outstandingReports', moduleId: 'outstanding/outstandingReports', title: 'Outstanding Reports', nav: true }
 		]);
+		
+		this.context.getUser().then(user => this.user = user).then(() => this.isClaire = this.user.firstName === 'Claire');
 	}
 }
 
