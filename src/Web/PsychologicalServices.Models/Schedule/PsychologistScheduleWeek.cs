@@ -5,6 +5,6 @@ namespace PsychologicalServices.Models.Schedule
 {
     public class PsychologistScheduleWeek
     {
-        public IEnumerable<DateTime> Days { get; set; }
+        public IEnumerable<DateTimeOffset> Days { get; set; }
     }
 }

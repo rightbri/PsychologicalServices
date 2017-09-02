@@ -1,6 +1,7 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Arbitrations;
+using PsychologicalServices.Models.CalendarNotes;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Users;
@@ -16,6 +17,7 @@ namespace PsychologicalServices.Models.Schedule
         private readonly IUserRepository _userRepository = null;
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IArbitrationRepository _arbitrationRepository = null;
+        private readonly ICalendarNoteRepository _calendarNoteRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
         private readonly IScheduleHtmlGenerator _scheduleHtmlGenerator = null;
         private readonly IHtmlToPdfService _htmlToPdfService = null;
@@ -27,6 +29,7 @@ namespace PsychologicalServices.Models.Schedule
             IUserRepository userRepository,
             IAppointmentRepository appointmentRepository,
             IArbitrationRepository arbitrationRepository,
+            ICalendarNoteRepository calendarNoteRepository,
             ICompanyRepository companyRepository,
             IScheduleHtmlGenerator scheduleHtmlGenerator,
             IHtmlToPdfService htmlToPdfService,
@@ -38,6 +41,7 @@ namespace PsychologicalServices.Models.Schedule
             _userRepository = userRepository;
             _appointmentRepository = appointmentRepository;
             _arbitrationRepository = arbitrationRepository;
+            _calendarNoteRepository = calendarNoteRepository;
             _companyRepository = companyRepository;
             _scheduleHtmlGenerator = scheduleHtmlGenerator;
             _htmlToPdfService = htmlToPdfService;
@@ -173,10 +177,18 @@ namespace PsychologicalServices.Models.Schedule
                 EndDate = parameters.ToDate,
             };
 
+            var calendarNoteSearchCriteria = new CalendarNoteSearchCriteria
+            {
+                CompanyId = result.Psychologist.Company.CompanyId,
+                FromDate = parameters.FromDate,
+                ToDate = parameters.ToDate,
+            };
+            
             var model = new PsychologistScheduleModel
             {
                 Appointments = _appointmentRepository.GetAppointments(appointmentSearchCriteria),
                 Arbitrations = _arbitrationRepository.GetArbitrations(arbitrationSearchCriteria),
+                CalendarNotes = _calendarNoteRepository.GetCalendarNotes(calendarNoteSearchCriteria),
                 Psychologist = _userRepository.GetUserById(parameters.PsychologistId),
                 FromDate = result.FromDate,
                 ToDate = result.ToDate,

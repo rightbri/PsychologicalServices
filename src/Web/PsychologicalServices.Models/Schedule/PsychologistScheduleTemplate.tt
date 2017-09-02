@@ -54,6 +54,12 @@
 						arbitration.AvailableDate >= day &&
 						arbitration.AvailableDate < day.AddDays(1)
 					);
+
+				var calendarNotes = Model.CalendarNotes
+					.Where(calendarNote =>
+						calendarNote.FromDate < day.AddDays(1) &&
+						calendarNote.ToDate >= day
+					);
 				#>
 				<tr><!-- Day -->
 					<td style="<#= dayCellStyles #>">
@@ -69,6 +75,11 @@
 						<# foreach (var arbitration in arbitrationAvailables) { #>
 							<li style="<#= smallListItemStyles #>">
 								<span style="<#= arbitrationLabelStyles #>">Arbitration</span> <#= arbitration.Title #> date given
+							</li>
+						<# } #>
+						<# foreach (var calendarNote in calendarNotes) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= calendarNote.Note.NoteText #>
 							</li>
 						<# } #>
 						</ul>

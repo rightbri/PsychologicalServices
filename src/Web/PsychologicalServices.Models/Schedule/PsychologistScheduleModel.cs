@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Arbitrations;
+using PsychologicalServices.Models.CalendarNotes;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Users;
 using System;
@@ -10,7 +11,7 @@ namespace PsychologicalServices.Models.Schedule
 {
     public class PsychologistScheduleModel
     {
-        private List<DateTime> _days = null;
+        private List<DateTimeOffset> _days = null;
 
         public User Psychologist { get; set; }
 
@@ -21,6 +22,8 @@ namespace PsychologicalServices.Models.Schedule
         public IEnumerable<Appointment> Appointments { get; set; }
 
         public IEnumerable<Arbitration> Arbitrations { get; set; }
+
+        public IEnumerable<CalendarNote> CalendarNotes { get; set; }
 
         public string DisplayTimezoneId { get; set; }
 
@@ -39,8 +42,7 @@ namespace PsychologicalServices.Models.Schedule
                         Day = day
                     })
                     .GroupBy(keySelector => keySelector.Week)
-                    .Select(grouping =>
-                        new PsychologistScheduleWeek
+                    .Select(grouping => new PsychologistScheduleWeek
                         {
                             Days =
                             grouping.Where(item =>
@@ -48,22 +50,21 @@ namespace PsychologicalServices.Models.Schedule
                                 item.Day.DayOfWeek <= DayOfWeek.Friday
                             )
                             .Select(item => item.Day)
-                        }
-                    );
+                        });
             }
         }
 
-        public IEnumerable<DateTime> Days
+        public IEnumerable<DateTimeOffset> Days
         {
             get
             {
                 if (null == _days)
                 {
-                    _days = new List<DateTime>();
+                    _days = new List<DateTimeOffset>();
 
-                    var day = FromDate.DateTime;
+                    var day = FromDate;
 
-                    while (day <= ToDate.DateTime)
+                    while (day <= ToDate)
                     {
                         _days.Add(day);
 
