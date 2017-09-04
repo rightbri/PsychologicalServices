@@ -350,6 +350,10 @@ export class DataRepository {
 	searchUsers(criteria) {
 		return this.searchBasic(criteria, 'user');
 	}
+
+	searchUnavailability(criteria) {
+		return this.searchBasic(criteria, 'userunavailability');
+	}
 	
 	getRoles() {
 		return this.getManyBasic('role', true);

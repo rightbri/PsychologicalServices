@@ -4,6 +4,7 @@
 	<require from="resources/value-converters/boolean"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/note-for-day"></require>
+	<require from="resources/value-converters/unavailable-for-day"></require>
 	<require from="resources/value-converters/arbitration-starting"></require>
 	<require from="resources/value-converters/arbitration-availability"></require>
 	<require from="resources/value-converters/appointment-for-day"></require>
@@ -79,21 +80,22 @@
 					</a>
 				</td>
 				<td colspan="7">
-					<p class="arbitration" repeat.for="arbitration of arbitrations | arbitrationStarting:day.date">
-						<small>
+					<ul class="uk-list smaller-children">
+						<li class="arbitration" repeat.for="arbitration of arbitrations | arbitrationStarting:day.date">
 							<span class="uk-label">Arbitration</span>
 							${arbitration.title} starting
-						</small>
-					</p>
-					<p class="arbitration" repeat.for="arbitration of arbitrations | arbitrationAvailability:day.date">
-						<small>
+						</li>
+						<li class="arbitration" repeat.for="arbitration of arbitrations | arbitrationAvailability:day.date">
 							<span class="uk-label">Arbitration</span>
 							${arbitration.title} date given
-						</small>
-					</p>
-					<p class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day.date">
-						<small>${calendarNote.note.noteText}</small>
-					</p>
+						</li>
+						<li class="calendar-note" repeat.for="calendarNote of calendarNotes | noteForDay:day.date">
+							${calendarNote.note.noteText}
+						</li>
+						<li class="unavailability" repeat.for="unavailability of unavailabilities | unavailableForDay:day.date">
+							${unavailability.firstName} Unavailable
+						</li>
+					</ul>
 				</td>
 			</tr>
 			<template repeat.for="appointment of appointments | appointmentInStatuses:appointmentStatusIds | appointmentForDay:day.date | sortArray:{ property: 'appointmentTime', direction: 'asc' } & signal:'appointment-status-filter'">

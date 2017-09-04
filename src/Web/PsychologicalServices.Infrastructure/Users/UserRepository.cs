@@ -1,14 +1,11 @@
 ﻿using PsychologicalServices.Data;
 using PsychologicalServices.Data.EntityClasses;
-using PsychologicalServices.Data.HelperClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Common.Configuration;
 using PsychologicalServices.Models.Common.Utility;
-using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Rights;
-using PsychologicalServices.Models.Roles;
 using PsychologicalServices.Models.Schedule;
 using PsychologicalServices.Models.Users;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -85,6 +82,12 @@ namespace PsychologicalServices.Infrastructure.Users
                             .Prefetch<CityEntity>(address => address.City)
                         )
                 );
+
+            private static readonly Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>>
+                UserUnavailabilityPath =
+                    (uPath => uPath
+                        .Prefetch<UserUnavailabilityEntity>(user => user.UserUnavailabilities)
+                    );
 
         private Func<IPathEdgeRootParser<UserEntity>, IPathEdgeRootParser<UserEntity>> GetPsychometristSchedulePath(
             PsychometristScheduleSearchCriteria criteria
@@ -403,6 +406,50 @@ namespace PsychologicalServices.Infrastructure.Users
                         users
                     )
                     .Select(entity => entity.ToPsychometristScheduleUser())
+                    .ToList();
+            }
+        }
+        
+        public IEnumerable<User> GetUsersWithUnavailability(UnavailabilitySearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var users = meta.User
+                    .WithPath(UserUnavailabilityPath);
+
+                if (null != criteria)
+                {
+                    if (criteria.CompanyId.HasValue)
+                    {
+                        users = users.Where(user => user.CompanyId == criteria.CompanyId.Value);
+                    }
+
+                    if (criteria.UnavailabilityStart.HasValue)
+                    {
+                        users = users.Where(user =>
+                            user.UserUnavailabilities.Any(unavailability =>
+                                unavailability.StartDate >= criteria.UnavailabilityStart.Value
+                            )
+                        );
+                    }
+
+                    if (criteria.UnavailabilityEnd.HasValue)
+                    {
+                        users = users.Where(user =>
+                            user.UserUnavailabilities.Any(unavailability =>
+                                unavailability.StartDate < criteria.UnavailabilityEnd.Value
+                            )
+                        );
+                    }
+                }
+
+                return Execute<UserEntity>(
+                        (ILLBLGenProQuery)
+                        users
+                    )
+                    .Select(user => user.ToUser())
                     .ToList();
             }
         }

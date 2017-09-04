@@ -22,6 +22,8 @@ namespace PsychologicalServices.Models.Users
 
         IEnumerable<User> GetPsychometristSchedules(PsychometristScheduleSearchCriteria criteria);
 
+        IEnumerable<User> GetUsersWithUnavailability(UnavailabilitySearchCriteria criteria);
+
         int SaveUser(User user);
     }
 }

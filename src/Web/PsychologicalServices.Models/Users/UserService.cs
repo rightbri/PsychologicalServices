@@ -44,6 +44,13 @@ namespace PsychologicalServices.Models.Users
             return users;
         }
 
+        public IEnumerable<User> GetUsersWithUnavailability(UnavailabilitySearchCriteria criteria)
+        {
+            var users = _userRepository.GetUsersWithUnavailability(criteria);
+
+            return users;
+        }
+
         public IEnumerable<User> GetPsychometrists(int? companyId = null)
         {
             var psychometrists = _userRepository.GetPsychometrists(companyId);

@@ -155,18 +155,23 @@ export class Calendar {
 				this.dataRepository.getCalendarNotes({
 					'fromDate': this.searchStart,
 					'toDate': this.searchEnd,
-					'companyId': this.user.company.companyId
+					'companyId': this.searchCompany
 				}).then(data => this.calendarNotes = data),
 				this.dataRepository.getArbitrations({
 					'startDate': this.searchStart,
 					'endDate': this.searchEnd,
-					'companyId': this.user.company.companyId
+					'companyId': this.searchCompany
 				}).then(data => this.arbitrations = data),
+				this.dataRepository.searchUnavailability({
+					'unavailabilityStart': this.searchStart,
+					'unavailabilityEnd': this.searchEnd,
+					'companyId': this.searchCompany
+				}).then(data => this.unavailabilities = data),
 				this.dataRepository.searchAppointments({
-					appointmentStatusIds: this.searchStatuses,
-					appointmentTimeStart: this.searchStart,
-					appointmentTimeEnd: this.searchEnd,
-					companyId: this.searchCompany
+					'appointmentStatusIds': this.searchStatuses,
+					'appointmentTimeStart': this.searchStart,
+					'appointmentTimeEnd': this.searchEnd,
+					'companyId': this.searchCompany
 				}).then(data => this.appointments = data)
 				.then(appointments => {
 					appointments.forEach(appointment => {
