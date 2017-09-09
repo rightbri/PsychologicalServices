@@ -530,7 +530,7 @@ namespace PsychologicalServices.Models.Test.Invoices
         [TestMethod]
         public void GetInvoiceTotalSumsInvoiceLinesAndAddsTax()
         {
-            var taxRate = 0.15m;
+            var taxRate = 0.147m;
             
             var invoice = new Invoice
             {
@@ -544,12 +544,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                             {
                                 new InvoiceLine
                                 {
-                                    Amount = 10000,
+                                    Amount = 15000,
                                     Description = "Psychological Assessment",
                                 },
                                 new InvoiceLine
                                 {
-                                    Amount = 7500,
+                                    Amount = 7555,
                                     Description = "Travel to London",
                                 },
                             }
@@ -570,7 +570,9 @@ namespace PsychologicalServices.Models.Test.Invoices
             
             var psychometristInvoiceGenerator = GetService();
 
-            var expected = Convert.ToInt32(50500 * (1 + taxRate));
+            var expectedSubtotal = 55555 * (1 + taxRate);
+
+            var expected = Convert.ToInt32(Math.Round(expectedSubtotal));
 
             var actual = psychometristInvoiceGenerator.GetInvoiceTotal(invoice);
 
