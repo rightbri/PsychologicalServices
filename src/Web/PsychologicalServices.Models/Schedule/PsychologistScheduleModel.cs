@@ -28,7 +28,7 @@ namespace PsychologicalServices.Models.Schedule
         public string DisplayTimezoneId { get; set; }
 
         public ITimezoneService TimezoneService { get; set; }
-
+        
         public IEnumerable<PsychologistScheduleWeek> Weeks
         {
             get
@@ -45,11 +45,11 @@ namespace PsychologicalServices.Models.Schedule
                     .Select(grouping => new PsychologistScheduleWeek
                         {
                             Days =
-                            grouping.Where(item =>
-                                item.Day.DayOfWeek >= DayOfWeek.Monday &&
-                                item.Day.DayOfWeek <= DayOfWeek.Friday
-                            )
-                            .Select(item => item.Day)
+                                grouping.Where(item =>
+                                    item.Day.DayOfWeek >= DayOfWeek.Monday &&
+                                    item.Day.DayOfWeek <= DayOfWeek.Friday
+                                )
+                                .Select(item => GetPsychologistScheduleDay(item.Day)),
                         });
             }
         }
@@ -74,6 +74,30 @@ namespace PsychologicalServices.Models.Schedule
 
                 return _days;
             }
+        }
+
+        public PsychologistScheduleDay GetPsychologistScheduleDay(DateTimeOffset day)
+        {
+            var appointments = Appointments
+                                    .Where(app =>
+                                        app.AppointmentTime.IsSameDay(day) &&
+                                        app.Assessment.AssessmentType.ShowOnSchedule
+                                    );
+
+            var arbitrationsStarting = Arbitrations.Where(arbitration => arbitration.StartDate.IsSameDay(day));
+
+            var arbitrationsDateGiven = Arbitrations.Where(arbitration => arbitration.AvailableDate.IsSameDay(day));
+
+            var calendarNotes = CalendarNotes.Where(calendarNote => calendarNote.AppliesToDay(day));
+
+            return new PsychologistScheduleDay
+            {
+                Day = day,
+                Appointments = appointments.OrderBy(appointment => appointment.AppointmentTime),
+                ArbitrationsStarting = arbitrationsStarting.OrderBy(arbitration => arbitration.StartDate),
+                ArbitrationsDateGiven = arbitrationsDateGiven.OrderBy(arbitration => arbitration.AvailableDate),
+                CalendarNotes = calendarNotes.OrderBy(calendarNote => calendarNote.FromDate).ThenBy(calendarNote => calendarNote.ToDate),
+            };
         }
     }
 }

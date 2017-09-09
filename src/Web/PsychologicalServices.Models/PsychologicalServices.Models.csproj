@@ -68,6 +68,7 @@
     <Compile Include="Analysis\IAnalysisService.cs" />
     <Compile Include="Analysis\CompletionData.cs" />
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
+    <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
     <Compile Include="Outstanding\IOutstandingRepository.cs" />
     <Compile Include="Outstanding\IOutstandingService.cs" />
     <Compile Include="Outstanding\OutstandingReport.cs" />
@@ -157,7 +158,7 @@
     <Compile Include="Common\Utility\ITimezoneService.cs" />
     <Compile Include="Common\Utility\MailResult.cs" />
     <Compile Include="Common\Utility\MailService.cs" />
-    <Compile Include="Common\Utility\ModelExtensions.cs" />
+    <Compile Include="Common\Utility\DateExtensions.cs" />
     <Compile Include="Common\Utility\Date.cs" />
     <Compile Include="Common\Utility\TimezoneService.cs" />
     <Compile Include="Common\Validation\IValidationError.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Roles\RoleService.cs" />
     <Compile Include="Schedule\IScheduleHtmlGenerator.cs" />
     <Compile Include="Schedule\IScheduleService.cs" />
+    <Compile Include="Schedule\PsychologistScheduleDay.cs" />
     <Compile Include="Schedule\PsychologistScheduleWeek.cs" />
     <Compile Include="Schedule\PsychometristScheduleTemplate.cs">
       <AutoGen>True</AutoGen>

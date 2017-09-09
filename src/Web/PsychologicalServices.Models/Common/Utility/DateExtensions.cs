@@ -2,7 +2,7 @@
 
 namespace PsychologicalServices.Models.Common.Utility
 {
-    public static class ModelExtensions
+    public static class DateExtensions
     {
         public static int YearsFrom(this DateTimeOffset d1, DateTimeOffset d2)
         {
@@ -71,6 +71,13 @@ namespace PsychologicalServices.Models.Common.Utility
         public static DateTime EndOfDay(this DateTime date)
         {
             return StartOfDay(date).AddDays(1).AddSeconds(-1);
+        }
+        
+        public static bool IsSameDay(this DateTimeOffset day, DateTimeOffset dayCompare)
+        {
+            return
+                day >= dayCompare &&
+                day < dayCompare.AddDays(1);
         }
     }
 }

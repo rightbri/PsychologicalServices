@@ -5,7 +5,7 @@ using PsychologicalServices.Models.Common.Utility;
 namespace PsychologicalServices.Models.Test.Common.Utility
 {
     [TestClass]
-    public class CommonUtilityModelExtensionsTests
+    public class DateExtensionsTests
     {
         [TestMethod]
         public void StartOfWeekForSundayIsTheFollowingMonday()
@@ -81,6 +81,63 @@ namespace PsychologicalServices.Models.Test.Common.Utility
             var expected = date.AddDays(-1);
 
             var actual = date.EndOfWeek();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestMethod]
+        public void IsSameDayReturnsFalseWhenDayIsBeforeCompareDay()
+        {
+            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
+
+            var day = new DateTimeOffset(2017, 9, 9, 4, 59, 59, TimeSpan.Zero);
+
+            var expected = false;
+
+            var actual = day.IsSameDay(compareDay);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void IsSameDayReturnsFalseWhenDayIsAfterCompareDay()
+        {
+            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
+
+            var day = new DateTimeOffset(2017, 9, 10, 5, 0, 0, TimeSpan.Zero);
+
+            var expected = false;
+
+            var actual = day.IsSameDay(compareDay);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void IsSameDayReturnsTrueWhenDayIsEqualToBeginningOfCompareDay()
+        {
+            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
+
+            var day = new DateTimeOffset(2017, 9, 9, 5, 0, 0, TimeSpan.Zero);
+
+            var expected = true;
+
+            var actual = day.IsSameDay(compareDay);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void IsSameDayReturnsTrueWhenDayIsEqualToEndOfCompareDay()
+        {
+            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
+
+            var day = new DateTimeOffset(2017, 9, 10, 4, 59, 59, TimeSpan.Zero);
+
+            var expected = true;
+
+            var actual = day.IsSameDay(compareDay);
 
             Assert.AreEqual(expected, actual);
         }

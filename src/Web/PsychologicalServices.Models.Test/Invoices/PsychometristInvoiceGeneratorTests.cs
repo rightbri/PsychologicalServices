@@ -572,7 +572,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var expectedSubtotal = 55555 * (1 + taxRate);
 
-            var expected = Convert.ToInt32(Math.Round(expectedSubtotal));
+            var expected = Convert.ToInt32(expectedSubtotal);
 
             var actual = psychometristInvoiceGenerator.GetInvoiceTotal(invoice);
 

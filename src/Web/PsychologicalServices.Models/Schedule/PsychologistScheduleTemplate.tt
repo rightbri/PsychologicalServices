@@ -42,42 +42,23 @@
 			</thead>
 			<tbody>
 			<# foreach (var day in week.Days) { #>
-				<#
-				var arbitrationStarts = Model.Arbitrations
-					.Where(arbitration =>
-						arbitration.StartDate >= day &&
-						arbitration.StartDate < day.AddDays(1)
-					);
-
-				var arbitrationAvailables = Model.Arbitrations
-					.Where(arbitration =>
-						arbitration.AvailableDate >= day &&
-						arbitration.AvailableDate < day.AddDays(1)
-					);
-
-				var calendarNotes = Model.CalendarNotes
-					.Where(calendarNote =>
-						calendarNote.FromDate < day.AddDays(1) &&
-						calendarNote.ToDate >= day
-					);
-				#>
 				<tr><!-- Day -->
 					<td style="<#= dayCellStyles #>">
-						<#= string.Format("{0:dddd MMMM d, yyyy}", day) #>
+						<#= string.Format("{0:dddd MMMM d, yyyy}", day.Day) #>
 					</td>
 					<td colspan="6" style="<#= dayNoteCellStyles #>">
 						<ul style="<#= listStyles #>">
-						<# foreach (var arbitration in arbitrationStarts) { #>
+						<# foreach (var arbitration in day.ArbitrationsStarting) { #>
 							<li style="<#= smallListItemStyles #>">
 								<span style="<#= arbitrationLabelStyles #>">Arbitration</span> <#= arbitration.Title #> starting
 							</li>
 						<# } #>
-						<# foreach (var arbitration in arbitrationAvailables) { #>
+						<# foreach (var arbitration in day.ArbitrationsDateGiven) { #>
 							<li style="<#= smallListItemStyles #>">
 								<span style="<#= arbitrationLabelStyles #>">Arbitration</span> <#= arbitration.Title #> date given
 							</li>
 						<# } #>
-						<# foreach (var calendarNote in calendarNotes) { #>
+						<# foreach (var calendarNote in day.CalendarNotes) { #>
 							<li style="<#= smallListItemStyles #>">
 								<#= calendarNote.Note.NoteText #>
 							</li>
@@ -86,14 +67,7 @@
 					</td>
 				</tr>
 				<#
-				var appointments = Model.Appointments
-					.Where(app =>
-						app.AppointmentTime > day &&
-						app.AppointmentTime < day.AddDays(1) &&
-						app.Assessment.AssessmentType.ShowOnSchedule
-					);
-
-				foreach (var appointment in appointments) {
+				foreach (var appointment in day.Appointments) {
 					var time = Model.TimezoneService.ConvertTime(appointment.AppointmentTime, timezone);
 					var hasNotes = appointment.Assessment.AssessmentNotes.Any();
 					var bodyCellBorderStyles = hasNotes ? "border-style: none;" : "border-style: none none solid none;";
