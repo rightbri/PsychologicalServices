@@ -183,12 +183,20 @@ namespace PsychologicalServices.Models.Schedule
                 FromDate = parameters.FromDate,
                 ToDate = parameters.ToDate,
             };
+
+            var unavailabilitySearchCriteria = new UnavailabilitySearchCriteria
+            {
+                CompanyId = result.Psychologist.Company.CompanyId,
+                UnavailabilityStart = parameters.FromDate,
+                UnavailabilityEnd = parameters.ToDate,
+            };
             
             var model = new PsychologistScheduleModel
             {
                 Appointments = _appointmentRepository.GetAppointments(appointmentSearchCriteria),
                 Arbitrations = _arbitrationRepository.GetArbitrations(arbitrationSearchCriteria),
                 CalendarNotes = _calendarNoteRepository.GetCalendarNotes(calendarNoteSearchCriteria),
+                UsersWithUnavailability = _userRepository.GetUsersWithUnavailability(unavailabilitySearchCriteria),
                 Psychologist = _userRepository.GetUserById(parameters.PsychologistId),
                 FromDate = result.FromDate,
                 ToDate = result.ToDate,

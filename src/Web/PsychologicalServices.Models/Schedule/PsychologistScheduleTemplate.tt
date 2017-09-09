@@ -63,6 +63,11 @@
 								<#= calendarNote.Note.NoteText #>
 							</li>
 						<# } #>
+						<# foreach (var user in day.UnavailableUsers) { #>
+							<li style="<#= smallListItemStyles #>">
+								<#= user.FirstName #> Unavailable
+							</li>
+						<# } #>
 						</ul>
 					</td>
 				</tr>

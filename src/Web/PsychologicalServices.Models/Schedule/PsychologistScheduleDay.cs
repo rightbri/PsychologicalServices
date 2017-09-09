@@ -14,5 +14,7 @@ namespace PsychologicalServices.Models.Schedule
         public IEnumerable<Arbitrations.Arbitration> ArbitrationsDateGiven { get; set; }
 
         public IEnumerable<CalendarNotes.CalendarNote> CalendarNotes { get; set; }
+
+        public IEnumerable<Users.User> UnavailableUsers { get; set; }
     }
 }

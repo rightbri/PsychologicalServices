@@ -25,6 +25,8 @@ namespace PsychologicalServices.Models.Schedule
 
         public IEnumerable<CalendarNote> CalendarNotes { get; set; }
 
+        public IEnumerable<User> UsersWithUnavailability { get; set; }
+
         public string DisplayTimezoneId { get; set; }
 
         public ITimezoneService TimezoneService { get; set; }
@@ -90,6 +92,8 @@ namespace PsychologicalServices.Models.Schedule
 
             var calendarNotes = CalendarNotes.Where(calendarNote => calendarNote.AppliesToDay(day));
 
+            var unavailableUsers = UsersWithUnavailability.Where(user => user.Unavailability.Any(unavailability => unavailability.StartDate.IsSameDay(day)));
+
             return new PsychologistScheduleDay
             {
                 Day = day,
@@ -97,6 +101,7 @@ namespace PsychologicalServices.Models.Schedule
                 ArbitrationsStarting = arbitrationsStarting.OrderBy(arbitration => arbitration.StartDate),
                 ArbitrationsDateGiven = arbitrationsDateGiven.OrderBy(arbitration => arbitration.AvailableDate),
                 CalendarNotes = calendarNotes.OrderBy(calendarNote => calendarNote.FromDate).ThenBy(calendarNote => calendarNote.ToDate),
+                UnavailableUsers = unavailableUsers.OrderBy(user => user.FirstName),
             };
         }
     }
