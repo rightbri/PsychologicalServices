@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
 {
-    public interface IInvoiceGenerator
+    public interface IPsychologistInvoiceGenerator
     {
-        Invoice CreatePsychologistInvoice(Appointment appointment);
+        Invoice CreateInvoice(Appointment appointment);
 
         IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
 

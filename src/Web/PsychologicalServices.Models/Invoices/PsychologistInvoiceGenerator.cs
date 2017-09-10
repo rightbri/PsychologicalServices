@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace PsychologicalServices.Models.Invoices
 {
-    public class InvoiceGenerator : IInvoiceGenerator
+    public class PsychologistInvoiceGenerator : IPsychologistInvoiceGenerator
     {
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IAppointmentRepository _appointmentRepository = null;
@@ -16,7 +16,7 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IUserRepository _userRepository = null;
         private readonly IDate _date = null;
 
-        public InvoiceGenerator(
+        public PsychologistInvoiceGenerator(
             IInvoiceRepository invoiceRepository,
             IAppointmentRepository appointmentRepository,
             IReferralRepository referralRepository,
@@ -31,7 +31,7 @@ namespace PsychologicalServices.Models.Invoices
             _date = date;
         }
 
-        public Invoice CreatePsychologistInvoice(Appointment appointment)
+        public Invoice CreateInvoice(Appointment appointment)
         {
             if (!appointment.AppointmentStatus.CanInvoice)
             {
@@ -67,7 +67,7 @@ namespace PsychologicalServices.Models.Invoices
                         new InvoiceAppointment
                         {
                             Appointment = appointment,
-                            Lines = GetPsychologistInvoiceLines(appointment),
+                            Lines = GetInvoiceLines(appointment),
                             InvoiceRate = GetAppointmentStatusInvoiceRate(
                                 appointment,
                                 invoiceType,
@@ -105,7 +105,7 @@ namespace PsychologicalServices.Models.Invoices
                             {
                                 InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
                                 Appointment = invoiceAppointment.Appointment,
-                                Lines = GetPsychologistInvoiceLines(invoiceAppointment.Appointment)
+                                Lines = GetInvoiceLines(invoiceAppointment.Appointment)
                                     .Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
                                 InvoiceRate = invoiceRate,
                             });
@@ -118,7 +118,7 @@ namespace PsychologicalServices.Models.Invoices
             return invoiceAppointments;
         }
 
-        private List<InvoiceLine> GetPsychologistInvoiceLines(Appointment appointment)
+        private List<InvoiceLine> GetInvoiceLines(Appointment appointment)
         {
             var lines = new List<InvoiceLine>();
 

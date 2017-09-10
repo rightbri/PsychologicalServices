@@ -31,8 +31,6 @@ namespace PsychologicalServices.Models.Appointments
 
         public bool IsActive { get; set; }
 
-        public IEnumerable<AppointmentStatusSetting> AppointmentStatusSettings { get; set; }
-
         public bool IsNew()
         {
             return AppointmentStatusId == 0;

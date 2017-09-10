@@ -194,14 +194,14 @@
     <Compile Include="Invoices\InvoiceableAppointmentData.cs" />
     <Compile Include="Invoices\InvoiceableAppointmentDataSearchCriteria.cs" />
     <Compile Include="Invoices\InvoiceAppointment.cs" />
-    <Compile Include="Invoices\IInvoiceGenerator.cs" />
+    <Compile Include="Invoices\IPsychologistInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\IInvoiceRepository.cs" />
     <Compile Include="Invoices\IInvoiceService.cs" />
     <Compile Include="Invoices\IInvoiceValidator.cs" />
     <Compile Include="Invoices\Invoice.cs" />
     <Compile Include="Invoices\InvoiceDocument.cs" />
-    <Compile Include="Invoices\InvoiceGenerator.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceGenerator.cs" />
     <Compile Include="Invoices\InvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\InvoiceLine.cs" />
     <Compile Include="Invoices\InvoiceSearchCriteria.cs" />
