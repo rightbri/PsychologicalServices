@@ -37,7 +37,6 @@ export class EditAppointment {
 		this.psychologists = model.psychologists;
 		this.appointmentStatuses = model.appointmentStatuses;
 		this.addresses = model.addresses;
-		this.attributes = model.attributes;
 	}
 
 	ok(e) {

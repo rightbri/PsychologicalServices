@@ -117,12 +117,6 @@ export class EditAssessment {
 				addressTypeIds: this.config.appointmentDefaults.addressTypeIds
 			}).then(data => this.appointmentAddresses = data),
 			
-			this.dataRepository.searchAttributes({
-				companyIds: [this.user.company.companyId],
-				attributeTypeIds: this.config.appointmentDefaults.attributeTypeIds,
-				isActive: true
-			}).then(data => this.appointmentAttributes = data),
-			
 			this.dataRepository.searchContacts({
 				contactTypeId: this.config.contactTypes.lawyer
 			}).then(data => this.defenseLawyers = data)
@@ -324,13 +318,14 @@ export class EditAssessment {
 	}
 	
 	editAppointment(appointment) {
+		appointment.attributes = this.getAppointmentAttributes(appointment);
+
 		this.appointmentEditModel = {
 			'appointment': appointment,
 			'psychometrists': this.availableUsers(this.psychometrists, appointment.appointmentTime),
 			'psychologists': this.psychologists,
 			'appointmentStatuses': this.appointmentStatuses,
-			'addresses': this.appointmentAddresses,
-			'attributes': this.appointmentAttributes
+			'addresses': this.appointmentAddresses
 		};
 	}
 	
@@ -478,28 +473,69 @@ export class EditAssessment {
 		this.checkMedRehab();
 	}
 	
-	assessmentTypeChanged() {
+
+	getAppointmentAttributes(appointment) {
+		let selectedAttributeTypes = this.getSelectedAttributeTypes();
 		
+		let existingAppointmentAttributes = appointment.attributes.filter(att =>
+			selectedAttributeTypes.some(at =>
+				at.attributeTypeId === att.attribute.attributeType.attributeTypeId &&
+				at.showOnAppointment
+			)
+		);
+
+		//add new attributes to appointment from this.attributes where not present already in appointment.attributes collection
+		let newAppointmentAttributes = this.getNewAppointmentAttributes();
+		
+		newAppointmentAttributes = newAppointmentAttributes.filter(attribute =>
+			!existingAppointmentAttributes.some(existingAttributeValue =>
+				existingAttributeValue.attribute.attributeId === attribute.attributeId
+			)
+		).map(attribute => this.toAttributeValue(attribute));
+
+		return existingAppointmentAttributes.concat(newAppointmentAttributes);
+	}
+
+	getNewAppointmentAttributes() {
+		let selectedAttributeTypes = this.getSelectedAttributeTypes();
+		
+		return this.attributes.filter(attribute =>
+				selectedAttributeTypes.some(attributeType =>
+					attributeType.attributeTypeId === attribute.attributeType.attributeTypeId &&
+					attributeType.showOnAppointment
+				)
+			);
+	}
+
+	toAttributeValue(attribute) {
+		return { 'attribute': attribute, 'value': null };
+	}
+
+	getSelectedAttributeTypes() {
 		let selectedAttributeTypes = (this.assessment && this.assessment.assessmentType) ? this.assessment.assessmentType.attributeTypes : [];
 		
+		return selectedAttributeTypes;
+	}
+
+	assessmentTypeChanged() {
+		let selectedAttributeTypes = this.getSelectedAttributeTypes();
+		
 		//filter assessment attributes based on selected assessment type
-		let existingAssessmentAttributes = this.assessment.attributes.filter(att => {
-			return selectedAttributeTypes.some(at =>
+		let existingAssessmentAttributes = this.assessment.attributes.filter(att =>
+			selectedAttributeTypes.some(at =>
 				at.attributeTypeId === att.attribute.attributeType.attributeTypeId &&
 				!at.showOnAppointment
-			);
-		});
+			)
+		);
 		
 		//add new attributes to assessment from this.attributes where not present already in assessment.attributes collection
-		let newAssessmentAttributes = this.attributes.filter(attribute => {
-			return !existingAssessmentAttributes.some(existingAttributeValue => existingAttributeValue.attribute.attributeId === attribute.attributeId) &&
+		let newAssessmentAttributes = this.attributes.filter(attribute =>
+			!existingAssessmentAttributes.some(existingAttributeValue => existingAttributeValue.attribute.attributeId === attribute.attributeId) &&
 				selectedAttributeTypes.some(attributeType =>
 					attributeType.attributeTypeId === attribute.attributeType.attributeTypeId &&
 					!attributeType.showOnAppointment
-				);
-		}).map(function (attribute, index, array) {
-			return { 'attribute': attribute, 'value': null };
-		});
+				)
+		).map(attribute => this.toAttributeValue(attribute));
 		
 		this.assessment.attributes = existingAssessmentAttributes.concat(newAssessmentAttributes);
 
@@ -507,27 +543,8 @@ export class EditAssessment {
 		for (let i = 0; i < this.assessment.appointments.length; i++) {
 			let appointment = this.assessment.appointments[i];
 
-			let existingAppointmentAttributes = appointment.attributes.filter(att => {
-				return selectedAttributeTypes.some(at =>
-					at.attributeTypeId === att.attribute.attributeType.attributeTypeId &&
-					at.showOnAppointment
-				);
-			});
-	
-			//add new attributes to appointment from this.attributes where not present already in appointment.attributes collection
-			let newAppointmentAttributes = this.attributes.filter(attribute => {
-				return !existingAppointmentAttributes.some(existingAttributeValue => existingAttributeValue.attribute.attributeId === attribute.attributeId) &&
-					selectedAttributeTypes.some(attributeType =>
-						attributeType.attributeTypeId === attribute.attributeType.attributeTypeId &&
-						attributeType.showOnAppointment
-					);
-			}).map(function (attribute, index, array) {
-				return { 'attribute': attribute, 'value': null };
-			});
-
-			appointment.attributes = existingAppointmentAttributes.concat(newAppointmentAttributes);
+			appointment.attributes = this.getAppointmentAttributes(appointment);
 		}
-		
 	}
 
 	summaryEditFocus(e) {
