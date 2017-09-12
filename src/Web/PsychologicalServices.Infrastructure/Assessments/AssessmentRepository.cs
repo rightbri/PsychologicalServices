@@ -1045,10 +1045,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             arbitration.ArbitrationId == assessmentArbitration.ArbitrationId &&
                             (
                                 arbitration.Title != assessmentArbitration.Title ||
-                                (
-                                    (null == arbitration.DefenseLawyer && assessmentArbitration.DefenseLawyerId.HasValue) ||
-                                    (arbitration.DefenseLawyer.ContactId != assessmentArbitration.DefenseLawyerId)
-                                ) ||
+                                (null == arbitration.DefenseLawyer && assessmentArbitration.DefenseLawyerId.HasValue) ||
+                                (arbitration.DefenseLawyer.ContactId != assessmentArbitration.DefenseLawyerId) ||
                                 arbitration.DefenseFileNumber != assessmentArbitration.DefenseFileNumber ||
                                 arbitration.StartDate != assessmentArbitration.StartDate ||
                                 arbitration.EndDate != assessmentArbitration.EndDate ||
@@ -1071,17 +1069,9 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     {
                         arbitrationEntity.Title = arbitration.Title;
                         arbitrationEntity.StartDate = arbitration.StartDate;
+                        arbitrationEntity.EndDate = arbitration.EndDate;
                         arbitrationEntity.AvailableDate = arbitration.AvailableDate;
-
-                        if (null == arbitration.EndDate)
-                        {
-                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.EndDate, null);
-                        }
-                        else
-                        {
-                            arbitrationEntity.EndDate = arbitration.EndDate;
-                        }
-
+                        
                         if (null == arbitration.DefenseLawyer)
                         {
                             arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.DefenseLawyerId, null);
@@ -1108,7 +1098,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         Title = arbitration.Title,
                         StartDate = arbitration.StartDate,
                         EndDate = arbitration.EndDate,
-                        AvailableDate = arbitration.EndDate,
+                        AvailableDate = arbitration.AvailableDate,
                         DefenseLawyerId = (null != arbitration.DefenseLawyer ? arbitration.DefenseLawyer.ContactId : (int?) null),
                         DefenseFileNumber = arbitration.DefenseFileNumber,
                     })
