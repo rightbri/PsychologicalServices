@@ -11,16 +11,19 @@ namespace PsychologicalServices.Models.Invoices
     {
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
+        private readonly IUserRepository _userRepository = null;
         private readonly IDate _dateService = null;
 
         public PsychometristInvoiceGenerator(
             IAppointmentRepository appointmentRepository,
             IInvoiceRepository invoiceRepository,
+            IUserRepository userRepository,
             IDate dateService
         )
         {
             _appointmentRepository = appointmentRepository;
             _invoiceRepository = invoiceRepository;
+            _userRepository = userRepository;
             _dateService = dateService;
         }
 
@@ -134,7 +137,9 @@ namespace PsychologicalServices.Models.Invoices
             
             lines.Add(new InvoiceLine { Amount = amount, Description = description });
 
-            var travelFee = appointment.Psychometrist.TravelFees
+            var psychometrist = _userRepository.GetUserById(appointment.Psychometrist.UserId);
+
+            var travelFee = psychometrist.TravelFees
                 .Where(fee =>
                     fee.City.CityId == appointment.Location.City.CityId &&
                     fee.Amount > 0)
