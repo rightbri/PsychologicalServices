@@ -28,6 +28,7 @@
 			var listStyles = "list-style-type: none; padding: 0; margin: 0;";
 			var listItemStyles = "font-size: 1.25rem; padding: 2px 0 0 0";
 			var smallListItemStyles = "font-size: 1.1rem; padding: 2px 0 0 0";
+			var addressItemStyle = "width: 225px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;";
 			var arbitrationLabelStyles = "text-transform: uppercase; background-color: #1e87f0; border-radius: 2px; color: #fff; padding: 1px 10px;";
 			#>
 				<tr>
@@ -133,18 +134,18 @@
 					</td>
 					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Location -->
 						<ul style="<#= listStyles #>">
-							<li style="<#= listItemStyles #>">
+							<li style="<#= addressItemStyle #><#= listItemStyles #>">
 								<#= appointment.Location.Name #>
 							</li>
-							<li style="<#= smallListItemStyles #>">
+							<li style="<#= addressItemStyle #><#= smallListItemStyles #>">
 								<#= appointment.Location.Street #>
 							</li>
 							<# if (!string.IsNullOrWhiteSpace(appointment.Location.Suite)) { #>
-							<li style="<#= smallListItemStyles #>">
+							<li style="<#= addressItemStyle #><#= smallListItemStyles #>">
 								<#= appointment.Location.Suite #>
 							</li>
 							<# } #>
-							<li style="<#= smallListItemStyles #>">
+							<li style="<#= addressItemStyle #><#= smallListItemStyles #>">
 								<#= appointment.Location.City.Name #>, <#= appointment.Location.City.Province #> <#= appointment.Location.PostalCode #>
 							</li>
 						</ul>
