@@ -47,7 +47,8 @@
 						<#
 							var displayDayTime = Model.TimezoneService.ConvertTime(day.Day, timezone);
 						#>
-						<#= string.Format("{0:dddd MMMM d, yyyy}", displayDayTime) #>
+						<#= string.Format("{0:dddd}", displayDayTime) #>
+						<br><#= string.Format("{0:MMMM d, yyyy}", displayDayTime) #>
 					</td>
 					<td colspan="6" style="<#= dayNoteCellStyles #>">
 						<ul style="<#= listStyles #>">
