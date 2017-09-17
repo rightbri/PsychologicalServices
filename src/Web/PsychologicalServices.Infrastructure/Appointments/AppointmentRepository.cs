@@ -125,6 +125,37 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Prefetch<UserEntity>(appointment => appointment.UpdateUser)
                 );
 
+        private static readonly Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>>
+            PsychometristInvoiceAppointmentPath =
+                (appointmentPath => appointmentPath
+                    .Prefetch<AddressEntity>(appointment => appointment.Location)
+                        .SubPath(addressPath => addressPath
+                            .Prefetch<CityEntity>(address => address.City)
+                        )
+                    .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
+                        .SubPath(psychometristPath => psychometristPath
+                            .Prefetch<UserTravelFeeEntity>(psychometrist => psychometrist.UserTravelFees)
+                                .SubPath(userTravelFeePath => userTravelFeePath
+                                    .Prefetch<CityEntity>(userTravelFee => userTravelFee.City)
+                                )
+                        )
+                    .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
+                    .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                        .SubPath(assessmentPath => assessmentPath
+                            .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
+                            .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
+                            .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                .SubPath(assessmentClaimPath => assessmentClaimPath
+                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                        .SubPath(claimPath => claimPath
+                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                        )
+                                )
+                            .Prefetch<CompanyEntity>(assessment => assessment.Company)
+                        )
+                );
+
         #endregion
 
         public Appointment GetAppointment(int id)
@@ -188,14 +219,18 @@ namespace PsychologicalServices.Infrastructure.Appointments
             }
         }
 
-        public IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria)
+        private IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria, Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>> prefetchPath = null)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
                 var meta = new LinqMetaData(adapter);
 
-                var appointments = meta.Appointment
-                    .WithPath(AppointmentPath);
+                var appointments = meta.Appointment.AsQueryable();
+
+                if (null != prefetchPath)
+                {
+                    appointments = appointments.WithPath(prefetchPath);
+                }
 
                 if (null != criteria)
                 {
@@ -249,6 +284,16 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Select(appointment => appointment.ToAppointment())
                     .ToList();
             }
+        }
+
+        public IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria)
+        {
+            return GetAppointments(criteria, AppointmentPath);
+        }
+
+        public IEnumerable<Appointment> GetAppointmentsForPsychometristInvoice(AppointmentSearchCriteria criteria)
+        {
+            return GetAppointments(criteria, PsychometristInvoiceAppointmentPath);
         }
 
         public IEnumerable<AppointmentStatus> GetAppointmentStatuses(bool? isActive = true)

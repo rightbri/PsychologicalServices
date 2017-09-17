@@ -291,6 +291,7 @@ namespace PsychologicalServices.Models.Test.Invoices
         public void GetInvoiceAppointmentsCalculatesCompletionCorrectly()
         {
             var taxRate = 0.15m;
+            var assessmentId = 1;
             var assessmentTypeId = 4;
             var companyId = 5;
             var timezone = "Eastern Standard Time";
@@ -299,7 +300,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             var travelFeeAmount = 10000;
             var appointmentIncompleteAmount = 35000;
             var appointmentCompletionAmount = 17500;
-            var appointmentStatusId = 5;
             var userId = 1;
             var invoiceAppointmentId = 456;
 
@@ -308,13 +308,27 @@ namespace PsychologicalServices.Models.Test.Invoices
                 {
                     invoiceRepositoryMock.Setup(invoiceRepository => invoiceRepository.GetPsychometristInvoiceAmount(
                         It.Is<int>(i => i == assessmentTypeId),
-                        It.Is<int>(i => i == appointmentStatusId),
+                        It.Is<int>(i => i == Appointments.AppointmentStatus.NoShow),
                         It.Is<int>(i => i == Appointments.AppointmentSequence.First),
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
                         AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = appointmentStatusId,
+                        AppointmentStatusId = Appointments.AppointmentStatus.NoShow,
+                        AppointmentSequenceId = Appointments.AppointmentSequence.First,
+                        CompanyId = companyId,
+                        InvoiceAmount = appointmentCompletionAmount,
+                    });
+
+                    invoiceRepositoryMock.Setup(invoiceRepository => invoiceRepository.GetPsychometristInvoiceAmount(
+                        It.Is<int>(i => i == assessmentTypeId),
+                        It.Is<int>(i => i == Appointments.AppointmentStatus.Incomplete),
+                        It.Is<int>(i => i == Appointments.AppointmentSequence.First),
+                        It.Is<int>(i => i == companyId))
+                    ).Returns(new PsychometristInvoiceAmount
+                    {
+                        AssessmentTypeId = assessmentTypeId,
+                        AppointmentStatusId = Appointments.AppointmentStatus.Incomplete,
                         AppointmentSequenceId = Appointments.AppointmentSequence.First,
                         CompanyId = companyId,
                         InvoiceAmount = appointmentIncompleteAmount,
@@ -322,54 +336,34 @@ namespace PsychologicalServices.Models.Test.Invoices
 
                     invoiceRepositoryMock.Setup(invoiceRepository => invoiceRepository.GetPsychometristInvoiceAmount(
                         It.Is<int>(i => i == assessmentTypeId),
-                        It.Is<int>(i => i == appointmentStatusId),
+                        It.Is<int>(i => i == Appointments.AppointmentStatus.Incomplete),
                         It.Is<int>(i => i == Appointments.AppointmentSequence.Subsequent),
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
                         AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = appointmentStatusId,
+                        AppointmentStatusId = Appointments.AppointmentStatus.Incomplete,
+                        AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent,
+                        CompanyId = companyId,
+                        InvoiceAmount = appointmentCompletionAmount,
+                    });
+
+                    invoiceRepositoryMock.Setup(invoiceRepository => invoiceRepository.GetPsychometristInvoiceAmount(
+                        It.Is<int>(i => i == assessmentTypeId),
+                        It.Is<int>(i => i == Appointments.AppointmentStatus.Complete),
+                        It.Is<int>(i => i == Appointments.AppointmentSequence.Subsequent),
+                        It.Is<int>(i => i == companyId))
+                    ).Returns(new PsychometristInvoiceAmount
+                    {
+                        AssessmentTypeId = assessmentTypeId,
+                        AppointmentStatusId = Appointments.AppointmentStatus.Complete,
                         AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent,
                         CompanyId = companyId,
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 
                 });
-
-            var invoiceLines = new[]
-            {
-                new InvoiceLine
-                {
-                    InvoiceLineId = 1,
-                    InvoiceAppointmentId = invoiceAppointmentId,
-                    Amount = appointmentIncompleteAmount + 10000,
-                    Description = "Psychological Assessment",
-                },
-                new InvoiceLine
-                {
-                    InvoiceLineId = 2,
-                    InvoiceAppointmentId = invoiceAppointmentId,
-                    Amount = travelFeeAmount + 5000,
-                    Description = "Travel to Oakville",
-                },
-                new InvoiceLine
-                {
-                    InvoiceLineId = 3,
-                    InvoiceAppointmentId = invoiceAppointmentId,
-                    Amount = 2500,
-                    Description = "Tip",
-                    IsCustom = true,
-                },
-                new InvoiceLine
-                {
-                    InvoiceLineId = 4,
-                    InvoiceAppointmentId = invoiceAppointmentId,
-                    Amount = 1000,
-                    Description = "Gas Money",
-                    IsCustom = true
-                },
-            };
-
+            
             var invoice = new Invoice
             {
                 InvoiceId = 1,
@@ -391,7 +385,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                         {
                             AppointmentStatus = new Appointments.AppointmentStatus
                             {
-                                AppointmentStatusId = appointmentStatusId,
+                                AppointmentStatusId = Appointments.AppointmentStatus.NoShow,
                                 CanInvoice = true,
                             },
                             Assessment = new Assessments.Assessment
@@ -399,7 +393,11 @@ namespace PsychologicalServices.Models.Test.Invoices
                                 AssessmentType = new Assessments.AssessmentType
                                 {
                                     AssessmentTypeId = assessmentTypeId,
-                                }
+                                },
+                                Company = new Companies.Company
+                                {
+                                    CompanyId = companyId,
+                                },
                             },
                             IsCompletion = false,
                             Location = new Addresses.Address
@@ -432,7 +430,23 @@ namespace PsychologicalServices.Models.Test.Invoices
                                 },
                             },
                         },
-                        Lines = invoiceLines,
+                        Lines = new List<InvoiceLine>(new[]
+                        {
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 1,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = appointmentCompletionAmount,
+                                Description = "Psychological Assessment - No Show",
+                            },
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 2,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = travelFeeAmount + 5000,
+                                Description = "Travel to Oakville",
+                            },
+                        }),
                     },
                     new InvoiceAppointment
                     {
@@ -441,7 +455,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                         {
                             AppointmentStatus = new Appointments.AppointmentStatus
                             {
-                                AppointmentStatusId = appointmentStatusId,
+                                AppointmentStatusId = Appointments.AppointmentStatus.Incomplete,
                                 CanInvoice = true,
                             },
                             Assessment = new Assessments.Assessment
@@ -449,7 +463,97 @@ namespace PsychologicalServices.Models.Test.Invoices
                                 AssessmentType = new Assessments.AssessmentType
                                 {
                                     AssessmentTypeId = assessmentTypeId,
+                                },
+                                Company = new Companies.Company
+                                {
+                                    CompanyId = companyId,
+                                },
+                            },
+                            IsCompletion = false,
+                            Location = new Addresses.Address
+                            {
+                                City = new Cities.City
+                                {
+                                    CityId = cityId,
+                                    Name = cityName,
                                 }
+                            },
+                            Psychometrist = new Users.User
+                            {
+                                UserId = userId,
+                                Company = new Companies.Company
+                                {
+                                    CompanyId = companyId,
+                                    Timezone = timezone,
+                                },
+                                TravelFees = new []
+                                {
+                                    new Users.UserTravelFee
+                                    {
+                                        City = new Cities.City
+                                        {
+                                            CityId = cityId,
+                                            Name = cityName,
+                                        },
+                                        Amount = travelFeeAmount,
+                                    }
+                                },
+                            },
+                        },
+                        Lines = new List<InvoiceLine>(new[]
+                        {
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 3,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = appointmentIncompleteAmount,
+                                Description = "Psychological Assessment - Incomplete",
+                            },
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 4,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = travelFeeAmount + 5000,
+                                Description = "Travel to Oakville",
+                            },
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 5,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = 2500,
+                                Description = "Tip",
+                                IsCustom = true,
+                            },
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 6,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = 1000,
+                                Description = "Gas Money",
+                                IsCustom = true
+                            },
+                        }),
+                    },
+                    new InvoiceAppointment
+                    {
+                        InvoiceAppointmentId = 3,
+                        Appointment = new Appointments.Appointment
+                        {
+                            AppointmentStatus = new Appointments.AppointmentStatus
+                            {
+                                AppointmentStatusId = Appointments.AppointmentStatus.Complete,
+                                CanInvoice = true,
+                            },
+                            Assessment = new Assessments.Assessment
+                            {
+                                AssessmentType = new Assessments.AssessmentType
+                                {
+                                    AssessmentTypeId = assessmentTypeId,
+                                },
+                                Company = new Companies.Company
+                                {
+                                    CompanyId = companyId,
+                                },
                             },
                             IsCompletion = true,
                             Location = new Addresses.Address
@@ -482,7 +586,23 @@ namespace PsychologicalServices.Models.Test.Invoices
                                 },
                             },
                         },
-                        Lines = Enumerable.Empty<InvoiceLine>(),
+                        Lines = new List<InvoiceLine>(new[]
+                        {
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 7,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = appointmentIncompleteAmount,
+                                Description = "Psychological Assessment - Complete (Completion)",
+                            },
+                            new InvoiceLine
+                            {
+                                InvoiceLineId = 8,
+                                InvoiceAppointmentId = invoiceAppointmentId,
+                                Amount = travelFeeAmount,
+                                Description = "Travel to Oakville",
+                            },
+                        }),
                     },
                 }
             };
@@ -490,7 +610,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             var invoiceAppointments = psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
 
             //verify custom lines are still present
-            foreach (var invoiceLine in invoiceLines.Where(il => il.IsCustom))
+            foreach (var invoiceLine in invoice.Appointments.SelectMany(ia => ia.Lines).Where(il => il.IsCustom))
             {
                 Assert.IsTrue(
                     invoiceAppointments.Any(invoiceAppointment =>
@@ -505,18 +625,20 @@ namespace PsychologicalServices.Models.Test.Invoices
                 );
             }
 
-            var customLineTotal = invoiceLines
+            var customLineTotal = invoice.Appointments.SelectMany(ia => ia.Lines)
                 .Where(invoiceLine => invoiceLine.IsCustom)
                 .Select(invoiceLine => invoiceLine.Amount)
                 .Sum();
 
             var expectedAmount = Convert.ToInt32(
                 (
+                    appointmentCompletionAmount + //no show appointment
+                    travelFeeAmount +               //travel for no show appointment
                     appointmentIncompleteAmount + //incomplete appointment
                     travelFeeAmount +               //travel for incomplete appointment
+                    customLineTotal +               //custom lines for incomplete appointment
                     appointmentCompletionAmount + //completion appointment
-                    travelFeeAmount +               //travel for completion appointment
-                    customLineTotal
+                    travelFeeAmount                 //travel for completion appointment
                 ) * (1 + taxRate)
             );
 
@@ -578,6 +700,6 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             Assert.AreEqual(expected, actual);
         }
-
+        
     }
 }

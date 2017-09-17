@@ -6,18 +6,6 @@ namespace PsychologicalServices.Models.Appointments
 {
     public static class AppointmentExtensions
     {
-        public static bool IsCompletion(this Appointment appointment, IEnumerable<Appointment> appointments)
-        {
-            return
-                null != appointment &&
-                null != appointments &&
-                appointments.Any(appt =>
-                    appt.Assessment.AssessmentId == appointment.Assessment.AssessmentId &&
-                    appt.AppointmentStatus.AppointmentStatusId == AppointmentStatus.Incomplete &&
-                    appt.AppointmentTime < appointment.AppointmentTime
-                );
-        }
-
         public static bool IsFirst(this Appointment appointment, IEnumerable<Appointment> appointments)
         {
             return !appointment.PriorAppointments(appointments).Any();

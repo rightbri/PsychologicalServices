@@ -75,6 +75,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         )
                     .Prefetch<InvoiceTypeEntity>(invoice => invoice.InvoiceType)
                     .Prefetch<UserEntity>(invoice => invoice.PayableTo)
+                        //.SubPath(payableToPath => payableToPath
+                        //    .Prefetch<CompanyEntity>(payableTo => payableTo.Company)
+                        //)
                     .Prefetch<InvoiceStatusChangeEntity>(invoice => invoice.InvoiceStatusChanges)
                         .SubPath(invoiceStatusChangePath => invoiceStatusChangePath
                             .Prefetch<InvoiceStatusEntity>(invoiceStatusChange => invoiceStatusChange.InvoiceStatus)
@@ -114,6 +117,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                         )
                                     .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
                                         .SubPath(assessmentPath => assessmentPath
+                                            .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                                             .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
                                             .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
                                                 .SubPath(assessmentReportPath => assessmentReportPath

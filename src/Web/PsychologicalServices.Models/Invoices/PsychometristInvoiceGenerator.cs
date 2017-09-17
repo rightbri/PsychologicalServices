@@ -53,7 +53,7 @@ namespace PsychologicalServices.Models.Invoices
                 InvoiceTypeId = InvoiceType.Psychometrist,
             };
 
-            var appointments = _appointmentRepository.GetAppointments(criteria)
+            var appointments = _appointmentRepository.GetAppointmentsForPsychometristInvoice(criteria)
                 .Where(appointment => appointment.AppointmentStatus.CanInvoice)
                 .Select(appointment =>
                 {
@@ -84,7 +84,7 @@ namespace PsychologicalServices.Models.Invoices
         public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
         {
             var invoiceAppointments = new List<InvoiceAppointment>();
-
+            
             foreach (var invoiceAppointment in invoice.Appointments)
             {
                 invoiceAppointments.Add(
