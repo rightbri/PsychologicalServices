@@ -44,7 +44,10 @@
 			<# foreach (var day in week.Days) { #>
 				<tr><!-- Day -->
 					<td style="<#= dayCellStyles #>">
-						<#= string.Format("{0:dddd MMMM d, yyyy}", day.Day) #>
+						<#
+							var displayDayTime = Model.TimezoneService.ConvertTime(day.Day, timezone);
+						#>
+						<#= string.Format("{0:dddd MMMM d, yyyy}", displayDayTime) #>
 					</td>
 					<td colspan="6" style="<#= dayNoteCellStyles #>">
 						<ul style="<#= listStyles #>">
@@ -63,9 +66,9 @@
 								<#= calendarNote.Note.NoteText #>
 							</li>
 						<# } #>
-						<# foreach (var user in day.UnavailableUsers) { #>
+						<# if (day.UnavailableUsers.Any()) { #>
 							<li style="<#= smallListItemStyles #>">
-								<#= user.FirstName #> Unavailable
+								Unavailable: <#= string.Join(", ", day.UnavailableUsers.Select(user => user.FirstName)) #>
 							</li>
 						<# } #>
 						</ul>

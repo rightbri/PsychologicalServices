@@ -8,136 +8,201 @@ namespace PsychologicalServices.Models.Test.Common.Utility
     public class DateExtensionsTests
     {
         [TestMethod]
-        public void StartOfWeekForSundayIsTheFollowingMonday()
+        public void IsWithinReturnsTrueWhenDateIsEqualToStartOfCompareRange()
         {
-            //Sunday July 30th, 2017
-            var date = new DateTime(2017, 7, 30);
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
 
-            var expected = date.AddDays(1);
+            var utcDate = new DateTimeOffset(year, month, day, offset * -1, 0, 0, TimeSpan.Zero);
 
-            var actual = date.StartOfWeek();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void StartOfWeekForMondayIsSameMonday()
-        {
-            //Monday July 31st, 2017
-            var date = new DateTime(2017, 7, 31);
-
-            var expected = date;
-
-            var actual = date.StartOfWeek();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void StartOfWeekForTuesdayIsPreviousMonday()
-        {
-            //Tuesday August 1st, 2017
-            var date = new DateTime(2017, 8, 1);
-
-            var expected = date.AddDays(-1);
-
-            var actual = date.StartOfWeek();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void EndOfWeekForThursdayIsTheFollowingFriday()
-        {
-            //Thursday August 3rd, 2017
-            var date = new DateTime(2017, 8, 3);
-
-            var expected = date.AddDays(1);
-
-            var actual = date.EndOfWeek();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void EndOfWeekForFridayIsSameFriday()
-        {
-            //Friday August 4th, 2017
-            var date = new DateTime(2017, 8, 4);
-
-            var expected = date;
-
-            var actual = date.EndOfWeek();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void EndOfWeekForSaturdayIsThePreviousFriday()
-        {
-            //Saturday August 5th, 2017
-            var date = new DateTime(2017, 8, 5);
-
-            var expected = date.AddDays(-1);
-
-            var actual = date.EndOfWeek();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-
-        [TestMethod]
-        public void IsSameDayReturnsFalseWhenDayIsBeforeCompareDay()
-        {
-            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
-
-            var day = new DateTimeOffset(2017, 9, 9, 4, 59, 59, TimeSpan.Zero);
-
-            var expected = false;
-
-            var actual = day.IsSameDay(compareDay);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void IsSameDayReturnsFalseWhenDayIsAfterCompareDay()
-        {
-            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
-
-            var day = new DateTimeOffset(2017, 9, 10, 5, 0, 0, TimeSpan.Zero);
-
-            var expected = false;
-
-            var actual = day.IsSameDay(compareDay);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void IsSameDayReturnsTrueWhenDayIsEqualToBeginningOfCompareDay()
-        {
-            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
-
-            var day = new DateTimeOffset(2017, 9, 9, 5, 0, 0, TimeSpan.Zero);
+            var rangeStart = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset));
+            
+            var rangeEnd = rangeStart.AddDays(1).AddHours(-1);
 
             var expected = true;
 
-            var actual = day.IsSameDay(compareDay);
+            var actual = utcDate.IsWithin(rangeStart, rangeEnd);
+
+            Assert.AreEqual(expected, actual);
+
+            Assert.AreEqual(utcDate, rangeStart);
+        }
+
+        [TestMethod]
+        public void IsWithinReturnsTrueWhenDateIsEqualToEndOfCompareRange()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+
+            var utcDate = new DateTimeOffset(year, month, day, offset * -1, 0, 0, TimeSpan.Zero).AddDays(1).AddSeconds(-1);
+
+            var rangeStart = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset));
+
+            var rangeEnd = rangeStart.AddDays(1).AddSeconds(-1);
+
+            var expected = true;
+
+            var actual = utcDate.IsWithin(rangeStart, rangeEnd);
+
+            Assert.AreEqual(expected, actual);
+
+            Assert.AreEqual(utcDate, rangeEnd);
+        }
+
+        [TestMethod]
+        public void IsWithinReturnsFalseWhenDateIsBeforeStartOfCompareRange()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+
+            var utcDate = new DateTimeOffset(year, month, day, offset * -1, 0, 0, TimeSpan.Zero).AddSeconds(-1);
+
+            var rangeStart = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset));
+
+            var rangeEnd = rangeStart.AddDays(1).AddHours(-1);
+
+            var expected = false;
+
+            var actual = utcDate.IsWithin(rangeStart, rangeEnd);
+
+            Assert.AreEqual(expected, actual);
+
+            Assert.IsTrue(utcDate < rangeStart);
+        }
+
+        [TestMethod]
+        public void IsWithinReturnsFalseWhenDateIsAfterEndOfCompareRange()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+
+            var utcDate = new DateTimeOffset(year, month, day, offset * -1, 0, 0, TimeSpan.Zero).AddDays(1);
+
+            var rangeStart = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset));
+
+            var rangeEnd = rangeStart.AddDays(1).AddSeconds(-1);
+
+            var expected = false;
+
+            var actual = utcDate.IsWithin(rangeStart, rangeEnd);
+
+            Assert.AreEqual(expected, actual);
+
+            Assert.IsTrue(utcDate > rangeEnd);
+        }
+
+        [TestMethod]
+        public void StartOfDayReturnsCorrectDayForUtcDate1()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+            var timezone = "Eastern Standard Time";
+
+            var utcDate = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.Zero).AddDays(1).AddHours(offset * -1).AddSeconds(-1);
+
+            var expected = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset));
+
+            var actual = utcDate.StartOfDay(timezone);
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void IsSameDayReturnsTrueWhenDayIsEqualToEndOfCompareDay()
+        public void StartOfDayReturnsCorrectDayForUtcDate2()
         {
-            var compareDay = new DateTimeOffset(2017, 9, 9, 0, 0, 0, TimeSpan.FromHours(-5));
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+            var timezone = "Eastern Standard Time";
 
-            var day = new DateTimeOffset(2017, 9, 10, 4, 59, 59, TimeSpan.Zero);
+            var utcDate = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.Zero);
 
-            var expected = true;
+            var expected = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset)).AddDays(-1);
 
-            var actual = day.IsSameDay(compareDay);
+            var actual = utcDate.StartOfDay(timezone);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void StartOfDayReturnsCorrectDayForUtcDate3()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+            var timezone = "Eastern Standard Time";
+
+            var utcDate = new DateTimeOffset(year, month, day, 12, 0, 0, TimeSpan.Zero);
+
+            var expected = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset));
+
+            var actual = utcDate.StartOfDay(timezone);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void EndOfDayReturnsCorrectDayForUtcDate1()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+            var timezone = "Eastern Standard Time";
+
+            var utcDate = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.Zero).AddDays(1).AddHours(offset * -1).AddSeconds(-1);
+
+            var expected = new DateTimeOffset(year, month, day, 23, 59, 59, TimeSpan.FromHours(offset));
+
+            var actual = utcDate.EndOfDay(timezone);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void EndOfDayReturnsCorrectDayForUtcDate2()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+            var timezone = "Eastern Standard Time";
+
+            var utcDate = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.Zero);
+
+            var expected = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset)).AddSeconds(-1);
+
+            var actual = utcDate.EndOfDay(timezone);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void EndOfDayReturnsCorrectDayForUtcDate3()
+        {
+            var year = 2017;
+            var month = 9;
+            var day = 18;
+            var offset = -4;
+            var timezone = "Eastern Standard Time";
+
+            var utcDate = new DateTimeOffset(year, month, day, 12, 0, 0, TimeSpan.Zero);
+
+            var expected = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset)).AddDays(1).AddSeconds(-1);
+
+            var actual = utcDate.EndOfDay(timezone);
 
             Assert.AreEqual(expected, actual);
         }

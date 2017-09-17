@@ -52,7 +52,8 @@ namespace PsychologicalServices.Models.Schedule
                                     item.Day.DayOfWeek <= DayOfWeek.Friday
                                 )
                                 .Select(item => GetPsychologistScheduleDay(item.Day)),
-                        });
+                        })
+                    .Where(week => week.Days.Any(day => !day.IsEmpty));
             }
         }
 
@@ -63,8 +64,8 @@ namespace PsychologicalServices.Models.Schedule
                 if (null == _days)
                 {
                     _days = new List<DateTimeOffset>();
-
-                    var day = FromDate;
+                    
+                    var day = FromDate.StartOfDay(DisplayTimezoneId);
 
                     while (day <= ToDate)
                     {
@@ -82,17 +83,17 @@ namespace PsychologicalServices.Models.Schedule
         {
             var appointments = Appointments
                                     .Where(app =>
-                                        app.AppointmentTime.IsSameDay(day) &&
+                                        app.AppointmentTime.IsWithin(day.StartOfDay(DisplayTimezoneId), day.EndOfDay(DisplayTimezoneId)) &&
                                         app.Assessment.AssessmentType.ShowOnSchedule
                                     );
 
-            var arbitrationsStarting = Arbitrations.Where(arbitration => arbitration.StartDate.IsSameDay(day));
+            var arbitrationsStarting = Arbitrations.Where(arbitration => arbitration.StartDate.IsWithin(day.StartOfDay(DisplayTimezoneId), day.EndOfDay(DisplayTimezoneId)));
 
-            var arbitrationsDateGiven = Arbitrations.Where(arbitration => arbitration.AvailableDate.IsSameDay(day));
+            var arbitrationsDateGiven = Arbitrations.Where(arbitration => arbitration.AvailableDate.IsWithin(day.StartOfDay(DisplayTimezoneId), day.EndOfDay(DisplayTimezoneId)));
 
             var calendarNotes = CalendarNotes.Where(calendarNote => calendarNote.AppliesToDay(day));
 
-            var unavailableUsers = UsersWithUnavailability.Where(user => user.Unavailability.Any(unavailability => unavailability.StartDate.IsSameDay(day)));
+            var unavailableUsers = UsersWithUnavailability.Where(user => user.Unavailability.Any(unavailability => unavailability.StartDate.IsWithin(day.StartOfDay(DisplayTimezoneId), day.EndOfDay(DisplayTimezoneId))));
 
             return new PsychologistScheduleDay
             {

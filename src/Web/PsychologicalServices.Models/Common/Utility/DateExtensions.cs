@@ -34,50 +34,25 @@ namespace PsychologicalServices.Models.Common.Utility
                     .AddSeconds(-1),
                 timezoneId);
         }
-
-        public static DateTime StartOfWeek(this DateTime date, DayOfWeek firstDayOfWeek = DayOfWeek.Monday)
-        {
-            DateTime start = date.Date;
-
-            var direction = start.DayOfWeek < firstDayOfWeek ? 1 : -1;
-
-            while (start.DayOfWeek != firstDayOfWeek)
-            {
-                start = start.AddDays(direction);
-            }
-
-            return start;
-        }
-
-        public static DateTime EndOfWeek(this DateTime date, DayOfWeek firstDayOfWeek = DayOfWeek.Monday, DayOfWeek lastDayOfWeek = DayOfWeek.Friday)
-        {
-            DateTime end = date.Date;
-
-            var direction = end.DayOfWeek > lastDayOfWeek ? -1 : 1;
-
-            while (end.DayOfWeek != lastDayOfWeek)
-            {
-                end = end.AddDays(direction);
-            }
-
-            return end;
-        }
         
-        public static DateTime StartOfDay(this DateTime date)
+        public static DateTimeOffset StartOfDay(this DateTimeOffset date, string timezoneId)
         {
-            return date.Date;
+            var displayDay = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(date, timezoneId);
+            
+            var startOfDisplayDay = new DateTimeOffset(new DateTime(displayDay.Year, displayDay.Month, displayDay.Day), displayDay.Offset);
+
+            return startOfDisplayDay;
         }
 
-        public static DateTime EndOfDay(this DateTime date)
+        public static DateTimeOffset EndOfDay(this DateTimeOffset date, string timezoneId)
         {
-            return StartOfDay(date).AddDays(1).AddSeconds(-1);
+            return date.StartOfDay(timezoneId).AddDays(1).AddSeconds(-1);
         }
-        
-        public static bool IsSameDay(this DateTimeOffset day, DateTimeOffset dayCompare)
+
+        public static bool IsWithin(this DateTimeOffset date, DateTimeOffset start, DateTimeOffset end)
         {
-            return
-                day >= dayCompare &&
-                day < dayCompare.AddDays(1);
+            return date >= start && date <= end;
         }
     }
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

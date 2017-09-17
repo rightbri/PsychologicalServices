@@ -12,22 +12,25 @@ namespace PsychologicalServices.Models.Test.Invoices
     public class PsychometristInvoiceGeneratorTests
     {
         private PsychometristInvoiceGenerator GetService(
-            Action<Mock<IInvoiceRepository>, Mock<Appointments.IAppointmentRepository>, Mock<IDate>> setupMocks = null
+            Action<Mock<IInvoiceRepository>, Mock<Appointments.IAppointmentRepository>, Mock<Users.IUserRepository>, Mock<IDate>> setupMocks = null
         )
         {
             var dateServiceMock = new Mock<IDate>();
             var appointmentRepositoryMock = new Mock<Appointments.IAppointmentRepository>();
             var invoiceRepositoryMock = new Mock<IInvoiceRepository>();
+            var userRepositoryMock = new Mock<Users.IUserRepository>();
 
             setupMocks?.Invoke(
                 invoiceRepositoryMock,
                 appointmentRepositoryMock,
+                userRepositoryMock,
                 dateServiceMock
             );
 
             var psychometristInvoiceGenerator = new PsychometristInvoiceGenerator(
                 appointmentRepositoryMock.Object,
                 invoiceRepositoryMock.Object,
+                userRepositoryMock.Object,
                 dateServiceMock.Object
             );
 
@@ -39,7 +42,7 @@ namespace PsychologicalServices.Models.Test.Invoices
         public void CreateInvoiceThrowsExceptionWhenInvoiceAlreadyExists()
         {
             var psychometristInvoiceGenerator = GetService(
-                (invoiceRepositoryMock, appointmentRepositoryMock, dateServiceMock) =>
+                (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository =>
@@ -65,7 +68,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             var invoiceStatusId = 1;
 
             var psychometristInvoiceGenerator = GetService(
-                (invoiceRepositoryMock, appointmentRepositoryMock, dateServiceMock) =>
+                (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoices(It.IsAny<InvoiceSearchCriteria>()))
@@ -137,7 +140,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             var invoiceAppointmentId = 456;
             
             var psychometristInvoiceGenerator = GetService(
-                (invoiceRepositoryMock, appointmentRepositoryMock, dateServiceMock) =>
+                (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
                 {
                     invoiceRepositoryMock.Setup(invoiceRepository => invoiceRepository.GetPsychometristInvoiceAmount(
                         It.Is<int>(i => i == assessmentTypeId),
@@ -304,7 +307,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             var invoiceAppointmentId = 456;
 
             var psychometristInvoiceGenerator = GetService(
-                (invoiceRepositoryMock, appointmentRepositoryMock, dateServiceMock) =>
+                (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
                 {
                     invoiceRepositoryMock.Setup(invoiceRepository => invoiceRepository.GetPsychometristInvoiceAmount(
                         It.Is<int>(i => i == assessmentTypeId),

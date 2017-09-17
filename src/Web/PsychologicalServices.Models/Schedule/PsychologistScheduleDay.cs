@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PsychologicalServices.Models.Schedule
 {
@@ -16,5 +17,19 @@ namespace PsychologicalServices.Models.Schedule
         public IEnumerable<CalendarNotes.CalendarNote> CalendarNotes { get; set; }
 
         public IEnumerable<Users.User> UnavailableUsers { get; set; }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return !(
+                    Appointments.Any() ||
+                    ArbitrationsStarting.Any() ||
+                    ArbitrationsDateGiven.Any() ||
+                    CalendarNotes.Any() ||
+                    UnavailableUsers.Any()
+                );
+            }
+        }
     }
 }

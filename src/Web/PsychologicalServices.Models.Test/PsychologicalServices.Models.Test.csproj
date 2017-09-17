@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CalendarNotes\CalendarNoteExtensionTests.cs" />
     <Compile Include="Common\Utility\DateExtensionsTests.cs" />
+    <Compile Include="Common\Utility\TimezoneServiceTests.cs" />
     <Compile Include="Invoices\PsychometristInvoiceGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
