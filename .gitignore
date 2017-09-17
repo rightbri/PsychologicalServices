@@ -282,5 +282,6 @@ docs/
 dist/
 .vs/
 
+scripts/**
 **/logs/*
 *Secrets.config
