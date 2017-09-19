@@ -146,18 +146,20 @@ namespace PsychologicalServices.Models.Schedule
 
         public PsychologistScheduleResult GetPsychologistSchedule(PsychologistScheduleParameters parameters)
         {
+            var psychologist = _userRepository.GetUserById(parameters.PsychologistId);
+
             var result = new PsychologistScheduleResult
             {
-                Psychologist = _userRepository.GetUserById(parameters.PsychologistId),
-                FromDate = parameters.FromDate,
-                ToDate = parameters.ToDate,
+                Psychologist = psychologist,
+                FromDate = parameters.FromDate.StartOfDay(psychologist.Company.Timezone),
+                ToDate = parameters.ToDate.EndOfDay(psychologist.Company.Timezone),
             };
 
             var appointmentSearchCriteria = new AppointmentSearchCriteria
             {
                 PsychologistId = parameters.PsychologistId,
                 AppointmentTimeStart = result.FromDate,
-                AppointmentTimeEnd = result.ToDate.AddDays(1),
+                AppointmentTimeEnd = result.ToDate,
                 AppointmentStatusIds = new[]
                 {
                     AppointmentStatus.Complete,
@@ -173,22 +175,22 @@ namespace PsychologicalServices.Models.Schedule
             var arbitrationSearchCriteria = new ArbitrationSearchCriteria
             {
                 CompanyId = result.Psychologist.Company.CompanyId,
-                StartDate = parameters.FromDate,
-                EndDate = parameters.ToDate,
+                StartDate = result.FromDate,
+                EndDate = result.ToDate,
             };
 
             var calendarNoteSearchCriteria = new CalendarNoteSearchCriteria
             {
                 CompanyId = result.Psychologist.Company.CompanyId,
-                FromDate = parameters.FromDate,
-                ToDate = parameters.ToDate,
+                FromDate = result.FromDate,
+                ToDate = result.ToDate,
             };
 
             var unavailabilitySearchCriteria = new UnavailabilitySearchCriteria
             {
                 CompanyId = result.Psychologist.Company.CompanyId,
-                UnavailabilityStart = parameters.FromDate,
-                UnavailabilityEnd = parameters.ToDate,
+                UnavailabilityStart = result.FromDate,
+                UnavailabilityEnd = result.ToDate,
             };
             
             var model = new PsychologistScheduleModel
