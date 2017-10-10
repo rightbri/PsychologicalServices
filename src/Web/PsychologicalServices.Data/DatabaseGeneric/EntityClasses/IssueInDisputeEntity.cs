@@ -38,8 +38,10 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AssessmentReportIssueInDisputeEntity> _assessmentReportIssuesInDispute;
+		private EntityCollection<IssueInDisputeInvoiceAmountEntity> _reportTypeInvoiceAmount;
 		private EntityCollection<ReferralTypeIssueInDisputeEntity> _referralTypeIssuesInDispute;
 
+		private EntityCollection<CompanyEntity> _companyCollectionViaReportTypeInvoiceAmount;
 
 
 
@@ -58,9 +60,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			/// <summary>Member name AssessmentReportIssuesInDispute</summary>
 			public static readonly string AssessmentReportIssuesInDispute = "AssessmentReportIssuesInDispute";
+			/// <summary>Member name ReportTypeInvoiceAmount</summary>
+			public static readonly string ReportTypeInvoiceAmount = "ReportTypeInvoiceAmount";
 			/// <summary>Member name ReferralTypeIssuesInDispute</summary>
 			public static readonly string ReferralTypeIssuesInDispute = "ReferralTypeIssuesInDispute";
 
+			/// <summary>Member name CompanyCollectionViaReportTypeInvoiceAmount</summary>
+			public static readonly string CompanyCollectionViaReportTypeInvoiceAmount = "CompanyCollectionViaReportTypeInvoiceAmount";
 
 
 		}
@@ -122,8 +128,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_assessmentReportIssuesInDispute = (EntityCollection<AssessmentReportIssueInDisputeEntity>)info.GetValue("_assessmentReportIssuesInDispute", typeof(EntityCollection<AssessmentReportIssueInDisputeEntity>));
+				_reportTypeInvoiceAmount = (EntityCollection<IssueInDisputeInvoiceAmountEntity>)info.GetValue("_reportTypeInvoiceAmount", typeof(EntityCollection<IssueInDisputeInvoiceAmountEntity>));
 				_referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>)info.GetValue("_referralTypeIssuesInDispute", typeof(EntityCollection<ReferralTypeIssueInDisputeEntity>));
 
+				_companyCollectionViaReportTypeInvoiceAmount = (EntityCollection<CompanyEntity>)info.GetValue("_companyCollectionViaReportTypeInvoiceAmount", typeof(EntityCollection<CompanyEntity>));
 
 
 
@@ -167,10 +175,18 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReportIssuesInDispute":
 					this.AssessmentReportIssuesInDispute.Add((AssessmentReportIssueInDisputeEntity)entity);
 					break;
+				case "ReportTypeInvoiceAmount":
+					this.ReportTypeInvoiceAmount.Add((IssueInDisputeInvoiceAmountEntity)entity);
+					break;
 				case "ReferralTypeIssuesInDispute":
 					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)entity);
 					break;
 
+				case "CompanyCollectionViaReportTypeInvoiceAmount":
+					this.CompanyCollectionViaReportTypeInvoiceAmount.IsReadOnly = false;
+					this.CompanyCollectionViaReportTypeInvoiceAmount.Add((CompanyEntity)entity);
+					this.CompanyCollectionViaReportTypeInvoiceAmount.IsReadOnly = true;
+					break;
 
 
 				default:
@@ -198,10 +214,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReportIssuesInDispute":
 					toReturn.Add(IssueInDisputeEntity.Relations.AssessmentReportIssueInDisputeEntityUsingIssueInDisputeId);
 					break;
+				case "ReportTypeInvoiceAmount":
+					toReturn.Add(IssueInDisputeEntity.Relations.IssueInDisputeInvoiceAmountEntityUsingIssueInDisputeId);
+					break;
 				case "ReferralTypeIssuesInDispute":
 					toReturn.Add(IssueInDisputeEntity.Relations.ReferralTypeIssueInDisputeEntityUsingIssueInDisputeId);
 					break;
 
+				case "CompanyCollectionViaReportTypeInvoiceAmount":
+					toReturn.Add(IssueInDisputeEntity.Relations.IssueInDisputeInvoiceAmountEntityUsingIssueInDisputeId, "IssueInDisputeEntity__", "IssueInDisputeInvoiceAmount_", JoinHint.None);
+					toReturn.Add(IssueInDisputeInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId, "IssueInDisputeInvoiceAmount_", string.Empty, JoinHint.None);
+					break;
 
 
 				default:
@@ -243,6 +266,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReportIssuesInDispute":
 					this.AssessmentReportIssuesInDispute.Add((AssessmentReportIssueInDisputeEntity)relatedEntity);
 					break;
+				case "ReportTypeInvoiceAmount":
+					this.ReportTypeInvoiceAmount.Add((IssueInDisputeInvoiceAmountEntity)relatedEntity);
+					break;
 				case "ReferralTypeIssuesInDispute":
 					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)relatedEntity);
 					break;
@@ -264,6 +290,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 				case "AssessmentReportIssuesInDispute":
 					base.PerformRelatedEntityRemoval(this.AssessmentReportIssuesInDispute, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "ReportTypeInvoiceAmount":
+					base.PerformRelatedEntityRemoval(this.ReportTypeInvoiceAmount, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "ReferralTypeIssuesInDispute":
 					base.PerformRelatedEntityRemoval(this.ReferralTypeIssuesInDispute, relatedEntity, signalRelatedEntityManyToOne);
@@ -300,6 +329,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.AssessmentReportIssuesInDispute);
+			toReturn.Add(this.ReportTypeInvoiceAmount);
 			toReturn.Add(this.ReferralTypeIssuesInDispute);
 
 			return toReturn;
@@ -316,8 +346,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_assessmentReportIssuesInDispute", ((_assessmentReportIssuesInDispute!=null) && (_assessmentReportIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_assessmentReportIssuesInDispute:null);
+				info.AddValue("_reportTypeInvoiceAmount", ((_reportTypeInvoiceAmount!=null) && (_reportTypeInvoiceAmount.Count>0) && !this.MarkedForDeletion)?_reportTypeInvoiceAmount:null);
 				info.AddValue("_referralTypeIssuesInDispute", ((_referralTypeIssuesInDispute!=null) && (_referralTypeIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_referralTypeIssuesInDispute:null);
 
+				info.AddValue("_companyCollectionViaReportTypeInvoiceAmount", ((_companyCollectionViaReportTypeInvoiceAmount!=null) && (_companyCollectionViaReportTypeInvoiceAmount.Count>0) && !this.MarkedForDeletion)?_companyCollectionViaReportTypeInvoiceAmount:null);
 
 
 
@@ -366,6 +398,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'IssueInDisputeInvoiceAmount' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoReportTypeInvoiceAmount()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(IssueInDisputeInvoiceAmountFields.IssueInDisputeId, null, ComparisonOperator.Equal, this.IssueInDisputeId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'ReferralTypeIssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoReferralTypeIssuesInDispute()
@@ -375,6 +417,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Company' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoCompanyCollectionViaReportTypeInvoiceAmount()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.Relations.AddRange(GetRelationsForFieldOfType("CompanyCollectionViaReportTypeInvoiceAmount"));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(IssueInDisputeFields.IssueInDisputeId, null, ComparisonOperator.Equal, this.IssueInDisputeId, "IssueInDisputeEntity__"));
+			return bucket;
+		}
 
 
 
@@ -407,8 +460,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._assessmentReportIssuesInDispute);
+			collectionsQueue.Enqueue(this._reportTypeInvoiceAmount);
 			collectionsQueue.Enqueue(this._referralTypeIssuesInDispute);
 
+			collectionsQueue.Enqueue(this._companyCollectionViaReportTypeInvoiceAmount);
 
 		}
 		
@@ -418,8 +473,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._assessmentReportIssuesInDispute = (EntityCollection<AssessmentReportIssueInDisputeEntity>) collectionsQueue.Dequeue();
+			this._reportTypeInvoiceAmount = (EntityCollection<IssueInDisputeInvoiceAmountEntity>) collectionsQueue.Dequeue();
 			this._referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>) collectionsQueue.Dequeue();
 
+			this._companyCollectionViaReportTypeInvoiceAmount = (EntityCollection<CompanyEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -431,11 +488,19 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+			if (this._reportTypeInvoiceAmount != null)
+			{
+				return true;
+			}
 			if (this._referralTypeIssuesInDispute != null)
 			{
 				return true;
 			}
 
+			if (this._companyCollectionViaReportTypeInvoiceAmount != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -447,8 +512,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentReportIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportIssueInDisputeEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<IssueInDisputeInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeInvoiceAmountEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory))) : null);
 
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
 
 		}
 #endif
@@ -461,8 +528,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
 			toReturn.Add("AssessmentReportIssuesInDispute", _assessmentReportIssuesInDispute);
+			toReturn.Add("ReportTypeInvoiceAmount", _reportTypeInvoiceAmount);
 			toReturn.Add("ReferralTypeIssuesInDispute", _referralTypeIssuesInDispute);
 
+			toReturn.Add("CompanyCollectionViaReportTypeInvoiceAmount", _companyCollectionViaReportTypeInvoiceAmount);
 
 
 			return toReturn;
@@ -475,11 +544,19 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_assessmentReportIssuesInDispute.ActiveContext = base.ActiveContext;
 			}
+			if(_reportTypeInvoiceAmount!=null)
+			{
+				_reportTypeInvoiceAmount.ActiveContext = base.ActiveContext;
+			}
 			if(_referralTypeIssuesInDispute!=null)
 			{
 				_referralTypeIssuesInDispute.ActiveContext = base.ActiveContext;
 			}
 
+			if(_companyCollectionViaReportTypeInvoiceAmount!=null)
+			{
+				_companyCollectionViaReportTypeInvoiceAmount.ActiveContext = base.ActiveContext;
+			}
 
 
 
@@ -490,8 +567,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_assessmentReportIssuesInDispute = null;
+			_reportTypeInvoiceAmount = null;
 			_referralTypeIssuesInDispute = null;
 
+			_companyCollectionViaReportTypeInvoiceAmount = null;
 
 
 
@@ -519,9 +598,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("AdditionalFee", fieldHashtable);
 		}
 		#endregion
 
@@ -570,6 +646,17 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("AssessmentReportIssuesInDispute")[0], (int)PsychologicalServices.Data.EntityType.IssueInDisputeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentReportIssueInDisputeEntity, 0, null, null, null, null, "AssessmentReportIssuesInDispute", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'IssueInDisputeInvoiceAmount' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathReportTypeInvoiceAmount
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<IssueInDisputeInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeInvoiceAmountEntityFactory))),
+					(IEntityRelation)GetRelationsForField("ReportTypeInvoiceAmount")[0], (int)PsychologicalServices.Data.EntityType.IssueInDisputeEntity, (int)PsychologicalServices.Data.EntityType.IssueInDisputeInvoiceAmountEntity, 0, null, null, null, null, "ReportTypeInvoiceAmount", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReferralTypeIssueInDispute' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -582,6 +669,20 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCompanyCollectionViaReportTypeInvoiceAmount
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = IssueInDisputeEntity.Relations.IssueInDisputeInvoiceAmountEntityUsingIssueInDisputeId;
+				intermediateRelation.SetAliases(string.Empty, "IssueInDisputeInvoiceAmount_");
+				return new PrefetchPathElement2(new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))), intermediateRelation,
+					(int)PsychologicalServices.Data.EntityType.IssueInDisputeEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, GetRelationsForField("CompanyCollectionViaReportTypeInvoiceAmount"), null, "CompanyCollectionViaReportTypeInvoiceAmount", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
 
 
 
@@ -643,17 +744,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)IssueInDisputeFieldIndex.IsActive, value); }
 		}
 
-		/// <summary> The AdditionalFee property of the Entity IssueInDispute<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "IssuesInDispute"."AdditionalFee"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AdditionalFee
-		{
-			get { return (System.Int32)GetValue((int)IssueInDisputeFieldIndex.AdditionalFee, true); }
-			set	{ SetValue((int)IssueInDisputeFieldIndex.AdditionalFee, value); }
-		}
-
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentReportIssueInDisputeEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AssessmentReportIssueInDisputeEntity))]
@@ -667,6 +757,22 @@ namespace PsychologicalServices.Data.EntityClasses
 					_assessmentReportIssuesInDispute.SetContainingEntityInfo(this, "IssueInDispute");
 				}
 				return _assessmentReportIssuesInDispute;
+			}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'IssueInDisputeInvoiceAmountEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(IssueInDisputeInvoiceAmountEntity))]
+		public virtual EntityCollection<IssueInDisputeInvoiceAmountEntity> ReportTypeInvoiceAmount
+		{
+			get
+			{
+				if(_reportTypeInvoiceAmount==null)
+				{
+					_reportTypeInvoiceAmount = new EntityCollection<IssueInDisputeInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(IssueInDisputeInvoiceAmountEntityFactory)));
+					_reportTypeInvoiceAmount.SetContainingEntityInfo(this, "IssueInDispute");
+				}
+				return _reportTypeInvoiceAmount;
 			}
 		}
 
@@ -686,6 +792,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'CompanyEntity' which are related to this entity via a relation of type 'm:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(CompanyEntity))]
+		public virtual EntityCollection<CompanyEntity> CompanyCollectionViaReportTypeInvoiceAmount
+		{
+			get
+			{
+				if(_companyCollectionViaReportTypeInvoiceAmount==null)
+				{
+					_companyCollectionViaReportTypeInvoiceAmount = new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory)));
+					_companyCollectionViaReportTypeInvoiceAmount.IsReadOnly=true;
+				}
+				return _companyCollectionViaReportTypeInvoiceAmount;
+			}
+		}
 
 
 

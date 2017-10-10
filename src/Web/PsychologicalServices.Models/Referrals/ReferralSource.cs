@@ -13,17 +13,9 @@ namespace PsychologicalServices.Models.Referrals
 
         public ReferralSourceType ReferralSourceType { get; set; }
 
-        public int LargeFileSize { get; set; }
-
-        public int LargeFileFeeAmount { get; set; }
-
         public bool IsActive { get; set; }
 
         public Address Address { get; set; }
-
-        public IEnumerable<ReportTypeInvoiceAmount> ReportTypeInvoiceAmounts { get; set; }
-
-        public IEnumerable<AppointmentStatusSetting> AppointmentStatusSettings { get; set; }
 
         public bool IsNew()
         {

@@ -30,13 +30,14 @@ BEGIN
 		END AS IsPsychological
 		,CASE
 			WHEN ass.IsLargeFile = 1 THEN 1
-			WHEN ass.FileSize >= rs.LargeFileSize THEN 1
+			WHEN ass.FileSize >= rsic.LargeFileSize THEN 1
 			ELSE 0
 		END AS IsLargeFile
 		FROM dbo.Assessments ass
 		INNER JOIN dbo.ReferralSources rs ON ass.ReferralSourceId = rs.ReferralSourceId
 		INNER JOIN dbo.AssessmentTypes t ON ass.AssessmentTypeId = t.AssessmentTypeId
 		INNER JOIN dbo.Appointments app ON ass.AssessmentId = app.AssessmentId
+		LEFT JOIN dbo.ReferralSourceInvoiceConfiguration rsic ON ass.CompanyId = rsic.CompanyId AND ass.ReferralSourceId = rsic.ReferralSourceId
 		WHERE
 		app.AppointmentTime < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 0)
 		AND (

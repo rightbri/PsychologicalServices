@@ -21,23 +21,57 @@ namespace PsychologicalServices.Infrastructure.Invoices
         private readonly IInvoiceHtmlGenerator _invoiceHtmlGenerator = null;
         private readonly IHtmlToPdfService _htmlToPdfService = null;
         private readonly ICompanyRepository _companyRepository = null;
+        private readonly IInvoiceDocumentFileNameGenerator _invoiceDocumentFileNameGenerator = null;
 
         public InvoiceRepository(
             IDataAccessAdapterFactory adapterFactory,
             IDate date,
             IInvoiceHtmlGenerator invoiceHtmlGenerator,
             IHtmlToPdfService htmlToPdfService,
-            ICompanyRepository companyRepository
+            ICompanyRepository companyRepository,
+            IInvoiceDocumentFileNameGenerator invoiceDocumentFileNameGenerator
         ) : base(adapterFactory)
         {
             _date = date;
             _invoiceHtmlGenerator = invoiceHtmlGenerator;
             _htmlToPdfService = htmlToPdfService;
             _companyRepository = companyRepository;
+            _invoiceDocumentFileNameGenerator = invoiceDocumentFileNameGenerator;
         }
 
         #region Prefetch Paths
 
+        private Func<IPathEdgeRootParser<CompanyEntity>, IPathEdgeRootParser<CompanyEntity>> GetInvoiceCalculationDataPrefetchPath(
+            int companyId,
+            int referralSourceId,
+            int assessmentTypeId,
+            int appointmentStatusId,
+            int appointmentSequenceId
+        )
+        {
+            return (cPath => cPath
+                .Prefetch<AppointmentStatusInvoiceRateEntity>(company => company.AppointmentStatusInvoiceRates)
+                    .FilterOn(appointmentStatusInvoiceRate =>
+                        appointmentStatusInvoiceRate.ReferralSourceId == referralSourceId &&
+                        appointmentStatusInvoiceRate.AppointmentStatusId == appointmentStatusId &&
+                        appointmentStatusInvoiceRate.AppointmentSequenceId == appointmentSequenceId
+                    )
+                .Prefetch<AssessmentTypeInvoiceAmountEntity>(company => company.AssessmentTypeInvoiceAmounts)
+                    .FilterOn(assessmentTypeInvoiceAmount =>
+                        assessmentTypeInvoiceAmount.ReferralSourceId == referralSourceId &&
+                        assessmentTypeInvoiceAmount.AssessmentTypeId == assessmentTypeId
+                    )
+                .Prefetch<ReferralSourceInvoiceConfigurationEntity>(company => company.ReferralSourceInvoiceConfigurations)
+                    .FilterOn(referralSourceInvoiceConfiguration =>
+                        referralSourceInvoiceConfiguration.ReferralSourceId == referralSourceId
+                    )
+                .Prefetch<IssueInDisputeInvoiceAmountEntity>(company => company.IssueInDisputeInvoiceAmounts)
+                    .SubPath(issueInDisputeInvoiceAmountPath => issueInDisputeInvoiceAmountPath
+                        .Prefetch<IssueInDisputeEntity>(issueInDisputeInvoiceAmount => issueInDisputeInvoiceAmount.IssueInDispute)
+                    )
+            );
+        }
+        
         private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
             InvoiceListPath =
                 (invoicePath => invoicePath
@@ -90,13 +124,13 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             .Prefetch<AppointmentEntity>(invoiceAppointment => invoiceAppointment.Appointment)
                                 .SubPath(appointmentPath => appointmentPath
                                     .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                                        .SubPath(appointmentStatusPath => appointmentStatusPath
-                                            .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(appointmentStatus => appointmentStatus.ReferralSourceAppointmentStatusSettings)
-                                                .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
-                                                    .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
-                                                    .Prefetch<ReferralSourceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ReferralSource)
-                                                )
-                                        )
+                                        //.SubPath(appointmentStatusPath => appointmentStatusPath
+                                        //    .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(appointmentStatus => appointmentStatus.ReferralSourceAppointmentStatusSettings)
+                                        //        .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
+                                        //            .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
+                                        //            .Prefetch<ReferralSourceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ReferralSource)
+                                        //        )
+                                        //)
                                     .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                                         .SubPath(psychologistPath => psychologistPath
                                             .Prefetch<UserTravelFeeEntity>(psychologist => psychologist.UserTravelFees)
@@ -154,6 +188,81 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 );
 
         #endregion
+
+        public PsychologistInvoiceCalculationData GetPsychologistInvoiceCalculationData(
+            int companyId,
+            int referralSourceId,
+            int assessmentTypeId,
+            int appointmentStatusId,
+            int appointmentSequenceId
+        )
+        {
+            var prefetchPath = GetInvoiceCalculationDataPrefetchPath(companyId, referralSourceId, assessmentTypeId, appointmentStatusId, appointmentSequenceId);
+            
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var companyEntity = meta.Company
+                    .WithPath(prefetchPath)
+                    .Where(company => company.CompanyId == companyId)
+                    .SingleOrDefault();
+                
+                var result = new PsychologistInvoiceCalculationData
+                {
+                    Company = companyEntity.ToCompany(),
+                    IssueInDisputeInvoiceAmounts = companyEntity.IssueInDisputeInvoiceAmounts.Select(issueInDisputeInvoiceAmount => issueInDisputeInvoiceAmount.ToIssueInDisputeInvoiceAmount()),
+                };
+
+                if (companyEntity.AppointmentStatusInvoiceRates.Any())
+                {
+                    var appointmentStatusInvoiceRate = companyEntity.AppointmentStatusInvoiceRates.FirstOrDefault();
+
+                    if (null != appointmentStatusInvoiceRate)
+                    {
+                        result.InvoiceRate = appointmentStatusInvoiceRate.InvoiceRate;
+                        result.ApplyCompletionFee = appointmentStatusInvoiceRate.ApplyCompletionFee;
+                        result.ApplyExtraReportFees = appointmentStatusInvoiceRate.ApplyExtraReportFees;
+                        result.ApplyIssueInDisputeFees = appointmentStatusInvoiceRate.ApplyIssueInDisputeFees;
+                        result.ApplyLargeFileFee = appointmentStatusInvoiceRate.ApplyLargeFileFee;
+                        result.ApplyTravelFee = appointmentStatusInvoiceRate.ApplyTravelFee;
+                    }
+                    else
+                    {
+                        result.MissingAppointmentStatusInvoiceData = true;
+                    }
+                }
+
+                if (companyEntity.AssessmentTypeInvoiceAmounts.Any())
+                {
+                    var assessmentTypeInvoiceAmount = companyEntity.AssessmentTypeInvoiceAmounts.First();
+
+                    result.SingleReportInvoiceAmount = assessmentTypeInvoiceAmount.SingleReportInvoiceAmount;
+                    result.ComboReportInvoiceAmount = assessmentTypeInvoiceAmount.ComboReportInvoiceAmount;
+                }
+                else
+                {
+                    result.MissingAssessmentTypeInvoiceData = true;
+                }
+
+                if (companyEntity.ReferralSourceInvoiceConfigurations.Any())
+                {
+                    var referralSourceInvoiceConfiguration = companyEntity.ReferralSourceInvoiceConfigurations.First();
+
+                    result.CompletionFeeAmount = referralSourceInvoiceConfiguration.CompletionFeeAmount;
+                    //result.FullFeeSequence = referralSourceInvoiceConfiguration.FullFeeSequence.ToAppointmentSequence();
+                    result.ExtraReportFee = referralSourceInvoiceConfiguration.ExtraReportFee;
+                    result.LargeFileFee = referralSourceInvoiceConfiguration.LargeFileFee;
+                    result.LargeFileSize = referralSourceInvoiceConfiguration.LargeFileSize;
+                }
+                else
+                {
+                    result.MissingReferralSourceInvoiceData = true;
+                }
+
+                return result;
+            }
+        }
 
         public Invoice GetInvoice(int id)
         {
@@ -333,18 +442,19 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 }
 
                 //determine whether we're changing to a status that requires an invoice document to be saved
-                var saveDocument = 
-                    !invoiceEntity.InvoiceStatus.SaveDocument &&
-                    invoice.InvoiceStatus.SaveDocument;
+                var saveDocument =
+                    invoice.InvoiceStatus.SaveDocument &&
+                    invoice.InvoiceStatus.InvoiceStatusId != invoiceEntity.InvoiceStatusId;
                 
                 invoiceEntity.Identifier = invoice.Identifier;
                 invoiceEntity.InvoiceDate = invoice.InvoiceDate;
                 invoiceEntity.InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId;
                 invoiceEntity.InvoiceTypeId = invoice.InvoiceType.InvoiceTypeId;
                 invoiceEntity.PayableToId = invoice.PayableTo.UserId;
-                invoiceEntity.UpdateDate = _date.UtcNow;
+                invoiceEntity.InvoiceRate = invoice.InvoiceRate;
                 invoiceEntity.TaxRate = invoice.TaxRate;
                 invoiceEntity.Total = invoice.Total;
+                invoiceEntity.UpdateDate = _date.UtcNow;
 
                 #region appointments
 
@@ -385,8 +495,10 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                         //updated lines
                                         ia.Lines.Any(line => line.InvoiceLineId == invoiceLine.InvoiceLineId &&
                                             (
+                                            line.Amount != invoiceLine.Amount ||
                                             line.Description != invoiceLine.Description ||
-                                            line.Amount != invoiceLine.Amount
+                                            line.ApplyInvoiceRate != invoiceLine.ApplyInvoiceRate ||
+                                            line.IsCustom != invoiceLine.IsCustom
                                             )
                                         )
                                     )
@@ -428,7 +540,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                             invoiceLine.InvoiceLineId == line.InvoiceLineId &&
                                             (
                                                 invoiceLine.Amount != line.Amount ||
-                                                invoiceLine.Description != line.Description
+                                                invoiceLine.Description != line.Description ||
+                                                invoiceLine.ApplyInvoiceRate != line.ApplyInvoiceRate ||
+                                                invoiceLine.IsCustom != line.IsCustom
                                             )
                                         )
                                     );
@@ -440,6 +554,8 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     {
                                         lineEntity.Amount = line.Amount;
                                         lineEntity.Description = line.Description;
+                                        lineEntity.ApplyInvoiceRate = line.ApplyInvoiceRate;
+                                        lineEntity.IsCustom = line.IsCustom;
                                     }
                                 }
                             }
@@ -471,6 +587,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         {
                             Amount = line.Amount,
                             Description = line.Description,
+                            ApplyInvoiceRate = line.ApplyInvoiceRate,
                             IsCustom = line.IsCustom,
                         })
                     );
@@ -490,7 +607,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     invoiceEntity.InvoiceDocuments.Add(
                         new InvoiceDocumentEntity
                         {
-                            FileName = string.Format("{0}_{1:yyyyMMddhhmmss}.pdf", invoice.Identifier, _date.UtcNow),
+                            FileName = string.Format("{0}.pdf", _invoiceDocumentFileNameGenerator.GetFileName(invoice)),
                             Document = pdf,
                         }
                     );
@@ -534,11 +651,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
         public decimal GetTaxRate()
         {
             return 0.13m;   //TODO: retrieve from DB
-        }
-
-        public int GetAdditionalReportAmount(int referralSourceId, int reportTypeId)
-        {
-            return 50000;
         }
 
         public InvoiceDocument GetInvoiceDocument(int invoiceDocumentId)

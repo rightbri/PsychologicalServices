@@ -43,11 +43,11 @@ export class EditReferralSource {
 		else {
 			this.referralSource = {
 				referralSourceId: 0,
-				largeFileSize: this.config.referralSourceDefaults.largeFileSize,
-				largeFileFeeAmount: this.config.referralSourceDefaults.largeFileFeeAmount,
-				lateCancellationRate: this.config.referralSourceDefaults.lateCancellationRate,
+				//largeFileSize: this.config.referralSourceDefaults.largeFileSize,
+				//largeFileFeeAmount: this.config.referralSourceDefaults.largeFileFeeAmount,
+				//lateCancellationRate: this.config.referralSourceDefaults.lateCancellationRate,
 				isActive: true,
-				reportTypeInvoiceAmounts: []
+				//reportTypeInvoiceAmounts: []
 			};
 			
 			return this.getData();
@@ -59,14 +59,16 @@ export class EditReferralSource {
 			this.dataRepository.searchAddress({
 				'addressTypeIds': this.config.referralSourceDefaults.addressTypeIds
 			}).then(data => this.addresses = data),
-			this.dataRepository.getReferralSourceTypes().then(data => this.referralSourceTypes = data),
+			this.dataRepository.getReferralSourceTypes().then(data => this.referralSourceTypes = data)
+			/*,
 			this.dataRepository.getReportTypes().then(data => {
 				this.reportTypes = data;
 				
 				this.referralSource.reportTypeInvoiceAmounts = this.referralSource.reportTypeInvoiceAmounts.concat(
 					getMissingInvoiceAmounts(data, this.referralSource.reportTypeInvoiceAmounts)
 				);
-			})/*,
+			})*/
+			/*,
 			this.dataRepository.getAppointmentStatuses().then(appointmentStatuses => {
 
 				return this.dataRepository.getInvoiceTypes().then(invoiceTypes => {
@@ -126,13 +128,13 @@ export class EditReferralSource {
 		this.router.navigateBack();
 	}
 }
-
+/*
 function getMissingInvoiceAmounts(reportTypes, invoiceAmounts) {
 	return reportTypes.filter(reportType => 
 		!invoiceAmounts.some(invoiceAmount => invoiceAmount.reportType.reportTypeId === reportType.reportTypeId)
 	).map(function(reportType) { return { reportType: reportType, invoiceAmount: 0 };});
 }
-/*
+
 function getMissingAppointmentStatusSettings(appointmentStatuses, invoiceTypes, appointmentStatusSettings) {
 	return appointmentStatuses.map(function (appointmentStatus) {
 		return invoiceTypes.map(function (invoiceType) {

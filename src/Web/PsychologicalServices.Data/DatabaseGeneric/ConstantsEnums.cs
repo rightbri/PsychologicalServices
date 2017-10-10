@@ -157,6 +157,36 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentStatusInvoiceRate.
+	/// </summary>
+	public enum AppointmentStatusInvoiceRateFieldIndex:int
+	{
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>ReferralSourceId. </summary>
+		ReferralSourceId,
+		///<summary>AppointmentStatusId. </summary>
+		AppointmentStatusId,
+		///<summary>AppointmentSequenceId. </summary>
+		AppointmentSequenceId,
+		///<summary>InvoiceRate. </summary>
+		InvoiceRate,
+		///<summary>ApplyCompletionFee. </summary>
+		ApplyCompletionFee,
+		///<summary>ApplyLargeFileFee. </summary>
+		ApplyLargeFileFee,
+		///<summary>ApplyTravelFee. </summary>
+		ApplyTravelFee,
+		///<summary>ApplyIssueInDisputeFees. </summary>
+		ApplyIssueInDisputeFees,
+		///<summary>ApplyExtraReportFees. </summary>
+		ApplyExtraReportFees,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Arbitration.
 	/// </summary>
 	public enum ArbitrationFieldIndex:int
@@ -373,6 +403,26 @@ namespace PsychologicalServices.Data
 		AssessmentTypeId,
 		///<summary>AttributeTypeId. </summary>
 		AttributeTypeId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AssessmentTypeInvoiceAmount.
+	/// </summary>
+	public enum AssessmentTypeInvoiceAmountFieldIndex:int
+	{
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>ReferralSourceId. </summary>
+		ReferralSourceId,
+		///<summary>AssessmentTypeId. </summary>
+		AssessmentTypeId,
+		///<summary>SingleReportInvoiceAmount. </summary>
+		SingleReportInvoiceAmount,
+		///<summary>ComboReportInvoiceAmount. </summary>
+		ComboReportInvoiceAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -689,6 +739,8 @@ namespace PsychologicalServices.Data
 		InvoiceTypeId,
 		///<summary>PayableToId. </summary>
 		PayableToId,
+		///<summary>InvoiceRate. </summary>
+		InvoiceRate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -745,6 +797,8 @@ namespace PsychologicalServices.Data
 		Amount,
 		///<summary>IsCustom. </summary>
 		IsCustom,
+		///<summary>ApplyInvoiceRate. </summary>
+		ApplyInvoiceRate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -833,8 +887,22 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
-		///<summary>AdditionalFee. </summary>
-		AdditionalFee,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: IssueInDisputeInvoiceAmount.
+	/// </summary>
+	public enum IssueInDisputeInvoiceAmountFieldIndex:int
+	{
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>IssueInDisputeId. </summary>
+		IssueInDisputeId,
+		///<summary>InvoiceAmount. </summary>
+		InvoiceAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -895,10 +963,6 @@ namespace PsychologicalServices.Data
 		ReferralSourceTypeId,
 		///<summary>IsActive. </summary>
 		IsActive,
-		///<summary>LargeFileSize. </summary>
-		LargeFileSize,
-		///<summary>LargeFileFeeAmount. </summary>
-		LargeFileFeeAmount,
 		///<summary>AddressId. </summary>
 		AddressId,
 		/// <summary></summary>
@@ -907,26 +971,22 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ReferralSourceAppointmentStatusSetting.
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ReferralSourceInvoiceConfiguration.
 	/// </summary>
-	public enum ReferralSourceAppointmentStatusSettingFieldIndex:int
+	public enum ReferralSourceInvoiceConfigurationFieldIndex:int
 	{
 		///<summary>ReferralSourceId. </summary>
 		ReferralSourceId,
-		///<summary>AppointmentStatusId. </summary>
-		AppointmentStatusId,
-		///<summary>InvoiceTypeId. </summary>
-		InvoiceTypeId,
-		///<summary>InvoiceRate. </summary>
-		InvoiceRate,
-		///<summary>AppointmentSequenceId. </summary>
-		AppointmentSequenceId,
-		///<summary>InvoiceFee. </summary>
-		InvoiceFee,
-		///<summary>ApplyTravelFee. </summary>
-		ApplyTravelFee,
-		///<summary>ApplyLargeFileFee. </summary>
-		ApplyLargeFileFee,
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>LargeFileSize. </summary>
+		LargeFileSize,
+		///<summary>LargeFileFee. </summary>
+		LargeFileFee,
+		///<summary>ExtraReportFee. </summary>
+		ExtraReportFee,
+		///<summary>CompletionFeeAmount. </summary>
+		CompletionFeeAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1005,22 +1065,6 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ReportTypeInvoiceAmount.
-	/// </summary>
-	public enum ReportTypeInvoiceAmountFieldIndex:int
-	{
-		///<summary>ReferralSourceId. </summary>
-		ReferralSourceId,
-		///<summary>ReportTypeId. </summary>
-		ReportTypeId,
-		///<summary>InvoiceAmount. </summary>
-		InvoiceAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1184,6 +1228,8 @@ namespace PsychologicalServices.Data
 		AppointmentSequenceEntity,
 		///<summary>AppointmentStatus</summary>
 		AppointmentStatusEntity,
+		///<summary>AppointmentStatusInvoiceRate</summary>
+		AppointmentStatusInvoiceRateEntity,
 		///<summary>Arbitration</summary>
 		ArbitrationEntity,
 		///<summary>Assessment</summary>
@@ -1206,6 +1252,8 @@ namespace PsychologicalServices.Data
 		AssessmentTypeEntity,
 		///<summary>AssessmentTypeAttributeType</summary>
 		AssessmentTypeAttributeTypeEntity,
+		///<summary>AssessmentTypeInvoiceAmount</summary>
+		AssessmentTypeInvoiceAmountEntity,
 		///<summary>AssessmentTypeReportType</summary>
 		AssessmentTypeReportTypeEntity,
 		///<summary>Attribute</summary>
@@ -1252,14 +1300,16 @@ namespace PsychologicalServices.Data
 		InvoiceTypeEntity,
 		///<summary>IssueInDispute</summary>
 		IssueInDisputeEntity,
+		///<summary>IssueInDisputeInvoiceAmount</summary>
+		IssueInDisputeInvoiceAmountEntity,
 		///<summary>Note</summary>
 		NoteEntity,
 		///<summary>PsychometristInvoiceAmount</summary>
 		PsychometristInvoiceAmountEntity,
 		///<summary>ReferralSource</summary>
 		ReferralSourceEntity,
-		///<summary>ReferralSourceAppointmentStatusSetting</summary>
-		ReferralSourceAppointmentStatusSettingEntity,
+		///<summary>ReferralSourceInvoiceConfiguration</summary>
+		ReferralSourceInvoiceConfigurationEntity,
 		///<summary>ReferralSourceType</summary>
 		ReferralSourceTypeEntity,
 		///<summary>ReferralType</summary>
@@ -1270,8 +1320,6 @@ namespace PsychologicalServices.Data
 		ReportStatusEntity,
 		///<summary>ReportType</summary>
 		ReportTypeEntity,
-		///<summary>ReportTypeInvoiceAmount</summary>
-		ReportTypeInvoiceAmountEntity,
 		///<summary>Right</summary>
 		RightEntity,
 		///<summary>Role</summary>

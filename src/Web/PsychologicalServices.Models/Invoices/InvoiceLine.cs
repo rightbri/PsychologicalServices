@@ -13,5 +13,7 @@ namespace PsychologicalServices.Models.Invoices
         public int Amount { get; set; }
 
         public bool IsCustom { get; set; }
+
+        public bool ApplyInvoiceRate { get; set; }
     }
 }

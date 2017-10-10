@@ -1,13 +1,11 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Appointments;
-using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PsychologicalServices.Models.Invoices
 {
@@ -18,8 +16,8 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IUserService _userService = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IInvoiceValidator _invoiceValidator = null;
+        private readonly IPsychologistInvoiceGenerator _psychologistInvoiceGenerator = null;
         private readonly IPsychometristInvoiceGenerator _psychometristInvoiceGenerator = null;
-        private readonly IMailService _mailService = null;
         private readonly IDate _date = null;
         private readonly ILog _log = null;
         private readonly ITimezoneService _timezoneService = null;
@@ -30,8 +28,8 @@ namespace PsychologicalServices.Models.Invoices
             IUserService userService,
             IInvoiceRepository invoiceRepository,
             IInvoiceValidator invoiceValidator,
+            IPsychologistInvoiceGenerator psychologistInvoiceGenerator,
             IPsychometristInvoiceGenerator psychometristInvoiceGenerator,
-            IMailService mailService,
             IDate date,
             ILog log,
             ITimezoneService timezoneService
@@ -41,9 +39,9 @@ namespace PsychologicalServices.Models.Invoices
             _companyRepository = companyRepository;
             _userService = userService;
             _invoiceRepository = invoiceRepository;
+            _psychologistInvoiceGenerator = psychologistInvoiceGenerator;
             _psychometristInvoiceGenerator = psychometristInvoiceGenerator;
             _invoiceValidator = invoiceValidator;
-            _mailService = mailService;
             _date = date;
             _log = log;
             _timezoneService = timezoneService;
@@ -56,9 +54,15 @@ namespace PsychologicalServices.Models.Invoices
             return invoice;
         }
 
-        public Invoice NewInvoice(Appointment appointment)
+        public Invoice CreatePsychologistInvoice(int appointmentId)
         {
-            throw new NotImplementedException("Psychologist invoices are not implemented yet!");
+            var appointment = _appointmentRepository.GetAppointmentForPsychologistInvoice(appointmentId);
+
+            var invoice = _psychologistInvoiceGenerator.CreateInvoice(appointment);
+
+            var invoiceId = _invoiceRepository.SaveInvoice(invoice);
+
+            return _invoiceRepository.GetInvoice(invoiceId);
         }
         
         public Invoice CreatePsychometristInvoice(PsychometristInvoiceCreationParameters parameters)
@@ -85,13 +89,21 @@ namespace PsychologicalServices.Models.Invoices
 
         public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
         {
+            IEnumerable<InvoiceAppointment> invoiceAppointments = null;
+
             if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychologist)
             {
-                throw new NotImplementedException("Psychologist Invoices are not implemented yet!");
+                invoiceAppointments = _psychologistInvoiceGenerator.GetInvoiceAppointments(invoice);
+            }
+            else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychometrist)
+            {
+                invoiceAppointments = _psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("invoice", $"Invoice type {invoice.InvoiceType.InvoiceTypeId} is not supported");
             }
 
-            var invoiceAppointments = _psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
-            
             return invoiceAppointments;
         }
         
@@ -132,11 +144,6 @@ namespace PsychologicalServices.Models.Invoices
 
         public SaveResult<Invoice> SaveInvoice(Invoice invoice)
         {
-            if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychologist)
-            {
-                throw new NotImplementedException("Psychologist Invoices are not implemented yet!");
-            }
-
             var result = new SaveResult<Invoice>();
 
             try
@@ -147,10 +154,21 @@ namespace PsychologicalServices.Models.Invoices
 
                 if (result.ValidationResult.IsValid)
                 {
-                    invoice.Total =
-                        invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychometrist
-                        ? _psychometristInvoiceGenerator.GetInvoiceTotal(invoice)
-                        : 0;    //TODO: implement psychologist invoice generator
+                    var total = 0;
+
+                    switch (invoice.InvoiceType.InvoiceTypeId)
+                    {
+                        case InvoiceType.Psychometrist:
+                            total = _psychometristInvoiceGenerator.GetInvoiceTotal(invoice);
+                            break;
+                        case InvoiceType.Psychologist:
+                            total = _psychologistInvoiceGenerator.GetInvoiceTotal(invoice);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    invoice.Total = total;
 
                     var id = _invoiceRepository.SaveInvoice(invoice);
 

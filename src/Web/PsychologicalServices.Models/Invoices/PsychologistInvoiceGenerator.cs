@@ -33,6 +33,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public Invoice CreateInvoice(Appointment appointment)
         {
+            var invoiceTypeId = InvoiceType.Psychologist;
+
             if (!appointment.AppointmentStatus.CanInvoice)
             {
                 throw new InvalidOperationException("An invoice cannot be opened without an invoiceable appointment.");
@@ -40,17 +42,25 @@ namespace PsychologicalServices.Models.Invoices
 
             if (_invoiceRepository.GetInvoices(new InvoiceSearchCriteria
                 {
-                    AppointmentId = appointment.AppointmentId
+                    AppointmentId = appointment.AppointmentId,
+                    InvoiceTypeId = invoiceTypeId,
                 }).Any()
             )
             {
-                throw new InvalidOperationException("An invoice already exists for this appointment.");
+                throw new InvalidOperationException("A psychologist invoice already exists for this appointment.");
             }
 
-            var invoiceType = new InvoiceType
-            {
-                InvoiceTypeId = InvoiceType.Psychologist,
-            };
+            var assessmentAppointments = _appointmentRepository.GetAppointmentSequenceSiblings(appointment.AppointmentId);
+
+            var appointmentSequence = appointment.AppointmentSequence(assessmentAppointments);
+
+            var invoiceCalculationData = _invoiceRepository.GetPsychologistInvoiceCalculationData(
+                appointment.Assessment.Company.CompanyId,
+                appointment.Assessment.ReferralSource.ReferralSourceId,
+                appointment.Assessment.AssessmentType.AssessmentTypeId,
+                appointment.AppointmentStatus.AppointmentStatusId,
+                appointmentSequence.AppointmentSequenceId
+            );
 
             var invoice = new Invoice
             {
@@ -60,7 +70,10 @@ namespace PsychologicalServices.Models.Invoices
                 ),
                 InvoiceDate = appointment.AppointmentTime.Date,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
-                InvoiceType = invoiceType,
+                InvoiceType = new InvoiceType
+                    {
+                        InvoiceTypeId = invoiceTypeId,
+                    },
                 PayableTo = appointment.Psychologist,
                 Appointments = new List<InvoiceAppointment>(new[]
                     {
@@ -68,13 +81,9 @@ namespace PsychologicalServices.Models.Invoices
                         {
                             Appointment = appointment,
                             Lines = GetInvoiceLines(appointment),
-                            InvoiceRate = GetAppointmentStatusInvoiceRate(
-                                appointment,
-                                invoiceType,
-                                appointment.AppointmentSequence(appointment.Assessment.Appointments)
-                            ),
                         }
                     }),
+                InvoiceRate = invoiceCalculationData.InvoiceRate,
                 TaxRate = _invoiceRepository.GetTaxRate(),
                 UpdateDate = _date.UtcNow,
             };
@@ -90,29 +99,14 @@ namespace PsychologicalServices.Models.Invoices
             
             foreach (var invoiceAppointment in invoice.Appointments)
             {
-                var invoiceRate =
-                    GetAppointmentStatusInvoiceRate(
-                        invoiceAppointment.Appointment,
-                        invoice.InvoiceType,
-                        invoiceAppointment.Appointment.AppointmentSequence(invoice.Appointments.Select(ia => ia.Appointment))
-                    );
-                
-                switch (invoice.InvoiceType.InvoiceTypeId)
-                {
-                    case InvoiceType.Psychologist:
-                        invoiceAppointments.Add(
-                            new InvoiceAppointment
-                            {
-                                InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
-                                Appointment = invoiceAppointment.Appointment,
-                                Lines = GetInvoiceLines(invoiceAppointment.Appointment)
-                                    .Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
-                                InvoiceRate = invoiceRate,
-                            });
-                        break;
-                    default:
-                        break;
-                }
+                invoiceAppointments.Add(
+                    new InvoiceAppointment
+                    {
+                        InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
+                        Appointment = invoiceAppointment.Appointment,
+                        Lines = GetInvoiceLines(invoiceAppointment.Appointment)
+                            .Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
+                    });
             }
             
             return invoiceAppointments;
@@ -124,66 +118,133 @@ namespace PsychologicalServices.Models.Invoices
 
             var psychologist = _userRepository.GetUserById(appointment.Psychologist.UserId);
 
-            var referralSource = _referralRepository.GetReferralSource(appointment.Assessment.ReferralSource.ReferralSourceId);
+            var assessmentAppointments = _appointmentRepository.GetAppointmentSequenceSiblings(appointment.AppointmentId);
 
-            foreach (var report in appointment.Assessment.Reports)
+            var appointmentSequence = appointment.AppointmentSequence(assessmentAppointments);
+            
+            var invoiceCalculationData = _invoiceRepository.GetPsychologistInvoiceCalculationData(
+                appointment.Assessment.Company.CompanyId,
+                appointment.Assessment.ReferralSource.ReferralSourceId,
+                appointment.Assessment.AssessmentType.AssessmentTypeId,
+                appointment.AppointmentStatus.AppointmentStatusId,
+                appointmentSequence.AppointmentSequenceId
+            );
+
+            var isLargeFile = appointment.Assessment.IsLargeFile || appointment.Assessment.FileSize >= invoiceCalculationData.LargeFileSize;
+            
+            if (invoiceCalculationData.ApplyCompletionFee)
             {
-                var reportAmount = referralSource.ReportTypeInvoiceAmounts.SingleOrDefault(invoiceAmount => invoiceAmount.ReportType.ReportTypeId == report.ReportType.ReportTypeId);
-
-                var description =
-                    string.Format("{0}{1} Assessment Report",
-                        report.IsAdditional ? "Additional " : "",
-                        report.ReportType.Name
-                    );
-
-                var amount = report.IsAdditional
-                    ? _invoiceRepository.GetAdditionalReportAmount(referralSource.ReferralSourceId, report.ReportType.ReportTypeId)
-                    : (null != reportAmount
-                        ? reportAmount.InvoiceAmount
-                    //report type invoice amount not configured for referral source
-                        : 0
-                    );
-
-                lines.Add(new InvoiceLine { Description = description, Amount = amount });
-
-                foreach (var issueInDispute in report.IssuesInDispute)
+                lines.Add(
+                    new InvoiceLine
+                    {
+                        Amount = invoiceCalculationData.CompletionFeeAmount,
+                        Description = $"Incomplete {appointment.Assessment.AssessmentType.Description} assessment",
+                    });
+            }
+            else
+            {
+                //primary reports
+                var primaryReports = appointment.Assessment.Reports.Where(report => !report.IsAdditional);
+                
+                if (primaryReports.Count() > 1)
                 {
-                    if (issueInDispute.AdditionalFee > 0)
+                    lines.Add(
+                        new InvoiceLine
+                        {
+                            Amount = invoiceCalculationData.ComboReportInvoiceAmount,
+                            Description = appointment.Assessment.ToPrimaryReportsInvoiceLineDescription(),
+                            ApplyInvoiceRate = true,
+                        });
+                }
+                else if (primaryReports.Count() == 1)
+                {
+                    lines.Add(
+                        new InvoiceLine
+                        {
+                            Amount = invoiceCalculationData.SingleReportInvoiceAmount,
+                            Description = appointment.Assessment.ToPrimaryReportsInvoiceLineDescription(),
+                            ApplyInvoiceRate = true,
+                        });
+                }
+
+                //extra reports
+                if (invoiceCalculationData.ApplyExtraReportFees)
+                {
+                    var extraReports = appointment.Assessment.Reports.Where(report => report.IsAdditional);
+
+                    foreach (var extraReport in extraReports)
                     {
                         lines.Add(
                             new InvoiceLine
                             {
-                                Description = string.Format("Addressing {0}", issueInDispute.Name),
-                                Amount = issueInDispute.AdditionalFee,
-                            }
-                        );
+                                Amount = invoiceCalculationData.ExtraReportFee,
+                                Description = extraReport.ToExtraReportsInvoiceLineDescriptions(appointment.Assessment.AssessmentType.Description),
+                                ApplyInvoiceRate = true,
+                            });
+                    }
+                }
+                
+                //issues in dispute
+                if (invoiceCalculationData.ApplyIssueInDisputeFees)
+                {
+                    foreach (var issueInDisputeInvoiceAmount in invoiceCalculationData.IssueInDisputeInvoiceAmounts)
+                    {
+                        if (issueInDisputeInvoiceAmount.InvoiceAmount > 0 &&
+                            appointment.Assessment.Reports.Any(report =>
+                                report.IssuesInDispute.Any(issueInDispute =>
+                                    issueInDispute.IssueInDisputeId == issueInDisputeInvoiceAmount.IssueInDispute.IssueInDisputeId
+                                )
+                            )
+                        )
+                        {
+                            lines.Add(
+                                new InvoiceLine
+                                {
+                                    Amount = issueInDisputeInvoiceAmount.InvoiceAmount,
+                                    Description = $"{issueInDisputeInvoiceAmount.IssueInDispute.Name} surcharge",
+                                    ApplyInvoiceRate = true,
+                                });
+                        }
                     }
                 }
             }
 
-            var travelFee = psychologist.TravelFees.SingleOrDefault(tf => tf.City.CityId == appointment.Location.City.CityId);
-            if (null != travelFee && travelFee.Amount > 0)
+            //large file fee - apply to first billable && first time seen appointments
+            if (invoiceCalculationData.ApplyLargeFileFee)
             {
-                lines.Add(
-                    new InvoiceLine
-                    {
-                        Description = string.Format("Travel to {0}", travelFee.City.Name),
-                        Amount = travelFee.Amount
-                    }
-                );
+                if (
+                    (
+                        appointment.IsFirstInvoiceableAppointment(assessmentAppointments) ||
+                        appointment.IsFirstTimeSeen(assessmentAppointments)
+                    ) && isLargeFile
+                )
+                {
+                    lines.Add(
+                        new InvoiceLine
+                        {
+                            Amount = invoiceCalculationData.LargeFileFee,
+                            Description = "Large File Fee",
+                        }
+                    );
+                }
             }
-
-            if (appointment.Assessment.IsLargeFile || appointment.Assessment.FileSize >= referralSource.LargeFileSize)
+            
+            //travel fee
+            if (invoiceCalculationData.ApplyTravelFee)
             {
-                lines.Add(
-                    new InvoiceLine
-                    {
-                        Description = "Large File Fee",
-                        Amount = referralSource.LargeFileFeeAmount
-                    }
-                );
+                var travelFee = psychologist.TravelFees.SingleOrDefault(tf => tf.City.CityId == appointment.Location.City.CityId);
+                if (null != travelFee && travelFee.Amount > 0)
+                {
+                    lines.Add(
+                        new InvoiceLine
+                        {
+                            Description = string.Format("Travel to {0}", travelFee.City.Name),
+                            Amount = travelFee.Amount
+                        }
+                    );
+                }
             }
-
+            
             return lines;
         }
 
@@ -195,59 +256,35 @@ namespace PsychologicalServices.Models.Invoices
 
             foreach (var invoiceAppointment in invoice.Appointments)
             {
-                decimal appointmentTotal = invoiceAppointment.Lines.Select(line => line.Amount).Sum();
+                var appointmentTotal = 0.0m;
                 
                 var appointment = invoiceAppointment.Appointment;
 
-                var invoiceRate = GetAppointmentStatusInvoiceRate(
-                    appointment,
-                    invoice.InvoiceType,
-                    appointment.AppointmentSequence(invoice.Appointments.Select(ia => ia.Appointment))
+                var assessmentAppointments = _appointmentRepository.GetAppointmentSequenceSiblings(appointment.AppointmentId);
+
+                var appointmentSequence = appointment.AppointmentSequence(assessmentAppointments);
+
+                var invoiceCalculationData = _invoiceRepository.GetPsychologistInvoiceCalculationData(
+                    appointment.Assessment.Company.CompanyId,
+                    appointment.Assessment.ReferralSource.ReferralSourceId,
+                    appointment.Assessment.AssessmentType.AssessmentTypeId,
+                    appointment.AppointmentStatus.AppointmentStatusId,
+                    appointmentSequence.AppointmentSequenceId
                 );
 
-                //var appointmentStatusSetting =
-                //        appointment.AppointmentStatus.AppointmentStatusSettings
-                //            .SingleOrDefault(setting =>
-                //                setting.InvoiceType.InvoiceTypeId == invoice.InvoiceType.InvoiceTypeId &&
-                //                setting.ReferralSource.ReferralSourceId == appointment.Assessment.ReferralSource.ReferralSourceId
-                //            );
+                var invoiceRate = invoiceCalculationData.InvoiceRate;
 
-                //if (null != appointmentStatusSetting)
-                //{
-                //    appointmentTotal = appointmentTotal * appointmentStatusSetting.InvoiceRate;
-                //}
-
-                appointmentTotal = appointmentTotal * invoiceRate;
+                appointmentTotal =
+                    invoiceAppointment.Lines.Where(line => !line.ApplyInvoiceRate).Select(line => line.Amount).Sum() +
+                    //apply invoice rate to base assessment charges only
+                    (invoiceAppointment.Lines.Where(line => line.ApplyInvoiceRate).Select(line => line.Amount).Sum() * invoiceRate);
 
                 subtotal += appointmentTotal;
             }
 
-            var taxRate = Convert.ToInt32(invoice.TaxRate * 100);
+            total = subtotal * (1 + invoice.TaxRate);
 
-            total = subtotal * (100 + invoice.TaxRate);
-
-            return Convert.ToInt32(total / 100);
-        }
-
-        private decimal GetAppointmentStatusInvoiceRate(Appointment appointment, InvoiceType invoiceType, AppointmentSequence appointmentSequence)
-        {
-            var rate = 100;
-
-            var referralSource = _referralRepository.GetReferralSource(appointment.Assessment.ReferralSource.ReferralSourceId);
-
-            var statusSetting = referralSource.AppointmentStatusSettings
-                .Where(appointmentStatusSetting =>
-                    appointmentStatusSetting.AppointmentSequence.AppointmentSequenceId == appointmentSequence.AppointmentSequenceId &&
-                    appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == appointment.AppointmentStatus.AppointmentStatusId &&
-                    appointmentStatusSetting.InvoiceType.InvoiceTypeId == invoiceType.InvoiceTypeId
-                ).SingleOrDefault();
-            
-            if (null != statusSetting)
-            {
-                rate = Convert.ToInt32(statusSetting.InvoiceRate * 100);
-            }
-
-            return rate;
+            return Convert.ToInt32(total);
         }
     }
 }

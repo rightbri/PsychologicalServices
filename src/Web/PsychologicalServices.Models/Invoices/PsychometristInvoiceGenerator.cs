@@ -68,6 +68,7 @@ namespace PsychologicalServices.Models.Invoices
             {
                 Identifier = string.Format("{0}-{1:00#}", psychometrist.UserId, _invoiceRepository.GetInvoiceCount(psychometrist.UserId) + 1),
                 InvoiceDate = invoiceDate,
+                InvoiceRate = 1.0m,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = invoiceType,
                 PayableTo = psychometrist,

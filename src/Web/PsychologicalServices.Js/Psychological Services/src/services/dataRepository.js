@@ -82,6 +82,12 @@ export class DataRepository {
 			'month': month
 		});
 	}
+
+	createPsychologistInvoice(appointmentId) {
+		return this.postBasic('psychologistinvoice/create', {
+			'appointmentId': appointmentId
+		});
+	}
 	
 	saveInvoice(invoice) {
 		return this.saveBasic(invoice, 'invoice');

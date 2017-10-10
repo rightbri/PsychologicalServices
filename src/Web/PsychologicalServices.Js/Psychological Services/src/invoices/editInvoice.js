@@ -105,17 +105,22 @@ export class EditInvoice {
 		{
 			let appointmentSubtotal = 0;
 			
-			appointmentSubtotal = invoiceAppointment.lines
-                .map(line => line.amount)
-                .reduce((accumulator, value) => accumulator + value, 0);
+			appointmentSubtotal =
+				invoiceAppointment.lines
+					.filter(line => !line.applyInvoiceRate)
+					.map(line => line.amount)
+					.reduce((accumulator, value) => accumulator + value, 0) +
+				invoiceAppointment.lines
+					.filter(line => line.applyInvoiceRate)
+					.map(line => line.amount)
+					.reduce((accumulator, value) => accumulator + (value * this.invoice.invoiceRate), 0);
 
-			//appointmentSubtotal = appointmentSubtotal * invoiceAppointment.invoiceRate;
+			invoiceAppointment.showStatusLine = this.invoice.invoiceRate !== 1.0;
 			
-			//invoiceAppointment.showStatusLine = invoiceAppointment.invoiceRate !== 1.0;
 			invoiceAppointment.subtotal = appointmentSubtotal;
 			
 			this.subtotal += appointmentSubtotal;
-		});
+		}, this);
 
         this.invoice.total = Math.round(this.subtotal * (1 + this.invoice.taxRate));
     }

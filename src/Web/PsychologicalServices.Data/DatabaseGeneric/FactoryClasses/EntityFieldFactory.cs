@@ -82,6 +82,14 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AppointmentStatusEntity", (int)fieldIndex));
 		}
 
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AppointmentStatusInvoiceRateEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(AppointmentStatusInvoiceRateFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AppointmentStatusInvoiceRateEntity", (int)fieldIndex));
+		}
+
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the ArbitrationEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
@@ -168,6 +176,14 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public static IEntityField2 Create(AssessmentTypeAttributeTypeFieldIndex fieldIndex)
 		{
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AssessmentTypeAttributeTypeEntity", (int)fieldIndex));
+		}
+
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AssessmentTypeInvoiceAmountEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(AssessmentTypeInvoiceAmountFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("AssessmentTypeInvoiceAmountEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the AssessmentTypeReportTypeEntity. Which EntityField is created is specified by fieldIndex</summary>
@@ -354,6 +370,14 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("IssueInDisputeEntity", (int)fieldIndex));
 		}
 
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the IssueInDisputeInvoiceAmountEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(IssueInDisputeInvoiceAmountFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("IssueInDisputeInvoiceAmountEntity", (int)fieldIndex));
+		}
+
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the NoteEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
@@ -378,12 +402,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("ReferralSourceEntity", (int)fieldIndex));
 		}
 
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the ReferralSourceAppointmentStatusSettingEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the ReferralSourceInvoiceConfigurationEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(ReferralSourceAppointmentStatusSettingFieldIndex fieldIndex)
+		public static IEntityField2 Create(ReferralSourceInvoiceConfigurationFieldIndex fieldIndex)
 		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("ReferralSourceAppointmentStatusSettingEntity", (int)fieldIndex));
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("ReferralSourceInvoiceConfigurationEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the ReferralSourceTypeEntity. Which EntityField is created is specified by fieldIndex</summary>
@@ -424,14 +448,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public static IEntityField2 Create(ReportTypeFieldIndex fieldIndex)
 		{
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("ReportTypeEntity", (int)fieldIndex));
-		}
-
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the ReportTypeInvoiceAmountEntity. Which EntityField is created is specified by fieldIndex</summary>
-		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
-		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(ReportTypeInvoiceAmountFieldIndex fieldIndex)
-		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("ReportTypeInvoiceAmountEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the RightEntity. Which EntityField is created is specified by fieldIndex</summary>

@@ -98,6 +98,11 @@
 											</a>
 										</td>
 									</tr>
+									<tr if.bind="invoiceAppointment.showStatusLine">
+										<td class="uk-text-warning" uk-leader>${invoiceAppointment.appointment.appointmentStatus.name}</td>
+										<td>${invoiceAppointment.subtotal | money}</td>
+										<td></td>
+									</tr>
 								</template>
 							
 								<tr>

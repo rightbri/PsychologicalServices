@@ -362,6 +362,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty AppointmentStatusInvoiceRateEntity objects.</summary>
+	[Serializable]
+	public partial class AppointmentStatusInvoiceRateEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AppointmentStatusInvoiceRateEntityFactory() : base("AppointmentStatusInvoiceRateEntity", PsychologicalServices.Data.EntityType.AppointmentStatusInvoiceRateEntity) { }
+
+		/// <summary>Creates a new, empty AppointmentStatusInvoiceRateEntity object.</summary>
+		/// <returns>A new, empty AppointmentStatusInvoiceRateEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AppointmentStatusInvoiceRateEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentStatusInvoiceRate
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AppointmentStatusInvoiceRateEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AppointmentStatusInvoiceRateEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentStatusInvoiceRateUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AppointmentStatusInvoiceRateEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty ArbitrationEntity objects.</summary>
 	[Serializable]
 	public partial class ArbitrationEntityFactory : EntityFactoryBase2 {
@@ -784,6 +823,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntityCollection2 CreateEntityCollection()
 		{
 			return new EntityCollection<AssessmentTypeAttributeTypeEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
+	/// <summary>Factory to create new, empty AssessmentTypeInvoiceAmountEntity objects.</summary>
+	[Serializable]
+	public partial class AssessmentTypeInvoiceAmountEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public AssessmentTypeInvoiceAmountEntityFactory() : base("AssessmentTypeInvoiceAmountEntity", PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity) { }
+
+		/// <summary>Creates a new, empty AssessmentTypeInvoiceAmountEntity object.</summary>
+		/// <returns>A new, empty AssessmentTypeInvoiceAmountEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new AssessmentTypeInvoiceAmountEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTypeInvoiceAmount
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new AssessmentTypeInvoiceAmountEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AssessmentTypeInvoiceAmountEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTypeInvoiceAmountUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<AssessmentTypeInvoiceAmountEntity>(this);
 		}
 		
 
@@ -1688,6 +1766,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty IssueInDisputeInvoiceAmountEntity objects.</summary>
+	[Serializable]
+	public partial class IssueInDisputeInvoiceAmountEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public IssueInDisputeInvoiceAmountEntityFactory() : base("IssueInDisputeInvoiceAmountEntity", PsychologicalServices.Data.EntityType.IssueInDisputeInvoiceAmountEntity) { }
+
+		/// <summary>Creates a new, empty IssueInDisputeInvoiceAmountEntity object.</summary>
+		/// <returns>A new, empty IssueInDisputeInvoiceAmountEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new IssueInDisputeInvoiceAmountEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewIssueInDisputeInvoiceAmount
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new IssueInDisputeInvoiceAmountEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new IssueInDisputeInvoiceAmountEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewIssueInDisputeInvoiceAmountUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<IssueInDisputeInvoiceAmountEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty NoteEntity objects.</summary>
 	[Serializable]
 	public partial class NoteEntityFactory : EntityFactoryBase2 {
@@ -1805,29 +1922,29 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
-	/// <summary>Factory to create new, empty ReferralSourceAppointmentStatusSettingEntity objects.</summary>
+	/// <summary>Factory to create new, empty ReferralSourceInvoiceConfigurationEntity objects.</summary>
 	[Serializable]
-	public partial class ReferralSourceAppointmentStatusSettingEntityFactory : EntityFactoryBase2 {
+	public partial class ReferralSourceInvoiceConfigurationEntityFactory : EntityFactoryBase2 {
 		/// <summary>CTor</summary>
-		public ReferralSourceAppointmentStatusSettingEntityFactory() : base("ReferralSourceAppointmentStatusSettingEntity", PsychologicalServices.Data.EntityType.ReferralSourceAppointmentStatusSettingEntity) { }
+		public ReferralSourceInvoiceConfigurationEntityFactory() : base("ReferralSourceInvoiceConfigurationEntity", PsychologicalServices.Data.EntityType.ReferralSourceInvoiceConfigurationEntity) { }
 
-		/// <summary>Creates a new, empty ReferralSourceAppointmentStatusSettingEntity object.</summary>
-		/// <returns>A new, empty ReferralSourceAppointmentStatusSettingEntity object.</returns>
+		/// <summary>Creates a new, empty ReferralSourceInvoiceConfigurationEntity object.</summary>
+		/// <returns>A new, empty ReferralSourceInvoiceConfigurationEntity object.</returns>
 		public override IEntity2 Create() {
-			IEntity2 toReturn = new ReferralSourceAppointmentStatusSettingEntity();
+			IEntity2 toReturn = new ReferralSourceInvoiceConfigurationEntity();
 			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralSourceAppointmentStatusSetting
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralSourceInvoiceConfiguration
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
 		
-		/// <summary>Creates a new ReferralSourceAppointmentStatusSettingEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <summary>Creates a new ReferralSourceInvoiceConfigurationEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
 		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
 		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
 		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new ReferralSourceAppointmentStatusSettingEntity(fields);
+			IEntity2 toReturn = new ReferralSourceInvoiceConfigurationEntity(fields);
 			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralSourceAppointmentStatusSettingUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralSourceInvoiceConfigurationUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1836,7 +1953,7 @@ namespace PsychologicalServices.Data.FactoryClasses
 		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
 		public override IEntityCollection2 CreateEntityCollection()
 		{
-			return new EntityCollection<ReferralSourceAppointmentStatusSettingEntity>(this);
+			return new EntityCollection<ReferralSourceInvoiceConfigurationEntity>(this);
 		}
 		
 
@@ -2032,45 +2149,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntityCollection2 CreateEntityCollection()
 		{
 			return new EntityCollection<ReportTypeEntity>(this);
-		}
-		
-
-		#region Included Code
-
-		#endregion
-	}	
-	/// <summary>Factory to create new, empty ReportTypeInvoiceAmountEntity objects.</summary>
-	[Serializable]
-	public partial class ReportTypeInvoiceAmountEntityFactory : EntityFactoryBase2 {
-		/// <summary>CTor</summary>
-		public ReportTypeInvoiceAmountEntityFactory() : base("ReportTypeInvoiceAmountEntity", PsychologicalServices.Data.EntityType.ReportTypeInvoiceAmountEntity) { }
-
-		/// <summary>Creates a new, empty ReportTypeInvoiceAmountEntity object.</summary>
-		/// <returns>A new, empty ReportTypeInvoiceAmountEntity object.</returns>
-		public override IEntity2 Create() {
-			IEntity2 toReturn = new ReportTypeInvoiceAmountEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReportTypeInvoiceAmount
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new ReportTypeInvoiceAmountEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
-		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
-		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
-		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new ReportTypeInvoiceAmountEntity(fields);
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReportTypeInvoiceAmountUsingFields
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		
-		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
-		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
-		public override IEntityCollection2 CreateEntityCollection()
-		{
-			return new EntityCollection<ReportTypeInvoiceAmountEntity>(this);
 		}
 		
 
@@ -2424,6 +2502,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.AppointmentStatusEntity:
 					factoryToUse = new AppointmentStatusEntityFactory();
 					break;
+				case PsychologicalServices.Data.EntityType.AppointmentStatusInvoiceRateEntity:
+					factoryToUse = new AppointmentStatusInvoiceRateEntityFactory();
+					break;
 				case PsychologicalServices.Data.EntityType.ArbitrationEntity:
 					factoryToUse = new ArbitrationEntityFactory();
 					break;
@@ -2456,6 +2537,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeAttributeTypeEntity:
 					factoryToUse = new AssessmentTypeAttributeTypeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity:
+					factoryToUse = new AssessmentTypeInvoiceAmountEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeReportTypeEntity:
 					factoryToUse = new AssessmentTypeReportTypeEntityFactory();
@@ -2526,6 +2610,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.IssueInDisputeEntity:
 					factoryToUse = new IssueInDisputeEntityFactory();
 					break;
+				case PsychologicalServices.Data.EntityType.IssueInDisputeInvoiceAmountEntity:
+					factoryToUse = new IssueInDisputeInvoiceAmountEntityFactory();
+					break;
 				case PsychologicalServices.Data.EntityType.NoteEntity:
 					factoryToUse = new NoteEntityFactory();
 					break;
@@ -2535,8 +2622,8 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.ReferralSourceEntity:
 					factoryToUse = new ReferralSourceEntityFactory();
 					break;
-				case PsychologicalServices.Data.EntityType.ReferralSourceAppointmentStatusSettingEntity:
-					factoryToUse = new ReferralSourceAppointmentStatusSettingEntityFactory();
+				case PsychologicalServices.Data.EntityType.ReferralSourceInvoiceConfigurationEntity:
+					factoryToUse = new ReferralSourceInvoiceConfigurationEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.ReferralSourceTypeEntity:
 					factoryToUse = new ReferralSourceTypeEntityFactory();
@@ -2552,9 +2639,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.ReportTypeEntity:
 					factoryToUse = new ReportTypeEntityFactory();
-					break;
-				case PsychologicalServices.Data.EntityType.ReportTypeInvoiceAmountEntity:
-					factoryToUse = new ReportTypeInvoiceAmountEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.RightEntity:
 					factoryToUse = new RightEntityFactory();

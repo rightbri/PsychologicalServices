@@ -10,8 +10,6 @@ namespace PsychologicalServices.Models.Claims
 
         public bool IsActive { get; set; }
 
-        public int AdditionalFee { get; set; }
-
         public bool IsNew()
         {
             return IssueInDisputeId == 0;

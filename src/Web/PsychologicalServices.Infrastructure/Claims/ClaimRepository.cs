@@ -224,7 +224,6 @@ namespace PsychologicalServices.Infrastructure.Claims
 
                 entity.Name = issueInDispute.Name;
                 entity.IsActive = issueInDispute.IsActive;
-                entity.AdditionalFee = issueInDispute.AdditionalFee;
 
                 adapter.SaveEntity(entity, false);
 

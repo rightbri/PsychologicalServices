@@ -102,6 +102,9 @@
 			border-width: 3px;
 		}
 		
+		.invoice-line-adjust {
+			text-decoration: line-through;
+		}
 		
 		/* Sticky footer styles
 		-------------------------------------------------- */
@@ -248,7 +251,7 @@
 							</td>
 						</tr>
 					<#
-					}	
+					}
 					#>
 
 					<tr>
@@ -268,6 +271,8 @@
 					{
 						var line = invoiceAppointment.Lines.ElementAt(j);
 						subtotal += line.Amount;
+
+						var amountAdjusted = Model.InvoiceRate != 1.0m;
 					#>
 						<tr>
 							<td class="label">
@@ -276,16 +281,16 @@
 							<td colspan="2">
 								<#= line.Description #>
 							</td>
-							<td class="invoice-amount">
+							<td class="invoice-amount<#= amountAdjusted ? " invoice-line-adjust" : "" #>">
 								<#= string.Format("{0:$#,##0.00}", line.Amount / 100) #>
 							</td>
 						</tr>
 					<#
 					}
 
-					if (invoiceAppointment.InvoiceRate != 1.0m)
+					if (Model.InvoiceRate != 1.0m)
 					{
-						subtotal = subtotal * invoiceAppointment.InvoiceRate;
+						subtotal = subtotal * Model.InvoiceRate;
 					#>
 						<tr>
 							<td>&nbsp;</td>
@@ -298,7 +303,7 @@
 						</tr>
 					<#
 					}
-
+					
 					total += subtotal;
 				}
 				#>
@@ -313,7 +318,7 @@
 				<tr class="invoice-amount total">
 					<td class="label" colspan="3">Total Invoice Amount:</td>
 					<td>
-						<#= string.Format("{0:$#,##0.00}", total * (1 + Model.TaxRate) / 100) #>
+						<#= string.Format("{0:$#,##0.00}", Model.Total / 100) #><!-- <#= total * (1 + Model.TaxRate) #> -->
 					</td>
 				</tr>
 				<tr>

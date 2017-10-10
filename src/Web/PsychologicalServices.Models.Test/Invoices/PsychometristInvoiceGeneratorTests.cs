@@ -41,13 +41,16 @@ namespace PsychologicalServices.Models.Test.Invoices
         [ExpectedException(typeof(InvalidOperationException))]
         public void CreateInvoiceThrowsExceptionWhenInvoiceAlreadyExists()
         {
+            var payableToUserId = 1;
+            var invoiceDate = new DateTimeOffset(2017, 09, 30, 11, 59, 59, TimeSpan.FromHours(-4));
+
             var psychometristInvoiceGenerator = GetService(
                 (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository =>
                             invoiceRepository.GetInvoices(
-                                It.IsAny<InvoiceSearchCriteria>()
+                                It.Is<InvoiceSearchCriteria>(c => c.InvoiceTypeId == InvoiceType.Psychometrist && c.PayableToId == payableToUserId && c.InvoiceDate == invoiceDate)
                             )
                         )
                         .Returns(() => new[]
@@ -56,7 +59,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                         });
                 });
 
-            psychometristInvoiceGenerator.CreateInvoice(new Users.User(), DateTimeOffset.UtcNow);
+            psychometristInvoiceGenerator.CreateInvoice(new Users.User { UserId = payableToUserId }, invoiceDate);
         }
 
         [TestMethod]
@@ -155,6 +158,30 @@ namespace PsychologicalServices.Models.Test.Invoices
                         CompanyId = companyId,
                         InvoiceAmount = appointmentAmount,
                     });
+                    
+                    userRepositoryMock
+                        .Setup(userRepository => userRepository.GetUserById(It.Is<int>(i => i == userId)))
+                        .Returns(new Users.User
+                        {
+                            UserId = userId,
+                            Company = new Companies.Company
+                            {
+                                CompanyId = companyId,
+                                Timezone = timezone,
+                            },
+                            TravelFees = new[]
+                                {
+                                    new Users.UserTravelFee
+                                    {
+                                        City = new Cities.City
+                                        {
+                                            CityId = cityId,
+                                            Name = cityName,
+                                        },
+                                        Amount = travelFeeAmount,
+                                    }
+                                },
+                        });
                 });
 
             var invoiceLines = new[]
@@ -220,7 +247,11 @@ namespace PsychologicalServices.Models.Test.Invoices
                                 AssessmentType = new Assessments.AssessmentType
                                 {
                                     AssessmentTypeId = assessmentTypeId,
-                                }
+                                },
+                                Company = new Companies.Company
+                                {
+                                    CompanyId = companyId,
+                                },
                             },
                             IsCompletion = isCompletion,
                             Location = new Addresses.Address
@@ -234,23 +265,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                             Psychometrist = new Users.User
                             {
                                 UserId = userId,
-                                Company = new Companies.Company
-                                {
-                                    CompanyId = companyId,
-                                    Timezone = timezone,
-                                },
-                                TravelFees = new []
-                                {
-                                    new Users.UserTravelFee
-                                    {
-                                        City = new Cities.City
-                                        {
-                                            CityId = cityId,
-                                            Name = cityName,
-                                        },
-                                        Amount = travelFeeAmount,
-                                    }
-                                },
                             },
                         },
                         Lines = invoiceLines,
@@ -365,6 +379,29 @@ namespace PsychologicalServices.Models.Test.Invoices
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 
+                    userRepositoryMock
+                        .Setup(userRepository => userRepository.GetUserById(It.Is<int>(i => i == userId)))
+                        .Returns(new Users.User
+                        {
+                            UserId = userId,
+                            Company = new Companies.Company
+                            {
+                                CompanyId = companyId,
+                                Timezone = timezone,
+                            },
+                            TravelFees = new[]
+                            {
+                                new Users.UserTravelFee
+                                {
+                                    City = new Cities.City
+                                    {
+                                        CityId = cityId,
+                                        Name = cityName,
+                                    },
+                                    Amount = travelFeeAmount,
+                                }
+                            },
+                        });
                 });
             
             var invoice = new Invoice
@@ -414,23 +451,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                             Psychometrist = new Users.User
                             {
                                 UserId = userId,
-                                Company = new Companies.Company
-                                {
-                                    CompanyId = companyId,
-                                    Timezone = timezone,
-                                },
-                                TravelFees = new []
-                                {
-                                    new Users.UserTravelFee
-                                    {
-                                        City = new Cities.City
-                                        {
-                                            CityId = cityId,
-                                            Name = cityName,
-                                        },
-                                        Amount = travelFeeAmount,
-                                    }
-                                },
                             },
                         },
                         Lines = new List<InvoiceLine>(new[]
@@ -484,23 +504,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                             Psychometrist = new Users.User
                             {
                                 UserId = userId,
-                                Company = new Companies.Company
-                                {
-                                    CompanyId = companyId,
-                                    Timezone = timezone,
-                                },
-                                TravelFees = new []
-                                {
-                                    new Users.UserTravelFee
-                                    {
-                                        City = new Cities.City
-                                        {
-                                            CityId = cityId,
-                                            Name = cityName,
-                                        },
-                                        Amount = travelFeeAmount,
-                                    }
-                                },
                             },
                         },
                         Lines = new List<InvoiceLine>(new[]
@@ -570,23 +573,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                             Psychometrist = new Users.User
                             {
                                 UserId = userId,
-                                Company = new Companies.Company
-                                {
-                                    CompanyId = companyId,
-                                    Timezone = timezone,
-                                },
-                                TravelFees = new []
-                                {
-                                    new Users.UserTravelFee
-                                    {
-                                        City = new Cities.City
-                                        {
-                                            CityId = cityId,
-                                            Name = cityName,
-                                        },
-                                        Amount = travelFeeAmount,
-                                    }
-                                },
                             },
                         },
                         Lines = new List<InvoiceLine>(new[]

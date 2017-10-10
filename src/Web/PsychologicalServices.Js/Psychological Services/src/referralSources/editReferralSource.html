@@ -50,20 +50,6 @@
 				</div>
 				
 				<div class="uk-width-1-2@s">
-					<label class="uk-form-label" for="largeFileSize">Large File Size</label>
-					<div class="uk-form-controls">
-						<input id="largeFileSize" type="text" pattern="\d+" class="uk-input" value.bind="referralSource.largeFileSize | numeric:'0'" />
-					</div>
-				</div>
-				
-				<div class="uk-width-1-2@s">
-					<label class="uk-form-label" for="largeFileFee">Large File Fee</label>
-					<div class="uk-form-controls">
-						<input id="largeFileFee" type="text" pattern="\d+" class="uk-input" value.bind="referralSource.largeFileFeeAmount | money:'0'" />
-					</div>
-				</div>
-				
-				<div class="uk-width-1-2@s">
 					<label class="uk-form-label">Status</label>
 					<div class="uk-form-controls">
 						<label class="uk-form-label">
@@ -72,27 +58,6 @@
 					</div>
 				</div>
 				
-				<div class="uk-width-1-1">
-					<label class="uk-form-label">Invoice Amounts</label>
-					<div class="uk-form-controls">
-						<table class="uk-table uk-table-divider" fixed-header>
-							<thead>
-								<tr>
-									<th>Report Type</th>
-									<th>Invoice Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr repeat.for="invoiceAmount of referralSource.reportTypeInvoiceAmounts | sortArray:{ property: 'reportType.name', direction: 'asc' }">
-									<td>${invoiceAmount.reportType.name}</td>
-									<td>
-										<input type="number" class="uk-input" min="0.00" step="0.01" value.bind="invoiceAmount.invoiceAmount | money:'0.00' & updateTrigger:'blur'" />
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
 				<!--
 				<div class="uk-width-1-1">
 					<label class="uk-form-label">Appointment Status Invoice Rates</label>
@@ -117,6 +82,22 @@
 								</tr>
 							</tbody>
 						</table>
+					</div>
+				</div>
+
+				
+				
+				<div class="uk-width-1-2@s">
+					<label class="uk-form-label" for="largeFileSize">Large File Size</label>
+					<div class="uk-form-controls">
+						<input id="largeFileSize" type="text" pattern="\d+" class="uk-input" value.bind="referralSource.largeFileSize | numeric:'0'" />
+					</div>
+				</div>
+				
+				<div class="uk-width-1-2@s">
+					<label class="uk-form-label" for="largeFileFee">Large File Fee</label>
+					<div class="uk-form-controls">
+						<input id="largeFileFee" type="text" pattern="\d+" class="uk-input" value.bind="referralSource.largeFileFeeAmount | money:'0'" />
 					</div>
 				</div>
 				-->

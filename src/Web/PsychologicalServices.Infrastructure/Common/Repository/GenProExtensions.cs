@@ -26,6 +26,17 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static IssueInDisputeInvoiceAmount ToIssueInDisputeInvoiceAmount(this IssueInDisputeInvoiceAmountEntity issueInDisputeInvoiceAmount)
+        {
+            return null != issueInDisputeInvoiceAmount
+                ? new IssueInDisputeInvoiceAmount
+                {
+                    IssueInDispute = issueInDisputeInvoiceAmount.IssueInDispute.ToIssueInDispute(),
+                    InvoiceAmount = issueInDisputeInvoiceAmount.InvoiceAmount,
+                }
+                : null;
+        }
+
         public static PsychometristInvoiceAmount ToPsychometristInvoiceAmount(this PsychometristInvoiceAmountEntity psychometristInvoiceAmount)
         {
             return psychometristInvoiceAmount != null
@@ -123,22 +134,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
-        public static AppointmentStatusSetting ToAppointmentStatusSetting(this ReferralSourceAppointmentStatusSettingEntity referralSourceAppointmentStatusSetting)
-        {
-            return null != referralSourceAppointmentStatusSetting
-                ? new AppointmentStatusSetting
-                {
-                    AppointmentStatus = referralSourceAppointmentStatusSetting.AppointmentStatus.ToAppointmentStatus(),
-                    AppointmentSequence = referralSourceAppointmentStatusSetting.AppointmentSequence.ToAppointmentSequence(),
-                    InvoiceType = referralSourceAppointmentStatusSetting.InvoiceType.ToInvoiceType(),
-                    InvoiceRate = referralSourceAppointmentStatusSetting.InvoiceRate,
-                    InvoiceFee = referralSourceAppointmentStatusSetting.InvoiceFee,
-                    ApplyLargeFileFee = referralSourceAppointmentStatusSetting.ApplyLargeFileFee,
-                    ApplyTravelFee = referralSourceAppointmentStatusSetting.ApplyTravelFee,
-                }
-                : null;
-        }
-
         public static AppointmentSequence ToAppointmentSequence(this AppointmentSequenceEntity appointmentSequence)
         {
             return null != appointmentSequence
@@ -150,18 +145,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 }
                 : null;
         }
-
-        public static ReportTypeInvoiceAmount ToReportTypeInvoiceAmount(this ReportTypeInvoiceAmountEntity reportTypeInvoiceAmount)
-        {
-            return null != reportTypeInvoiceAmount
-                ? new ReportTypeInvoiceAmount
-                {
-                    ReportType = reportTypeInvoiceAmount.ReportType.ToReportType(),
-                    InvoiceAmount = reportTypeInvoiceAmount.InvoiceAmount,
-                }
-                : null;
-        }
-
+        
         public static InvoiceDocument ToInvoiceDocument(this InvoiceDocumentEntity invoiceDocument)
         {
             return null != invoiceDocument
@@ -183,6 +167,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 IsNew = invoice.IsNew(),
                 Identifier = invoice.Identifier,
                 InvoiceDate = invoice.InvoiceDate,
+                InvoiceRate = invoice.InvoiceRate,
                 InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId,
                 InvoiceTypeId = invoice.InvoiceType.InvoiceTypeId,
                 TaxRate = invoice.TaxRate,
@@ -203,6 +188,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 Amount = invoiceLine.Amount,
                 Description = invoiceLine.Description,
                 IsCustom = invoiceLine.IsCustom,
+                ApplyInvoiceRate = invoiceLine.ApplyInvoiceRate,
             };
         }
 
@@ -257,45 +243,30 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     InvoiceId = invoice.InvoiceId,
                     Identifier = invoice.Identifier,
                     InvoiceDate = invoice.InvoiceDate,
+                    InvoiceRate = invoice.InvoiceRate,
                     InvoiceStatus = invoice.InvoiceStatus.ToInvoiceStatus(),
                     InvoiceType = invoice.InvoiceType.ToInvoiceType(),
                     PayableTo = invoice.PayableTo.ToUser(),
                     UpdateDate = invoice.UpdateDate,
                     TaxRate = invoice.TaxRate,
                     Total = invoice.Total,
-                    Appointments = invoice.InvoiceAppointments.Select(invoiceAppointment => invoiceAppointment.ToInvoiceAppointment(invoice.InvoiceTypeId)),
+                    Appointments = invoice.InvoiceAppointments.Select(invoiceAppointment => invoiceAppointment.ToInvoiceAppointment()),
                     StatusChanges = invoice.InvoiceStatusChanges.Select(invoiceStatusChange => invoiceStatusChange.ToInvoiceStatusChange()),
                     Documents = invoice.InvoiceDocuments.Select(invoiceDocument => invoiceDocument.ToInvoiceDocument()),
                 }
                 : null;
         }
 
-        public static InvoiceAppointment ToInvoiceAppointment(this InvoiceAppointmentEntity invoiceAppointment, int invoiceTypeId)
+        public static InvoiceAppointment ToInvoiceAppointment(this InvoiceAppointmentEntity invoiceAppointment)
         {
-            InvoiceAppointment result = null;
-
-            if (null != invoiceAppointment)
-            {
-                result = new InvoiceAppointment
+            return null != invoiceAppointment
+                ? new InvoiceAppointment
                 {
                     InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
                     Appointment = invoiceAppointment.Appointment.ToAppointment(),
                     Lines = invoiceAppointment.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
-                };
-
-                if (null != invoiceAppointment.Appointment.AppointmentStatus)
-                {
-                    var statusSetting = invoiceAppointment.Appointment.AppointmentStatus.ReferralSourceAppointmentStatusSettings
-                    .SingleOrDefault(appointmentStatusSetting =>
-                        appointmentStatusSetting.InvoiceTypeId == invoiceTypeId &&
-                        appointmentStatusSetting.ReferralSourceId == invoiceAppointment.Appointment.Assessment.ReferralSourceId
-                    );
-
-                    result.InvoiceRate = null != statusSetting ? statusSetting.InvoiceRate : 1.0m;
                 }
-            }
-
-            return result;
+                : null;
         }
 
         public static InvoiceStatusChange ToInvoiceStatusChange(this InvoiceStatusChangeEntity invoiceStatusChange)
@@ -320,6 +291,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Description = invoiceLine.Description,
                     Amount = invoiceLine.Amount,
                     IsCustom = invoiceLine.IsCustom,
+                    ApplyInvoiceRate = invoiceLine.ApplyInvoiceRate,
                 }
                 : null;
         }
@@ -577,13 +549,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     ReferralSourceId = referralSource.ReferralSourceId,
                     Name = referralSource.Name,
-                    LargeFileSize = referralSource.LargeFileSize,
-                    LargeFileFeeAmount = referralSource.LargeFileFeeAmount,
                     IsActive = referralSource.IsActive,
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
                     Address = referralSource.Address.ToAddress(),
-                    ReportTypeInvoiceAmounts = referralSource.ReportTypeInvoiceAmounts.Select(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ToReportTypeInvoiceAmount()),
-                    AppointmentStatusSettings = referralSource.ReferralSourceAppointmentStatusSettings.Select(appointmentStatusSetting => appointmentStatusSetting.ToAppointmentStatusSetting()),
                 }
                 : null;
         }
@@ -596,7 +564,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     IssueInDisputeId = issueInDispute.IssueInDisputeId,
                     Name = issueInDispute.Name,
                     IsActive = issueInDispute.IsActive,
-                    AdditionalFee = issueInDispute.AdditionalFee,
                 }
                 : null;
         }
@@ -757,6 +724,51 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateDate = appointment.UpdateDate,
                     UpdateUser = appointment.UpdateUser.ToUser(),
                     IsCompletion = appointment.IsCompletion(),
+                }
+                : null;
+        }
+
+        public static Appointment ToPsychologistInvoiceAppointment(this AppointmentEntity appointment)
+        {
+            return null != appointment
+                ? new Appointment
+                {
+                    AppointmentId = appointment.AppointmentId,
+                    AppointmentTime = appointment.AppointmentTime,
+                    Location = appointment.Location.ToAddress(),
+                    Psychometrist = appointment.Psychometrist.ToUser(),
+                    Psychologist = appointment.Psychologist.ToUser(),
+                    AppointmentStatus = appointment.AppointmentStatus.ToAppointmentStatus(),
+                    Assessment = appointment.Assessment.ToPsychologistInvoiceAssessment(),
+                    Attributes = appointment.AppointmentAttributes.Select(appointmentAttribute => appointmentAttribute.ToAttributeValue()),
+                    CreateDate = appointment.CreateDate,
+                    CreateUser = appointment.CreateUser.ToUser(),
+                    UpdateDate = appointment.UpdateDate,
+                    UpdateUser = appointment.UpdateUser.ToUser(),
+                    IsCompletion = appointment.IsCompletion(),
+                }
+                : null;
+        }
+
+        public static Assessment ToPsychologistInvoiceAssessment(this AssessmentEntity assessment)
+        {
+            return null != assessment
+                ? new Assessment
+                {
+                    AssessmentId = assessment.AssessmentId,
+                    MedicalFileReceivedDate = assessment.MedicalFileReceivedDate,
+                    FileSize = assessment.FileSize,
+                    ReferralSourceFileNumber = assessment.ReferralSourceFileNumber,
+                    ReferralSourceContactEmail = assessment.ReferralSourceContactEmail,
+                    IsLargeFile = assessment.IsLargeFile,
+                    AssessmentType = assessment.AssessmentType.ToAssessmentType(),
+                    ReferralType = assessment.ReferralType.ToReferralType(),
+                    ReferralSource = assessment.ReferralSource.ToReferralSource(),
+                    ReportStatus = assessment.ReportStatus.ToReportStatus(),
+                    Company = assessment.Company.ToCompany(),
+                    Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
+                    Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
+                    Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
                 }
                 : null;
         }
