@@ -144,9 +144,6 @@
 		<h1 class="title">
 			<#= company.Name #>
 		</h1>
-		<h2 class="subtitle">
-			Assessment and Counselling Services
-		</h2>
 	</header>
 	
 	<p class="referral-source-address">
@@ -198,8 +195,7 @@
 						<br />&nbsp;
 					</td>
 					<td colspan="2">
-						Office Fax: <#= company.Fax #>
-						<br />Office No.: <#= company.Phone #>
+						Office No.: <#= company.Phone #>
 						<br />Email: <a href="mailto:<#= company.Email #>">
 							<#= company.Email #>
 						</a>
@@ -357,8 +353,6 @@
 						~ <#= company.Address.City.Province #>
 						~ <#= company.Address.PostalCode #>
 					<br />Phone:&nbsp;<#= company.Phone #>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					Fax:&nbsp;<#= company.Fax #>
 				</p>
 			</div>
 		</div>
