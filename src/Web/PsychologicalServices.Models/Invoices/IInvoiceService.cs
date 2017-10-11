@@ -8,7 +8,7 @@ namespace PsychologicalServices.Models.Invoices
     {
         Invoice GetInvoice(int id);
 
-        Invoice NewInvoice(Appointment appointment);
+        Invoice CreatePsychologistInvoice(int appointmentId);
 
         Invoice CreatePsychometristInvoice(PsychometristInvoiceCreationParameters parameters);
 

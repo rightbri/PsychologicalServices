@@ -29,16 +29,6 @@ namespace PsychologicalServices.Infrastructure.Referrals
                         .SubPath(addressPath => addressPath
                             .Prefetch<CityEntity>(address => address.City)
                         )
-                    .Prefetch<ReportTypeInvoiceAmountEntity>(referralSource => referralSource.ReportTypeInvoiceAmounts)
-                        .SubPath(reportTypeInvoiceAmountPath => reportTypeInvoiceAmountPath
-                            .Prefetch<ReportTypeEntity>(reportTypeInvoiceAmount => reportTypeInvoiceAmount.ReportType)
-                        )
-                    .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(referralSource => referralSource.ReferralSourceAppointmentStatusSettings)
-                        .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
-                            .Prefetch<AppointmentSequenceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.AppointmentSequence)
-                            .Prefetch<AppointmentStatusEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.AppointmentStatus)
-                            .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
-                        )
                 );
         
         private static readonly Func<IPathEdgeRootParser<ReferralTypeEntity>, IPathEdgeRootParser<ReferralTypeEntity>>
@@ -192,18 +182,12 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 if (!isNew)
                 {
                     var prefetch = new PrefetchPath2(EntityType.ReferralSourceEntity);
-
-                    prefetch.Add(ReferralSourceEntity.PrefetchPathReportTypeInvoiceAmounts);
-
-                    prefetch.Add(ReferralSourceEntity.PrefetchPathReferralSourceAppointmentStatusSettings);
-
+                    
                     adapter.FetchEntity(entity, prefetch);
                 }
 
                 entity.Name = referralSource.Name;
                 entity.ReferralSourceTypeId = referralSource.ReferralSourceType.ReferralSourceTypeId;
-                entity.LargeFileSize = referralSource.LargeFileSize;
-                entity.LargeFileFeeAmount = referralSource.LargeFileFeeAmount;
                 entity.IsActive = referralSource.IsActive;
 
                 if (null == referralSource.Address)
@@ -214,119 +198,7 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 {
                     entity.AddressId = referralSource.Address.AddressId;
                 }
-
-                #region appointment status settings
-
-                //var appointmentStatusSettingsToAdd = referralSource.AppointmentStatusSettings
-                //    .Where(appointmentStatusSetting =>
-                //        !entity.ReferralSourceAppointmentStatusSettings.Any(appointmentStatusSettingEntity =>
-                //            appointmentStatusSettingEntity.AppointmentStatusId == appointmentStatusSetting.AppointmentStatus.AppointmentStatusId &&
-                //            appointmentStatusSettingEntity.InvoiceTypeId == appointmentStatusSetting.InvoiceType.InvoiceTypeId
-                //        )
-                //    );
-
-                //var appointmentStatusSettingsToRemove = entity.ReferralSourceAppointmentStatusSettings
-                //    .Where(appointmentStatusSettingEntity =>
-                //        !referralSource.AppointmentStatusSettings.Any(appointmentStatusSetting =>
-                //            appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == appointmentStatusSettingEntity.AppointmentStatusId &&
-                //            appointmentStatusSetting.InvoiceType.InvoiceTypeId == appointmentStatusSettingEntity.InvoiceTypeId
-                //        )
-                //    );
-
-                //var appointmentStatusSettingsToUpdate = referralSource.AppointmentStatusSettings
-                //    .Where(appointmentStatusSetting =>
-                //        entity.ReferralSourceAppointmentStatusSettings.Any(appointmentStatusSettingEntity =>
-                //            appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == appointmentStatusSettingEntity.AppointmentStatusId &&
-                //            appointmentStatusSetting.InvoiceType.InvoiceTypeId == appointmentStatusSettingEntity.InvoiceTypeId &&
-                //            appointmentStatusSetting.InvoiceRate != appointmentStatusSettingEntity.InvoiceRate
-                //        )
-                //    );
-
-                //foreach (var appointmentStatusSetting in appointmentStatusSettingsToRemove)
-                //{
-                //    uow.AddForDelete(appointmentStatusSetting);
-                //}
-
-                //foreach (var appointmentStatusSetting in appointmentStatusSettingsToUpdate)
-                //{
-                //    var appointmentStatusSettingEntity = entity.ReferralSourceAppointmentStatusSettings
-                //        .Where(referralSourceAppointmentStatusSetting =>
-                //            appointmentStatusSetting.AppointmentStatus.AppointmentStatusId == referralSourceAppointmentStatusSetting.AppointmentStatusId &&
-                //            appointmentStatusSetting.InvoiceType.InvoiceTypeId == referralSourceAppointmentStatusSetting.InvoiceTypeId
-                //        )
-                //        .SingleOrDefault();
-
-                //    if (null != appointmentStatusSettingEntity)
-                //    {
-                //        appointmentStatusSettingEntity.InvoiceRate = appointmentStatusSetting.InvoiceRate;
-                //    }
-                //}
-
-                //entity.ReferralSourceAppointmentStatusSettings.AddRange(
-                //    appointmentStatusSettingsToAdd.Select(appointmentStatusSetting =>
-                //    new ReferralSourceAppointmentStatusSettingEntity
-                //    {
-                //        AppointmentStatusId = appointmentStatusSetting.AppointmentStatus.AppointmentStatusId,
-                //        InvoiceTypeId = appointmentStatusSetting.InvoiceType.InvoiceTypeId,
-                //        InvoiceRate = appointmentStatusSetting.InvoiceRate,
-                        
-                //    })
-                //);
-
-                #endregion
-
-                #region report type invoice amounts
-
-                var reportTypeInvoiceAmountsToAdd = referralSource.ReportTypeInvoiceAmounts
-                    .Where(reportTypeInvoiceAmount =>
-                        !entity.ReportTypeInvoiceAmounts.Any(reportTypeInvoiceAmountEntity =>
-                            reportTypeInvoiceAmountEntity.ReportTypeId == reportTypeInvoiceAmount.ReportType.ReportTypeId
-                        )
-                    );
-
-                var reportTypeInvoiceAmountsToRemove = entity.ReportTypeInvoiceAmounts
-                    .Where(reportTypeInvoiceAmountEntity =>
-                        !referralSource.ReportTypeInvoiceAmounts.Any(reportTypeInvoiceAmount =>
-                            reportTypeInvoiceAmount.ReportType.ReportTypeId == reportTypeInvoiceAmountEntity.ReportTypeId
-                        )
-                    );
-
-                var reportTypeInvoiceAmountsToUpdate = referralSource.ReportTypeInvoiceAmounts
-                    .Where(reportTypeInvoiceAmount =>
-                        entity.ReportTypeInvoiceAmounts.Any(reportTypeInvoiceAmountEntity =>
-                            reportTypeInvoiceAmountEntity.ReportTypeId == reportTypeInvoiceAmount.ReportType.ReportTypeId &&
-                            reportTypeInvoiceAmountEntity.InvoiceAmount != reportTypeInvoiceAmount.InvoiceAmount
-                        )
-                    );
-
-                foreach (var invoiceAmount in reportTypeInvoiceAmountsToRemove)
-                {
-                    uow.AddForDelete(invoiceAmount);
-                }
-
-                foreach (var invoiceAmount in reportTypeInvoiceAmountsToUpdate)
-                {
-                    var invoiceAmountEntity = entity.ReportTypeInvoiceAmounts
-                        .Where(referralSourceInvoiceAmount => referralSourceInvoiceAmount.ReportTypeId == invoiceAmount.ReportType.ReportTypeId)
-                        .SingleOrDefault();
-
-                    if (null != invoiceAmountEntity)
-                    {
-                        invoiceAmountEntity.InvoiceAmount = invoiceAmount.InvoiceAmount;
-                    }
-                }
-
-                entity.ReportTypeInvoiceAmounts.AddRange(
-                    reportTypeInvoiceAmountsToAdd.Select(invoiceAmount =>
-                    new ReportTypeInvoiceAmountEntity
-                    {
-                        InvoiceAmount = invoiceAmount.InvoiceAmount,
-                        ReportTypeId = invoiceAmount.ReportType.ReportTypeId,
-                    })
-                );
                 
-                #endregion
-
                 uow.AddForSave(entity);
 
                 uow.Commit(adapter);

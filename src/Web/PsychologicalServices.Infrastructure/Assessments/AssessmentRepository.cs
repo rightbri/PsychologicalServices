@@ -22,7 +22,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
         private readonly IAttributeRepository _attributeRepository = null;
-        private readonly IInvoiceGenerator _invoiceGenerator = null;
+        private readonly IPsychologistInvoiceGenerator _invoiceGenerator = null;
         private readonly IDate _date = null;
 
         public AssessmentRepository(
@@ -30,7 +30,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
             IAppointmentRepository appointmentRepository,
             ICompanyRepository companyRepository,
             IAttributeRepository attributeRepository,
-            IInvoiceGenerator invoiceGenerator,
+            IPsychologistInvoiceGenerator invoiceGenerator,
             IDate date
         ) : base(adapterFactory)
         {

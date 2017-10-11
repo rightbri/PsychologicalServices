@@ -39,19 +39,19 @@ namespace PsychologicalServices.Models.Referrals
                 );
             }
 
-            if (item.LargeFileSize <= 0)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "LargeFileSize", Message = "Large file size must be greater than zero" }
-                );
-            }
+            //if (item.LargeFileSize <= 0)
+            //{
+            //    result.ValidationErrors.Add(
+            //        new ValidationError { PropertyName = "LargeFileSize", Message = "Large file size must be greater than zero" }
+            //    );
+            //}
 
-            if (item.LargeFileFeeAmount < 0)
-            {
-                result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "LargeFileFeeAmount", Message = "Large file fee amount must be greater than or equal to zero" }
-                );
-            }
+            //if (item.LargeFileFeeAmount < 0)
+            //{
+            //    result.ValidationErrors.Add(
+            //        new ValidationError { PropertyName = "LargeFileFeeAmount", Message = "Large file fee amount must be greater than or equal to zero" }
+            //    );
+            //}
 
             result.IsValid = !result.ValidationErrors.Any();
 

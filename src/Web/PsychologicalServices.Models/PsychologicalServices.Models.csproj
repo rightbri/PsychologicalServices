@@ -69,6 +69,13 @@
     <Compile Include="Analysis\CompletionData.cs" />
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
     <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
+    <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
+    <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />
+    <Compile Include="Invoices\InvoiceExtensions.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceCalculationData.cs" />
+    <Compile Include="Invoices\IssueInDisputeInvoiceAmount.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceGenerator.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceCreationParameters.cs" />
     <Compile Include="Outstanding\IOutstandingRepository.cs" />
     <Compile Include="Outstanding\IOutstandingService.cs" />
     <Compile Include="Outstanding\OutstandingReport.cs" />
@@ -194,14 +201,13 @@
     <Compile Include="Invoices\InvoiceableAppointmentData.cs" />
     <Compile Include="Invoices\InvoiceableAppointmentDataSearchCriteria.cs" />
     <Compile Include="Invoices\InvoiceAppointment.cs" />
-    <Compile Include="Invoices\IInvoiceGenerator.cs" />
+    <Compile Include="Invoices\IPsychologistInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\IInvoiceRepository.cs" />
     <Compile Include="Invoices\IInvoiceService.cs" />
     <Compile Include="Invoices\IInvoiceValidator.cs" />
     <Compile Include="Invoices\Invoice.cs" />
     <Compile Include="Invoices\InvoiceDocument.cs" />
-    <Compile Include="Invoices\InvoiceGenerator.cs" />
     <Compile Include="Invoices\InvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\InvoiceLine.cs" />
     <Compile Include="Invoices\InvoiceSearchCriteria.cs" />
@@ -228,7 +234,6 @@
     <Compile Include="Notes\Note.cs" />
     <Compile Include="Notes\NoteValidator.cs" />
     <Compile Include="Outstanding\OutstandingService.cs" />
-    <Compile Include="Referrals\AppointmentStatusSetting.cs" />
     <Compile Include="Referrals\IReferralRepository.cs" />
     <Compile Include="Referrals\IReferralService.cs" />
     <Compile Include="Referrals\IReferralSourceTypeValidator.cs" />
@@ -257,7 +262,6 @@
     <Compile Include="Claims\Claim.cs" />
     <Compile Include="Claims\Claimant.cs" />
     <Compile Include="Companies\Company.cs" />
-    <Compile Include="Invoices\ReportTypeInvoiceAmount.cs" />
     <Compile Include="Claims\IssueInDispute.cs" />
     <Compile Include="Referrals\ReferralSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

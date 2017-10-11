@@ -5,6 +5,8 @@ namespace PsychologicalServices.Models.Invoices
 {
     public interface IInvoiceRepository
     {
+        PsychologistInvoiceCalculationData GetPsychologistInvoiceCalculationData(int companyId, int referralSourceId, int assessmentTypeId, int appointmentStatusId, int appointmentSequenceId);
+
         Invoice GetInvoice(int id);
 
         InvoiceDocument GetInvoiceDocument(int invoiceDocumentId);
@@ -30,10 +32,7 @@ namespace PsychologicalServices.Models.Invoices
         int SaveInvoice(Invoice invoice);
 
         decimal GetTaxRate();
-
-        int GetAdditionalReportAmount(int referralSourceId, int reportTypeId);
-
-
+        
         IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria);
 
         PsychometristInvoiceAmount GetPsychometristInvoiceAmount(int assessmentTypeId, int appointmentStatusId, int appointmentSequenceId, int companyId);

@@ -20,6 +20,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public DateTimeOffset UpdateDate { get; set; }
 
+        public decimal InvoiceRate { get; set; }
+
         public decimal TaxRate { get; set; }
 
         public int Total { get; set; }

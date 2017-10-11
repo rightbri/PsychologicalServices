@@ -7,6 +7,8 @@ namespace PsychologicalServices.Models.Appointments
     {
         public int? AppointmentId { get; set; }
 
+        public int? AssessmentId { get; set; }
+
         public int? LocationId { get; set; }
 
         public int? PsychometristId { get; set; }

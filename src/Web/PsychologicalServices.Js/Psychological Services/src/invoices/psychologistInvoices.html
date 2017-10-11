@@ -1,0 +1,68 @@
+<template>
+	<require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+	<require from="common/date-picker"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	<require from="flatpickr/flatpickr.css"></require>
+	
+	<div class="uk-container">
+	
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Psychologist Invoices</legend>
+			
+			<form class="uk-form-stacked">
+			
+				<div class="uk-margin">
+					<label class="uk-form-label" for="startSearch">Search for invoices to create based on appointments on or after: (Beginning of prior month if blank)</label>
+					<div class="uk-form-controls">
+						<input id="startSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="dateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
+					</div>
+				</div>
+			
+				<div class="uk-margin">
+					<button class="uk-button uk-button-primary" click.delegate="searchInvoices()">Search</button>
+				</div>
+				
+			</form>
+			
+		</fieldset>
+
+	</div>
+
+	<div class="uk-overflow-auto" if.bind="invoiceableAppointments">
+		<table class="uk-table uk-table-divider" fixed-header>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Date</th>
+					<th>Status</th>
+					<th>Type</th>
+					<th>Referral Source</th>
+					<th>Claimant</th>
+					<th>Payable To</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr repeat.for="appointment of invoiceableAppointments | sortArray:[{ property: 'appointmentTime', direction: 'asc' },{ property: 'payableTo', direction: 'asc' }]">
+					<td>
+						<button type="button" class="uk-button uk-button-primary" click.delegate="createInvoice(appointment)" if.bind="appointment.canCreateInvoice">
+							Create Invoice
+						</button>
+						<a route-href="route: editInvoice; params.bind: {'id': appointment.invoiceId }" class="uk-button uk-button-secondary" if.bind="appointment.invoiceId">
+							Edit Invoice
+						</a>
+					</td>
+					<td>${appointment.appointmentTime | dateFormat:config.longDateTimeFormat}</td>
+					<td>${appointment.appointmentStatus}</td>
+					<td>${appointment.assessmentType}</td>
+					<td>${appointment.referralSource}</td>
+					<td>${appointment.claimant}</td>
+					<td>${appointment.payableTo}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</template>

@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AssessmentReportIssueInDisputeEntityUsingIssueInDisputeId);
+			toReturn.Add(this.IssueInDisputeInvoiceAmountEntityUsingIssueInDisputeId);
 			toReturn.Add(this.ReferralTypeIssueInDisputeEntityUsingIssueInDisputeId);
 
 
@@ -50,6 +51,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(IssueInDisputeFields.IssueInDisputeId, AssessmentReportIssueInDisputeFields.IssueInDisputeId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IssueInDisputeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentReportIssueInDisputeEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between IssueInDisputeEntity and IssueInDisputeInvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
+		/// IssueInDispute.IssueInDisputeId - IssueInDisputeInvoiceAmount.IssueInDisputeId
+		/// </summary>
+		public virtual IEntityRelation IssueInDisputeInvoiceAmountEntityUsingIssueInDisputeId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ReportTypeInvoiceAmount" , true);
+				relation.AddEntityFieldPair(IssueInDisputeFields.IssueInDisputeId, IssueInDisputeInvoiceAmountFields.IssueInDisputeId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IssueInDisputeEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IssueInDisputeInvoiceAmountEntity", false);
 				return relation;
 			}
 		}

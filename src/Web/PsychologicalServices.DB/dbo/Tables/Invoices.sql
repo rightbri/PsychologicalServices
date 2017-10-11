@@ -8,11 +8,14 @@
     [Total]           INT                NOT NULL,
     [InvoiceTypeId]   INT                NOT NULL,
     [PayableToId]     INT                NOT NULL,
+    [InvoiceRate]     DECIMAL (3, 2)     CONSTRAINT [DF_Invoices_InvoiceRate] DEFAULT ((1)) NOT NULL,
     CONSTRAINT [PK_Invoices] PRIMARY KEY CLUSTERED ([InvoiceId] ASC),
     CONSTRAINT [FK_Invoices_InvoiceStatuses] FOREIGN KEY ([InvoiceStatusId]) REFERENCES [dbo].[InvoiceStatuses] ([InvoiceStatusId]),
     CONSTRAINT [FK_Invoices_InvoiceTypes] FOREIGN KEY ([InvoiceTypeId]) REFERENCES [dbo].[InvoiceTypes] ([InvoiceTypeId]),
     CONSTRAINT [FK_Invoices_Users] FOREIGN KEY ([PayableToId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

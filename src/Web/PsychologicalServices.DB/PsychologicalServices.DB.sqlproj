@@ -112,10 +112,8 @@
     <Build Include="dbo\Tables\Invoices.sql" />
     <Build Include="dbo\Tables\InvoiceLines.sql" />
     <Build Include="dbo\Tables\AssessmentReportIssuesInDispute.sql" />
-    <Build Include="dbo\Tables\ReportTypeInvoiceAmounts.sql" />
     <Build Include="dbo\Tables\InvoiceDocuments.sql" />
     <Build Include="dbo\Tables\InvoiceDocumentArchive.sql" />
-    <Build Include="dbo\Tables\ReferralSourceAppointmentStatusSettings.sql" />
     <Build Include="dbo\Tables\Log.sql" />
     <Build Include="dbo\Tables\InvoiceTypes.sql" />
     <Build Include="dbo\Tables\InvoiceStatusPaths.sql" />
@@ -134,6 +132,10 @@
     <Build Include="dbo\Tables\PsychometristInvoiceAmounts.sql" />
     <Build Include="dbo\Stored Procedures\InvoiceableAppointmentData.sql" />
     <Build Include="dbo\Stored Procedures\OutstandingReports.sql" />
+    <Build Include="dbo\Tables\ReferralSourceInvoiceConfiguration.sql" />
+    <Build Include="dbo\Tables\IssueInDisputeInvoiceAmounts.sql" />
+    <Build Include="dbo\Tables\AssessmentTypeInvoiceAmounts.sql" />
+    <Build Include="dbo\Tables\AppointmentStatusInvoiceRates.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

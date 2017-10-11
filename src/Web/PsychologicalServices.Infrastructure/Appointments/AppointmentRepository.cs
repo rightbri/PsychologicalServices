@@ -51,13 +51,13 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                     .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                     .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                        .SubPath(appointmentStatusPath => appointmentStatusPath
-                            .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(appointmentStatus => appointmentStatus.ReferralSourceAppointmentStatusSettings)
-                                .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
-                                    .Prefetch<ReferralSourceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ReferralSource)
-                                    .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
-                                )
-                        )
+                        //.SubPath(appointmentStatusPath => appointmentStatusPath
+                        //    .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(appointmentStatus => appointmentStatus.ReferralSourceAppointmentStatusSettings)
+                        //        .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
+                        //            .Prefetch<ReferralSourceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ReferralSource)
+                        //            .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
+                        //        )
+                        //)
                     .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
                         .SubPath(appointmentAttributePath => appointmentAttributePath
                             .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
@@ -156,19 +156,94 @@ namespace PsychologicalServices.Infrastructure.Appointments
                         )
                 );
 
+        private static readonly Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>>
+            PsychologistInvoiceAppointmentPath =
+                (appointmentPath => appointmentPath
+                    .Prefetch<AddressEntity>(appointment => appointment.Location)
+                        .SubPath(addressPath => addressPath
+                            .Prefetch<CityEntity>(address => address.City)
+                        )
+                    .Prefetch<UserEntity>(appointment => appointment.Psychologist)
+                        .SubPath(psychologistPath => psychologistPath
+                            .Prefetch<UserTravelFeeEntity>(psychologist => psychologist.UserTravelFees)
+                                .SubPath(userTravelFeePath => userTravelFeePath
+                                    .Prefetch<CityEntity>(userTravelFee => userTravelFee.City)
+                                )
+                        )
+                    .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
+                    .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                        .SubPath(assessmentPath => assessmentPath
+                            .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
+                                .SubPath(assessmentAppointmentPath => assessmentAppointmentPath
+                                    .Prefetch<AppointmentStatusEntity>(assessmentAppointment => assessmentAppointment.AppointmentStatus)
+                                )
+                            .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
+                            .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                .SubPath(assessmentClaimPath => assessmentClaimPath
+                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                        .SubPath(claimPath => claimPath
+                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                        )
+                                )
+                            .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
+                                .SubPath(assessmentReportPath => assessmentReportPath
+                                    .Prefetch<AssessmentReportIssueInDisputeEntity>(assessmentReport => assessmentReport.AssessmentReportIssuesInDispute)
+                                        .SubPath(assessmentReportIssueInDisputePath => assessmentReportIssueInDisputePath
+                                            .Prefetch(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
+                                        )
+                                )
+                            .Prefetch<CompanyEntity>(assessment => assessment.Company)
+                        )
+                );
+
+        private static readonly Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>>
+            AppointmentSiblingsSequencePath =
+                (appointmentPath => appointmentPath
+                    .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
+                    .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                );
+
         #endregion
 
-        public Appointment GetAppointment(int id)
+        private Appointment GetAppointment(int id, Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>> prefetchPath = null)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
                 var meta = new LinqMetaData(adapter);
 
-                return meta.Appointment
-                    .WithPath(AppointmentPath)
-                    .Where(appointment => appointment.AppointmentId == id)
+                var appointment = meta.Appointment.AsQueryable();
+
+                if (null != prefetchPath)
+                {
+                    appointment = appointment.WithPath(prefetchPath);
+                }
+                
+                return appointment
+                    .Where(appt => appt.AppointmentId == id)
                     .SingleOrDefault()
                     .ToAppointment();
+            }
+        }
+
+        public Appointment GetAppointment(int id)
+        {
+            return GetAppointment(id, AppointmentPath);
+        }
+
+        public Appointment GetAppointmentForPsychologistInvoice(int id)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var appointment = meta.Appointment
+                    .WithPath(PsychologistInvoiceAppointmentPath)
+                    .Where(appt => appt.AppointmentId == id)
+                    .SingleOrDefault()
+                    .ToPsychologistInvoiceAppointment();
+
+                return appointment;
             }
         }
 
@@ -219,6 +294,28 @@ namespace PsychologicalServices.Infrastructure.Appointments
             }
         }
 
+        public IEnumerable<Appointment> GetAppointmentSequenceSiblings(int appointmentId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var appointments = meta.Appointment
+                    .WithPath(AppointmentSiblingsSequencePath)
+                    .Where(appointment =>
+                        appointment.Assessment.Appointments.Any(assessmentAppointment => assessmentAppointment.AppointmentId == appointmentId) &&
+                        appointment.AppointmentId != appointmentId
+                    );
+                
+                return Execute<AppointmentEntity>(
+                        (ILLBLGenProQuery)
+                        appointments
+                    )
+                    .Select(appointment => appointment.ToAppointment())
+                    .ToList();
+            }
+        }
+
         private IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria, Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>> prefetchPath = null)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -237,6 +334,11 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     if (criteria.AppointmentId.HasValue)
                     {
                         appointments = appointments.Where(appointment => appointment.AppointmentId == criteria.AppointmentId.Value);
+                    }
+
+                    if (criteria.AssessmentId.HasValue)
+                    {
+                        appointments = appointments.Where(appointment => appointment.AssessmentId == criteria.AssessmentId.Value);
                     }
 
                     if (criteria.CompanyId.HasValue)

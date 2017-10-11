@@ -30,10 +30,14 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.AppointmentStatusInvoiceRateEntityUsingCompanyId);
 			toReturn.Add(this.AssessmentEntityUsingCompanyId);
+			toReturn.Add(this.AssessmentTypeInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.CalendarNoteEntityUsingCompanyId);
 			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
+			toReturn.Add(this.IssueInDisputeInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.PsychometristInvoiceAmountEntityUsingCompanyId);
+			toReturn.Add(this.ReferralSourceInvoiceConfigurationEntityUsingCompanyId);
 			toReturn.Add(this.UserEntityUsingCompanyId);
 
 			toReturn.Add(this.AddressEntityUsingNewAppointmentLocationId);
@@ -48,6 +52,21 @@ namespace PsychologicalServices.Data.RelationClasses
 
 		#region Class Property Declarations
 
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AppointmentStatusInvoiceRateEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - AppointmentStatusInvoiceRate.CompanyId
+		/// </summary>
+		public virtual IEntityRelation AppointmentStatusInvoiceRateEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AppointmentStatusInvoiceRates" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, AppointmentStatusInvoiceRateFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentStatusInvoiceRateEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AssessmentEntity over the 1:n relation they have, using the relation between the fields:
 		/// Company.CompanyId - Assessment.CompanyId
 		/// </summary>
@@ -59,6 +78,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, AssessmentFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and AssessmentTypeInvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - AssessmentTypeInvoiceAmount.CompanyId
+		/// </summary>
+		public virtual IEntityRelation AssessmentTypeInvoiceAmountEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentTypeInvoiceAmounts" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, AssessmentTypeInvoiceAmountFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeInvoiceAmountEntity", false);
 				return relation;
 			}
 		}
@@ -93,6 +127,21 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and IssueInDisputeInvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - IssueInDisputeInvoiceAmount.CompanyId
+		/// </summary>
+		public virtual IEntityRelation IssueInDisputeInvoiceAmountEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "IssueInDisputeInvoiceAmounts" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, IssueInDisputeInvoiceAmountFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IssueInDisputeInvoiceAmountEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and PsychometristInvoiceAmountEntity over the 1:n relation they have, using the relation between the fields:
 		/// Company.CompanyId - PsychometristInvoiceAmount.CompanyId
 		/// </summary>
@@ -104,6 +153,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, PsychometristInvoiceAmountFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PsychometristInvoiceAmountEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and ReferralSourceInvoiceConfigurationEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - ReferralSourceInvoiceConfiguration.CompanyId
+		/// </summary>
+		public virtual IEntityRelation ReferralSourceInvoiceConfigurationEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ReferralSourceInvoiceConfigurations" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, ReferralSourceInvoiceConfigurationFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReferralSourceInvoiceConfigurationEntity", false);
 				return relation;
 			}
 		}

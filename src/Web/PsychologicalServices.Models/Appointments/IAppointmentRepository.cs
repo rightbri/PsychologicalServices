@@ -7,11 +7,15 @@ namespace PsychologicalServices.Models.Appointments
     {
         Appointment GetAppointment(int id);
 
+        Appointment GetAppointmentForPsychologistInvoice(int id);
+
         Appointment NewAppointment(int companyId);
 
         Appointment NewAppointment(int companyId, DateTime appointmentDate);
 
         AppointmentStatus GetAppointmentStatus(int id);
+
+        IEnumerable<Appointment> GetAppointmentSequenceSiblings(int appointmentId);
 
         IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria);
 
