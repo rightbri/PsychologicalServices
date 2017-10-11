@@ -118,7 +118,7 @@ export class EditAssessment {
 			}).then(data => this.appointmentAddresses = data),
 			
 			this.dataRepository.searchContacts({
-				contactTypeId: this.config.contactTypes.lawyer
+				contactTypeIds: [this.config.contactTypes.lawyer, this.config.contactTypes.lawClerk]
 			}).then(data => this.defenseLawyers = data)
 		]);
 	}

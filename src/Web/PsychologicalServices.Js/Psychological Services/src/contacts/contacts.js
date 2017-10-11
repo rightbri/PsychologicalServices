@@ -41,7 +41,7 @@ export class Contacts {
 		return this.dataRepository.searchContacts({
 			firstName: this.searchFirstName,
 			lastName: this.searchLastName,
-			contactTypeId: this.searchContactTypeId,
+			contactTypeIds: [this.searchContactTypeId],
 			employerId: this.searchEmployerId,
 			isActive: this.searchIsActive
 		}).then(data => this.contacts = data);

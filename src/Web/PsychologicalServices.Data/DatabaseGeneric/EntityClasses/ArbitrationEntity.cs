@@ -721,10 +721,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Arbitrations"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTimeOffset EndDate
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.DateTimeOffset> EndDate
 		{
-			get { return (System.DateTimeOffset)GetValue((int)ArbitrationFieldIndex.EndDate, true); }
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ArbitrationFieldIndex.EndDate, false); }
 			set	{ SetValue((int)ArbitrationFieldIndex.EndDate, value); }
 		}
 
@@ -732,10 +732,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Arbitrations"."AvailableDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTimeOffset AvailableDate
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.DateTimeOffset> AvailableDate
 		{
-			get { return (System.DateTimeOffset)GetValue((int)ArbitrationFieldIndex.AvailableDate, true); }
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ArbitrationFieldIndex.AvailableDate, false); }
 			set	{ SetValue((int)ArbitrationFieldIndex.AvailableDate, value); }
 		}
 
@@ -764,7 +764,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The Title property of the Entity Arbitration<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Arbitrations"."Title"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 250<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Title
 		{

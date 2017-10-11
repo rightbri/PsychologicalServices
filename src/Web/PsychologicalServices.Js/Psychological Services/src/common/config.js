@@ -48,7 +48,8 @@ export class Config {
 		};
 
 		this.contactTypes = {
-			'lawyer': 1
+			'lawyer': 1,
+			'lawClerk': 2
 		};
 		
 		this.invoiceTypes = {

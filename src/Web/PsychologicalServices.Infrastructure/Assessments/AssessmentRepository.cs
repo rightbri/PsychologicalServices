@@ -447,11 +447,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 
                 #region appointments
 
-                //foreach (var appointment in assessment.Appointments)
-                //{
-                //    appointment.Assessment = assessment;
-                //}
-
                 var appointmentsToAdd = assessment.Appointments
                     .Where(appointment =>
                         appointment.AppointmentId == 0 ||
@@ -524,19 +519,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.UpdateDate = _date.UtcNow;
                     appointmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
 
-                    //if (appointment.AppointmentStatus.CanInvoice &&
-                    //    !appointmentEntity.InvoiceAppointments.Any())
-                    //{
-                    //    var invoice = _invoiceGenerator.CreatePsychologistInvoice(appointment);
-
-                    //    appointmentEntity.InvoiceAppointments.Add(
-                    //        new InvoiceAppointmentEntity
-                    //        {
-                    //            Invoice = invoice.ToInvoiceEntity()
-                    //        }
-                    //    );
-                    //}
-
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
                             appointmentAttribute.AttributeId == attribute.Attribute.AttributeId
@@ -602,13 +584,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         UpdateDate = _date.UtcNow,
                         UpdateUserId = assessment.UpdateUser.UserId,
                     };
-
-                    //if (appointment.AppointmentStatus.CanInvoice)
-                    //{
-                    //    var invoice = _invoiceGenerator.CreatePsychologistInvoice(appointment);
-                        
-                    //    invoice.AddToAppointment(appointmentEntity);
-                    //}
 
                     appointmentEntity.AppointmentAttributes.AddRange(
                         appointment.Attributes.Select(attribute =>
@@ -1069,8 +1044,24 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     {
                         arbitrationEntity.Title = arbitration.Title;
                         arbitrationEntity.StartDate = arbitration.StartDate;
-                        arbitrationEntity.EndDate = arbitration.EndDate;
-                        arbitrationEntity.AvailableDate = arbitration.AvailableDate;
+
+                        if (null == arbitration.EndDate)
+                        {
+                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.EndDate, null);
+                        }
+                        else
+                        {
+                            arbitrationEntity.EndDate = arbitration.EndDate;
+                        }
+                        
+                        if (null == arbitrationEntity.AvailableDate)
+                        {
+                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.AvailableDate, null);
+                        }
+                        else
+                        {
+                            arbitrationEntity.AvailableDate = arbitration.AvailableDate;
+                        }
                         
                         if (null == arbitration.DefenseLawyer)
                         {

@@ -89,7 +89,7 @@ namespace PsychologicalServices.Models.Schedule
 
             var arbitrationsStarting = Arbitrations.Where(arbitration => arbitration.StartDate.IsWithin(day.StartOfDay(DisplayTimezoneId), day.EndOfDay(DisplayTimezoneId)));
 
-            var arbitrationsDateGiven = Arbitrations.Where(arbitration => arbitration.AvailableDate.IsWithin(day.StartOfDay(DisplayTimezoneId), day.EndOfDay(DisplayTimezoneId)));
+            var arbitrationsDateGiven = Arbitrations.Where(arbitration => arbitration.AvailableDate.HasValue && arbitration.AvailableDate.Value.IsWithin(day.StartOfDay(DisplayTimezoneId), day.EndOfDay(DisplayTimezoneId)));
 
             var calendarNotes = CalendarNotes.Where(calendarNote => calendarNote.AppliesToDay(day));
 

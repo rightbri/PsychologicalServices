@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Contacts
 {
@@ -12,7 +13,7 @@ namespace PsychologicalServices.Models.Contacts
 
         public string Email { get; set; }
 
-        public int? ContactTypeId { get; set; }
+        public IEnumerable<int> ContactTypeIds { get; set; }
 
         public int? EmployerId { get; set; }
 

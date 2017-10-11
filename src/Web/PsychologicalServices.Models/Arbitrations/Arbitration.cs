@@ -14,9 +14,9 @@ namespace PsychologicalServices.Models.Arbitrations
 
         public DateTimeOffset StartDate { get; set; }
 
-        public DateTimeOffset EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
-        public DateTimeOffset AvailableDate { get; set; }
+        public DateTimeOffset? AvailableDate { get; set; }
 
         public Contact DefenseLawyer { get; set; }
 

@@ -109,9 +109,9 @@ namespace PsychologicalServices.Infrastructure.Contacts
                         contacts = contacts.Where(contact => contact.Email.Contains(criteria.Email));
                     }
 
-                    if (criteria.ContactTypeId.HasValue)
+                    if (criteria.ContactTypeIds.Any())
                     {
-                        contacts = contacts.Where(contact => contact.ContactTypeId == criteria.ContactTypeId);
+                        contacts = contacts.Where(contact => criteria.ContactTypeIds.Contains(contact.ContactTypeId));
                     }
 
                     if (criteria.EmployerId.HasValue)

@@ -42,7 +42,10 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                 var meta = new LinqMetaData(adapter);
 
                 var arbitrations = meta.Arbitration
-                    .Where(arbitration => arbitration.StartDate <= criteria.EndDate && arbitration.EndDate >= criteria.StartDate);
+                    .Where(arbitration =>
+                        arbitration.StartDate <= criteria.EndDate &&
+                        (arbitration.EndDate == null || arbitration.EndDate >= criteria.StartDate)
+                    );
 
                 if (criteria.CompanyId.HasValue)
                 {

@@ -215,11 +215,11 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "ArbitrationEntity", "ArbitrationId", "ArbitrationId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "StartDate", "StartDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
-			base.AddElementFieldMapping( "ArbitrationEntity", "EndDate", "EndDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3 );
-			base.AddElementFieldMapping( "ArbitrationEntity", "AvailableDate", "AvailableDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 4 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "EndDate", "EndDate", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "AvailableDate", "AvailableDate", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 4 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "DefenseLawyerId", "DefenseLawyerId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "DefenseFileNumber", "DefenseFileNumber", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 6 );
-			base.AddElementFieldMapping( "ArbitrationEntity", "Title", "Title", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 7 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "Title", "Title", false, (int)SqlDbType.NVarChar, 250, 0, 0, false, "", null, typeof(System.String), 7 );
 		}
 		/// <summary>Inits AssessmentEntity's mappings</summary>
 		private void InitAssessmentEntityMappings()

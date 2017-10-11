@@ -52,14 +52,15 @@ namespace PsychologicalServices.Models.Arbitrations
                 );
             }
 
-            if (item.StartDate > item.EndDate)
+            if (item.EndDate.HasValue && item.StartDate > item.EndDate)
             {
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "EndDate", Message = GetValidationMessage(item, "End Date must be after Start Date") }
                 );
             }
 
-            if (item.AvailableDate < item.StartDate || item.AvailableDate > item.EndDate)
+            if ((item.AvailableDate.HasValue && item.AvailableDate < item.StartDate) ||
+                (item.AvailableDate.HasValue && item.EndDate.HasValue && item.AvailableDate > item.EndDate))
             {
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "AvailableDate", Message = GetValidationMessage(item, "Available Date must be within Start and End dates") }
