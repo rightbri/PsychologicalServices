@@ -369,7 +369,7 @@ namespace PsychologicalServices.Models.Invoices
 						var line = invoiceAppointment.Lines.ElementAt(j);
 						subtotal += line.Amount;
 
-						var amountAdjusted = Model.InvoiceRate != 1.0m;
+						var amountAdjusted = Model.InvoiceRate != 1.0m && line.ApplyInvoiceRate;
 					
             
             #line default
