@@ -40,21 +40,13 @@ namespace PsychologicalServices.Models.Invoices
             {
                 throw new InvalidOperationException("An invoice already exists for this psychometrist and invoice date.");
             }
-
-            var criteria = new AppointmentSearchCriteria
-            {
-                PsychometristId = psychometrist.UserId,
-                AppointmentTimeStart = invoiceDate.StartOfMonth(psychometrist.Company.Timezone),
-                AppointmentTimeEnd = invoiceDate.EndOfMonth(psychometrist.Company.Timezone),
-            };
-
+            
             var invoiceType = new InvoiceType
             {
                 InvoiceTypeId = InvoiceType.Psychometrist,
             };
 
-            var appointments = _appointmentRepository.GetAppointmentsForPsychometristInvoice(criteria)
-                .Where(appointment => appointment.AppointmentStatus.CanInvoice)
+            var appointments = GetInvoiceableAppointments(psychometrist.UserId, invoiceDate, psychometrist.Company.Timezone)
                 .Select(appointment =>
                 {
                     return new InvoiceAppointment
@@ -84,23 +76,25 @@ namespace PsychologicalServices.Models.Invoices
 
         public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
         {
-            var invoiceAppointments = new List<InvoiceAppointment>();
-            
-            foreach (var invoiceAppointment in invoice.Appointments)
+            if (invoice.InvoiceType.InvoiceTypeId != InvoiceType.Psychometrist)
             {
-                invoiceAppointments.Add(
-                    new InvoiceAppointment
-                    {
-                        InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
-                        Appointment = invoiceAppointment.Appointment,
-                        Lines =
-                            GetInvoiceLines(invoiceAppointment.Appointment)
-                                .Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
-                    }
-                );
+                throw new InvalidOperationException("Invoice must be a psychometrist invoice");
             }
 
-            return invoiceAppointments;
+            var psychometrist = _userRepository.GetUserById(invoice.PayableTo.UserId);
+
+            var appointments = GetInvoiceableAppointments(psychometrist.UserId, invoice.InvoiceDate, psychometrist.Company.Timezone)
+                .Select(appointment => new InvoiceAppointment
+                {
+                    Appointment = appointment,
+                    Lines = GetInvoiceLines(appointment)
+                        .Union(invoice.Appointments
+                            .Where(invoiceAppointment => invoiceAppointment.Appointment.AppointmentId == appointment.AppointmentId)
+                            .SelectMany(invoiceAppointment => invoiceAppointment.Lines.Where(line => line.IsCustom))
+                        ),
+                });
+
+            return appointments.ToList();
         }
 
         public int GetInvoiceTotal(Invoice invoice)
@@ -174,6 +168,21 @@ namespace PsychologicalServices.Models.Invoices
             return null != psychometristInvoiceAmount
                 ? psychometristInvoiceAmount.InvoiceAmount
                 : 0;
+        }
+
+        private IEnumerable<Appointment> GetInvoiceableAppointments(int psychometristId, DateTimeOffset invoiceDate, string timezone)
+        {
+            var criteria = new AppointmentSearchCriteria
+            {
+                PsychometristId = psychometristId,
+                AppointmentTimeStart = invoiceDate.StartOfMonth(timezone),
+                AppointmentTimeEnd = invoiceDate.EndOfMonth(timezone),
+            };
+
+            var appointments = _appointmentRepository.GetAppointmentsForPsychometristInvoice(criteria)
+                .Where(appointment => appointment.AppointmentStatus.CanInvoice);
+
+            return appointments;
         }
     }
 }

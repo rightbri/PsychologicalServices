@@ -56,14 +56,16 @@ BEGIN
 	WHERE 
 	apps.CanInvoice = 1
 	AND t.PsychometristCanInvoice = 1
+	--prevent new invoices being created when new invoiceable appointments are added during a month that is already covered by an invoice
 	AND NOT EXISTS (
 		SELECT
 		*
-		FROM dbo.InvoiceAppointments ia
-		INNER JOIN dbo.Invoices i ON ia.InvoiceId = i.InvoiceId
+		FROM dbo.Invoices
 		WHERE
-		ia.AppointmentId = app.AppointmentId
-		AND i.PayableToId = psychometrists.UserId
+		InvoiceTypeId = @psychometristInvoiceTypeId 
+		AND PayableToId = app.PsychometristId
+		AND YEAR(InvoiceDate) = YEAR(app.AppointmentTime) 
+		AND MONTH(InvoiceDate) = MONTH(app.AppointmentTime)
 	)
 	AND (c.RowNum IS NULL OR c.RowNum = 1)
 	AND ass.CompanyId = @localCompanyId
@@ -94,6 +96,7 @@ BEGIN
 	INNER JOIN dbo.Assessments ass ON app.AssessmentId = ass.AssessmentId
 	INNER JOIN dbo.AssessmentTypes t ON ass.AssessmentTypeId = t.AssessmentTypeId
 	INNER JOIN dbo.ReferralSources rs ON ass.ReferralSourceId = rs.ReferralSourceId
+	INNER JOIN dbo.AssessmentTypeInvoiceAmounts atia ON t.AssessmentTypeId = atia.AssessmentTypeId AND rs.ReferralSourceId = atia.ReferralSourceId AND ass.CompanyId = atia.CompanyId
 	LEFT JOIN (
 		SELECT
 		AssessmentId
@@ -105,7 +108,6 @@ BEGIN
 	) c ON ass.AssessmentId = c.AssessmentId
 	WHERE 
 	apps.CanInvoice = 1
-	AND t.ShowOnSchedule = 1
 	AND NOT EXISTS (
 		SELECT
 		*
