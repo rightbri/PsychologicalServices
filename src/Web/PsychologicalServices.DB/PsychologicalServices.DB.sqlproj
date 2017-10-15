@@ -136,6 +136,7 @@
     <Build Include="dbo\Tables\IssueInDisputeInvoiceAmounts.sql" />
     <Build Include="dbo\Tables\AssessmentTypeInvoiceAmounts.sql" />
     <Build Include="dbo\Tables\AppointmentStatusInvoiceRates.sql" />
+    <Build Include="dbo\Stored Procedures\InvoiceSearch.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

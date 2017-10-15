@@ -317,63 +317,31 @@ namespace PsychologicalServices.Infrastructure.Invoices
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var invoiceIds = RetrievalProcedures.InvoiceSearch(
+                    criteria.CompanyId,
+                    criteria.AppointmentId,
+                    criteria.Identifier,
+                    criteria.InvoiceDate,
+                    criteria.InvoiceMonth,
+                    criteria.InvoiceStatusId,
+                    criteria.InvoiceTypeId,
+                    criteria.PayableToId,
+                    criteria.NeedsRefresh,
+                    (DataAccessAdapter)adapter
+                )
+                .AsEnumerable()
+                .Select(row => Convert.ToInt32(row["InvoiceId"]));
+                
                 var meta = new LinqMetaData(adapter);
 
                 var invoices = meta.Invoice
                     .WithPath(InvoiceListPath);
-                    
-                if (null != criteria)
+
+                if (invoiceIds.Any())
                 {
-                    invoices = invoices.Where(invoice => invoice.PayableTo.CompanyId == criteria.CompanyId);
-
-                    if (criteria.AppointmentId.HasValue)
-                    {
-                        invoices = invoices
-                            .Where(invoice => invoice.InvoiceAppointments
-                                .Any(invoiceAppointment => invoiceAppointment.AppointmentId == criteria.AppointmentId.Value)
-                            );
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(criteria.Identifier))
-                    {
-                        invoices = invoices.Where(invoice => invoice.Identifier.Contains(criteria.Identifier));
-                    }
-
-                    if (criteria.InvoiceDate.HasValue)
-                    {
-                        invoices = invoices.Where(invoice => invoice.InvoiceDate >= criteria.InvoiceDate.Value.Date && invoice.InvoiceDate < criteria.InvoiceDate.Value.Date.AddDays(1));
-                    }
-
-                    if (criteria.InvoiceMonth.HasValue)
-                    {
-                        var company = _companyRepository.GetCompany(criteria.CompanyId);
-                        
-                        if (null != company)
-                        {
-                            var monthStart = criteria.InvoiceMonth.Value.StartOfMonth(company.Timezone);
-
-                            var monthEnd = monthStart.AddMonths(1);
-
-                            invoices = invoices.Where(invoice => invoice.InvoiceDate >= monthStart && invoice.InvoiceDate < monthEnd);
-                        }
-                    }
-
-                    if (criteria.InvoiceStatusId.HasValue)
-                    {
-                        invoices = invoices.Where(invoice => invoice.InvoiceStatusId == criteria.InvoiceStatusId);
-                    }
-
-                    if (criteria.InvoiceTypeId.HasValue)
-                    {
-                        invoices = invoices.Where(invoice => invoice.InvoiceTypeId == criteria.InvoiceTypeId);
-                    }
-
-                    if (criteria.PayableToId.HasValue)
-                    {
-                        invoices = invoices.Where(invoice => invoice.PayableToId == criteria.PayableToId);
-                    }
+                    invoices = invoices.Where(invoice => invoiceIds.Contains(invoice.InvoiceId));
                 }
-
+                
                 return Execute<InvoiceEntity>(
                         (ILLBLGenProQuery)
                         invoices
