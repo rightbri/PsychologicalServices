@@ -151,6 +151,8 @@ namespace PsychologicalServices.Data
 		Sort,
 		///<summary>ShowOnSchedule. </summary>
 		ShowOnSchedule,
+		///<summary>ClaimantSeen. </summary>
+		ClaimantSeen,
 		/// <summary></summary>
 		AmountOfFields
 	}

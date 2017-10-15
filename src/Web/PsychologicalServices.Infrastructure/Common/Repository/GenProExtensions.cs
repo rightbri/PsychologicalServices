@@ -700,6 +700,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     NotifyReferralSource = appointmentStatus.NotifyReferralSource,
                     CanInvoice = appointmentStatus.CanInvoice,
                     ShowOnSchedule = appointmentStatus.ShowOnSchedule,
+                    ClaimantSeen = appointmentStatus.ClaimantSeen,
                     IsActive = appointmentStatus.IsActive,
                     Sort = appointmentStatus.Sort,
                 }

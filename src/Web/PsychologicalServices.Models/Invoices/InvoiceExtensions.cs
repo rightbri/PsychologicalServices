@@ -44,5 +44,14 @@ namespace PsychologicalServices.Models.Invoices
                 ? $"{assessmentTypeDescription} assessment - extra report addressing {string.Join(", ", report.IssuesInDispute.Select(issueInDispute => issueInDispute.Name))}"
                 : $"{assessmentTypeDescription} assessment - extra report";
         }
+
+        public static string ToCompletionFeeInvoiceLineDescription(this Appointments.Appointment appointment)
+        {
+            var baseDescription = $"Completion {appointment.Assessment.AssessmentType.Description} assessment";
+
+            return appointment.AppointmentStatus.ClaimantSeen
+                ? baseDescription
+                : $"{baseDescription} - {appointment.AppointmentStatus.Name}";
+        }
     }
 }

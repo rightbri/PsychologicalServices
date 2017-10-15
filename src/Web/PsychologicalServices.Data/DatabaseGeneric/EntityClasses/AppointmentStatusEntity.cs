@@ -816,6 +816,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ShowOnSchedule", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("ClaimantSeen", fieldHashtable);
 		}
 		#endregion
 
@@ -1017,6 +1020,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AppointmentStatusFieldIndex.ShowOnSchedule, true); }
 			set	{ SetValue((int)AppointmentStatusFieldIndex.ShowOnSchedule, value); }
+		}
+
+		/// <summary> The ClaimantSeen property of the Entity AppointmentStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AppointmentStatuses"."ClaimantSeen"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean ClaimantSeen
+		{
+			get { return (System.Boolean)GetValue((int)AppointmentStatusFieldIndex.ClaimantSeen, true); }
+			set	{ SetValue((int)AppointmentStatusFieldIndex.ClaimantSeen, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.

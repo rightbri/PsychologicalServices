@@ -186,6 +186,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AppointmentStatusEntity", "CanInvoice", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.CanInvoice, 0, 0, 0);
 			base.AddElementFieldInfo("AppointmentStatusEntity", "Sort", typeof(System.Int32), false, false, false, false,  (int)AppointmentStatusFieldIndex.Sort, 0, 0, 10);
 			base.AddElementFieldInfo("AppointmentStatusEntity", "ShowOnSchedule", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.ShowOnSchedule, 0, 0, 0);
+			base.AddElementFieldInfo("AppointmentStatusEntity", "ClaimantSeen", typeof(System.Boolean), false, false, false, false,  (int)AppointmentStatusFieldIndex.ClaimantSeen, 0, 0, 0);
 		}
 		/// <summary>Inits AppointmentStatusInvoiceRateEntity's FieldInfo objects</summary>
 		private void InitAppointmentStatusInvoiceRateEntityInfos()

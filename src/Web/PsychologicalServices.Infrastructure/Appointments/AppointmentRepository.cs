@@ -536,6 +536,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentStatusEntity.NotifyReferralSource = appointmentStatus.NotifyReferralSource;
                 appointmentStatusEntity.CanInvoice = appointmentStatus.CanInvoice;
                 appointmentStatusEntity.ShowOnSchedule = appointmentStatus.ShowOnSchedule;
+                appointmentStatusEntity.ClaimantSeen = appointmentStatus.ClaimantSeen;
                 appointmentStatusEntity.Sort = appointmentStatus.Sort;
                 appointmentStatusEntity.IsActive = appointmentStatus.IsActive;
                 
@@ -544,12 +545,5 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 return appointmentStatusEntity.AppointmentStatusId;
             }
         }
-
-        public int GetLateCancellationStatusId()
-        {
-            //TODO: retrieve from DB or config
-            return 8;
-        }
-
     }
 }

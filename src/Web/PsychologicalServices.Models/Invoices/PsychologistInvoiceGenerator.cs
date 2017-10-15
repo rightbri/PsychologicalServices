@@ -138,7 +138,7 @@ namespace PsychologicalServices.Models.Invoices
                     new InvoiceLine
                     {
                         Amount = invoiceCalculationData.CompletionFeeAmount,
-                        Description = $"Incomplete {appointment.Assessment.AssessmentType.Description} assessment",
+                        Description = appointment.ToCompletionFeeInvoiceLineDescription(),
                     });
             }
             else
