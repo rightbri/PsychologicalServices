@@ -620,19 +620,28 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 return invoiceEntity.InvoiceId;
             }
         }
-
-        public int GetInvoiceCount(int year, int month)
+        
+        public int IncrementCompanyInvoiceCounter(int companyId)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
-                var meta = new LinqMetaData(adapter);
+                var entity = new CompanyEntity
+                {
+                    CompanyId = companyId,
+                };
 
-                var startDate = new DateTime(year, month, 1);
-                var endDate = startDate.AddMonths(1).AddDays(-1);
+                if (adapter.FetchEntity(entity))
+                {
+                    var newValue = entity.InvoiceCounter + 1;
 
-                return meta.Invoice
-                    .Where(invoice => invoice.InvoiceDate >= startDate && invoice.InvoiceDate <= endDate)
-                    .Count();
+                    entity.InvoiceCounter = newValue;
+                    
+                    adapter.SaveEntity(entity);
+
+                    return newValue;
+                }
+
+                throw new ArgumentOutOfRangeException("companyId", $"Company with id {companyId} not found");
             }
         }
 
@@ -740,5 +749,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     .ToList();
             }
         }
+
     }
 }

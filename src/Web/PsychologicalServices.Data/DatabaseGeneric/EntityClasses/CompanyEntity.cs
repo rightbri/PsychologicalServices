@@ -1413,6 +1413,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("NewAssessmentAssessmentTypeId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("InvoiceCounter", fieldHashtable);
 		}
 		#endregion
 
@@ -2096,6 +2099,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.Int32>)GetValue((int)CompanyFieldIndex.NewAssessmentAssessmentTypeId, false); }
 			set	{ SetValue((int)CompanyFieldIndex.NewAssessmentAssessmentTypeId, value); }
+		}
+
+		/// <summary> The InvoiceCounter property of the Entity Company<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Companies"."InvoiceCounter"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 InvoiceCounter
+		{
+			get { return (System.Int32)GetValue((int)CompanyFieldIndex.InvoiceCounter, true); }
+			set	{ SetValue((int)CompanyFieldIndex.InvoiceCounter, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentStatusInvoiceRateEntity' which are related to this entity via a relation of type '1:n'.

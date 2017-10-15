@@ -25,7 +25,7 @@ namespace PsychologicalServices.Models.Invoices
 
         IEnumerable<Invoice> GetInvoices(InvoiceSearchCriteria criteria);
 
-        int GetInvoiceCount(int year, int month);
+        int IncrementCompanyInvoiceCounter(int companyId);
 
         int GetInvoiceCount(int userId);
         

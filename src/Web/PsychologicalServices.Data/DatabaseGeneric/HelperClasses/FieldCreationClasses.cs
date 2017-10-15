@@ -972,6 +972,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.NewAssessmentAssessmentTypeId);}
 		}
+		/// <summary>Creates a new CompanyEntity.InvoiceCounter field instance</summary>
+		public static EntityField2 InvoiceCounter
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.InvoiceCounter);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CompanyAttributeEntity</summary>

@@ -623,6 +623,8 @@ namespace PsychologicalServices.Data
 		ReplyToEmail,
 		///<summary>NewAssessmentAssessmentTypeId. </summary>
 		NewAssessmentAssessmentTypeId,
+		///<summary>InvoiceCounter. </summary>
+		InvoiceCounter,
 		/// <summary></summary>
 		AmountOfFields
 	}

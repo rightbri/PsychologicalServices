@@ -64,10 +64,6 @@ namespace PsychologicalServices.Models.Invoices
 
             var invoice = new Invoice
             {
-                Identifier = string.Format("{0:yy-MM-}{1:00#}",
-                    appointment.AppointmentTime,
-                    _invoiceRepository.GetInvoiceCount(appointment.AppointmentTime.Year, appointment.AppointmentTime.Month) + 1
-                ),
                 InvoiceDate = appointment.AppointmentTime.Date,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = new InvoiceType
@@ -90,6 +86,8 @@ namespace PsychologicalServices.Models.Invoices
 
             invoice.Total = GetInvoiceTotal(invoice);
 
+            invoice.Identifier = $"{appointment.AppointmentTime:yy-MM-}{_invoiceRepository.IncrementCompanyInvoiceCounter(appointment.Assessment.Company.CompanyId):00#}";
+            
             return invoice;
         }
         
