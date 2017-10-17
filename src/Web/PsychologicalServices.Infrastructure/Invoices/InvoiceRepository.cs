@@ -332,15 +332,16 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 .AsEnumerable()
                 .Select(row => Convert.ToInt32(row["InvoiceId"]));
                 
+                if (!invoiceIds.Any())
+                {
+                    return Enumerable.Empty<Invoice>();
+                }
+                
                 var meta = new LinqMetaData(adapter);
 
                 var invoices = meta.Invoice
-                    .WithPath(InvoiceListPath);
-
-                if (invoiceIds.Any())
-                {
-                    invoices = invoices.Where(invoice => invoiceIds.Contains(invoice.InvoiceId));
-                }
+                    .WithPath(InvoiceListPath)
+                    .Where(invoice => invoiceIds.Contains(invoice.InvoiceId));
                 
                 return Execute<InvoiceEntity>(
                         (ILLBLGenProQuery)

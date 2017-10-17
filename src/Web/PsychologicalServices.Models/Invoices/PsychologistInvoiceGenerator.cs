@@ -42,6 +42,7 @@ namespace PsychologicalServices.Models.Invoices
 
             if (_invoiceRepository.GetInvoices(new InvoiceSearchCriteria
                 {
+                    CompanyId = appointment.Assessment.Company.CompanyId,
                     AppointmentId = appointment.AppointmentId,
                     InvoiceTypeId = invoiceTypeId,
                 }).Any()

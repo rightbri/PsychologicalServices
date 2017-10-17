@@ -31,6 +31,7 @@ namespace PsychologicalServices.Models.Invoices
         {
             var invoiceSearchCriteria = new InvoiceSearchCriteria
             {
+                CompanyId = psychometrist.Company.CompanyId,
                 PayableToId = psychometrist.UserId,
                 InvoiceTypeId = InvoiceType.Psychometrist,
                 InvoiceDate = invoiceDate,
