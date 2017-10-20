@@ -190,6 +190,15 @@ namespace PsychologicalServices.Infrastructure.Referrals
                 entity.ReferralSourceTypeId = referralSource.ReferralSourceType.ReferralSourceTypeId;
                 entity.IsActive = referralSource.IsActive;
 
+                if (string.IsNullOrEmpty(referralSource.InvoicesContactEmail))
+                {
+                    entity.SetNewFieldValue((int)ReferralSourceFieldIndex.InvoicesContactEmail, null);
+                }
+                else
+                {
+                    entity.InvoicesContactEmail = referralSource.InvoicesContactEmail;
+                }
+
                 if (null == referralSource.Address)
                 {
                     entity.SetNewFieldValue((int)ReferralSourceFieldIndex.AddressId, null);

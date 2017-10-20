@@ -555,6 +555,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ReferralSourceEntity", "ReferralSourceTypeId", typeof(System.Int32), false, true, false, false,  (int)ReferralSourceFieldIndex.ReferralSourceTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("ReferralSourceEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ReferralSourceFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("ReferralSourceEntity", "AddressId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ReferralSourceFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("ReferralSourceEntity", "InvoicesContactEmail", typeof(System.String), false, false, false, true,  (int)ReferralSourceFieldIndex.InvoicesContactEmail, 4000, 0, 0);
 		}
 		/// <summary>Inits ReferralSourceInvoiceConfigurationEntity's FieldInfo objects</summary>
 		private void InitReferralSourceInvoiceConfigurationEntityInfos()

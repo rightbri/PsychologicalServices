@@ -969,6 +969,8 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>AddressId. </summary>
 		AddressId,
+		///<summary>InvoicesContactEmail. </summary>
+		InvoicesContactEmail,
 		/// <summary></summary>
 		AmountOfFields
 	}

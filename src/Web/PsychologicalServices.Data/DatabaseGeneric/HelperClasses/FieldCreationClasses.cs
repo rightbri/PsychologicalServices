@@ -1477,6 +1477,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceFieldIndex.AddressId);}
 		}
+		/// <summary>Creates a new ReferralSourceEntity.InvoicesContactEmail field instance</summary>
+		public static EntityField2 InvoicesContactEmail
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ReferralSourceFieldIndex.InvoicesContactEmail);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity ReferralSourceInvoiceConfigurationEntity</summary>

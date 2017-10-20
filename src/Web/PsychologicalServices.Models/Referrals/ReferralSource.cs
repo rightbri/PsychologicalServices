@@ -1,7 +1,4 @@
 ﻿using PsychologicalServices.Models.Addresses;
-using PsychologicalServices.Models.Invoices;
-using System;
-using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Referrals
 {
@@ -10,6 +7,8 @@ namespace PsychologicalServices.Models.Referrals
         public int ReferralSourceId { get; set; }
 
         public string Name { get; set; }
+
+        public string InvoicesContactEmail { get; set; }
 
         public ReferralSourceType ReferralSourceType { get; set; }
 

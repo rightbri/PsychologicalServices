@@ -1009,6 +1009,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("InvoicesContactEmail", fieldHashtable);
 		}
 		#endregion
 
@@ -1351,6 +1354,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.Int32>)GetValue((int)ReferralSourceFieldIndex.AddressId, false); }
 			set	{ SetValue((int)ReferralSourceFieldIndex.AddressId, value); }
+		}
+
+		/// <summary> The InvoicesContactEmail property of the Entity ReferralSource<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "ReferralSources"."InvoicesContactEmail"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4000<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String InvoicesContactEmail
+		{
+			get { return (System.String)GetValue((int)ReferralSourceFieldIndex.InvoicesContactEmail, true); }
+			set	{ SetValue((int)ReferralSourceFieldIndex.InvoicesContactEmail, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentStatusInvoiceRateEntity' which are related to this entity via a relation of type '1:n'.

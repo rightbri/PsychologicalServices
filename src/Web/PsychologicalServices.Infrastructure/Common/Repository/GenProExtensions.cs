@@ -549,6 +549,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     ReferralSourceId = referralSource.ReferralSourceId,
                     Name = referralSource.Name,
+                    InvoicesContactEmail = referralSource.InvoicesContactEmail,
                     IsActive = referralSource.IsActive,
                     ReferralSourceType = referralSource.ReferralSourceType.ToReferralSourceType(),
                     Address = referralSource.Address.ToAddress(),
