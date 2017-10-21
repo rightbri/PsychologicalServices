@@ -1790,6 +1790,159 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             Assert.AreEqual(expected, actual);
         }
-        
+
+        [TestMethod]
+        public void InvoiceDateIsUtcNow()
+        {
+            var appointmentId = 1;
+            var appointmentTime = new DateTimeOffset(2017, 10, 8, 13, 0, 0, TimeSpan.Zero);
+            var appointmentStatusId = Appointments.AppointmentStatus.Complete;
+            var cityId = 2;
+            var assessmentTypeId = 3;
+            var assessmentTypeDescription = "Assessment Type";
+            var fileSize = 500;
+            var isLargeFile = false;
+            var largeFileSize = 1000;
+            var largeFileFee = 50000;
+            var referralSourceId = 4;
+            var companyId = 5;
+            var psychologistId = 6;
+            var psychologist = new Users.User
+            {
+                UserId = psychologistId,
+                TravelFees = Enumerable.Empty<Users.UserTravelFee>(),
+            };
+            var taxRate = 0.1m;
+            var invoiceCount = 0;
+            var utcNow = DateTimeOffset.UtcNow;
+            var appointmentSequenceId = Appointments.AppointmentSequence.First;
+            var siblingAppointments = Enumerable.Empty<Appointments.Appointment>();
+            var singleReportInvoiceAmount = 123400;
+            var comboReportInvoiceAmount = 432100;
+            var applyCompletionFee = false;
+            var applyExtraReportFees = false;
+            var applyIssueInDisputeFees = false;
+            var applyLargeFileFee = false;
+            var applyTravelFee = false;
+            var completionFeeAmount = 75000;
+            var extraReportFee = 50000;
+            var invoiceRate = 1.0m;
+            var catastrophicFee = 35000;
+            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issueInDisputeInvoiceAmounts = new[]
+            {
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+            };
+
+            var psychologistInvoiceGenerator = GetService(
+                (invoiceRepositoryMock, appointmentRepositoryMock, referralRepositoryMock, userRepositoryMock, dateMock) =>
+                {
+                    userRepositoryMock.Setup(ur => ur.GetUserById(It.Is<int>(i => i == psychologistId))).Returns(psychologist);
+
+                    appointmentRepositoryMock
+                        .Setup(ar => ar.GetAppointmentSequenceSiblings(It.Is<int>(i => i == appointmentId)))
+                        .Returns(() => siblingAppointments);
+
+                    invoiceRepositoryMock.Setup(ir => ir.GetPsychologistInvoiceCalculationData(
+                        It.Is<int>(i => i == companyId),
+                        It.Is<int>(i => i == referralSourceId),
+                        It.Is<int>(i => i == assessmentTypeId),
+                        It.Is<int>(i => i == appointmentStatusId),
+                        It.Is<int>(i => i == appointmentSequenceId)
+                    )).Returns(new PsychologistInvoiceCalculationData
+                    {
+                        Company = new Companies.Company { CompanyId = companyId, },
+                        SingleReportInvoiceAmount = singleReportInvoiceAmount,
+                        ComboReportInvoiceAmount = comboReportInvoiceAmount,
+                        CompletionFeeAmount = completionFeeAmount,
+                        ExtraReportFee = extraReportFee,
+                        InvoiceRate = invoiceRate,
+                        IssueInDisputeInvoiceAmounts = issueInDisputeInvoiceAmounts,
+                        LargeFileSize = largeFileSize,
+                        LargeFileFee = largeFileFee,
+                        ApplyCompletionFee = applyCompletionFee,
+                        ApplyExtraReportFees = applyExtraReportFees,
+                        ApplyIssueInDisputeFees = applyIssueInDisputeFees,
+                        ApplyLargeFileFee = applyLargeFileFee,
+                        ApplyTravelFee = applyTravelFee,
+                    });
+
+                    invoiceRepositoryMock
+                        .Setup(ir => ir.GetInvoices(It.Is<InvoiceSearchCriteria>(isc =>
+                            isc.AppointmentId == appointmentId &&
+                            isc.InvoiceTypeId == InvoiceType.Psychologist)))
+                        .Returns(() => Enumerable.Empty<Invoice>());
+
+                    invoiceRepositoryMock.Setup(ir => ir.GetInvoiceCount(It.Is<int>(i => i == psychologistId))).Returns(invoiceCount);
+
+                    invoiceRepositoryMock.Setup(ir => ir.GetInitialInvoiceStatus()).Returns(new InvoiceStatus { InvoiceStatusId = InvoiceStatus.Open });
+
+                    invoiceRepositoryMock.Setup(ir => ir.GetTaxRate()).Returns(taxRate);
+
+                    dateMock.SetupGet(d => d.UtcNow).Returns(utcNow);
+                });
+
+            var appointment = new Appointments.Appointment
+            {
+                AppointmentId = appointmentId,
+                AppointmentTime = appointmentTime,
+                AppointmentStatus = new Appointments.AppointmentStatus
+                {
+                    AppointmentStatusId = appointmentStatusId,
+                    CanInvoice = true,
+                },
+                Location = new Addresses.Address
+                {
+                    City = new Cities.City
+                    {
+                        CityId = cityId,
+                    },
+                },
+                Assessment = new Assessments.Assessment
+                {
+                    AssessmentType = new Assessments.AssessmentType
+                    {
+                        AssessmentTypeId = assessmentTypeId,
+                        Description = assessmentTypeDescription,
+                    },
+                    FileSize = fileSize,
+                    IsLargeFile = isLargeFile,
+                    ReferralSource = new Referrals.ReferralSource
+                    {
+                        ReferralSourceId = referralSourceId,
+                    },
+                    Reports = new[] {
+                        new Reports.Report
+                        {
+                            IsAdditional = false,
+                            IssuesInDispute = issuesInDispute,
+                        }
+                    },
+                    Company = new Companies.Company
+                    {
+                        CompanyId = companyId,
+                    },
+                },
+                Psychologist = new Users.User { UserId = psychologistId },
+            };
+
+            var invoice = psychologistInvoiceGenerator.CreateInvoice(appointment);
+
+            var subtotal = singleReportInvoiceAmount * invoiceRate;
+
+            var expected = utcNow;
+
+            var actual = invoice.InvoiceDate;
+
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }
