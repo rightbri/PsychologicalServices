@@ -9,6 +9,8 @@ namespace PsychologicalServices.Models.Invoices
 
         Invoice GetInvoice(int id);
 
+        Invoice GetInvoiceForDocument(int invoiceDocumentId);
+
         InvoiceDocument GetInvoiceDocument(int invoiceDocumentId);
 
         InvoiceStatus GetInvoiceStatus(int id);

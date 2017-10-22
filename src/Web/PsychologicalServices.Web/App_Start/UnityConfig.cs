@@ -46,7 +46,7 @@ namespace PsychologicalServices.Web
             container
                 .RegisterType<IDataAccessAdapterFactory, SqlServerAdapterFactory>()
                 .RegisterType<ICacheService, CacheService>(new InjectionConstructor(System.Runtime.Caching.MemoryCache.Default))
-                .RegisterInstance<ILog>(LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType))
+                .RegisterType<ILog>(new InjectionFactory(unityContainer => LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)))
                 .RegisterType<ExceptionLogger, Log4NetExceptionLogger>()
                 ;
 

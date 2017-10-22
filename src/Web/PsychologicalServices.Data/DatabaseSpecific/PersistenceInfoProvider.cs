@@ -550,10 +550,11 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits InvoiceTypeEntity's mappings</summary>
 		private void InitInvoiceTypeEntityMappings()
 		{
-			base.AddElementMapping( "InvoiceTypeEntity", "PsychologicalServices", @"dbo", "InvoiceTypes", 3 );
+			base.AddElementMapping( "InvoiceTypeEntity", "PsychologicalServices", @"dbo", "InvoiceTypes", 4 );
 			base.AddElementFieldMapping( "InvoiceTypeEntity", "InvoiceTypeId", "InvoiceTypeId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "InvoiceTypeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "InvoiceTypeEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
+			base.AddElementFieldMapping( "InvoiceTypeEntity", "CanSend", "CanSend", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
 		}
 		/// <summary>Inits IssueInDisputeEntity's mappings</summary>
 		private void InitIssueInDisputeEntityMappings()

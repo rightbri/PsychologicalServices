@@ -478,6 +478,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CanSend", fieldHashtable);
 		}
 		#endregion
 
@@ -586,6 +589,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)InvoiceTypeFieldIndex.IsActive, true); }
 			set	{ SetValue((int)InvoiceTypeFieldIndex.IsActive, value); }
+		}
+
+		/// <summary> The CanSend property of the Entity InvoiceType<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceTypes"."CanSend"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean CanSend
+		{
+			get { return (System.Boolean)GetValue((int)InvoiceTypeFieldIndex.CanSend, true); }
+			set	{ SetValue((int)InvoiceTypeFieldIndex.CanSend, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceEntity' which are related to this entity via a relation of type '1:n'.

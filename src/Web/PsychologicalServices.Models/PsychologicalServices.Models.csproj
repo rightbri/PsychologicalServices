@@ -76,6 +76,9 @@
     <Compile Include="Invoices\IssueInDisputeInvoiceAmount.cs" />
     <Compile Include="Invoices\PsychologistInvoiceGenerator.cs" />
     <Compile Include="Invoices\PsychologistInvoiceCreationParameters.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceSendModel.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceSendParameters.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceSendResult.cs" />
     <Compile Include="Outstanding\IOutstandingRepository.cs" />
     <Compile Include="Outstanding\IOutstandingService.cs" />
     <Compile Include="Outstanding\OutstandingReport.cs" />

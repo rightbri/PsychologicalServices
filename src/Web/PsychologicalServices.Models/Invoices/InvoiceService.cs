@@ -6,6 +6,9 @@ using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Mail;
 
 namespace PsychologicalServices.Models.Invoices
 {
@@ -21,6 +24,7 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IDate _date = null;
         private readonly ILog _log = null;
         private readonly ITimezoneService _timezoneService = null;
+        private readonly IMailService _mailService = null;
 
         public InvoiceService(
             IAppointmentRepository appointmentRepository,
@@ -32,7 +36,8 @@ namespace PsychologicalServices.Models.Invoices
             IPsychometristInvoiceGenerator psychometristInvoiceGenerator,
             IDate date,
             ILog log,
-            ITimezoneService timezoneService
+            ITimezoneService timezoneService,
+            IMailService mailService
         )
         {
             _appointmentRepository = appointmentRepository;
@@ -45,6 +50,7 @@ namespace PsychologicalServices.Models.Invoices
             _date = date;
             _log = log;
             _timezoneService = timezoneService;
+            _mailService = mailService;
         }
         
         public Invoice GetInvoice(int id)
@@ -184,6 +190,151 @@ namespace PsychologicalServices.Models.Invoices
             }
 
             return result;
+        }
+
+        public PsychologistInvoiceSendResult SendPsychologistInvoiceDocument(PsychologistInvoiceSendParameters parameters)
+        {
+            var result = new PsychologistInvoiceSendResult();
+
+            var model = GetPsychologistInvoiceSendModel(parameters.InvoiceDocumentId);
+
+            if (model.IsValid)
+            {
+                var from = model.CompanyEmail;
+                var to = model.InvoicesContactEmail;
+                var subject = "Invoice";
+                var body = $"Please see the attached invoice regarding the services for {model.ClaimantName}.";
+
+                var message = new MailMessage(from, to, subject, body);
+
+                message.CC.Add(model.PsychologistEmail);
+
+                message.Attachments.Add(
+                    new Attachment(new MemoryStream(model.Document.Content), model.Document.FileName)
+                );
+
+                var mailResult = _mailService.Send(message);
+                
+                if (!string.IsNullOrWhiteSpace(mailResult.ErrorDetails))
+                {
+                    result.Errors.Add(mailResult.ErrorDetails);
+                }
+
+                result.Success = mailResult.MailSent && !mailResult.IsError;
+            }
+            else
+            {
+                result.Errors.AddRange(model.Errors);
+            }
+            
+            return result;
+        }
+
+        private PsychologistInvoiceSendModel GetPsychologistInvoiceSendModel(int invoiceDocumentId)
+        {
+            var model = new PsychologistInvoiceSendModel();
+
+            var errors = new List<string>();
+
+            InvoiceDocument document = null;
+            Invoice invoice = null;
+            Appointment appointment = null;
+            Claims.Claimant claimant = null;
+
+            document = _invoiceRepository.GetInvoiceDocument(invoiceDocumentId);
+
+            var hasDocument = null != document;
+
+            if (!hasDocument)
+            {
+                errors.Add("The selected invoice document does not exist");
+            }
+            else
+            {
+                model.Document = document;
+
+                invoice = _invoiceRepository.GetInvoiceForDocument(invoiceDocumentId);
+            }
+
+            var hasInvoice = hasDocument && null != invoice;
+            var hasPsychologistInvoice = hasInvoice && null != invoice.InvoiceType && invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychologist;
+
+            if (!hasPsychologistInvoice)
+            {
+                errors.Add("The selected invoice document is not from a psychologist invoice");
+            }
+
+            var hasAppointments = hasPsychologistInvoice &&
+                (null != invoice.Appointments && invoice.Appointments.Any());
+
+            if (hasAppointments)
+            {
+                appointment = invoice.Appointments.First().Appointment;
+            }
+            else
+            {
+                errors.Add("The selected invoice has no appointment");
+            }
+
+            var hasAssessment = hasAppointments && null != appointment && null != appointment.Assessment;
+
+            var hasReferralSource = hasAssessment && null != appointment.Assessment.ReferralSource;
+
+            var hasInvoiceContactEmail = hasReferralSource &&
+                (null != appointment.Assessment.ReferralSource && !string.IsNullOrWhiteSpace(appointment.Assessment.ReferralSource.InvoicesContactEmail));
+
+            if (hasInvoiceContactEmail)
+            {
+                model.InvoicesContactEmail = appointment.Assessment.ReferralSource.InvoicesContactEmail;
+            }
+            else
+            {
+                errors.Add("The referral source has no invoices contact email address");
+            }
+
+            var hasClaims = hasAssessment && null != appointment.Assessment.Claims && appointment.Assessment.Claims.Any();
+
+            if (!hasClaims)
+            {
+                errors.Add("The related assessment has no claim/claimant");
+            }
+            else
+            {
+                claimant = appointment.Assessment.Claims.First().Claimant;
+            }
+
+            var hasClaimant = null != claimant;
+
+            if (hasClaimant)
+            {
+                model.ClaimantName = $"{claimant.FirstName} {claimant.LastName}";
+            }
+
+            var hasCompanyEmail = hasAssessment && null != appointment.Assessment.Company && !string.IsNullOrWhiteSpace(appointment.Assessment.Company.Email);
+
+            if (hasCompanyEmail)
+            {
+                model.CompanyEmail = appointment.Assessment.Company.Email;
+            }
+            else
+            {
+                errors.Add("The related assessment has no company email");
+            }
+
+            var hasPsychologistEmail = hasAppointments && null != appointment.Psychologist && !string.IsNullOrWhiteSpace(appointment.Psychologist.Email);
+
+            if (hasPsychologistEmail)
+            {
+                model.PsychologistEmail = appointment.Psychologist.Email;
+            }
+            else
+            {
+                errors.Add("The psychologist has no email");
+            }
+
+            model.Errors = errors;
+
+            return model;
         }
     }
 }

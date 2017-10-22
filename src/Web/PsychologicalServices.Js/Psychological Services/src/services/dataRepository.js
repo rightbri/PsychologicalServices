@@ -104,6 +104,12 @@ export class DataRepository {
 	getInvoiceTypes() {
 		return this.getManyBasic('invoicetype', true);
 	}
+
+	sendInvoiceDocument(invoiceDocumentId) {
+		return this.postBasic('psychologistinvoice/send', {
+			'invoiceDocumentId': invoiceDocumentId
+		});
+	}
 	
 	getAppointment(id) {
 		return this.getSingleBasic(id, 'appointment');

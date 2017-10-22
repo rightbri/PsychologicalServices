@@ -71,7 +71,34 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     )
             );
         }
-        
+
+        private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
+            InvoiceSendPath =
+                (invoicePath => invoicePath
+                    .Prefetch<InvoiceStatusEntity>(invoice => invoice.InvoiceStatus)
+                    .Prefetch<InvoiceTypeEntity>(invoice => invoice.InvoiceType)
+                    .Prefetch<UserEntity>(invoice => invoice.PayableTo)
+                    .Prefetch<InvoiceAppointmentEntity>(invoice => invoice.InvoiceAppointments)
+                        .SubPath(invoiceAppointmentPath => invoiceAppointmentPath
+                            .Prefetch<AppointmentEntity>(invoiceAppointment => invoiceAppointment.Appointment)
+                                .SubPath(appointmentPath => appointmentPath
+                                    .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                                        .SubPath(assessmentPath => assessmentPath
+                                            .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                                .SubPath(assessmentClaimPath => assessmentClaimPath
+                                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                                        .SubPath(claimPath => claimPath
+                                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                                        )
+                                                )
+                                            .Prefetch<CompanyEntity>(assessment => assessment.Company)
+                                        )
+                                    .Prefetch<UserEntity>(appointment => appointment.Psychologist)
+                                )
+                        )
+                );
+
         private static readonly Func<IPathEdgeRootParser<InvoiceEntity>, IPathEdgeRootParser<InvoiceEntity>>
             InvoiceListPath =
                 (invoicePath => invoicePath
@@ -92,6 +119,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                             .Prefetch<ClaimantEntity>(claim => claim.Claimant)
                                                         )
                                                 )
+                                            .Prefetch<CompanyEntity>(assessment => assessment.Company)
                                         )
                                 )
                         )
@@ -273,6 +301,20 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 return meta.Invoice
                     .WithPath(InvoiceEditPath)
                     .Where(invoice => invoice.InvoiceId == id)
+                    .SingleOrDefault()
+                    .ToInvoice();
+            }
+        }
+        
+        public Invoice GetInvoiceForDocument(int invoiceDocumentId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return meta.Invoice
+                    .WithPath(InvoiceSendPath)
+                    .Where(invoice => invoice.InvoiceDocuments.Any(invoiceDocument => invoiceDocument.InvoiceDocumentId == invoiceDocumentId))
                     .SingleOrDefault()
                     .ToInvoice();
             }

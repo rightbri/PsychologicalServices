@@ -875,6 +875,8 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
+		///<summary>CanSend. </summary>
+		CanSend,
 		/// <summary></summary>
 		AmountOfFields
 	}

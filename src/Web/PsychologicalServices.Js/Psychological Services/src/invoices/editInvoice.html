@@ -130,6 +130,7 @@
 								<tr>
 									<th>Document</th>
 									<th>Create Date</th>
+									<th if.bind="invoice.invoiceType.canSend">Send</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -139,6 +140,11 @@
 									</td>
 									<td>
 										${document.createDate | dateFormat:config.longDateTimeFormat}
+									</td>
+									<td if.bind="invoice.invoiceType.canSend">
+										<button type="button" class="uk-button uk-button-default" click.delegate="sendInvoiceDocument(document)">
+											Send&nbsp;<i class="fa fa-envelope-o"></i>
+										</button>
 									</td>
 								</tr>
 							</tbody>

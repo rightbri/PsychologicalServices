@@ -1342,6 +1342,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceTypeFieldIndex.IsActive);}
 		}
+		/// <summary>Creates a new InvoiceTypeEntity.CanSend field instance</summary>
+		public static EntityField2 CanSend
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceTypeFieldIndex.CanSend);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity IssueInDisputeEntity</summary>

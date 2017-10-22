@@ -129,6 +129,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     InvoiceTypeId = invoiceType.InvoiceTypeId,
                     Name = invoiceType.Name,
+                    CanSend = invoiceType.CanSend,
                     IsActive = invoiceType.IsActive,
                 }
                 : null;

@@ -513,6 +513,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceTypeEntity", "InvoiceTypeId", typeof(System.Int32), true, false, true, false,  (int)InvoiceTypeFieldIndex.InvoiceTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)InvoiceTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("InvoiceTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)InvoiceTypeFieldIndex.IsActive, 0, 0, 0);
+			base.AddElementFieldInfo("InvoiceTypeEntity", "CanSend", typeof(System.Boolean), false, false, false, false,  (int)InvoiceTypeFieldIndex.CanSend, 0, 0, 0);
 		}
 		/// <summary>Inits IssueInDisputeEntity's FieldInfo objects</summary>
 		private void InitIssueInDisputeEntityInfos()

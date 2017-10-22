@@ -135,4 +135,18 @@ export class EditInvoice {
 	getInvoiceDocument(invoiceDocument) {
 		this.dataRepository.getInvoiceDocument(invoiceDocument);
 	}
+
+	sendInvoiceDocument(invoiceDocument) {
+		this.dataRepository.sendInvoiceDocument(invoiceDocument.invoiceDocumentId)
+			.then(result => {
+				if (result.success) {
+					this.notifier.info('Invoice sent successfully');
+				}
+				else {
+					this.notifier.error(
+						result.errors.reduce((accumulator, value) => "-" + value)
+					);
+				}
+			});
+	}
 }

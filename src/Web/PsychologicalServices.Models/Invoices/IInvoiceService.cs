@@ -1,5 +1,4 @@
-﻿using PsychologicalServices.Models.Appointments;
-using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Models.Common;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
@@ -13,6 +12,8 @@ namespace PsychologicalServices.Models.Invoices
         Invoice CreatePsychometristInvoice(PsychometristInvoiceCreationParameters parameters);
 
         InvoiceDocument GetInvoiceDocument(int invoiceDocumentId);
+
+        PsychologistInvoiceSendResult SendPsychologistInvoiceDocument(PsychologistInvoiceSendParameters parameters);
 
         IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
 

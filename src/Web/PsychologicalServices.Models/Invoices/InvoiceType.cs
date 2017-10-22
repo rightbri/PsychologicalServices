@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public string Name { get; set; }
 
+        public bool CanSend { get; set; }
+
         public bool IsActive { get; set; }
     }
 }
