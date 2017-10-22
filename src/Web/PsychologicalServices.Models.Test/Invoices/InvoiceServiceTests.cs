@@ -80,7 +80,12 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoiceService = GetService();
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("document")));
@@ -197,8 +202,13 @@ namespace PsychologicalServices.Models.Test.Invoices
 
 
                 });
-            
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("psychologist")));
@@ -308,7 +318,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Returns(invoice);
                 });
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("appointment")));
@@ -425,7 +440,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Returns(invoice);
                 });
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("claim")));
@@ -553,7 +573,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Returns(invoice);
                 });
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("email")));
@@ -682,7 +707,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Returns(invoice);
                 });
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("company")));
@@ -813,7 +843,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Returns(invoice);
                 });
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("psychologist")));
@@ -959,7 +994,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                     mailServiceMockToVerify = mailServiceMock;
                 });
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(true, sendResult.Success);
             Assert.IsFalse(sendResult.Errors.Any());
@@ -1113,7 +1153,12 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Returns(mailResult);
                 });
 
-            var sendResult = invoiceService.SendPsychologistInvoiceDocument(invoiceDocumentId);
+            var parameters = new PsychologistInvoiceSendParameters
+            {
+                InvoiceDocumentId = invoiceDocumentId,
+            };
+
+            var sendResult = invoiceService.SendPsychologistInvoiceDocument(parameters);
 
             Assert.AreEqual(false, sendResult.Success);
             Assert.IsTrue(sendResult.Errors.Any(error => error.Contains("Email")));

@@ -450,6 +450,15 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 appointmentEntity.AppointmentTime = appointment.AppointmentTime;
                 appointmentEntity.AssessmentId = appointment.Assessment.AssessmentId;
 
+                if (null == appointment.RoomRentalBillableAmount)
+                {
+                    appointmentEntity.SetNewFieldValue((int)AppointmentFieldIndex.RoomRentalBillableAmount, null);
+                }
+                else
+                {
+                    appointmentEntity.RoomRentalBillableAmount = appointment.RoomRentalBillableAmount;
+                }
+
                 if (!isNew)
                 {
                     var attributesToRemove = appointmentEntity.AppointmentAttributes

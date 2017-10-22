@@ -151,7 +151,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AppointmentEntity's mappings</summary>
 		private void InitAppointmentEntityMappings()
 		{
-			base.AddElementMapping( "AppointmentEntity", "PsychologicalServices", @"dbo", "Appointments", 11 );
+			base.AddElementMapping( "AppointmentEntity", "PsychologicalServices", @"dbo", "Appointments", 12 );
 			base.AddElementFieldMapping( "AppointmentEntity", "AppointmentId", "AppointmentId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AppointmentEntity", "LocationId", "LocationId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "AppointmentEntity", "AppointmentTime", "AppointmentTime", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
@@ -163,6 +163,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AppointmentEntity", "CreateUserId", "CreateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
 			base.AddElementFieldMapping( "AppointmentEntity", "UpdateDate", "UpdateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 9 );
 			base.AddElementFieldMapping( "AppointmentEntity", "UpdateUserId", "UpdateUserId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 10 );
+			base.AddElementFieldMapping( "AppointmentEntity", "RoomRentalBillableAmount", "RoomRentalBillableAmount", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 11 );
 		}
 		/// <summary>Inits AppointmentAttributeEntity's mappings</summary>
 		private void InitAppointmentAttributeEntityMappings()

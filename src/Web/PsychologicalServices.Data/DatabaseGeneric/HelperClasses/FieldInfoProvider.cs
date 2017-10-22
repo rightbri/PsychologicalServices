@@ -160,6 +160,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AppointmentEntity", "CreateUserId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.CreateUserId, 0, 0, 10);
 			base.AddElementFieldInfo("AppointmentEntity", "UpdateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)AppointmentFieldIndex.UpdateDate, 0, 0, 0);
 			base.AddElementFieldInfo("AppointmentEntity", "UpdateUserId", typeof(System.Int32), false, true, false, false,  (int)AppointmentFieldIndex.UpdateUserId, 0, 0, 10);
+			base.AddElementFieldInfo("AppointmentEntity", "RoomRentalBillableAmount", typeof(Nullable<System.Int32>), false, false, false, true,  (int)AppointmentFieldIndex.RoomRentalBillableAmount, 0, 0, 10);
 		}
 		/// <summary>Inits AppointmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAppointmentAttributeEntityInfos()

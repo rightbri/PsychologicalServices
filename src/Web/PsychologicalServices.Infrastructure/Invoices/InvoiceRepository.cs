@@ -577,6 +577,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     Amount = line.Amount,
                                     Description = line.Description,
                                     IsCustom = line.IsCustom,
+                                    ApplyInvoiceRate = line.ApplyInvoiceRate,
                                 })
                             );
 

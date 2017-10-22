@@ -243,6 +243,19 @@ namespace PsychologicalServices.Models.Invoices
                     );
                 }
             }
+
+            //room rental fee
+            if (appointment.RoomRentalBillableAmount.HasValue &&
+                appointment.RoomRentalBillableAmount.Value > 0)
+            {
+                lines.Add(
+                    new InvoiceLine
+                    {
+                        Description = $"Room Rental Fee",
+                        Amount = appointment.RoomRentalBillableAmount.Value,
+                    }
+                );
+            }
             
             return lines;
         }

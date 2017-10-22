@@ -847,6 +847,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("UpdateUserId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("RoomRentalBillableAmount", fieldHashtable);
 		}
 		#endregion
 
@@ -1367,6 +1370,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)AppointmentFieldIndex.UpdateUserId, true); }
 			set	{ SetValue((int)AppointmentFieldIndex.UpdateUserId, value); }
+		}
+
+		/// <summary> The RoomRentalBillableAmount property of the Entity Appointment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Appointments"."RoomRentalBillableAmount"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> RoomRentalBillableAmount
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)AppointmentFieldIndex.RoomRentalBillableAmount, false); }
+			set	{ SetValue((int)AppointmentFieldIndex.RoomRentalBillableAmount, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentAttributeEntity' which are related to this entity via a relation of type '1:n'.

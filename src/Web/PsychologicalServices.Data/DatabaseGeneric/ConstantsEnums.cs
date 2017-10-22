@@ -93,6 +93,8 @@ namespace PsychologicalServices.Data
 		UpdateDate,
 		///<summary>UpdateUserId. </summary>
 		UpdateUserId,
+		///<summary>RoomRentalBillableAmount. </summary>
+		RoomRentalBillableAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}

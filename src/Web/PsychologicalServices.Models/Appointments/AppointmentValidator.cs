@@ -139,6 +139,14 @@ namespace PsychologicalServices.Models.Appointments
                     new ValidationError { PropertyName = "AppointmentTime", Message = GetValidationMessage(item, "Please select an appointment time") }
                 );
             }
+
+            if (item.RoomRentalBillableAmount.HasValue &&
+                item.RoomRentalBillableAmount.Value < 0)
+            {
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "RoomRentalBillableAmount", Message = GetValidationMessage(item, "Room rental billable amount must be greater than or equal to zero") }
+                );
+            }
             
             result.IsValid = !result.ValidationErrors.Any();
 

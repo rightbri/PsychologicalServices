@@ -726,6 +726,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CreateUser = appointment.CreateUser.ToUser(),
                     UpdateDate = appointment.UpdateDate,
                     UpdateUser = appointment.UpdateUser.ToUser(),
+                    RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                     IsCompletion = appointment.IsCompletion(),
                 }
                 : null;
@@ -748,6 +749,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     CreateUser = appointment.CreateUser.ToUser(),
                     UpdateDate = appointment.UpdateDate,
                     UpdateUser = appointment.UpdateUser.ToUser(),
+                    RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                     IsCompletion = appointment.IsCompletion(),
                 }
                 : null;

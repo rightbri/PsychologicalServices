@@ -144,7 +144,7 @@ export class EditInvoice {
 				}
 				else {
 					this.notifier.error(
-						result.errors.reduce((accumulator, value) => "-" + value)
+						result.errors.reduce((accumulator, value) => "-" + value + '\n')
 					);
 				}
 			});

@@ -1,6 +1,7 @@
 <template>
 	<require from="common/date-mask"></require>
 	<require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/money"></require>
 	<require from="resources/value-converters/attribute-types"></require>
 	<require from="resources/elements/edit-panel"></require>
 	
@@ -94,7 +95,14 @@
 						</table>
 					</div>
 				</div>
-				
+
+				<div class="uk-width-1-1">
+					<label class="uk-form-label" for="roomRentalBillableAmount">Room Rental Billable Amount</label>
+					<div class="uk-form-controls">
+						<input type="number" class="uk-input uk-form-width-small" value.bind="model.appointment.roomRentalBillableAmount | money:'0'" />
+					</div>
+				</div>
+
 				<div class="uk-width-1-1" if.bind="model.appointment.createUser || model.appointment.updateUser">
 					<p class="uk-text-meta" if.bind="model.appointment.createUser">Created by ${model.appointment.createUser.firstName} ${model.appointment.createUser.lastName} at ${model.appointment.createDate | dateFormat:config.longDateTimeFormat}</p>
 					<p class="uk-text-meta" if.bind="model.appointment.updateUser">Updated by ${model.appointment.updateUser.firstName} ${model.appointment.updateUser.lastName} at ${model.appointment.updateDate | dateFormat:config.longDateTimeFormat}</p>

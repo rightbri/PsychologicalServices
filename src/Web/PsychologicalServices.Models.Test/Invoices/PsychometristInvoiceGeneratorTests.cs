@@ -42,6 +42,7 @@ namespace PsychologicalServices.Models.Test.Invoices
         public void CreateInvoiceThrowsExceptionWhenInvoiceAlreadyExists()
         {
             var payableToUserId = 1;
+            var companyId = 2;
             var invoiceDate = new DateTimeOffset(2017, 09, 30, 11, 59, 59, TimeSpan.FromHours(-4));
 
             var psychometristInvoiceGenerator = GetService(
@@ -50,7 +51,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                     invoiceRepositoryMock
                         .Setup(invoiceRepository =>
                             invoiceRepository.GetInvoices(
-                                It.Is<InvoiceSearchCriteria>(c => c.InvoiceTypeId == InvoiceType.Psychometrist && c.PayableToId == payableToUserId && c.InvoiceDate == invoiceDate)
+                                It.Is<InvoiceSearchCriteria>(c => c.InvoiceTypeId == InvoiceType.Psychometrist && c.PayableToId == payableToUserId && c.InvoiceDate == invoiceDate && c.CompanyId == companyId)
                             )
                         )
                         .Returns(() => new[]
@@ -59,7 +60,15 @@ namespace PsychologicalServices.Models.Test.Invoices
                         });
                 });
 
-            psychometristInvoiceGenerator.CreateInvoice(new Users.User { UserId = payableToUserId }, invoiceDate);
+            psychometristInvoiceGenerator.CreateInvoice(
+                new Users.User
+                {
+                    UserId = payableToUserId,
+                    Company = new Companies.Company
+                    {
+                        CompanyId = companyId,
+                    },
+                }, invoiceDate);
         }
 
         [TestMethod]

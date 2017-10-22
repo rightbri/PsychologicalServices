@@ -147,6 +147,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.UpdateUserId);}
 		}
+		/// <summary>Creates a new AppointmentEntity.RoomRentalBillableAmount field instance</summary>
+		public static EntityField2 RoomRentalBillableAmount
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentFieldIndex.RoomRentalBillableAmount);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AppointmentAttributeEntity</summary>

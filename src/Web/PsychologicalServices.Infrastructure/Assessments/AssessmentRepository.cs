@@ -491,7 +491,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                         appointmentAttribute.AttributeId == attributeValue.Attribute.AttributeId &&
                                         appointmentAttribute.Value != attributeValue.Value
                                     )
-                                )
+                                ) ||
+                                appointmentEntity.RoomRentalBillableAmount != appointment.RoomRentalBillableAmount
                             )
                         )
                     )
@@ -518,6 +519,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
                     appointmentEntity.UpdateDate = _date.UtcNow;
                     appointmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
+
+                    if (null == appointment.RoomRentalBillableAmount)
+                    {
+                        appointmentEntity.SetNewFieldValue((int)AppointmentFieldIndex.RoomRentalBillableAmount, null);
+                    }
+                    else
+                    {
+                        appointmentEntity.RoomRentalBillableAmount = appointment.RoomRentalBillableAmount;
+                    }
 
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
@@ -583,6 +593,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         CreateUserId = assessment.CreateUser.UserId,
                         UpdateDate = _date.UtcNow,
                         UpdateUserId = assessment.UpdateUser.UserId,
+                        RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                     };
 
                     appointmentEntity.AppointmentAttributes.AddRange(
