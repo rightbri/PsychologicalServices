@@ -193,8 +193,8 @@ namespace PsychologicalServices.Models.Test.Common.Utility
         public void EndOfDayReturnsCorrectDayForUtcDate3()
         {
             var year = 2017;
-            var month = 9;
-            var day = 18;
+            var month = 11;
+            var day = 4;
             var offset = -4;
             var timezone = "Eastern Standard Time";
 
@@ -203,6 +203,43 @@ namespace PsychologicalServices.Models.Test.Common.Utility
             var expected = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset)).AddDays(1).AddSeconds(-1);
 
             var actual = utcDate.EndOfDay(timezone);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void EndOfDayReturnsCorrectDayForUtcDate4()
+        {
+            var year = 2017;
+            var month = 11;
+            var day = 5;
+            var offset = -5;
+            var timezone = "Eastern Standard Time";
+
+            var utcDate = new DateTimeOffset(year, month, day, 12, 0, 0, TimeSpan.Zero);
+
+            var expected = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset)).AddDays(1).AddSeconds(-1);
+
+            var actual = utcDate.EndOfDay(timezone);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestMethod]
+        public void StartOfDayReturnsCorrectDayWhen36HoursIsAddedToPreDstDate()
+        {
+            var year = 2017;
+            var month = 11;
+            var day = 5;
+            var offset = -4;
+            var timezone = "Eastern Standard Time";
+
+            var startDate = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.FromHours(offset));
+
+            var expected = new DateTimeOffset(year, month, day + 1, 0, 0, 0, TimeSpan.FromHours(offset - 1));
+
+            var actual = startDate.AddDays(1).AddHours(12).StartOfDay(timezone);
 
             Assert.AreEqual(expected, actual);
         }

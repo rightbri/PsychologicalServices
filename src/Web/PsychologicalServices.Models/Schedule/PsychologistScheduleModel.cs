@@ -71,7 +71,8 @@ namespace PsychologicalServices.Models.Schedule
                     {
                         _days.Add(day);
 
-                        day = day.AddDays(1);
+                        //day = day.AddDays(1);
+                        day = day.AddHours(36).StartOfDay(DisplayTimezoneId);
                     }
                 }
 

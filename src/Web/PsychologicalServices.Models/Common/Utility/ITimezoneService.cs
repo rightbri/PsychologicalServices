@@ -10,6 +10,8 @@ namespace PsychologicalServices.Models.Common.Utility
 
         DateTime ConvertFromUtc(DateTime utcDateTime, TimeZoneInfo timeZoneInfo);
 
+        DateTimeOffset ConvertTimeBySystemTimeZoneId(DateTimeOffset dateTimeOffset, string timezoneId);
+
         TimeZoneInfo GetTimeZoneInfo(string timezone);
     }
 }
