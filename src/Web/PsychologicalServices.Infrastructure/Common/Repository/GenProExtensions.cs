@@ -623,6 +623,22 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
+        public static AssessmentSearchResult ToAssessmentSearchResult(this AppointmentEntity appointment)
+        {
+            return null != appointment
+                ? new AssessmentSearchResult
+                {
+                    AssessmentId = appointment.Assessment.AssessmentId,
+                    AssessmentType = appointment.Assessment.AssessmentType.Name,
+                    ReferralSource = appointment.Assessment.ReferralSource.Name,
+                    Claimant = appointment.Assessment.AssessmentClaims.Any()
+                        ? appointment.Assessment.AssessmentClaims.Select(assessmentClaim => $"{assessmentClaim.Claim.Claimant.FirstName} {assessmentClaim.Claim.Claimant.LastName}").First()
+                        : "",
+                    AppointmentTime = appointment.AppointmentTime,
+                }
+                : null;
+        }
+
         public static Assessment ToAssessment(this AssessmentEntity assessment)
         {
             return null != assessment

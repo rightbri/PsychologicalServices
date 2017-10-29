@@ -42,7 +42,7 @@ namespace PsychologicalServices.Web.Controllers
 
         [Route("search")]
         [HttpPost]
-        [ResponseType(typeof(IEnumerable<Assessment>))]
+        [ResponseType(typeof(IEnumerable<AssessmentSearchResult>))]
         public IHttpActionResult Search(AssessmentSearchCriteria criteria)
         {
             var assessments = _assessmentService.SearchAssessments(criteria);

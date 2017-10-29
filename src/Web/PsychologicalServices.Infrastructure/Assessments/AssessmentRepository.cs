@@ -141,6 +141,24 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<UserEntity>(assessment => assessment.UpdateUser)
                 );
 
+        private static readonly Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>>
+            AssessmentSearchPath =
+                (appointmentPath => appointmentPath
+                    .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                        .SubPath(assessmentPath => assessmentPath
+                            .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
+                            .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                                .SubPath(assessmentClaimPath => assessmentClaimPath
+                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                                        .SubPath(claimPath => claimPath
+                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                        )
+                                )
+
+                        )
+                );
+
         private static readonly Func<IPathEdgeRootParser<AssessmentTypeEntity>, IPathEdgeRootParser<AssessmentTypeEntity>>
             AssessmentTypePath = (assessmentTypePath => assessmentTypePath
                 .Prefetch<AssessmentTypeReportTypeEntity>(assessmentType => assessmentType.AssessmentTypeReportTypes)
@@ -210,97 +228,55 @@ namespace PsychologicalServices.Infrastructure.Assessments
             }
         }
 
-        public IEnumerable<Assessment> GetAssessments(AssessmentSearchCriteria criteria)
+        public IEnumerable<AssessmentSearchResult> SearchAssessments(AssessmentSearchCriteria criteria)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
                 var meta = new LinqMetaData(adapter);
 
-                var assessments = meta.Assessment
-                    .WithPath(AssessmentPath);
+                var appointments = meta.Appointment
+                    .WithPath(AssessmentSearchPath);
 
                 if (null != criteria)
                 {
+                    appointments = appointments.Where(appointment => appointment.Assessment.CompanyId == criteria.CompanyId);
+
                     if (criteria.AssessmentId.HasValue)
                     {
-                        assessments = assessments.Where(assessment => assessment.AssessmentId == criteria.AssessmentId.Value);
-                    }
-
-                    if (criteria.AssesmentTypeId.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.AssessmentTypeId == criteria.AssesmentTypeId.Value);
-                    }
-
-                    if (criteria.ReferralTypeId.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.ReferralTypeId == criteria.ReferralTypeId.Value);
+                        appointments = appointments.Where(appointment => appointment.AssessmentId == criteria.AssessmentId.Value);
                     }
 
                     if (criteria.ReferralSourceId.HasValue)
                     {
-                        assessments = assessments.Where(assessment => assessment.ReferralSourceId == criteria.ReferralSourceId.Value);
-                    }
-
-                    if (criteria.ReportStatusId.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.ReportStatusId == criteria.ReportStatusId.Value);
+                        appointments = appointments.Where(appointment => appointment.Assessment.ReferralSourceId == criteria.ReferralSourceId.Value);
                     }
 
                     if (criteria.ClaimantId.HasValue)
                     {
-                        assessments = assessments.Where(assessment =>
-                            assessment.AssessmentClaims.Any(assessmentClaim =>
+                        appointments = appointments.Where(appointment =>
+                            appointment.Assessment.AssessmentClaims.Any(assessmentClaim =>
                                 assessmentClaim.Claim.ClaimantId == criteria.ClaimantId
                             )
                         );
                     }
 
-                    if (criteria.DocListWriterId.HasValue)
+                    if (criteria.AppointmentTimeStart.HasValue)
                     {
-                        assessments = assessments.Where(assessment => assessment.DocListWriterId == criteria.DocListWriterId.Value);
+                        appointments = appointments.Where(appointment => appointment.AppointmentTime >= criteria.AppointmentTimeStart);
                     }
 
-                    if (criteria.NotesWriterId.HasValue)
+                    if (criteria.AppointmentTimeEnd.HasValue)
                     {
-                        assessments = assessments.Where(assessment => assessment.NotesWriterId == criteria.NotesWriterId.Value);
-                    }
-
-                    if (criteria.MedicalFileReceivedDateStart.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.MedicalFileReceivedDate >= criteria.MedicalFileReceivedDateStart.Value);
-                    }
-
-                    if (criteria.MedicalFileReceivedDateEnd.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.MedicalFileReceivedDate <= criteria.MedicalFileReceivedDateEnd.Value);
-                    }
-
-                    if (criteria.FileSizeMin.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.FileSize >= criteria.FileSizeMin.Value);
-                    }
-
-                    if (criteria.FileSizeMax.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.FileSize <= criteria.FileSizeMax.Value);
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(criteria.ReferralSourceContactEmail))
-                    {
-                        assessments = assessments.Where(assessment => assessment.ReferralSourceContactEmail.Contains(criteria.ReferralSourceContactEmail));
-                    }
-
-                    if (criteria.CompanyId.HasValue)
-                    {
-                        assessments = assessments.Where(assessment => assessment.CompanyId == criteria.CompanyId.Value);
+                        appointments = appointments.Where(appointment => appointment.AppointmentTime >= criteria.AppointmentTimeEnd);
                     }
                 }
 
-                return Execute<AssessmentEntity>(
+                return Execute<AppointmentEntity>(
                         (ILLBLGenProQuery)
-                        assessments
+                        appointments
+                            .OrderBy(appointment => appointment.AppointmentTime)
                     )
-                    .Select(assessment => assessment.ToAssessment())
+                    .Select(appointment => appointment.ToAssessmentSearchResult())
                     .ToList();
             }
         }

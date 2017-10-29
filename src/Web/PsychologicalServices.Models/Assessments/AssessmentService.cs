@@ -48,9 +48,9 @@ namespace PsychologicalServices.Models.Assessments
             return assessmentType;
         }
 
-        public IEnumerable<Assessment> SearchAssessments(AssessmentSearchCriteria criteria)
+        public IEnumerable<AssessmentSearchResult> SearchAssessments(AssessmentSearchCriteria criteria)
         {
-            var assessments = _assessmentRepository.GetAssessments(criteria);
+            var assessments = _assessmentRepository.SearchAssessments(criteria);
 
             return assessments;
         }

@@ -68,6 +68,7 @@
     <Compile Include="Analysis\IAnalysisService.cs" />
     <Compile Include="Analysis\CompletionData.cs" />
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
+    <Compile Include="Assessments\AssessmentSearchResult.cs" />
     <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />

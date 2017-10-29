@@ -49,8 +49,8 @@ export class Assessments {
 					this.notifier.error(data.errorDetails);
 				}
 				else {
-					this.assessments.splice(this.assessments.indexOf(assessment), 1);
-					
+					this.assessments = this.assessments.filter(value => value.assessmentId !== assessment.assessmentId);
+
 					this.notifier.info('Deleted');
 				}
 			});

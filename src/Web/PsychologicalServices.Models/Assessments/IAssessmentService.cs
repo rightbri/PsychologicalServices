@@ -12,7 +12,7 @@ namespace PsychologicalServices.Models.Assessments
 
         AssessmentType GetAssessmentType(int id);
 
-        IEnumerable<Assessment> SearchAssessments(AssessmentSearchCriteria criteria);
+        IEnumerable<AssessmentSearchResult> SearchAssessments(AssessmentSearchCriteria criteria);
 
         IEnumerable<AssessmentType> GetAssessmentTypes(bool? isActive = true);
 
