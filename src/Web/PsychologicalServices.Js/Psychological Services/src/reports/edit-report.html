@@ -23,9 +23,12 @@
 					<label class="uk-form-label" if.bind="!(model.issuesInDispute && model.issuesInDispute.length > 0)">
 						N/A
 					</label>
-					<label class="uk-form-label" repeat.for="issueInDispute of model.issuesInDispute">
+					<template repeat.for="issueInDispute of model.issuesInDispute">
+					<label>
 						<input type="checkbox" class="uk-checkbox" model.bind="issueInDispute" checked.bind="model.report.issuesInDispute" matcher.bind="issueInDisputeMatcher" />&nbsp;${issueInDispute.name}
 					</label>
+					<br if.bind="!$last">
+					</template>
 				</div>
 			</div>
 			
