@@ -90,7 +90,7 @@
 											<input type="text" class="uk-input" value.bind="line.description" disabled.bind="!invoice.invoiceStatus.canEdit" />
 										</td>
 										<td class="uk-table-shrink">
-											<input type="number" class="uk-input uk-form-width-small" value.bind="line.amount | money:'0'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
+											<input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="line.amount | money:'0.[00]'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
 										</td>
 										<td class="uk-table-shrink">
 											<a href="#" click.delegate="removeLine(invoiceAppointment, line)" if.bind="invoice.invoiceStatus.canEdit">
