@@ -103,23 +103,10 @@ export class EditInvoice {
 		
 		this.invoice.appointments.forEach(invoiceAppointment =>
 		{
-			let appointmentSubtotal = 0;
-			
-			appointmentSubtotal =
+			this.subtotal += 
 				invoiceAppointment.lines
-					.filter(line => !line.applyInvoiceRate)
 					.map(line => line.amount)
-					.reduce((accumulator, value) => accumulator + value, 0) +
-				invoiceAppointment.lines
-					.filter(line => line.applyInvoiceRate)
-					.map(line => line.amount)
-					.reduce((accumulator, value) => accumulator + (value * this.invoice.invoiceRate), 0);
-
-			invoiceAppointment.showStatusLine = this.invoice.invoiceRate !== 1.0;
-			
-			invoiceAppointment.subtotal = appointmentSubtotal;
-			
-			this.subtotal += appointmentSubtotal;
+					.reduce((accumulator, value) => accumulator + value, 0);
 		}, this);
 
         this.invoice.total = Math.round(this.subtotal * (1 + this.invoice.taxRate));

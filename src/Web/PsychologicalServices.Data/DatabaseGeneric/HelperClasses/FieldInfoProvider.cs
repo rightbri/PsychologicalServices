@@ -482,6 +482,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceLineEntity", "Amount", typeof(System.Int32), false, false, false, false,  (int)InvoiceLineFieldIndex.Amount, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceLineEntity", "IsCustom", typeof(System.Boolean), false, false, false, false,  (int)InvoiceLineFieldIndex.IsCustom, 0, 0, 0);
 			base.AddElementFieldInfo("InvoiceLineEntity", "ApplyInvoiceRate", typeof(System.Boolean), false, false, false, false,  (int)InvoiceLineFieldIndex.ApplyInvoiceRate, 0, 0, 0);
+			base.AddElementFieldInfo("InvoiceLineEntity", "OriginalAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceLineFieldIndex.OriginalAmount, 0, 0, 10);
 		}
 		/// <summary>Inits InvoiceStatusEntity's FieldInfo objects</summary>
 		private void InitInvoiceStatusEntityInfos()

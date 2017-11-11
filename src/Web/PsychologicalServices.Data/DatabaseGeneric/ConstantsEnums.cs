@@ -805,6 +805,8 @@ namespace PsychologicalServices.Data
 		IsCustom,
 		///<summary>ApplyInvoiceRate. </summary>
 		ApplyInvoiceRate,
+		///<summary>OriginalAmount. </summary>
+		OriginalAmount,
 		/// <summary></summary>
 		AmountOfFields
 	}

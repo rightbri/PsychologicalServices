@@ -190,6 +190,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 Description = invoiceLine.Description,
                 IsCustom = invoiceLine.IsCustom,
                 ApplyInvoiceRate = invoiceLine.ApplyInvoiceRate,
+                OriginalAmount = invoiceLine.OriginalAmount,
             };
         }
 
@@ -293,6 +294,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Amount = invoiceLine.Amount,
                     IsCustom = invoiceLine.IsCustom,
                     ApplyInvoiceRate = invoiceLine.ApplyInvoiceRate,
+                    OriginalAmount = invoiceLine.OriginalAmount,
                 }
                 : null;
         }

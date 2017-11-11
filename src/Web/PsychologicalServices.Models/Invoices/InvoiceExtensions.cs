@@ -53,5 +53,10 @@ namespace PsychologicalServices.Models.Invoices
                 ? baseDescription
                 : $"{baseDescription} - {appointment.AppointmentStatus.Name}";
         }
+
+        public static bool IsDiscountedRate(this PsychologistInvoiceCalculationData data)
+        {
+            return data.InvoiceRate < 1.0m;
+        }
     }
 }

@@ -385,7 +385,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                     {
                         ReferralSourceId = referralSourceId,
                     },
-                    Claims = Enumerable.Empty<Claims.Claim>(),
+                    Claims = Enumerable.Empty<Models.Claims.Claim>(),
                     Company = new Companies.Company
                     {
                         CompanyId = companyId,
@@ -510,9 +510,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                     },
                     Claims = new[]
                     {
-                        new Claims.Claim
+                        new Models.Claims.Claim
                         {
-                            Claimant = new Claims.Claimant
+                            Claimant = new Models.Claims.Claimant
                             {
                                 FirstName = "First",
                                 LastName = "Last",
@@ -644,9 +644,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                     },
                     Claims = new[]
                     {
-                        new Claims.Claim
+                        new Models.Claims.Claim
                         {
-                            Claimant = new Claims.Claimant
+                            Claimant = new Models.Claims.Claimant
                             {
                                 FirstName = "First",
                                 LastName = "Last",
@@ -779,9 +779,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                     },
                     Claims = new[]
                     {
-                        new Claims.Claim
+                        new Models.Claims.Claim
                         {
-                            Claimant = new Claims.Claimant
+                            Claimant = new Models.Claims.Claimant
                             {
                                 FirstName = "First",
                                 LastName = "Last",
@@ -918,9 +918,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                     },
                     Claims = new[]
                     {
-                        new Claims.Claim
+                        new Models.Claims.Claim
                         {
-                            Claimant = new Claims.Claimant
+                            Claimant = new Models.Claims.Claimant
                             {
                                 FirstName = claimantFirstName,
                                 LastName = claimantLastName,
@@ -1081,9 +1081,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                     },
                     Claims = new[]
                     {
-                        new Claims.Claim
+                        new Models.Claims.Claim
                         {
-                            Claimant = new Claims.Claimant
+                            Claimant = new Models.Claims.Claimant
                             {
                                 FirstName = claimantFirstName,
                                 LastName = claimantLastName,
