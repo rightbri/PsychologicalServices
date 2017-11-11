@@ -1,6 +1,7 @@
 ﻿using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PsychologicalServices.Models.Invoices
 {
@@ -35,6 +36,19 @@ namespace PsychologicalServices.Models.Invoices
         public bool IsNew()
         {
             return InvoiceId == 0;
+        }
+
+        public int Subtotal
+        {
+            get
+            {
+                return null != Appointments
+                    ? Appointments
+                        .SelectMany(invoiceAppointment => invoiceAppointment.Lines)
+                        .Select(line => line.Amount)
+                        .Sum()
+                    : 0;
+            }
         }
     }
 }

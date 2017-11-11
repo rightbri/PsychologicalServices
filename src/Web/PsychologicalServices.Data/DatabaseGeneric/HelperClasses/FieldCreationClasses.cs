@@ -1247,6 +1247,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.ApplyInvoiceRate);}
 		}
+		/// <summary>Creates a new InvoiceLineEntity.OriginalAmount field instance</summary>
+		public static EntityField2 OriginalAmount
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.OriginalAmount);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity InvoiceStatusEntity</summary>

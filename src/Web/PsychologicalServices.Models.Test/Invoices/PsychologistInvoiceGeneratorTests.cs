@@ -132,17 +132,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.0m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -284,17 +284,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.0m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -383,7 +383,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                         new Reports.Report
                         {
                             IsAdditional = false,
-                            IssuesInDispute = Enumerable.Empty<Claims.IssueInDispute>(),
+                            IssuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>(),
                         }
                     },
                     Company = new Companies.Company
@@ -441,17 +441,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.0m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -593,17 +593,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.0m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -745,17 +745,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.3m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -897,17 +897,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.3m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -1049,17 +1049,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.3m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -1209,17 +1209,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.3m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -1369,17 +1369,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.3m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -1524,18 +1524,18 @@ namespace PsychologicalServices.Models.Test.Invoices
             var catastrophicFee = 35000;
             var issuesInDispute = new[]
             {
-                new Claims.IssueInDispute { IssueInDisputeId = catastrophicId, },
+                new Models.Claims.IssueInDispute { IssueInDisputeId = catastrophicId, },
             };
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = catastrophicId, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = catastrophicId, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -1677,17 +1677,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.3m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -1835,17 +1835,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var roomRentalFee = 40000;
             var invoiceRate = 1.3m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -1989,17 +1989,17 @@ namespace PsychologicalServices.Models.Test.Invoices
             var extraReportFee = 50000;
             var invoiceRate = 1.0m;
             var catastrophicFee = 35000;
-            var issuesInDispute = Enumerable.Empty<Claims.IssueInDispute>();
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
             var issueInDisputeInvoiceAmounts = new[]
             {
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
-                new IssueInDisputeInvoiceAmount { IssueInDispute = new Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
             };
 
             var psychologistInvoiceGenerator = GetService(
@@ -2104,6 +2104,5 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             Assert.AreEqual(expected, actual);
         }
-
     }
 }

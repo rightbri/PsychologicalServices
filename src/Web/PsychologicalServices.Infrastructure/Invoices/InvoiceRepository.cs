@@ -551,9 +551,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                             invoiceLine.InvoiceLineId == line.InvoiceLineId &&
                                             (
                                                 invoiceLine.Amount != line.Amount ||
-                                                invoiceLine.Description != line.Description ||
-                                                invoiceLine.ApplyInvoiceRate != line.ApplyInvoiceRate ||
-                                                invoiceLine.IsCustom != line.IsCustom
+                                                invoiceLine.Description != line.Description
                                             )
                                         )
                                     );
@@ -565,8 +563,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     {
                                         lineEntity.Amount = line.Amount;
                                         lineEntity.Description = line.Description;
-                                        lineEntity.ApplyInvoiceRate = line.ApplyInvoiceRate;
-                                        lineEntity.IsCustom = line.IsCustom;
                                     }
                                 }
                             }
@@ -578,6 +574,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     Description = line.Description,
                                     IsCustom = line.IsCustom,
                                     ApplyInvoiceRate = line.ApplyInvoiceRate,
+                                    OriginalAmount = line.IsCustom ? line.Amount : line.OriginalAmount,
                                 })
                             );
 
@@ -601,6 +598,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             Description = line.Description,
                             ApplyInvoiceRate = line.ApplyInvoiceRate,
                             IsCustom = line.IsCustom,
+                            OriginalAmount = line.IsCustom ? line.Amount : line.OriginalAmount,
                         })
                     );
 

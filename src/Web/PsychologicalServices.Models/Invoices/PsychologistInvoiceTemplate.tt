@@ -93,6 +93,9 @@
 			border-width: 3px;
 		}
 		
+		.separator-top {
+			border-top-width: 3px;
+		}
 		.total td {
 			border-width: 3px;
 		}
@@ -100,10 +103,6 @@
 		tr:first-child td,
 		tr:last-child td {
 			border-width: 3px;
-		}
-		
-		.invoice-line-adjust {
-			text-decoration: line-through;
 		}
 		
 		/* Sticky footer styles
@@ -163,7 +162,7 @@
 		Invoice Number:&nbsp;<#= Model.Identifier #>
 	</p>
 	<p class="invoice-data">
-		Date of Invoice:&nbsp;<#= string.Format("{0:MMMM d, yyyy}", Model.InvoiceDate) #>
+		Date of Invoice:&nbsp;<#= $"{Model.InvoiceDate:MMMM d, yyyy}" #>
 	</p>
 	
 	<section>
@@ -207,8 +206,6 @@
 				</tr>
 
 				<#
-				var total = 0m;
-
 				for (var i = 0; i < Model.Appointments.Count(); i++)
 				{
 					var invoiceAppointment = Model.Appointments.ElementAt(i);
@@ -234,7 +231,7 @@
 							<td class="label">Date of Loss:</td>
 							<td colspan="3">
 								<# if (claim.DateOfLoss.HasValue) { #>
-									<#= string.Format("{0:MMMM d, yyyy}", claim.DateOfLoss) #>
+									<#= $"{claim.DateOfLoss:MMMM d, yyyy}" #>
 								<# } #>
 							</td>
 						</tr>
@@ -253,7 +250,7 @@
 					<tr>
 						<td class="label">Assessment Date:</td>
 						<td colspan="3">
-							<#= string.Format("{0:MMMM d, yyyy}", appointment.AppointmentTime) #>
+							<#= $"{appointment.AppointmentTime:MMMM d, yyyy}" #>
 						</td>
 					</tr>
 					<tr>
@@ -261,18 +258,10 @@
 					</tr>
 
 					<#
-					var subtotal = 0.0m;
-
 					for (var j = 0; j < invoiceAppointment.Lines.Count(); j++)
 					{
 						var line = invoiceAppointment.Lines.ElementAt(j);
-						
-						var amountAdjusted = Model.InvoiceRate != 1.0m && line.ApplyInvoiceRate;
-
-						if (!amountAdjusted)
-						{
-							subtotal += line.Amount;
-						}
+						var amountAdjusted = line.Amount != line.OriginalAmount;
 					#>
 						<tr>
 							<td class="label">
@@ -281,43 +270,30 @@
 							<td colspan="2">
 								<#= line.Description #>
 							</td>
-							<td class="invoice-amount<#= amountAdjusted ? " invoice-line-adjust" : "" #>">
-								<#= string.Format("{0:$#,##0.00}", line.Amount / 100) #>
-							</td>
-						</tr>
-					<#
-					}
-
-					if (Model.InvoiceRate != 1.0m)
-					{
-						var invoiceRateAmount = invoiceAppointment.Lines
-							.Where(line => line.ApplyInvoiceRate)
-							.Select(line => line.Amount)
-							.Sum() * Model.InvoiceRate;
-
-						subtotal += invoiceRateAmount;
-					#>
-						<tr>
-							<td>&nbsp;</td>
-							<td colspan="2">
-								<#= invoiceAppointment.Appointment.AppointmentStatus.Name #>
-							</td>
 							<td class="invoice-amount">
-								<#= string.Format("{0:$#,##0.00}", invoiceRateAmount / 100) #>
+								<#= $"{(line.Amount / 100):$#,##0.00}" #>
 							</td>
 						</tr>
 					<#
 					}
-					
-					total += subtotal;
 				}
 				#>
 				
+				<#
+					var subtotal = Model.Subtotal;
+				#>
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan="2">Subtotal</td>
+					<td class="invoice-amount separator-top">
+						<#= $"{(subtotal / 100.0m):$#,##0.00}" #>
+					</td>
+				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td colspan="2">+H.S.T.</td>
 					<td class="invoice-amount">
-						<#= string.Format("{0:$#,##0.00}", (total * Model.TaxRate) / 100.0m) #>
+						<#= string.Format("{0:$#,##0.00}", ((subtotal * Model.TaxRate) / 100.0m)) #>
 					</td>
 				</tr>
 				<tr class="invoice-amount total">

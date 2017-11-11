@@ -137,6 +137,7 @@ namespace PsychologicalServices.Models.Invoices
                     new InvoiceLine
                     {
                         Amount = invoiceCalculationData.CompletionFeeAmount,
+                        OriginalAmount = invoiceCalculationData.CompletionFeeAmount,
                         Description = appointment.ToCompletionFeeInvoiceLineDescription(),
                     });
             }
@@ -144,28 +145,30 @@ namespace PsychologicalServices.Models.Invoices
             {
                 //primary reports
                 var primaryReports = appointment.Assessment.Reports.Where(report => !report.IsAdditional);
-                
-                if (primaryReports.Count() > 1)
-                {
-                    lines.Add(
-                        new InvoiceLine
-                        {
-                            Amount = invoiceCalculationData.ComboReportInvoiceAmount,
-                            Description = appointment.Assessment.ToPrimaryReportsInvoiceLineDescription(),
-                            ApplyInvoiceRate = true,
-                        });
-                }
-                else if (primaryReports.Count() == 1)
-                {
-                    lines.Add(
-                        new InvoiceLine
-                        {
-                            Amount = invoiceCalculationData.SingleReportInvoiceAmount,
-                            Description = appointment.Assessment.ToPrimaryReportsInvoiceLineDescription(),
-                            ApplyInvoiceRate = true,
-                        });
-                }
 
+                if (primaryReports.Any())
+                {
+                    var baseAmount = primaryReports.Count() > 1
+                        ? invoiceCalculationData.ComboReportInvoiceAmount
+                        : invoiceCalculationData.SingleReportInvoiceAmount;
+
+                    var amount = Convert.ToInt32(baseAmount * invoiceCalculationData.InvoiceRate);
+
+                    var baseDescription = appointment.Assessment.ToPrimaryReportsInvoiceLineDescription();
+
+                    var description = invoiceCalculationData.IsDiscountedRate()
+                        ? $"{baseDescription} - {appointment.AppointmentStatus.Name}"
+                        : baseDescription;
+
+                    lines.Add(
+                        new InvoiceLine
+                        {
+                            Amount = amount,
+                            OriginalAmount = baseAmount,
+                            Description = description,
+                        });
+                }
+                
                 //extra reports
                 if (invoiceCalculationData.ApplyExtraReportFees)
                 {
@@ -173,12 +176,22 @@ namespace PsychologicalServices.Models.Invoices
 
                     foreach (var extraReport in extraReports)
                     {
+                        var baseAmount = invoiceCalculationData.ExtraReportFee;
+
+                        var amount = Convert.ToInt32(baseAmount * invoiceCalculationData.InvoiceRate);
+
+                        var baseDescription = extraReport.ToExtraReportsInvoiceLineDescriptions(appointment.Assessment.AssessmentType.Description);
+
+                        var description = invoiceCalculationData.IsDiscountedRate()
+                            ? $"{baseDescription} - {appointment.AppointmentStatus.Name}"
+                            : baseDescription;
+
                         lines.Add(
                             new InvoiceLine
                             {
-                                Amount = invoiceCalculationData.ExtraReportFee,
-                                Description = extraReport.ToExtraReportsInvoiceLineDescriptions(appointment.Assessment.AssessmentType.Description),
-                                ApplyInvoiceRate = true,
+                                Amount = amount,
+                                OriginalAmount = baseAmount,
+                                Description = description,
                             });
                     }
                 }
@@ -196,12 +209,22 @@ namespace PsychologicalServices.Models.Invoices
                             )
                         )
                         {
+                            var baseAmount = issueInDisputeInvoiceAmount.InvoiceAmount;
+
+                            var amount = Convert.ToInt32(baseAmount * invoiceCalculationData.InvoiceRate);
+
+                            var baseDescription = $"{issueInDisputeInvoiceAmount.IssueInDispute.Name} surcharge";
+
+                            var description = invoiceCalculationData.IsDiscountedRate()
+                                ? $"{baseDescription} - {appointment.AppointmentStatus.Name}"
+                                : baseDescription;
+
                             lines.Add(
                                 new InvoiceLine
                                 {
-                                    Amount = issueInDisputeInvoiceAmount.InvoiceAmount,
-                                    Description = $"{issueInDisputeInvoiceAmount.IssueInDispute.Name} surcharge",
-                                    ApplyInvoiceRate = true,
+                                    Amount = amount,
+                                    OriginalAmount = baseAmount,
+                                    Description = description,
                                 });
                         }
                     }
@@ -222,6 +245,7 @@ namespace PsychologicalServices.Models.Invoices
                         new InvoiceLine
                         {
                             Amount = invoiceCalculationData.LargeFileFee,
+                            OriginalAmount = invoiceCalculationData.LargeFileFee,
                             Description = "Large File Fee",
                         }
                     );
@@ -237,8 +261,9 @@ namespace PsychologicalServices.Models.Invoices
                     lines.Add(
                         new InvoiceLine
                         {
-                            Description = string.Format("Travel to {0}", travelFee.City.Name),
-                            Amount = travelFee.Amount
+                            Amount = travelFee.Amount,
+                            OriginalAmount = travelFee.Amount,
+                            Description = $"Travel to {travelFee.City.Name}",
                         }
                     );
                 }
@@ -251,8 +276,9 @@ namespace PsychologicalServices.Models.Invoices
                 lines.Add(
                     new InvoiceLine
                     {
-                        Description = $"Room Rental Fee",
                         Amount = appointment.RoomRentalBillableAmount.Value,
+                        OriginalAmount = appointment.RoomRentalBillableAmount.Value,
+                        Description = $"Room Rental Fee",
                     }
                 );
             }
@@ -262,39 +288,12 @@ namespace PsychologicalServices.Models.Invoices
 
         public int GetInvoiceTotal(Invoice invoice)
         {
-            var total = 0.0m;
-
-            var subtotal = 0.0m;
-
-            foreach (var invoiceAppointment in invoice.Appointments)
-            {
-                var appointmentTotal = 0.0m;
-                
-                var appointment = invoiceAppointment.Appointment;
-
-                var assessmentAppointments = _appointmentRepository.GetAppointmentSequenceSiblings(appointment.AppointmentId);
-
-                var appointmentSequence = appointment.AppointmentSequence(assessmentAppointments);
-
-                var invoiceCalculationData = _invoiceRepository.GetPsychologistInvoiceCalculationData(
-                    appointment.Assessment.Company.CompanyId,
-                    appointment.Assessment.ReferralSource.ReferralSourceId,
-                    appointment.Assessment.AssessmentType.AssessmentTypeId,
-                    appointment.AppointmentStatus.AppointmentStatusId,
-                    appointmentSequence.AppointmentSequenceId
-                );
-
-                var invoiceRate = invoiceCalculationData.InvoiceRate;
-
-                appointmentTotal =
-                    invoiceAppointment.Lines.Where(line => !line.ApplyInvoiceRate).Select(line => line.Amount).Sum() +
-                    //apply invoice rate to base assessment charges only
-                    (invoiceAppointment.Lines.Where(line => line.ApplyInvoiceRate).Select(line => line.Amount).Sum() * invoiceRate);
-
-                subtotal += appointmentTotal;
-            }
-
-            total = subtotal * (1 + invoice.TaxRate);
+            var subtotal = invoice.Appointments
+                .SelectMany(invoiceAppointment => invoiceAppointment.Lines)
+                .Select(line => line.Amount)
+                .Sum();
+            
+            var total = subtotal * (1 + invoice.TaxRate);
 
             return Convert.ToInt32(total);
         }
