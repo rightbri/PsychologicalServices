@@ -8,6 +8,6 @@ export class MoneyValueConverter {
 	
 	fromView(value, format) {
 		var v = numeral(value).value() * 100;
-		return v;
+		return Math.round(v);
 	}
 }
