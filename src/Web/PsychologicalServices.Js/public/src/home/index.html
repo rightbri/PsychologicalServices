@@ -1,0 +1,190 @@
+<template>
+
+  <div class="uk-container">
+
+    <div uk-grid>
+      <div class="uk-width-2-3@s">
+
+        <section class="uk-section uk-section-default uk-section-small uk-text-justify">
+            
+          <img class="uk-align-left uk-margin-remove-adjacent" src="../content/images/markwatson.jpg" width="250" height="350" alt="Photo of Dr. Mark Watson">
+          
+          <p>
+            Dr. Mark Watson is a Clinical Psychologist and Clinical Neuropsychologist receiving his Ph.D from York University in 2008. 
+            Dr. Watson has completed numerous clinical internships in Psychology and Clinical Neuropsychology at Trillium Health Care Centre, Chedoke McMaster Hospital, Hamilton Psychiatric Hospital, the Centre for Addiction and Mental Health and York University.  
+            He has also presented numerous published papers on topics including applying psychology to criminal proceedings, understanding and treating violence, and other forensic psychological and neuropsychological issues.  
+            He is licensed to practice both Psychology and Clinical Neuropsychology within the province of Ontario.
+          </p>
+          <p>
+            Dr. Watson is an active member of CSME (Canadian Society of Medical Examiners), MLST (Medical Legal Society of Toronto), OPA (Ontario Psychological Association), CPA (Canadian Psychological Association), and has completed continuing education with respect to the AMA Guidelines and impairment ratings, expert testimony, as well as advanced studies in clinical neuropsychology.
+          </p>
+          <p>
+            Legal citations available upon request.
+          </p>
+          <p>
+            Dr. Watson specializes in the providing expert psychological and neuropsychological opinion with respect to psychology, neuropsychology and psycho-vocational pursuits. 
+            He is committed to providing comprehensive, objective reports utilizing evidenced-based assessment protocols and practices. 
+            Dr. Watson has been practicing Independent Evaluations since 2005, with thousands of assessments completed. 
+            He has been an autonomous assessor since 2010.
+          </p>
+        </section>
+
+      </div>
+      <div class="uk-width-1-3@s">
+
+        <h3>Seminars and Events</h3>
+
+        <div class="event uk-padding-small" repeat.for="event of events">
+          <span class="uk-text-bold">${event.name}</span>
+          <template if.bind="event.location">
+            <br>${event.location}
+          </template>
+          <template if.bind="event.time">
+            <br>${event.time}
+          </template>
+          <template if.bind="event.linkHref">
+            <br><a href.bind="event.linkHref" target="_blank">${event.linkText}</a>
+          </template>
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+
+</template>
+<!--
+    <div class="slick">
+		<div><img src="images/experience.jpg" width="940" height="437" alt="Picture of mountain"></div>
+		<div><img src="images/objectivity.jpg" width="940" height="437" alt="picture of brain "></div>
+		<div><img src="images/clarity.jpg" width="940" height="437" alt="picture of path in forest"></div>
+        <div><img src="images/clinical.jpg" width="940" height="437" alt="Picture of brain and water colours"></div>
+	</div>
+-->
+  <!--
+	<aside class="events">
+		<h2>Seminars and Events:</h2>
+        <div class="event">
+        <p class="bold">OTLA 2017 Fall Conference</p>
+        <p>Metro Toronto Conference Centre, Toronto</p>
+        <p>November 16, 2017</p>
+        <p><a href="https://www.otla.com/index.cfm?pg=calendar" target="_blank">link</a></p>
+      	</div>
+     <div class="event">
+        <p class="bold">OTLA 2017 Disability Conference</p>
+        <p>Twenty Toronto Street Conferences and Events, Toronto</p>
+        <p>May 26, 2017</p>
+        <p><a href="https://www.otla.com/index.cfm?pg=calendar" target="_blank">link</a></p>
+      	</div>
+         <div class="event">
+        <p class="bold">31st Annual Joint Insurance Seminar</p>
+        <p>May 2, 2017</p>
+        <p><a href="http://www.hamiltonlaw.on.ca/events-cpd" target="_blank">link</a></p>
+      	</div>
+        <div class="event">
+        <p class="bold">OTLA 2017 Spring Conference</p>
+        <p>Twenty Toronto Street Conferences and Events, Toronto</p>
+        <p>April 27, 2017</p>
+        <p><a href="https://www.otla.com/index.cfm?pg=calendar" target="_blank">link</a></p>
+      	</div>
+        
+        <div class="event">
+        <p class="bold">Recent Case Law and the Legal Perspective on Expert Evidence and Report Writing-CAPDA Workshop</p>
+        <p>Albany Club, 91 King Street East, Toronto, ON   M5C 1G3</p>
+        <p>April 21 2017, 8:00 am - 1:00 pm</p>
+        <p><a href="http://capda.ca/resources/workshop-details/2017/03/01/recent-case-law-and-the-legal-perspective-on-expert-evidence-and-report-writing" target="_blank">link</a></p>
+        </div>
+        
+         <div class="event">
+        <p class="bold">American Academy of Forensic Psychology: Comtemporary Issues in Forensic Psychology</p>
+        <p>Chicago</p>
+        <p>April 19-23, 2017</p>
+        <p><a href="https://www.regonline.com/builder/site/Default.aspx?eventid=1891004" target="_blank">link</a></p>
+      	</div>
+        
+         <div class="event">
+        <p class="bold">Fourth Annual NRVMS/DSF Threshold Conference-Psychological/Psychiatric Impairment</p>
+        <p>National Club</p>
+        <p>303 Bay Street, Toronto</p>
+        <p>April 19, 2017</p>
+        <p><a href="http://nrvmsdsfcharityevent.ca" target="_blank">link</a></p>
+      	</div>
+        
+            
+        <div class="event">
+        <p class="bold">Canadian Defence Lawyers AB Spring Symposium</p>
+        <p>Toronto</p>
+        <p>April 13, 2017</p>
+        <p><a href="https://www.cdlawyers.org/?page=220" target="_blank">link</a></p>
+      	</div>
+        
+         <div class="event">
+        <p class="bold">HLA Annual Dinner</p>
+        <p>Art Gallery of Hamilton</p>
+        <p>123 King Street West, Hamilton</p>
+        <p>March 30, 2017 5:30pm</p>
+        <p><a href="http://www.hamiltonlaw.on.ca/docs/default-source/event-flyers/2017-annual-dinner-invite.pdf?sfvrsn=2" target="_blank">link</a></p>
+      	</div>
+        
+        <div class="event">
+        <p class="bold">Canadian Defence Lawyers</p>
+        <p>Toronto</p>
+        <p>March 30, 2017</p>
+        <p><a href="https://www.cdlawyers.org/?page=220" target="_blank">link</a></p>
+      	</div>
+        
+         <div class="event">
+        <p class="bold">HLA Winter Special</p>
+        <p>Serve Ping Pong</p>
+        <p>105-115 King St East (2nd Floor), Hamilton</p>
+        <p>February 23, 2017 5:30pm - 7:30pm</p>
+        <p><a href="http://www.hamiltonlaw.on.ca/docs/default-source/event-flyers/february-pub-night-2017.pdf?sfvrsn=2" target="_blank">link</a></p>
+      	</div>
+        
+         <div class="event">
+        <p class="bold">Canadian Defence Lawyers Insurance Coverage Symposium</p>
+        <p>Toronto</p>
+        <p>February 1, 2017</p>
+        <p><a href="https://www.cdlawyers.org/?page=220" target="_blank">link</a></p>
+      	</div>
+        
+        <div class="event">
+        <p class="bold">OIAA Claims Conference</p>
+        <p>January 31, 2017</p>
+        <p><a href="https://www.oiaa.com/about-us/claims-conference/" target="_blank">link</a></p>
+      	</div>
+        <div class="event">
+        <p class="bold">OIAA 2016 Holiday Party</p>
+        <p>Fairmont Royal York, 100 Front Street West, Toronto</p>
+        <p>December 14 at 6pm</p>
+        <p><a href="https://www.oiaa.com/events/2016-christmas-party/" target="_blank">link</a></p>
+        </div>
+        
+         <div class="event">
+        <p class="bold">Ontario Minister of Labour First PTSD Summit</p>
+        <p>December 6, 2016 7:30 - 9:00</p>
+        <p><a href="http://www.csme.org/events/EventDetails.aspx?id=881250&group=" target="_blank">link</a></p>
+      	</div>
+        
+        <div class="event">
+        <p class="bold">OIAA Hamilton Chapter Christmas Party</p>
+        <p>Shoeless Joe's at 1250 Brant Street, Burlington ON</p>
+        <p>November 30 5:30-9:00pm</p>
+        <p><a href="http://www.oiaahamilton.ca/event/oiaa-hamilton-christmas-party/" target="_blank">link</a></p>
+      </div>
+      <div class="event">
+      	<p class="bold">The &#8220;F&#8221; Word: On the Nature of Feigning, Malingering, Conversion and Beyond</p>
+        <p>Courtyard Toronto, 475 Yonge Street, Toronto</p>
+        <p>November 25 at 8 am</p>
+        </div>
+        
+        <div class="event">
+        <p class="bold">Insurance Coverage Primer</p>
+        <p>Hyatt Regency, 370 King Street West, Toronto</p>
+        <p>November 24 at 9 am</p>
+        <p><a href="events/Insurance Coverage Primer Agenda.pdf" target="_blank">agenda</a></p>
+      </div>
+       
+        
+	</aside>
+-->

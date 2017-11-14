@@ -1,0 +1,15 @@
+<template>
+      <div class="uk-container">
+            <h2>Frequently Asked Questions</h2>
+
+            <ul uk-accordion>
+                  <li repeat.for="faq of faqs">
+                        <h3 class="uk-accordion-title">${faq.question}</h3>
+                        <div class="uk-accordion-content">${faq.answer}</div>
+                  </li>
+            </ul>
+
+      </div>
+</template>
+
+	
