@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Data"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.DataDBSpecific", "PsychologicalServices.Data\PsychologicalServices.DataDBSpecific.csproj", "{5E18E5D8-E997-4B4B-96CD-825283E25994}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Web", "PsychologicalServices.Web\PsychologicalServices.Web.csproj", "{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Api", "PsychologicalServices.Api\PsychologicalServices.Api.csproj", "{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Models.Test", "PsychologicalServices.Models.Test\PsychologicalServices.Models.Test.csproj", "{A334CFEB-DC6B-4C78-9D35-849FA8907849}"
 EndProject
