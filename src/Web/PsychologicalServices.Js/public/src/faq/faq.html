@@ -1,13 +1,13 @@
 <template>
-      <div class="uk-container">
-            <h2>Frequently Asked Questions</h2>
+      <div class="uk-container uk-padding">
+            <h3 class="uk-heading-divider">Frequently Asked Questions</h3>
 
-            <ul uk-accordion>
-                  <li repeat.for="faq of faqs">
-                        <h3 class="uk-accordion-title">${faq.question}</h3>
-                        <div class="uk-accordion-content">${faq.answer}</div>
-                  </li>
-            </ul>
+            <dl id="faq" class="uk-description-list uk-description-list-divider">
+                  <template repeat.for="faq of faqs">
+                        <dt class="faq-question">${faq.question}</dt>
+                        <dd>${faq.answer}</dd>
+                  </template>
+            </dl>
 
       </div>
 </template>

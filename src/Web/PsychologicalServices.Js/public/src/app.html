@@ -1,26 +1,28 @@
 <template>
     <require from="uikit/css/uikit.css"></require>
- 
-    <nav class="uk-navbar-container" uk-navbar>
-      <div class="uk-navbar-left">
-
-        <a class="uk-navbar-item uk-logo" href="/">
-          ${title}
-        </a>
-
-        <ul class="uk-navbar-nav">
-            <li class="uk-active"><a href="/home">Home</a></li>
+    <require from="content/css/styles.css"></require>
+    
+    <header class="uk-container-expand uk-padding-small uk-padding-remove-bottom">
+      <a href="/">
+        <h1 class="header-title">${title}</h1>
+      </a>
+      
+      <nav id="wsp_navigation">
+        <ul class="uk-child-width-expand@s" uk-grid>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/about">About</a></li>
             <li><a href="/services">Services</a></li>
             <li><a href="/faq">FAQ</a></li>
             <li><a href="/seminars">Seminars</a></li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/links">Links</a></li>
-            <li><a href="/referrals">Referrals</a></li>
             <li><a href="/what-to-expect">What to expect</a></li>
         </ul>
-
-      </div>
-    </nav>
+      </nav>
+      
+      <hr class="uk-divider-icon">
+    </header>
+    
 
     <div id="overlay" if.bind="router.isNavigating">
       <p>
@@ -30,5 +32,23 @@
     </div>
     
     <router-view></router-view>
+    
+    
+  <footer class="uk-container-expand uk-padding-small">
+    
+      <div uk-grid><!-- class="uk-child-width-expand@s"-->
 
+          <div id="wsp_copy" class="uk-width-3-4@s uk-text-left">
+              &copy; ${year} ${title}
+          </div>
+
+          <div class="uk-width-1-4@s uk-text-right">
+              <a href="https://ca.linkedin.com/in/markwatsonpsychologicalservice">
+                <i class="fa fa-2x fa-linkedin-square"></i>
+              </a>
+          </div>
+
+        </div>
+
+  </footer>
 </template>

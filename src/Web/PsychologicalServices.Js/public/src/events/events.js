@@ -1,5 +1,7 @@
 
-export class Index {
+
+export class Events {
+
     activate() {
         this.events = this.getData();
     }
@@ -35,4 +37,5 @@ export class Index {
 
         return events;
     }
+
 }

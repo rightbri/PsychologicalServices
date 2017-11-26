@@ -2,7 +2,8 @@ import {UIkit} from 'uikit';
 
 export class App {
   constructor() {
-    this.title = "Watson Psychological Services";
+	this.title = "Watson Psychological Services";
+	this.year = new Date().getFullYear();
   }
 
   configureRouter(config, router) {
@@ -18,11 +19,11 @@ export class App {
 			{ route: 'services', name: 'services', moduleId: 'services/services', title: 'Services', nav: true },
 			{ route: 'faq', name: 'faq', moduleId: 'faq/faq', title: 'FAQ', nav: true },
 			{ route: 'seminars', name: 'seminars', moduleId: 'seminars/seminars', title: 'Seminars', nav: true },
-			{ route: 'contact', name: 'contact', moduleId: 'contact/contact', title: 'Contact', nav: true }/*,
-			{ route: 'assessments', name: 'assessments', moduleId: 'assessments/assessments', title: 'Assessments', nav: true },
-			{ route: 'assessments/:id', name: 'editAssessment', moduleId: 'assessments/editAssessment', title: 'Edit Assessment', nav: false },
-			{ route: 'contacts/:id', name: 'editContact', moduleId: 'contacts/editContact', title: 'Edit Contact', nav: false },
-			{ route: 'contacts/add', name: 'addContact', moduleId: 'contacts/editContact', title: 'Add Contact', nav: false }*/
+			{ route: 'events', name: 'events', moduleId: 'events/events', title: 'Events', nav: true },
+			{ route: 'contact', name: 'contact', moduleId: 'contact/contact', title: 'Contact', nav: true },
+			{ route: 'about', name: 'about', moduleId: 'about/about', title: 'About', nav: true },
+			{ route: 'links', name: 'links', moduleId: 'links/links', title: 'Links', nav: true },
+			{ route: 'what-to-expect', name: 'whatToExpect', moduleId: 'whatToExpect/whatToExpect', title: 'What to expect', nav: true }
 		]);
 		
 	}

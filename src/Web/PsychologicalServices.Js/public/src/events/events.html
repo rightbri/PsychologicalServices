@@ -1,0 +1,18 @@
+<template>
+
+        <h3>Seminars and Events</h3>
+    <div class="event uk-padding-small" repeat.for="event of events">
+        <span class="uk-text-bold">${event.name}</span>
+        <template if.bind="event.location">
+            <br>${event.location}
+        </template>
+        <template if.bind="event.time">
+            <br>${event.time}
+        </template>
+        <template if.bind="event.linkHref">
+            <br><a href.bind="event.linkHref" target="_blank">${event.linkText}</a>
+        </template>
+    </div>
+        
+
+</template>
