@@ -11,8 +11,8 @@ export class Index {
     getEvents() {
 
         var events = [
-            {'eventId': 1,'name': 'OTLA 2017 Fall Conference','description': null,'location': 'Metro Toronto Conference Centre, Toronto','locationMap': null,'linkText': 'link','linkHref': 'https://www.otla.com/index.cfm?pg=calendar','time': 'November 16, 2017'},
-            {'eventId': 2,'name': 'OTLA 2017 Disability Conference','description': null,'location': 'Twenty Toronto Street Conferences and Events, Toronto','locationMap': null,'linkText': 'link','linkHref': 'https://www.otla.com/index.cfm?pg=calendar','time': 'May 26, 2017'}//,
+            {'eventId': 1,'name': 'OTLA 2017 Fall Conference','description': null,'location': 'Metro Toronto Conference Centre, Toronto','locationMap': null,'linkHref': 'https://www.otla.com/index.cfm?pg=calendar','time': 'November 16, 2017'},
+            {'eventId': 2,'name': 'OTLA 2017 Disability Conference','description': null,'location': 'Twenty Toronto Street Conferences and Events, Toronto','locationMap': null,'linkHref': 'https://www.otla.com/index.cfm?pg=calendar','time': 'May 26, 2017'}//,
             /*
             {'eventId': 3,'name': '31st Annual Joint Insurance Seminar','description': null,'location': null,'locationMap': null,'linkText': 'link','linkHref': 'http://www.hamiltonlaw.on.ca/events-cpd','time': 'May 2, 2017'},
             {'eventId': 4,'name': 'OTLA 2017 Spring Conference','description': null,'location': 'Twenty Toronto Street Conferences and Events, Toronto','locationMap': null,'linkText': 'link','linkHref': 'https://www.otla.com/index.cfm?pg=calendar','time': 'April 27, 2017'},

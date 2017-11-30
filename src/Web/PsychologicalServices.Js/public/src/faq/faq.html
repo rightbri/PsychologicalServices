@@ -1,15 +1,13 @@
 <template>
       <div class="uk-container uk-padding">
-            <h3 class="uk-heading-divider">Frequently Asked Questions</h3>
+            <h3 class="uk-heading-line">Frequently Asked Questions &amp; Terms</h3>
 
-            <dl id="faq" class="uk-description-list uk-description-list-divider">
+            <dl id="wsp_faq" class="uk-description-list uk-description-list-divider">
                   <template repeat.for="faq of faqs">
-                        <dt class="faq-question">${faq.question}</dt>
+                        <dt class="faq-question uk-padding-remove-top">${faq.question}</dt>
                         <dd>${faq.answer}</dd>
                   </template>
             </dl>
 
       </div>
 </template>
-
-	

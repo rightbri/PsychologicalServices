@@ -37,6 +37,12 @@ header h1 {
     text-decoration: none;
 }
 
+#wsp_navigation a.active {
+    border-width: 2px;
+    border-style: none none solid none;
+    border-color: #b5bfc8;
+}
+
 .uk-divider-icon {
     margin: 0;
 
@@ -59,22 +65,36 @@ footer {
 a,
 a:hover,
 a:visited {
+    color: #0467b8;
+    text-decoration: underline;
+}
+header a,
+header a:hover,
+header a:visited {
     color: #121518;
+    text-decoration: none;
 }
 footer a,
 footer a:hover,
 footer a:visited {
     color: #eef2f3;
+    text-decoration: none;
 }
 
+#brand h1 {
+    display: inline-block;
+}
 #wsp_copy {
     margin: auto;
 }
 
-#faq .faq-question {
+#wsp_faq .faq-question {
     font-size: 1.2rem;
+    border-style: none none none solid;
+    border-width: 4px;
+    border-color: #b5bfc8;
+    padding-left: 0.5em;
 }
-
 
 #overlay {
     position: fixed;

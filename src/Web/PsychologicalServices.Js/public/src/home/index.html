@@ -14,13 +14,13 @@
                 <h3>Dr. Mark Watson</h3>
             </div>
 
-            <div class="uk-width-1-2@s">
+            <div class="uk-width-1-2@s uk-margin-remove-top">
                 <p>
                     is a Clinical Psychologist and Clinical Neuropsychologist, specializing in providing expert psychological and neuropsychological opinion with respect to psychology, neuropsychology and psycho-vocational pursuits. 
                 </p>
             </div>
       
-            <div class="uk-width-1-2@s">
+            <div class="uk-width-1-2@s uk-margin-remove-top">
                 <ul class="uk-list uk-list-divider">
                   <li>Psychological and Neuropsychological-Legal Examinations</li>
                   <li>Insurer Examinations</li>
@@ -33,21 +33,19 @@
       </div>
 
       <div class="uk-width-1-4@s">
-        <h3 class="uk-text-center">
+        <h3 class="uk-text-center uk-margin-remove-bottom">
           Events
           <i class="fa fa-calendar-o fa-lg"></i>
         </h3>
 
         <div class="event uk-padding-small" repeat.for="event of events">
-            <span class="uk-text-bold">${event.name}</span>
+            <a href.bind="event.linkHref" target="_blank" if.bind="event.linkHref">${event.name}</a>
+            <span class="uk-text-bold" if.bind="!event.linkHref">${event.name}</span>
             <template if.bind="event.location">
                 <br>${event.location}
             </template>
             <template if.bind="event.time">
                 <br>${event.time}
-            </template>
-            <template if.bind="event.linkHref">
-                <br><a href.bind="event.linkHref" target="_blank">${event.linkText}</a>
             </template>
         </div>
 

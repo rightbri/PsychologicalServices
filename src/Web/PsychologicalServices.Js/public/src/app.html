@@ -3,20 +3,13 @@
     <require from="content/css/styles.css"></require>
     
     <header class="uk-container-expand uk-padding-small uk-padding-remove-bottom">
-      <a href="/">
-        <h1 class="header-title">${title}</h1>
+      <a href="/" id="brand">
+        <h1>${title}</h1>
       </a>
       
       <nav id="wsp_navigation">
         <ul class="uk-child-width-expand@s" uk-grid>
-            <li><a href="/home">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/services">Services</a></li>
-            <li><a href="/faq">FAQ</a></li>
-            <li><a href="/seminars">Seminars</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/links">Links</a></li>
-            <li><a href="/what-to-expect">What to expect</a></li>
+            <li repeat.for="route of router.navigation"><a href.bind="route.href" class="${route.isActive ? 'active' : ''}">${route.title}</a></li>
         </ul>
       </nav>
       
@@ -36,7 +29,7 @@
     
   <footer class="uk-container-expand uk-padding-small">
     
-      <div uk-grid><!-- class="uk-child-width-expand@s"-->
+      <div uk-grid>
 
           <div id="wsp_copy" class="uk-width-3-4@s uk-text-left">
               &copy; ${year} ${title}

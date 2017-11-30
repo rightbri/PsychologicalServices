@@ -16,12 +16,11 @@ export class App {
 		
 		config.map([
 			{ route: ['', 'home'], name: 'home', moduleId: 'home/index', title: 'Home', nav: true },
+			{ route: 'about', name: 'about', moduleId: 'about/about', title: 'About', nav: true },
 			{ route: 'services', name: 'services', moduleId: 'services/services', title: 'Services', nav: true },
 			{ route: 'faq', name: 'faq', moduleId: 'faq/faq', title: 'FAQ', nav: true },
 			{ route: 'seminars', name: 'seminars', moduleId: 'seminars/seminars', title: 'Seminars', nav: true },
-			{ route: 'events', name: 'events', moduleId: 'events/events', title: 'Events', nav: true },
 			{ route: 'contact', name: 'contact', moduleId: 'contact/contact', title: 'Contact', nav: true },
-			{ route: 'about', name: 'about', moduleId: 'about/about', title: 'About', nav: true },
 			{ route: 'links', name: 'links', moduleId: 'links/links', title: 'Links', nav: true },
 			{ route: 'what-to-expect', name: 'whatToExpect', moduleId: 'whatToExpect/whatToExpect', title: 'What to expect', nav: true }
 		]);
