@@ -220,6 +220,10 @@ namespace PsychologicalServices.Models.Invoices
                     result.Errors.Add(mailResult.ErrorDetails);
                 }
 
+                var logId = _invoiceRepository.LogInvoiceDocumentSent(model.Document.InvoiceDocumentId, model.InvoicesContactEmail);
+
+                result.SendLogs = _invoiceRepository.GetInvoiceDocumentSendLogs(model.Document.InvoiceDocumentId);
+
                 result.Success = mailResult.MailSent && !mailResult.IsError;
             }
             else

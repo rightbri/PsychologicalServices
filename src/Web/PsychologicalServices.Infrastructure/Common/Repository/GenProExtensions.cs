@@ -146,7 +146,20 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 }
                 : null;
         }
-        
+
+        public static InvoiceDocumentSendLog ToInvoiceDocumentSendLog(this InvoiceDocumentSendLogEntity invoiceDocumentSendLog)
+        {
+            return null != invoiceDocumentSendLog
+                ? new InvoiceDocumentSendLog
+                {
+                    InvoiceDocumentSendLogId = invoiceDocumentSendLog.InvoiceDocumentSendLogId,
+                    InvoiceDocumentId = invoiceDocumentSendLog.InvoiceDocumentId,
+                    Recipients = invoiceDocumentSendLog.Recipients,
+                    SentDate = invoiceDocumentSendLog.SentDate,
+                }
+                : null;
+        }
+
         public static InvoiceDocument ToInvoiceDocument(this InvoiceDocumentEntity invoiceDocument)
         {
             return null != invoiceDocument
@@ -156,6 +169,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     FileName = invoiceDocument.FileName,
                     CreateDate = invoiceDocument.CreateDate,
                     Content = invoiceDocument.Document,
+                    SendLogs = invoiceDocument.InvoiceDocumentSendLogs.Select(idsl => idsl.ToInvoiceDocumentSendLog()),
                 }
                 : null;
         }

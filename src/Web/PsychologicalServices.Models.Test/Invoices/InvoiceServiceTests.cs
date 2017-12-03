@@ -974,6 +974,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
 
             Mock<IMailService> mailServiceMockToVerify = null;
+            Mock<IInvoiceRepository> invoiceRepositoryMockToVerify = null;
 
             var invoiceService = GetService(
                 (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
@@ -986,11 +987,16 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceForDocument(It.Is<int>(i => i == invoiceDocumentId)))
                         .Returns(invoice);
 
+                    invoiceRepositoryMock
+                        .Setup(invoiceRepository => invoiceRepository.LogInvoiceDocumentSent(It.Is<int>(i => i == invoiceDocumentId), It.Is<string>(s => s == referralSourceInvoicesContactEmail)))
+                        .Verifiable();
+
                     mailServiceMock
                         .Setup(mailService => mailService.Send(It.IsAny<System.Net.Mail.MailMessage>()))
                         .Returns(mailResult)
                         .Verifiable();
 
+                    invoiceRepositoryMockToVerify = invoiceRepositoryMock;
                     mailServiceMockToVerify = mailServiceMock;
                 });
 
@@ -1003,6 +1009,8 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             Assert.AreEqual(true, sendResult.Success);
             Assert.IsFalse(sendResult.Errors.Any());
+
+            invoiceRepositoryMockToVerify.Verify();
 
             mailServiceMockToVerify
                 .Verify(mailService => mailService.Send(It.Is<System.Net.Mail.MailMessage>(mm =>

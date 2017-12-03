@@ -789,6 +789,24 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceDocumentSendLog.
+	/// </summary>
+	public enum InvoiceDocumentSendLogFieldIndex:int
+	{
+		///<summary>InvoiceDocumentSendLogId. </summary>
+		InvoiceDocumentSendLogId,
+		///<summary>InvoiceDocumentId. </summary>
+		InvoiceDocumentId,
+		///<summary>Recipients. </summary>
+		Recipients,
+		///<summary>SentDate. </summary>
+		SentDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceLine.
 	/// </summary>
 	public enum InvoiceLineFieldIndex:int
@@ -1300,6 +1318,8 @@ namespace PsychologicalServices.Data
 		InvoiceAppointmentEntity,
 		///<summary>InvoiceDocument</summary>
 		InvoiceDocumentEntity,
+		///<summary>InvoiceDocumentSendLog</summary>
+		InvoiceDocumentSendLogEntity,
 		///<summary>InvoiceLine</summary>
 		InvoiceLineEntity,
 		///<summary>InvoiceStatus</summary>

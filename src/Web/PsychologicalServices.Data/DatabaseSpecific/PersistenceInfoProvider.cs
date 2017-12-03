@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((61 + 0));
+			base.InitClass((62 + 0));
 			InitAddressEntityMappings();
 			InitAddressAddressTypeEntityMappings();
 			InitAddressTypeEntityMappings();
@@ -93,6 +93,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitInvoiceEntityMappings();
 			InitInvoiceAppointmentEntityMappings();
 			InitInvoiceDocumentEntityMappings();
+			InitInvoiceDocumentSendLogEntityMappings();
 			InitInvoiceLineEntityMappings();
 			InitInvoiceStatusEntityMappings();
 			InitInvoiceStatusChangeEntityMappings();
@@ -508,6 +509,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "InvoiceDocumentEntity", "Document", "Document", false, (int)SqlDbType.VarBinary, 2147483647, 0, 0, false, "", null, typeof(System.Byte[]), 2 );
 			base.AddElementFieldMapping( "InvoiceDocumentEntity", "CreateDate", "CreateDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3 );
 			base.AddElementFieldMapping( "InvoiceDocumentEntity", "FileName", "FileName", false, (int)SqlDbType.VarChar, 150, 0, 0, false, "", null, typeof(System.String), 4 );
+		}
+		/// <summary>Inits InvoiceDocumentSendLogEntity's mappings</summary>
+		private void InitInvoiceDocumentSendLogEntityMappings()
+		{
+			base.AddElementMapping( "InvoiceDocumentSendLogEntity", "PsychologicalServices", @"dbo", "InvoiceDocumentSendLogs", 4 );
+			base.AddElementFieldMapping( "InvoiceDocumentSendLogEntity", "InvoiceDocumentSendLogId", "InvoiceDocumentSendLogId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "InvoiceDocumentSendLogEntity", "InvoiceDocumentId", "InvoiceDocumentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "InvoiceDocumentSendLogEntity", "Recipients", "Recipients", false, (int)SqlDbType.NVarChar, 4000, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "InvoiceDocumentSendLogEntity", "SentDate", "SentDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3 );
 		}
 		/// <summary>Inits InvoiceLineEntity's mappings</summary>
 		private void InitInvoiceLineEntityMappings()

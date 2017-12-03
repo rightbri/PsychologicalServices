@@ -26,24 +26,27 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'InvoiceDocument'.<br/><br/>
+	/// Entity class which represents the entity 'InvoiceDocumentSendLog'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class InvoiceDocumentEntity : CommonEntityBase, ISerializable
+	public partial class InvoiceDocumentSendLogEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
-		private EntityCollection<InvoiceDocumentSendLogEntity> _invoiceDocumentSendLogs;
 
-		private InvoiceEntity _invoice;
+
+		private InvoiceDocumentEntity _invoiceDocument;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -53,23 +56,22 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Invoice</summary>
-			public static readonly string Invoice = "Invoice";
-			/// <summary>Member name InvoiceDocumentSendLogs</summary>
-			public static readonly string InvoiceDocumentSendLogs = "InvoiceDocumentSendLogs";
+			/// <summary>Member name InvoiceDocument</summary>
+			public static readonly string InvoiceDocument = "InvoiceDocument";
+
 
 
 		}
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static InvoiceDocumentEntity()
+		static InvoiceDocumentSendLogEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public InvoiceDocumentEntity():base("InvoiceDocumentEntity")
+		public InvoiceDocumentSendLogEntity():base("InvoiceDocumentSendLogEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -77,52 +79,52 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public InvoiceDocumentEntity(IEntityFields2 fields):base("InvoiceDocumentEntity")
+		public InvoiceDocumentSendLogEntity(IEntityFields2 fields):base("InvoiceDocumentSendLogEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this InvoiceDocumentEntity</param>
-		public InvoiceDocumentEntity(IValidator validator):base("InvoiceDocumentEntity")
+		/// <param name="validator">The custom validator object for this InvoiceDocumentSendLogEntity</param>
+		public InvoiceDocumentSendLogEntity(IValidator validator):base("InvoiceDocumentSendLogEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="invoiceDocumentId">PK value for InvoiceDocument which data should be fetched into this InvoiceDocument object</param>
+		/// <param name="invoiceDocumentSendLogId">PK value for InvoiceDocumentSendLog which data should be fetched into this InvoiceDocumentSendLog object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public InvoiceDocumentEntity(System.Int32 invoiceDocumentId):base("InvoiceDocumentEntity")
+		public InvoiceDocumentSendLogEntity(System.Int32 invoiceDocumentSendLogId):base("InvoiceDocumentSendLogEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.InvoiceDocumentId = invoiceDocumentId;
+			this.InvoiceDocumentSendLogId = invoiceDocumentSendLogId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="invoiceDocumentId">PK value for InvoiceDocument which data should be fetched into this InvoiceDocument object</param>
-		/// <param name="validator">The custom validator object for this InvoiceDocumentEntity</param>
+		/// <param name="invoiceDocumentSendLogId">PK value for InvoiceDocumentSendLog which data should be fetched into this InvoiceDocumentSendLog object</param>
+		/// <param name="validator">The custom validator object for this InvoiceDocumentSendLogEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public InvoiceDocumentEntity(System.Int32 invoiceDocumentId, IValidator validator):base("InvoiceDocumentEntity")
+		public InvoiceDocumentSendLogEntity(System.Int32 invoiceDocumentSendLogId, IValidator validator):base("InvoiceDocumentSendLogEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.InvoiceDocumentId = invoiceDocumentId;
+			this.InvoiceDocumentSendLogId = invoiceDocumentSendLogId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected InvoiceDocumentEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected InvoiceDocumentSendLogEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_invoiceDocumentSendLogs = (EntityCollection<InvoiceDocumentSendLogEntity>)info.GetValue("_invoiceDocumentSendLogs", typeof(EntityCollection<InvoiceDocumentSendLogEntity>));
 
-				_invoice = (InvoiceEntity)info.GetValue("_invoice", typeof(InvoiceEntity));
-				if(_invoice!=null)
+
+				_invoiceDocument = (InvoiceDocumentEntity)info.GetValue("_invoiceDocument", typeof(InvoiceDocumentEntity));
+				if(_invoiceDocument!=null)
 				{
-					_invoice.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_invoiceDocument.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -130,6 +132,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -137,10 +140,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((InvoiceDocumentFieldIndex)fieldIndex)
+			switch((InvoiceDocumentSendLogFieldIndex)fieldIndex)
 			{
-				case InvoiceDocumentFieldIndex.InvoiceId:
-					DesetupSyncInvoice(true, false);
+				case InvoiceDocumentSendLogFieldIndex.InvoiceDocumentId:
+					DesetupSyncInvoiceDocument(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -164,12 +167,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Invoice":
-					this.Invoice = (InvoiceEntity)entity;
+				case "InvoiceDocument":
+					this.InvoiceDocument = (InvoiceDocumentEntity)entity;
 					break;
-				case "InvoiceDocumentSendLogs":
-					this.InvoiceDocumentSendLogs.Add((InvoiceDocumentSendLogEntity)entity);
-					break;
+
 
 
 				default:
@@ -182,7 +183,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return InvoiceDocumentEntity.GetRelationsForField(fieldName);
+			return InvoiceDocumentSendLogEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -193,12 +194,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Invoice":
-					toReturn.Add(InvoiceDocumentEntity.Relations.InvoiceEntityUsingInvoiceId);
+				case "InvoiceDocument":
+					toReturn.Add(InvoiceDocumentSendLogEntity.Relations.InvoiceDocumentEntityUsingInvoiceDocumentId);
 					break;
-				case "InvoiceDocumentSendLogs":
-					toReturn.Add(InvoiceDocumentEntity.Relations.InvoiceDocumentSendLogEntityUsingInvoiceDocumentId);
-					break;
+
 
 
 				default:
@@ -236,12 +235,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Invoice":
-					SetupSyncInvoice(relatedEntity);
+				case "InvoiceDocument":
+					SetupSyncInvoiceDocument(relatedEntity);
 					break;
-				case "InvoiceDocumentSendLogs":
-					this.InvoiceDocumentSendLogs.Add((InvoiceDocumentSendLogEntity)relatedEntity);
-					break;
+
 
 				default:
 					break;
@@ -257,12 +254,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Invoice":
-					DesetupSyncInvoice(false, true);
+				case "InvoiceDocument":
+					DesetupSyncInvoiceDocument(false, true);
 					break;
-				case "InvoiceDocumentSendLogs":
-					base.PerformRelatedEntityRemoval(this.InvoiceDocumentSendLogs, relatedEntity, signalRelatedEntityManyToOne);
-					break;
+
 
 				default:
 					break;
@@ -284,9 +279,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_invoice!=null)
+			if(_invoiceDocument!=null)
 			{
-				toReturn.Add(_invoice);
+				toReturn.Add(_invoiceDocument);
 			}
 
 			return toReturn;
@@ -297,7 +292,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.InvoiceDocumentSendLogs);
+
 
 			return toReturn;
 		}
@@ -312,14 +307,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_invoiceDocumentSendLogs", ((_invoiceDocumentSendLogs!=null) && (_invoiceDocumentSendLogs.Count>0) && !this.MarkedForDeletion)?_invoiceDocumentSendLogs:null);
 
-				info.AddValue("_invoice", (!this.MarkedForDeletion?_invoice:null));
+
+				info.AddValue("_invoiceDocument", (!this.MarkedForDeletion?_invoiceDocument:null));
 
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -327,7 +323,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(InvoiceDocumentFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(InvoiceDocumentSendLogFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -336,7 +332,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(InvoiceDocumentFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(InvoiceDocumentSendLogFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -346,28 +342,19 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new InvoiceDocumentRelations().GetAllRelations();
+			return new InvoiceDocumentSendLogRelations().GetAllRelations();
 		}
 		
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'InvoiceDocumentSendLog' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoInvoiceDocumentSendLogs()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceDocumentSendLogFields.InvoiceDocumentId, null, ComparisonOperator.Equal, this.InvoiceDocumentId));
-			return bucket;
-		}
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Invoice' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// the related entity of type 'InvoiceDocument' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoInvoice()
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceDocument()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceFields.InvoiceId, null, ComparisonOperator.Equal, this.InvoiceId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceDocumentFields.InvoiceDocumentId, null, ComparisonOperator.Equal, this.InvoiceDocumentId));
 			return bucket;
 		}
 
@@ -376,7 +363,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.InvoiceDocumentEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.InvoiceDocumentSendLogEntity);
 		}
 
 		/// <summary>
@@ -391,7 +378,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentSendLogEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -399,7 +386,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._invoiceDocumentSendLogs);
+
 
 		}
 		
@@ -408,7 +395,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._invoiceDocumentSendLogs = (EntityCollection<InvoiceDocumentSendLogEntity>) collectionsQueue.Dequeue();
+
 
 		}
 		
@@ -416,10 +403,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-			if (this._invoiceDocumentSendLogs != null)
-			{
-				return true;
-			}
+
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -430,7 +414,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceDocumentSendLogEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentSendLogEntityFactory))) : null);
+
 
 		}
 #endif
@@ -441,8 +425,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Invoice", _invoice);
-			toReturn.Add("InvoiceDocumentSendLogs", _invoiceDocumentSendLogs);
+			toReturn.Add("InvoiceDocument", _invoiceDocument);
+
 
 
 			return toReturn;
@@ -451,14 +435,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			if(_invoiceDocumentSendLogs!=null)
-			{
-				_invoiceDocumentSendLogs.ActiveContext = base.ActiveContext;
-			}
 
-			if(_invoice!=null)
+
+			if(_invoiceDocument!=null)
 			{
-				_invoice.ActiveContext = base.ActiveContext;
+				_invoiceDocument.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -467,14 +448,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-			_invoiceDocumentSendLogs = null;
 
-			_invoice = null;
+
+			_invoiceDocument = null;
 
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -488,47 +470,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
+			_fieldsCustomProperties.Add("InvoiceDocumentSendLogId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
 			_fieldsCustomProperties.Add("InvoiceDocumentId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("InvoiceId", fieldHashtable);
+			_fieldsCustomProperties.Add("Recipients", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Document", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("CreateDate", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("FileName", fieldHashtable);
+			_fieldsCustomProperties.Add("SentDate", fieldHashtable);
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _invoice</summary>
+		/// <summary> Removes the sync logic for member _invoiceDocument</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncInvoice(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncInvoiceDocument(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _invoice, new PropertyChangedEventHandler( OnInvoicePropertyChanged ), "Invoice", InvoiceDocumentEntity.Relations.InvoiceEntityUsingInvoiceId, true, signalRelatedEntity, "InvoiceDocuments", resetFKFields, new int[] { (int)InvoiceDocumentFieldIndex.InvoiceId } );		
-			_invoice = null;
+			base.PerformDesetupSyncRelatedEntity( _invoiceDocument, new PropertyChangedEventHandler( OnInvoiceDocumentPropertyChanged ), "InvoiceDocument", InvoiceDocumentSendLogEntity.Relations.InvoiceDocumentEntityUsingInvoiceDocumentId, true, signalRelatedEntity, "InvoiceDocumentSendLogs", resetFKFields, new int[] { (int)InvoiceDocumentSendLogFieldIndex.InvoiceDocumentId } );		
+			_invoiceDocument = null;
 		}
 
-		/// <summary> setups the sync logic for member _invoice</summary>
+		/// <summary> setups the sync logic for member _invoiceDocument</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncInvoice(IEntity2 relatedEntity)
+		private void SetupSyncInvoiceDocument(IEntity2 relatedEntity)
 		{
-			if(_invoice!=relatedEntity)
+			if(_invoiceDocument!=relatedEntity)
 			{
-				DesetupSyncInvoice(true, true);
-				_invoice = (InvoiceEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _invoice, new PropertyChangedEventHandler( OnInvoicePropertyChanged ), "Invoice", InvoiceDocumentEntity.Relations.InvoiceEntityUsingInvoiceId, true, new string[] {  } );
+				DesetupSyncInvoiceDocument(true, true);
+				_invoiceDocument = (InvoiceDocumentEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _invoiceDocument, new PropertyChangedEventHandler( OnInvoiceDocumentPropertyChanged ), "InvoiceDocument", InvoiceDocumentSendLogEntity.Relations.InvoiceDocumentEntityUsingInvoiceDocumentId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnInvoicePropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnInvoiceDocumentPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -539,7 +518,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this InvoiceDocumentEntity</param>
+		/// <param name="validator">The validator object for this InvoiceDocumentSendLogEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -552,15 +531,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static InvoiceDocumentRelations Relations
+		public  static InvoiceDocumentSendLogRelations Relations
 		{
-			get	{ return new InvoiceDocumentRelations(); }
+			get	{ return new InvoiceDocumentSendLogRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -570,28 +550,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceDocumentSendLog' 
+
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceDocument' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathInvoiceDocumentSendLogs
+		public static IPrefetchPathElement2 PrefetchPathInvoiceDocument
 		{
 			get
 			{
-				return new PrefetchPathElement2( new EntityCollection<InvoiceDocumentSendLogEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentSendLogEntityFactory))),
-					(IEntityRelation)GetRelationsForField("InvoiceDocumentSendLogs")[0], (int)PsychologicalServices.Data.EntityType.InvoiceDocumentEntity, (int)PsychologicalServices.Data.EntityType.InvoiceDocumentSendLogEntity, 0, null, null, null, null, "InvoiceDocumentSendLogs", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
-			}
-		}
-
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Invoice' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathInvoice
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Invoice")[0], (int)PsychologicalServices.Data.EntityType.InvoiceDocumentEntity, (int)PsychologicalServices.Data.EntityType.InvoiceEntity, 0, null, null, null, null, "Invoice", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceDocument")[0], (int)PsychologicalServices.Data.EntityType.InvoiceDocumentSendLogEntity, (int)PsychologicalServices.Data.EntityType.InvoiceDocumentEntity, 0, null, null, null, null, "InvoiceDocument", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -601,7 +570,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return InvoiceDocumentEntity.CustomProperties;}
+			get { return InvoiceDocumentSendLogEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -617,110 +586,84 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return InvoiceDocumentEntity.FieldsCustomProperties;}
+			get { return InvoiceDocumentSendLogEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The InvoiceDocumentId property of the Entity InvoiceDocument<br/><br/>
+		/// <summary> The InvoiceDocumentSendLogId property of the Entity InvoiceDocumentSendLog<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceDocuments"."InvoiceDocumentId"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceDocumentSendLogs"."InvoiceDocumentSendLogId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 InvoiceDocumentId
+		public virtual System.Int32 InvoiceDocumentSendLogId
 		{
-			get { return (System.Int32)GetValue((int)InvoiceDocumentFieldIndex.InvoiceDocumentId, true); }
-			set	{ SetValue((int)InvoiceDocumentFieldIndex.InvoiceDocumentId, value); }
+			get { return (System.Int32)GetValue((int)InvoiceDocumentSendLogFieldIndex.InvoiceDocumentSendLogId, true); }
+			set	{ SetValue((int)InvoiceDocumentSendLogFieldIndex.InvoiceDocumentSendLogId, value); }
 		}
 
-		/// <summary> The InvoiceId property of the Entity InvoiceDocument<br/><br/>
+		/// <summary> The InvoiceDocumentId property of the Entity InvoiceDocumentSendLog<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceDocuments"."InvoiceId"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceDocumentSendLogs"."InvoiceDocumentId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 InvoiceId
+		public virtual System.Int32 InvoiceDocumentId
 		{
-			get { return (System.Int32)GetValue((int)InvoiceDocumentFieldIndex.InvoiceId, true); }
-			set	{ SetValue((int)InvoiceDocumentFieldIndex.InvoiceId, value); }
+			get { return (System.Int32)GetValue((int)InvoiceDocumentSendLogFieldIndex.InvoiceDocumentId, true); }
+			set	{ SetValue((int)InvoiceDocumentSendLogFieldIndex.InvoiceDocumentId, value); }
 		}
 
-		/// <summary> The Document property of the Entity InvoiceDocument<br/><br/>
+		/// <summary> The Recipients property of the Entity InvoiceDocumentSendLog<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceDocuments"."Document"<br/>
-		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
+		/// <remarks>Mapped on  table field: "InvoiceDocumentSendLogs"."Recipients"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4000<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Byte[] Document
+		public virtual System.String Recipients
 		{
-			get { return (System.Byte[])GetValue((int)InvoiceDocumentFieldIndex.Document, true); }
-			set	{ SetValue((int)InvoiceDocumentFieldIndex.Document, value); }
+			get { return (System.String)GetValue((int)InvoiceDocumentSendLogFieldIndex.Recipients, true); }
+			set	{ SetValue((int)InvoiceDocumentSendLogFieldIndex.Recipients, value); }
 		}
 
-		/// <summary> The CreateDate property of the Entity InvoiceDocument<br/><br/>
+		/// <summary> The SentDate property of the Entity InvoiceDocumentSendLog<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceDocuments"."CreateDate"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceDocumentSendLogs"."SentDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTimeOffset CreateDate
+		public virtual System.DateTimeOffset SentDate
 		{
-			get { return (System.DateTimeOffset)GetValue((int)InvoiceDocumentFieldIndex.CreateDate, true); }
-			set	{ SetValue((int)InvoiceDocumentFieldIndex.CreateDate, value); }
-		}
-
-		/// <summary> The FileName property of the Entity InvoiceDocument<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceDocuments"."FileName"<br/>
-		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 150<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String FileName
-		{
-			get { return (System.String)GetValue((int)InvoiceDocumentFieldIndex.FileName, true); }
-			set	{ SetValue((int)InvoiceDocumentFieldIndex.FileName, value); }
-		}
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceDocumentSendLogEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(InvoiceDocumentSendLogEntity))]
-		public virtual EntityCollection<InvoiceDocumentSendLogEntity> InvoiceDocumentSendLogs
-		{
-			get
-			{
-				if(_invoiceDocumentSendLogs==null)
-				{
-					_invoiceDocumentSendLogs = new EntityCollection<InvoiceDocumentSendLogEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceDocumentSendLogEntityFactory)));
-					_invoiceDocumentSendLogs.SetContainingEntityInfo(this, "InvoiceDocument");
-				}
-				return _invoiceDocumentSendLogs;
-			}
+			get { return (System.DateTimeOffset)GetValue((int)InvoiceDocumentSendLogFieldIndex.SentDate, true); }
+			set	{ SetValue((int)InvoiceDocumentSendLogFieldIndex.SentDate, value); }
 		}
 
 
-		/// <summary> Gets / sets related entity of type 'InvoiceEntity' which has to be set using a fetch action earlier. If no related entity
+
+		/// <summary> Gets / sets related entity of type 'InvoiceDocumentEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual InvoiceEntity Invoice
+		public virtual InvoiceDocumentEntity InvoiceDocument
 		{
 			get
 			{
-				return _invoice;
+				return _invoiceDocument;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncInvoice(value);
+					SetupSyncInvoiceDocument(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_invoice != null)
+						if(_invoiceDocument != null)
 						{
-							_invoice.UnsetRelatedEntity(this, "InvoiceDocuments");
+							_invoiceDocument.UnsetRelatedEntity(this, "InvoiceDocumentSendLogs");
 						}
 					}
 					else
 					{
-						if(_invoice!=value)
+						if(_invoiceDocument!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "InvoiceDocuments");
+							((IEntity2)value).SetRelatedEntity(this, "InvoiceDocumentSendLogs");
 						}
 					}
 				}
@@ -745,7 +688,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.InvoiceDocumentEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.InvoiceDocumentSendLogEntity; }
 		}
 		#endregion
 
@@ -754,6 +697,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

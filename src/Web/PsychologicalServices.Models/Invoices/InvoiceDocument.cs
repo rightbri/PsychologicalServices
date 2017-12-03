@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
 {
@@ -11,5 +12,7 @@ namespace PsychologicalServices.Models.Invoices
         public byte[] Content { get; set; }
 
         public DateTimeOffset CreateDate { get; set; }
+
+        public IEnumerable<InvoiceDocumentSendLog> SendLogs { get; set; }
     }
 }

@@ -127,6 +127,9 @@ export class EditInvoice {
 		this.dataRepository.sendInvoiceDocument(invoiceDocument.invoiceDocumentId)
 			.then(result => {
 				if (result.success) {
+
+					invoiceDocument.sendLogs = result.sendLogs;
+
 					this.notifier.info('Invoice sent successfully');
 				}
 				else {

@@ -72,6 +72,7 @@
     <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />
+    <Compile Include="Invoices\InvoiceDocumentSendLog.cs" />
     <Compile Include="Invoices\InvoiceExtensions.cs" />
     <Compile Include="Invoices\PsychologistInvoiceCalculationData.cs" />
     <Compile Include="Invoices\IssueInDisputeInvoiceAmount.cs" />

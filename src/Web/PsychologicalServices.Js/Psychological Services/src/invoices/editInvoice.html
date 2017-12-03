@@ -53,7 +53,7 @@
 				</div>
 				
 				<div class="uk-width-1-1">
-					<label class="uk-form-label">Appointments</label>
+					<label>Appointments</label>
 					<div class="uk-form-controls uk-overflow-auto">
 						
 						<table class="uk-table uk-table-divider uk-table-small">
@@ -123,14 +123,17 @@
 				</div>
 				
 				<div class="uk-width-1-1">
-					<label class="uk-form-label">Documents</label>
-					<div class="uk-form-controls uk-overflow-auto">
+					<label title="Click to expand/collapse" uk-toggle="target: #documents" uk-tooltip="pos: right">
+						Documents
+					</label>
+					<div id="documents" class="uk-form-controls uk-overflow-auto" hidden>
 						<table class="uk-table uk-table-divider uk-table-small">
 							<thead>
 								<tr>
 									<th>Document</th>
 									<th>Create Date</th>
 									<th if.bind="invoice.invoiceType.canSend">Send</th>
+									<th if.bind="invoice.invoiceType.canSend">Send Log</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -142,9 +145,16 @@
 										${document.createDate | dateFormat:config.longDateTimeFormat}
 									</td>
 									<td if.bind="invoice.invoiceType.canSend">
-										<button type="button" class="uk-button uk-button-default" click.delegate="sendInvoiceDocument(document)">
+										<button type="button" class="uk-button uk-button-default" click.delegate="sendInvoiceDocument(document)" if.bind="$first">
 											<i class="fa fa-envelope-o"></i>
 										</button>
+									</td>
+									<td if.bind="invoice.invoiceType.canSend">
+										<ul class="uk-list">
+											<li repeat.for="log of document.sendLogs | sortArray:{property:'sentDate',direction:'desc'}">
+												${log.sentDate | dateFormat:config.longDateTimeFormat}
+											</li>
+										</ul>
 									</td>
 								</tr>
 							</tbody>
@@ -153,8 +163,10 @@
 				</div>
 				
 				<div class="uk-width-1-1">
-					<label class="uk-form-label">Status changes</label>
-					<div class="uk-form-controls uk-overflow-auto">
+					<label title="Click to expand/collapse" uk-toggle="target: #status_changes" uk-tooltip="pos: right">
+						Status changes
+					</label>
+					<div id="status_changes" class="uk-form-controls uk-overflow-auto" hidden>
 						<table class="uk-table uk-table-divider uk-table-small">
 							<thead>
 								<tr>

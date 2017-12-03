@@ -1214,6 +1214,31 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity InvoiceDocumentSendLogEntity</summary>
+	public partial class InvoiceDocumentSendLogFields
+	{
+		/// <summary>Creates a new InvoiceDocumentSendLogEntity.InvoiceDocumentSendLogId field instance</summary>
+		public static EntityField2 InvoiceDocumentSendLogId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceDocumentSendLogFieldIndex.InvoiceDocumentSendLogId);}
+		}
+		/// <summary>Creates a new InvoiceDocumentSendLogEntity.InvoiceDocumentId field instance</summary>
+		public static EntityField2 InvoiceDocumentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceDocumentSendLogFieldIndex.InvoiceDocumentId);}
+		}
+		/// <summary>Creates a new InvoiceDocumentSendLogEntity.Recipients field instance</summary>
+		public static EntityField2 Recipients
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceDocumentSendLogFieldIndex.Recipients);}
+		}
+		/// <summary>Creates a new InvoiceDocumentSendLogEntity.SentDate field instance</summary>
+		public static EntityField2 SentDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceDocumentSendLogFieldIndex.SentDate);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity InvoiceLineEntity</summary>
 	public partial class InvoiceLineFields
 	{

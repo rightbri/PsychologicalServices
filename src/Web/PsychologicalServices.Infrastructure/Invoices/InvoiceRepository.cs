@@ -146,6 +146,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         )
                     .Prefetch<InvoiceDocumentEntity>(invoice => invoice.InvoiceDocuments)
                         .Exclude(invoiceDocument => invoiceDocument.Document)
+                        .SubPath(invoiceDocumentPath => invoiceDocumentPath
+                            .Prefetch<InvoiceDocumentSendLogEntity>(invoiceDocument => invoiceDocument.InvoiceDocumentSendLogs)
+                        )
                     .Prefetch<InvoiceAppointmentEntity>(invoice => invoice.InvoiceAppointments)
                         .SubPath(invoiceAppointmentPath => invoiceAppointmentPath
                             .Prefetch<InvoiceLineEntity>(invoiceAppointment => invoiceAppointment.InvoiceLines)
@@ -407,6 +410,22 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         .Where(invoiceDocument => invoiceDocument.InvoiceId == invoiceId)
                     )
                     .Select(invoiceDocument => invoiceDocument.ToInvoiceDocument())
+                    .ToList();
+            }
+        }
+        
+        public IEnumerable<InvoiceDocumentSendLog> GetInvoiceDocumentSendLogs(int invoiceDocumentId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return Execute<InvoiceDocumentSendLogEntity>(
+                    (ILLBLGenProQuery)
+                        meta.InvoiceDocumentSendLog
+                        .Where(invoiceDocumentSendLog => invoiceDocumentSendLog.InvoiceDocumentId == invoiceDocumentId)
+                    )
+                    .Select(invoiceDocumentSendLog => invoiceDocumentSendLog.ToInvoiceDocumentSendLog())
                     .ToList();
             }
         }
@@ -757,6 +776,23 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             Claimant = Convert.ToString(row["Claimant"]),
                         })
                     .ToList();
+            }
+        }
+
+        public int LogInvoiceDocumentSent(int invoiceDocumentId, string recipients)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var log = new InvoiceDocumentSendLogEntity
+                {
+                    InvoiceDocumentId = invoiceDocumentId,
+                    IsNew = true,
+                    Recipients = recipients,
+                };
+
+                adapter.SaveEntity(log);
+
+                return log.InvoiceDocumentSendLogId;
             }
         }
 

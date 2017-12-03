@@ -1532,6 +1532,47 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty InvoiceDocumentSendLogEntity objects.</summary>
+	[Serializable]
+	public partial class InvoiceDocumentSendLogEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public InvoiceDocumentSendLogEntityFactory() : base("InvoiceDocumentSendLogEntity", PsychologicalServices.Data.EntityType.InvoiceDocumentSendLogEntity) { }
+
+		/// <summary>Creates a new, empty InvoiceDocumentSendLogEntity object.</summary>
+		/// <returns>A new, empty InvoiceDocumentSendLogEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new InvoiceDocumentSendLogEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceDocumentSendLog
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new InvoiceDocumentSendLogEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new InvoiceDocumentSendLogEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceDocumentSendLogUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<InvoiceDocumentSendLogEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty InvoiceLineEntity objects.</summary>
 	[Serializable]
 	public partial class InvoiceLineEntityFactory : EntityFactoryBase2 {
@@ -2591,6 +2632,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
 					factoryToUse = new InvoiceDocumentEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceDocumentSendLogEntity:
+					factoryToUse = new InvoiceDocumentSendLogEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineEntity:
 					factoryToUse = new InvoiceLineEntityFactory();

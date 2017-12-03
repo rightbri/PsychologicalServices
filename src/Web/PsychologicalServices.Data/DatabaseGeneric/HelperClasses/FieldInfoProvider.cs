@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (61 + 0));
+			base.InitClass( (62 + 0));
 			InitAddressEntityInfos();
 			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
@@ -94,6 +94,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitInvoiceEntityInfos();
 			InitInvoiceAppointmentEntityInfos();
 			InitInvoiceDocumentEntityInfos();
+			InitInvoiceDocumentSendLogEntityInfos();
 			InitInvoiceLineEntityInfos();
 			InitInvoiceStatusEntityInfos();
 			InitInvoiceStatusChangeEntityInfos();
@@ -472,6 +473,14 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceDocumentEntity", "Document", typeof(System.Byte[]), false, false, false, false,  (int)InvoiceDocumentFieldIndex.Document, 2147483647, 0, 0);
 			base.AddElementFieldInfo("InvoiceDocumentEntity", "CreateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)InvoiceDocumentFieldIndex.CreateDate, 0, 0, 0);
 			base.AddElementFieldInfo("InvoiceDocumentEntity", "FileName", typeof(System.String), false, false, false, false,  (int)InvoiceDocumentFieldIndex.FileName, 150, 0, 0);
+		}
+		/// <summary>Inits InvoiceDocumentSendLogEntity's FieldInfo objects</summary>
+		private void InitInvoiceDocumentSendLogEntityInfos()
+		{
+			base.AddElementFieldInfo("InvoiceDocumentSendLogEntity", "InvoiceDocumentSendLogId", typeof(System.Int32), true, false, true, false,  (int)InvoiceDocumentSendLogFieldIndex.InvoiceDocumentSendLogId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceDocumentSendLogEntity", "InvoiceDocumentId", typeof(System.Int32), false, true, false, false,  (int)InvoiceDocumentSendLogFieldIndex.InvoiceDocumentId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceDocumentSendLogEntity", "Recipients", typeof(System.String), false, false, false, false,  (int)InvoiceDocumentSendLogFieldIndex.Recipients, 4000, 0, 0);
+			base.AddElementFieldInfo("InvoiceDocumentSendLogEntity", "SentDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)InvoiceDocumentSendLogFieldIndex.SentDate, 0, 0, 0);
 		}
 		/// <summary>Inits InvoiceLineEntity's FieldInfo objects</summary>
 		private void InitInvoiceLineEntityInfos()

@@ -13,5 +13,7 @@ namespace PsychologicalServices.Models.Invoices
         public bool Success { get; set; }
 
         public List<string> Errors { get; set; } 
+
+        public IEnumerable<InvoiceDocumentSendLog> SendLogs { get; set; }
     }
 }

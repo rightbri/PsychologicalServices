@@ -25,6 +25,8 @@ namespace PsychologicalServices.Models.Invoices
 
         IEnumerable<InvoiceDocument> GetInvoiceDocuments(int invoiceId);
 
+        IEnumerable<InvoiceDocumentSendLog> GetInvoiceDocumentSendLogs(int invoiceDocumentId);
+
         IEnumerable<Invoice> GetInvoices(InvoiceSearchCriteria criteria);
 
         int IncrementCompanyInvoiceCounter(int companyId);
@@ -34,6 +36,8 @@ namespace PsychologicalServices.Models.Invoices
         int SaveInvoice(Invoice invoice);
 
         decimal GetTaxRate();
+
+        int LogInvoiceDocumentSent(int invoiceDocumentId, string recipients);
         
         IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria);
 
