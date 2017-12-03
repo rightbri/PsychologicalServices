@@ -274,7 +274,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 return Execute<AppointmentEntity>(
                         (ILLBLGenProQuery)
                         appointments
-                            .OrderBy(appointment => appointment.AppointmentTime)
+                            .OrderByDescending(appointment => appointment.AppointmentTime)
                     )
                     .Select(appointment => appointment.ToAssessmentSearchResult())
                     .ToList();
