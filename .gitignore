@@ -283,5 +283,5 @@ dist/
 .vs/
 
 scripts/**
-**/logs/*
+**/logs/**
 *Secrets.config
