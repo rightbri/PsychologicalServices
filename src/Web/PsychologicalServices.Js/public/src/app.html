@@ -8,8 +8,8 @@
       </a>
       
       <nav id="wsp_navigation">
-        <ul class="uk-child-width-expand@s" uk-grid>
-            <li repeat.for="route of router.navigation"><a href.bind="route.href" class="${route.isActive ? 'active' : ''}">${route.title}</a></li>
+        <ul class="uk-child-width-expand@s uk-child-width-1-3" uk-grid>
+            <li class="uk-text-center" repeat.for="route of router.navigation"><a href.bind="route.href" class="${route.isActive ? 'active' : ''}">${route.title}</a></li>
         </ul>
       </nav>
       
@@ -31,11 +31,11 @@
     
       <div uk-grid>
 
-          <div id="wsp_copy" class="uk-width-3-4@s uk-text-left">
+          <div id="wsp_copy" class="uk-width-3-4 uk-text-left">
               &copy; ${year} ${title}
           </div>
 
-          <div class="uk-width-1-4@s uk-text-right">
+          <div class="uk-width-1-4 uk-margin-remove-top uk-text-right">
               <a href="https://ca.linkedin.com/in/markwatsonpsychologicalservice">
                 <i class="fa fa-2x fa-linkedin-square"></i>
               </a>
