@@ -100,6 +100,7 @@
     <Compile Include="Common\Utility\TempPath.cs" />
     <Compile Include="Companies\CompanyRepository.cs" />
     <Compile Include="Contacts\ContactRepository.cs" />
+    <Compile Include="Credibilities\CredibilityRepository.cs" />
     <Compile Include="Employers\EmployerRepository.cs" />
     <Compile Include="Invoices\InvoiceRepository.cs" />
     <Compile Include="Outstanding\OutstandingRepository.cs" />

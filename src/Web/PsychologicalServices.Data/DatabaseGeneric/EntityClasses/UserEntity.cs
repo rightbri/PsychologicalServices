@@ -105,6 +105,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 		private AddressEntity _address;
 		private CompanyEntity _company;
 
@@ -149,6 +157,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string UserTravelFees = "UserTravelFees";
 			/// <summary>Member name UserUnavailabilities</summary>
 			public static readonly string UserUnavailabilities = "UserUnavailabilities";
+
+
+
+
+
+
+
+
 
 
 
@@ -276,6 +292,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				_userRoles = (EntityCollection<UserRoleEntity>)info.GetValue("_userRoles", typeof(EntityCollection<UserRoleEntity>));
 				_userTravelFees = (EntityCollection<UserTravelFeeEntity>)info.GetValue("_userTravelFees", typeof(EntityCollection<UserTravelFeeEntity>));
 				_userUnavailabilities = (EntityCollection<UserUnavailabilityEntity>)info.GetValue("_userUnavailabilities", typeof(EntityCollection<UserUnavailabilityEntity>));
+
+
+
+
+
+
+
+
 
 
 
@@ -471,6 +495,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 				default:
 					break;
 			}
@@ -531,6 +563,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserUnavailabilities":
 					toReturn.Add(UserEntity.Relations.UserUnavailabilityEntityUsingUserId);
 					break;
+
+
+
+
+
+
+
+
 
 
 
@@ -849,6 +889,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
 
@@ -1026,6 +1074,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Address' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
@@ -1142,6 +1198,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -1166,6 +1230,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._userRoles = (EntityCollection<UserRoleEntity>) collectionsQueue.Dequeue();
 			this._userTravelFees = (EntityCollection<UserTravelFeeEntity>) collectionsQueue.Dequeue();
 			this._userUnavailabilities = (EntityCollection<UserUnavailabilityEntity>) collectionsQueue.Dequeue();
+
+
+
+
+
+
+
+
 
 
 
@@ -1315,6 +1387,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -1341,6 +1421,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserRoleEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserRoleEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserUnavailabilityEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserUnavailabilityEntityFactory))) : null);
+
+
+
+
+
+
+
+
 
 
 
@@ -1420,6 +1508,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("UserRoles", _userRoles);
 			toReturn.Add("UserTravelFees", _userTravelFees);
 			toReturn.Add("UserUnavailabilities", _userUnavailabilities);
+
+
+
+
+
+
+
+
 
 
 
@@ -1570,6 +1666,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 			if(_address!=null)
 			{
 				_address.ActiveContext = base.ActiveContext;
@@ -1602,6 +1706,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			_userRoles = null;
 			_userTravelFees = null;
 			_userUnavailabilities = null;
+
+
+
+
+
+
+
+
 
 
 
@@ -1934,6 +2046,14 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
+
+
+
+
+
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -2196,6 +2316,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _userUnavailabilities;
 			}
 		}
+
+
+
+
+
+
+
+
 
 
 

@@ -138,6 +138,7 @@
     <Build Include="dbo\Tables\AppointmentStatusInvoiceRates.sql" />
     <Build Include="dbo\Stored Procedures\InvoiceSearch.sql" />
     <Build Include="dbo\Tables\InvoiceDocumentSendLogs.sql" />
+    <Build Include="dbo\Tables\Credibilities.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PsychologicalServices.DB.refactorlog" />

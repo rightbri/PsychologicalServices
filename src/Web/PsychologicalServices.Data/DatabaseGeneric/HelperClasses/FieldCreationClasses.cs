@@ -437,6 +437,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.SummaryNoteId);}
 		}
+		/// <summary>Creates a new AssessmentEntity.PsychologistFoundInFavorOfClaimant field instance</summary>
+		public static EntityField2 PsychologistFoundInFavorOfClaimant
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.PsychologistFoundInFavorOfClaimant);}
+		}
+		/// <summary>Creates a new AssessmentEntity.NeurocognitiveCredibilityId field instance</summary>
+		public static EntityField2 NeurocognitiveCredibilityId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.NeurocognitiveCredibilityId);}
+		}
+		/// <summary>Creates a new AssessmentEntity.PsychologicalCredibilityId field instance</summary>
+		public static EntityField2 PsychologicalCredibilityId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.PsychologicalCredibilityId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentAttributeEntity</summary>
@@ -1061,6 +1076,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 IsActive
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ContactTypeFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity CredibilityEntity</summary>
+	public partial class CredibilityFields
+	{
+		/// <summary>Creates a new CredibilityEntity.CredibilityId field instance</summary>
+		public static EntityField2 CredibilityId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CredibilityFieldIndex.CredibilityId);}
+		}
+		/// <summary>Creates a new CredibilityEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CredibilityFieldIndex.Name);}
+		}
+		/// <summary>Creates a new CredibilityEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CredibilityFieldIndex.IsActive);}
 		}
 	}
 

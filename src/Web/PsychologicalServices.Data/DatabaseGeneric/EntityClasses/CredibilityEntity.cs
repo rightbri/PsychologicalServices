@@ -26,19 +26,29 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'ReferralType'.<br/><br/>
+	/// Entity class which represents the entity 'Credibility'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class ReferralTypeEntity : CommonEntityBase, ISerializable
+	public partial class CredibilityEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
-		private EntityCollection<AssessmentEntity> _assessments;
-		private EntityCollection<ReferralTypeIssueInDisputeEntity> _referralTypeIssuesInDispute;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -56,6 +66,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -66,10 +77,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static partial class MemberNames
 		{
 
-			/// <summary>Member name Assessments</summary>
-			public static readonly string Assessments = "Assessments";
-			/// <summary>Member name ReferralTypeIssuesInDispute</summary>
-			public static readonly string ReferralTypeIssuesInDispute = "ReferralTypeIssuesInDispute";
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -87,13 +104,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static ReferralTypeEntity()
+		static CredibilityEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public ReferralTypeEntity():base("ReferralTypeEntity")
+		public CredibilityEntity():base("CredibilityEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -101,48 +118,56 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public ReferralTypeEntity(IEntityFields2 fields):base("ReferralTypeEntity")
+		public CredibilityEntity(IEntityFields2 fields):base("CredibilityEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this ReferralTypeEntity</param>
-		public ReferralTypeEntity(IValidator validator):base("ReferralTypeEntity")
+		/// <param name="validator">The custom validator object for this CredibilityEntity</param>
+		public CredibilityEntity(IValidator validator):base("CredibilityEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="referralTypeId">PK value for ReferralType which data should be fetched into this ReferralType object</param>
+		/// <param name="credibilityId">PK value for Credibility which data should be fetched into this Credibility object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReferralTypeEntity(System.Int32 referralTypeId):base("ReferralTypeEntity")
+		public CredibilityEntity(System.Int32 credibilityId):base("CredibilityEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.ReferralTypeId = referralTypeId;
+			this.CredibilityId = credibilityId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="referralTypeId">PK value for ReferralType which data should be fetched into this ReferralType object</param>
-		/// <param name="validator">The custom validator object for this ReferralTypeEntity</param>
+		/// <param name="credibilityId">PK value for Credibility which data should be fetched into this Credibility object</param>
+		/// <param name="validator">The custom validator object for this CredibilityEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReferralTypeEntity(System.Int32 referralTypeId, IValidator validator):base("ReferralTypeEntity")
+		public CredibilityEntity(System.Int32 credibilityId, IValidator validator):base("CredibilityEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.ReferralTypeId = referralTypeId;
+			this.CredibilityId = credibilityId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected ReferralTypeEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected CredibilityEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
-				_referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>)info.GetValue("_referralTypeIssuesInDispute", typeof(EntityCollection<ReferralTypeIssueInDisputeEntity>));
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -162,6 +187,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -169,7 +195,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((ReferralTypeFieldIndex)fieldIndex)
+			switch((CredibilityFieldIndex)fieldIndex)
 			{
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -194,12 +220,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(propertyName)
 			{
 
-				case "Assessments":
-					this.Assessments.Add((AssessmentEntity)entity);
-					break;
-				case "ReferralTypeIssuesInDispute":
-					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)entity);
-					break;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -223,7 +253,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return ReferralTypeEntity.GetRelationsForField(fieldName);
+			return CredibilityEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -235,12 +265,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "Assessments":
-					toReturn.Add(ReferralTypeEntity.Relations.AssessmentEntityUsingReferralTypeId);
-					break;
-				case "ReferralTypeIssuesInDispute":
-					toReturn.Add(ReferralTypeEntity.Relations.ReferralTypeIssueInDisputeEntityUsingReferralTypeId);
-					break;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -290,12 +324,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "Assessments":
-					this.Assessments.Add((AssessmentEntity)relatedEntity);
-					break;
-				case "ReferralTypeIssuesInDispute":
-					this.ReferralTypeIssuesInDispute.Add((ReferralTypeIssueInDisputeEntity)relatedEntity);
-					break;
+
+
 
 				default:
 					break;
@@ -312,12 +342,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "Assessments":
-					base.PerformRelatedEntityRemoval(this.Assessments, relatedEntity, signalRelatedEntityManyToOne);
-					break;
-				case "ReferralTypeIssuesInDispute":
-					base.PerformRelatedEntityRemoval(this.ReferralTypeIssuesInDispute, relatedEntity, signalRelatedEntityManyToOne);
-					break;
+
+
 
 				default:
 					break;
@@ -349,8 +375,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.Assessments);
-			toReturn.Add(this.ReferralTypeIssuesInDispute);
+
+
 
 			return toReturn;
 		}
@@ -365,8 +391,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_assessments", ((_assessments!=null) && (_assessments.Count>0) && !this.MarkedForDeletion)?_assessments:null);
-				info.AddValue("_referralTypeIssuesInDispute", ((_referralTypeIssuesInDispute!=null) && (_referralTypeIssuesInDispute.Count>0) && !this.MarkedForDeletion)?_referralTypeIssuesInDispute:null);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -385,6 +419,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -392,7 +427,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(ReferralTypeFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(CredibilityFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -401,7 +436,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(ReferralTypeFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(CredibilityFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -411,29 +446,19 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new ReferralTypeRelations().GetAllRelations();
+			return new CredibilityRelations().GetAllRelations();
 		}
 		
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Assessment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAssessments()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.ReferralTypeId, null, ComparisonOperator.Equal, this.ReferralTypeId));
-			return bucket;
-		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'ReferralTypeIssueInDispute' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoReferralTypeIssuesInDispute()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralTypeIssueInDisputeFields.ReferralTypeId, null, ComparisonOperator.Equal, this.ReferralTypeId));
-			return bucket;
-		}
+
+
+
+
+
+
+
+
 
 
 
@@ -453,7 +478,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.ReferralTypeEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.CredibilityEntity);
 		}
 
 		/// <summary>
@@ -468,7 +493,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(CredibilityEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -476,8 +501,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._assessments);
-			collectionsQueue.Enqueue(this._referralTypeIssuesInDispute);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -497,8 +530,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
-			this._referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>) collectionsQueue.Dequeue();
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -517,14 +558,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-			if (this._assessments != null)
-			{
-				return true;
-			}
-			if (this._referralTypeIssuesInDispute != null)
-			{
-				return true;
-			}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -546,8 +589,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory))) : null);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -570,8 +621,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-			toReturn.Add("Assessments", _assessments);
-			toReturn.Add("ReferralTypeIssuesInDispute", _referralTypeIssuesInDispute);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -591,14 +650,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			if(_assessments!=null)
-			{
-				_assessments.ActiveContext = base.ActiveContext;
-			}
-			if(_referralTypeIssuesInDispute!=null)
-			{
-				_referralTypeIssuesInDispute.ActiveContext = base.ActiveContext;
-			}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -619,8 +680,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-			_assessments = null;
-			_referralTypeIssuesInDispute = null;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -639,6 +708,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -652,7 +722,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ReferralTypeId", fieldHashtable);
+			_fieldsCustomProperties.Add("CredibilityId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
@@ -665,7 +735,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this ReferralTypeEntity</param>
+		/// <param name="validator">The validator object for this CredibilityEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -678,15 +748,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static ReferralTypeRelations Relations
+		public  static CredibilityRelations Relations
 		{
-			get	{ return new ReferralTypeRelations(); }
+			get	{ return new CredibilityRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -696,28 +767,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAssessments
-		{
-			get
-			{
-				return new PrefetchPathElement2( new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Assessments")[0], (int)PsychologicalServices.Data.EntityType.ReferralTypeEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
-			}
-		}
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ReferralTypeIssueInDispute' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathReferralTypeIssuesInDispute
-		{
-			get
-			{
-				return new PrefetchPathElement2( new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory))),
-					(IEntityRelation)GetRelationsForField("ReferralTypeIssuesInDispute")[0], (int)PsychologicalServices.Data.EntityType.ReferralTypeEntity, (int)PsychologicalServices.Data.EntityType.ReferralTypeIssueInDisputeEntity, 0, null, null, null, null, "ReferralTypeIssuesInDispute", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
-			}
-		}
+
+
+
+
+
+
+
+
 
 
 
@@ -738,7 +795,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return ReferralTypeEntity.CustomProperties;}
+			get { return CredibilityEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -754,73 +811,51 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return ReferralTypeEntity.FieldsCustomProperties;}
+			get { return CredibilityEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The ReferralTypeId property of the Entity ReferralType<br/><br/>
+		/// <summary> The CredibilityId property of the Entity Credibility<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReferralTypes"."ReferralTypeId"<br/>
+		/// <remarks>Mapped on  table field: "Credibilities"."CredibilityId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ReferralTypeId
+		public virtual System.Int32 CredibilityId
 		{
-			get { return (System.Int32)GetValue((int)ReferralTypeFieldIndex.ReferralTypeId, true); }
-			set	{ SetValue((int)ReferralTypeFieldIndex.ReferralTypeId, value); }
+			get { return (System.Int32)GetValue((int)CredibilityFieldIndex.CredibilityId, true); }
+			set	{ SetValue((int)CredibilityFieldIndex.CredibilityId, value); }
 		}
 
-		/// <summary> The Name property of the Entity ReferralType<br/><br/>
+		/// <summary> The Name property of the Entity Credibility<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReferralTypes"."Name"<br/>
+		/// <remarks>Mapped on  table field: "Credibilities"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Name
 		{
-			get { return (System.String)GetValue((int)ReferralTypeFieldIndex.Name, true); }
-			set	{ SetValue((int)ReferralTypeFieldIndex.Name, value); }
+			get { return (System.String)GetValue((int)CredibilityFieldIndex.Name, true); }
+			set	{ SetValue((int)CredibilityFieldIndex.Name, value); }
 		}
 
-		/// <summary> The IsActive property of the Entity ReferralType<br/><br/>
+		/// <summary> The IsActive property of the Entity Credibility<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReferralTypes"."IsActive"<br/>
+		/// <remarks>Mapped on  table field: "Credibilities"."IsActive"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Boolean IsActive
 		{
-			get { return (System.Boolean)GetValue((int)ReferralTypeFieldIndex.IsActive, true); }
-			set	{ SetValue((int)ReferralTypeFieldIndex.IsActive, value); }
+			get { return (System.Boolean)GetValue((int)CredibilityFieldIndex.IsActive, true); }
+			set	{ SetValue((int)CredibilityFieldIndex.IsActive, value); }
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(AssessmentEntity))]
-		public virtual EntityCollection<AssessmentEntity> Assessments
-		{
-			get
-			{
-				if(_assessments==null)
-				{
-					_assessments = new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory)));
-					_assessments.SetContainingEntityInfo(this, "ReferralType");
-				}
-				return _assessments;
-			}
-		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'ReferralTypeIssueInDisputeEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(ReferralTypeIssueInDisputeEntity))]
-		public virtual EntityCollection<ReferralTypeIssueInDisputeEntity> ReferralTypeIssuesInDispute
-		{
-			get
-			{
-				if(_referralTypeIssuesInDispute==null)
-				{
-					_referralTypeIssuesInDispute = new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory)));
-					_referralTypeIssuesInDispute.SetContainingEntityInfo(this, "ReferralType");
-				}
-				return _referralTypeIssuesInDispute;
-			}
-		}
+
+
+
+
+
+
+
+
 
 
 
@@ -853,7 +888,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.ReferralTypeEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.CredibilityEntity; }
 		}
 		#endregion
 
@@ -862,6 +897,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

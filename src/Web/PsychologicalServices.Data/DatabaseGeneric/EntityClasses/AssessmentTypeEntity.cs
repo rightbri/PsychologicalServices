@@ -67,6 +67,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -92,6 +94,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Companies = "Companies";
 			/// <summary>Member name PsychometristInvoiceAmounts</summary>
 			public static readonly string PsychometristInvoiceAmounts = "PsychometristInvoiceAmounts";
+
+
 
 
 
@@ -203,6 +207,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -281,6 +287,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				default:
 					break;
 			}
@@ -321,6 +329,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "PsychometristInvoiceAmounts":
 					toReturn.Add(AssessmentTypeEntity.Relations.PsychometristInvoiceAmountEntityUsingAssessmentTypeId);
 					break;
+
+
 
 
 
@@ -513,6 +523,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -630,6 +642,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -686,6 +700,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -699,6 +715,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessmentTypeReportTypes = (EntityCollection<AssessmentTypeReportTypeEntity>) collectionsQueue.Dequeue();
 			this._companies = (EntityCollection<CompanyEntity>) collectionsQueue.Dequeue();
 			this._psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>) collectionsQueue.Dequeue();
+
+
 
 
 
@@ -773,6 +791,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -788,6 +808,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeReportTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeReportTypeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))) : null);
+
+
 
 
 
@@ -826,6 +848,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("AssessmentTypeReportTypes", _assessmentTypeReportTypes);
 			toReturn.Add("Companies", _companies);
 			toReturn.Add("PsychometristInvoiceAmounts", _psychometristInvoiceAmounts);
+
+
 
 
 
@@ -903,6 +927,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -915,6 +941,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessmentTypeReportTypes = null;
 			_companies = null;
 			_psychometristInvoiceAmounts = null;
+
+
 
 
 
@@ -1075,6 +1103,8 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("PsychometristInvoiceAmounts")[0], (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, (int)PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity, 0, null, null, null, null, "PsychometristInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
 
 
 
@@ -1285,6 +1315,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _psychometristInvoiceAmounts;
 			}
 		}
+
+
 
 
 

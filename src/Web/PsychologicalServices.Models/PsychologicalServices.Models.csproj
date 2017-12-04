@@ -70,6 +70,10 @@
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
     <Compile Include="Assessments\AssessmentSearchResult.cs" />
     <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
+    <Compile Include="Credibilities\Credibility.cs" />
+    <Compile Include="Credibilities\CredibilityService.cs" />
+    <Compile Include="Credibilities\ICredibilityRepository.cs" />
+    <Compile Include="Credibilities\ICredibilityService.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentSendLog.cs" />

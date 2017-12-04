@@ -59,14 +59,16 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		private AssessmentTypeEntity _assessmentType;
 		private CompanyEntity _company;
+		private CredibilityEntity _psychologicalCredibility;
+		private CredibilityEntity _neurocognitiveCredibility;
 		private NoteEntity _summary;
 		private ReferralSourceEntity _referralSource;
 		private ReferralTypeEntity _referralType;
 		private ReportStatusEntity _reportStatus;
-		private UserEntity _updateUser;
-		private UserEntity _createUser;
 		private UserEntity _docListWriter;
 		private UserEntity _notesWriter;
+		private UserEntity _createUser;
+		private UserEntity _updateUser;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -84,6 +86,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AssessmentType = "AssessmentType";
 			/// <summary>Member name Company</summary>
 			public static readonly string Company = "Company";
+			/// <summary>Member name PsychologicalCredibility</summary>
+			public static readonly string PsychologicalCredibility = "PsychologicalCredibility";
+			/// <summary>Member name NeurocognitiveCredibility</summary>
+			public static readonly string NeurocognitiveCredibility = "NeurocognitiveCredibility";
 			/// <summary>Member name Summary</summary>
 			public static readonly string Summary = "Summary";
 			/// <summary>Member name ReferralSource</summary>
@@ -92,14 +98,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ReferralType = "ReferralType";
 			/// <summary>Member name ReportStatus</summary>
 			public static readonly string ReportStatus = "ReportStatus";
-			/// <summary>Member name UpdateUser</summary>
-			public static readonly string UpdateUser = "UpdateUser";
-			/// <summary>Member name CreateUser</summary>
-			public static readonly string CreateUser = "CreateUser";
 			/// <summary>Member name DocListWriter</summary>
 			public static readonly string DocListWriter = "DocListWriter";
 			/// <summary>Member name NotesWriter</summary>
 			public static readonly string NotesWriter = "NotesWriter";
+			/// <summary>Member name CreateUser</summary>
+			public static readonly string CreateUser = "CreateUser";
+			/// <summary>Member name UpdateUser</summary>
+			public static readonly string UpdateUser = "UpdateUser";
 			/// <summary>Member name Appointments</summary>
 			public static readonly string Appointments = "Appointments";
 			/// <summary>Member name Arbitrations</summary>
@@ -217,6 +223,16 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_company.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_psychologicalCredibility = (CredibilityEntity)info.GetValue("_psychologicalCredibility", typeof(CredibilityEntity));
+				if(_psychologicalCredibility!=null)
+				{
+					_psychologicalCredibility.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_neurocognitiveCredibility = (CredibilityEntity)info.GetValue("_neurocognitiveCredibility", typeof(CredibilityEntity));
+				if(_neurocognitiveCredibility!=null)
+				{
+					_neurocognitiveCredibility.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_summary = (NoteEntity)info.GetValue("_summary", typeof(NoteEntity));
 				if(_summary!=null)
 				{
@@ -237,16 +253,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_reportStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_updateUser = (UserEntity)info.GetValue("_updateUser", typeof(UserEntity));
-				if(_updateUser!=null)
-				{
-					_updateUser.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
-				_createUser = (UserEntity)info.GetValue("_createUser", typeof(UserEntity));
-				if(_createUser!=null)
-				{
-					_createUser.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
 				_docListWriter = (UserEntity)info.GetValue("_docListWriter", typeof(UserEntity));
 				if(_docListWriter!=null)
 				{
@@ -256,6 +262,16 @@ namespace PsychologicalServices.Data.EntityClasses
 				if(_notesWriter!=null)
 				{
 					_notesWriter.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_createUser = (UserEntity)info.GetValue("_createUser", typeof(UserEntity));
+				if(_createUser!=null)
+				{
+					_createUser.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_updateUser = (UserEntity)info.GetValue("_updateUser", typeof(UserEntity));
+				if(_updateUser!=null)
+				{
+					_updateUser.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -302,6 +318,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case AssessmentFieldIndex.SummaryNoteId:
 					DesetupSyncSummary(true, false);
 					break;
+				case AssessmentFieldIndex.NeurocognitiveCredibilityId:
+					DesetupSyncNeurocognitiveCredibility(true, false);
+					break;
+				case AssessmentFieldIndex.PsychologicalCredibilityId:
+					DesetupSyncPsychologicalCredibility(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -330,6 +352,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Company":
 					this.Company = (CompanyEntity)entity;
 					break;
+				case "PsychologicalCredibility":
+					this.PsychologicalCredibility = (CredibilityEntity)entity;
+					break;
+				case "NeurocognitiveCredibility":
+					this.NeurocognitiveCredibility = (CredibilityEntity)entity;
+					break;
 				case "Summary":
 					this.Summary = (NoteEntity)entity;
 					break;
@@ -342,17 +370,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					this.ReportStatus = (ReportStatusEntity)entity;
 					break;
-				case "UpdateUser":
-					this.UpdateUser = (UserEntity)entity;
-					break;
-				case "CreateUser":
-					this.CreateUser = (UserEntity)entity;
-					break;
 				case "DocListWriter":
 					this.DocListWriter = (UserEntity)entity;
 					break;
 				case "NotesWriter":
 					this.NotesWriter = (UserEntity)entity;
+					break;
+				case "CreateUser":
+					this.CreateUser = (UserEntity)entity;
+					break;
+				case "UpdateUser":
+					this.UpdateUser = (UserEntity)entity;
 					break;
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)entity);
@@ -418,6 +446,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Company":
 					toReturn.Add(AssessmentEntity.Relations.CompanyEntityUsingCompanyId);
 					break;
+				case "PsychologicalCredibility":
+					toReturn.Add(AssessmentEntity.Relations.CredibilityEntityUsingPsychologicalCredibilityId);
+					break;
+				case "NeurocognitiveCredibility":
+					toReturn.Add(AssessmentEntity.Relations.CredibilityEntityUsingNeurocognitiveCredibilityId);
+					break;
 				case "Summary":
 					toReturn.Add(AssessmentEntity.Relations.NoteEntityUsingSummaryNoteId);
 					break;
@@ -430,17 +464,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					toReturn.Add(AssessmentEntity.Relations.ReportStatusEntityUsingReportStatusId);
 					break;
-				case "UpdateUser":
-					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingUpdateUserId);
-					break;
-				case "CreateUser":
-					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingCreateUserId);
-					break;
 				case "DocListWriter":
 					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingDocListWriterId);
 					break;
 				case "NotesWriter":
 					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingNotesWriterId);
+					break;
+				case "CreateUser":
+					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingCreateUserId);
+					break;
+				case "UpdateUser":
+					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingUpdateUserId);
 					break;
 				case "Appointments":
 					toReturn.Add(AssessmentEntity.Relations.AppointmentEntityUsingAssessmentId);
@@ -494,24 +528,28 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool CheckOneWayRelations(string propertyName)
 		{
 			// use template trick to calculate the # of single-sided / oneway relations
-			int numberOfOneWayRelations = 0+1+1+1+1;
+			int numberOfOneWayRelations = 0+1+1+1+1+1+1;
 			switch(propertyName)
 			{
 				case null:
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
-
-
-
-
-				case "UpdateUser":
+				case "PsychologicalCredibility":
 					return true;
-				case "CreateUser":
+				case "NeurocognitiveCredibility":
 					return true;
+
+
+
+
 				case "DocListWriter":
 					return true;
 				case "NotesWriter":
+					return true;
+				case "CreateUser":
+					return true;
+				case "UpdateUser":
 					return true;
 
 				default:
@@ -533,6 +571,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Company":
 					SetupSyncCompany(relatedEntity);
 					break;
+				case "PsychologicalCredibility":
+					SetupSyncPsychologicalCredibility(relatedEntity);
+					break;
+				case "NeurocognitiveCredibility":
+					SetupSyncNeurocognitiveCredibility(relatedEntity);
+					break;
 				case "Summary":
 					SetupSyncSummary(relatedEntity);
 					break;
@@ -545,17 +589,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					SetupSyncReportStatus(relatedEntity);
 					break;
-				case "UpdateUser":
-					SetupSyncUpdateUser(relatedEntity);
-					break;
-				case "CreateUser":
-					SetupSyncCreateUser(relatedEntity);
-					break;
 				case "DocListWriter":
 					SetupSyncDocListWriter(relatedEntity);
 					break;
 				case "NotesWriter":
 					SetupSyncNotesWriter(relatedEntity);
+					break;
+				case "CreateUser":
+					SetupSyncCreateUser(relatedEntity);
+					break;
+				case "UpdateUser":
+					SetupSyncUpdateUser(relatedEntity);
 					break;
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)relatedEntity);
@@ -602,6 +646,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Company":
 					DesetupSyncCompany(false, true);
 					break;
+				case "PsychologicalCredibility":
+					DesetupSyncPsychologicalCredibility(false, true);
+					break;
+				case "NeurocognitiveCredibility":
+					DesetupSyncNeurocognitiveCredibility(false, true);
+					break;
 				case "Summary":
 					DesetupSyncSummary(false, true);
 					break;
@@ -614,17 +664,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					DesetupSyncReportStatus(false, true);
 					break;
-				case "UpdateUser":
-					DesetupSyncUpdateUser(false, true);
-					break;
-				case "CreateUser":
-					DesetupSyncCreateUser(false, true);
-					break;
 				case "DocListWriter":
 					DesetupSyncDocListWriter(false, true);
 					break;
 				case "NotesWriter":
 					DesetupSyncNotesWriter(false, true);
+					break;
+				case "CreateUser":
+					DesetupSyncCreateUser(false, true);
+					break;
+				case "UpdateUser":
+					DesetupSyncUpdateUser(false, true);
 					break;
 				case "Appointments":
 					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
@@ -679,6 +729,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_company);
 			}
+			if(_psychologicalCredibility!=null)
+			{
+				toReturn.Add(_psychologicalCredibility);
+			}
+			if(_neurocognitiveCredibility!=null)
+			{
+				toReturn.Add(_neurocognitiveCredibility);
+			}
 			if(_summary!=null)
 			{
 				toReturn.Add(_summary);
@@ -695,14 +753,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_reportStatus);
 			}
-			if(_updateUser!=null)
-			{
-				toReturn.Add(_updateUser);
-			}
-			if(_createUser!=null)
-			{
-				toReturn.Add(_createUser);
-			}
 			if(_docListWriter!=null)
 			{
 				toReturn.Add(_docListWriter);
@@ -710,6 +760,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(_notesWriter!=null)
 			{
 				toReturn.Add(_notesWriter);
+			}
+			if(_createUser!=null)
+			{
+				toReturn.Add(_createUser);
+			}
+			if(_updateUser!=null)
+			{
+				toReturn.Add(_updateUser);
 			}
 
 			return toReturn;
@@ -764,14 +822,16 @@ namespace PsychologicalServices.Data.EntityClasses
 
 				info.AddValue("_assessmentType", (!this.MarkedForDeletion?_assessmentType:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
+				info.AddValue("_psychologicalCredibility", (!this.MarkedForDeletion?_psychologicalCredibility:null));
+				info.AddValue("_neurocognitiveCredibility", (!this.MarkedForDeletion?_neurocognitiveCredibility:null));
 				info.AddValue("_summary", (!this.MarkedForDeletion?_summary:null));
 				info.AddValue("_referralSource", (!this.MarkedForDeletion?_referralSource:null));
 				info.AddValue("_referralType", (!this.MarkedForDeletion?_referralType:null));
 				info.AddValue("_reportStatus", (!this.MarkedForDeletion?_reportStatus:null));
-				info.AddValue("_updateUser", (!this.MarkedForDeletion?_updateUser:null));
-				info.AddValue("_createUser", (!this.MarkedForDeletion?_createUser:null));
 				info.AddValue("_docListWriter", (!this.MarkedForDeletion?_docListWriter:null));
 				info.AddValue("_notesWriter", (!this.MarkedForDeletion?_notesWriter:null));
+				info.AddValue("_createUser", (!this.MarkedForDeletion?_createUser:null));
+				info.AddValue("_updateUser", (!this.MarkedForDeletion?_updateUser:null));
 
 			}
 			
@@ -920,6 +980,26 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'Credibility' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPsychologicalCredibility()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CredibilityFields.CredibilityId, null, ComparisonOperator.Equal, this.PsychologicalCredibilityId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'Credibility' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoNeurocognitiveCredibility()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CredibilityFields.CredibilityId, null, ComparisonOperator.Equal, this.NeurocognitiveCredibilityId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'Note' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoSummary()
@@ -962,10 +1042,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoUpdateUser()
+		public virtual IRelationPredicateBucket GetRelationInfoDocListWriter()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UpdateUserId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.DocListWriterId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoNotesWriter()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.NotesWriterId));
 			return bucket;
 		}
 
@@ -982,20 +1072,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoDocListWriter()
+		public virtual IRelationPredicateBucket GetRelationInfoUpdateUser()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.DocListWriterId));
-			return bucket;
-		}
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoNotesWriter()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.NotesWriterId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UpdateUserId));
 			return bucket;
 		}
 
@@ -1164,14 +1244,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("AssessmentType", _assessmentType);
 			toReturn.Add("Company", _company);
+			toReturn.Add("PsychologicalCredibility", _psychologicalCredibility);
+			toReturn.Add("NeurocognitiveCredibility", _neurocognitiveCredibility);
 			toReturn.Add("Summary", _summary);
 			toReturn.Add("ReferralSource", _referralSource);
 			toReturn.Add("ReferralType", _referralType);
 			toReturn.Add("ReportStatus", _reportStatus);
-			toReturn.Add("UpdateUser", _updateUser);
-			toReturn.Add("CreateUser", _createUser);
 			toReturn.Add("DocListWriter", _docListWriter);
 			toReturn.Add("NotesWriter", _notesWriter);
+			toReturn.Add("CreateUser", _createUser);
+			toReturn.Add("UpdateUser", _updateUser);
 			toReturn.Add("Appointments", _appointments);
 			toReturn.Add("Arbitrations", _arbitrations);
 			toReturn.Add("AssessmentAttributes", _assessmentAttributes);
@@ -1251,6 +1333,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_company.ActiveContext = base.ActiveContext;
 			}
+			if(_psychologicalCredibility!=null)
+			{
+				_psychologicalCredibility.ActiveContext = base.ActiveContext;
+			}
+			if(_neurocognitiveCredibility!=null)
+			{
+				_neurocognitiveCredibility.ActiveContext = base.ActiveContext;
+			}
 			if(_summary!=null)
 			{
 				_summary.ActiveContext = base.ActiveContext;
@@ -1267,14 +1357,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_reportStatus.ActiveContext = base.ActiveContext;
 			}
-			if(_updateUser!=null)
-			{
-				_updateUser.ActiveContext = base.ActiveContext;
-			}
-			if(_createUser!=null)
-			{
-				_createUser.ActiveContext = base.ActiveContext;
-			}
 			if(_docListWriter!=null)
 			{
 				_docListWriter.ActiveContext = base.ActiveContext;
@@ -1282,6 +1364,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(_notesWriter!=null)
 			{
 				_notesWriter.ActiveContext = base.ActiveContext;
+			}
+			if(_createUser!=null)
+			{
+				_createUser.ActiveContext = base.ActiveContext;
+			}
+			if(_updateUser!=null)
+			{
+				_updateUser.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -1312,14 +1402,16 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_assessmentType = null;
 			_company = null;
+			_psychologicalCredibility = null;
+			_neurocognitiveCredibility = null;
 			_summary = null;
 			_referralSource = null;
 			_referralType = null;
 			_reportStatus = null;
-			_updateUser = null;
-			_createUser = null;
 			_docListWriter = null;
 			_notesWriter = null;
+			_createUser = null;
+			_updateUser = null;
 
 			PerformDependencyInjection();
 			
@@ -1390,6 +1482,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("SummaryNoteId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("PsychologistFoundInFavorOfClaimant", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("NeurocognitiveCredibilityId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("PsychologicalCredibilityId", fieldHashtable);
 		}
 		#endregion
 
@@ -1451,6 +1552,72 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnCompanyPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _psychologicalCredibility</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncPsychologicalCredibility(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _psychologicalCredibility, new PropertyChangedEventHandler( OnPsychologicalCredibilityPropertyChanged ), "PsychologicalCredibility", AssessmentEntity.Relations.CredibilityEntityUsingPsychologicalCredibilityId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.PsychologicalCredibilityId } );		
+			_psychologicalCredibility = null;
+		}
+
+		/// <summary> setups the sync logic for member _psychologicalCredibility</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncPsychologicalCredibility(IEntity2 relatedEntity)
+		{
+			if(_psychologicalCredibility!=relatedEntity)
+			{
+				DesetupSyncPsychologicalCredibility(true, true);
+				_psychologicalCredibility = (CredibilityEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _psychologicalCredibility, new PropertyChangedEventHandler( OnPsychologicalCredibilityPropertyChanged ), "PsychologicalCredibility", AssessmentEntity.Relations.CredibilityEntityUsingPsychologicalCredibilityId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPsychologicalCredibilityPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _neurocognitiveCredibility</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncNeurocognitiveCredibility(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _neurocognitiveCredibility, new PropertyChangedEventHandler( OnNeurocognitiveCredibilityPropertyChanged ), "NeurocognitiveCredibility", AssessmentEntity.Relations.CredibilityEntityUsingNeurocognitiveCredibilityId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.NeurocognitiveCredibilityId } );		
+			_neurocognitiveCredibility = null;
+		}
+
+		/// <summary> setups the sync logic for member _neurocognitiveCredibility</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncNeurocognitiveCredibility(IEntity2 relatedEntity)
+		{
+			if(_neurocognitiveCredibility!=relatedEntity)
+			{
+				DesetupSyncNeurocognitiveCredibility(true, true);
+				_neurocognitiveCredibility = (CredibilityEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _neurocognitiveCredibility, new PropertyChangedEventHandler( OnNeurocognitiveCredibilityPropertyChanged ), "NeurocognitiveCredibility", AssessmentEntity.Relations.CredibilityEntityUsingNeurocognitiveCredibilityId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnNeurocognitiveCredibilityPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1591,72 +1758,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _updateUser</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncUpdateUser(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.UpdateUserId } );		
-			_updateUser = null;
-		}
-
-		/// <summary> setups the sync logic for member _updateUser</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncUpdateUser(IEntity2 relatedEntity)
-		{
-			if(_updateUser!=relatedEntity)
-			{
-				DesetupSyncUpdateUser(true, true);
-				_updateUser = (UserEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnUpdateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
-		/// <summary> Removes the sync logic for member _createUser</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncCreateUser(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", AssessmentEntity.Relations.UserEntityUsingCreateUserId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.CreateUserId } );		
-			_createUser = null;
-		}
-
-		/// <summary> setups the sync logic for member _createUser</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCreateUser(IEntity2 relatedEntity)
-		{
-			if(_createUser!=relatedEntity)
-			{
-				DesetupSyncCreateUser(true, true);
-				_createUser = (UserEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", AssessmentEntity.Relations.UserEntityUsingCreateUserId, true, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnCreateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
 		/// <summary> Removes the sync logic for member _docListWriter</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -1715,6 +1816,72 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnNotesWriterPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _createUser</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncCreateUser(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", AssessmentEntity.Relations.UserEntityUsingCreateUserId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.CreateUserId } );		
+			_createUser = null;
+		}
+
+		/// <summary> setups the sync logic for member _createUser</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncCreateUser(IEntity2 relatedEntity)
+		{
+			if(_createUser!=relatedEntity)
+			{
+				DesetupSyncCreateUser(true, true);
+				_createUser = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", AssessmentEntity.Relations.UserEntityUsingCreateUserId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCreateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _updateUser</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncUpdateUser(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.UpdateUserId } );		
+			_updateUser = null;
+		}
+
+		/// <summary> setups the sync logic for member _updateUser</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncUpdateUser(IEntity2 relatedEntity)
+		{
+			if(_updateUser!=relatedEntity)
+			{
+				DesetupSyncUpdateUser(true, true);
+				_updateUser = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnUpdateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1881,6 +2048,30 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Credibility' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPsychologicalCredibility
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CredibilityEntityFactory))),
+					(IEntityRelation)GetRelationsForField("PsychologicalCredibility")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.CredibilityEntity, 0, null, null, null, null, "PsychologicalCredibility", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Credibility' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathNeurocognitiveCredibility
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CredibilityEntityFactory))),
+					(IEntityRelation)GetRelationsForField("NeurocognitiveCredibility")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.CredibilityEntity, 0, null, null, null, null, "NeurocognitiveCredibility", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1932,30 +2123,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathUpdateUser
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
-					(IEntityRelation)GetRelationsForField("UpdateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "UpdateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathCreateUser
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
-					(IEntityRelation)GetRelationsForField("CreateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "CreateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathDocListWriter
 		{
 			get
@@ -1974,6 +2141,30 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
 					(IEntityRelation)GetRelationsForField("NotesWriter")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "NotesWriter", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCreateUser
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
+					(IEntityRelation)GetRelationsForField("CreateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "CreateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathUpdateUser
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
+					(IEntityRelation)GetRelationsForField("UpdateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "UpdateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -2200,6 +2391,39 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AssessmentFieldIndex.SummaryNoteId, value); }
 		}
 
+		/// <summary> The PsychologistFoundInFavorOfClaimant property of the Entity Assessment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Assessments"."PsychologistFoundInFavorOfClaimant"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Boolean> PsychologistFoundInFavorOfClaimant
+		{
+			get { return (Nullable<System.Boolean>)GetValue((int)AssessmentFieldIndex.PsychologistFoundInFavorOfClaimant, false); }
+			set	{ SetValue((int)AssessmentFieldIndex.PsychologistFoundInFavorOfClaimant, value); }
+		}
+
+		/// <summary> The NeurocognitiveCredibilityId property of the Entity Assessment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Assessments"."NeurocognitiveCredibilityId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> NeurocognitiveCredibilityId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)AssessmentFieldIndex.NeurocognitiveCredibilityId, false); }
+			set	{ SetValue((int)AssessmentFieldIndex.NeurocognitiveCredibilityId, value); }
+		}
+
+		/// <summary> The PsychologicalCredibilityId property of the Entity Assessment<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Assessments"."PsychologicalCredibilityId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> PsychologicalCredibilityId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)AssessmentFieldIndex.PsychologicalCredibilityId, false); }
+			set	{ SetValue((int)AssessmentFieldIndex.PsychologicalCredibilityId, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AppointmentEntity))]
@@ -2410,6 +2634,76 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Gets / sets related entity of type 'CredibilityEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual CredibilityEntity PsychologicalCredibility
+		{
+			get
+			{
+				return _psychologicalCredibility;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncPsychologicalCredibility(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_psychologicalCredibility != null)
+						{
+							UnsetRelatedEntity(_psychologicalCredibility, "PsychologicalCredibility");
+						}
+					}
+					else
+					{
+						if(_psychologicalCredibility!=value)
+						{
+							SetRelatedEntity((IEntity2)value, "PsychologicalCredibility");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'CredibilityEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual CredibilityEntity NeurocognitiveCredibility
+		{
+			get
+			{
+				return _neurocognitiveCredibility;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncNeurocognitiveCredibility(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_neurocognitiveCredibility != null)
+						{
+							UnsetRelatedEntity(_neurocognitiveCredibility, "NeurocognitiveCredibility");
+						}
+					}
+					else
+					{
+						if(_neurocognitiveCredibility!=value)
+						{
+							SetRelatedEntity((IEntity2)value, "NeurocognitiveCredibility");
+						}
+					}
+				}
+			}
+		}
+
 		/// <summary> Gets / sets related entity of type 'NoteEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
@@ -2553,76 +2847,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual UserEntity UpdateUser
-		{
-			get
-			{
-				return _updateUser;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncUpdateUser(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_updateUser != null)
-						{
-							UnsetRelatedEntity(_updateUser, "UpdateUser");
-						}
-					}
-					else
-					{
-						if(_updateUser!=value)
-						{
-							SetRelatedEntity((IEntity2)value, "UpdateUser");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual UserEntity CreateUser
-		{
-			get
-			{
-				return _createUser;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncCreateUser(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_createUser != null)
-						{
-							UnsetRelatedEntity(_createUser, "CreateUser");
-						}
-					}
-					else
-					{
-						if(_createUser!=value)
-						{
-							SetRelatedEntity((IEntity2)value, "CreateUser");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
 		public virtual UserEntity DocListWriter
 		{
 			get
@@ -2684,6 +2908,76 @@ namespace PsychologicalServices.Data.EntityClasses
 						if(_notesWriter!=value)
 						{
 							SetRelatedEntity((IEntity2)value, "NotesWriter");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual UserEntity CreateUser
+		{
+			get
+			{
+				return _createUser;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncCreateUser(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_createUser != null)
+						{
+							UnsetRelatedEntity(_createUser, "CreateUser");
+						}
+					}
+					else
+					{
+						if(_createUser!=value)
+						{
+							SetRelatedEntity((IEntity2)value, "CreateUser");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual UserEntity UpdateUser
+		{
+			get
+			{
+				return _updateUser;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncUpdateUser(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_updateUser != null)
+						{
+							UnsetRelatedEntity(_updateUser, "UpdateUser");
+						}
+					}
+					else
+					{
+						if(_updateUser!=value)
+						{
+							SetRelatedEntity((IEntity2)value, "UpdateUser");
 						}
 					}
 				}

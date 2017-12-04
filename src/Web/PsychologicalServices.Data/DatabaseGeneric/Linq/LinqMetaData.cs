@@ -157,6 +157,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.ContactTypeEntity:
 					toReturn = this.ContactType;
 					break;
+				case PsychologicalServices.Data.EntityType.CredibilityEntity:
+					toReturn = this.Credibility;
+					break;
 				case PsychologicalServices.Data.EntityType.EmployerEntity:
 					toReturn = this.Employer;
 					break;
@@ -444,6 +447,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<ContactTypeEntity> ContactType
 		{
 			get { return new DataSource2<ContactTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting CredibilityEntity instances in the database.</summary>
+		public DataSource2<CredibilityEntity> Credibility
+		{
+			get { return new DataSource2<CredibilityEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting EmployerEntity instances in the database.</summary>

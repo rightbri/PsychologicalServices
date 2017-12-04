@@ -26,6 +26,7 @@ export class EditAssessment {
 		this.colorMatcher = (a, b) => a != null && b != null && a.colorId === b.colorId;
 		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
 		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attribute.attributeId === b.attribute.attributeId;
+		this.credibilityMatcher = (a, b) => a !== null && b !== null && a.credibilityId === b.credibilityId;
 		
 		this.saveDisabled = false;
 		this.validationErrors = null;
@@ -85,6 +86,7 @@ export class EditAssessment {
 			this.dataRepository.getReportStatuses().then(data => this.reportStatuses = data),
 			this.dataRepository.getColors().then(data => this.colors = data),
 			this.dataRepository.getGenders().then(data => this.genders = data),
+			this.dataRepository.getCredibilities().then(data => this.credibilities = data),
 
 			this.dataRepository.searchUsers({
 				companyId: this.user.company.companyId,

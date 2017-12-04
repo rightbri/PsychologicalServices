@@ -3,6 +3,7 @@ using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Credibilities;
 using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Referrals;
 using PsychologicalServices.Models.Reports;
@@ -65,6 +66,12 @@ namespace PsychologicalServices.Models.Assessments
         public DateTimeOffset UpdateDate { get; set; }
 
         public User UpdateUser { get; set; }
+
+        public bool? PsychologistFoundInFavorOfClaimant { get; set; }
+
+        public Credibility NeurocognitiveCredibility { get; set; }
+
+        public Credibility PsychologicalCredibility { get; set; }
 
         public bool IsNew()
         {

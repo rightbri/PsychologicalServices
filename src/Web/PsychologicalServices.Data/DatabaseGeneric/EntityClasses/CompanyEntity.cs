@@ -68,6 +68,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		private AddressEntity _newAppointmentLocation;
 		private AddressEntity _address;
 		private AppointmentStatusEntity _newAppointmentStatus;
@@ -119,6 +121,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ReferralSourceInvoiceConfigurations = "ReferralSourceInvoiceConfigurations";
 			/// <summary>Member name Users</summary>
 			public static readonly string Users = "Users";
+
+
 
 
 
@@ -209,6 +213,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				_psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>)info.GetValue("_psychometristInvoiceAmounts", typeof(EntityCollection<PsychometristInvoiceAmountEntity>));
 				_referralSourceInvoiceConfigurations = (EntityCollection<ReferralSourceInvoiceConfigurationEntity>)info.GetValue("_referralSourceInvoiceConfigurations", typeof(EntityCollection<ReferralSourceInvoiceConfigurationEntity>));
 				_users = (EntityCollection<UserEntity>)info.GetValue("_users", typeof(EntityCollection<UserEntity>));
+
+
 
 
 
@@ -393,6 +399,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				default:
 					break;
 			}
@@ -460,6 +468,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Users":
 					toReturn.Add(CompanyEntity.Relations.UserEntityUsingCompanyId);
 					break;
+
+
 
 
 
@@ -748,6 +758,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				info.AddValue("_newAppointmentLocation", (!this.MarkedForDeletion?_newAppointmentLocation:null));
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_newAppointmentStatus", (!this.MarkedForDeletion?_newAppointmentStatus:null));
@@ -870,6 +882,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.CompanyId, null, ComparisonOperator.Equal, this.CompanyId));
 			return bucket;
 		}
+
+
 
 
 
@@ -1022,6 +1036,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -1038,6 +1054,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._psychometristInvoiceAmounts = (EntityCollection<PsychometristInvoiceAmountEntity>) collectionsQueue.Dequeue();
 			this._referralSourceInvoiceConfigurations = (EntityCollection<ReferralSourceInvoiceConfigurationEntity>) collectionsQueue.Dequeue();
 			this._users = (EntityCollection<UserEntity>) collectionsQueue.Dequeue();
+
+
 
 
 
@@ -1121,6 +1139,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -1139,6 +1159,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<PsychometristInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PsychometristInvoiceAmountEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceInvoiceConfigurationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceInvoiceConfigurationEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))) : null);
+
+
 
 
 
@@ -1186,6 +1208,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("PsychometristInvoiceAmounts", _psychometristInvoiceAmounts);
 			toReturn.Add("ReferralSourceInvoiceConfigurations", _referralSourceInvoiceConfigurations);
 			toReturn.Add("Users", _users);
+
+
 
 
 
@@ -1270,6 +1294,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			if(_newAppointmentLocation!=null)
 			{
 				_newAppointmentLocation.ActiveContext = base.ActiveContext;
@@ -1314,6 +1340,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_psychometristInvoiceAmounts = null;
 			_referralSourceInvoiceConfigurations = null;
 			_users = null;
+
+
 
 
 
@@ -1794,6 +1822,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -2240,6 +2270,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _users;
 			}
 		}
+
+
 
 
 

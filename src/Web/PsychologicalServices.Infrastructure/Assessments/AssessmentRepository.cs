@@ -72,6 +72,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<UserEntity>(assessment => assessment.DocListWriter)
                     .Prefetch<UserEntity>(assessment => assessment.NotesWriter)
                     .Prefetch<CompanyEntity>(assessment => assessment.Company)
+                    .Prefetch<CredibilityEntity>(assessment => assessment.NeurocognitiveCredibility)
+                    .Prefetch<CredibilityEntity>(assessment => assessment.PsychologicalCredibility)
                     .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                         .SubPath(assessmentClaimPath => assessmentClaimPath
                             .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
@@ -318,6 +320,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     prefetch.Add(AssessmentEntity.PrefetchPathSummary);
 
+                    prefetch.Add(AssessmentEntity.PrefetchPathNeurocognitiveCredibility);
+
+                    prefetch.Add(AssessmentEntity.PrefetchPathPsychologicalCredibility);
+
                     var appointmentsPath = prefetch.Add(AssessmentEntity.PrefetchPathAppointments);
 
                     appointmentsPath
@@ -420,7 +426,34 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 {
                     assessmentEntity.NotesWriterId = assessment.NotesWriter.UserId;
                 }
-                
+
+                if (null == assessment.PsychologistFoundInFavorOfClaimant)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.PsychologistFoundInFavorOfClaimant, null);
+                }
+                else
+                {
+                    assessmentEntity.PsychologistFoundInFavorOfClaimant = assessment.PsychologistFoundInFavorOfClaimant;
+                }
+
+                if (null == assessment.NeurocognitiveCredibility)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.NeurocognitiveCredibilityId, null);
+                }
+                else
+                {
+                    assessmentEntity.NeurocognitiveCredibilityId = assessment.NeurocognitiveCredibility.CredibilityId;
+                }
+
+                if (null == assessment.PsychologicalCredibility)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.PsychologicalCredibilityId, null);
+                }
+                else
+                {
+                    assessmentEntity.PsychologicalCredibilityId = assessment.PsychologicalCredibility.CredibilityId;
+                }
+
                 #region appointments
 
                 var appointmentsToAdd = assessment.Appointments

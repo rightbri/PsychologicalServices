@@ -163,6 +163,10 @@ export class DataRepository {
 		return this.getManyBasic('assessmenttype', true);
 	}
 
+	getCredibilities() {
+		return this.getManyBasic('credibility', true);
+	}
+
 	searchBookingData(criteria) {
 		return this.searchBasic(criteria, 'bookingdata');
 	}

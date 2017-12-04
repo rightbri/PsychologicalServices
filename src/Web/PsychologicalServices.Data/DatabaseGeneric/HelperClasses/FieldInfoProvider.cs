@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (62 + 0));
+			base.InitClass( (63 + 0));
 			InitAddressEntityInfos();
 			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
@@ -89,6 +89,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitCompanyAttributeEntityInfos();
 			InitContactEntityInfos();
 			InitContactTypeEntityInfos();
+			InitCredibilityEntityInfos();
 			InitEmployerEntityInfos();
 			InitEmployerTypeEntityInfos();
 			InitInvoiceEntityInfos();
@@ -237,6 +238,9 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentEntity", "UpdateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)AssessmentFieldIndex.UpdateDate, 0, 0, 0);
 			base.AddElementFieldInfo("AssessmentEntity", "UpdateUserId", typeof(System.Int32), false, true, false, false,  (int)AssessmentFieldIndex.UpdateUserId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "SummaryNoteId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.SummaryNoteId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentEntity", "PsychologistFoundInFavorOfClaimant", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)AssessmentFieldIndex.PsychologistFoundInFavorOfClaimant, 0, 0, 0);
+			base.AddElementFieldInfo("AssessmentEntity", "NeurocognitiveCredibilityId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.NeurocognitiveCredibilityId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentEntity", "PsychologicalCredibilityId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.PsychologicalCredibilityId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAssessmentAttributeEntityInfos()
@@ -428,6 +432,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ContactTypeEntity", "ContactTypeId", typeof(System.Int32), true, false, true, false,  (int)ContactTypeFieldIndex.ContactTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("ContactTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)ContactTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("ContactTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ContactTypeFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits CredibilityEntity's FieldInfo objects</summary>
+		private void InitCredibilityEntityInfos()
+		{
+			base.AddElementFieldInfo("CredibilityEntity", "CredibilityId", typeof(System.Int32), true, false, true, false,  (int)CredibilityFieldIndex.CredibilityId, 0, 0, 10);
+			base.AddElementFieldInfo("CredibilityEntity", "Name", typeof(System.String), false, false, false, false,  (int)CredibilityFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("CredibilityEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)CredibilityFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits EmployerEntity's FieldInfo objects</summary>
 		private void InitEmployerEntityInfos()
