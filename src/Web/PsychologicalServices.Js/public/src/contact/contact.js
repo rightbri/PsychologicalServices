@@ -12,7 +12,7 @@ export class Contact {
                 'address2': 'PO Box 52565 Turtle Creek',
                 'city': 'Mississauga',
                 'province': 'Ontario',
-                'postalCode': 'L5J 4S6'
+                'postalCode': 'L5J 1J6'
             },
             email: 'doctormarkwatson@gmail.com'
         };
