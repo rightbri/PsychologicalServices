@@ -7,6 +7,8 @@ using Newtonsoft.Json.Serialization;
 using PsychologicalServices.Api.Infrastructure.Filters;
 using System.Web.Http.Filters;
 using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Cors;
+using PsychologicalServices.Api.Infrastructure.Services;
 
 namespace PsychologicalServices.Api
 {
@@ -18,11 +20,22 @@ namespace PsychologicalServices.Api
             // Configure Web API to use only bearer token authentication.
             //config.SuppressDefaultHostAuthentication();
             //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-            
-            config.Filters.Add(
-                (IFilter)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(VerifyAuthToken))
+
+            config.MessageHandlers.Add(
+                new OptionsRequestHandler(
+                    (ICorsAllowedOrigins)config.DependencyResolver.GetService(typeof(ICorsAllowedOrigins))
+                )
             );
 
+            config.SetCorsPolicyProviderFactory(
+                (ICorsPolicyProviderFactory)config.DependencyResolver.GetService(typeof(ICorsPolicyProviderFactory))
+            );
+            config.EnableCors();
+
+            config.Filters.Add(
+                (IFilter)config.DependencyResolver.GetService(typeof(VerifyAuthToken))
+            );
+            
             config.Services.Add(typeof(IExceptionLogger), GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ExceptionLogger)));
 
             // Use camel case for JSON data.

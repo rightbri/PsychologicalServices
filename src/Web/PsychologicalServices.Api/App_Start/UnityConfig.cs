@@ -8,7 +8,6 @@ using System.Web.Http;
 using Unity.WebApi;
 using System.Web.Http.Filters;
 using PsychologicalServices.Api.Infrastructure.Filters;
-using PsychologicalServices.Api.Infrastructure;
 using Owin;
 using Microsoft.Practices.ServiceLocation;
 using PsychologicalServices.Models.Common.Utility;
