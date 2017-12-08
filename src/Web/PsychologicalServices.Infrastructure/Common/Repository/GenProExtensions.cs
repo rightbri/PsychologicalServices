@@ -12,6 +12,7 @@ using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Contacts;
 using PsychologicalServices.Models.Credibilities;
 using PsychologicalServices.Models.Employers;
+using PsychologicalServices.Models.Events;
 using PsychologicalServices.Models.Invoices;
 using PsychologicalServices.Models.Notes;
 using PsychologicalServices.Models.Referrals;
@@ -27,6 +28,22 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Event ToEvent(this EventEntity e)
+        {
+            return null != e
+                ? new Event
+                {
+                    EventId = e.EventId,
+                    Description = e.Description,
+                    Location = e.Location,
+                    Time = e.Time,
+                    Url = e.Url,
+                    Date = e.Date,
+                    IsActive = e.IsActive,
+                }
+                : null;
+        }
+
         public static Credibility ToCredibility(this CredibilityEntity credibility)
         {
             return null != credibility

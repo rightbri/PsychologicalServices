@@ -1350,7 +1350,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCredibility
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -1362,7 +1361,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCredibilityUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		
@@ -1449,6 +1447,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntityCollection2 CreateEntityCollection()
 		{
 			return new EntityCollection<EmployerTypeEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
+	/// <summary>Factory to create new, empty EventEntity objects.</summary>
+	[Serializable]
+	public partial class EventEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public EventEntityFactory() : base("EventEntity", PsychologicalServices.Data.EntityType.EventEntity) { }
+
+		/// <summary>Creates a new, empty EventEntity object.</summary>
+		/// <returns>A new, empty EventEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new EventEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEvent
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new EventEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new EventEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEventUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<EventEntity>(this);
 		}
 		
 
@@ -2665,6 +2702,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.EmployerTypeEntity:
 					factoryToUse = new EmployerTypeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.EventEntity:
+					factoryToUse = new EventEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					factoryToUse = new InvoiceEntityFactory();

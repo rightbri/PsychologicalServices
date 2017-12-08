@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (63 + 0));
+			base.InitClass( (64 + 0));
 			InitAddressEntityInfos();
 			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
@@ -92,6 +92,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitCredibilityEntityInfos();
 			InitEmployerEntityInfos();
 			InitEmployerTypeEntityInfos();
+			InitEventEntityInfos();
 			InitInvoiceEntityInfos();
 			InitInvoiceAppointmentEntityInfos();
 			InitInvoiceDocumentEntityInfos();
@@ -454,6 +455,17 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("EmployerTypeEntity", "EmployerTypeId", typeof(System.Int32), true, false, true, false,  (int)EmployerTypeFieldIndex.EmployerTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("EmployerTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)EmployerTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("EmployerTypeEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)EmployerTypeFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits EventEntity's FieldInfo objects</summary>
+		private void InitEventEntityInfos()
+		{
+			base.AddElementFieldInfo("EventEntity", "EventId", typeof(System.Int32), true, false, true, false,  (int)EventFieldIndex.EventId, 0, 0, 10);
+			base.AddElementFieldInfo("EventEntity", "Description", typeof(System.String), false, false, false, false,  (int)EventFieldIndex.Description, 300, 0, 0);
+			base.AddElementFieldInfo("EventEntity", "Location", typeof(System.String), false, false, false, true,  (int)EventFieldIndex.Location, 300, 0, 0);
+			base.AddElementFieldInfo("EventEntity", "Time", typeof(System.String), false, false, false, true,  (int)EventFieldIndex.Time, 100, 0, 0);
+			base.AddElementFieldInfo("EventEntity", "Url", typeof(System.String), false, false, false, true,  (int)EventFieldIndex.Url, 1000, 0, 0);
+			base.AddElementFieldInfo("EventEntity", "Date", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)EventFieldIndex.Date, 0, 0, 0);
+			base.AddElementFieldInfo("EventEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)EventFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits InvoiceEntity's FieldInfo objects</summary>
 		private void InitInvoiceEntityInfos()

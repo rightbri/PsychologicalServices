@@ -43,12 +43,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<ReferralSourceInvoiceConfigurationEntity> _referralSourceInvoiceConfiguration;
 		private EntityCollection<AppointmentSequenceEntity> _appointmentSequenceCollectionViaAppointmentStatusInvoiceRates;
 		private EntityCollection<AppointmentStatusEntity> _appointmentStatusCollectionViaAppointmentStatusInvoiceRates;
+
 		private EntityCollection<AssessmentTypeEntity> _assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts;
-
-		private EntityCollection<CompanyEntity> _companyCollectionViaAssessmentTypeInvoiceAmounts;
-
 		private EntityCollection<CompanyEntity> _companyCollectionViaReferralSourceInvoiceConfiguration;
+		private EntityCollection<CompanyEntity> _companyCollectionViaAssessmentTypeInvoiceAmounts;
 		private EntityCollection<CompanyEntity> _companyCollectionViaAppointmentStatusInvoiceRates;
+
 
 
 
@@ -89,16 +89,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AppointmentSequenceCollectionViaAppointmentStatusInvoiceRates = "AppointmentSequenceCollectionViaAppointmentStatusInvoiceRates";
 			/// <summary>Member name AppointmentStatusCollectionViaAppointmentStatusInvoiceRates</summary>
 			public static readonly string AppointmentStatusCollectionViaAppointmentStatusInvoiceRates = "AppointmentStatusCollectionViaAppointmentStatusInvoiceRates";
+
 			/// <summary>Member name AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts</summary>
 			public static readonly string AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts = "AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts";
-
-			/// <summary>Member name CompanyCollectionViaAssessmentTypeInvoiceAmounts</summary>
-			public static readonly string CompanyCollectionViaAssessmentTypeInvoiceAmounts = "CompanyCollectionViaAssessmentTypeInvoiceAmounts";
-
 			/// <summary>Member name CompanyCollectionViaReferralSourceInvoiceConfiguration</summary>
 			public static readonly string CompanyCollectionViaReferralSourceInvoiceConfiguration = "CompanyCollectionViaReferralSourceInvoiceConfiguration";
+			/// <summary>Member name CompanyCollectionViaAssessmentTypeInvoiceAmounts</summary>
+			public static readonly string CompanyCollectionViaAssessmentTypeInvoiceAmounts = "CompanyCollectionViaAssessmentTypeInvoiceAmounts";
 			/// <summary>Member name CompanyCollectionViaAppointmentStatusInvoiceRates</summary>
 			public static readonly string CompanyCollectionViaAppointmentStatusInvoiceRates = "CompanyCollectionViaAppointmentStatusInvoiceRates";
+
 
 
 
@@ -173,12 +173,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				_referralSourceInvoiceConfiguration = (EntityCollection<ReferralSourceInvoiceConfigurationEntity>)info.GetValue("_referralSourceInvoiceConfiguration", typeof(EntityCollection<ReferralSourceInvoiceConfigurationEntity>));
 				_appointmentSequenceCollectionViaAppointmentStatusInvoiceRates = (EntityCollection<AppointmentSequenceEntity>)info.GetValue("_appointmentSequenceCollectionViaAppointmentStatusInvoiceRates", typeof(EntityCollection<AppointmentSequenceEntity>));
 				_appointmentStatusCollectionViaAppointmentStatusInvoiceRates = (EntityCollection<AppointmentStatusEntity>)info.GetValue("_appointmentStatusCollectionViaAppointmentStatusInvoiceRates", typeof(EntityCollection<AppointmentStatusEntity>));
+
 				_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts = (EntityCollection<AssessmentTypeEntity>)info.GetValue("_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts", typeof(EntityCollection<AssessmentTypeEntity>));
-
-				_companyCollectionViaAssessmentTypeInvoiceAmounts = (EntityCollection<CompanyEntity>)info.GetValue("_companyCollectionViaAssessmentTypeInvoiceAmounts", typeof(EntityCollection<CompanyEntity>));
-
 				_companyCollectionViaReferralSourceInvoiceConfiguration = (EntityCollection<CompanyEntity>)info.GetValue("_companyCollectionViaReferralSourceInvoiceConfiguration", typeof(EntityCollection<CompanyEntity>));
+				_companyCollectionViaAssessmentTypeInvoiceAmounts = (EntityCollection<CompanyEntity>)info.GetValue("_companyCollectionViaAssessmentTypeInvoiceAmounts", typeof(EntityCollection<CompanyEntity>));
 				_companyCollectionViaAppointmentStatusInvoiceRates = (EntityCollection<CompanyEntity>)info.GetValue("_companyCollectionViaAppointmentStatusInvoiceRates", typeof(EntityCollection<CompanyEntity>));
+
 
 
 
@@ -269,28 +269,28 @@ namespace PsychologicalServices.Data.EntityClasses
 					this.AppointmentStatusCollectionViaAppointmentStatusInvoiceRates.Add((AppointmentStatusEntity)entity);
 					this.AppointmentStatusCollectionViaAppointmentStatusInvoiceRates.IsReadOnly = true;
 					break;
+
 				case "AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts":
 					this.AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly = false;
 					this.AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts.Add((AssessmentTypeEntity)entity);
 					this.AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly = true;
 					break;
-
-				case "CompanyCollectionViaAssessmentTypeInvoiceAmounts":
-					this.CompanyCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly = false;
-					this.CompanyCollectionViaAssessmentTypeInvoiceAmounts.Add((CompanyEntity)entity);
-					this.CompanyCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly = true;
-					break;
-
 				case "CompanyCollectionViaReferralSourceInvoiceConfiguration":
 					this.CompanyCollectionViaReferralSourceInvoiceConfiguration.IsReadOnly = false;
 					this.CompanyCollectionViaReferralSourceInvoiceConfiguration.Add((CompanyEntity)entity);
 					this.CompanyCollectionViaReferralSourceInvoiceConfiguration.IsReadOnly = true;
+					break;
+				case "CompanyCollectionViaAssessmentTypeInvoiceAmounts":
+					this.CompanyCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly = false;
+					this.CompanyCollectionViaAssessmentTypeInvoiceAmounts.Add((CompanyEntity)entity);
+					this.CompanyCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly = true;
 					break;
 				case "CompanyCollectionViaAppointmentStatusInvoiceRates":
 					this.CompanyCollectionViaAppointmentStatusInvoiceRates.IsReadOnly = false;
 					this.CompanyCollectionViaAppointmentStatusInvoiceRates.Add((CompanyEntity)entity);
 					this.CompanyCollectionViaAppointmentStatusInvoiceRates.IsReadOnly = true;
 					break;
+
 
 
 
@@ -348,24 +348,24 @@ namespace PsychologicalServices.Data.EntityClasses
 					toReturn.Add(ReferralSourceEntity.Relations.AppointmentStatusInvoiceRateEntityUsingReferralSourceId, "ReferralSourceEntity__", "AppointmentStatusInvoiceRate_", JoinHint.None);
 					toReturn.Add(AppointmentStatusInvoiceRateEntity.Relations.AppointmentStatusEntityUsingAppointmentStatusId, "AppointmentStatusInvoiceRate_", string.Empty, JoinHint.None);
 					break;
+
 				case "AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts":
 					toReturn.Add(ReferralSourceEntity.Relations.AssessmentTypeInvoiceAmountEntityUsingReferralSourceId, "ReferralSourceEntity__", "AssessmentTypeInvoiceAmount_", JoinHint.None);
 					toReturn.Add(AssessmentTypeInvoiceAmountEntity.Relations.AssessmentTypeEntityUsingAssessmentTypeId, "AssessmentTypeInvoiceAmount_", string.Empty, JoinHint.None);
 					break;
-
-				case "CompanyCollectionViaAssessmentTypeInvoiceAmounts":
-					toReturn.Add(ReferralSourceEntity.Relations.AssessmentTypeInvoiceAmountEntityUsingReferralSourceId, "ReferralSourceEntity__", "AssessmentTypeInvoiceAmount_", JoinHint.None);
-					toReturn.Add(AssessmentTypeInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId, "AssessmentTypeInvoiceAmount_", string.Empty, JoinHint.None);
-					break;
-
 				case "CompanyCollectionViaReferralSourceInvoiceConfiguration":
 					toReturn.Add(ReferralSourceEntity.Relations.ReferralSourceInvoiceConfigurationEntityUsingReferralSourceId, "ReferralSourceEntity__", "ReferralSourceInvoiceConfiguration_", JoinHint.None);
 					toReturn.Add(ReferralSourceInvoiceConfigurationEntity.Relations.CompanyEntityUsingCompanyId, "ReferralSourceInvoiceConfiguration_", string.Empty, JoinHint.None);
+					break;
+				case "CompanyCollectionViaAssessmentTypeInvoiceAmounts":
+					toReturn.Add(ReferralSourceEntity.Relations.AssessmentTypeInvoiceAmountEntityUsingReferralSourceId, "ReferralSourceEntity__", "AssessmentTypeInvoiceAmount_", JoinHint.None);
+					toReturn.Add(AssessmentTypeInvoiceAmountEntity.Relations.CompanyEntityUsingCompanyId, "AssessmentTypeInvoiceAmount_", string.Empty, JoinHint.None);
 					break;
 				case "CompanyCollectionViaAppointmentStatusInvoiceRates":
 					toReturn.Add(ReferralSourceEntity.Relations.AppointmentStatusInvoiceRateEntityUsingReferralSourceId, "ReferralSourceEntity__", "AppointmentStatusInvoiceRate_", JoinHint.None);
 					toReturn.Add(AppointmentStatusInvoiceRateEntity.Relations.CompanyEntityUsingCompanyId, "AppointmentStatusInvoiceRate_", string.Empty, JoinHint.None);
 					break;
+
 
 
 
@@ -525,12 +525,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_referralSourceInvoiceConfiguration", ((_referralSourceInvoiceConfiguration!=null) && (_referralSourceInvoiceConfiguration.Count>0) && !this.MarkedForDeletion)?_referralSourceInvoiceConfiguration:null);
 				info.AddValue("_appointmentSequenceCollectionViaAppointmentStatusInvoiceRates", ((_appointmentSequenceCollectionViaAppointmentStatusInvoiceRates!=null) && (_appointmentSequenceCollectionViaAppointmentStatusInvoiceRates.Count>0) && !this.MarkedForDeletion)?_appointmentSequenceCollectionViaAppointmentStatusInvoiceRates:null);
 				info.AddValue("_appointmentStatusCollectionViaAppointmentStatusInvoiceRates", ((_appointmentStatusCollectionViaAppointmentStatusInvoiceRates!=null) && (_appointmentStatusCollectionViaAppointmentStatusInvoiceRates.Count>0) && !this.MarkedForDeletion)?_appointmentStatusCollectionViaAppointmentStatusInvoiceRates:null);
+
 				info.AddValue("_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts", ((_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts!=null) && (_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts.Count>0) && !this.MarkedForDeletion)?_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts:null);
-
-				info.AddValue("_companyCollectionViaAssessmentTypeInvoiceAmounts", ((_companyCollectionViaAssessmentTypeInvoiceAmounts!=null) && (_companyCollectionViaAssessmentTypeInvoiceAmounts.Count>0) && !this.MarkedForDeletion)?_companyCollectionViaAssessmentTypeInvoiceAmounts:null);
-
 				info.AddValue("_companyCollectionViaReferralSourceInvoiceConfiguration", ((_companyCollectionViaReferralSourceInvoiceConfiguration!=null) && (_companyCollectionViaReferralSourceInvoiceConfiguration.Count>0) && !this.MarkedForDeletion)?_companyCollectionViaReferralSourceInvoiceConfiguration:null);
+				info.AddValue("_companyCollectionViaAssessmentTypeInvoiceAmounts", ((_companyCollectionViaAssessmentTypeInvoiceAmounts!=null) && (_companyCollectionViaAssessmentTypeInvoiceAmounts.Count>0) && !this.MarkedForDeletion)?_companyCollectionViaAssessmentTypeInvoiceAmounts:null);
 				info.AddValue("_companyCollectionViaAppointmentStatusInvoiceRates", ((_companyCollectionViaAppointmentStatusInvoiceRates!=null) && (_companyCollectionViaAppointmentStatusInvoiceRates.Count>0) && !this.MarkedForDeletion)?_companyCollectionViaAppointmentStatusInvoiceRates:null);
+
 
 
 
@@ -639,6 +639,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'AssessmentType' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
@@ -649,19 +650,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralSourceFields.ReferralSourceId, null, ComparisonOperator.Equal, this.ReferralSourceId, "ReferralSourceEntity__"));
 			return bucket;
 		}
-
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Company' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoCompanyCollectionViaAssessmentTypeInvoiceAmounts()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.Relations.AddRange(GetRelationsForFieldOfType("CompanyCollectionViaAssessmentTypeInvoiceAmounts"));
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralSourceFields.ReferralSourceId, null, ComparisonOperator.Equal, this.ReferralSourceId, "ReferralSourceEntity__"));
-			return bucket;
-		}
-
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'Company' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
@@ -677,6 +665,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'Company' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoCompanyCollectionViaAssessmentTypeInvoiceAmounts()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.Relations.AddRange(GetRelationsForFieldOfType("CompanyCollectionViaAssessmentTypeInvoiceAmounts"));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralSourceFields.ReferralSourceId, null, ComparisonOperator.Equal, this.ReferralSourceId, "ReferralSourceEntity__"));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Company' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoCompanyCollectionViaAppointmentStatusInvoiceRates()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
@@ -684,6 +683,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ReferralSourceFields.ReferralSourceId, null, ComparisonOperator.Equal, this.ReferralSourceId, "ReferralSourceEntity__"));
 			return bucket;
 		}
+
 
 
 
@@ -748,12 +748,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._referralSourceInvoiceConfiguration);
 			collectionsQueue.Enqueue(this._appointmentSequenceCollectionViaAppointmentStatusInvoiceRates);
 			collectionsQueue.Enqueue(this._appointmentStatusCollectionViaAppointmentStatusInvoiceRates);
+
 			collectionsQueue.Enqueue(this._assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts);
-
-			collectionsQueue.Enqueue(this._companyCollectionViaAssessmentTypeInvoiceAmounts);
-
 			collectionsQueue.Enqueue(this._companyCollectionViaReferralSourceInvoiceConfiguration);
+			collectionsQueue.Enqueue(this._companyCollectionViaAssessmentTypeInvoiceAmounts);
 			collectionsQueue.Enqueue(this._companyCollectionViaAppointmentStatusInvoiceRates);
+
 
 
 
@@ -776,12 +776,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._referralSourceInvoiceConfiguration = (EntityCollection<ReferralSourceInvoiceConfigurationEntity>) collectionsQueue.Dequeue();
 			this._appointmentSequenceCollectionViaAppointmentStatusInvoiceRates = (EntityCollection<AppointmentSequenceEntity>) collectionsQueue.Dequeue();
 			this._appointmentStatusCollectionViaAppointmentStatusInvoiceRates = (EntityCollection<AppointmentStatusEntity>) collectionsQueue.Dequeue();
+
 			this._assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts = (EntityCollection<AssessmentTypeEntity>) collectionsQueue.Dequeue();
-
-			this._companyCollectionViaAssessmentTypeInvoiceAmounts = (EntityCollection<CompanyEntity>) collectionsQueue.Dequeue();
-
 			this._companyCollectionViaReferralSourceInvoiceConfiguration = (EntityCollection<CompanyEntity>) collectionsQueue.Dequeue();
+			this._companyCollectionViaAssessmentTypeInvoiceAmounts = (EntityCollection<CompanyEntity>) collectionsQueue.Dequeue();
 			this._companyCollectionViaAppointmentStatusInvoiceRates = (EntityCollection<CompanyEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -821,17 +821,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+
 			if (this._assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts != null)
 			{
 				return true;
 			}
-
-			if (this._companyCollectionViaAssessmentTypeInvoiceAmounts != null)
+			if (this._companyCollectionViaReferralSourceInvoiceConfiguration != null)
 			{
 				return true;
 			}
-
-			if (this._companyCollectionViaReferralSourceInvoiceConfiguration != null)
+			if (this._companyCollectionViaAssessmentTypeInvoiceAmounts != null)
 			{
 				return true;
 			}
@@ -839,6 +838,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+
 
 
 
@@ -863,12 +863,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceInvoiceConfigurationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceInvoiceConfigurationEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentSequenceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentSequenceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentStatusEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentStatusEntityFactory))) : null);
+
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeEntityFactory))) : null);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
 
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))) : null);
 
 
 
@@ -895,12 +895,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("ReferralSourceInvoiceConfiguration", _referralSourceInvoiceConfiguration);
 			toReturn.Add("AppointmentSequenceCollectionViaAppointmentStatusInvoiceRates", _appointmentSequenceCollectionViaAppointmentStatusInvoiceRates);
 			toReturn.Add("AppointmentStatusCollectionViaAppointmentStatusInvoiceRates", _appointmentStatusCollectionViaAppointmentStatusInvoiceRates);
+
 			toReturn.Add("AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts", _assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts);
-
-			toReturn.Add("CompanyCollectionViaAssessmentTypeInvoiceAmounts", _companyCollectionViaAssessmentTypeInvoiceAmounts);
-
 			toReturn.Add("CompanyCollectionViaReferralSourceInvoiceConfiguration", _companyCollectionViaReferralSourceInvoiceConfiguration);
+			toReturn.Add("CompanyCollectionViaAssessmentTypeInvoiceAmounts", _companyCollectionViaAssessmentTypeInvoiceAmounts);
 			toReturn.Add("CompanyCollectionViaAppointmentStatusInvoiceRates", _companyCollectionViaAppointmentStatusInvoiceRates);
+
 
 
 
@@ -941,24 +941,24 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointmentStatusCollectionViaAppointmentStatusInvoiceRates.ActiveContext = base.ActiveContext;
 			}
+
 			if(_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts!=null)
 			{
 				_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts.ActiveContext = base.ActiveContext;
 			}
-
-			if(_companyCollectionViaAssessmentTypeInvoiceAmounts!=null)
-			{
-				_companyCollectionViaAssessmentTypeInvoiceAmounts.ActiveContext = base.ActiveContext;
-			}
-
 			if(_companyCollectionViaReferralSourceInvoiceConfiguration!=null)
 			{
 				_companyCollectionViaReferralSourceInvoiceConfiguration.ActiveContext = base.ActiveContext;
+			}
+			if(_companyCollectionViaAssessmentTypeInvoiceAmounts!=null)
+			{
+				_companyCollectionViaAssessmentTypeInvoiceAmounts.ActiveContext = base.ActiveContext;
 			}
 			if(_companyCollectionViaAppointmentStatusInvoiceRates!=null)
 			{
 				_companyCollectionViaAppointmentStatusInvoiceRates.ActiveContext = base.ActiveContext;
 			}
+
 
 
 
@@ -989,12 +989,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			_referralSourceInvoiceConfiguration = null;
 			_appointmentSequenceCollectionViaAppointmentStatusInvoiceRates = null;
 			_appointmentStatusCollectionViaAppointmentStatusInvoiceRates = null;
+
 			_assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts = null;
-
-			_companyCollectionViaAssessmentTypeInvoiceAmounts = null;
-
 			_companyCollectionViaReferralSourceInvoiceConfiguration = null;
+			_companyCollectionViaAssessmentTypeInvoiceAmounts = null;
 			_companyCollectionViaAppointmentStatusInvoiceRates = null;
+
 
 
 
@@ -1215,6 +1215,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentType' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1228,22 +1229,6 @@ namespace PsychologicalServices.Data.EntityClasses
 					(int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, 0, null, null, GetRelationsForField("AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts"), null, "AssessmentTypeCollectionViaAssessmentTypeInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
-
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathCompanyCollectionViaAssessmentTypeInvoiceAmounts
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = ReferralSourceEntity.Relations.AssessmentTypeInvoiceAmountEntityUsingReferralSourceId;
-				intermediateRelation.SetAliases(string.Empty, "AssessmentTypeInvoiceAmount_");
-				return new PrefetchPathElement2(new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))), intermediateRelation,
-					(int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, GetRelationsForField("CompanyCollectionViaAssessmentTypeInvoiceAmounts"), null, "CompanyCollectionViaAssessmentTypeInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
-
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
@@ -1262,6 +1247,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCompanyCollectionViaAssessmentTypeInvoiceAmounts
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = ReferralSourceEntity.Relations.AssessmentTypeInvoiceAmountEntityUsingReferralSourceId;
+				intermediateRelation.SetAliases(string.Empty, "AssessmentTypeInvoiceAmount_");
+				return new PrefetchPathElement2(new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))), intermediateRelation,
+					(int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, GetRelationsForField("CompanyCollectionViaAssessmentTypeInvoiceAmounts"), null, "CompanyCollectionViaAssessmentTypeInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathCompanyCollectionViaAppointmentStatusInvoiceRates
 		{
 			get
@@ -1272,6 +1271,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					(int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, GetRelationsForField("CompanyCollectionViaAppointmentStatusInvoiceRates"), null, "CompanyCollectionViaAppointmentStatusInvoiceRates", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
+
 
 
 
@@ -1493,6 +1493,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentTypeEntity' which are related to this entity via a relation of type 'm:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AssessmentTypeEntity))]
@@ -1508,24 +1509,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _assessmentTypeCollectionViaAssessmentTypeInvoiceAmounts;
 			}
 		}
-
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'CompanyEntity' which are related to this entity via a relation of type 'm:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(CompanyEntity))]
-		public virtual EntityCollection<CompanyEntity> CompanyCollectionViaAssessmentTypeInvoiceAmounts
-		{
-			get
-			{
-				if(_companyCollectionViaAssessmentTypeInvoiceAmounts==null)
-				{
-					_companyCollectionViaAssessmentTypeInvoiceAmounts = new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory)));
-					_companyCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly=true;
-				}
-				return _companyCollectionViaAssessmentTypeInvoiceAmounts;
-			}
-		}
-
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'CompanyEntity' which are related to this entity via a relation of type 'm:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
@@ -1546,6 +1529,22 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Gets the EntityCollection with the related entities of type 'CompanyEntity' which are related to this entity via a relation of type 'm:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(CompanyEntity))]
+		public virtual EntityCollection<CompanyEntity> CompanyCollectionViaAssessmentTypeInvoiceAmounts
+		{
+			get
+			{
+				if(_companyCollectionViaAssessmentTypeInvoiceAmounts==null)
+				{
+					_companyCollectionViaAssessmentTypeInvoiceAmounts = new EntityCollection<CompanyEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory)));
+					_companyCollectionViaAssessmentTypeInvoiceAmounts.IsReadOnly=true;
+				}
+				return _companyCollectionViaAssessmentTypeInvoiceAmounts;
+			}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'CompanyEntity' which are related to this entity via a relation of type 'm:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(CompanyEntity))]
 		public virtual EntityCollection<CompanyEntity> CompanyCollectionViaAppointmentStatusInvoiceRates
 		{
 			get
@@ -1558,6 +1557,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _companyCollectionViaAppointmentStatusInvoiceRates;
 			}
 		}
+
 
 
 

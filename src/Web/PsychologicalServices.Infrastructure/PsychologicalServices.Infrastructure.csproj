@@ -102,6 +102,7 @@
     <Compile Include="Contacts\ContactRepository.cs" />
     <Compile Include="Credibilities\CredibilityRepository.cs" />
     <Compile Include="Employers\EmployerRepository.cs" />
+    <Compile Include="Events\EventRepository.cs" />
     <Compile Include="Invoices\InvoiceRepository.cs" />
     <Compile Include="Outstanding\OutstandingRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

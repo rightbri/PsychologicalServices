@@ -65,10 +65,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		private ReferralSourceEntity _referralSource;
 		private ReferralTypeEntity _referralType;
 		private ReportStatusEntity _reportStatus;
-		private UserEntity _docListWriter;
-		private UserEntity _notesWriter;
-		private UserEntity _createUser;
 		private UserEntity _updateUser;
+		private UserEntity _createUser;
+		private UserEntity _notesWriter;
+		private UserEntity _docListWriter;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -98,14 +98,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ReferralType = "ReferralType";
 			/// <summary>Member name ReportStatus</summary>
 			public static readonly string ReportStatus = "ReportStatus";
-			/// <summary>Member name DocListWriter</summary>
-			public static readonly string DocListWriter = "DocListWriter";
-			/// <summary>Member name NotesWriter</summary>
-			public static readonly string NotesWriter = "NotesWriter";
-			/// <summary>Member name CreateUser</summary>
-			public static readonly string CreateUser = "CreateUser";
 			/// <summary>Member name UpdateUser</summary>
 			public static readonly string UpdateUser = "UpdateUser";
+			/// <summary>Member name CreateUser</summary>
+			public static readonly string CreateUser = "CreateUser";
+			/// <summary>Member name NotesWriter</summary>
+			public static readonly string NotesWriter = "NotesWriter";
+			/// <summary>Member name DocListWriter</summary>
+			public static readonly string DocListWriter = "DocListWriter";
 			/// <summary>Member name Appointments</summary>
 			public static readonly string Appointments = "Appointments";
 			/// <summary>Member name Arbitrations</summary>
@@ -253,25 +253,25 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_reportStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_docListWriter = (UserEntity)info.GetValue("_docListWriter", typeof(UserEntity));
-				if(_docListWriter!=null)
+				_updateUser = (UserEntity)info.GetValue("_updateUser", typeof(UserEntity));
+				if(_updateUser!=null)
 				{
-					_docListWriter.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
-				_notesWriter = (UserEntity)info.GetValue("_notesWriter", typeof(UserEntity));
-				if(_notesWriter!=null)
-				{
-					_notesWriter.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_updateUser.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 				_createUser = (UserEntity)info.GetValue("_createUser", typeof(UserEntity));
 				if(_createUser!=null)
 				{
 					_createUser.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_updateUser = (UserEntity)info.GetValue("_updateUser", typeof(UserEntity));
-				if(_updateUser!=null)
+				_notesWriter = (UserEntity)info.GetValue("_notesWriter", typeof(UserEntity));
+				if(_notesWriter!=null)
 				{
-					_updateUser.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_notesWriter.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_docListWriter = (UserEntity)info.GetValue("_docListWriter", typeof(UserEntity));
+				if(_docListWriter!=null)
+				{
+					_docListWriter.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -370,17 +370,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					this.ReportStatus = (ReportStatusEntity)entity;
 					break;
-				case "DocListWriter":
-					this.DocListWriter = (UserEntity)entity;
-					break;
-				case "NotesWriter":
-					this.NotesWriter = (UserEntity)entity;
+				case "UpdateUser":
+					this.UpdateUser = (UserEntity)entity;
 					break;
 				case "CreateUser":
 					this.CreateUser = (UserEntity)entity;
 					break;
-				case "UpdateUser":
-					this.UpdateUser = (UserEntity)entity;
+				case "NotesWriter":
+					this.NotesWriter = (UserEntity)entity;
+					break;
+				case "DocListWriter":
+					this.DocListWriter = (UserEntity)entity;
 					break;
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)entity);
@@ -464,17 +464,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					toReturn.Add(AssessmentEntity.Relations.ReportStatusEntityUsingReportStatusId);
 					break;
-				case "DocListWriter":
-					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingDocListWriterId);
-					break;
-				case "NotesWriter":
-					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingNotesWriterId);
+				case "UpdateUser":
+					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingUpdateUserId);
 					break;
 				case "CreateUser":
 					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingCreateUserId);
 					break;
-				case "UpdateUser":
-					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingUpdateUserId);
+				case "NotesWriter":
+					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingNotesWriterId);
+					break;
+				case "DocListWriter":
+					toReturn.Add(AssessmentEntity.Relations.UserEntityUsingDocListWriterId);
 					break;
 				case "Appointments":
 					toReturn.Add(AssessmentEntity.Relations.AppointmentEntityUsingAssessmentId);
@@ -543,13 +543,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-				case "DocListWriter":
-					return true;
-				case "NotesWriter":
+				case "UpdateUser":
 					return true;
 				case "CreateUser":
 					return true;
-				case "UpdateUser":
+				case "NotesWriter":
+					return true;
+				case "DocListWriter":
 					return true;
 
 				default:
@@ -589,17 +589,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					SetupSyncReportStatus(relatedEntity);
 					break;
-				case "DocListWriter":
-					SetupSyncDocListWriter(relatedEntity);
-					break;
-				case "NotesWriter":
-					SetupSyncNotesWriter(relatedEntity);
+				case "UpdateUser":
+					SetupSyncUpdateUser(relatedEntity);
 					break;
 				case "CreateUser":
 					SetupSyncCreateUser(relatedEntity);
 					break;
-				case "UpdateUser":
-					SetupSyncUpdateUser(relatedEntity);
+				case "NotesWriter":
+					SetupSyncNotesWriter(relatedEntity);
+					break;
+				case "DocListWriter":
+					SetupSyncDocListWriter(relatedEntity);
 					break;
 				case "Appointments":
 					this.Appointments.Add((AppointmentEntity)relatedEntity);
@@ -664,17 +664,17 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					DesetupSyncReportStatus(false, true);
 					break;
-				case "DocListWriter":
-					DesetupSyncDocListWriter(false, true);
-					break;
-				case "NotesWriter":
-					DesetupSyncNotesWriter(false, true);
+				case "UpdateUser":
+					DesetupSyncUpdateUser(false, true);
 					break;
 				case "CreateUser":
 					DesetupSyncCreateUser(false, true);
 					break;
-				case "UpdateUser":
-					DesetupSyncUpdateUser(false, true);
+				case "NotesWriter":
+					DesetupSyncNotesWriter(false, true);
+					break;
+				case "DocListWriter":
+					DesetupSyncDocListWriter(false, true);
 					break;
 				case "Appointments":
 					base.PerformRelatedEntityRemoval(this.Appointments, relatedEntity, signalRelatedEntityManyToOne);
@@ -753,21 +753,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_reportStatus);
 			}
-			if(_docListWriter!=null)
+			if(_updateUser!=null)
 			{
-				toReturn.Add(_docListWriter);
-			}
-			if(_notesWriter!=null)
-			{
-				toReturn.Add(_notesWriter);
+				toReturn.Add(_updateUser);
 			}
 			if(_createUser!=null)
 			{
 				toReturn.Add(_createUser);
 			}
-			if(_updateUser!=null)
+			if(_notesWriter!=null)
 			{
-				toReturn.Add(_updateUser);
+				toReturn.Add(_notesWriter);
+			}
+			if(_docListWriter!=null)
+			{
+				toReturn.Add(_docListWriter);
 			}
 
 			return toReturn;
@@ -828,10 +828,10 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_referralSource", (!this.MarkedForDeletion?_referralSource:null));
 				info.AddValue("_referralType", (!this.MarkedForDeletion?_referralType:null));
 				info.AddValue("_reportStatus", (!this.MarkedForDeletion?_reportStatus:null));
-				info.AddValue("_docListWriter", (!this.MarkedForDeletion?_docListWriter:null));
-				info.AddValue("_notesWriter", (!this.MarkedForDeletion?_notesWriter:null));
-				info.AddValue("_createUser", (!this.MarkedForDeletion?_createUser:null));
 				info.AddValue("_updateUser", (!this.MarkedForDeletion?_updateUser:null));
+				info.AddValue("_createUser", (!this.MarkedForDeletion?_createUser:null));
+				info.AddValue("_notesWriter", (!this.MarkedForDeletion?_notesWriter:null));
+				info.AddValue("_docListWriter", (!this.MarkedForDeletion?_docListWriter:null));
 
 			}
 			
@@ -1042,20 +1042,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoDocListWriter()
+		public virtual IRelationPredicateBucket GetRelationInfoUpdateUser()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.DocListWriterId));
-			return bucket;
-		}
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoNotesWriter()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.NotesWriterId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UpdateUserId));
 			return bucket;
 		}
 
@@ -1072,10 +1062,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoUpdateUser()
+		public virtual IRelationPredicateBucket GetRelationInfoNotesWriter()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UpdateUserId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.NotesWriterId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'User' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoDocListWriter()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.DocListWriterId));
 			return bucket;
 		}
 
@@ -1250,10 +1250,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("ReferralSource", _referralSource);
 			toReturn.Add("ReferralType", _referralType);
 			toReturn.Add("ReportStatus", _reportStatus);
-			toReturn.Add("DocListWriter", _docListWriter);
-			toReturn.Add("NotesWriter", _notesWriter);
-			toReturn.Add("CreateUser", _createUser);
 			toReturn.Add("UpdateUser", _updateUser);
+			toReturn.Add("CreateUser", _createUser);
+			toReturn.Add("NotesWriter", _notesWriter);
+			toReturn.Add("DocListWriter", _docListWriter);
 			toReturn.Add("Appointments", _appointments);
 			toReturn.Add("Arbitrations", _arbitrations);
 			toReturn.Add("AssessmentAttributes", _assessmentAttributes);
@@ -1357,21 +1357,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_reportStatus.ActiveContext = base.ActiveContext;
 			}
-			if(_docListWriter!=null)
+			if(_updateUser!=null)
 			{
-				_docListWriter.ActiveContext = base.ActiveContext;
-			}
-			if(_notesWriter!=null)
-			{
-				_notesWriter.ActiveContext = base.ActiveContext;
+				_updateUser.ActiveContext = base.ActiveContext;
 			}
 			if(_createUser!=null)
 			{
 				_createUser.ActiveContext = base.ActiveContext;
 			}
-			if(_updateUser!=null)
+			if(_notesWriter!=null)
 			{
-				_updateUser.ActiveContext = base.ActiveContext;
+				_notesWriter.ActiveContext = base.ActiveContext;
+			}
+			if(_docListWriter!=null)
+			{
+				_docListWriter.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -1408,10 +1408,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_referralSource = null;
 			_referralType = null;
 			_reportStatus = null;
-			_docListWriter = null;
-			_notesWriter = null;
-			_createUser = null;
 			_updateUser = null;
+			_createUser = null;
+			_notesWriter = null;
+			_docListWriter = null;
 
 			PerformDependencyInjection();
 			
@@ -1758,64 +1758,31 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _docListWriter</summary>
+		/// <summary> Removes the sync logic for member _updateUser</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncDocListWriter(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncUpdateUser(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _docListWriter, new PropertyChangedEventHandler( OnDocListWriterPropertyChanged ), "DocListWriter", AssessmentEntity.Relations.UserEntityUsingDocListWriterId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.DocListWriterId } );		
-			_docListWriter = null;
+			base.PerformDesetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.UpdateUserId } );		
+			_updateUser = null;
 		}
 
-		/// <summary> setups the sync logic for member _docListWriter</summary>
+		/// <summary> setups the sync logic for member _updateUser</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncDocListWriter(IEntity2 relatedEntity)
+		private void SetupSyncUpdateUser(IEntity2 relatedEntity)
 		{
-			if(_docListWriter!=relatedEntity)
+			if(_updateUser!=relatedEntity)
 			{
-				DesetupSyncDocListWriter(true, true);
-				_docListWriter = (UserEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _docListWriter, new PropertyChangedEventHandler( OnDocListWriterPropertyChanged ), "DocListWriter", AssessmentEntity.Relations.UserEntityUsingDocListWriterId, true, new string[] {  } );
+				DesetupSyncUpdateUser(true, true);
+				_updateUser = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnDocListWriterPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
-		/// <summary> Removes the sync logic for member _notesWriter</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncNotesWriter(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _notesWriter, new PropertyChangedEventHandler( OnNotesWriterPropertyChanged ), "NotesWriter", AssessmentEntity.Relations.UserEntityUsingNotesWriterId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.NotesWriterId } );		
-			_notesWriter = null;
-		}
-
-		/// <summary> setups the sync logic for member _notesWriter</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncNotesWriter(IEntity2 relatedEntity)
-		{
-			if(_notesWriter!=relatedEntity)
-			{
-				DesetupSyncNotesWriter(true, true);
-				_notesWriter = (UserEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _notesWriter, new PropertyChangedEventHandler( OnNotesWriterPropertyChanged ), "NotesWriter", AssessmentEntity.Relations.UserEntityUsingNotesWriterId, true, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnNotesWriterPropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnUpdateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1857,31 +1824,64 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _updateUser</summary>
+		/// <summary> Removes the sync logic for member _notesWriter</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncUpdateUser(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncNotesWriter(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.UpdateUserId } );		
-			_updateUser = null;
+			base.PerformDesetupSyncRelatedEntity( _notesWriter, new PropertyChangedEventHandler( OnNotesWriterPropertyChanged ), "NotesWriter", AssessmentEntity.Relations.UserEntityUsingNotesWriterId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.NotesWriterId } );		
+			_notesWriter = null;
 		}
 
-		/// <summary> setups the sync logic for member _updateUser</summary>
+		/// <summary> setups the sync logic for member _notesWriter</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncUpdateUser(IEntity2 relatedEntity)
+		private void SetupSyncNotesWriter(IEntity2 relatedEntity)
 		{
-			if(_updateUser!=relatedEntity)
+			if(_notesWriter!=relatedEntity)
 			{
-				DesetupSyncUpdateUser(true, true);
-				_updateUser = (UserEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _updateUser, new PropertyChangedEventHandler( OnUpdateUserPropertyChanged ), "UpdateUser", AssessmentEntity.Relations.UserEntityUsingUpdateUserId, true, new string[] {  } );
+				DesetupSyncNotesWriter(true, true);
+				_notesWriter = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _notesWriter, new PropertyChangedEventHandler( OnNotesWriterPropertyChanged ), "NotesWriter", AssessmentEntity.Relations.UserEntityUsingNotesWriterId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnUpdateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnNotesWriterPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _docListWriter</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncDocListWriter(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _docListWriter, new PropertyChangedEventHandler( OnDocListWriterPropertyChanged ), "DocListWriter", AssessmentEntity.Relations.UserEntityUsingDocListWriterId, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)AssessmentFieldIndex.DocListWriterId } );		
+			_docListWriter = null;
+		}
+
+		/// <summary> setups the sync logic for member _docListWriter</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncDocListWriter(IEntity2 relatedEntity)
+		{
+			if(_docListWriter!=relatedEntity)
+			{
+				DesetupSyncDocListWriter(true, true);
+				_docListWriter = (UserEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _docListWriter, new PropertyChangedEventHandler( OnDocListWriterPropertyChanged ), "DocListWriter", AssessmentEntity.Relations.UserEntityUsingDocListWriterId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnDocListWriterPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -2123,24 +2123,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathDocListWriter
+		public static IPrefetchPathElement2 PrefetchPathUpdateUser
 		{
 			get
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
-					(IEntityRelation)GetRelationsForField("DocListWriter")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "DocListWriter", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathNotesWriter
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
-					(IEntityRelation)GetRelationsForField("NotesWriter")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "NotesWriter", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("UpdateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "UpdateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -2159,12 +2147,24 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathUpdateUser
+		public static IPrefetchPathElement2 PrefetchPathNotesWriter
 		{
 			get
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
-					(IEntityRelation)GetRelationsForField("UpdateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "UpdateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("NotesWriter")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "NotesWriter", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathDocListWriter
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),
+					(IEntityRelation)GetRelationsForField("DocListWriter")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "DocListWriter", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -2847,67 +2847,32 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual UserEntity DocListWriter
+		public virtual UserEntity UpdateUser
 		{
 			get
 			{
-				return _docListWriter;
+				return _updateUser;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncDocListWriter(value);
+					SetupSyncUpdateUser(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_docListWriter != null)
+						if(_updateUser != null)
 						{
-							UnsetRelatedEntity(_docListWriter, "DocListWriter");
+							UnsetRelatedEntity(_updateUser, "UpdateUser");
 						}
 					}
 					else
 					{
-						if(_docListWriter!=value)
+						if(_updateUser!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "DocListWriter");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual UserEntity NotesWriter
-		{
-			get
-			{
-				return _notesWriter;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncNotesWriter(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_notesWriter != null)
-						{
-							UnsetRelatedEntity(_notesWriter, "NotesWriter");
-						}
-					}
-					else
-					{
-						if(_notesWriter!=value)
-						{
-							SetRelatedEntity((IEntity2)value, "NotesWriter");
+							SetRelatedEntity((IEntity2)value, "UpdateUser");
 						}
 					}
 				}
@@ -2952,32 +2917,67 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
 		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
 		[Browsable(false)]
-		public virtual UserEntity UpdateUser
+		public virtual UserEntity NotesWriter
 		{
 			get
 			{
-				return _updateUser;
+				return _notesWriter;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncUpdateUser(value);
+					SetupSyncNotesWriter(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_updateUser != null)
+						if(_notesWriter != null)
 						{
-							UnsetRelatedEntity(_updateUser, "UpdateUser");
+							UnsetRelatedEntity(_notesWriter, "NotesWriter");
 						}
 					}
 					else
 					{
-						if(_updateUser!=value)
+						if(_notesWriter!=value)
 						{
-							SetRelatedEntity((IEntity2)value, "UpdateUser");
+							SetRelatedEntity((IEntity2)value, "NotesWriter");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual UserEntity DocListWriter
+		{
+			get
+			{
+				return _docListWriter;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncDocListWriter(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_docListWriter != null)
+						{
+							UnsetRelatedEntity(_docListWriter, "DocListWriter");
+						}
+					}
+					else
+					{
+						if(_docListWriter!=value)
+						{
+							SetRelatedEntity((IEntity2)value, "DocListWriter");
 						}
 					}
 				}

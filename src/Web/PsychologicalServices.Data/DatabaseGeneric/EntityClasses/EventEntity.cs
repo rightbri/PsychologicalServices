@@ -28,35 +28,15 @@ namespace PsychologicalServices.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 
 	/// <summary>
-	/// Entity class which represents the entity 'Credibility'.<br/><br/>
+	/// Entity class which represents the entity 'Event'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class CredibilityEntity : CommonEntityBase, ISerializable
+	public partial class EventEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -77,37 +57,17 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static CredibilityEntity()
+		static EventEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public CredibilityEntity():base("CredibilityEntity")
+		public EventEntity():base("EventEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -115,66 +75,46 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public CredibilityEntity(IEntityFields2 fields):base("CredibilityEntity")
+		public EventEntity(IEntityFields2 fields):base("EventEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this CredibilityEntity</param>
-		public CredibilityEntity(IValidator validator):base("CredibilityEntity")
+		/// <param name="validator">The custom validator object for this EventEntity</param>
+		public EventEntity(IValidator validator):base("EventEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="credibilityId">PK value for Credibility which data should be fetched into this Credibility object</param>
+		/// <param name="eventId">PK value for Event which data should be fetched into this Event object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public CredibilityEntity(System.Int32 credibilityId):base("CredibilityEntity")
+		public EventEntity(System.Int32 eventId):base("EventEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.CredibilityId = credibilityId;
+			this.EventId = eventId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="credibilityId">PK value for Credibility which data should be fetched into this Credibility object</param>
-		/// <param name="validator">The custom validator object for this CredibilityEntity</param>
+		/// <param name="eventId">PK value for Event which data should be fetched into this Event object</param>
+		/// <param name="validator">The custom validator object for this EventEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public CredibilityEntity(System.Int32 credibilityId, IValidator validator):base("CredibilityEntity")
+		public EventEntity(System.Int32 eventId, IValidator validator):base("EventEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.CredibilityId = credibilityId;
+			this.EventId = eventId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected CredibilityEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected EventEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -191,7 +131,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((CredibilityFieldIndex)fieldIndex)
+			switch((EventFieldIndex)fieldIndex)
 			{
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -219,26 +159,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 				default:
 					break;
 			}
@@ -249,7 +169,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return CredibilityEntity.GetRelationsForField(fieldName);
+			return EventEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -260,26 +180,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -322,7 +222,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
 				default:
 					break;
 			}
@@ -337,7 +236,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
 
 
 
@@ -373,7 +271,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 
 
-
 			return toReturn;
 		}
 		
@@ -391,26 +288,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -422,7 +299,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(CredibilityFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(EventFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -431,7 +308,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(CredibilityFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(EventFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -441,29 +318,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new CredibilityRelations().GetAllRelations();
+			return new EventRelations().GetAllRelations();
 		}
 		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -473,7 +330,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.CredibilityEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.EventEntity);
 		}
 
 		/// <summary>
@@ -488,7 +345,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(CredibilityEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(EventEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -496,26 +353,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 		}
@@ -527,52 +364,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
 		
 		/// <summary>Determines whether the entity has populated member collections</summary>
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 			return base.HasPopulatedMemberEntityCollections();
@@ -584,26 +381,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 		}
@@ -619,26 +396,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			return toReturn;
 		}
 		
@@ -649,51 +406,11 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
 
 		/// <summary> Initializes the class members</summary>
 		protected virtual void InitClassMembers()
 		{
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -716,10 +433,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("CredibilityId", fieldHashtable);
+			_fieldsCustomProperties.Add("EventId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Name", fieldHashtable);
+			_fieldsCustomProperties.Add("Description", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Location", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Time", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Url", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Date", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
@@ -729,7 +458,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this CredibilityEntity</param>
+		/// <param name="validator">The validator object for this EventEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -748,9 +477,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static CredibilityRelations Relations
+		public  static EventRelations Relations
 		{
-			get	{ return new CredibilityRelations(); }
+			get	{ return new EventRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -764,31 +493,12 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return CredibilityEntity.CustomProperties;}
+			get { return EventEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -804,61 +514,85 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return CredibilityEntity.FieldsCustomProperties;}
+			get { return EventEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The CredibilityId property of the Entity Credibility<br/><br/>
+		/// <summary> The EventId property of the Entity Event<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Credibilities"."CredibilityId"<br/>
+		/// <remarks>Mapped on  table field: "Events"."EventId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 CredibilityId
+		public virtual System.Int32 EventId
 		{
-			get { return (System.Int32)GetValue((int)CredibilityFieldIndex.CredibilityId, true); }
-			set	{ SetValue((int)CredibilityFieldIndex.CredibilityId, value); }
+			get { return (System.Int32)GetValue((int)EventFieldIndex.EventId, true); }
+			set	{ SetValue((int)EventFieldIndex.EventId, value); }
 		}
 
-		/// <summary> The Name property of the Entity Credibility<br/><br/>
+		/// <summary> The Description property of the Entity Event<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Credibilities"."Name"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// <remarks>Mapped on  table field: "Events"."Description"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 300<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Name
+		public virtual System.String Description
 		{
-			get { return (System.String)GetValue((int)CredibilityFieldIndex.Name, true); }
-			set	{ SetValue((int)CredibilityFieldIndex.Name, value); }
+			get { return (System.String)GetValue((int)EventFieldIndex.Description, true); }
+			set	{ SetValue((int)EventFieldIndex.Description, value); }
 		}
 
-		/// <summary> The IsActive property of the Entity Credibility<br/><br/>
+		/// <summary> The Location property of the Entity Event<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Credibilities"."IsActive"<br/>
+		/// <remarks>Mapped on  table field: "Events"."Location"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 300<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String Location
+		{
+			get { return (System.String)GetValue((int)EventFieldIndex.Location, true); }
+			set	{ SetValue((int)EventFieldIndex.Location, value); }
+		}
+
+		/// <summary> The Time property of the Entity Event<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Events"."Time"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String Time
+		{
+			get { return (System.String)GetValue((int)EventFieldIndex.Time, true); }
+			set	{ SetValue((int)EventFieldIndex.Time, value); }
+		}
+
+		/// <summary> The Url property of the Entity Event<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Events"."Url"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 1000<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String Url
+		{
+			get { return (System.String)GetValue((int)EventFieldIndex.Url, true); }
+			set	{ SetValue((int)EventFieldIndex.Url, value); }
+		}
+
+		/// <summary> The Date property of the Entity Event<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Events"."Date"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.DateTimeOffset> Date
+		{
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)EventFieldIndex.Date, false); }
+			set	{ SetValue((int)EventFieldIndex.Date, value); }
+		}
+
+		/// <summary> The IsActive property of the Entity Event<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Events"."IsActive"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Boolean IsActive
 		{
-			get { return (System.Boolean)GetValue((int)CredibilityFieldIndex.IsActive, true); }
-			set	{ SetValue((int)CredibilityFieldIndex.IsActive, value); }
+			get { return (System.Boolean)GetValue((int)EventFieldIndex.IsActive, true); }
+			set	{ SetValue((int)EventFieldIndex.IsActive, value); }
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -881,7 +615,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.CredibilityEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.EventEntity; }
 		}
 		#endregion
 

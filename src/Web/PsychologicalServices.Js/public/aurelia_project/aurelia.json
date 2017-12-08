@@ -65,6 +65,12 @@
           "aurelia-templating",
           "aurelia-templating-binding",
           {
+            "name": "aurelia-fetch-client",
+            "path": "../node_modules/aurelia-fetch-client/dist/amd",
+            "main": "aurelia-fetch-client",
+            "deps": ["fetch"]
+          },
+          {
             "name": "aurelia-templating-resources",
             "path": "../node_modules/aurelia-templating-resources/dist/amd",
             "main": "aurelia-templating-resources"
@@ -79,6 +85,11 @@
             "path": "../node_modules/aurelia-testing/dist/amd",
             "main": "aurelia-testing",
             "env": "dev"
+          },
+          {
+            "name": "fetch",
+            "path": "../node_modules/whatwg-fetch",
+            "main": "fetch"
           },
           {
             "name": "jquery",

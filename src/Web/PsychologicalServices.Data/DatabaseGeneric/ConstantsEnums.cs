@@ -745,6 +745,30 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Event.
+	/// </summary>
+	public enum EventFieldIndex:int
+	{
+		///<summary>EventId. </summary>
+		EventId,
+		///<summary>Description. </summary>
+		Description,
+		///<summary>Location. </summary>
+		Location,
+		///<summary>Time. </summary>
+		Time,
+		///<summary>Url. </summary>
+		Url,
+		///<summary>Date. </summary>
+		Date,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Invoice.
 	/// </summary>
 	public enum InvoiceFieldIndex:int
@@ -1336,6 +1360,8 @@ namespace PsychologicalServices.Data
 		EmployerEntity,
 		///<summary>EmployerType</summary>
 		EmployerTypeEntity,
+		///<summary>Event</summary>
+		EventEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
 		///<summary>InvoiceAppointment</summary>

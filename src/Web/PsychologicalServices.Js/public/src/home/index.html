@@ -22,8 +22,8 @@
         </h3>
 
         <div class="event uk-padding-small" repeat.for="event of events">
-            <a href.bind="event.linkHref" target="_blank" if.bind="event.linkHref">${event.name}</a>
-            <span class="uk-text-bold" if.bind="!event.linkHref">${event.name}</span>
+            <a href.bind="event.url" target="_blank" if.bind="event.url">${event.description}</a>
+            <span class="uk-text-bold" if.bind="!event.url">${event.description}</span>
             <template if.bind="event.location">
                 <br>${event.location}
             </template>
@@ -31,6 +31,7 @@
                 <br>${event.time}
             </template>
         </div>
+        <p if.bind="!events">No upcoming events</p>
 
       </div>
 

@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((63 + 0));
+			base.InitClass((64 + 0));
 			InitAddressEntityMappings();
 			InitAddressAddressTypeEntityMappings();
 			InitAddressTypeEntityMappings();
@@ -91,6 +91,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitCredibilityEntityMappings();
 			InitEmployerEntityMappings();
 			InitEmployerTypeEntityMappings();
+			InitEventEntityMappings();
 			InitInvoiceEntityMappings();
 			InitInvoiceAppointmentEntityMappings();
 			InitInvoiceDocumentEntityMappings();
@@ -488,6 +489,18 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "EmployerTypeEntity", "EmployerTypeId", "EmployerTypeId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "EmployerTypeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "EmployerTypeEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
+		}
+		/// <summary>Inits EventEntity's mappings</summary>
+		private void InitEventEntityMappings()
+		{
+			base.AddElementMapping( "EventEntity", "PsychologicalServices", @"dbo", "Events", 7 );
+			base.AddElementFieldMapping( "EventEntity", "EventId", "EventId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "EventEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 300, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "EventEntity", "Location", "Location", true, (int)SqlDbType.NVarChar, 300, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "EventEntity", "Time", "Time", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 3 );
+			base.AddElementFieldMapping( "EventEntity", "Url", "Url", true, (int)SqlDbType.NVarChar, 1000, 0, 0, false, "", null, typeof(System.String), 4 );
+			base.AddElementFieldMapping( "EventEntity", "Date", "Date", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5 );
+			base.AddElementFieldMapping( "EventEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 6 );
 		}
 		/// <summary>Inits InvoiceEntity's mappings</summary>
 		private void InitInvoiceEntityMappings()

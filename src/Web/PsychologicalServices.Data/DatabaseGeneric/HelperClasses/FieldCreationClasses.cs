@@ -1144,6 +1144,46 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity EventEntity</summary>
+	public partial class EventFields
+	{
+		/// <summary>Creates a new EventEntity.EventId field instance</summary>
+		public static EntityField2 EventId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.EventId);}
+		}
+		/// <summary>Creates a new EventEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Description);}
+		}
+		/// <summary>Creates a new EventEntity.Location field instance</summary>
+		public static EntityField2 Location
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Location);}
+		}
+		/// <summary>Creates a new EventEntity.Time field instance</summary>
+		public static EntityField2 Time
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Time);}
+		}
+		/// <summary>Creates a new EventEntity.Url field instance</summary>
+		public static EntityField2 Url
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Url);}
+		}
+		/// <summary>Creates a new EventEntity.Date field instance</summary>
+		public static EntityField2 Date
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Date);}
+		}
+		/// <summary>Creates a new EventEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.IsActive);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity InvoiceEntity</summary>
 	public partial class InvoiceFields
 	{

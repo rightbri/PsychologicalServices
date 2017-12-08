@@ -166,6 +166,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.EmployerTypeEntity:
 					toReturn = this.EmployerType;
 					break;
+				case PsychologicalServices.Data.EntityType.EventEntity:
+					toReturn = this.Event;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
@@ -465,6 +468,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<EmployerTypeEntity> EmployerType
 		{
 			get { return new DataSource2<EmployerTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting EventEntity instances in the database.</summary>
+		public DataSource2<EventEntity> Event
+		{
+			get { return new DataSource2<EventEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceEntity instances in the database.</summary>
