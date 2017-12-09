@@ -67,7 +67,10 @@ export class App {
 			{ route: 'analysis/booking-statistics', name: 'bookingStatistics', moduleId: 'analysis/bookingStatistics', title: 'Booking Statistics', nav: true },
 			{ route: 'analysis/cancellation-statistics', name: 'cancellationStatistics', moduleId: 'analysis/cancellationStatistics', title: 'Cancellation Statistics', nav: true },
 			{ route: 'analysis/completion-statistics', name: 'completionStatistics', moduleId: 'analysis/completionStatistics', title: 'Completion Statistics', nav: true },
-			{ route: 'outstanding/reports', name: 'outstandingReports', moduleId: 'outstanding/outstandingReports', title: 'Outstanding Reports', nav: true }
+			{ route: 'outstanding/reports', name: 'outstandingReports', moduleId: 'outstanding/outstandingReports', title: 'Outstanding Reports', nav: true },
+			{ route: 'events', name: 'events', moduleId: 'events/events', title: 'Events', nav: true },
+			{ route: 'events/:id', name: 'editEvent', moduleId: 'events/editEvent', title: 'Edit Event', nav: false },
+			{ route: 'events/add', name: 'addEvent', moduleId: 'events/editEvent', title: 'Add Event', nav: false }
 		]);
 		
 		this.context.getUser().then(user => this.user = user).then(() => this.isClaire = this.user.firstName === 'Claire');

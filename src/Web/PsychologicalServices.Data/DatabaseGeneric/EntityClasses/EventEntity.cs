@@ -448,7 +448,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("Url", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Date", fieldHashtable);
+			_fieldsCustomProperties.Add("Expires", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
@@ -572,15 +572,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)EventFieldIndex.Url, value); }
 		}
 
-		/// <summary> The Date property of the Entity Event<br/><br/>
+		/// <summary> The Expires property of the Entity Event<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Events"."Date"<br/>
+		/// <remarks>Mapped on  table field: "Events"."Expires"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTimeOffset> Date
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.DateTimeOffset Expires
 		{
-			get { return (Nullable<System.DateTimeOffset>)GetValue((int)EventFieldIndex.Date, false); }
-			set	{ SetValue((int)EventFieldIndex.Date, value); }
+			get { return (System.DateTimeOffset)GetValue((int)EventFieldIndex.Expires, true); }
+			set	{ SetValue((int)EventFieldIndex.Expires, value); }
 		}
 
 		/// <summary> The IsActive property of the Entity Event<br/><br/>

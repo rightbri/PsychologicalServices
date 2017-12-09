@@ -4,9 +4,11 @@ namespace PsychologicalServices.Models.Events
 {
     public class EventSearchCriteria
     {
-        public DateTimeOffset? FromDate { get; set; }
+        public string Description { get; set; }
 
-        public DateTimeOffset? ToDate { get; set; }
+        public string Location { get; set; }
+        
+        public bool? IsExpired { get; set; }
 
         public bool? IsActive { get; set; }
     }

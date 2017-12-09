@@ -499,7 +499,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "EventEntity", "Location", "Location", true, (int)SqlDbType.NVarChar, 300, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "EventEntity", "Time", "Time", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 3 );
 			base.AddElementFieldMapping( "EventEntity", "Url", "Url", true, (int)SqlDbType.NVarChar, 1000, 0, 0, false, "", null, typeof(System.String), 4 );
-			base.AddElementFieldMapping( "EventEntity", "Date", "Date", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5 );
+			base.AddElementFieldMapping( "EventEntity", "Expires", "Expires", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5 );
 			base.AddElementFieldMapping( "EventEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 6 );
 		}
 		/// <summary>Inits InvoiceEntity's mappings</summary>

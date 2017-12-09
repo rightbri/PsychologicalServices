@@ -759,8 +759,8 @@ namespace PsychologicalServices.Data
 		Time,
 		///<summary>Url. </summary>
 		Url,
-		///<summary>Date. </summary>
-		Date,
+		///<summary>Expires. </summary>
+		Expires,
 		///<summary>IsActive. </summary>
 		IsActive,
 		/// <summary></summary>

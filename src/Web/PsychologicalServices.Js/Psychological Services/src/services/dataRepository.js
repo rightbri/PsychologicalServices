@@ -207,6 +207,18 @@ export class DataRepository {
 		return this.saveBasic(city, 'city');
 	}
 	
+	getEvents(criteria) {
+		return this.searchBasic(criteria, 'event');
+	}
+
+	getEvent(id) {
+		return this.getSingleBasic(id, 'event');
+	}
+
+	saveEvent(event) {
+		return this.saveBasic(event, 'event');
+	}
+
 	searchAttributes(criteria) {
 		return this.searchBasic(criteria, 'attribute');
 	}

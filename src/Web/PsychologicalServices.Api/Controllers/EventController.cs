@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Events;
+﻿using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Events;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -18,6 +19,16 @@ namespace PsychologicalServices.Api.Controllers
             _eventService = eventService;
         }
 
+        [Route("{id}")]
+        [HttpGet]
+        [ResponseType(typeof(Event))]
+        public IHttpActionResult Get(int id)
+        {
+            var e = _eventService.GetEvent(id);
+
+            return Ok(e);
+        }
+
         [AllowAnonymous]
         [OverrideAuthorization]
         [Route("search")]
@@ -29,6 +40,15 @@ namespace PsychologicalServices.Api.Controllers
 
             return Ok(events);
         }
+        
+        [Route("save")]
+        [HttpPut]
+        [ResponseType(typeof(SaveResult<Event>))]
+        public IHttpActionResult Save(Event e)
+        {
+            var result = _eventService.SaveEvent(e);
 
+            return Ok(result);
+        }
     }
 }

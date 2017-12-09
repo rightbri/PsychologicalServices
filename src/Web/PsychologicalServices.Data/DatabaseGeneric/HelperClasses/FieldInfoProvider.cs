@@ -464,7 +464,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("EventEntity", "Location", typeof(System.String), false, false, false, true,  (int)EventFieldIndex.Location, 300, 0, 0);
 			base.AddElementFieldInfo("EventEntity", "Time", typeof(System.String), false, false, false, true,  (int)EventFieldIndex.Time, 100, 0, 0);
 			base.AddElementFieldInfo("EventEntity", "Url", typeof(System.String), false, false, false, true,  (int)EventFieldIndex.Url, 1000, 0, 0);
-			base.AddElementFieldInfo("EventEntity", "Date", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)EventFieldIndex.Date, 0, 0, 0);
+			base.AddElementFieldInfo("EventEntity", "Expires", typeof(System.DateTimeOffset), false, false, false, false,  (int)EventFieldIndex.Expires, 0, 0, 0);
 			base.AddElementFieldInfo("EventEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)EventFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits InvoiceEntity's FieldInfo objects</summary>

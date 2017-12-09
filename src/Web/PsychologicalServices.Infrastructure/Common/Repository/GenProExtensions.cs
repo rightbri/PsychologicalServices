@@ -38,7 +38,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Location = e.Location,
                     Time = e.Time,
                     Url = e.Url,
-                    Date = e.Date,
+                    Expires = e.Expires,
                     IsActive = e.IsActive,
                 }
                 : null;

@@ -77,8 +77,10 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventSearchCriteria.cs" />
     <Compile Include="Events\EventService.cs" />
+    <Compile Include="Events\EventValidator.cs" />
     <Compile Include="Events\IEventRepository.cs" />
     <Compile Include="Events\IEventService.cs" />
+    <Compile Include="Events\IEventValidator.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentSendLog.cs" />

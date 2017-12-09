@@ -14,8 +14,13 @@ namespace PsychologicalServices.Models.Events
 
         public string Url { get; set; }
 
-        public DateTimeOffset? Date { get; set; }
+        public DateTimeOffset Expires { get; set; }
 
         public bool IsActive { get; set; }
+
+        public bool IsNew()
+        {
+            return EventId == 0;
+        }
     }
 }

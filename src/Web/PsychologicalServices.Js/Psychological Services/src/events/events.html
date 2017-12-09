@@ -1,0 +1,97 @@
+<template>
+	<require from="resources/value-converters/boolean"></require>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Search Events</legend>
+
+		<form class="uk-form-stacked uk-grid-medium" uk-grid>
+			
+			<div class="uk-width-1-1">
+				<label for="searchDescription" class="uk-form-label">Description</label>
+				<div class="uk-form-controls">
+					<input id="searchDescription" type="text" class="uk-input" value.bind="searchDescription" />
+				</div>
+			</div>
+
+			<div class="uk-width-1-1">
+				<label for="searchLocation" class="uk-form-label">Location</label>
+				<div class="uk-form-controls">
+					<input id="searchLocation" type="text" class="uk-input" value.bind="searchLocation" />
+				</div>
+			</div>
+
+			<div class="uk-width-1-2@s">
+				<label class="uk-form-label" for="searchExpired">Is Expired?</label>
+				<div class="uk-form-controls">
+					<select class="uk-select" id="searchExpired" value.bind="searchExpired">
+						<option></option>
+						<option value="true">yes</option>
+						<option value="false">no</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="uk-width-1-2@s">
+				<label class="uk-form-label" for="searchActive">Is Active?</label>
+				<div class="uk-form-controls">
+					<select class="uk-select" id="searchActive" value.bind="searchActive">
+						<option></option>
+						<option value="true">yes</option>
+						<option value="false">no</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="uk-width-1-1">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+					Search
+				</button>
+				
+				<a route-href="route: addEvent" class="uk-button uk-button-secondary">
+					<i class="fa fa-plus"></i>&nbsp;Add
+				</a>
+			</div>
+			
+		</form>
+
+	</fieldset>
+
+</div>
+			
+<div class="uk-overflow-auto" if.bind="events">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Description</th>
+				<th>Location</th>
+				<th>Time</th>
+				<th>URL</th>
+				<th>Expires</th>
+				<th>Is Active?</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="event of events | sortArray:{ property: 'Date', direction: 'asc' }">
+				<td>
+					<a route-href="route: editEvent; params.bind: { id: event.eventId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${event.description}</td>
+				<td>${event.location}</td>
+				<td>${event.time}</td>
+				<td><a href.bind="event.url" target="_blank">${event.url}</a></td>
+				<td>${event.expires | dateFormat:config.shortDateFormat}</td>
+				<td>${event.isActive | boolean}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</template>

@@ -1172,10 +1172,10 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Url);}
 		}
-		/// <summary>Creates a new EventEntity.Date field instance</summary>
-		public static EntityField2 Date
+		/// <summary>Creates a new EventEntity.Expires field instance</summary>
+		public static EntityField2 Expires
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Date);}
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.Expires);}
 		}
 		/// <summary>Creates a new EventEntity.IsActive field instance</summary>
 		public static EntityField2 IsActive
