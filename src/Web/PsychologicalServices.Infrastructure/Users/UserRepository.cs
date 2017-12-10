@@ -594,7 +594,9 @@ namespace PsychologicalServices.Infrastructure.Users
                 uow.AddForSave(userEntity);
 
                 uow.Commit(adapter);
-                
+
+                _cache.Remove(user.Email);
+
                 return userEntity.UserId;
             }
         }
