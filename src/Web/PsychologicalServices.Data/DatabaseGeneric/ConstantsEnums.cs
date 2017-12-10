@@ -559,8 +559,6 @@ namespace PsychologicalServices.Data
 		FirstName,
 		///<summary>LastName. </summary>
 		LastName,
-		///<summary>Age. </summary>
-		Age,
 		///<summary>IsActive. </summary>
 		IsActive,
 		///<summary>Gender. </summary>

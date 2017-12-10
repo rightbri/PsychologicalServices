@@ -1,6 +1,7 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/gender"></require>
+	<require from="resources/value-converters/age"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-mask"></require>
 	<require from="resources/elements/edit-panel"></require>
@@ -29,17 +30,24 @@
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="dateOfBirth">Date of Birth</label>
 					<div class="uk-form-controls">
-						<input id="dateOfBirth" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.claimant.dateOfBirth | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+						<input id="dateOfBirth" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.claimant.dateOfBirth | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />						
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
+					<label class="uk-form-label" for="calculatedAge">Calculated Age</label>
+					<div class="uk-form-controls">
+						${model.claimant.dateOfBirth | age}
+					</div>
+				</div>
+
+				<div class="uk-width-1-1">
 					<label class="uk-form-label" for="age">Age</label>
 					<div class="uk-form-controls">
-						<input id="age" type="text" class="uk-input" pattern="[0-9]+" value.bind="model.claimant.age" />
+						<input id="age" type="text" pattern="[0-9]+" class="uk-input" value.bind="age" change.delegate="ageWasChanged()" />
 					</div>
 				</div>
 				

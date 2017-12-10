@@ -194,7 +194,6 @@ namespace PsychologicalServices.Infrastructure.Claims
 
                 entity.FirstName = claimant.FirstName;
                 entity.LastName = claimant.LastName;
-                entity.Age = claimant.Age;
                 entity.DateOfBirth = claimant.DateOfBirth;
                 entity.Gender = claimant.Gender;
                 entity.IsActive = claimant.IsActive;

@@ -373,10 +373,9 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ClaimantEntity", "ClaimantId", typeof(System.Int32), true, false, true, false,  (int)ClaimantFieldIndex.ClaimantId, 0, 0, 10);
 			base.AddElementFieldInfo("ClaimantEntity", "FirstName", typeof(System.String), false, false, false, false,  (int)ClaimantFieldIndex.FirstName, 50, 0, 0);
 			base.AddElementFieldInfo("ClaimantEntity", "LastName", typeof(System.String), false, false, false, false,  (int)ClaimantFieldIndex.LastName, 50, 0, 0);
-			base.AddElementFieldInfo("ClaimantEntity", "Age", typeof(Nullable<System.Int32>), false, false, false, true,  (int)ClaimantFieldIndex.Age, 0, 0, 10);
 			base.AddElementFieldInfo("ClaimantEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ClaimantFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("ClaimantEntity", "Gender", typeof(System.String), false, false, false, false,  (int)ClaimantFieldIndex.Gender, 1, 0, 0);
-			base.AddElementFieldInfo("ClaimantEntity", "DateOfBirth", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ClaimantFieldIndex.DateOfBirth, 0, 0, 0);
+			base.AddElementFieldInfo("ClaimantEntity", "DateOfBirth", typeof(System.DateTimeOffset), false, false, false, false,  (int)ClaimantFieldIndex.DateOfBirth, 0, 0, 0);
 		}
 		/// <summary>Inits ColorEntity's FieldInfo objects</summary>
 		private void InitColorEntityInfos()

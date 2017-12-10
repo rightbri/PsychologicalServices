@@ -224,8 +224,7 @@ namespace PsychologicalServices.Models.Test.Common.Utility
 
             Assert.AreEqual(expected, actual);
         }
-
-
+        
         [TestMethod]
         public void StartOfDayReturnsCorrectDayWhen36HoursIsAddedToPreDstDate()
         {
@@ -240,6 +239,34 @@ namespace PsychologicalServices.Models.Test.Common.Utility
             var expected = new DateTimeOffset(year, month, day + 1, 0, 0, 0, TimeSpan.FromHours(offset - 1));
 
             var actual = startDate.AddDays(1).AddHours(12).StartOfDay(timezone);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void YearsFromReturnsCorrectValue1()
+        {
+            var value1 = new DateTimeOffset(2017, 12, 11, 12, 00, 00, TimeSpan.FromHours(-5));
+
+            var value2 = new DateTimeOffset(1979, 1, 23, 7, 30, 0, TimeSpan.FromHours(-5));
+
+            var expected = 38;
+
+            var actual = value1.YearsFrom(value2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void YearsFromReturnsCorrectValue2()
+        {
+            var value1 = new DateTimeOffset(2017, 1, 1, 0, 0, 0, TimeSpan.FromHours(-5));
+
+            var value2 = new DateTimeOffset(1979, 1, 1, 7, 30, 0, TimeSpan.FromHours(-5));
+
+            var expected = 37;
+
+            var actual = value1.YearsFrom(value2);
 
             Assert.AreEqual(expected, actual);
         }

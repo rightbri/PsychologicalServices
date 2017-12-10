@@ -4,7 +4,7 @@ import {Notifier} from 'services/notifier';
 
 @inject(DataRepository, Notifier)
 export class Claimants {
-	constructor(dataRepository, notifier) {
+	constructor(dataRepository, notifier, config) {
 		this.dataRepository = dataRepository;
 		this.notifier = notifier;
 		this.claimants = null;

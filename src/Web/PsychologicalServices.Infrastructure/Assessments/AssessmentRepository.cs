@@ -670,7 +670,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             {
                                 FirstName = claim.Claimant.FirstName,
                                 LastName = claim.Claimant.LastName,
-                                Age = claim.Claimant.Age,
                                 DateOfBirth = claim.Claimant.DateOfBirth,
                                 Gender = claim.Claimant.Gender,
                                 IsActive = claim.Claimant.IsActive,
@@ -690,7 +689,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             {
                                 FirstName = claim.Claimant.FirstName,
                                 LastName = claim.Claimant.LastName,
-                                Age = claim.Claimant.Age,
                                 DateOfBirth = claim.Claimant.DateOfBirth,
                                 Gender = claim.Claimant.Gender,
                                 IsActive = claim.Claimant.IsActive,

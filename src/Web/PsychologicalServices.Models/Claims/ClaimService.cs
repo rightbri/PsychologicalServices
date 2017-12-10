@@ -39,8 +39,6 @@ namespace PsychologicalServices.Models.Claims
                 throw new ClaimantNotFoundException(id);
             }
 
-            CalculateClaimantAge(claimant);
-
             return claimant;
         }
 
@@ -54,12 +52,7 @@ namespace PsychologicalServices.Models.Claims
         public IEnumerable<Claimant> SearchClaimants(string name)
         {
             var claimants = _claimRepository.SearchClaimants(name);
-
-            foreach (var claimant in claimants)
-            {
-                CalculateClaimantAge(claimant);
-            }
-
+            
             return claimants;
         }
 
@@ -118,8 +111,6 @@ namespace PsychologicalServices.Models.Claims
 
             try
             {
-                CalculateClaimantAge(claimant);
-
                 var validation = _claimantValidator.Validate(claimant);
 
                 result.ValidationResult = validation;
@@ -163,30 +154,6 @@ namespace PsychologicalServices.Models.Claims
             return result;
         }
         
-        private void CalculateClaimantAge(Claimant claimant)
-        {
-            //recalculate age/date of birth
-            if (claimant.DateOfBirth.HasValue)
-            {
-                claimant.Age = GetAge(claimant.DateOfBirth.Value);
-            }
-            else if (claimant.Age.HasValue)
-            {
-                claimant.DateOfBirth = GetDateOfBirth(_date, claimant.Age.Value);
-            }
-        }
-        
-        private int GetAge(DateTimeOffset date)
-        {
-            return new DateTimeOffset(_date.Today).YearsFrom(date);
-        }
-
-        private DateTime GetDateOfBirth(IDate date, int age)
-        {
-            //when calculating date of birth from age, always set date of birth to 1/1/{birth year}
-            return new DateTime(date.Today.AddYears(-Math.Abs(age)).Year, 1, 1);
-        }
-
         public DeleteResult DeleteClaimant(int id)
         {
             var result = new DeleteResult();

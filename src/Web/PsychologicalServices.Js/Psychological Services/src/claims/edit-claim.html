@@ -2,6 +2,7 @@
 	<require from="resources/elements/edit-panel"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/gender"></require>
+	<require from="resources/value-converters/age"></require>
 	<require from="common/date-mask"></require>
 	
 	<edit-panel ok.delegate="ok($event)" cancel.delegate="cancel($event)">
@@ -13,7 +14,7 @@
 				<div class="uk-form-controls">
 					<p>
 						${model.claimant.firstName} ${model.claimant.lastName}
-						<br>${model.claimant.age} - ${model.claimant.gender | gender}
+						<br>${model.claimant.dateOfBirth | age} - ${model.claimant.gender | gender}
 					</p>
 				</div>
 			</div>

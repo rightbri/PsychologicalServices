@@ -852,11 +852,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ClaimantFieldIndex.LastName);}
 		}
-		/// <summary>Creates a new ClaimantEntity.Age field instance</summary>
-		public static EntityField2 Age
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(ClaimantFieldIndex.Age);}
-		}
 		/// <summary>Creates a new ClaimantEntity.IsActive field instance</summary>
 		public static EntityField2 IsActive
 		{

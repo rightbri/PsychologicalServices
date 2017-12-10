@@ -466,9 +466,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("LastName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("Age", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
@@ -585,17 +582,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ClaimantFieldIndex.LastName, value); }
 		}
 
-		/// <summary> The Age property of the Entity Claimant<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Claimants"."Age"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> Age
-		{
-			get { return (Nullable<System.Int32>)GetValue((int)ClaimantFieldIndex.Age, false); }
-			set	{ SetValue((int)ClaimantFieldIndex.Age, value); }
-		}
-
 		/// <summary> The IsActive property of the Entity Claimant<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Claimants"."IsActive"<br/>
@@ -622,10 +608,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Claimants"."DateOfBirth"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTimeOffset> DateOfBirth
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.DateTimeOffset DateOfBirth
 		{
-			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ClaimantFieldIndex.DateOfBirth, false); }
+			get { return (System.DateTimeOffset)GetValue((int)ClaimantFieldIndex.DateOfBirth, true); }
 			set	{ SetValue((int)ClaimantFieldIndex.DateOfBirth, value); }
 		}
 

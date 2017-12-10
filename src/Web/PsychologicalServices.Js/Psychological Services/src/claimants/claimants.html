@@ -2,6 +2,7 @@
 	<require from="claimants/search-claimant"></require>
 	<require from="claimants/edit-claimant"></require>
 	<require from="resources/value-converters/gender"></require>
+	<require from="resources/value-converters/age"></require>
 	
 <div class="uk-container">
 
@@ -22,7 +23,7 @@
 			
 			<div class="uk-width-1-2@s" if.bind="claimant && !claimantEditModel">
 				${claimant.firstName} ${claimant.lastName}
-				<br>${claimant.age} - ${claimant.gender | gender}
+				<br>${claimant.dateOfBirth | age} - ${claimant.gender | gender}
 			</div>
 			
 			<div class="uk-width-1-2@s" if.bind="claimant && !claimantEditModel">

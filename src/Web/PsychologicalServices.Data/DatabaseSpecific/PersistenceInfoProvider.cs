@@ -395,14 +395,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits ClaimantEntity's mappings</summary>
 		private void InitClaimantEntityMappings()
 		{
-			base.AddElementMapping( "ClaimantEntity", "PsychologicalServices", @"dbo", "Claimants", 7 );
+			base.AddElementMapping( "ClaimantEntity", "PsychologicalServices", @"dbo", "Claimants", 6 );
 			base.AddElementFieldMapping( "ClaimantEntity", "ClaimantId", "ClaimantId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ClaimantEntity", "FirstName", "FirstName", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "ClaimantEntity", "LastName", "LastName", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 2 );
-			base.AddElementFieldMapping( "ClaimantEntity", "Age", "Age", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
-			base.AddElementFieldMapping( "ClaimantEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
-			base.AddElementFieldMapping( "ClaimantEntity", "Gender", "Gender", false, (int)SqlDbType.NChar, 1, 0, 0, false, "", null, typeof(System.String), 5 );
-			base.AddElementFieldMapping( "ClaimantEntity", "DateOfBirth", "DateOfBirth", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 6 );
+			base.AddElementFieldMapping( "ClaimantEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
+			base.AddElementFieldMapping( "ClaimantEntity", "Gender", "Gender", false, (int)SqlDbType.NChar, 1, 0, 0, false, "", null, typeof(System.String), 4 );
+			base.AddElementFieldMapping( "ClaimantEntity", "DateOfBirth", "DateOfBirth", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5 );
 		}
 		/// <summary>Inits ColorEntity's mappings</summary>
 		private void InitColorEntityMappings()

@@ -11,6 +11,7 @@
 	<require from="resources/value-converters/attribute-types"></require>
 	<require from="resources/value-converters/sort-array"></require>
 	<require from="resources/value-converters/appointment-in-statuses"></require>
+	<require from="resources/value-converters/age"></require>
 	<require from="assessments/view-assessment-summary"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
@@ -150,7 +151,7 @@
 				<td>
 					<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
 						<li title="Claimant Name" class="smaller-siblings" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
-						<li title="Claimant Age, Gender" if.bind="claim.claimant">${claim.claimant.age} ${claim.claimant.gender}</li>
+						<li title="Claimant Age, Gender" if.bind="claim.claimant">${claim.claimant.dateOfBirth | age} ${claim.claimant.gender}</li>
 						<li title="Date of Loss">DOL: ${claim.dateOfLoss | dateFormat:config.shortDateFormat}</li>
 						<li title="Claim Number">Claim No: ${claim.claimNumber}</li>
 					</ul>

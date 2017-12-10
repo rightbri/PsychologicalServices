@@ -245,7 +245,7 @@ export class EditAssessment {
 	}
 	
 	newClaimant() {
-		let claimant = { isAdd: true, isActive: true };
+		let claimant = { isAdd: true, dateOfBirth: new Date(), isActive: true };
 		this.editClaimant(claimant);
 	}
 	

@@ -2,6 +2,7 @@
 	<require from="resources/value-converters/gender"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/sort-array"></require>
+	<require from="resources/value-converters/age"></require>
 	<require from="resources/attributes/cancel-enter"></require>
 	
 <div class="uk-container">
@@ -30,7 +31,7 @@
 					<td>${claimant.firstName}</td>
 					<td>${claimant.lastName}</td>
 					<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>
-					<td>${claimant.age}</td>
+					<td>${claimant.dateOfBirth | age}</td>
 					<td>${claimant.gender | gender}</td>
 					<td>
 						<button type="button" class="uk-button uk-button-default" click.delegate="selectClaimant(claimant)">

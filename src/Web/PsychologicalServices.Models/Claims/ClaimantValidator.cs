@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Common.Validation;
+﻿using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Common.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace PsychologicalServices.Models.Claims
     {
         private readonly IClaimRepository _claimRepository = null;
         private readonly IClaimantParameters _claimantParameters = null;
+        private readonly IDate _date = null;
         
         public ClaimantValidator(
             IClaimRepository claimRepository,
-            IClaimantParameters claimantParameters
+            IClaimantParameters claimantParameters,
+            IDate date
         )
         {
             _claimRepository = claimRepository;
             _claimantParameters = claimantParameters;
+            _date = date;
         }
 
         public IValidationResult Validate(Claimant item)
@@ -52,28 +56,19 @@ namespace PsychologicalServices.Models.Claims
                 );
             }
 
-            if (!item.Age.HasValue && !item.DateOfBirth.HasValue)
+            var age = _date.UtcNow.YearsFrom(item.DateOfBirth);
+
+            if (age < _claimantParameters.MinAge)
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "DateOfBirth", Message = GetValidationMessage(item, "Age or date of birth is required") }
+                    new ValidationError { PropertyName = "DateOfBirth", Message = GetValidationMessage(item, string.Format("Claimant cannot be younger than {0}", _claimantParameters.MinAge)) }
                 );
             }
-            else
+            else if (age > _claimantParameters.MaxAge)
             {
-                if (item.Age < _claimantParameters.MinAge)
-                {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "Age", Message = GetValidationMessage(item, string.Format("Age is below minimum value of {0}", _claimantParameters.MinAge)) }
-                    );
-                }
-
-                if (item.Age > _claimantParameters.MaxAge)
-                {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "Age", Message = GetValidationMessage(item, string.Format("Age is above maximum value of {0}", _claimantParameters.MaxAge)) }
-                    );
-                }
-
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "DateOfBirth", Message = GetValidationMessage(item, string.Format("Claimant cannot be older than {0}", _claimantParameters.MaxAge)) }
+                );
             }
             
             if (!_claimantParameters.ValidGenders.Any(gender => gender.Abbreviation == item.Gender))

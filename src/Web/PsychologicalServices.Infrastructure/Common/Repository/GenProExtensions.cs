@@ -543,7 +543,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ClaimantId = claimant.ClaimantId,
                     FirstName = claimant.FirstName,
                     LastName = claimant.LastName,
-                    Age = claimant.Age,
                     DateOfBirth = claimant.DateOfBirth,
                     Gender = claimant.Gender,
                     IsActive = claimant.IsActive,

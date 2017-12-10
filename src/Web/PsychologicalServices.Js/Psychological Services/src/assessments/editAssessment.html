@@ -8,6 +8,7 @@
 	<require from="resources/value-converters/attribute-value"></require>
 	<require from="resources/value-converters/sort-array"></require>
 	<require from="resources/value-converters/note-for-user"></require>
+	<!--<require from="resources/value-converters/age"></require>-->
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-mask"></require>
 	<require from="appointments/edit-appointment"></require>
@@ -176,7 +177,7 @@
 					<search-claimant claimant.bind="claimant" selected.delegate="claimantSelected($event)" if.bind="!claimantEditModel"></search-claimant>
 					<p if.bind="claimant && !claimantEditModel">
 						${claimant.firstName} ${claimant.lastName}
-						<br>${claimant.age} - ${claimant.gender | gender}
+						<!--<br>${claimant.dateOfBirth | age} - ${claimant.gender | gender}-->
 						<button type="button" class="uk-button uk-button-link" click.delegate="editClaimant(claimant)" title="Edit Claimant" uk-tooltip>
 							<i class="fa fa-edit"></i>
 						</button>
