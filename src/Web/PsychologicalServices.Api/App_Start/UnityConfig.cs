@@ -14,6 +14,7 @@ using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Infrastructure.Common.Utility;
 using log4net;
 using System.Web.Http.ExceptionHandling;
+using PsychologicalServices.Models.Rights;
 
 namespace PsychologicalServices.Api
 {
@@ -47,6 +48,8 @@ namespace PsychologicalServices.Api
                 .RegisterType<ICacheService, CacheService>(new InjectionConstructor(System.Runtime.Caching.MemoryCache.Default))
                 .RegisterType<ILog>(new InjectionFactory(unityContainer => LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)))
                 .RegisterType<ExceptionLogger, Log4NetExceptionLogger>()
+                //registration for globally applied authorization attribute (can user login?)
+                .RegisterType<RightAuthorizeAttribute>(new InjectionConstructor(StaticRights.Login))
                 ;
 
             // register all your components with the container here

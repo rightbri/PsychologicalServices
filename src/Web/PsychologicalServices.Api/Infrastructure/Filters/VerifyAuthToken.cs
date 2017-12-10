@@ -18,7 +18,7 @@ namespace PsychologicalServices.Api.Infrastructure.Filters
         public IGoogleAuthTokenVerifier GoogleAuthTokenVerifier { private get; set; }
 
         [Dependency]
-        public IUserService UserService { private get; set; }
+        public IUserLookupService UserLookupService { private get; set; }
 
         public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
@@ -36,10 +36,12 @@ namespace PsychologicalServices.Api.Infrastructure.Filters
 
                 if (null != principal)
                 {
-                    var email = principal.Claims.FirstOrDefault(c => c.Type == "email");
+                    const string emailClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress";
+
+                    var email = principal.Claims.FirstOrDefault(c => c.Type == emailClaimType);
                     if (null != email && !string.IsNullOrWhiteSpace(email.Value))
                     {
-                        var user = UserService.GetUserByEmail(email.Value);
+                        var user = UserLookupService.GetUserByEmail(email.Value);
                         if (null != user && user.IsActive)
                         {
                             actionContext.RequestContext.Principal = new UserPrincipal(user);

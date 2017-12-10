@@ -35,7 +35,10 @@ namespace PsychologicalServices.Api
             config.Filters.Add(
                 (IFilter)config.DependencyResolver.GetService(typeof(VerifyAuthToken))
             );
-            
+            config.Filters.Add(
+                (IFilter)config.DependencyResolver.GetService(typeof(RightAuthorizeAttribute))
+            );
+
             config.Services.Add(typeof(IExceptionLogger), GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ExceptionLogger)));
 
             // Use camel case for JSON data.
