@@ -487,25 +487,22 @@
 				<edit-assessment-note model.bind="noteEditModel" edited.delegate="noteEdited($event)" canceled.delegate="noteCanceled($event)"></edit-assessment-note>
 			</div>
 			
-			<div class="uk-width-2-3@s">
+			<div class="uk-width-1-1">
 				<label class="uk-form-label" for="summary">Summary</label>
 				<div class="uk-form-controls">
+
+					<div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+						<template repeat.for="color of colors">
+							<label>
+								<input type="checkbox" class="uk-checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span class="color-swatch" css="background-color: ${color.hexCode};"></span>
+							</label>
+						</template>					
+					</div>
+					
 					<textarea id="summary" class="uk-textarea" rows="${summaryEditRows}" value.bind="assessment.summary.noteText" focus.trigger="summaryEditFocus($event)" blur.trigger="summaryEditBlur($event)"></textarea>
 				</div>
 			</div>
 			
-			<div class="uk-width-1-3@s">
-				<label class="uk-form-label">Colors</label>
-				<div class="uk-form-controls">
-					<template repeat.for="color of colors">
-						<label>
-							<input type="checkbox" class="uk-checkbox" model.bind="color" checked.bind="assessment.colors" matcher.bind="colorMatcher" />&nbsp;<span class="color-swatch" css="background-color: ${color.hexCode};"></span>
-						</label>
-						<br if.bind="!$last">
-					</template>
-				</div>
-			</div>
-
 			<div class="uk-width-1-1">
 				<label class="uk-form-label">After the assessment</label>
 			</div>
