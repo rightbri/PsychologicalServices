@@ -16,8 +16,6 @@ export class EditClaimantCustomElement {
 		this.eventHelper = eventHelper;
 
 		this.validationErrors = null;
-
-		this.age = 0;
 	}
 	
 	modelChanged(newValue, oldValue) {
@@ -26,15 +24,25 @@ export class EditClaimantCustomElement {
 		
 			this.backup = getBackup(newValue.claimant);
 
-			this.age = this.ageService.getAge(newValue.claimant.dateOfBirth);
+			if (newValue.claimant.dateOfBirth) {
+				this.age = this.ageService.getAge(newValue.claimant.dateOfBirth);
+			}
+			else {
+				this.age = null;
+			}
 		}
 	}
 
-	ageWasChanged() {
-		let newDateOfBirth = this.ageService.getBirthDate(this.age);
-		console.log('age changed .. new date of birth is ' + newDateOfBirth);
+	dobChanged() {
+		let age = this.ageService.getAge(this.model.claimant.dateOfBirth);
+
+		this.age = age;
+	}
+
+	ageChanged() {
+		let dateOfBirth = this.ageService.getDateOfBirth(this.age);
 		
-		this.model.claimant.dateOfBirth = newDateOfBirth;
+		this.model.claimant.dateOfBirth = dateOfBirth;
 	}
 	
 	ok(e) {
@@ -57,6 +65,8 @@ export class EditClaimantCustomElement {
 	
 	cancel(e) {
 		this.eventHelper.fireEvent(this.element, 'canceled', { 'claimant': this.backup });
+
+		this.age = null;
 	}
 }
 

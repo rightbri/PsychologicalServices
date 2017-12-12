@@ -10,9 +10,9 @@ export class AgeValueConverter {
 
 	toView(value) {
 		if (!isNaN(Date.parse(value))) {
-			let birthDate = new Date(value);
+			let dateOfBirth = new Date(value);
 
-			return this.ageService.getAge(birthDate);
+			return this.ageService.getAge(dateOfBirth);
 		}
 		
 		return value;

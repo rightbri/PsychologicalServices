@@ -18,21 +18,17 @@
 		<table class="uk-table uk-table-divider" if.bind="showResults">
 			<thead>
 				<tr>
-					<th>First</th>
-					<th>Last</th>
+					<th>Name</th>
 					<th>Date of Birth</th>
-					<th>Age</th>
 					<th>Gender</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr repeat.for="claimant of claimants | sortArray:[{ property: 'lastName', direction: 'asc' },{ property: 'firstName', direction: 'asc' }]">
-					<td>${claimant.firstName}</td>
-					<td>${claimant.lastName}</td>
+					<td>${claimant.firstName} ${claimant.lastName}</td>
 					<td>${claimant.dateOfBirth | dateFormat:config.longDateFormat}</td>
-					<td>${claimant.dateOfBirth | age}</td>
-					<td>${claimant.gender | gender}</td>
+					<td>${claimant.gender}</td>
 					<td>
 						<button type="button" class="uk-button uk-button-default" click.delegate="selectClaimant(claimant)">
 							Select

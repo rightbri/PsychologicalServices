@@ -33,21 +33,14 @@
 				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="dateOfBirth">Date of Birth</label>
 					<div class="uk-form-controls">
-						<input id="dateOfBirth" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.claimant.dateOfBirth | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />						
+						<input id="dateOfBirth" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.claimant.dateOfBirth | dateFormat:config.shortDateFormat & updateTrigger:'blur'" change.delegate="dobChanged()" />
 					</div>
 				</div>
 				
 				<div class="uk-width-1-2">
-					<label class="uk-form-label" for="calculatedAge">Calculated Age</label>
-					<div class="uk-form-controls">
-						${model.claimant.dateOfBirth | age}
-					</div>
-				</div>
-
-				<div class="uk-width-1-1">
 					<label class="uk-form-label" for="age">Age</label>
 					<div class="uk-form-controls">
-						<input id="age" type="text" pattern="[0-9]+" class="uk-input" value.bind="age" change.delegate="ageWasChanged()" />
+						<input id="age" type="text" pattern="[0-9]+" class="uk-input" value.bind="age" change.delegate="ageChanged()" />
 					</div>
 				</div>
 				

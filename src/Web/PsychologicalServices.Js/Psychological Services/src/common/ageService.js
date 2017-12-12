@@ -27,7 +27,7 @@ export class AgeService {
 		return age;
 	}
 	
-	getBirthDate(age) {
+	getDateOfBirth(age) {
 		let today = new Date();
 
 		let year = today.getFullYear() - age;
