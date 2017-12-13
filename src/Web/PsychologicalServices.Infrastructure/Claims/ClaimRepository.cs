@@ -93,6 +93,41 @@ namespace PsychologicalServices.Infrastructure.Claims
                 .ToList();
             }
         }
+        
+        public IEnumerable<Claimant> SearchClaimants(ClaimantSearchParameters parameters)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var claimants = meta.Claimant.AsQueryable();
+
+                if (null != parameters)
+                {
+                    if (!string.IsNullOrWhiteSpace(parameters.FirstName))
+                    {
+                        claimants = claimants.Where(claimant => claimant.FirstName.Contains(parameters.FirstName));
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(parameters.LastName))
+                    {
+                        claimants = claimants.Where(claimant => claimant.LastName.Contains(parameters.LastName));
+                    }
+
+                    if (parameters.DateOfBirth.HasValue)
+                    {
+                        claimants = claimants.Where(claimant => claimant.DateOfBirth == parameters.DateOfBirth);
+                    }
+                }
+
+                return Execute<ClaimantEntity>(
+                    (ILLBLGenProQuery)
+                    claimants
+                )
+                .Select(claimant => claimant.ToClaimant())
+                .ToList();
+            }
+        }
 
         public IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId)
         {

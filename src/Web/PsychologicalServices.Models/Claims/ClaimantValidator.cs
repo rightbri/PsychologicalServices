@@ -41,6 +41,24 @@ namespace PsychologicalServices.Models.Claims
                     );
                 }
             }
+            else
+            {
+                //duplicate check
+                var duplicates = _claimRepository.SearchClaimants(
+                new ClaimantSearchParameters
+                {
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    DateOfBirth = item.DateOfBirth
+                });
+
+                if (duplicates.Any())
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "ClaimantId", Message = GetValidationMessage(item, $"A claimant already exists with the same name and date of birth") }
+                    );
+                }
+            }
 
             if (string.IsNullOrWhiteSpace(item.FirstName))
             {
