@@ -13,6 +13,7 @@ CREATE PROCEDURE [dbo].[InvoiceSearch]
 	,@InvoiceStatusId INT = NULL
 	,@InvoiceTypeId INT = NULL
 	,@PayableToId INT = NULL
+	,@ClaimantId INT = NULL
 	,@NeedsRefresh BIT = NULL
 AS
 BEGIN
@@ -28,6 +29,7 @@ BEGIN
 			@invoiceStatusId_local INT,
 			@invoiceTypeId_local INT,
 			@payableToId_local INT,
+			@claimantId_local INT,
 			@needsRefresh_local BIT
 
 	SET @companyId_local = @CompanyId
@@ -38,6 +40,7 @@ BEGIN
 	SET @invoiceStatusId_local = @InvoiceStatusId
 	SET @invoiceTypeId_local = @InvoiceTypeId
 	SET @payableToId_local = @PayableToId
+	SET @claimantId_local = @ClaimantId
 	SET @needsRefresh_local = @NeedsRefresh
 
 	
@@ -46,6 +49,10 @@ BEGIN
 	FROM dbo.Invoices i
 	INNER JOIN dbo.Users u ON i.PayableToId = u.UserId
 	LEFT JOIN dbo.InvoiceAppointments ia ON i.InvoiceId = ia.InvoiceId
+	LEFT JOIN dbo.Appointments app ON ia.AppointmentId = app.AppointmentId
+	LEFT JOIN dbo.Assessments ass ON app.AssessmentId = ass.AssessmentId
+	LEFT JOIN dbo.AssessmentClaims ac ON ass.AssessmentId = ac.AssessmentId
+	LEFT JOIN dbo.Claims cl ON ac.ClaimId = cl.ClaimId
 	WHERE
 	u.CompanyId = @companyId_local
 	AND (@appointmentId_local IS NULL OR ia.AppointmentId = @appointmentId_local)
@@ -55,6 +62,7 @@ BEGIN
 	AND (@invoiceStatusId_local IS NULL OR i.InvoiceStatusId = @invoiceStatusId_local)
 	AND (@invoiceTypeId_local IS NULL OR i.InvoiceTypeId = @invoiceTypeId_local)
 	AND (@payableToId_local IS NULL OR i.PayableToId = @payableToId_local)
+	AND (@claimantId_local IS NULL OR cl.ClaimantId = @claimantId_local)
 	AND (@needsRefresh_local IS NULL OR 
 		(@needsRefresh_local = 1 AND EXISTS (
 			SELECT

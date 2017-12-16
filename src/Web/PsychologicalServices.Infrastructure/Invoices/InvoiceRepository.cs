@@ -371,6 +371,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     criteria.InvoiceStatusId,
                     criteria.InvoiceTypeId,
                     criteria.PayableToId,
+                    criteria.ClaimantId,
                     criteria.NeedsRefresh,
                     (DataAccessAdapter)adapter
                 )

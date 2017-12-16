@@ -18,6 +18,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public int? PayableToId { get; set; }
 
+        public int? ClaimantId { get; set; }
+
         public bool? NeedsRefresh { get; set; }
 
         public int CompanyId { get; set; }

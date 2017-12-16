@@ -38,6 +38,7 @@ export class Invoices {
 			'invoiceStatusId': this.searchStatus ? this.searchStatus.invoiceStatusId : null,
 			'invoiceTypeId': this.searchType ? this.searchType.invoiceTypeId : null,
 			'payableToId': this.searchPayableTo ? this.searchPayableTo.userId : null,
+			'claimantId': this.searchClaimant ? this.searchClaimant.claimantId : null,
 			'needsRefresh': this.searchNeedsRefresh ? true : null,
 			'companyId': this.user.company.companyId
 		})

@@ -2,6 +2,7 @@
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/money"></require>
 	<require from="resources/value-converters/sort-array"></require>
+	<require from="claimants/search-claimant"></require>
 	<require from="common/date-picker"></require>
 	<require from="common/fixed-header"></require>
 	<require from="../../content/css/fixed-header.css"></require>
@@ -62,6 +63,19 @@
 						</option>
 					</select>
 				</div>
+			</div>
+
+			<div class="uk-margin">
+				<label class="uk-form-label">Claimant</label>
+				<div class="uk-form-controls">
+					<search-claimant claimant.bind="searchClaimant"></search-claimant>
+				</div>
+			</div>
+			
+			<div class="uk-margin" if.bind="searchClaimant">
+				<p>
+					${searchClaimant.firstName} ${searchClaimant.lastName}
+				</p>
 			</div>
 
 			<div class="uk-margin">

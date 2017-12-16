@@ -430,13 +430,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceStatusId">Input parameter of stored procedure</param>
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
 		/// <param name="payableToId">Input parameter of stored procedure</param>
+		/// <param name="claimantId">Input parameter of stored procedure</param>
 		/// <param name="needsRefresh">Input parameter of stored procedure</param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Boolean> needsRefresh)
+		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh)
 		{
 			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
 			{
-				return InvoiceSearch(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, needsRefresh,  adapter);
+				return InvoiceSearch(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, needsRefresh,  adapter);
 			}
 		}
 
@@ -453,12 +454,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceStatusId">Input parameter of stored procedure</param>
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
 		/// <param name="payableToId">Input parameter of stored procedure</param>
+		/// <param name="claimantId">Input parameter of stored procedure</param>
 		/// <param name="needsRefresh">Input parameter of stored procedure</param>
 		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Boolean> needsRefresh, DataAccessAdapter adapter)
+		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, DataAccessAdapter adapter)
 		{
-			SqlParameter[] parameters = new SqlParameter[9];
+			SqlParameter[] parameters = new SqlParameter[10];
 			parameters[0] = new SqlParameter("@CompanyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
 			parameters[1] = new SqlParameter("@AppointmentId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, appointmentId);
 			parameters[2] = new SqlParameter("@Identifier", SqlDbType.NVarChar, 20, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, identifier);
@@ -467,7 +469,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			parameters[5] = new SqlParameter("@InvoiceStatusId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceStatusId);
 			parameters[6] = new SqlParameter("@InvoiceTypeId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceTypeId);
 			parameters[7] = new SqlParameter("@PayableToId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, payableToId);
-			parameters[8] = new SqlParameter("@NeedsRefresh", SqlDbType.Bit, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, needsRefresh);
+			parameters[8] = new SqlParameter("@ClaimantId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, claimantId);
+			parameters[9] = new SqlParameter("@NeedsRefresh", SqlDbType.Bit, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, needsRefresh);
 
 			DataTable toReturn = new DataTable("InvoiceSearch");
 			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[InvoiceSearch]", parameters, toReturn);
@@ -488,14 +491,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceStatusId">Input parameter of stored procedure</param>
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
 		/// <param name="payableToId">Input parameter of stored procedure</param>
+		/// <param name="claimantId">Input parameter of stored procedure</param>
 		/// <param name="needsRefresh">Input parameter of stored procedure</param>
 		/// <param name="returnValue">Return value of the stored procedure</param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Boolean> needsRefresh, ref System.Int32 returnValue)
+		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, ref System.Int32 returnValue)
 		{
 			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
 			{
-				return InvoiceSearch(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, needsRefresh, ref returnValue, adapter);
+				return InvoiceSearch(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, needsRefresh, ref returnValue, adapter);
 			}
 		}
 	
@@ -512,14 +516,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceStatusId">Input parameter of stored procedure</param>
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
 		/// <param name="payableToId">Input parameter of stored procedure</param>
+		/// <param name="claimantId">Input parameter of stored procedure</param>
 		/// <param name="needsRefresh">Input parameter of stored procedure</param>
 		/// <param name="returnValue">Return value of the stored procedure</param>
 		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Boolean> needsRefresh, ref System.Int32 returnValue, DataAccessAdapter adapter)
+		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, ref System.Int32 returnValue, DataAccessAdapter adapter)
 		{
 			// create parameters. Add 1 to make room for the return value parameter.
-			SqlParameter[] parameters = new SqlParameter[9 + 1];
+			SqlParameter[] parameters = new SqlParameter[10 + 1];
 			parameters[0] = new SqlParameter("@CompanyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
 			parameters[1] = new SqlParameter("@AppointmentId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, appointmentId);
 			parameters[2] = new SqlParameter("@Identifier", SqlDbType.NVarChar, 20, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, identifier);
@@ -528,14 +533,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			parameters[5] = new SqlParameter("@InvoiceStatusId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceStatusId);
 			parameters[6] = new SqlParameter("@InvoiceTypeId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceTypeId);
 			parameters[7] = new SqlParameter("@PayableToId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, payableToId);
-			parameters[8] = new SqlParameter("@NeedsRefresh", SqlDbType.Bit, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, needsRefresh);
+			parameters[8] = new SqlParameter("@ClaimantId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, claimantId);
+			parameters[9] = new SqlParameter("@NeedsRefresh", SqlDbType.Bit, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, needsRefresh);
 
-			parameters[9] = new SqlParameter("RETURNVALUE", SqlDbType.Int, 0, ParameterDirection.ReturnValue, true, 10, 0, "",  DataRowVersion.Current, returnValue);
+			parameters[10] = new SqlParameter("RETURNVALUE", SqlDbType.Int, 0, ParameterDirection.ReturnValue, true, 10, 0, "",  DataRowVersion.Current, returnValue);
 			DataTable toReturn = new DataTable("InvoiceSearch");
 			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[InvoiceSearch]", parameters, toReturn);
 
 
-			returnValue = (int)parameters[9].Value;
+			returnValue = (int)parameters[10].Value;
 			return toReturn;
 		}
 
@@ -550,9 +556,10 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceStatusId">Input parameter of stored procedure</param>
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
 		/// <param name="payableToId">Input parameter of stored procedure</param>
+		/// <param name="claimantId">Input parameter of stored procedure</param>
 		/// <param name="needsRefresh">Input parameter of stored procedure</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetInvoiceSearchCallAsQuery( System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Boolean> needsRefresh)
+		public static IRetrievalQuery GetInvoiceSearchCallAsQuery( System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh)
 		{
 			RetrievalQuery toReturn = new RetrievalQuery( new SqlCommand("[PsychologicalServices].[dbo].[InvoiceSearch]" ) );
 			toReturn.Parameters.Add(new SqlParameter("@CompanyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId));
@@ -563,6 +570,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			toReturn.Parameters.Add(new SqlParameter("@InvoiceStatusId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceStatusId));
 			toReturn.Parameters.Add(new SqlParameter("@InvoiceTypeId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, invoiceTypeId));
 			toReturn.Parameters.Add(new SqlParameter("@PayableToId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, payableToId));
+			toReturn.Parameters.Add(new SqlParameter("@ClaimantId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, claimantId));
 			toReturn.Parameters.Add(new SqlParameter("@NeedsRefresh", SqlDbType.Bit, 0, ParameterDirection.Input, true, 0, 0, "",  DataRowVersion.Current, needsRefresh));
 
 			toReturn.Command.CommandType = CommandType.StoredProcedure;
