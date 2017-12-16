@@ -128,8 +128,6 @@ namespace PsychologicalServices.Models.Invoices
                 appointment.AppointmentStatus.AppointmentStatusId,
                 appointmentSequence.AppointmentSequenceId
             );
-
-            var isLargeFile = appointment.Assessment.IsLargeFile || appointment.Assessment.FileSize >= invoiceCalculationData.LargeFileSize;
             
             if (invoiceCalculationData.ApplyCompletionFee)
             {
@@ -231,22 +229,26 @@ namespace PsychologicalServices.Models.Invoices
                 }
             }
 
+            var isLargeFile = appointment.Assessment.IsLargeFile || appointment.Assessment.FileSize >= invoiceCalculationData.LargeFileSize;
+
             //large file fee - apply to first billable && first time seen appointments
-            if (invoiceCalculationData.ApplyLargeFileFee)
+            if (isLargeFile && invoiceCalculationData.ApplyLargeFileFee)
             {
-                if (
-                    (
-                        appointment.IsFirstInvoiceableAppointment(assessmentAppointments) ||
-                        appointment.IsFirstTimeSeen(assessmentAppointments)
-                    ) && isLargeFile
-                )
+                if (appointment.IsFirstInvoiceableAppointment(assessmentAppointments) ||
+                    appointment.IsFirstTimeSeen(assessmentAppointments))
                 {
+                    var fileSize = appointment.Assessment.FileSize;
+
+                    var description = fileSize.HasValue
+                        ? $"Large File Fee ({fileSize:#,##0} pages)"
+                        : "Large File Fee";
+
                     lines.Add(
                         new InvoiceLine
                         {
                             Amount = invoiceCalculationData.LargeFileFee,
                             OriginalAmount = invoiceCalculationData.LargeFileFee,
-                            Description = "Large File Fee",
+                            Description = description,
                         }
                     );
                 }
