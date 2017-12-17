@@ -22,7 +22,17 @@ namespace PsychologicalServices.Infrastructure.Events
         {
             _date = date;
         }
-        
+
+        #region Prefetch Paths
+
+        private static readonly Func<IPathEdgeRootParser<EventEntity>, IPathEdgeRootParser<EventEntity>>
+            EventPath =
+                (eventPath => eventPath
+                    .Prefetch<CompanyEntity>(e => e.Company)
+                );
+
+        #endregion
+
         public Event GetEvent(int id)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -30,6 +40,7 @@ namespace PsychologicalServices.Infrastructure.Events
                 var meta = new LinqMetaData(adapter);
 
                 return meta.Event
+                    .WithPath(EventPath)
                     .Where(e => e.EventId == id)
                     .SingleOrDefault()
                     .ToEvent();
@@ -42,7 +53,9 @@ namespace PsychologicalServices.Infrastructure.Events
             {
                 var meta = new LinqMetaData(adapter);
 
-                var events = meta.Event.AsQueryable();
+                var events = meta.Event
+                    .WithPath(EventPath)
+                    .Where(e => e.CompanyId == criteria.CompanyId);
 
                 if (!string.IsNullOrWhiteSpace(criteria.Description))
                 {
@@ -97,6 +110,10 @@ namespace PsychologicalServices.Infrastructure.Events
                 if (!isNew)
                 {
                     adapter.FetchEntity(entity);
+                }
+                else
+                {
+                    entity.CompanyId = e.Company.CompanyId;
                 }
 
                 entity.Description = e.Description;

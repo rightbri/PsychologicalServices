@@ -5,9 +5,15 @@ import {inject} from 'aurelia-framework';
 export class Index {
     constructor(dataRepository) {
         this.dataRepository = dataRepository;
+
+        this.noEventsMessage = "Loading upcoming events...";
+
+        this.searchCompanyId = 1;
+        this.searchExpired = false;
+        this.searchActive = true;
     }
 
-    activate() {
+    attached() {
         return Promise.all([
 			this.getEvents()
         ]);
@@ -15,8 +21,13 @@ export class Index {
 
     getEvents() {
         return this.dataRepository.getEvents({
-            'isExpired': false,
-			'isActive': true
-        }).then(data => this.events = data).catch(err => console.log(err));
+            'companyId': this.searchCompanyId,
+            'isExpired': this.searchExpired,
+			'isActive': this.searchActive
+        }).then(data => {
+            this.events = data;
+            //message to be displayed if data is empty
+            this.noEventsMessage = "No upcoming events";
+        }).catch(err => console.log(err));
     }
 }

@@ -1,16 +1,18 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Config} from 'common/config';
+import {Context} from 'common/context';
 import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
 import {DataRepository} from 'services/dataRepository';
 
-@inject(Router, DataRepository, Config, Scroller, Notifier)
+@inject(Router, DataRepository, Config, Context, Scroller, Notifier)
 export class EditEvent {
-	constructor(router, dataRepository, config, scroller, notifier) {
+	constructor(router, dataRepository, config, context, scroller, notifier) {
 		this.router = router;
 		this.dataRepository = dataRepository;
 		this.config = config;
+		this.context = context;
 		this.scroller = scroller;
 		this.notifier = notifier;
 		
@@ -25,16 +27,19 @@ export class EditEvent {
 
 		this.editType = id ? 'Edit' : 'Add';
 		
-		if (id) {
-			return this.dataRepository.getEvent(id).then(data => this.event = data);
-		}
-		else {
-			this.editType = 'Add';
-			
-			this.event = { eventId: 0, expires: new Date(), isActive: true };
-			
-			return;
-		}
+		return Promise.all([
+			this.context.getUser().then(user => this.user = user)
+				.then(() => {
+					if (id) {
+						return this.dataRepository.getEvent(id).then(data => this.event = data);
+					}
+					else {
+						this.event = { eventId: 0, company: this.user.company, expires: new Date(), isActive: true };
+						
+						return;
+					}
+				})
+		]);
 	}
 	
 	save() {

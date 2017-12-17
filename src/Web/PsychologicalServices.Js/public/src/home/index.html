@@ -31,7 +31,7 @@
                 <br>${event.time}
             </template>
         </div>
-        <p if.bind="!events">No upcoming events</p>
+        <p if.bind="!events.length">${noEventsMessage}</p>
 
       </div>
 

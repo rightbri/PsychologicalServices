@@ -34,6 +34,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new Event
                 {
                     EventId = e.EventId,
+                    Company = e.Company.ToCompany(),
                     Description = e.Description,
                     Location = e.Location,
                     Time = e.Time,

@@ -39,7 +39,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		#region Class Member Declarations
 
 
-
+		private CompanyEntity _company;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -53,7 +53,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-
+			/// <summary>Member name Company</summary>
+			public static readonly string Company = "Company";
 
 
 
@@ -117,7 +118,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-
+				_company = (CompanyEntity)info.GetValue("_company", typeof(CompanyEntity));
+				if(_company!=null)
+				{
+					_company.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
@@ -133,6 +138,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch((EventFieldIndex)fieldIndex)
 			{
+				case EventFieldIndex.CompanyId:
+					DesetupSyncCompany(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -155,7 +163,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-
+				case "Company":
+					this.Company = (CompanyEntity)entity;
+					break;
 
 
 
@@ -180,7 +190,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-
+				case "Company":
+					toReturn.Add(EventEntity.Relations.CompanyEntityUsingCompanyId);
+					break;
 
 
 
@@ -219,7 +231,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
+				case "Company":
+					SetupSyncCompany(relatedEntity);
+					break;
 
 
 				default:
@@ -236,7 +250,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-
+				case "Company":
+					DesetupSyncCompany(false, true);
+					break;
 
 
 				default:
@@ -259,7 +275,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-
+			if(_company!=null)
+			{
+				toReturn.Add(_company);
+			}
 
 			return toReturn;
 		}
@@ -286,7 +305,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 
 
-
+				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
 
 			}
 			
@@ -324,6 +343,15 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'Company' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoCompany()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CompanyFields.CompanyId, null, ComparisonOperator.Equal, this.CompanyId));
+			return bucket;
+		}
 
 	
 		
@@ -392,7 +420,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-
+			toReturn.Add("Company", _company);
 
 
 
@@ -404,7 +432,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 
-
+			if(_company!=null)
+			{
+				_company.ActiveContext = base.ActiveContext;
+			}
 
 		}
 
@@ -414,7 +445,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
-
+			_company = null;
 
 			PerformDependencyInjection();
 			
@@ -452,9 +483,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("CompanyId", fieldHashtable);
 		}
 		#endregion
 
+		/// <summary> Removes the sync logic for member _company</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncCompany(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", EventEntity.Relations.CompanyEntityUsingCompanyId, true, signalRelatedEntity, "Event", resetFKFields, new int[] { (int)EventFieldIndex.CompanyId } );		
+			_company = null;
+		}
+
+		/// <summary> setups the sync logic for member _company</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncCompany(IEntity2 relatedEntity)
+		{
+			if(_company!=relatedEntity)
+			{
+				DesetupSyncCompany(true, true);
+				_company = (CompanyEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _company, new PropertyChangedEventHandler( OnCompanyPropertyChanged ), "Company", EventEntity.Relations.CompanyEntityUsingCompanyId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCompanyPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
@@ -491,6 +557,17 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCompany
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Company")[0], (int)PsychologicalServices.Data.EntityType.EventEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, null, null, "Company", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
 
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
@@ -594,8 +671,53 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)EventFieldIndex.IsActive, value); }
 		}
 
+		/// <summary> The CompanyId property of the Entity Event<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Events"."CompanyId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 CompanyId
+		{
+			get { return (System.Int32)GetValue((int)EventFieldIndex.CompanyId, true); }
+			set	{ SetValue((int)EventFieldIndex.CompanyId, value); }
+		}
 
 
+
+		/// <summary> Gets / sets related entity of type 'CompanyEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual CompanyEntity Company
+		{
+			get
+			{
+				return _company;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncCompany(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_company != null)
+						{
+							_company.UnsetRelatedEntity(this, "Event");
+						}
+					}
+					else
+					{
+						if(_company!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Event");
+						}
+					}
+				}
+			}
+		}
 
 	
 		

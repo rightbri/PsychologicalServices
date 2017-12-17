@@ -1,10 +1,13 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Companies;
+using System;
 
 namespace PsychologicalServices.Models.Events
 {
     public class Event
     {
         public int EventId { get; set; }
+
+        public Company Company { get; set; }
 
         public string Description { get; set; }
 

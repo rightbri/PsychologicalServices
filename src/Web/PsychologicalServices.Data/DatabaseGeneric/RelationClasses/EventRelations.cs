@@ -32,7 +32,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 
 
-
+			toReturn.Add(this.CompanyEntityUsingCompanyId);
 			return toReturn;
 		}
 
@@ -40,6 +40,20 @@ namespace PsychologicalServices.Data.RelationClasses
 
 
 
+		/// <summary>Returns a new IEntityRelation object, between EventEntity and CompanyEntity over the m:1 relation they have, using the relation between the fields:
+		/// Event.CompanyId - Company.CompanyId
+		/// </summary>
+		public virtual IEntityRelation CompanyEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Company", false);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, EventFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EventEntity", true);
+				return relation;
+			}
+		}
 
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }

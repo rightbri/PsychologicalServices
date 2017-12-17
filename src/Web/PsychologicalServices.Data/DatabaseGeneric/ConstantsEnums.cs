@@ -761,6 +761,8 @@ namespace PsychologicalServices.Data
 		Expires,
 		///<summary>IsActive. </summary>
 		IsActive,
+		///<summary>CompanyId. </summary>
+		CompanyId,
 		/// <summary></summary>
 		AmountOfFields
 	}

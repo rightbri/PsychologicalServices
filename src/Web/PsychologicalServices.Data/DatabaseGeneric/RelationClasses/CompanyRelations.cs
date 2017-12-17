@@ -35,6 +35,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentTypeInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.CalendarNoteEntityUsingCompanyId);
 			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
+			toReturn.Add(this.EventEntityUsingCompanyId);
 			toReturn.Add(this.IssueInDisputeInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.PsychometristInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.ReferralSourceInvoiceConfigurationEntityUsingCompanyId);
@@ -123,6 +124,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, CompanyAttributeFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyAttributeEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and EventEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - Event.CompanyId
+		/// </summary>
+		public virtual IEntityRelation EventEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Event" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, EventFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EventEntity", false);
 				return relation;
 			}
 		}

@@ -492,7 +492,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits EventEntity's mappings</summary>
 		private void InitEventEntityMappings()
 		{
-			base.AddElementMapping( "EventEntity", "PsychologicalServices", @"dbo", "Events", 7 );
+			base.AddElementMapping( "EventEntity", "PsychologicalServices", @"dbo", "Events", 8 );
 			base.AddElementFieldMapping( "EventEntity", "EventId", "EventId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "EventEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 300, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "EventEntity", "Location", "Location", true, (int)SqlDbType.NVarChar, 300, 0, 0, false, "", null, typeof(System.String), 2 );
@@ -500,6 +500,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "EventEntity", "Url", "Url", true, (int)SqlDbType.NVarChar, 1000, 0, 0, false, "", null, typeof(System.String), 4 );
 			base.AddElementFieldMapping( "EventEntity", "Expires", "Expires", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5 );
 			base.AddElementFieldMapping( "EventEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 6 );
+			base.AddElementFieldMapping( "EventEntity", "CompanyId", "CompanyId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 7 );
 		}
 		/// <summary>Inits InvoiceEntity's mappings</summary>
 		private void InitInvoiceEntityMappings()

@@ -1177,6 +1177,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.IsActive);}
 		}
+		/// <summary>Creates a new EventEntity.CompanyId field instance</summary>
+		public static EntityField2 CompanyId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(EventFieldIndex.CompanyId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity InvoiceEntity</summary>

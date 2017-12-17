@@ -7,6 +7,8 @@ namespace PsychologicalServices.Models.Events
         public string Description { get; set; }
 
         public string Location { get; set; }
+
+        public int CompanyId { get; set; }
         
         public bool? IsExpired { get; set; }
 
