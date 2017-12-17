@@ -14,7 +14,8 @@ export class Contact {
                 'province': 'Ontario',
                 'postalCode': 'L5J 1J6'
             },
-            email: 'doctormarkwatson@gmail.com'
+            email: 'doctormarkwatson@gmail.com',
+            linkedInAddress: 'https://ca.linkedin.com/in/markwatsonpsychologicalservice'
         };
 
         return contactInfo;
