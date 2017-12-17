@@ -28,6 +28,9 @@ export class Index {
             this.events = data;
             //message to be displayed if data is empty
             this.noEventsMessage = "No upcoming events";
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            console.log(err);
+            this.noEventsMessage = "Unable to load events";
+        });
     }
 }
