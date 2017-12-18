@@ -1,23 +1,16 @@
+import {DataRepository} from 'repository/dataRepository';
+import {inject} from 'aurelia-framework';
 
+@inject(DataRepository)
 export class Contact {
 
-    activate() {
-        this.contactInfo = this.getContactInfo();
+    constructor(dataRepository) {
+        this.dataRepository = dataRepository;
     }
 
-    getContactInfo() {
-        var contactInfo = {
-            address: {
-                'address1': '1801 Lakeshore Road West',
-                'address2': 'PO Box 52565 Turtle Creek',
-                'city': 'Mississauga',
-                'province': 'Ontario',
-                'postalCode': 'L5J 1J6'
-            },
-            email: 'doctormarkwatson@gmail.com',
-            linkedInAddress: 'https://ca.linkedin.com/in/markwatsonpsychologicalservice'
-        };
-
-        return contactInfo;
+    activate() {
+        return Promise.all([
+            this.dataRepository.getContactInfo().then(data => this.contactInfo = data)
+        ]);
     }
 }

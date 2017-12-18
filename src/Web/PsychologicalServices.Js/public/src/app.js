@@ -1,9 +1,18 @@
 import {UIkit} from 'uikit';
+import {DataRepository} from 'repository/dataRepository';
+import {inject} from 'aurelia-framework';
 
+@inject(DataRepository)
 export class App {
-  constructor() {
+  constructor(dataRepository) {
+	this.dataRepository = dataRepository;
+
 	this.title = "Watson Psychological Services";
 	this.year = new Date().getFullYear();
+  }
+
+  attached() {
+	this.dataRepository.getContactInfo().then(data => this.contactInfo = data);
   }
 
   configureRouter(config, router) {

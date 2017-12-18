@@ -35,8 +35,8 @@
               &copy; ${year} ${title}
           </div>
 
-          <div class="uk-width-1-4 uk-margin-remove-top uk-text-right">
-              <a href="https://ca.linkedin.com/in/markwatsonpsychologicalservice">
+          <div class="uk-width-1-4 uk-margin-remove-top uk-text-right" if.bind="contactInfo">
+              <a href.bind="contactInfo.linkedInAddress">
                 <i class="fa fa-2x fa-linkedin-square"></i>
               </a>
           </div>
