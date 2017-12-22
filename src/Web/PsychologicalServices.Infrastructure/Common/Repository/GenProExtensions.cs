@@ -772,6 +772,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ShowOnSchedule = appointmentStatus.ShowOnSchedule,
                     ClaimantSeen = appointmentStatus.ClaimantSeen,
                     IsActive = appointmentStatus.IsActive,
+                    IsFinalStatus = appointmentStatus.IsFinalStatus,
                     Sort = appointmentStatus.Sort,
                 }
                 : null;

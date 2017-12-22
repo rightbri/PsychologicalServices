@@ -242,6 +242,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AppointmentStatusFieldIndex.ClaimantSeen);}
 		}
+		/// <summary>Creates a new AppointmentStatusEntity.IsFinalStatus field instance</summary>
+		public static EntityField2 IsFinalStatus
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentStatusFieldIndex.IsFinalStatus);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AppointmentStatusInvoiceRateEntity</summary>

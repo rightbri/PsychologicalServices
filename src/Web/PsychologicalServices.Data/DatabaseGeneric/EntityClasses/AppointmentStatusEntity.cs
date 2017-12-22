@@ -819,6 +819,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ClaimantSeen", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("IsFinalStatus", fieldHashtable);
 		}
 		#endregion
 
@@ -1031,6 +1034,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)AppointmentStatusFieldIndex.ClaimantSeen, true); }
 			set	{ SetValue((int)AppointmentStatusFieldIndex.ClaimantSeen, value); }
+		}
+
+		/// <summary> The IsFinalStatus property of the Entity AppointmentStatus<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "AppointmentStatuses"."IsFinalStatus"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean IsFinalStatus
+		{
+			get { return (System.Boolean)GetValue((int)AppointmentStatusFieldIndex.IsFinalStatus, true); }
+			set	{ SetValue((int)AppointmentStatusFieldIndex.IsFinalStatus, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'.

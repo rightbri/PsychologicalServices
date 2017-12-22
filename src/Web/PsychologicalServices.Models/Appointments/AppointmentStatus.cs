@@ -33,6 +33,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public bool IsActive { get; set; }
 
+        public bool IsFinalStatus { get; set; }
+
         public bool IsNew()
         {
             return AppointmentStatusId == 0;

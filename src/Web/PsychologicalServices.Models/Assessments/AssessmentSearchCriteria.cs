@@ -15,5 +15,7 @@ namespace PsychologicalServices.Models.Assessments
         public DateTimeOffset? AppointmentTimeStart { get; set; }
 
         public DateTimeOffset? AppointmentTimeEnd { get; set; }
+
+        public bool? NeedsStatusUpdate { get; set; }
     }
 }

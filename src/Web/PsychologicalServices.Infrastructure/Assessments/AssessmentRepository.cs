@@ -157,7 +157,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                             .Prefetch<ClaimantEntity>(claim => claim.Claimant)
                                         )
                                 )
-
                         )
                 );
 
@@ -270,6 +269,14 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     if (criteria.AppointmentTimeEnd.HasValue)
                     {
                         appointments = appointments.Where(appointment => appointment.AppointmentTime >= criteria.AppointmentTimeEnd);
+                    }
+
+                    if (criteria.NeedsStatusUpdate.HasValue)
+                    {
+                        appointments = appointments.Where(appointment =>
+                            appointment.AppointmentStatus.IsFinalStatus != criteria.NeedsStatusUpdate.Value &&
+                            appointment.AppointmentTime < _date.UtcNow
+                        );
                     }
                 }
 

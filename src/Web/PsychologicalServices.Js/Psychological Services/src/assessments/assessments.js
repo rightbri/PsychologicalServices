@@ -14,6 +14,7 @@ export class Assessments {
 		
 		this.referralSources = null;
 		
+		this.searchNeedsStatusUpdate = null;
 		this.searchReferralSourceId = null;
 		this.searchClaimant = null;
 		this.searchCompanyId = null;
@@ -35,9 +36,10 @@ export class Assessments {
 	
 	search() {
 		return this.dataRepository.searchAssessments({
-			referralSourceId: this.searchReferralSourceId,
-			claimantId: this.searchClaimant ? this.searchClaimant.claimantId : null,
-			companyId: this.searchCompanyId
+			'referralSourceId': this.searchReferralSourceId,
+			'claimantId': this.searchClaimant ? this.searchClaimant.claimantId : null,
+			'needsStatusUpdate': this.searchNeedsStatusUpdate,
+			'companyId': this.searchCompanyId
 		}).then(data => this.assessments = data);
 	}
 	

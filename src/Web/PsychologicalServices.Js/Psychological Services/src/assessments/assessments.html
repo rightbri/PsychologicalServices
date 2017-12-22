@@ -34,6 +34,17 @@
 					${searchClaimant.firstName} ${searchClaimant.lastName}
 				</p>
 			</div>
+
+			<div class="uk-margin">
+				<label class="uk-form-label">Needs status update?</label>
+				<div class="uk-form-controls">
+					<select id="searchNeedsStatusUpdate" class="uk-select uk-form-width-small" value.bind="searchNeedsStatusUpdate">
+						<option></option>
+						<option value.bind="true">yes</option>
+						<option value.bind="false">no</option>
+					</select>
+				</div>
+			</div>
 			
 			<div class="uk-margin">
 				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">

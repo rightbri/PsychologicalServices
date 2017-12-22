@@ -155,6 +155,8 @@ namespace PsychologicalServices.Data
 		ShowOnSchedule,
 		///<summary>ClaimantSeen. </summary>
 		ClaimantSeen,
+		///<summary>IsFinalStatus. </summary>
+		IsFinalStatus,
 		/// <summary></summary>
 		AmountOfFields
 	}
