@@ -10,5 +10,7 @@ namespace PsychologicalServices.Models.Analysis
         IEnumerable<CancellationData> GetCancellationData(CancellationDataSearchCriteria criteria);
 
         IEnumerable<CompletionData> GetCompletionData(CompletionDataSearchCriteria criteria);
+
+        IEnumerable<AssessmentTypeCount> GetAssessmentTypeCountsForYear(AssessmentTypeCountSearchCriteria criteria);
     }
 }

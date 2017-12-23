@@ -1,0 +1,65 @@
+<template>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Assessment Type Counts</legend>
+
+        <form class="uk-form-stacked">
+            
+            <div class="uk-margin">
+                <label class="uk-form-label" for="year">Year</label>
+                <div class="uk-form-controls">
+                    <input id="year" type="number" min="2000" class="uk-input" value.bind="searchYear" />
+                </div>
+            </div>
+
+			<div class="uk-margin">
+				<label class="uk-form-label">Assessment Types</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="assessmentType of assessmentTypes">
+						<input class="uk-checkbox" type="checkbox" model.bind="assessmentType.assessmentTypeId" checked.bind="searchAssessmentTypeIds">&nbsp;${assessmentType.name}
+					</label>
+				</div>
+			</div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div class="uk-overflow-auto" if.bind="assessmentTypeCounts">
+
+    <table class="uk-table uk-table-divider uk-table-small">
+        <thead>
+            <tr>
+                <th>Assessment Type</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="count of assessmentTypeCounts">
+                <td>${count.assessmentType.name}</td>
+                <td>${count.count | numeric:'0,0'}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</template>

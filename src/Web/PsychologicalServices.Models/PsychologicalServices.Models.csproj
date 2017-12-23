@@ -60,6 +60,8 @@
     <Compile Include="Addresses\IAddressRepository.cs" />
     <Compile Include="Addresses\IAddressValidator.cs" />
     <Compile Include="Analysis\AnalysisService.cs" />
+    <Compile Include="Analysis\AssessmentTypeCount.cs" />
+    <Compile Include="Analysis\AssessmentTypeCountSearchCriteria.cs" />
     <Compile Include="Analysis\BookingData.cs" />
     <Compile Include="Analysis\CancellationData.cs" />
     <Compile Include="Analysis\BookingDataSearchCriteria.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Analysis\IAnalysisService.cs" />
     <Compile Include="Analysis\CompletionData.cs" />
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
+    <Compile Include="Analysis\AssessmentTypeCountDataSearchCriteria.cs" />
     <Compile Include="Assessments\AssessmentSearchResult.cs" />
     <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
     <Compile Include="Claims\ClaimantSearchParameters.cs" />

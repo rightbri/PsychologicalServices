@@ -1,6 +1,9 @@
 ﻿using PsychologicalServices.Data.DatabaseSpecific;
+using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Analysis;
+using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Assessments;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -88,6 +91,38 @@ namespace PsychologicalServices.Infrastructure.Analysis
                             IsFemaleClaimant = Convert.ToBoolean(row["IsFemaleClaimant"]),
                         })
                     .ToList();
+            }
+        }
+
+        public IEnumerable<AssessmentTypeCount> GetNumberOfCompletedAssessments(AssessmentTypeCountDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var counts = (from at in meta.AssessmentType
+                              join ass in meta.Assessment on at.AssessmentTypeId equals ass.AssessmentTypeId
+                              where criteria.AssessmentTypeIds.Contains(at.AssessmentTypeId) &&
+                              ass.Appointments.Any(app =>
+                                  app.AppointmentStatusId == AppointmentStatus.Complete &&
+                                  app.AppointmentTime >= criteria.AppointmentTimeMin &&
+                                  app.AppointmentTime <= criteria.AppointmentTimeMax
+                              )
+                              group at by new { at.AssessmentTypeId, at.Name } into g
+                              select new { g.Key.AssessmentTypeId, g.Key.Name, Count = g.Count() }
+                              );
+
+                return counts
+                    .ToList()
+                    .Select(c => new AssessmentTypeCount
+                    {
+                        AssessmentType = new AssessmentType
+                        {
+                            AssessmentTypeId = c.AssessmentTypeId,
+                            Name = c.Name,
+                        },
+                        Count = c.Count,
+                    });
             }
         }
     }

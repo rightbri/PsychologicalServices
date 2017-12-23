@@ -179,6 +179,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'completiondata');
 	}
 
+	searchAssessmentTypeCounts(criteria) {
+		return this.searchBasic(criteria, 'assessmenttypecount');
+	}
+
 	getAddress(id) {
 		return this.getSingleBasic(id, 'address');
 	}
