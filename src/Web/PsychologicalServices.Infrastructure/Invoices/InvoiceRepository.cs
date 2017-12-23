@@ -373,6 +373,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     criteria.PayableToId,
                     criteria.ClaimantId,
                     criteria.NeedsRefresh,
+                    criteria.NeedsToBeSentToReferralSource,
                     (DataAccessAdapter)adapter
                 )
                 .AsEnumerable()

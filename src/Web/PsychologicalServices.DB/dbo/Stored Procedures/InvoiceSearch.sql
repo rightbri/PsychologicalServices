@@ -15,6 +15,7 @@ CREATE PROCEDURE [dbo].[InvoiceSearch]
 	,@PayableToId INT = NULL
 	,@ClaimantId INT = NULL
 	,@NeedsRefresh BIT = NULL
+	,@NeedsToBeSentToReferralSource BIT = NULL
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -30,7 +31,8 @@ BEGIN
 			@invoiceTypeId_local INT,
 			@payableToId_local INT,
 			@claimantId_local INT,
-			@needsRefresh_local BIT
+			@needsRefresh_local BIT,
+			@needsToBeSentToReferralSource_local BIT
 
 	SET @companyId_local = @CompanyId
 	SET @appointmentId_local = @AppointmentId
@@ -42,8 +44,10 @@ BEGIN
 	SET @payableToId_local = @PayableToId
 	SET @claimantId_local = @ClaimantId
 	SET @needsRefresh_local = @NeedsRefresh
-
+	SET @needsToBeSentToReferralSource_local = @NeedsToBeSentToReferralSource
 	
+	DECLARE @invoiceDateSentTrackingBeginDate DATETIME = '20171203'
+
 	SELECT
 	i.InvoiceId
 	FROM dbo.Invoices i
@@ -53,6 +57,16 @@ BEGIN
 	LEFT JOIN dbo.Assessments ass ON app.AssessmentId = ass.AssessmentId
 	LEFT JOIN dbo.AssessmentClaims ac ON ass.AssessmentId = ac.AssessmentId
 	LEFT JOIN dbo.Claims cl ON ac.ClaimId = cl.ClaimId
+	LEFT JOIN (
+		SELECT TOP 1
+		 id.InvoiceId
+		,id.InvoiceDocumentId
+		,idsl.SentDate
+		FROM dbo.InvoiceDocuments id
+		LEFT JOIN dbo.InvoiceDocumentSendLogs idsl ON id.InvoiceDocumentId = idsl.InvoiceDocumentId
+		ORDER BY
+		id.InvoiceDocumentId DESC
+	) id ON i.InvoiceId = id.InvoiceId
 	WHERE
 	u.CompanyId = @companyId_local
 	AND (@appointmentId_local IS NULL OR ia.AppointmentId = @appointmentId_local)
@@ -90,6 +104,22 @@ BEGIN
 			AND eas.CanInvoice = 1
 			AND eia.InvoiceId IS NULL
 		))
+	)
+	AND (@needsToBeSentToReferralSource_local IS NULL
+		OR (@needsToBeSentToReferralSource_local = 1
+			 AND i.InvoiceTypeId = 1
+			 AND i.UpdateDate >= @invoiceDateSentTrackingBeginDate
+			 AND id.SentDate IS NULL
+			)
+		OR (@needsToBeSentToReferralSource_local = 0
+			AND (
+				i.InvoiceTypeId <> 1
+				OR (i.InvoiceTypeId = 1 
+					AND i.UpdateDate < @invoiceDateSentTrackingBeginDate
+					AND id.SentDate IS NOT NULL
+					)
+				)
+		   )
 	)
 	GROUP BY
 	i.InvoiceId

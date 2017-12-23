@@ -40,6 +40,7 @@ export class Invoices {
 			'payableToId': this.searchPayableTo ? this.searchPayableTo.userId : null,
 			'claimantId': this.searchClaimant ? this.searchClaimant.claimantId : null,
 			'needsRefresh': this.searchNeedsRefresh ? true : null,
+			'needsToBeSentToReferralSource': this.searchNeedsToBeSentToReferralSource ? true : null,
 			'companyId': this.user.company.companyId
 		})
 		.then(invoices => this.invoices = invoices)
