@@ -27,6 +27,102 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 
 	
 		/// <summary>
+		/// Calls stored procedure 'ArbitrationsData'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable ArbitrationsData(System.Int32 companyId, Nullable<System.Int32> months)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return ArbitrationsData(companyId, months,  adapter);
+			}
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'ArbitrationsData'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable ArbitrationsData(System.Int32 companyId, Nullable<System.Int32> months, DataAccessAdapter adapter)
+		{
+			SqlParameter[] parameters = new SqlParameter[2];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+			parameters[1] = new SqlParameter("@months", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, months);
+
+			DataTable toReturn = new DataTable("ArbitrationsData");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[ArbitrationsData]", parameters, toReturn);
+
+			return toReturn;
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'ArbitrationsData'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable ArbitrationsData(System.Int32 companyId, Nullable<System.Int32> months, ref System.Int32 returnValue)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return ArbitrationsData(companyId, months, ref returnValue, adapter);
+			}
+		}
+	
+	
+		/// <summary>
+		/// Calls stored procedure 'ArbitrationsData'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable ArbitrationsData(System.Int32 companyId, Nullable<System.Int32> months, ref System.Int32 returnValue, DataAccessAdapter adapter)
+		{
+			// create parameters. Add 1 to make room for the return value parameter.
+			SqlParameter[] parameters = new SqlParameter[2 + 1];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+			parameters[1] = new SqlParameter("@months", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, months);
+
+			parameters[2] = new SqlParameter("RETURNVALUE", SqlDbType.Int, 0, ParameterDirection.ReturnValue, true, 10, 0, "",  DataRowVersion.Current, returnValue);
+			DataTable toReturn = new DataTable("ArbitrationsData");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[ArbitrationsData]", parameters, toReturn);
+
+
+			returnValue = (int)parameters[2].Value;
+			return toReturn;
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'ArbitrationsData'.
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetArbitrationsDataCallAsQuery( System.Int32 companyId, Nullable<System.Int32> months)
+		{
+			RetrievalQuery toReturn = new RetrievalQuery( new SqlCommand("[PsychologicalServices].[dbo].[ArbitrationsData]" ) );
+			toReturn.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId));
+			toReturn.Parameters.Add(new SqlParameter("@months", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, months));
+
+			toReturn.Command.CommandType = CommandType.StoredProcedure;
+			return toReturn;
+		}
+	
+
+		/// <summary>
 		/// Calls stored procedure 'BookingData'.<br/><br/>
 		/// 
 		/// </summary>

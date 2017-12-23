@@ -60,9 +60,11 @@
     <Compile Include="Addresses\IAddressRepository.cs" />
     <Compile Include="Addresses\IAddressValidator.cs" />
     <Compile Include="Analysis\AnalysisService.cs" />
+    <Compile Include="Analysis\ArbitrationData.cs" />
     <Compile Include="Analysis\AssessmentTypeCount.cs" />
     <Compile Include="Analysis\AssessmentTypeCountSearchCriteria.cs" />
     <Compile Include="Analysis\BookingData.cs" />
+    <Compile Include="Analysis\ArbitrationDataSearchCriteria.cs" />
     <Compile Include="Analysis\CancellationData.cs" />
     <Compile Include="Analysis\BookingDataSearchCriteria.cs" />
     <Compile Include="Analysis\CancellationDataSearchCriteria.cs" />

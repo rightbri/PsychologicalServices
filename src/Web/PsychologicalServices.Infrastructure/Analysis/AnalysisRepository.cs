@@ -93,6 +93,30 @@ namespace PsychologicalServices.Infrastructure.Analysis
                     .ToList();
             }
         }
+        
+        public IEnumerable<ArbitrationData> GetArbitrationData(ArbitrationDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.ArbitrationsData(criteria.CompanyId, criteria.Months, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new ArbitrationData
+                        {
+                            AssessmentId = Convert.ToInt32(row["AssessmentId"]),
+                            ArbitrationId = Convert.ToInt32(row["ArbitrationId"]),
+                            ReferralSourceId = Convert.ToInt32(row["ReferralSourceId"]),
+                            ReferralSource = Convert.ToString(row["ReferralSource"]),
+                            IssueInDisputeId = row.IsNull("IssueInDisputeId") ? (int?)null : Convert.ToInt32(row["IssueInDisputeId"]),
+                            IssueInDispute = row.IsNull("IssueInDispute") ? null : Convert.ToString(row["IssueInDispute"]),
+                            LawyerId = row.IsNull("LawyerId") ? (int?)null : Convert.ToInt32(row["LawyerId"]),
+                            Lawyer = row.IsNull("Lawyer") ? null : Convert.ToString(row["Lawyer"]),
+                        })
+                    .ToList();
+            }
+        }
 
         public IEnumerable<AssessmentTypeCount> GetNumberOfCompletedAssessments(AssessmentTypeCountDataSearchCriteria criteria)
         {

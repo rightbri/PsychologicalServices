@@ -44,6 +44,13 @@ namespace PsychologicalServices.Models.Analysis
             return data;
         }
 
+        public IEnumerable<ArbitrationData> GetArbitrationData(ArbitrationDataSearchCriteria criteria)
+        {
+            var data = _analysisRepository.GetArbitrationData(criteria);
+
+            return data;
+        }
+
         public IEnumerable<AssessmentTypeCount> GetAssessmentTypeCountsForYear(AssessmentTypeCountSearchCriteria criteria)
         {
             var company = _companyRepository.GetCompany(criteria.CompanyId);

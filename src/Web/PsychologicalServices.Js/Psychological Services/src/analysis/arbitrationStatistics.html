@@ -1,0 +1,121 @@
+<template>
+    <require from="resources/value-converters/boolean"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Arbitration Statistics</legend>
+
+        <form class="uk-form-stacked">
+            
+            <div class="uk-margin">
+                <label class="uk-form-label" for="months">Past X Months (not counting the current month) (YTD if blank)</label>
+                <div class="uk-form-controls">
+                    <input type="number" min="0" class="uk-input" value.bind="searchMonths" />
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div if.bind="arbitrationData">
+
+    <h3>Total arbitrations: ${arbitrationsTotal}</h3>
+
+    <hr>
+
+    <ul uk-tab="swiping: false">
+        <li>
+            <a href="#" click.delegate="showTab(0)">By Referral Source</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(1)">By Referral Type</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(2)">By Lawyer</a>
+        </li>
+    </ul>
+
+    <ul class="uk-switcher">
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 0">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Referral Source</th>
+                            <th># Arbitrations</th>
+                            <th>% Arbitrations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of arbitrationsByReferralSource | sortArray:[{ property: 'referralSource', direction: 'asc' }]">
+                            <td>${item.referralSource}</td>
+                            <td>${item.arbitrationCount | numeric:'0,0'}</td>
+                            <td>${item.percentArbitrations | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 1">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Referral Type</th>
+                            <th># Arbitrations</th>
+                            <th>% Arbitrations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of arbitrationsByReferralType | sortArray:[{ property: 'referralType', direction: 'asc' }]">
+                            <td>${item.referralType}</td>
+                            <td>${item.arbitrationCount | numeric:'0,0'}</td>
+                            <td>${item.percentArbitrations | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 2">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Lawyer</th>
+                            <th># Arbitrations</th>
+                            <th>% Arbitrations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of arbitrationsByLawyer | sortArray:[{ property: 'lawyer', direction: 'asc' }]">
+                            <td>${item.lawyer}</td>
+                            <td>${item.arbitrationCount | numeric:'0,0'}</td>
+                            <td>${item.percentArbitrations | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+    
+</div>
+
+</template>

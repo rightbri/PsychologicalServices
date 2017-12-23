@@ -179,6 +179,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'completiondata');
 	}
 
+	searchArbitrationData(criteria) {
+		return this.searchBasic(criteria, 'arbitrationdata');
+	}
+
 	searchAssessmentTypeCounts(criteria) {
 		return this.searchBasic(criteria, 'assessmenttypecount');
 	}

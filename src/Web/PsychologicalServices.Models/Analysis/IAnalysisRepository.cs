@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Analysis
 
         IEnumerable<CompletionData> GetCompletionData(CompletionDataSearchCriteria criteria);
 
+        IEnumerable<ArbitrationData> GetArbitrationData(ArbitrationDataSearchCriteria criteria);
+
         IEnumerable<AssessmentTypeCount> GetNumberOfCompletedAssessments(AssessmentTypeCountDataSearchCriteria criteria);
     }
 }
