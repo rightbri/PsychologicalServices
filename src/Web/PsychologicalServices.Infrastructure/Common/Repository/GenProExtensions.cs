@@ -28,6 +28,21 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static InvoiceConfiguration ToInvoiceConfiguration(this CompanyEntity company)
+        {
+            return null != company
+                ? new InvoiceConfiguration
+                {
+                    CompanyId = company.CompanyId,
+                    AssessmentTypeInvoiceAmounts = company.AssessmentTypeInvoiceAmounts.Select(assessmentTypeInvoiceAmount => assessmentTypeInvoiceAmount.ToAssessmentTypeInvoiceAmount()),
+                    IssueInDisputeInvoiceAmounts = company.IssueInDisputeInvoiceAmounts.Select(issueInDisputeInvoiceAmount => issueInDisputeInvoiceAmount.ToIssueInDisputeInvoiceAmount()),
+                    ReferralSourceInvoiceConfigurations = company.ReferralSourceInvoiceConfigurations.Select(referralSourceInvoiceConfiguration => referralSourceInvoiceConfiguration.ToReferralSourceInvoiceConfiguration()),
+                    AppointmentStatusInvoiceRates = company.AppointmentStatusInvoiceRates.Select(appointmentStatusInvoiceRate => appointmentStatusInvoiceRate.ToAppointmentStatusInvoiceRate()),
+                    PsychometristInvoiceAmounts = company.PsychometristInvoiceAmounts.Select(psychometristInvoiceAmount => psychometristInvoiceAmount.ToPsychometristInvoiceAmount()),
+                }
+                : null;
+        }
+
         public static Event ToEvent(this EventEntity e)
         {
             return null != e
@@ -57,6 +72,51 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
+        public static AppointmentStatusInvoiceRate ToAppointmentStatusInvoiceRate(this AppointmentStatusInvoiceRateEntity appointmentStatusInvoiceRate)
+        {
+            return null != appointmentStatusInvoiceRate
+                ? new AppointmentStatusInvoiceRate
+                {
+                    ReferralSource = appointmentStatusInvoiceRate.ReferralSource.ToReferralSource(),
+                    AppointmentStatus = appointmentStatusInvoiceRate.AppointmentStatus.ToAppointmentStatus(),
+                    AppointmentSequence = appointmentStatusInvoiceRate.AppointmentSequence.ToAppointmentSequence(),
+                    InvoiceRate = appointmentStatusInvoiceRate.InvoiceRate,
+                    ApplyCompletionFee = appointmentStatusInvoiceRate.ApplyCompletionFee,
+                    ApplyExtraReportFees = appointmentStatusInvoiceRate.ApplyExtraReportFees,
+                    ApplyIssueInDisputeFees = appointmentStatusInvoiceRate.ApplyIssueInDisputeFees,
+                    ApplyLargeFileFee = appointmentStatusInvoiceRate.ApplyLargeFileFee,
+                    ApplyTravelFee = appointmentStatusInvoiceRate.ApplyTravelFee,
+                }
+                : null;
+        }
+
+        public static ReferralSourceInvoiceConfiguration ToReferralSourceInvoiceConfiguration(this ReferralSourceInvoiceConfigurationEntity referralSourceInvoiceConfiguration)
+        {
+            return null != referralSourceInvoiceConfiguration
+                ? new ReferralSourceInvoiceConfiguration
+                {
+                    ReferralSource = referralSourceInvoiceConfiguration.ReferralSource.ToReferralSource(),
+                    LargeFileSize = referralSourceInvoiceConfiguration.LargeFileSize,
+                    LargeFileFee = referralSourceInvoiceConfiguration.LargeFileFee,
+                    ExtraReportFee = referralSourceInvoiceConfiguration.ExtraReportFee,
+                    CompletionFee = referralSourceInvoiceConfiguration.CompletionFeeAmount,
+                }
+                : null;
+        }
+
+        public static AssessmentTypeInvoiceAmount ToAssessmentTypeInvoiceAmount(this AssessmentTypeInvoiceAmountEntity assessmentTypeInvoiceAmount)
+        {
+            return null != assessmentTypeInvoiceAmount
+                ? new AssessmentTypeInvoiceAmount
+                {
+                    ReferralSource = assessmentTypeInvoiceAmount.ReferralSource.ToReferralSource(),
+                    AssessmentType = assessmentTypeInvoiceAmount.AssessmentType.ToAssessmentType(),
+                    SingleReportInvoiceAmount = assessmentTypeInvoiceAmount.SingleReportInvoiceAmount,
+                    ComboReportInvoiceAmount = assessmentTypeInvoiceAmount.ComboReportInvoiceAmount,
+                }
+                : null;
+        }
+
         public static IssueInDisputeInvoiceAmount ToIssueInDisputeInvoiceAmount(this IssueInDisputeInvoiceAmountEntity issueInDisputeInvoiceAmount)
         {
             return null != issueInDisputeInvoiceAmount
@@ -73,10 +133,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
             return psychometristInvoiceAmount != null
                 ? new PsychometristInvoiceAmount
                 {
-                    AssessmentTypeId = psychometristInvoiceAmount.AssessmentTypeId,
-                    AppointmentStatusId = psychometristInvoiceAmount.AppointmentStatusId,
-                    AppointmentSequenceId = psychometristInvoiceAmount.AppointmentSequenceId,
-                    CompanyId = psychometristInvoiceAmount.CompanyId,
+                    AssessmentType = psychometristInvoiceAmount.AssessmentType.ToAssessmentType(),
+                    AppointmentStatus = psychometristInvoiceAmount.AppointmentStatus.ToAppointmentStatus(),
+                    AppointmentSequence = psychometristInvoiceAmount.AppointmentSequence.ToAppointmentSequence(),
                     InvoiceAmount = psychometristInvoiceAmount.InvoiceAmount,
                 }
                 : null;

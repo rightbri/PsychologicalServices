@@ -1,0 +1,189 @@
+<template>
+    <require from="resources/value-converters/money"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/validation-summary.html"></require>
+    
+    <div class="uk-container">
+
+        <h3>Invoice Configuration</h3>
+        
+        <div if.bind="validationErrors">
+            <validation-summary errors.bind="validationErrors"></validation-summary>
+        </div>
+        
+        <ul uk-tab="swiping: false">
+            <li>
+                <a href="#" click.delegate="showTab(0)">Referral Source Configuration</a>
+            </li>
+            <li>
+                <a href="#" click.delegate="showTab(1)">Psychometrist Invoice Amounts</a>
+            </li>
+            <li>
+                <a href="#" click.delegate="showTab(2)">Issue in Dispute Invoice Amounts</a>
+            </li>
+        </ul>
+
+        <ul class="uk-switcher">
+            <li>
+                <div class="uk-overflow-auto" if.bind="visibleTab === 0">
+                    
+                    <div class="uk-margin">
+                        <label for="referralSources">Referral Source</label>
+                        <select id="referralSources" class="uk-select" value.bind="selectedReferralSource" change.delegate="referralSourceChanged()">
+                            <option model.bind="null"></option>
+                            <option repeat.for="referralSource of referralSources | sortArray:{ property: 'name', direction: 'asc' }" model.bind="referralSource">${referralSource.name}</option>
+                        </select>
+                    </div>
+            
+                    <table class="uk-table uk-table-divider uk-table-small" if.bind="referralSourceInvoiceConfigurations">
+                        <thead>
+                            <tr>
+                                <th>Completion Fee</th>
+                                <th>Extra Report Fee</th>
+                                <th>Large File Fee</th>
+                                <th>Large File Size</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="referralSourceInvoiceConfiguration of referralSourceInvoiceConfigurations">
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="referralSourceInvoiceConfiguration.completionFee | money:'0.[00]'" />
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="referralSourceInvoiceConfiguration.extraReportFee | money:'0.[00]'" />
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="referralSourceInvoiceConfiguration.largeFileFee | money:'0.[00]'" />
+                                </td>
+                                <td>
+                                    <input type="number" step="1" class="uk-input uk-form-width-small" value.bind="referralSourceInvoiceConfiguration.largeFileSize" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+                    <table class="uk-table uk-table-divider uk-table-small" if.bind="assessmentTypeInvoiceAmounts">
+                        <thead>
+                            <tr>
+                                <th>Assessment Type</th>
+                                <th>Single Report Invoice Amount</th>
+                                <th>Combo Report Invoice Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="assessmentTypeInvoiceAmount of assessmentTypeInvoiceAmounts | sortArray:{ property: 'assessmentType.name', direction: 'asc' }">
+                                <td>${assessmentTypeInvoiceAmount.assessmentType.name}</td>
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="assessmentTypeInvoiceAmount.singleReportInvoiceAmount | money:'0.[00]'" />
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="assessmentTypeInvoiceAmount.comboReportInvoiceAmount | money:'0.[00]'" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+                    <table class="uk-table uk-table-divider uk-table-small" if.bind="appointmentStatusInvoiceRates">
+                        <thead>
+                            <tr>
+                                <th>Appointment Status</th>
+                                <th>Appointment Sequence</th>
+                                <th>Invoice Rate</th>
+                                <th>Apply Completion Fee</th>
+                                <th>Apply Extra Report Fee</th>
+                                <th>Apply Issue in Dispute Fee</th>
+                                <th>Apply Large File Fee</th>
+                                <th>Apply Travel Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="appointmentStatusInvoiceRate of appointmentStatusInvoiceRates | sortArray:[{ property: 'appointmentStatus.sort', direction: 'asc' }, { property: 'appointmentSequence.appointmentSequenceId', direction: 'asc' }]">
+                                <td>${appointmentStatusInvoiceRate.appointmentStatus.name}</td>
+                                <td>${appointmentStatusInvoiceRate.appointmentSequence.name}</td>
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="appointmentStatusInvoiceRate.invoiceRate | numeric:'0.[00]'" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked.bind="appointmentStatusInvoiceRate.applyCompletionFee" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked.bind="appointmentStatusInvoiceRate.applyExtraReportFees" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked.bind="appointmentStatusInvoiceRate.applyIssueInDisputeFees" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked.bind="appointmentStatusInvoiceRate.applyLargeFileFee" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked.bind="appointmentStatusInvoiceRate.applyTravelFee" />
+                                </td>                                
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </li>
+            <li>
+                <div class="uk-overflow-auto" if.bind="visibleTab === 1">
+                    
+                    <table class="uk-table uk-table-divider uk-table-small" if.bind="invoiceConfiguration.psychometristInvoiceAmounts">
+                        <thead>
+                            <tr>
+                                <th>Assessment Type</th>
+                                <th>Appointment Status</th>
+                                <th>Appointment Sequence</th>
+                                <th>Invoice Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="psychometristInvoiceAmount of invoiceConfiguration.psychometristInvoiceAmounts | sortArray:[{ property: 'assessmentType.name', direction: 'asc'},{ property: 'appointmentStatus.sort', direction: 'asc'},{ property: 'appointmentSequence.appointmentSequenceId', direction: 'asc' }]">
+                                <td>${psychometristInvoiceAmount.assessmentType.name}</td>
+                                <td>${psychometristInvoiceAmount.appointmentStatus.name}</td>
+                                <td>${psychometristInvoiceAmount.appointmentSequence.name}</td>
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="psychometristInvoiceAmount.invoiceAmount | money:'0.[00]'" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </li>
+            <li>
+                <div class="uk-overflow-auto" if.bind="visibleTab === 2">
+                    
+                    <table class="uk-table uk-table-divider uk-table-small" if.bind="invoiceConfiguration.issueInDisputeInvoiceAmounts">
+                        <thead>
+                            <tr>
+                                <th>Issue In Dispute</th>
+                                <th>Invoice Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="issueInDisputeInvoiceAmount of invoiceConfiguration.issueInDisputeInvoiceAmounts | sortArray:{ property: 'issueInDispute.name', direction: 'asc' }">
+                                <td>${issueInDisputeInvoiceAmount.issueInDispute.name}</td>
+                                <td>
+                                    <input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="issueInDisputeInvoiceAmount.invoiceAmount | money:'0.[00]'" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </li>
+        </ul>
+
+        <div class="uk-margin">
+            <button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
+                <i class="fa fa-arrow-left"></i> Back
+            </button>
+            <button type="button" class="uk-button uk-button-primary" click.delegate="save()">
+                Save <i class="fa fa-save"></i>
+            </button>
+        </div>
+        
+    </div>
+
+</template>

@@ -210,10 +210,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = appointmentStatusId,
-                        AppointmentSequenceId = appointmentSequenceId,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = appointmentStatusId },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = appointmentSequenceId },
                         InvoiceAmount = appointmentAmount,
                     });
 
@@ -473,10 +472,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.NoShow,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.First,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.NoShow },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.First },
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 
@@ -487,10 +485,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.Incomplete,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.First,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.Incomplete },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.First },
                         InvoiceAmount = appointmentIncompleteAmount,
                     });
 
@@ -501,10 +498,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.Incomplete,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.Incomplete },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent },
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 
@@ -515,10 +511,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.Complete,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.Complete },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent },
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 
@@ -830,10 +825,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.NoShow,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.First,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.NoShow },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.First },
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 
@@ -844,10 +838,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.Incomplete,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.First,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.Incomplete },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.First },
                         InvoiceAmount = appointmentIncompleteAmount,
                     });
 
@@ -858,10 +851,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.Incomplete,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.Incomplete },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent },
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 
@@ -872,10 +864,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                         It.Is<int>(i => i == companyId))
                     ).Returns(new PsychometristInvoiceAmount
                     {
-                        AssessmentTypeId = assessmentTypeId,
-                        AppointmentStatusId = Appointments.AppointmentStatus.Complete,
-                        AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent,
-                        CompanyId = companyId,
+                        AssessmentType = new Assessments.AssessmentType { AssessmentTypeId = assessmentTypeId },
+                        AppointmentStatus = new Appointments.AppointmentStatus { AppointmentStatusId = Appointments.AppointmentStatus.Complete },
+                        AppointmentSequence = new Appointments.AppointmentSequence { AppointmentSequenceId = Appointments.AppointmentSequence.Subsequent },
                         InvoiceAmount = appointmentCompletionAmount,
                     });
 

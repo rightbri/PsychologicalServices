@@ -1,10 +1,13 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Companies;
+using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
 {
     public interface IInvoiceRepository
     {
+        InvoiceConfiguration GetInvoiceConfiguration(int companyId);
+
         PsychologistInvoiceCalculationData GetPsychologistInvoiceCalculationData(int companyId, int referralSourceId, int assessmentTypeId, int appointmentStatusId, int appointmentSequenceId);
 
         Invoice GetInvoice(int id);
@@ -34,6 +37,8 @@ namespace PsychologicalServices.Models.Invoices
         int GetInvoiceCount(int userId);
         
         int SaveInvoice(Invoice invoice);
+
+        int SaveInvoiceConfiguration(InvoiceConfiguration invoiceConfiguration);
 
         decimal GetTaxRate();
 

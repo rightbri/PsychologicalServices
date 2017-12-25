@@ -19,6 +19,7 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IUserService _userService = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IInvoiceValidator _invoiceValidator = null;
+        private readonly IInvoiceConfigurationValidator _invoiceConfigurationValidator = null;
         private readonly IPsychologistInvoiceGenerator _psychologistInvoiceGenerator = null;
         private readonly IPsychometristInvoiceGenerator _psychometristInvoiceGenerator = null;
         private readonly IDate _date = null;
@@ -32,6 +33,7 @@ namespace PsychologicalServices.Models.Invoices
             IUserService userService,
             IInvoiceRepository invoiceRepository,
             IInvoiceValidator invoiceValidator,
+            IInvoiceConfigurationValidator invoiceConfigurationValidator,
             IPsychologistInvoiceGenerator psychologistInvoiceGenerator,
             IPsychometristInvoiceGenerator psychometristInvoiceGenerator,
             IDate date,
@@ -47,6 +49,7 @@ namespace PsychologicalServices.Models.Invoices
             _psychologistInvoiceGenerator = psychologistInvoiceGenerator;
             _psychometristInvoiceGenerator = psychometristInvoiceGenerator;
             _invoiceValidator = invoiceValidator;
+            _invoiceConfigurationValidator = invoiceConfigurationValidator;
             _date = date;
             _log = log;
             _timezoneService = timezoneService;
@@ -91,6 +94,13 @@ namespace PsychologicalServices.Models.Invoices
             var invoiceDocument = _invoiceRepository.GetInvoiceDocument(invoiceDocumentId);
 
             return invoiceDocument;
+        }
+        
+        public InvoiceConfiguration GetInvoiceConfiguration(int companyId)
+        {
+            var configuration = _invoiceRepository.GetInvoiceConfiguration(companyId);
+
+            return configuration;
         }
 
         public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
@@ -185,6 +195,35 @@ namespace PsychologicalServices.Models.Invoices
             catch (Exception ex)
             {
                 _log.Error("SaveInvoice", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
+
+        public SaveResult<InvoiceConfiguration> SaveInvoiceConfiguration(InvoiceConfiguration invoiceConfiguration)
+        {
+            var result = new SaveResult<InvoiceConfiguration>();
+
+            try
+            {
+                var validation = _invoiceConfigurationValidator.Validate(invoiceConfiguration);
+
+                result.ValidationResult = validation;
+
+                if (result.ValidationResult.IsValid)
+                {
+                    var companyId = _invoiceRepository.SaveInvoiceConfiguration(invoiceConfiguration);
+
+                    result.Item = _invoiceRepository.GetInvoiceConfiguration(companyId);
+
+                    result.IsSaved = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error("SaveInvoiceConfiguration", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }
@@ -340,5 +379,6 @@ namespace PsychologicalServices.Models.Invoices
 
             return model;
         }
+
     }
 }

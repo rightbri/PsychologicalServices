@@ -110,6 +110,14 @@ export class DataRepository {
 			'invoiceDocumentId': invoiceDocumentId
 		});
 	}
+
+	getInvoiceConfiguration(companyId) {
+		return this.getSingleBasic(companyId, 'invoiceconfiguration');
+	}
+
+	saveInvoiceConfiguration(invoiceConfiguration) {
+		return this.saveBasic(invoiceConfiguration, 'invoiceconfiguration');
+	}
 	
 	getAppointment(id) {
 		return this.getSingleBasic(id, 'appointment');

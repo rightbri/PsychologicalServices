@@ -15,6 +15,8 @@ namespace PsychologicalServices.Models.Invoices
 
         PsychologistInvoiceSendResult SendPsychologistInvoiceDocument(PsychologistInvoiceSendParameters parameters);
 
+        InvoiceConfiguration GetInvoiceConfiguration(int companyId);
+
         IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
 
         IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true);
@@ -28,5 +30,7 @@ namespace PsychologicalServices.Models.Invoices
         IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria);
 
         SaveResult<Invoice> SaveInvoice(Invoice invoice);
+
+        SaveResult<InvoiceConfiguration> SaveInvoiceConfiguration(InvoiceConfiguration invoiceConfiguration);
     }
 }

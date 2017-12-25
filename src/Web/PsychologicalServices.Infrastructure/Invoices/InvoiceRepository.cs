@@ -41,6 +41,44 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
         #region Prefetch Paths
 
+        private static readonly Func<IPathEdgeRootParser<PsychometristInvoiceAmountEntity>, IPathEdgeRootParser<PsychometristInvoiceAmountEntity>>
+            PsychometristInvoiceAmountPath =
+                (psychometristInvoiceAmountPath => psychometristInvoiceAmountPath
+                    .Prefetch<AssessmentTypeEntity>(psychometristInvoiceAmount => psychometristInvoiceAmount.AssessmentType)
+                    .Prefetch<AppointmentStatusEntity>(psychometristInvoiceAmount => psychometristInvoiceAmount.AppointmentStatus)
+                    .Prefetch<AppointmentSequenceEntity>(psychometristInvoiceAmount => psychometristInvoiceAmount.AppointmentSequence)
+                );
+
+        private static readonly Func<IPathEdgeRootParser<CompanyEntity>, IPathEdgeRootParser<CompanyEntity>>
+            InvoiceConfigurationPath =
+                (companyPath => companyPath
+                    .Prefetch<IssueInDisputeInvoiceAmountEntity>(company => company.IssueInDisputeInvoiceAmounts)
+                        .SubPath(issueInDisputeInvoiceAmountPath => issueInDisputeInvoiceAmountPath
+                            .Prefetch<IssueInDisputeEntity>(issueInDisputeInvoiceAmount => issueInDisputeInvoiceAmount.IssueInDispute)
+                        )
+                    .Prefetch<AssessmentTypeInvoiceAmountEntity>(company => company.AssessmentTypeInvoiceAmounts)
+                        .SubPath(assessmentTypeInvoiceAmountPath => assessmentTypeInvoiceAmountPath
+                            .Prefetch<ReferralSourceEntity>(assessmentTypeInvoiceAmount => assessmentTypeInvoiceAmount.ReferralSource)
+                            .Prefetch<AssessmentTypeEntity>(assessmentTypeInvoiceAmount => assessmentTypeInvoiceAmount.AssessmentType)
+                        )
+                    .Prefetch<ReferralSourceInvoiceConfigurationEntity>(company => company.ReferralSourceInvoiceConfigurations)
+                        .SubPath(referralSourceInvoiceConfigurationPath => referralSourceInvoiceConfigurationPath
+                            .Prefetch<ReferralSourceEntity>(referralSourceInvoiceConfiguration => referralSourceInvoiceConfiguration.ReferralSource)
+                        )
+                    .Prefetch<AppointmentStatusInvoiceRateEntity>(company => company.AppointmentStatusInvoiceRates)
+                        .SubPath(appointmentStatusInvoiceRatePath => appointmentStatusInvoiceRatePath
+                            .Prefetch<ReferralSourceEntity>(appointmentStatusInvoiceRate => appointmentStatusInvoiceRate.ReferralSource)
+                            .Prefetch<AppointmentStatusEntity>(appointmentStatusInvoiceRate => appointmentStatusInvoiceRate.AppointmentStatus)
+                            .Prefetch<AppointmentSequenceEntity>(appointmentStatusInvoiceRate => appointmentStatusInvoiceRate.AppointmentSequence)
+                        )
+                    .Prefetch<PsychometristInvoiceAmountEntity>(company => company.PsychometristInvoiceAmounts)
+                        .SubPath(psychometristInvoiceAmountPath => psychometristInvoiceAmountPath
+                            .Prefetch<AssessmentTypeEntity>(psychometristInvoiceAmount => psychometristInvoiceAmount.AssessmentType)
+                            .Prefetch<AppointmentStatusEntity>(psychometristInvoiceAmount => psychometristInvoiceAmount.AppointmentStatus)
+                            .Prefetch<AppointmentSequenceEntity>(psychometristInvoiceAmount => psychometristInvoiceAmount.AppointmentSequence)
+                        )
+                );
+
         private Func<IPathEdgeRootParser<CompanyEntity>, IPathEdgeRootParser<CompanyEntity>> GetInvoiceCalculationDataPrefetchPath(
             int companyId,
             int referralSourceId,
@@ -651,6 +689,354 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 return invoiceEntity.InvoiceId;
             }
         }
+
+        public int SaveInvoiceConfiguration(InvoiceConfiguration invoiceConfiguration)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var uow = new UnitOfWork2();
+
+                var companyEntity = new CompanyEntity(invoiceConfiguration.CompanyId);
+
+                var prefetch = new PrefetchPath2(EntityType.CompanyEntity);
+
+                prefetch.Add(CompanyEntity.PrefetchPathIssueInDisputeInvoiceAmounts);
+
+                prefetch.Add(CompanyEntity.PrefetchPathAssessmentTypeInvoiceAmounts);
+
+                prefetch.Add(CompanyEntity.PrefetchPathReferralSourceInvoiceConfigurations);
+
+                prefetch.Add(CompanyEntity.PrefetchPathAppointmentStatusInvoiceRates);
+
+                prefetch.Add(CompanyEntity.PrefetchPathPsychometristInvoiceAmounts);
+
+                adapter.FetchEntity(companyEntity, prefetch);
+
+                #region assessment type invoice amounts
+
+                var assessmentTypeInvoiceAmountsToAdd = invoiceConfiguration.AssessmentTypeInvoiceAmounts
+                    .Where(atia => !companyEntity.AssessmentTypeInvoiceAmounts.Any(atiae => atiae.ReferralSourceId == atia.ReferralSource.ReferralSourceId && atiae.AssessmentTypeId == atia.AssessmentType.AssessmentTypeId))
+                    .ToList();
+
+                var assessmentTypeInvoiceAmountsToDelete = companyEntity.AssessmentTypeInvoiceAmounts
+                    .Where(atiae => !invoiceConfiguration.AssessmentTypeInvoiceAmounts.Any(atia => atia.ReferralSource.ReferralSourceId == atiae.ReferralSourceId && atia.AssessmentType.AssessmentTypeId == atiae.AssessmentTypeId))
+                    .ToList();
+
+                var assessmentTypeInvoiceAmountsToUpdate = invoiceConfiguration.AssessmentTypeInvoiceAmounts
+                    .Where(atia =>
+                        companyEntity.AssessmentTypeInvoiceAmounts.Any(atiae =>
+                            atiae.ReferralSourceId == atia.ReferralSource.ReferralSourceId &&
+                            atiae.AssessmentTypeId == atia.AssessmentType.AssessmentTypeId &&
+                            (
+                                atiae.SingleReportInvoiceAmount != atia.SingleReportInvoiceAmount ||
+                                atiae.ComboReportInvoiceAmount != atia.ComboReportInvoiceAmount
+                            )
+                        )
+                    )
+                    .ToList();
+
+                foreach (var assessmentTypeInvoiceAmount in assessmentTypeInvoiceAmountsToDelete)
+                {
+                    uow.AddForDelete(assessmentTypeInvoiceAmount);
+                }
+
+                foreach (var assessmentTypeInvoiceAmount in assessmentTypeInvoiceAmountsToUpdate)
+                {
+                    var entity = companyEntity.AssessmentTypeInvoiceAmounts.Where(atiae => atiae.ReferralSourceId == assessmentTypeInvoiceAmount.ReferralSource.ReferralSourceId && atiae.AssessmentTypeId == assessmentTypeInvoiceAmount.AssessmentType.AssessmentTypeId).SingleOrDefault();
+
+                    if (null != entity)
+                    {
+                        entity.SingleReportInvoiceAmount = assessmentTypeInvoiceAmount.SingleReportInvoiceAmount;
+                        entity.ComboReportInvoiceAmount = assessmentTypeInvoiceAmount.ComboReportInvoiceAmount;
+
+                        uow.AddForSave(entity);
+                    }
+                }
+
+                foreach (var assessmentTypeInvoiceAmount in assessmentTypeInvoiceAmountsToAdd)
+                {
+                    uow.AddForSave(
+                        new AssessmentTypeInvoiceAmountEntity
+                        {
+                            CompanyId = invoiceConfiguration.CompanyId,
+                            ReferralSourceId = assessmentTypeInvoiceAmount.ReferralSource.ReferralSourceId,
+                            AssessmentTypeId = assessmentTypeInvoiceAmount.AssessmentType.AssessmentTypeId,
+                            SingleReportInvoiceAmount = assessmentTypeInvoiceAmount.SingleReportInvoiceAmount,
+                            ComboReportInvoiceAmount = assessmentTypeInvoiceAmount.ComboReportInvoiceAmount,
+                            IsNew = true,
+                        }
+                    );
+                }
+
+                #endregion
+
+                #region issue in dispute invoice amounts
+
+                var issueInDisputeInvoiceAmountsToAdd = invoiceConfiguration.IssueInDisputeInvoiceAmounts
+                    .Where(idia => !companyEntity.IssueInDisputeInvoiceAmounts.Any(idiae => idiae.IssueInDisputeId == idia.IssueInDispute.IssueInDisputeId))
+                    .ToList();
+
+                var issueInDisputeInvoiceAmountsToDelete = companyEntity.IssueInDisputeInvoiceAmounts
+                    .Where(idiae => !invoiceConfiguration.IssueInDisputeInvoiceAmounts.Any(idia => idia.IssueInDispute.IssueInDisputeId == idiae.IssueInDisputeId))
+                    .ToList();
+
+                var issueInDisputeInvoiceAmountsToUpdate = invoiceConfiguration.IssueInDisputeInvoiceAmounts
+                    .Where(idia =>
+                        companyEntity.IssueInDisputeInvoiceAmounts.Any(idiae =>
+                            idiae.IssueInDisputeId == idia.IssueInDispute.IssueInDisputeId &&
+                            idiae.InvoiceAmount != idia.InvoiceAmount
+                        )
+                    )
+                    .ToList();
+
+                foreach (var entity in issueInDisputeInvoiceAmountsToDelete)
+                {
+                    uow.AddForDelete(entity);
+                }
+
+                foreach (var issueInDisputeInvoiceAmount in issueInDisputeInvoiceAmountsToUpdate)
+                {
+                    var entity = companyEntity.IssueInDisputeInvoiceAmounts.Where(idiae => idiae.IssueInDisputeId == issueInDisputeInvoiceAmount.IssueInDispute.IssueInDisputeId).SingleOrDefault();
+
+                    if (null != entity)
+                    {
+                        entity.InvoiceAmount = issueInDisputeInvoiceAmount.InvoiceAmount;
+
+                        uow.AddForSave(entity);
+                    }
+                }
+
+                foreach (var issueInDisputeInvoiceAmount in issueInDisputeInvoiceAmountsToAdd)
+                {
+                    uow.AddForSave(
+                        new IssueInDisputeInvoiceAmountEntity
+                        {
+                            CompanyId = invoiceConfiguration.CompanyId,
+                            IssueInDisputeId = issueInDisputeInvoiceAmount.IssueInDispute.IssueInDisputeId,
+                            InvoiceAmount = issueInDisputeInvoiceAmount.InvoiceAmount,
+                            IsNew = true,
+                        }
+                    );
+                }
+
+                #endregion
+
+                #region referral source invoice configurations
+
+                var referralSourceInvoiceConfigurationsToAdd = invoiceConfiguration.ReferralSourceInvoiceConfigurations
+                    .Where(rsic => !companyEntity.ReferralSourceInvoiceConfigurations.Any(rsice => rsice.ReferralSourceId == rsic.ReferralSource.ReferralSourceId))
+                    .ToList();
+
+                var referralSourceInvoiceConfigurationsToDelete = companyEntity.ReferralSourceInvoiceConfigurations
+                    .Where(rsice => !invoiceConfiguration.ReferralSourceInvoiceConfigurations.Any(rsic => rsic.ReferralSource.ReferralSourceId == rsice.ReferralSourceId))
+                    .ToList();
+
+                var referralSourceInvoiceConfigurationsToUpdate = invoiceConfiguration.ReferralSourceInvoiceConfigurations
+                    .Where(rsic => companyEntity.ReferralSourceInvoiceConfigurations.Any(rsice =>
+                            rsice.ReferralSourceId == rsic.ReferralSource.ReferralSourceId &&
+                            (
+                                rsice.CompletionFeeAmount != rsic.CompletionFee ||
+                                rsice.ExtraReportFee != rsic.ExtraReportFee ||
+                                rsice.LargeFileFee != rsic.LargeFileFee ||
+                                rsice.LargeFileSize != rsic.LargeFileSize
+                            )
+                        )
+                    )
+                    .ToList();
+
+                foreach (var entity in referralSourceInvoiceConfigurationsToDelete)
+                {
+                    uow.AddForDelete(entity);
+                }
+
+                foreach (var referralSourceInvoiceConfiguration in referralSourceInvoiceConfigurationsToUpdate)
+                {
+                    var entity = companyEntity.ReferralSourceInvoiceConfigurations.Where(rsice => rsice.ReferralSourceId == referralSourceInvoiceConfiguration.ReferralSource.ReferralSourceId).SingleOrDefault();
+
+                    if (null != entity)
+                    {
+                        entity.CompletionFeeAmount = referralSourceInvoiceConfiguration.CompletionFee;
+                        entity.ExtraReportFee = referralSourceInvoiceConfiguration.ExtraReportFee;
+                        entity.LargeFileFee = referralSourceInvoiceConfiguration.LargeFileFee;
+                        entity.LargeFileSize = referralSourceInvoiceConfiguration.LargeFileSize;
+                    }
+                }
+
+                foreach (var referralSourceInvoiceConfiguration in referralSourceInvoiceConfigurationsToAdd)
+                {
+                    uow.AddForSave(
+                        new ReferralSourceInvoiceConfigurationEntity
+                        {
+                            CompanyId = invoiceConfiguration.CompanyId,
+                            ReferralSourceId = referralSourceInvoiceConfiguration.ReferralSource.ReferralSourceId,
+                            CompletionFeeAmount = referralSourceInvoiceConfiguration.CompletionFee,
+                            ExtraReportFee = referralSourceInvoiceConfiguration.ExtraReportFee,
+                            LargeFileFee = referralSourceInvoiceConfiguration.LargeFileFee,
+                            LargeFileSize = referralSourceInvoiceConfiguration.LargeFileSize,
+                            IsNew = true,
+                        }
+                    );
+                }
+
+                #endregion
+
+                #region appointment status invoice rates
+
+                var appointmentStatusInvoiceRatesToAdd = invoiceConfiguration.AppointmentStatusInvoiceRates
+                    .Where(asir => !companyEntity.AppointmentStatusInvoiceRates.Any(asire =>
+                        asir.ReferralSource.ReferralSourceId == asire.ReferralSourceId &&
+                        asir.AppointmentStatus.AppointmentStatusId == asire.AppointmentStatusId &&
+                        asir.AppointmentSequence.AppointmentSequenceId == asire.AppointmentSequenceId
+                        )
+                    )
+                    .ToList();
+
+                var appointmentStatusInvoiceRatesToDelete = companyEntity.AppointmentStatusInvoiceRates
+                    .Where(asire => !invoiceConfiguration.AppointmentStatusInvoiceRates.Any(asir =>
+                        asir.ReferralSource.ReferralSourceId == asire.ReferralSourceId &&
+                        asir.AppointmentStatus.AppointmentStatusId == asire.AppointmentStatusId &&
+                        asir.AppointmentSequence.AppointmentSequenceId == asire.AppointmentSequenceId
+                        )
+                    )
+                    .ToList();
+
+                var appointmentStatusInvoiceRatesToUpdate = invoiceConfiguration.AppointmentStatusInvoiceRates
+                    .Where(asir => companyEntity.AppointmentStatusInvoiceRates.Any(asire =>
+                        asir.ReferralSource.ReferralSourceId == asire.ReferralSourceId &&
+                        asir.AppointmentStatus.AppointmentStatusId == asire.AppointmentStatusId &&
+                        asir.AppointmentSequence.AppointmentSequenceId == asire.AppointmentSequenceId &&
+                        (
+                            asir.ApplyCompletionFee != asire.ApplyCompletionFee ||
+                            asir.ApplyExtraReportFees != asire.ApplyExtraReportFees ||
+                            asir.ApplyIssueInDisputeFees != asire.ApplyIssueInDisputeFees ||
+                            asir.ApplyLargeFileFee != asire.ApplyLargeFileFee ||
+                            asir.ApplyTravelFee != asire.ApplyTravelFee ||
+                            asir.InvoiceRate != asire.InvoiceRate
+                        ))
+                    )
+                    .ToList();
+
+
+                foreach (var entity in appointmentStatusInvoiceRatesToDelete)
+                {
+                    uow.AddForDelete(entity);
+                }
+
+                foreach (var appointmentStatusInvoiceRate in appointmentStatusInvoiceRatesToUpdate)
+                {
+                    var entity = companyEntity.AppointmentStatusInvoiceRates.Where(asire =>
+                        asire.ReferralSourceId == appointmentStatusInvoiceRate.ReferralSource.ReferralSourceId &&
+                        asire.AppointmentStatusId == appointmentStatusInvoiceRate.AppointmentStatus.AppointmentStatusId &&
+                        asire.AppointmentSequenceId == appointmentStatusInvoiceRate.AppointmentSequence.AppointmentSequenceId
+                    ).SingleOrDefault();
+
+                    if (null != entity)
+                    {
+                        entity.ApplyCompletionFee = appointmentStatusInvoiceRate.ApplyCompletionFee;
+                        entity.ApplyExtraReportFees = appointmentStatusInvoiceRate.ApplyExtraReportFees;
+                        entity.ApplyIssueInDisputeFees = appointmentStatusInvoiceRate.ApplyIssueInDisputeFees;
+                        entity.ApplyLargeFileFee = appointmentStatusInvoiceRate.ApplyLargeFileFee;
+                        entity.ApplyTravelFee = appointmentStatusInvoiceRate.ApplyTravelFee;
+                        entity.InvoiceRate = appointmentStatusInvoiceRate.InvoiceRate;
+
+                        uow.AddForSave(entity);
+                    }
+                }
+
+                foreach (var appointmentStatusInvoiceRate in appointmentStatusInvoiceRatesToAdd)
+                {
+                    uow.AddForSave(
+                        new AppointmentStatusInvoiceRateEntity
+                        {
+                            CompanyId = invoiceConfiguration.CompanyId,
+                            ReferralSourceId = appointmentStatusInvoiceRate.ReferralSource.ReferralSourceId,
+                            AppointmentStatusId = appointmentStatusInvoiceRate.AppointmentStatus.AppointmentStatusId,
+                            AppointmentSequenceId = appointmentStatusInvoiceRate.AppointmentSequence.AppointmentSequenceId,
+                            ApplyCompletionFee = appointmentStatusInvoiceRate.ApplyCompletionFee,
+                            ApplyExtraReportFees = appointmentStatusInvoiceRate.ApplyExtraReportFees,
+                            ApplyIssueInDisputeFees = appointmentStatusInvoiceRate.ApplyIssueInDisputeFees,
+                            ApplyLargeFileFee = appointmentStatusInvoiceRate.ApplyLargeFileFee,
+                            ApplyTravelFee = appointmentStatusInvoiceRate.ApplyTravelFee,
+                            InvoiceRate = appointmentStatusInvoiceRate.InvoiceRate,
+                        }
+                    );
+                }
+
+                #endregion
+
+                #region psychometrist invoice amounts
+
+                var psychometristInvoiceAmountsToAdd = invoiceConfiguration.PsychometristInvoiceAmounts
+                    .Where(pia => !companyEntity.PsychometristInvoiceAmounts.Any(piae =>
+                        pia.AssessmentType.AssessmentTypeId == piae.AssessmentTypeId &&
+                        pia.AppointmentStatus.AppointmentStatusId == piae.AppointmentStatusId &&
+                        pia.AppointmentSequence.AppointmentSequenceId == piae.AppointmentSequenceId
+                        )
+                    )
+                    .ToList();
+
+                var psychometristInvoiceAmountsToDelete = companyEntity.PsychometristInvoiceAmounts
+                    .Where(piae => !invoiceConfiguration.PsychometristInvoiceAmounts.Any(pia =>
+                        pia.AssessmentType.AssessmentTypeId == piae.AssessmentTypeId &&
+                        pia.AppointmentStatus.AppointmentStatusId == piae.AppointmentStatusId &&
+                        pia.AppointmentSequence.AppointmentSequenceId == piae.AppointmentSequenceId
+                        )
+                    )
+                    .ToList();
+
+                var psychometristInvoiceAmountsToUpdate = invoiceConfiguration.PsychometristInvoiceAmounts
+                    .Where(pia => companyEntity.PsychometristInvoiceAmounts.Any(piae =>
+                        pia.AssessmentType.AssessmentTypeId == piae.AssessmentTypeId &&
+                        pia.AppointmentStatus.AppointmentStatusId == piae.AppointmentStatusId &&
+                        pia.AppointmentSequence.AppointmentSequenceId == piae.AppointmentSequenceId &&
+                        (
+                            pia.InvoiceAmount != piae.InvoiceAmount
+                        ))
+                    )
+                    .ToList();
+
+                foreach (var entity in psychometristInvoiceAmountsToDelete)
+                {
+                    uow.AddForDelete(entity);
+                }
+
+                foreach (var psychometristInvoiceAmount in psychometristInvoiceAmountsToUpdate)
+                {
+                    var entity = companyEntity.PsychometristInvoiceAmounts.Where(piae =>
+                        psychometristInvoiceAmount.AssessmentType.AssessmentTypeId == piae.AssessmentTypeId &&
+                        psychometristInvoiceAmount.AppointmentStatus.AppointmentStatusId == piae.AppointmentStatusId &&
+                        psychometristInvoiceAmount.AppointmentSequence.AppointmentSequenceId == piae.AppointmentSequenceId
+                    ).SingleOrDefault();
+                    
+                    if (null != entity)
+                    {
+                        entity.InvoiceAmount = psychometristInvoiceAmount.InvoiceAmount;
+
+                        uow.AddForSave(entity);
+                    }
+                }
+
+                foreach (var psychometristInvoiceAmount in psychometristInvoiceAmountsToAdd)
+                {
+                    uow.AddForSave(
+                        new PsychometristInvoiceAmountEntity
+                        {
+                            CompanyId = invoiceConfiguration.CompanyId,
+                            AssessmentTypeId = psychometristInvoiceAmount.AssessmentType.AssessmentTypeId,
+                            AppointmentStatusId = psychometristInvoiceAmount.AppointmentStatus.AppointmentStatusId,
+                            AppointmentSequenceId = psychometristInvoiceAmount.AppointmentSequence.AppointmentSequenceId,
+                            InvoiceAmount = psychometristInvoiceAmount.InvoiceAmount,
+                        }
+                    );
+                }
+
+                #endregion
+
+                uow.Commit(adapter);
+            }
+
+            return invoiceConfiguration.CompanyId;
+        }
         
         public int IncrementCompanyInvoiceCounter(int companyId)
         {
@@ -742,6 +1128,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 var meta = new LinqMetaData(adapter);
 
                 return meta.PsychometristInvoiceAmount
+                    .WithPath(PsychometristInvoiceAmountPath)
                     .Where(psychometristInvoiceAmount =>
                         psychometristInvoiceAmount.AssessmentTypeId == assessmentTypeId &&
                         psychometristInvoiceAmount.AppointmentStatusId == appointmentStatusId &&
@@ -798,5 +1185,18 @@ namespace PsychologicalServices.Infrastructure.Invoices
             }
         }
 
+        public InvoiceConfiguration GetInvoiceConfiguration(int companyId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return meta.Company
+                    .WithPath(InvoiceConfigurationPath)
+                    .Where(company => company.CompanyId == companyId)
+                    .SingleOrDefault()
+                    .ToInvoiceConfiguration();
+            }
+        }
     }
 }

@@ -18,10 +18,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public IValidationResult Validate(Invoice item)
         {
-            var result = new ValidationResult
-            {
-                ValidationErrors = new List<IValidationError>(),
-            };
+            var result = new ValidationResult();
 
             if (item.Total < 0)
             {

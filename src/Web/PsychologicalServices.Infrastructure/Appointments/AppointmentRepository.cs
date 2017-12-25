@@ -398,6 +398,23 @@ namespace PsychologicalServices.Infrastructure.Appointments
             return GetAppointments(criteria, PsychometristInvoiceAppointmentPath);
         }
 
+        public IEnumerable<AppointmentSequence> GetAppointmentSequences(bool? isActive = true)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return
+                    Execute<AppointmentSequenceEntity>(
+                        (ILLBLGenProQuery)
+                        meta.AppointmentSequence
+                        .Where(appointmentSequence => isActive == null || appointmentSequence.IsActive == isActive.Value)
+                    )
+                    .Select(appointmentSequence => appointmentSequence.ToAppointmentSequence())
+                    .ToList();
+            }
+        }
+
         public IEnumerable<AppointmentStatus> GetAppointmentStatuses(bool? isActive = true)
         {
             using (var adapter = AdapterFactory.CreateAdapter())

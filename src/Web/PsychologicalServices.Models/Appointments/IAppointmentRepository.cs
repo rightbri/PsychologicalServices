@@ -21,6 +21,8 @@ namespace PsychologicalServices.Models.Appointments
 
         IEnumerable<Appointment> GetAppointmentsForPsychometristInvoice(AppointmentSearchCriteria criteria);
 
+        IEnumerable<AppointmentSequence> GetAppointmentSequences(bool? isActive = true);
+
         IEnumerable<AppointmentStatus> GetAppointmentStatuses(bool? isActive = true);
 
         int SaveAppointment(Appointment appointment);

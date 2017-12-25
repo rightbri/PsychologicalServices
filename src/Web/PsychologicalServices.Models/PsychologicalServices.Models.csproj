@@ -87,7 +87,12 @@
     <Compile Include="Events\IEventRepository.cs" />
     <Compile Include="Events\IEventService.cs" />
     <Compile Include="Events\IEventValidator.cs" />
+    <Compile Include="Invoices\AppointmentStatusInvoiceRate.cs" />
+    <Compile Include="Invoices\AssessmentTypeInvoiceAmount.cs" />
+    <Compile Include="Invoices\IInvoiceConfigurationValidator.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
+    <Compile Include="Invoices\InvoiceConfiguration.cs" />
+    <Compile Include="Invoices\InvoiceConfigurationValidator.cs" />
     <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentSendLog.cs" />
     <Compile Include="Invoices\InvoiceExtensions.cs" />
@@ -98,6 +103,7 @@
     <Compile Include="Invoices\PsychologistInvoiceSendModel.cs" />
     <Compile Include="Invoices\PsychologistInvoiceSendParameters.cs" />
     <Compile Include="Invoices\PsychologistInvoiceSendResult.cs" />
+    <Compile Include="Invoices\ReferralSourceInvoiceConfiguration.cs" />
     <Compile Include="Outstanding\IOutstandingRepository.cs" />
     <Compile Include="Outstanding\IOutstandingService.cs" />
     <Compile Include="Outstanding\OutstandingReport.cs" />

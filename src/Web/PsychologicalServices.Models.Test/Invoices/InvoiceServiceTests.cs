@@ -21,6 +21,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Mock<Users.IUserService>,
                 Mock<IInvoiceRepository>,
                 Mock<IInvoiceValidator>,
+                Mock<IInvoiceConfigurationValidator>,
                 Mock<IPsychologistInvoiceGenerator>,
                 Mock<IPsychometristInvoiceGenerator>,
                 Mock<IDate>,
@@ -35,6 +36,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             var userServiceMock = new Mock<Users.IUserService>();
             var invoiceRepositoryMock = new Mock<IInvoiceRepository>();
             var invoiceValidatorMock = new Mock<IInvoiceValidator>();
+            var invoiceConfigurationValidatorMock = new Mock<IInvoiceConfigurationValidator>();
             var psychologistInvoiceGeneratorMock = new Mock<IPsychologistInvoiceGenerator>();
             var psychometristInvoiceGeneratorMock = new Mock<IPsychometristInvoiceGenerator>();
             var dateServiceMock = new Mock<IDate>();
@@ -48,6 +50,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 userServiceMock,
                 invoiceRepositoryMock,
                 invoiceValidatorMock,
+                invoiceConfigurationValidatorMock,
                 psychologistInvoiceGeneratorMock,
                 psychometristInvoiceGeneratorMock,
                 dateServiceMock,
@@ -62,6 +65,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 userServiceMock.Object,
                 invoiceRepositoryMock.Object,
                 invoiceValidatorMock.Object,
+                invoiceConfigurationValidatorMock.Object,
                 psychologistInvoiceGeneratorMock.Object,
                 psychometristInvoiceGeneratorMock.Object,
                 dateServiceMock.Object,
@@ -190,7 +194,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
@@ -307,7 +311,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
 
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
@@ -429,7 +433,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
 
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
@@ -562,7 +566,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
 
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
@@ -696,7 +700,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
 
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
@@ -832,7 +836,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
 
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
@@ -977,7 +981,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             Mock<IInvoiceRepository> invoiceRepositoryMockToVerify = null;
 
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
@@ -1146,7 +1150,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
 
             var invoiceService = GetService(
-                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
+                (appointmentRepositoryMock, companyRepositoryMock, userServiceMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, psychologistInvoiceGeneratorMock, psychometristInvoiceGeneratorMock, dateMock, logMock, timezoneServiceMock, mailServiceMock) =>
                 {
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetInvoiceDocument(It.Is<int>(i => i == invoiceDocumentId)))
