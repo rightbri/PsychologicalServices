@@ -1,8 +1,11 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Referrals;
 using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -15,7 +18,10 @@ namespace PsychologicalServices.Models.Invoices
     public class InvoiceService : IInvoiceService
     {
         private readonly IAppointmentRepository _appointmentRepository = null;
+        private readonly IAssessmentRepository _assessmentRepository = null;
+        private readonly IClaimRepository _claimRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
+        private readonly IReferralRepository _referralRepository = null;
         private readonly IUserService _userService = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IInvoiceValidator _invoiceValidator = null;
@@ -29,7 +35,10 @@ namespace PsychologicalServices.Models.Invoices
 
         public InvoiceService(
             IAppointmentRepository appointmentRepository,
+            IAssessmentRepository assessmentRepository,
+            IClaimRepository claimRepository,
             ICompanyRepository companyRepository,
+            IReferralRepository referralRepository,
             IUserService userService,
             IInvoiceRepository invoiceRepository,
             IInvoiceValidator invoiceValidator,
@@ -43,7 +52,10 @@ namespace PsychologicalServices.Models.Invoices
         )
         {
             _appointmentRepository = appointmentRepository;
+            _assessmentRepository = assessmentRepository;
+            _claimRepository = claimRepository;
             _companyRepository = companyRepository;
+            _referralRepository = referralRepository;
             _userService = userService;
             _invoiceRepository = invoiceRepository;
             _psychologistInvoiceGenerator = psychologistInvoiceGenerator;
@@ -100,7 +112,9 @@ namespace PsychologicalServices.Models.Invoices
         {
             var configuration = _invoiceRepository.GetInvoiceConfiguration(companyId);
 
-            return configuration;
+            var updatedConfiguration = FillInvoiceConfiguration(configuration);
+
+            return updatedConfiguration;
         }
 
         public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
@@ -380,5 +394,155 @@ namespace PsychologicalServices.Models.Invoices
             return model;
         }
 
+        private InvoiceConfiguration FillInvoiceConfiguration(InvoiceConfiguration configuration)
+        {
+            var appointmentStatuses = _appointmentRepository.GetAppointmentStatuses();
+            var appointmentSequences = _appointmentRepository.GetAppointmentSequences();
+            var assessmentTypes = _assessmentRepository.GetAssessmentTypes();
+            var issuesInDispute = _claimRepository.GetIssuesInDispute();
+            var referralSources = _referralRepository.GetReferralSources(new ReferralSourceSearchCriteria { IsActive = true });
+
+            //add missing appointment status invoice rates with default values
+            var appointmentStatusInvoiceRates = new List<AppointmentStatusInvoiceRate>(
+                configuration.AppointmentStatusInvoiceRates
+            ).Union(
+                (from rs in referralSources
+                 from appst in appointmentStatuses
+                 from appsq in appointmentSequences
+                 where appst.CanInvoice &&
+                 (
+                    (appsq.AppointmentSequenceId == AppointmentSequence.First) ||
+                    (appsq.AppointmentSequenceId == AppointmentSequence.Subsequent && appst.AppointmentStatusId != AppointmentStatus.Complete) ||
+                    (appsq.AppointmentSequenceId == AppointmentSequence.Last && appst.AppointmentStatusId == AppointmentStatus.Complete)
+                 )
+                 select new { ReferralSource = rs, AppointmentStatus = appst, AppointmentSequence = appsq }
+                )
+                .Where(apir =>
+                    !configuration.AppointmentStatusInvoiceRates.Any(appointmentStatusInvoiceRate =>
+                        appointmentStatusInvoiceRate.ReferralSource.ReferralSourceId == apir.ReferralSource.ReferralSourceId &&
+                        appointmentStatusInvoiceRate.AppointmentStatus.AppointmentStatusId == apir.AppointmentStatus.AppointmentStatusId &&
+                        appointmentStatusInvoiceRate.AppointmentSequence.AppointmentSequenceId == apir.AppointmentSequence.AppointmentSequenceId
+                    )
+                )
+                .Select(apir =>
+                    new AppointmentStatusInvoiceRate
+                    {
+                        ReferralSource = apir.ReferralSource,
+                        AppointmentStatus = apir.AppointmentStatus,
+                        AppointmentSequence = apir.AppointmentSequence,
+                        ApplyCompletionFee = InvoiceDefaults.ApplyCompletionFee,
+                        ApplyExtraReportFees = InvoiceDefaults.ApplyExtraReportFees,
+                        ApplyIssueInDisputeFees = InvoiceDefaults.ApplyIssueInDisputeFees,
+                        ApplyLargeFileFee = InvoiceDefaults.ApplyLargeFileFee,
+                        ApplyTravelFee = InvoiceDefaults.ApplyTravelFee,
+                        InvoiceRate = InvoiceDefaults.InvoiceRate,
+                    })
+            );
+
+            //add missing assessment type invoice amounts with default values
+            var assessmentTypeInvoiceAmounts = new List<AssessmentTypeInvoiceAmount>(
+                configuration.AssessmentTypeInvoiceAmounts
+            ).Union(
+                (from rs in referralSources
+                 from at in assessmentTypes
+                 select new { ReferralSource = rs, AssessmentType = at }
+                )
+                .Where(rsat =>
+                    !configuration.AssessmentTypeInvoiceAmounts.Any(assessmentTypeInvoiceAmount =>
+                        assessmentTypeInvoiceAmount.ReferralSource.ReferralSourceId == rsat.ReferralSource.ReferralSourceId &&
+                        assessmentTypeInvoiceAmount.AssessmentType.AssessmentTypeId == rsat.AssessmentType.AssessmentTypeId
+                    )
+                )
+                .Select(rsat =>
+                    new AssessmentTypeInvoiceAmount
+                    {
+                        ReferralSource = rsat.ReferralSource,
+                        AssessmentType = rsat.AssessmentType,
+                        SingleReportInvoiceAmount = InvoiceDefaults.SingleReportInvoiceAmount,
+                        ComboReportInvoiceAmount = InvoiceDefaults.ComboReportInvoiceAmount,
+                    })
+            );
+
+            //add missing issue in dispute invoice amounts with default values
+            var issueInDisputeInvoiceAmounts = new List<IssueInDisputeInvoiceAmount>(
+                configuration.IssueInDisputeInvoiceAmounts
+            ).Union(
+                issuesInDispute.Where(issueInDispute =>
+                    !configuration.IssueInDisputeInvoiceAmounts.Any(issueInDisputeInvoiceAmount =>
+                        issueInDisputeInvoiceAmount.IssueInDispute.IssueInDisputeId == issueInDispute.IssueInDisputeId
+                    )
+                )
+                .Select(issueInDispute =>
+                    new IssueInDisputeInvoiceAmount
+                    {
+                        IssueInDispute = issueInDispute,
+                        InvoiceAmount = InvoiceDefaults.IssueInDisputeInvoiceAmount,
+                    })
+            );
+
+            //add missing psychometrist invoice amounts with default values
+            var psychometristInvoiceAmounts = new List<PsychometristInvoiceAmount>(
+                configuration.PsychometristInvoiceAmounts
+            ).Union(
+                (from at in assessmentTypes
+                 from appst in appointmentStatuses
+                 from appsq in appointmentSequences
+                 where appst.CanInvoice &&
+                 (
+                    (appsq.AppointmentSequenceId == AppointmentSequence.First) ||
+                    (appsq.AppointmentSequenceId == AppointmentSequence.Subsequent && appst.AppointmentStatusId != AppointmentStatus.Complete) ||
+                    (appsq.AppointmentSequenceId == AppointmentSequence.Last && appst.AppointmentStatusId == AppointmentStatus.Complete)
+                 )
+                 select new { AssessmentType = at, AppointmentStatus = appst, AppointmentSequence = appsq }
+                )
+                .Where(pia =>
+                    !configuration.PsychometristInvoiceAmounts.Any(psychometristInvoiceAmount =>
+                        psychometristInvoiceAmount.AssessmentType.AssessmentTypeId == pia.AssessmentType.AssessmentTypeId &&
+                        psychometristInvoiceAmount.AppointmentStatus.AppointmentStatusId == pia.AppointmentStatus.AppointmentStatusId &&
+                        psychometristInvoiceAmount.AppointmentSequence.AppointmentSequenceId == pia.AppointmentSequence.AppointmentSequenceId
+                    )
+                )
+                .Select(pia =>
+                    new PsychometristInvoiceAmount
+                    {
+                        AssessmentType = pia.AssessmentType,
+                        AppointmentStatus = pia.AppointmentStatus,
+                        AppointmentSequence = pia.AppointmentSequence,
+                        InvoiceAmount = InvoiceDefaults.PsychometristInvoiceAmount,
+                    })
+            );
+            
+            //add missing referral source configurations with default values
+            var referralSourceInvoiceConfigurations = new List<ReferralSourceInvoiceConfiguration>(
+                configuration.ReferralSourceInvoiceConfigurations
+            ).Union(
+                referralSources.Where(referralSource =>
+                    !configuration.ReferralSourceInvoiceConfigurations.Any(referralSourceInvoiceConfiguration =>
+                        referralSourceInvoiceConfiguration.ReferralSource.ReferralSourceId == referralSource.ReferralSourceId
+                    )
+                )
+                .Select(referralSource =>
+                    new ReferralSourceInvoiceConfiguration
+                    {
+                        ReferralSource = referralSource,
+                        CompletionFee = InvoiceDefaults.CompletionFee,
+                        ExtraReportFee = InvoiceDefaults.ExtraReportFee,
+                        LargeFileFee = InvoiceDefaults.LargeFileFee,
+                        LargeFileSize = InvoiceDefaults.LargeFileSize,
+                    })
+            );
+
+            var newConfiguration = new InvoiceConfiguration
+            {
+                CompanyId = configuration.CompanyId,
+                AssessmentTypeInvoiceAmounts = assessmentTypeInvoiceAmounts,
+                AppointmentStatusInvoiceRates = appointmentStatusInvoiceRates,
+                IssueInDisputeInvoiceAmounts = issueInDisputeInvoiceAmounts,
+                PsychometristInvoiceAmounts = psychometristInvoiceAmounts,
+                ReferralSourceInvoiceConfigurations = referralSourceInvoiceConfigurations,
+            };
+            
+            return newConfiguration;
+        }
     }
 }

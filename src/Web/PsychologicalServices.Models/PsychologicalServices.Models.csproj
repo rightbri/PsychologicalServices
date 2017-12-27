@@ -93,6 +93,7 @@
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceConfiguration.cs" />
     <Compile Include="Invoices\InvoiceConfigurationValidator.cs" />
+    <Compile Include="Invoices\InvoiceDefaults.cs" />
     <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentSendLog.cs" />
     <Compile Include="Invoices\InvoiceExtensions.cs" />
