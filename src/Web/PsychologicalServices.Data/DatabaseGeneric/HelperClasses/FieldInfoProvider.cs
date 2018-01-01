@@ -669,6 +669,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("UserEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)UserFieldIndex.IsActive, 0, 0, 0);
 			base.AddElementFieldInfo("UserEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)UserFieldIndex.CompanyId, 0, 0, 10);
 			base.AddElementFieldInfo("UserEntity", "AddressId", typeof(System.Int32), false, true, false, false,  (int)UserFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("UserEntity", "DateInactivated", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)UserFieldIndex.DateInactivated, 0, 0, 0);
 		}
 		/// <summary>Inits UserNoteEntity's FieldInfo objects</summary>
 		private void InitUserNoteEntityInfos()

@@ -1804,6 +1804,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("DateInactivated", fieldHashtable);
 		}
 		#endregion
 
@@ -2178,6 +2181,17 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)UserFieldIndex.AddressId, true); }
 			set	{ SetValue((int)UserFieldIndex.AddressId, value); }
+		}
+
+		/// <summary> The DateInactivated property of the Entity User<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Users"."DateInactivated"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.DateTimeOffset> DateInactivated
+		{
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)UserFieldIndex.DateInactivated, false); }
+			set	{ SetValue((int)UserFieldIndex.DateInactivated, value); }
 		}
 
 

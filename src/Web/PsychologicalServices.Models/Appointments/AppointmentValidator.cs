@@ -77,10 +77,10 @@ namespace PsychologicalServices.Models.Appointments
                         new ValidationError { PropertyName = "PsychometristId", Message = GetValidationMessage(item, "The selected user is not a psychometrist") }
                     );
                 }
-                else if (!psychometrist.IsActive)
+                else if (!psychometrist.IsAvailable(item.AppointmentTime))
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychometristId", Message = GetValidationMessage(item, "The selected psychometrist is not active") }
+                        new ValidationError { PropertyName = "PsychometristId", Message = GetValidationMessage(item, "The selected psychometrist is not available at the time of the appointment") }
                     );
                 }
             }
@@ -107,10 +107,10 @@ namespace PsychologicalServices.Models.Appointments
                         new ValidationError { PropertyName = "PsychologistId", Message = GetValidationMessage(item, "The selected user is not a psychologistId") }
                     );
                 }
-                else if (!psychologist.IsActive)
+                else if (!psychologist.IsAvailable(item.AppointmentTime))
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "PsychologistId", Message = GetValidationMessage(item, "The selected psychologistId is not active") }
+                        new ValidationError { PropertyName = "PsychologistId", Message = GetValidationMessage(item, "The selected psychologistId is not available at the time of the appointment") }
                     );
                 }
             }

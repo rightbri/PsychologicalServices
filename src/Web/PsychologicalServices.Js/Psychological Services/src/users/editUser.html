@@ -3,6 +3,7 @@
 	<require from="resources/value-converters/sort-array"></require>
 	<require from="resources/value-converters/money"></require>
 	<require from="common/validation-summary.html"></require>
+	<require from="common/date-mask"></require>
 	<require from="common/date-picker"></require>
 	<require from="flatpickr/flatpickr.css"></require>
 	
@@ -65,6 +66,14 @@
 					<label class="uk-form-label">
 						<input type="checkbox" class="uk-checkbox" checked.bind="user.isActive" />&nbsp;Is Active?
 					</label>
+				</div>
+			</div>
+
+			<div class="uk-width-1-2@s" if.bind="!user.isActive"></div>
+			<div class="uk-width-1-2@s" if.bind="!user.isActive">
+				<label class="uk-form-label" for="dateInactivated">Date Inactivated</label>
+				<div class="uk-form-controls">
+					<input id="dateInactivated" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="user.dateInactivated | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
 				</div>
 			</div>
 			

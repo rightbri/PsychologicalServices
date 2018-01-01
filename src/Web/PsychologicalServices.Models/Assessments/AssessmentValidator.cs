@@ -121,17 +121,6 @@ namespace PsychologicalServices.Models.Assessments
                         new ValidationError { PropertyName = "ReferralTypeId", Message = "The selected referral type is not active." }
                     );
                 }
-                //else
-                //{
-                //    if (null != item.IssuesInDispute)
-                //    {
-                //        result.ValidationErrors.AddRange(
-                //            item.IssuesInDispute
-                //                .Where(issueInDispute => !referralType.IssuesInDispute.Any(referralTypeIssuesInDispute => referralTypeIssuesInDispute.IssueInDisputeId == issueInDispute.IssueInDisputeId))
-                //                .Select(issueInDispute => new ValidationError { PropertyName = "IssuesInDispute", Message = string.Format("{0} is not a valid issue in dispute for referral type {1}", issueInDispute.Name, referralType.Name) })
-                //        );
-                //    }
-                //}
             }
             
             if (null == item.ReferralSource)
@@ -181,7 +170,7 @@ namespace PsychologicalServices.Models.Assessments
                     );
                 }
             }
-            
+
             if (null != item.DocListWriter)
             {
                 var docListWriters = _userRepository.GetUsers(new UserSearchCriteria

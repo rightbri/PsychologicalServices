@@ -3,20 +3,22 @@ import {bindable, bindingMode} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
 import {EventHelper} from 'services/eventHelper';
+import {UserAvailability} from 'services/userAvailability';
 import {Timezone} from 'common/timezone';
 import moment from 'moment';
 import 'moment-timezone';
 
-@inject(Element, DataRepository, Config, EventHelper, Timezone)
+@inject(Element, DataRepository, Config, EventHelper, Timezone, UserAvailability)
 export class EditAppointment {
 	@bindable({ defaultBindingMode: bindingMode.twoWay }) model;
 	
-	constructor(element, dataRepository, config, eventHelper, timezone) {
+	constructor(element, dataRepository, config, eventHelper, timezone, userAvailability) {
 		this.element = element;
 		this.dataRepository = dataRepository;
 		this.config = config;
 		this.eventHelper = eventHelper;
 		this.timezone = timezone;
+		this.userAvailability = userAvailability;
 		
 		this.psychometristMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.psychologistMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
@@ -37,6 +39,18 @@ export class EditAppointment {
 		this.psychologists = model.psychologists;
 		this.appointmentStatuses = model.appointmentStatuses;
 		this.addresses = model.addresses;
+
+		this.availablePsychometrists = this.getAvailablePsychometrists(this.appointmentDate);
+	}
+
+	appointmentDateChanged() {
+		this.availablePsychometrists = this.getAvailablePsychometrists(this.appointmentDate);
+	}
+
+	getAvailablePsychometrists(date) {
+		let availableUsers = this.psychometrists.filter(psychometrist => this.userAvailability.isAvailable(psychometrist, date));
+
+		return availableUsers;
 	}
 
 	ok(e) {

@@ -67,6 +67,7 @@
     <Compile Include="Invoices\PsychometristInvoiceGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedule\PsychologistScheduleModelTests.cs" />
+    <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PsychologicalServices.Models\PsychologicalServices.Models.csproj">

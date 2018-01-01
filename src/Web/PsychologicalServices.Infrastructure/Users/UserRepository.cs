@@ -236,10 +236,6 @@ namespace PsychologicalServices.Infrastructure.Users
                     {
                         users = users.Where(user => user.IsActive == criteria.IsActive.Value);
                     }
-                    else
-                    {
-                        users = users.Where(user => user.IsActive);
-                    }
 
                     if (criteria.AvailableDate.HasValue)
                     {
@@ -487,6 +483,15 @@ namespace PsychologicalServices.Infrastructure.Users
                 userEntity.CompanyId = user.Company.CompanyId;
                 userEntity.AddressId = user.Address.AddressId;
                 userEntity.IsActive = user.IsActive;
+
+                if (user.DateInactivated.HasValue)
+                {
+                    userEntity.DateInactivated = user.DateInactivated;
+                }
+                else
+                {
+                    userEntity.SetNewFieldValue((int)UserFieldIndex.DateInactivated, null);
+                }
 
                 #region roles
 

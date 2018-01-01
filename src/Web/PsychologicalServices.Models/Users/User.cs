@@ -33,6 +33,8 @@ namespace PsychologicalServices.Models.Users
 
         public bool IsActive { get; set; }
 
+        public DateTimeOffset? DateInactivated { get; set; }
+
         public bool IsNew()
         {
             return UserId == 0;
@@ -54,11 +56,17 @@ namespace PsychologicalServices.Models.Users
                 );
         }
 
-        public bool IsAvailable(DateTime date)
+        public bool IsAvailable(DateTimeOffset date)
         {
-            return null != Unavailability
-                ? !Unavailability.Any(unavailability => unavailability.StartDate <= date && unavailability.EndDate >= date)
-                : true;
+            return
+                (
+                    null == Unavailability ||
+                    !Unavailability.Any(unavailability => unavailability.StartDate <= date && unavailability.EndDate >= date)
+                ) &&
+                (
+                    IsActive ||
+                    (DateInactivated.HasValue && DateInactivated.Value > date)
+                );
         }
     }
 }

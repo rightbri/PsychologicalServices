@@ -14,7 +14,7 @@
 				<div>
 					<label class="uk-form-label" for="appointmentDate">Date</label>
 					<div class="uk-form-controls">
-						<input id="appointmentDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="appointmentDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+						<input id="appointmentDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="appointmentDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" change.delegate="appointmentDateChanged()" />
 					</div>
 				</div>
 			
@@ -54,7 +54,7 @@
 					<div class="uk-form-controls">
 						<select id="psychometrist" class="uk-select" value.bind="model.appointment.psychometrist" matcher.bind="psychometristMatcher">
 							<option></option>
-							<option repeat.for="psychometrist of psychometrists" model.bind="psychometrist">
+							<option repeat.for="psychometrist of availablePsychometrists" model.bind="psychometrist">
 								${psychometrist.firstName} ${psychometrist.lastName}
 							</option>
 						</select>

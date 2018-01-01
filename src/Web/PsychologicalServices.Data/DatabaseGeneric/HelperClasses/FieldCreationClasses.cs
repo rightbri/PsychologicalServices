@@ -1837,6 +1837,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(UserFieldIndex.AddressId);}
 		}
+		/// <summary>Creates a new UserEntity.DateInactivated field instance</summary>
+		public static EntityField2 DateInactivated
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserFieldIndex.DateInactivated);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity UserNoteEntity</summary>

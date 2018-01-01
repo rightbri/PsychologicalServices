@@ -56,7 +56,7 @@ export class EditAssessment {
 								this.claimant = this.assessment.claims[0].claimant;
 							}
 							
-							return this.getData(assessment).then(() => this.scroller.scrollTo(0));
+							return this.getData().then(() => this.scroller.scrollTo(0));
 						});
 				}
 				else {
@@ -64,7 +64,7 @@ export class EditAssessment {
 						.then(assessment => {
 							this.assessment = assessment;
 							
-							return this.getData(assessment).then(() => {
+							return this.getData().then(() => {
 								this.assessmentTypeChanged();
 								
 								this.scroller.scrollTo(0);
@@ -298,19 +298,6 @@ export class EditAssessment {
 		this.assessment.claims.splice(this.assessment.claims.indexOf(claim), 1);
 	}
 	
-	dateIsWithinUnavailability(date, unavailability) {
-		return unavailability.startDate <= date && unavailability.endDate >= date;
-	}
-	
-	userIsAvailable(user, date) {
-		return !user.unavailability ||
-			!user.unavailability.some(unavailability => this.dateIsWithinUnavailability(date, unavailability));
-	}
-	
-	availableUsers(users, date) {
-		return users.filter(psychometrist => this.userIsAvailable(psychometrist, date));	
-	}
-	
 	newAppointment() {
 		this.dataRepository.getNewAppointment(this.assessment.company.companyId)
 			.then(data => {
@@ -324,7 +311,7 @@ export class EditAssessment {
 
 		this.appointmentEditModel = {
 			'appointment': appointment,
-			'psychometrists': this.availableUsers(this.psychometrists, appointment.appointmentTime),
+			'psychometrists': this.psychometrists,
 			'psychologists': this.psychologists,
 			'appointmentStatuses': this.appointmentStatuses,
 			'addresses': this.appointmentAddresses

@@ -1217,6 +1217,8 @@ namespace PsychologicalServices.Data
 		CompanyId,
 		///<summary>AddressId. </summary>
 		AddressId,
+		///<summary>DateInactivated. </summary>
+		DateInactivated,
 		/// <summary></summary>
 		AmountOfFields
 	}
