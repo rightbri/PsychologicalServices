@@ -265,6 +265,8 @@ namespace PsychologicalServices.Data
 		NeurocognitiveCredibilityId,
 		///<summary>PsychologicalCredibilityId. </summary>
 		PsychologicalCredibilityId,
+		///<summary>DiagnosisFoundReponseId. </summary>
+		DiagnosisFoundReponseId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -701,6 +703,22 @@ namespace PsychologicalServices.Data
 	{
 		///<summary>CredibilityId. </summary>
 		CredibilityId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: DiagnosisFoundResponse.
+	/// </summary>
+	public enum DiagnosisFoundResponseFieldIndex:int
+	{
+		///<summary>DiagnosisFoundResponseId. </summary>
+		DiagnosisFoundResponseId,
 		///<summary>Name. </summary>
 		Name,
 		///<summary>IsActive. </summary>
@@ -1360,6 +1378,8 @@ namespace PsychologicalServices.Data
 		ContactTypeEntity,
 		///<summary>Credibility</summary>
 		CredibilityEntity,
+		///<summary>DiagnosisFoundResponse</summary>
+		DiagnosisFoundResponseEntity,
 		///<summary>Employer</summary>
 		EmployerEntity,
 		///<summary>EmployerType</summary>

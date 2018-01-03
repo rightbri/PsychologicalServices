@@ -26,24 +26,19 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'ReportStatus'.<br/><br/>
+	/// Entity class which represents the entity 'DiagnosisFoundResponses'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class ReportStatusEntity : CommonEntityBase, ISerializable
+	public partial class DiagnosisFoundResponsesEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
-		private EntityCollection<AssessmentEntity> _assessments;
-
-
-
-
-
-
 
 
 
@@ -62,6 +57,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -71,14 +67,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-
-			/// <summary>Member name Assessments</summary>
-			public static readonly string Assessments = "Assessments";
-
-
-
-
-
 
 
 
@@ -98,13 +86,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static ReportStatusEntity()
+		static DiagnosisFoundResponsesEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public ReportStatusEntity():base("ReportStatusEntity")
+		public DiagnosisFoundResponsesEntity():base("DiagnosisFoundResponsesEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -112,53 +100,46 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public ReportStatusEntity(IEntityFields2 fields):base("ReportStatusEntity")
+		public DiagnosisFoundResponsesEntity(IEntityFields2 fields):base("DiagnosisFoundResponsesEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this ReportStatusEntity</param>
-		public ReportStatusEntity(IValidator validator):base("ReportStatusEntity")
+		/// <param name="validator">The custom validator object for this DiagnosisFoundResponsesEntity</param>
+		public DiagnosisFoundResponsesEntity(IValidator validator):base("DiagnosisFoundResponsesEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="reportStatusId">PK value for ReportStatus which data should be fetched into this ReportStatus object</param>
+		/// <param name="diagnosisFoundResponseId">PK value for DiagnosisFoundResponses which data should be fetched into this DiagnosisFoundResponses object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReportStatusEntity(System.Int32 reportStatusId):base("ReportStatusEntity")
+		public DiagnosisFoundResponsesEntity(System.Int32 diagnosisFoundResponseId):base("DiagnosisFoundResponsesEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.ReportStatusId = reportStatusId;
+			this.DiagnosisFoundResponseId = diagnosisFoundResponseId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="reportStatusId">PK value for ReportStatus which data should be fetched into this ReportStatus object</param>
-		/// <param name="validator">The custom validator object for this ReportStatusEntity</param>
+		/// <param name="diagnosisFoundResponseId">PK value for DiagnosisFoundResponses which data should be fetched into this DiagnosisFoundResponses object</param>
+		/// <param name="validator">The custom validator object for this DiagnosisFoundResponsesEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ReportStatusEntity(System.Int32 reportStatusId, IValidator validator):base("ReportStatusEntity")
+		public DiagnosisFoundResponsesEntity(System.Int32 diagnosisFoundResponseId, IValidator validator):base("DiagnosisFoundResponsesEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.ReportStatusId = reportStatusId;
+			this.DiagnosisFoundResponseId = diagnosisFoundResponseId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected ReportStatusEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected DiagnosisFoundResponsesEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
-
-
-
-
-
-
 
 
 
@@ -179,6 +160,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -186,7 +168,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((ReportStatusFieldIndex)fieldIndex)
+			switch((DiagnosisFoundResponsesFieldIndex)fieldIndex)
 			{
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -210,15 +192,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-
-				case "Assessments":
-					this.Assessments.Add((AssessmentEntity)entity);
-					break;
-
-
-
-
-
 
 
 
@@ -244,7 +217,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return ReportStatusEntity.GetRelationsForField(fieldName);
+			return DiagnosisFoundResponsesEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -255,15 +228,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-
-				case "Assessments":
-					toReturn.Add(ReportStatusEntity.Relations.AssessmentEntityUsingReportStatusId);
-					break;
-
-
-
-
-
 
 
 
@@ -315,9 +279,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "Assessments":
-					this.Assessments.Add((AssessmentEntity)relatedEntity);
-					break;
 
 
 				default:
@@ -335,9 +296,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "Assessments":
-					base.PerformRelatedEntityRemoval(this.Assessments, relatedEntity, signalRelatedEntityManyToOne);
-					break;
 
 
 				default:
@@ -370,7 +328,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.Assessments);
 
 
 			return toReturn;
@@ -386,13 +343,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_assessments", ((_assessments!=null) && (_assessments.Count>0) && !this.MarkedForDeletion)?_assessments:null);
-
-
-
-
-
-
 
 
 
@@ -412,6 +362,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -419,7 +370,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(ReportStatusFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(DiagnosisFoundResponsesFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -428,7 +379,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(ReportStatusFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(DiagnosisFoundResponsesFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -438,25 +389,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new ReportStatusRelations().GetAllRelations();
+			return new DiagnosisFoundResponsesRelations().GetAllRelations();
 		}
 		
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entities of type 'Assessment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAssessments()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.ReportStatusId, null, ComparisonOperator.Equal, this.ReportStatusId));
-			return bucket;
-		}
-
-
-
-
-
-
 
 
 
@@ -477,7 +412,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.ReportStatusEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.DiagnosisFoundResponsesEntity);
 		}
 
 		/// <summary>
@@ -492,7 +427,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(ReportStatusEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(DiagnosisFoundResponsesEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -500,13 +435,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._assessments);
-
-
-
-
-
-
 
 
 
@@ -527,13 +455,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
-
-
-
-
-
-
 
 
 
@@ -553,16 +474,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-			if (this._assessments != null)
-			{
-				return true;
-			}
-
-
-
-
-
-
 
 
 
@@ -585,13 +496,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
-
-
-
-
-
-
 
 
 
@@ -615,13 +519,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-			toReturn.Add("Assessments", _assessments);
-
-
-
-
-
-
 
 
 
@@ -642,16 +539,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			if(_assessments!=null)
-			{
-				_assessments.ActiveContext = base.ActiveContext;
-			}
-
-
-
-
-
-
 
 
 
@@ -673,13 +560,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
-			_assessments = null;
-
-
-
-
-
-
 
 
 
@@ -699,6 +579,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -712,7 +593,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ReportStatusId", fieldHashtable);
+			_fieldsCustomProperties.Add("DiagnosisFoundResponseId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
@@ -725,7 +606,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this ReportStatusEntity</param>
+		/// <param name="validator">The validator object for this DiagnosisFoundResponsesEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -738,15 +619,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static ReportStatusRelations Relations
+		public  static DiagnosisFoundResponsesRelations Relations
 		{
-			get	{ return new ReportStatusRelations(); }
+			get	{ return new DiagnosisFoundResponsesRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -755,23 +637,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return _customProperties;}
 		}
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAssessments
-		{
-			get
-			{
-				return new PrefetchPathElement2( new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Assessments")[0], (int)PsychologicalServices.Data.EntityType.ReportStatusEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
-			}
-		}
-
-
-
-
-
 
 
 
@@ -793,7 +658,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return ReportStatusEntity.CustomProperties;}
+			get { return DiagnosisFoundResponsesEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -809,63 +674,41 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return ReportStatusEntity.FieldsCustomProperties;}
+			get { return DiagnosisFoundResponsesEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The ReportStatusId property of the Entity ReportStatus<br/><br/>
+		/// <summary> The DiagnosisFoundResponseId property of the Entity DiagnosisFoundResponses<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportStatuses"."ReportStatusId"<br/>
+		/// <remarks>Mapped on  table field: "DiagnosisFoundResponses"."DiagnosisFoundResponseId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ReportStatusId
+		public virtual System.Int32 DiagnosisFoundResponseId
 		{
-			get { return (System.Int32)GetValue((int)ReportStatusFieldIndex.ReportStatusId, true); }
-			set	{ SetValue((int)ReportStatusFieldIndex.ReportStatusId, value); }
+			get { return (System.Int32)GetValue((int)DiagnosisFoundResponsesFieldIndex.DiagnosisFoundResponseId, true); }
+			set	{ SetValue((int)DiagnosisFoundResponsesFieldIndex.DiagnosisFoundResponseId, value); }
 		}
 
-		/// <summary> The Name property of the Entity ReportStatus<br/><br/>
+		/// <summary> The Name property of the Entity DiagnosisFoundResponses<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportStatuses"."Name"<br/>
+		/// <remarks>Mapped on  table field: "DiagnosisFoundResponses"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Name
 		{
-			get { return (System.String)GetValue((int)ReportStatusFieldIndex.Name, true); }
-			set	{ SetValue((int)ReportStatusFieldIndex.Name, value); }
+			get { return (System.String)GetValue((int)DiagnosisFoundResponsesFieldIndex.Name, true); }
+			set	{ SetValue((int)DiagnosisFoundResponsesFieldIndex.Name, value); }
 		}
 
-		/// <summary> The IsActive property of the Entity ReportStatus<br/><br/>
+		/// <summary> The IsActive property of the Entity DiagnosisFoundResponses<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "ReportStatuses"."IsActive"<br/>
+		/// <remarks>Mapped on  table field: "DiagnosisFoundResponses"."IsActive"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Boolean IsActive
 		{
-			get { return (System.Boolean)GetValue((int)ReportStatusFieldIndex.IsActive, true); }
-			set	{ SetValue((int)ReportStatusFieldIndex.IsActive, value); }
+			get { return (System.Boolean)GetValue((int)DiagnosisFoundResponsesFieldIndex.IsActive, true); }
+			set	{ SetValue((int)DiagnosisFoundResponsesFieldIndex.IsActive, value); }
 		}
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.
-		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
-		[TypeContainedAttribute(typeof(AssessmentEntity))]
-		public virtual EntityCollection<AssessmentEntity> Assessments
-		{
-			get
-			{
-				if(_assessments==null)
-				{
-					_assessments = new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory)));
-					_assessments.SetContainingEntityInfo(this, "ReportStatus");
-				}
-				return _assessments;
-			}
-		}
-
-
-
-
-
-
 
 
 
@@ -899,7 +742,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.ReportStatusEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.DiagnosisFoundResponsesEntity; }
 		}
 		#endregion
 
@@ -908,6 +751,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

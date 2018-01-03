@@ -80,6 +80,10 @@
     <Compile Include="Credibilities\CredibilityService.cs" />
     <Compile Include="Credibilities\ICredibilityRepository.cs" />
     <Compile Include="Credibilities\ICredibilityService.cs" />
+    <Compile Include="DiagnosisFoundResponses\DiagnosisFoundResponse.cs" />
+    <Compile Include="DiagnosisFoundResponses\DiagnosisFoundResponseService.cs" />
+    <Compile Include="DiagnosisFoundResponses\IDiagnosisFoundResponseRepository.cs" />
+    <Compile Include="DiagnosisFoundResponses\IDiagnosisFoundResponseService.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventSearchCriteria.cs" />
     <Compile Include="Events\EventService.cs" />

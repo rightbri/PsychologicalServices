@@ -53,6 +53,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -70,6 +71,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Assessments = "Assessments";
 			/// <summary>Member name ReferralTypeIssuesInDispute</summary>
 			public static readonly string ReferralTypeIssuesInDispute = "ReferralTypeIssuesInDispute";
+
 
 
 
@@ -157,6 +159,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -213,6 +216,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					break;
 			}
@@ -241,6 +245,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReferralTypeIssuesInDispute":
 					toReturn.Add(ReferralTypeEntity.Relations.ReferralTypeIssueInDisputeEntityUsingReferralTypeId);
 					break;
+
 
 
 
@@ -381,6 +386,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -448,6 +454,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 	
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -490,6 +497,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -499,6 +507,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._referralTypeIssuesInDispute = (EntityCollection<ReferralTypeIssueInDisputeEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -537,6 +546,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -548,6 +558,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralTypeIssueInDisputeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralTypeIssueInDisputeEntityFactory))) : null);
+
 
 
 
@@ -572,6 +583,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("ReferralTypeIssuesInDispute", _referralTypeIssuesInDispute);
+
 
 
 
@@ -613,6 +625,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 
 		/// <summary> Initializes the class members</summary>
@@ -621,6 +634,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_assessments = null;
 			_referralTypeIssuesInDispute = null;
+
 
 
 
@@ -733,6 +747,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
@@ -821,6 +836,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _referralTypeIssuesInDispute;
 			}
 		}
+
 
 
 

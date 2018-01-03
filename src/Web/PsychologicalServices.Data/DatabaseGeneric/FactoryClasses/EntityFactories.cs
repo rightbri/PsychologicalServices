@@ -1376,6 +1376,45 @@ namespace PsychologicalServices.Data.FactoryClasses
 
 		#endregion
 	}	
+	/// <summary>Factory to create new, empty DiagnosisFoundResponseEntity objects.</summary>
+	[Serializable]
+	public partial class DiagnosisFoundResponseEntityFactory : EntityFactoryBase2 {
+		/// <summary>CTor</summary>
+		public DiagnosisFoundResponseEntityFactory() : base("DiagnosisFoundResponseEntity", PsychologicalServices.Data.EntityType.DiagnosisFoundResponseEntity) { }
+
+		/// <summary>Creates a new, empty DiagnosisFoundResponseEntity object.</summary>
+		/// <returns>A new, empty DiagnosisFoundResponseEntity object.</returns>
+		public override IEntity2 Create() {
+			IEntity2 toReturn = new DiagnosisFoundResponseEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDiagnosisFoundResponse
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new DiagnosisFoundResponseEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new DiagnosisFoundResponseEntity(fields);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDiagnosisFoundResponseUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new generic EntityCollection(Of T) for the entity to which this factory belongs.</summary>
+		/// <returns>ready to use generic EntityCollection(Of T) with this factory set as the factory</returns>
+		public override IEntityCollection2 CreateEntityCollection()
+		{
+			return new EntityCollection<DiagnosisFoundResponseEntity>(this);
+		}
+		
+
+		#region Included Code
+
+		#endregion
+	}	
 	/// <summary>Factory to create new, empty EmployerEntity objects.</summary>
 	[Serializable]
 	public partial class EmployerEntityFactory : EntityFactoryBase2 {
@@ -2696,6 +2735,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.CredibilityEntity:
 					factoryToUse = new CredibilityEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.DiagnosisFoundResponseEntity:
+					factoryToUse = new DiagnosisFoundResponseEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.EmployerEntity:
 					factoryToUse = new EmployerEntityFactory();

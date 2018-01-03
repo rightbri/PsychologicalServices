@@ -61,6 +61,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -73,6 +75,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
+
+
 
 
 
@@ -179,6 +183,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			
@@ -239,6 +245,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 				default:
 					break;
 			}
@@ -260,6 +268,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
+
+
 
 
 
@@ -411,6 +421,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -444,6 +456,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			return new CredibilityRelations().GetAllRelations();
 		}
 		
+
+
 
 
 
@@ -518,6 +532,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -525,6 +541,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+
+
 
 
 
@@ -575,6 +593,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -584,6 +604,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+
+
 
 
 
@@ -639,6 +661,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			return toReturn;
 		}
 		
@@ -669,11 +693,15 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		}
 
 		/// <summary> Initializes the class members</summary>
 		protected virtual void InitClassMembers()
 		{
+
+
 
 
 
@@ -783,6 +811,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
@@ -839,6 +869,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return (System.Boolean)GetValue((int)CredibilityFieldIndex.IsActive, true); }
 			set	{ SetValue((int)CredibilityFieldIndex.IsActive, value); }
 		}
+
+
 
 
 

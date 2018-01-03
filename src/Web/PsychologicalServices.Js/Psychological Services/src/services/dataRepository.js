@@ -175,6 +175,10 @@ export class DataRepository {
 		return this.getManyBasic('credibility', true);
 	}
 
+	getDiagnosisFoundResponses() {
+		return this.getManyBasic('diagnosisfoundresponse', true);
+	}
+
 	searchBookingData(criteria) {
 		return this.searchBasic(criteria, 'bookingdata');
 	}

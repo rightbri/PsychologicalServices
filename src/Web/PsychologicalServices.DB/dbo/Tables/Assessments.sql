@@ -20,11 +20,13 @@
     [PsychologistFoundInFavorOfClaimant] BIT                NULL,
     [NeurocognitiveCredibilityId]        INT                NULL,
     [PsychologicalCredibilityId]         INT                NULL,
+    [DiagnosisFoundReponseId]            INT                NULL,
     CONSTRAINT [PK_Assessments] PRIMARY KEY CLUSTERED ([AssessmentId] ASC),
     CONSTRAINT [FK_Assessments_AssessmentTypes] FOREIGN KEY ([AssessmentTypeId]) REFERENCES [dbo].[AssessmentTypes] ([AssessmentTypeId]),
     CONSTRAINT [FK_Assessments_Companies] FOREIGN KEY ([CompanyId]) REFERENCES [dbo].[Companies] ([CompanyId]),
     CONSTRAINT [FK_Assessments_Credibilities] FOREIGN KEY ([NeurocognitiveCredibilityId]) REFERENCES [dbo].[Credibilities] ([CredibilityId]),
     CONSTRAINT [FK_Assessments_Credibilities1] FOREIGN KEY ([PsychologicalCredibilityId]) REFERENCES [dbo].[Credibilities] ([CredibilityId]),
+    CONSTRAINT [FK_Assessments_DiagnosisFoundResponses] FOREIGN KEY ([DiagnosisFoundReponseId]) REFERENCES [dbo].[DiagnosisFoundResponses] ([DiagnosisFoundResponseId]),
     CONSTRAINT [FK_Assessments_DocListWriter] FOREIGN KEY ([DocListWriterId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Assessments_Notes] FOREIGN KEY ([SummaryNoteId]) REFERENCES [dbo].[Notes] ([NoteId]),
     CONSTRAINT [FK_Assessments_NotesWriter] FOREIGN KEY ([NotesWriterId]) REFERENCES [dbo].[Users] ([UserId]),
@@ -34,6 +36,8 @@
     CONSTRAINT [FK_Assessments_Users] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Assessments_Users1] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

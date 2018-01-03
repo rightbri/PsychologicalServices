@@ -6,7 +6,7 @@ using System.Web.Http.Description;
 
 namespace PsychologicalServices.Api.Controllers
 {
-    [RoutePrefix("api/company")]
+    [RoutePrefix("api/credibility")]
     public class CredibilityController : ApiController
     {
         private readonly ICredibilityService _credibilityService = null;

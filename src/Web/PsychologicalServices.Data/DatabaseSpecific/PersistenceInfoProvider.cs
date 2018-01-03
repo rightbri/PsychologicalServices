@@ -55,7 +55,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((64 + 0));
+			base.InitClass((65 + 0));
 			InitAddressEntityMappings();
 			InitAddressAddressTypeEntityMappings();
 			InitAddressTypeEntityMappings();
@@ -89,6 +89,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitContactEntityMappings();
 			InitContactTypeEntityMappings();
 			InitCredibilityEntityMappings();
+			InitDiagnosisFoundResponseEntityMappings();
 			InitEmployerEntityMappings();
 			InitEmployerTypeEntityMappings();
 			InitEventEntityMappings();
@@ -230,7 +231,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AssessmentEntity's mappings</summary>
 		private void InitAssessmentEntityMappings()
 		{
-			base.AddElementMapping( "AssessmentEntity", "PsychologicalServices", @"dbo", "Assessments", 21 );
+			base.AddElementMapping( "AssessmentEntity", "PsychologicalServices", @"dbo", "Assessments", 22 );
 			base.AddElementFieldMapping( "AssessmentEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AssessmentEntity", "ReferralTypeId", "ReferralTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "AssessmentEntity", "ReferralSourceId", "ReferralSourceId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
@@ -252,6 +253,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "AssessmentEntity", "PsychologistFoundInFavorOfClaimant", "PsychologistFoundInFavorOfClaimant", true, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 18 );
 			base.AddElementFieldMapping( "AssessmentEntity", "NeurocognitiveCredibilityId", "NeurocognitiveCredibilityId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 19 );
 			base.AddElementFieldMapping( "AssessmentEntity", "PsychologicalCredibilityId", "PsychologicalCredibilityId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 20 );
+			base.AddElementFieldMapping( "AssessmentEntity", "DiagnosisFoundReponseId", "DiagnosisFoundReponseId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 21 );
 		}
 		/// <summary>Inits AssessmentAttributeEntity's mappings</summary>
 		private void InitAssessmentAttributeEntityMappings()
@@ -472,6 +474,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "CredibilityEntity", "CredibilityId", "CredibilityId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "CredibilityEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "CredibilityEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
+		}
+		/// <summary>Inits DiagnosisFoundResponseEntity's mappings</summary>
+		private void InitDiagnosisFoundResponseEntityMappings()
+		{
+			base.AddElementMapping( "DiagnosisFoundResponseEntity", "PsychologicalServices", @"dbo", "DiagnosisFoundResponses", 3 );
+			base.AddElementFieldMapping( "DiagnosisFoundResponseEntity", "DiagnosisFoundResponseId", "DiagnosisFoundResponseId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "DiagnosisFoundResponseEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "DiagnosisFoundResponseEntity", "IsActive", "IsActive", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 2 );
 		}
 		/// <summary>Inits EmployerEntity's mappings</summary>
 		private void InitEmployerEntityMappings()

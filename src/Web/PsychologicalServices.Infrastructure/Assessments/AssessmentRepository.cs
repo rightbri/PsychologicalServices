@@ -74,6 +74,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<CompanyEntity>(assessment => assessment.Company)
                     .Prefetch<CredibilityEntity>(assessment => assessment.NeurocognitiveCredibility)
                     .Prefetch<CredibilityEntity>(assessment => assessment.PsychologicalCredibility)
+                    .Prefetch<DiagnosisFoundResponseEntity>(assessment => assessment.DiagnosisFoundResponse)
                     .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                         .SubPath(assessmentClaimPath => assessmentClaimPath
                             .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
@@ -331,6 +332,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     prefetch.Add(AssessmentEntity.PrefetchPathPsychologicalCredibility);
 
+                    prefetch.Add(AssessmentEntity.PrefetchPathDiagnosisFoundResponse);
+
                     var appointmentsPath = prefetch.Add(AssessmentEntity.PrefetchPathAppointments);
 
                     appointmentsPath
@@ -459,6 +462,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 else
                 {
                     assessmentEntity.PsychologicalCredibilityId = assessment.PsychologicalCredibility.CredibilityId;
+                }
+
+                if (null == assessment.DiagnosisFoundResponse)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.DiagnosisFoundReponseId, null);
+                }
+                else
+                {
+                    assessmentEntity.DiagnosisFoundReponseId = assessment.DiagnosisFoundResponse.DiagnosisFoundResponseId;
                 }
 
                 #region appointments

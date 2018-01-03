@@ -11,6 +11,7 @@ using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Contacts;
 using PsychologicalServices.Models.Credibilities;
+using PsychologicalServices.Models.DiagnosisFoundResponses;
 using PsychologicalServices.Models.Employers;
 using PsychologicalServices.Models.Events;
 using PsychologicalServices.Models.Invoices;
@@ -28,6 +29,18 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static DiagnosisFoundResponse ToDiagnosisFoundResponse(this DiagnosisFoundResponseEntity diagnosisFoundResponse)
+        {
+            return null != diagnosisFoundResponse
+                ? new DiagnosisFoundResponse
+                {
+                    DiagnosisFoundResponseId = diagnosisFoundResponse.DiagnosisFoundResponseId,
+                    Name = diagnosisFoundResponse.Name,
+                    IsActive = diagnosisFoundResponse.IsActive,
+                }
+                : null;
+        }
+
         public static InvoiceConfiguration ToInvoiceConfiguration(this CompanyEntity company)
         {
             return null != company
@@ -765,6 +778,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     PsychologistFoundInFavorOfClaimant = assessment.PsychologistFoundInFavorOfClaimant,
                     NeurocognitiveCredibility = assessment.NeurocognitiveCredibility.ToCredibility(),
                     PsychologicalCredibility = assessment.PsychologicalCredibility.ToCredibility(),
+                    DiagnosisFoundResponse = assessment.DiagnosisFoundResponse.ToDiagnosisFoundResponse(),
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),
                     MedRehabs = assessment.AssessmentMedRehabs.Select(assessmentMedRehab => assessmentMedRehab.ToMedRehab()),
@@ -814,6 +828,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     //PsychologistFoundInFavorOfClaimant
                     //NeurocognitiveCredibility
                     //PsychologicalCredibility
+                    //DiagnosisFoundResponse
                 }
                 : null;
         }

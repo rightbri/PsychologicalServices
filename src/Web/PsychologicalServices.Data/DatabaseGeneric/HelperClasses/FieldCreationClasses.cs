@@ -457,6 +457,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.PsychologicalCredibilityId);}
 		}
+		/// <summary>Creates a new AssessmentEntity.DiagnosisFoundReponseId field instance</summary>
+		public static EntityField2 DiagnosisFoundReponseId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.DiagnosisFoundReponseId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentAttributeEntity</summary>
@@ -1096,6 +1101,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 IsActive
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CredibilityFieldIndex.IsActive);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity DiagnosisFoundResponseEntity</summary>
+	public partial class DiagnosisFoundResponseFields
+	{
+		/// <summary>Creates a new DiagnosisFoundResponseEntity.DiagnosisFoundResponseId field instance</summary>
+		public static EntityField2 DiagnosisFoundResponseId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(DiagnosisFoundResponseFieldIndex.DiagnosisFoundResponseId);}
+		}
+		/// <summary>Creates a new DiagnosisFoundResponseEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(DiagnosisFoundResponseFieldIndex.Name);}
+		}
+		/// <summary>Creates a new DiagnosisFoundResponseEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(DiagnosisFoundResponseFieldIndex.IsActive);}
 		}
 	}
 

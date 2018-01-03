@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (64 + 0));
+			base.InitClass( (65 + 0));
 			InitAddressEntityInfos();
 			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
@@ -90,6 +90,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitContactEntityInfos();
 			InitContactTypeEntityInfos();
 			InitCredibilityEntityInfos();
+			InitDiagnosisFoundResponseEntityInfos();
 			InitEmployerEntityInfos();
 			InitEmployerTypeEntityInfos();
 			InitEventEntityInfos();
@@ -243,6 +244,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("AssessmentEntity", "PsychologistFoundInFavorOfClaimant", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)AssessmentFieldIndex.PsychologistFoundInFavorOfClaimant, 0, 0, 0);
 			base.AddElementFieldInfo("AssessmentEntity", "NeurocognitiveCredibilityId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.NeurocognitiveCredibilityId, 0, 0, 10);
 			base.AddElementFieldInfo("AssessmentEntity", "PsychologicalCredibilityId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.PsychologicalCredibilityId, 0, 0, 10);
+			base.AddElementFieldInfo("AssessmentEntity", "DiagnosisFoundReponseId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.DiagnosisFoundReponseId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAssessmentAttributeEntityInfos()
@@ -440,6 +442,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("CredibilityEntity", "CredibilityId", typeof(System.Int32), true, false, true, false,  (int)CredibilityFieldIndex.CredibilityId, 0, 0, 10);
 			base.AddElementFieldInfo("CredibilityEntity", "Name", typeof(System.String), false, false, false, false,  (int)CredibilityFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("CredibilityEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)CredibilityFieldIndex.IsActive, 0, 0, 0);
+		}
+		/// <summary>Inits DiagnosisFoundResponseEntity's FieldInfo objects</summary>
+		private void InitDiagnosisFoundResponseEntityInfos()
+		{
+			base.AddElementFieldInfo("DiagnosisFoundResponseEntity", "DiagnosisFoundResponseId", typeof(System.Int32), true, false, true, false,  (int)DiagnosisFoundResponseFieldIndex.DiagnosisFoundResponseId, 0, 0, 10);
+			base.AddElementFieldInfo("DiagnosisFoundResponseEntity", "Name", typeof(System.String), false, false, false, false,  (int)DiagnosisFoundResponseFieldIndex.Name, 50, 0, 0);
+			base.AddElementFieldInfo("DiagnosisFoundResponseEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)DiagnosisFoundResponseFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits EmployerEntity's FieldInfo objects</summary>
 		private void InitEmployerEntityInfos()
