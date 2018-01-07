@@ -529,7 +529,7 @@
 			</div>
 			<div class="uk-width-1-3@s"></div>
 
-			<div class="uk-width-1-4@s">
+			<div class="uk-width-1-4@s" show.bind="showNeurocognitiveCredibility">
 				<label class="uk-form-label" for="neurocognitiveCredibility">Neurocognitive Credibility</label>
 				<div class="uk-form-controls">
 					<select id="neurocognitiveCredibility" class="uk-select" value.bind="assessment.neurocognitiveCredibility" matcher.bind="credibilityMatcher">
@@ -541,7 +541,7 @@
 				</div>
 			</div>
 			
-			<div class="uk-width-1-4@s">
+			<div class="uk-width-1-4@s" show.bind="showPsychologicalCredibility">
 				<label class="uk-form-label" for="psychologicalCredibility">Psychological Credibility</label>
 				<div class="uk-form-controls">
 					<select id="psychologicalCredibility" class="uk-select" value.bind="assessment.psychologicalCredibility" matcher.bind="credibilityMatcher">

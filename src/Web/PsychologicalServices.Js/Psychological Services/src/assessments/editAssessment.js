@@ -52,12 +52,17 @@ export class EditAssessment {
 							this.assessment = assessment;
 							
 							this.checkMedRehab();
+							this.setCredibilityVisibility(this.assessment.assessmentType.name);
 							
 							if (this.assessment.claims && this.assessment.claims.length > 0) {
 								this.claimant = this.assessment.claims[0].claimant;
 							}
 							
-							return this.getData().then(() => this.scroller.scrollTo(0));
+							return this.getData().then(() => {
+								this.assessmentTypeChanged();
+
+								this.scroller.scrollTo(0)
+							});
 						});
 				}
 				else {
@@ -536,6 +541,19 @@ export class EditAssessment {
 
 			appointment.attributes = this.getAppointmentAttributes(appointment);
 		}
+
+		this.setCredibilityVisibility(this.assessment.assessmentType.name);
+	}
+
+	setCredibilityVisibility(assessmentType) {
+		//show/hide credibility questions based on selected assessment type
+		let neurocognitiveCredibilityAssessmentTypes = ['NP', 'NC', 'NC/P'];
+
+		this.showNeurocognitiveCredibility = neurocognitiveCredibilityAssessmentTypes.some(type => type === assessmentType);
+
+		let psychologicalCredibilityAssessmentTypes = ['P', 'PVOC', 'NP', 'NC/P'];
+
+		this.showPsychologicalCredibility = psychologicalCredibilityAssessmentTypes.some(type => type === assessmentType);
 	}
 
 	summaryEditFocus(e) {
