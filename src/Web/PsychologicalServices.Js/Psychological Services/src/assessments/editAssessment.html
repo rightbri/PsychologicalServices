@@ -283,7 +283,7 @@
 				<div class="uk-form-controls">
 					<select id="docListWriter" class="uk-select" value.bind="assessment.docListWriter" matcher.bind="userMatcher">
 						<option></option>
-						<option repeat.for="user of docListWriters | sortArray:{ property: 'firstName', direction: 'asc' }" model.bind="user">
+						<option repeat.for="user of filteredDocListWriters | sortArray:{ property: 'firstName', direction: 'asc' }" model.bind="user">
 							${user.firstName}
 						</option>
 					</select>
@@ -343,7 +343,7 @@
 				<div class="uk-form-controls">
 					<select id="notesWriter" class="uk-select" value.bind="assessment.notesWriter" matcher.bind="userMatcher">
 						<option></option>
-						<option repeat.for="user of notesWriters | sortArray:{ property: 'firstName', direction: 'asc' }" model.bind="user">
+						<option repeat.for="user of filteredNotesWriters | sortArray:{ property: 'firstName', direction: 'asc' }" model.bind="user">
 							${user.firstName}
 						</option>
 					</select>

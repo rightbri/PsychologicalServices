@@ -51,7 +51,6 @@ export class EditAssessment {
 						.then(assessment => {
 							this.assessment = assessment;
 							
-							this.checkMedRehab();
 							this.setCredibilityVisibility(this.assessment.assessmentType.name);
 							
 							if (this.assessment.claims && this.assessment.claims.length > 0) {
@@ -60,6 +59,12 @@ export class EditAssessment {
 							
 							return this.getData().then(() => {
 								this.assessmentTypeChanged();
+								
+								this.filterDocListWriters(this.assessment);
+								
+								this.filterNotesWriters(this.assessment);
+								
+								this.checkMedRehab();
 
 								this.scroller.scrollTo(0)
 							});
@@ -73,6 +78,10 @@ export class EditAssessment {
 							return this.getData().then(() => {
 								this.assessmentTypeChanged();
 								
+								this.filterDocListWriters(this.assessment);
+								
+								this.filterNotesWriters(this.assessment);
+
 								this.scroller.scrollTo(0);
 							});
 						});
@@ -334,6 +343,10 @@ export class EditAssessment {
 		}
 		
 		this.appointmentEditModel = null;
+
+		this.filterDocListWriters(this.assessment);
+								
+		this.filterNotesWriters(this.assessment);
 	}
 	
 	appointmentCanceled(e) {
@@ -344,10 +357,49 @@ export class EditAssessment {
 		}
 		
 		this.appointmentEditModel = null;
+
+		this.filterDocListWriters(this.assessment);
+								
+		this.filterNotesWriters(this.assessment);
 	}
 	
 	removeAppointment(appointment) {
 		this.assessment.appointments.splice(this.assessment.appointments.indexOf(appointment), 1);
+	}
+
+	filterDocListWriters(assessment) {
+		let firstAppointmentTime = this.getFirstAppointmentTime(assessment);
+
+		this.filteredDocListWriters = this.docListWriters.filter(user =>
+			user.isActive ||
+			firstAppointmentTime === null ||
+			Date.parse(user.dateInactivated) > Date.parse(firstAppointmentTime)
+		);
+	}
+
+	filterNotesWriters(assessment) {
+		let firstAppointmentTime = this.getFirstAppointmentTime(assessment);
+
+		this.filteredNotesWriters = this.notesWriters.filter(user =>
+			user.isActive ||
+			firstAppointmentTime === null ||
+			Date.parse(user.dateInactivated) > Date.parse(firstAppointmentTime)
+		);
+	}
+
+	getFirstAppointmentTime(assessment) {
+		
+		if (assessment != null && assessment.appointments !== null) {
+
+			let first = assessment.appointments.map(value => value.appointmentTime).reduce(
+				(accumulator, current) => (null === accumulator || current < accumulator) ? current : accumulator,
+				null
+			);
+
+			return first;
+		}
+
+		return null;
 	}
 	
 	newArbitration() {
