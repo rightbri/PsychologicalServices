@@ -83,6 +83,13 @@ namespace PsychologicalServices.Models.Users
                     );
                 }
             }
+            
+            if (!item.IsActive && !item.DateInactivated.HasValue)
+            {
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "DateInactivated", Message = "Date Inactivated is required" }
+                );
+            }
 
             var roles = _roleRepository.GetRoles(null);
             foreach (var userRole in item.Roles)
