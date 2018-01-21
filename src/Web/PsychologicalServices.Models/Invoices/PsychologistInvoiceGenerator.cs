@@ -72,14 +72,14 @@ namespace PsychologicalServices.Models.Invoices
                         InvoiceTypeId = invoiceTypeId,
                     },
                 PayableTo = appointment.Psychologist,
-                Appointments = new List<InvoiceAppointment>(new[]
+                LineGroups = new List<InvoiceLineGroup>(new[]
+                {
+                    new InvoiceLineGroup
                     {
-                        new InvoiceAppointment
-                        {
-                            Appointment = appointment,
-                            Lines = GetInvoiceLines(appointment),
-                        }
-                    }),
+                        Appointment = appointment,
+                        Lines = GetInvoiceLines(appointment),
+                    }
+                }),
                 InvoiceRate = invoiceCalculationData.InvoiceRate,
                 TaxRate = _invoiceRepository.GetTaxRate(),
                 UpdateDate = _date.UtcNow,
@@ -91,24 +91,29 @@ namespace PsychologicalServices.Models.Invoices
             
             return invoice;
         }
-        
-        public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
+
+        public IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice)
         {
-            var invoiceAppointments = new List<InvoiceAppointment>();
-            
-            foreach (var invoiceAppointment in invoice.Appointments)
+            var invoiceLineGroups = new List<InvoiceLineGroup>();
+
+            foreach (var lineGroup in invoice.LineGroups)
             {
-                invoiceAppointments.Add(
-                    new InvoiceAppointment
+                var appointmentInvoiceLines =
+                    null != lineGroup.Appointment
+                        ? GetInvoiceLines(lineGroup.Appointment)
+                        : Enumerable.Empty<InvoiceLine>();
+
+                invoiceLineGroups.Add(
+                    new InvoiceLineGroup
                     {
-                        InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
-                        Appointment = invoiceAppointment.Appointment,
-                        Lines = GetInvoiceLines(invoiceAppointment.Appointment)
-                            .Union(invoiceAppointment.Lines.Where(line => line.IsCustom)),
+                        InvoiceLineGroupId = lineGroup.InvoiceLineGroupId,
+                        Appointment = lineGroup.Appointment,
+                        Lines = appointmentInvoiceLines
+                            .Union(lineGroup.Lines.Where(line => line.IsCustom)),
                     });
             }
             
-            return invoiceAppointments;
+            return invoiceLineGroups;
         }
 
         private List<InvoiceLine> GetInvoiceLines(Appointment appointment)
@@ -290,8 +295,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public int GetInvoiceTotal(Invoice invoice)
         {
-            var subtotal = invoice.Appointments
-                .SelectMany(invoiceAppointment => invoiceAppointment.Lines)
+            var subtotal = invoice.LineGroups
+                .SelectMany(lineGroup => lineGroup.Lines)
                 .Select(line => line.Amount)
                 .Sum();
             

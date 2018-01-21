@@ -103,6 +103,7 @@
     <Compile Include="Invoices\InvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\InvoiceDocumentSendLog.cs" />
     <Compile Include="Invoices\InvoiceExtensions.cs" />
+    <Compile Include="Invoices\InvoiceLineGroup.cs" />
     <Compile Include="Invoices\PsychologistInvoiceCalculationData.cs" />
     <Compile Include="Invoices\IssueInDisputeInvoiceAmount.cs" />
     <Compile Include="Invoices\PsychologistInvoiceGenerator.cs" />
@@ -235,7 +236,6 @@
     <Compile Include="Employers\IEmployerValidator.cs" />
     <Compile Include="Invoices\InvoiceableAppointmentData.cs" />
     <Compile Include="Invoices\InvoiceableAppointmentDataSearchCriteria.cs" />
-    <Compile Include="Invoices\InvoiceAppointment.cs" />
     <Compile Include="Invoices\IPsychologistInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceHtmlGenerator.cs" />
     <Compile Include="Invoices\IInvoiceRepository.cs" />

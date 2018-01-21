@@ -111,10 +111,11 @@ BEGIN
 	AND NOT EXISTS (
 		SELECT
 		*
-		FROM dbo.InvoiceAppointments ia
-		INNER JOIN dbo.Invoices i ON ia.InvoiceId = i.InvoiceId
+		FROM dbo.InvoiceLineGroupAppointments ilga
+		INNER JOIN dbo.InvoiceLineGroups ilg ON ilga.InvoiceLineGroupId = ilg.InvoiceLineGroupId
+		INNER JOIN dbo.Invoices i ON ilg.InvoiceId = i.InvoiceId
 		WHERE
-		ia.AppointmentId = app.AppointmentId
+		ilga.AppointmentId = app.AppointmentId
 		AND i.PayableToId = psychologists.UserId
 	)
 	AND (c.RowNum IS NULL OR c.RowNum = 1)

@@ -303,7 +303,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
             return new InvoiceLineEntity
             {
                 InvoiceLineId = invoiceLine.InvoiceLineId,
-                InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
+                //InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
                 Amount = invoiceLine.Amount,
                 Description = invoiceLine.Description,
                 IsCustom = invoiceLine.IsCustom,
@@ -316,40 +316,23 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
         {
             var invoiceEntity = invoice.ToInvoiceEntityBase();
 
-            foreach (var invoiceAppointment in invoice.Appointments)
+            foreach (var lineGroup in invoice.LineGroups)
             {
-                var invoiceAppointmentEntity = new InvoiceAppointmentEntity
+                var invoiceLineGroupEntity = new InvoiceLineGroupEntity
                 {
-                    InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
-                    AppointmentId = invoiceAppointment.Appointment.AppointmentId,
-                };
-
-                invoiceAppointmentEntity.InvoiceLines.AddRange(
-                    invoiceAppointment.Lines.Select(invoiceLine => invoiceLine.ToInvoiceLineEntity())
-                );
-
-                invoiceEntity.InvoiceAppointments.Add(invoiceAppointmentEntity);
-            }
-
-            return invoiceEntity;
-        }
-
-        public static InvoiceEntity AddToAppointment(this Invoice invoice, AppointmentEntity appointmentEntity)
-        {
-            var invoiceEntity = invoice.ToInvoiceEntityBase();
-
-            foreach (var invoiceAppointment in invoice.Appointments)
-            {
-                var invoiceAppointmentEntity = new InvoiceAppointmentEntity
-                {
-                    Invoice = invoiceEntity,
+                    InvoiceLineGroupId = lineGroup.InvoiceLineGroupId,
+                    Description = lineGroup.Description,
+                    InvoiceLineGroupAppointment = new InvoiceLineGroupAppointmentEntity
+                    {
+                        AppointmentId = lineGroup.Appointment.AppointmentId
+                    },
                 };
                 
-                invoiceAppointmentEntity.InvoiceLines.AddRange(
-                    invoiceAppointment.Lines.Select(invoiceLine => invoiceLine.ToInvoiceLineEntity())
+                invoiceLineGroupEntity.InvoiceLines.AddRange(
+                    lineGroup.Lines.Select(invoiceLine => invoiceLine.ToInvoiceLineEntity())
                 );
-                
-                appointmentEntity.InvoiceAppointments.Add(invoiceAppointmentEntity);
+
+                invoiceEntity.InvoiceLineGroups.Add(invoiceLineGroupEntity);
             }
 
             return invoiceEntity;
@@ -370,21 +353,24 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateDate = invoice.UpdateDate,
                     TaxRate = invoice.TaxRate,
                     Total = invoice.Total,
-                    Appointments = invoice.InvoiceAppointments.Select(invoiceAppointment => invoiceAppointment.ToInvoiceAppointment()),
+                    LineGroups = invoice.InvoiceLineGroups.Select(invoiceLineGroup => invoiceLineGroup.ToInvoiceLineGroup()),
                     StatusChanges = invoice.InvoiceStatusChanges.Select(invoiceStatusChange => invoiceStatusChange.ToInvoiceStatusChange()),
                     Documents = invoice.InvoiceDocuments.Select(invoiceDocument => invoiceDocument.ToInvoiceDocument()),
                 }
                 : null;
         }
 
-        public static InvoiceAppointment ToInvoiceAppointment(this InvoiceAppointmentEntity invoiceAppointment)
+        public static InvoiceLineGroup ToInvoiceLineGroup(this InvoiceLineGroupEntity invoiceLineGroup)
         {
-            return null != invoiceAppointment
-                ? new InvoiceAppointment
+            return null != invoiceLineGroup
+                ? new InvoiceLineGroup
                 {
-                    InvoiceAppointmentId = invoiceAppointment.InvoiceAppointmentId,
-                    Appointment = invoiceAppointment.Appointment.ToAppointment(),
-                    Lines = invoiceAppointment.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
+                    InvoiceLineGroupId = invoiceLineGroup.InvoiceLineGroupId,
+                    Description = invoiceLineGroup.Description,
+                    Lines = invoiceLineGroup.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
+                    Appointment = null != invoiceLineGroup.InvoiceLineGroupAppointment
+                        ? invoiceLineGroup.InvoiceLineGroupAppointment.Appointment.ToAppointment()
+                        : null,
                 }
                 : null;
         }
@@ -407,7 +393,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new InvoiceLine
                 {
                     InvoiceLineId = invoiceLine.InvoiceLineId,
-                    InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
                     Description = invoiceLine.Description,
                     Amount = invoiceLine.Amount,
                     IsCustom = invoiceLine.IsCustom,

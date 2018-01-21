@@ -27,7 +27,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public int Total { get; set; }
 
-        public IEnumerable<InvoiceAppointment> Appointments { get; set; }
+        public IEnumerable<InvoiceLineGroup> LineGroups { get; set; }
 
         public IEnumerable<InvoiceStatusChange> StatusChanges { get; set; }
 
@@ -42,9 +42,9 @@ namespace PsychologicalServices.Models.Invoices
         {
             get
             {
-                return null != Appointments
-                    ? Appointments
-                        .SelectMany(invoiceAppointment => invoiceAppointment.Lines)
+                return null != LineGroups
+                    ? LineGroups
+                        .SelectMany(lineGroup => lineGroup.Lines)
                         .Select(line => line.Amount)
                         .Sum()
                     : 0;

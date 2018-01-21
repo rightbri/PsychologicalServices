@@ -31,7 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AppointmentAttributeEntityUsingAppointmentId);
-			toReturn.Add(this.InvoiceAppointmentEntityUsingAppointmentId);
+			toReturn.Add(this.InvoiceLineGroupAppointmentEntityUsingAppointmentId);
 
 			toReturn.Add(this.AddressEntityUsingLocationId);
 			toReturn.Add(this.AppointmentStatusEntityUsingAppointmentStatusId);
@@ -60,17 +60,17 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and InvoiceAppointmentEntity over the 1:n relation they have, using the relation between the fields:
-		/// Appointment.AppointmentId - InvoiceAppointment.AppointmentId
+		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and InvoiceLineGroupAppointmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// Appointment.AppointmentId - InvoiceLineGroupAppointment.AppointmentId
 		/// </summary>
-		public virtual IEntityRelation InvoiceAppointmentEntityUsingAppointmentId
+		public virtual IEntityRelation InvoiceLineGroupAppointmentEntityUsingAppointmentId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceAppointments" , true);
-				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, InvoiceAppointmentFields.AppointmentId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceLineGroupAppointments" , true);
+				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, InvoiceLineGroupAppointmentFields.AppointmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceAppointmentEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupAppointmentEntity", false);
 				return relation;
 			}
 		}

@@ -8,7 +8,7 @@ namespace PsychologicalServices.Models.Invoices
     {
         Invoice CreateInvoice(User psychometrist, DateTimeOffset invoiceDate);
 
-        IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
+        IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice);
 
         int GetInvoiceTotal(Invoice invoice);
     }

@@ -7,8 +7,8 @@ namespace PsychologicalServices.Models.Invoices
     {
         Invoice CreateInvoice(Appointment appointment);
 
-        IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
-
+        IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice);
+        
         int GetInvoiceTotal(Invoice invoice);
     }
 }

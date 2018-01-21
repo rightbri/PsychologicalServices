@@ -330,14 +330,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceEntity", (int)fieldIndex));
 		}
 
-		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceAppointmentEntity. Which EntityField is created is specified by fieldIndex</summary>
-		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
-		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
-		public static IEntityField2 Create(InvoiceAppointmentFieldIndex fieldIndex)
-		{
-			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceAppointmentEntity", (int)fieldIndex));
-		}
-
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceDocumentEntity. Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
 		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
@@ -360,6 +352,22 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public static IEntityField2 Create(InvoiceLineFieldIndex fieldIndex)
 		{
 			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceLineEntity", (int)fieldIndex));
+		}
+
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceLineGroupEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(InvoiceLineGroupFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceLineGroupEntity", (int)fieldIndex));
+		}
+
+		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceLineGroupAppointmentEntity. Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField2 instance should be created</param>
+		/// <returns>The IEntityField2 instance for the field specified in fieldIndex</returns>
+		public static IEntityField2 Create(InvoiceLineGroupAppointmentFieldIndex fieldIndex)
+		{
+			return new EntityField2(FieldInfoProviderSingleton.GetInstance().GetFieldInfo("InvoiceLineGroupAppointmentEntity", (int)fieldIndex));
 		}
 
 		/// <summary> Creates a new IEntityField2 instance for usage in the EntityFields object for the InvoiceStatusEntity. Which EntityField is created is specified by fieldIndex</summary>

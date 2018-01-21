@@ -175,9 +175,6 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
-				case PsychologicalServices.Data.EntityType.InvoiceAppointmentEntity:
-					toReturn = this.InvoiceAppointment;
-					break;
 				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
 					toReturn = this.InvoiceDocument;
 					break;
@@ -186,6 +183,12 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineEntity:
 					toReturn = this.InvoiceLine;
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupEntity:
+					toReturn = this.InvoiceLineGroup;
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupAppointmentEntity:
+					toReturn = this.InvoiceLineGroupAppointment;
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceStatusEntity:
 					toReturn = this.InvoiceStatus;
@@ -491,12 +494,6 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<InvoiceEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
-		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceAppointmentEntity instances in the database.</summary>
-		public DataSource2<InvoiceAppointmentEntity> InvoiceAppointment
-		{
-			get { return new DataSource2<InvoiceAppointmentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
-		}
-		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceDocumentEntity instances in the database.</summary>
 		public DataSource2<InvoiceDocumentEntity> InvoiceDocument
 		{
@@ -513,6 +510,18 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<InvoiceLineEntity> InvoiceLine
 		{
 			get { return new DataSource2<InvoiceLineEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineGroupEntity instances in the database.</summary>
+		public DataSource2<InvoiceLineGroupEntity> InvoiceLineGroup
+		{
+			get { return new DataSource2<InvoiceLineGroupEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineGroupAppointmentEntity instances in the database.</summary>
+		public DataSource2<InvoiceLineGroupAppointmentEntity> InvoiceLineGroupAppointment
+		{
+			get { return new DataSource2<InvoiceLineGroupAppointmentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceStatusEntity instances in the database.</summary>

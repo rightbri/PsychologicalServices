@@ -823,22 +823,6 @@ namespace PsychologicalServices.Data
 
 
 	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceAppointment.
-	/// </summary>
-	public enum InvoiceAppointmentFieldIndex:int
-	{
-		///<summary>InvoiceAppointmentId. </summary>
-		InvoiceAppointmentId,
-		///<summary>InvoiceId. </summary>
-		InvoiceId,
-		///<summary>AppointmentId. </summary>
-		AppointmentId,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceDocument.
 	/// </summary>
 	public enum InvoiceDocumentFieldIndex:int
@@ -883,8 +867,6 @@ namespace PsychologicalServices.Data
 	{
 		///<summary>InvoiceLineId. </summary>
 		InvoiceLineId,
-		///<summary>InvoiceAppointmentId. </summary>
-		InvoiceAppointmentId,
 		///<summary>Description. </summary>
 		Description,
 		///<summary>Amount. </summary>
@@ -895,6 +877,38 @@ namespace PsychologicalServices.Data
 		ApplyInvoiceRate,
 		///<summary>OriginalAmount. </summary>
 		OriginalAmount,
+		///<summary>InvoiceLineGroupId. </summary>
+		InvoiceLineGroupId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceLineGroup.
+	/// </summary>
+	public enum InvoiceLineGroupFieldIndex:int
+	{
+		///<summary>InvoiceLineGroupId. </summary>
+		InvoiceLineGroupId,
+		///<summary>InvoiceId. </summary>
+		InvoiceId,
+		///<summary>Description. </summary>
+		Description,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceLineGroupAppointment.
+	/// </summary>
+	public enum InvoiceLineGroupAppointmentFieldIndex:int
+	{
+		///<summary>InvoiceLineGroupId. </summary>
+		InvoiceLineGroupId,
+		///<summary>AppointmentId. </summary>
+		AppointmentId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1392,14 +1406,16 @@ namespace PsychologicalServices.Data
 		EventEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
-		///<summary>InvoiceAppointment</summary>
-		InvoiceAppointmentEntity,
 		///<summary>InvoiceDocument</summary>
 		InvoiceDocumentEntity,
 		///<summary>InvoiceDocumentSendLog</summary>
 		InvoiceDocumentSendLogEntity,
 		///<summary>InvoiceLine</summary>
 		InvoiceLineEntity,
+		///<summary>InvoiceLineGroup</summary>
+		InvoiceLineGroupEntity,
+		///<summary>InvoiceLineGroupAppointment</summary>
+		InvoiceLineGroupAppointmentEntity,
 		///<summary>InvoiceStatus</summary>
 		InvoiceStatusEntity,
 		///<summary>InvoiceStatusChange</summary>

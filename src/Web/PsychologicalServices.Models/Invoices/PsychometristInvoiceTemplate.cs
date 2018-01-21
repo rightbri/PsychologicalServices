@@ -58,7 +58,7 @@ namespace PsychologicalServices.Models.Invoices
             #line 118 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
 
 		var psychometrist = Model.PayableTo;
-		var company = Model.Appointments.First().Appointment.Assessment.Company;
+		var company = Model.LineGroups.First(lineGroup => null != lineGroup).Appointment.Assessment.Company;
 	
             
             #line default
@@ -331,12 +331,12 @@ namespace PsychologicalServices.Models.Invoices
 				var subtotal = 0.0m;
 				var divisor = 100.0m;
 
-				foreach (var invoiceAppointment in Model.Appointments)
+				foreach (var lineGroup in Model.LineGroups)
 				{
-					var appointment = invoiceAppointment.Appointment;
+					var appointment = lineGroup.Appointment;
 					var firstClaim = appointment.Assessment.Claims.OrderByDescending(claim => claim.DateOfLoss.HasValue ? claim.DateOfLoss.Value : DateTime.MinValue).FirstOrDefault();
 
-					foreach (var line in invoiceAppointment.Lines)
+					foreach (var line in lineGroup.Lines)
 					{
 						subtotal += line.Amount;
 			

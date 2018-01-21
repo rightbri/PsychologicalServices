@@ -343,15 +343,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
 
                     appointmentsPath
                         .SubPath.Add(AppointmentEntity.PrefetchPathAppointmentAttributes);
-
-                    var invoiceAppointmentsPath = appointmentsPath
-                        .SubPath.Add(AppointmentEntity.PrefetchPathInvoiceAppointments);
-
-                    invoiceAppointmentsPath
-                        .SubPath.Add(InvoiceAppointmentEntity.PrefetchPathInvoiceLines);
-
-                    invoiceAppointmentsPath
-                        .SubPath.Add(InvoiceAppointmentEntity.PrefetchPathInvoice);
                     
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentClaims)
                         .SubPath.Add(AssessmentClaimEntity.PrefetchPathClaim);

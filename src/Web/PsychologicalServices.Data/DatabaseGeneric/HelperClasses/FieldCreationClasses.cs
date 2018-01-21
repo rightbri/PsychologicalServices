@@ -1279,26 +1279,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
-	/// <summary>Field Creation Class for entity InvoiceAppointmentEntity</summary>
-	public partial class InvoiceAppointmentFields
-	{
-		/// <summary>Creates a new InvoiceAppointmentEntity.InvoiceAppointmentId field instance</summary>
-		public static EntityField2 InvoiceAppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.InvoiceAppointmentId);}
-		}
-		/// <summary>Creates a new InvoiceAppointmentEntity.InvoiceId field instance</summary>
-		public static EntityField2 InvoiceId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.InvoiceId);}
-		}
-		/// <summary>Creates a new InvoiceAppointmentEntity.AppointmentId field instance</summary>
-		public static EntityField2 AppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.AppointmentId);}
-		}
-	}
-
 	/// <summary>Field Creation Class for entity InvoiceDocumentEntity</summary>
 	public partial class InvoiceDocumentFields
 	{
@@ -1362,11 +1342,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceLineId);}
 		}
-		/// <summary>Creates a new InvoiceLineEntity.InvoiceAppointmentId field instance</summary>
-		public static EntityField2 InvoiceAppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceAppointmentId);}
-		}
 		/// <summary>Creates a new InvoiceLineEntity.Description field instance</summary>
 		public static EntityField2 Description
 		{
@@ -1391,6 +1366,46 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 OriginalAmount
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.OriginalAmount);}
+		}
+		/// <summary>Creates a new InvoiceLineEntity.InvoiceLineGroupId field instance</summary>
+		public static EntityField2 InvoiceLineGroupId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceLineGroupId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity InvoiceLineGroupEntity</summary>
+	public partial class InvoiceLineGroupFields
+	{
+		/// <summary>Creates a new InvoiceLineGroupEntity.InvoiceLineGroupId field instance</summary>
+		public static EntityField2 InvoiceLineGroupId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupFieldIndex.InvoiceLineGroupId);}
+		}
+		/// <summary>Creates a new InvoiceLineGroupEntity.InvoiceId field instance</summary>
+		public static EntityField2 InvoiceId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupFieldIndex.InvoiceId);}
+		}
+		/// <summary>Creates a new InvoiceLineGroupEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupFieldIndex.Description);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity InvoiceLineGroupAppointmentEntity</summary>
+	public partial class InvoiceLineGroupAppointmentFields
+	{
+		/// <summary>Creates a new InvoiceLineGroupAppointmentEntity.InvoiceLineGroupId field instance</summary>
+		public static EntityField2 InvoiceLineGroupId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupAppointmentFieldIndex.InvoiceLineGroupId);}
+		}
+		/// <summary>Creates a new InvoiceLineGroupAppointmentEntity.AppointmentId field instance</summary>
+		public static EntityField2 AppointmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupAppointmentFieldIndex.AppointmentId);}
 		}
 	}
 

@@ -6,8 +6,6 @@ namespace PsychologicalServices.Models.Invoices
     {
         public int InvoiceLineId { get; set; }
 
-        public int InvoiceAppointmentId { get; set; }
-
         public string Description { get; set; }
 
         public int Amount { get; set; }

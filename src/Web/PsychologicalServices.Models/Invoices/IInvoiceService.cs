@@ -17,7 +17,7 @@ namespace PsychologicalServices.Models.Invoices
 
         InvoiceConfiguration GetInvoiceConfiguration(int companyId);
 
-        IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice);
+        IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice);
 
         IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true);
 

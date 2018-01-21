@@ -117,24 +117,24 @@ namespace PsychologicalServices.Models.Invoices
             return updatedConfiguration;
         }
 
-        public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
+        public IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice)
         {
-            IEnumerable<InvoiceAppointment> invoiceAppointments = null;
+            IEnumerable<InvoiceLineGroup> invoiceLineGroups = null;
 
             if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychologist)
             {
-                invoiceAppointments = _psychologistInvoiceGenerator.GetInvoiceAppointments(invoice);
+                invoiceLineGroups = _psychologistInvoiceGenerator.GetInvoiceLineGroups(invoice);
             }
             else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychometrist)
             {
-                invoiceAppointments = _psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
+                invoiceLineGroups = _psychometristInvoiceGenerator.GetInvoiceLineGroups(invoice);
             }
             else
             {
                 throw new ArgumentOutOfRangeException("invoice", $"Invoice type {invoice.InvoiceType.InvoiceTypeId} is not supported");
             }
 
-            return invoiceAppointments;
+            return invoiceLineGroups;
         }
         
         public IEnumerable<InvoiceStatus> GetInvoiceStatuses(bool? isActive = true)
@@ -322,11 +322,11 @@ namespace PsychologicalServices.Models.Invoices
             }
 
             var hasAppointments = hasPsychologistInvoice &&
-                (null != invoice.Appointments && invoice.Appointments.Any());
-
+                (null != invoice.LineGroups && invoice.LineGroups.Any(lineGroup => null != lineGroup.Appointment));
+                
             if (hasAppointments)
             {
-                appointment = invoice.Appointments.First().Appointment;
+                appointment = invoice.LineGroups.First(lineGroup => null != lineGroup.Appointment).Appointment;
             }
             else
             {

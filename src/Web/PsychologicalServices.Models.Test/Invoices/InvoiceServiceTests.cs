@@ -173,9 +173,9 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
                         Appointment = appointment,
                     },
@@ -296,7 +296,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = Enumerable.Empty<InvoiceAppointment>(),
+                LineGroups = Enumerable.Empty<InvoiceLineGroup>(),
                 Documents = new[]
                 {
                     document,
@@ -412,9 +412,9 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
                         Appointment = appointment,
                     },
@@ -545,9 +545,9 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
                         Appointment = appointment,
                     },
@@ -679,9 +679,9 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
                         Appointment = appointment,
                     },
@@ -815,9 +815,9 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
                         Appointment = appointment,
                     },
@@ -954,9 +954,9 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
                         Appointment = appointment,
                     },
@@ -1125,9 +1125,9 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
                         Appointment = appointment,
                     },

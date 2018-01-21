@@ -67,10 +67,17 @@ BEGIN
 	INSERT INTO @invoiceIds ([InvoiceId])
 		SELECT DISTINCT
 		InvoiceId 
-		FROM dbo.InvoiceAppointments ia
-		INNER JOIN dbo.Appointments a ON ia.AppointmentId = a.AppointmentId
+		FROM dbo.InvoiceLineGroupAppointments ilga
+		INNER JOIN dbo.InvoiceLineGroups ilg ON ilga.InvoiceLineGroupId = ilg.InvoiceLineGroupId
+		INNER JOIN dbo.Appointments a ON ilga.AppointmentId = a.AppointmentId
 		WHERE
 		a.AssessmentId = @AssessmentId
+
+	DELETE idsl FROM dbo.InvoiceDocumentSendLogs idsl
+	INNER JOIN dbo.InvoiceDocuments id ON idsl.InvoiceDocumentId = id.InvoiceDocumentId
+	WHERE id.InvoiceId IN (
+		SELECT InvoiceId FROM @invoiceIds
+	)
 
 	DELETE FROM dbo.InvoiceDocuments WHERE InvoiceId IN (
 		SELECT InvoiceId FROM @invoiceIds
@@ -81,12 +88,19 @@ BEGIN
 	)
 
 	DELETE il FROM dbo.InvoiceLines il
-	INNER JOIN dbo.InvoiceAppointments ia ON il.InvoiceAppointmentId = ia.InvoiceAppointmentId
-	WHERE ia.InvoiceId IN (
+	INNER JOIN dbo.InvoiceLineGroups ilg ON il.InvoiceLineGroupId = ilg.InvoiceLineGroupId
+	WHERE ilg.InvoiceId IN (
 		SELECT InvoiceId FROM @invoiceIds
 	)
 
-	DELETE FROM dbo.InvoiceAppointments WHERE InvoiceId IN (
+	DELETE ilga FROM dbo.InvoiceLineGroupAppointments ilga
+	INNER JOIN dbo.InvoiceLineGroups ilg ON ilga.InvoiceLineGroupId = ilg.InvoiceLineGroupId
+	WHERE ilg.InvoiceId IN (
+		SELECT InvoiceId FROM @invoiceIds
+	)
+
+	DELETE FROM dbo.InvoiceLineGroups 
+	WHERE InvoiceId IN (
 		SELECT InvoiceId FROM @invoiceIds
 	)
 

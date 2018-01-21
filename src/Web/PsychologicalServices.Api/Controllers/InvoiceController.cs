@@ -30,12 +30,12 @@ namespace PsychologicalServices.Api.Controllers
 
         [Route("refresh")]
         [HttpPost]
-        [ResponseType(typeof(IEnumerable<InvoiceAppointment>))]
+        [ResponseType(typeof(IEnumerable<InvoiceLineGroup>))]
         public IHttpActionResult Refresh(Invoice invoice)
         {
-            var invoiceAppointments = _invoiceService.GetInvoiceAppointments(invoice);
+            var invoiceLineGroups = _invoiceService.GetInvoiceLineGroups(invoice);
 
-            return Ok(invoiceAppointments);
+            return Ok(invoiceLineGroups);
         }
 
         [Route("search")]

@@ -47,13 +47,13 @@ namespace PsychologicalServices.Models.Invoices
                 InvoiceTypeId = InvoiceType.Psychometrist,
             };
 
-            var appointments = GetInvoiceableAppointments(psychometrist.UserId, invoiceDate, psychometrist.Company.Timezone)
+            var lineGroups = GetInvoiceableAppointments(psychometrist.UserId, invoiceDate, psychometrist.Company.Timezone)
                 .Select(appointment =>
                 {
-                    return new InvoiceAppointment
+                    return new InvoiceLineGroup
                     {
-                        Appointment = appointment,
                         Lines = GetInvoiceLines(appointment),
+                        Appointment = appointment,
                     };
                 });
 
@@ -65,7 +65,7 @@ namespace PsychologicalServices.Models.Invoices
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = invoiceType,
                 PayableTo = psychometrist,
-                Appointments = appointments,
+                LineGroups = lineGroups,
                 TaxRate = _invoiceRepository.GetTaxRate(),
                 UpdateDate = _dateService.UtcNow,
             };
@@ -75,7 +75,7 @@ namespace PsychologicalServices.Models.Invoices
             return invoice;
         }
 
-        public IEnumerable<InvoiceAppointment> GetInvoiceAppointments(Invoice invoice)
+        public IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice)
         {
             if (invoice.InvoiceType.InvoiceTypeId != InvoiceType.Psychometrist)
             {
@@ -84,18 +84,31 @@ namespace PsychologicalServices.Models.Invoices
 
             var psychometrist = _userRepository.GetUserById(invoice.PayableTo.UserId);
 
-            var appointments = GetInvoiceableAppointments(psychometrist.UserId, invoice.InvoiceDate, psychometrist.Company.Timezone)
-                .Select(appointment => new InvoiceAppointment
+            var lineGroups = GetInvoiceableAppointments(psychometrist.UserId, invoice.InvoiceDate, psychometrist.Company.Timezone)
+                .Select(appointment =>
                 {
-                    Appointment = appointment,
-                    Lines = GetInvoiceLines(appointment)
-                        .Union(invoice.Appointments
-                            .Where(invoiceAppointment => invoiceAppointment.Appointment.AppointmentId == appointment.AppointmentId)
-                            .SelectMany(invoiceAppointment => invoiceAppointment.Lines.Where(line => line.IsCustom))
-                        ),
-                });
+                    var matchingLineGroup = invoice.LineGroups.SingleOrDefault(lg => null != lg.Appointment && lg.Appointment.AppointmentId == appointment.AppointmentId);
+                    var matchingLineGroupId = null != matchingLineGroup ? matchingLineGroup.InvoiceLineGroupId : 0;
 
-            return appointments.ToList();
+                    var lineGroup = new InvoiceLineGroup
+                    {
+                        InvoiceLineGroupId = matchingLineGroupId,
+                        Appointment = appointment,
+                        Lines = GetInvoiceLines(appointment)
+                            .Union(
+                                invoice.LineGroups
+                                    .Where(lg => lg.Appointment.AppointmentId == appointment.AppointmentId)
+                                    .SelectMany(lg => lg.Lines.Where(line => line.IsCustom))
+                            ),
+                    };
+
+                    return lineGroup;
+                })
+                .Union(
+                    invoice.LineGroups.Where(lineGroup => null == lineGroup.Appointment)
+                );
+
+            return lineGroups.ToList();
         }
 
         public int GetInvoiceTotal(Invoice invoice)
@@ -104,13 +117,11 @@ namespace PsychologicalServices.Models.Invoices
 
             var subtotal = 0.0m;
 
-            foreach (var invoiceAppointment in invoice.Appointments)
+            foreach (var lineGroup in invoice.LineGroups)
             {
-                var appointmentTotal = invoiceAppointment.Lines.Select(line => line.Amount).Sum();
+                var lineGroupTotal = lineGroup.Lines.Select(line => line.Amount).Sum();
 
-                var appointment = invoiceAppointment.Appointment;
-
-                subtotal += appointmentTotal;
+                subtotal += lineGroupTotal;
             }
 
             total = subtotal * (1 + invoice.TaxRate);

@@ -157,13 +157,16 @@
     <Compile Include="DatabaseGeneric\EntityClasses\UserUnavailabilityEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\RelationClasses\ReferralSourceInvoiceConfigurationRelations.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
     <Compile Include="DatabaseGeneric\HelperClasses\TypeDefaultValue.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\ReportStatusEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\InvoiceLineGroupAppointmentEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\RelationClasses\InvoiceLineGroupAppointmentRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\ReferralSourceTypeRelations.cs">
@@ -199,13 +202,19 @@
     <Compile Include="DatabaseGeneric\RelationClasses\ClaimRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\InvoiceLineGroupEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\CommonEntityBase.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\InvoiceStatusPathsEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\AppointmentEntity.cs">
+    <Compile Include="DatabaseGeneric\EntityClasses\AddressEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\AssessmentClaimEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\InvoiceLineEntity.cs">
@@ -226,13 +235,7 @@
     <Compile Include="DatabaseGeneric\RelationClasses\InvoiceDocumentRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\InvoiceAppointmentEntity.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\AttributeRelations.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="DatabaseGeneric\RelationClasses\CalendarNoteRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\HelperClasses\FieldInfoProvider.cs">
@@ -253,7 +256,7 @@
     <Compile Include="DatabaseGeneric\RelationClasses\AppointmentStatusRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\AddressEntity.cs">
+    <Compile Include="DatabaseGeneric\RelationClasses\CalendarNoteRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\RoleRightRelations.cs">
@@ -292,7 +295,7 @@
     <Compile Include="DatabaseGeneric\RelationClasses\AssessmentTypeAttributeTypeRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\NoteEntity.cs">
+    <Compile Include="DatabaseGeneric\RelationClasses\InvoiceLineGroupRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\AddressRelations.cs">
@@ -370,13 +373,10 @@
     <Compile Include="DatabaseGeneric\RelationClasses\AssessmentReportRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\CompanyAttributeEntity.cs">
+    <Compile Include="DatabaseGeneric\EntityClasses\AppointmentEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\HelperClasses\FieldCreationClasses.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="DatabaseGeneric\RelationClasses\InvoiceAppointmentRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\InvoiceDocumentSendLogEntity.cs">
@@ -409,7 +409,7 @@
     <Compile Include="DatabaseGeneric\EntityClasses\ReferralTypeEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\EntityClasses\AssessmentClaimEntity.cs">
+    <Compile Include="DatabaseGeneric\RelationClasses\AssessmentNoteRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\UserUnavailabilityRelations.cs">
@@ -484,13 +484,16 @@
     <Compile Include="DatabaseGeneric\EntityClasses\InvoiceStatusChangeEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\NoteEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\AppointmentStatusInvoiceRateEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\IssueInDisputeInvoiceAmountEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="DatabaseGeneric\RelationClasses\AssessmentNoteRelations.cs">
+    <Compile Include="DatabaseGeneric\RelationClasses\ReferralSourceInvoiceConfigurationRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\AssessmentMedRehabEntity.cs">
@@ -518,6 +521,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\ReportTypeEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\CompanyAttributeEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\AssessmentTypeReportTypeEntity.cs">

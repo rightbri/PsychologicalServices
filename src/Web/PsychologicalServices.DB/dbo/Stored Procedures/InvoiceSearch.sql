@@ -52,8 +52,9 @@ BEGIN
 	i.InvoiceId
 	FROM dbo.Invoices i
 	INNER JOIN dbo.Users u ON i.PayableToId = u.UserId
-	LEFT JOIN dbo.InvoiceAppointments ia ON i.InvoiceId = ia.InvoiceId
-	LEFT JOIN dbo.Appointments app ON ia.AppointmentId = app.AppointmentId
+	LEFT JOIN dbo.InvoiceLineGroups ilg ON i.InvoiceId = ilg.InvoiceId
+	LEFT JOIN dbo.InvoiceLineGroupAppointments ilga ON ilg.InvoiceLineGroupId = ilga.InvoiceLineGroupId
+	LEFT JOIN dbo.Appointments app ON ilga.AppointmentId = app.AppointmentId
 	LEFT JOIN dbo.Assessments ass ON app.AssessmentId = ass.AssessmentId
 	LEFT JOIN dbo.AssessmentClaims ac ON ass.AssessmentId = ac.AssessmentId
 	LEFT JOIN dbo.Claims cl ON ac.ClaimId = cl.ClaimId
@@ -76,7 +77,7 @@ BEGIN
 	) id ON i.InvoiceId = id.InvoiceId
 	WHERE
 	u.CompanyId = @companyId_local
-	AND (@appointmentId_local IS NULL OR ia.AppointmentId = @appointmentId_local)
+	AND (@appointmentId_local IS NULL OR ilga.AppointmentId = @appointmentId_local)
 	AND (@identifier_local IS NULL OR LEN(@identifier_local) = 0 OR i.Identifier LIKE '%' + @identifier_local + '%')
 	AND (@invoiceDate_local IS NULL OR (i.InvoiceDate >= CAST(@invoiceDate_local AS DATE) AND i.InvoiceDate < DATEADD(DAY,1,CAST(@invoiceDate_local AS DATE))))
 	AND (@invoiceMonth_local IS NULL OR (YEAR(i.InvoiceDate) = YEAR(@invoiceMonth_local) AND MONTH(i.InvoiceDate) = MONTH(@invoiceMonth_local)))
@@ -90,26 +91,28 @@ BEGIN
 			*
 			FROM dbo.Appointments eapp
 			INNER JOIN dbo.AppointmentStatuses eas ON eapp.AppointmentStatusId = eas.AppointmentStatusId
-			LEFT JOIN dbo.InvoiceAppointments eia ON eapp.AppointmentId = eia.AppointmentId
+			LEFT JOIN dbo.InvoiceLineGroupAppointments eilga ON eapp.AppointmentId = eilga.AppointmentId
+			LEFT JOIN dbo.InvoiceLineGroups eilg ON eilga.InvoiceLineGroupId = eilg.InvoiceLineGroupId
 			WHERE
 			eapp.PsychometristId = i.PayableToId
 			AND YEAR(eapp.AppointmentTime) = YEAR(i.InvoiceDate)
 			AND MONTH(eapp.AppointmentTime) = MONTH(i.InvoiceDate)
 			AND eas.CanInvoice = 1
-			AND eia.InvoiceId IS NULL
+			AND eilg.InvoiceId IS NULL
 		)) OR
 		(@needsRefresh_local = 0 AND NOT EXISTS (
 			SELECT
 			*
 			FROM dbo.Appointments eapp
 			INNER JOIN dbo.AppointmentStatuses eas ON eapp.AppointmentStatusId = eas.AppointmentStatusId
-			LEFT JOIN dbo.InvoiceAppointments eia ON eapp.AppointmentId = eia.AppointmentId
+			LEFT JOIN dbo.InvoiceLineGroupAppointments eilga ON eapp.AppointmentId = eilga.AppointmentId
+			LEFT JOIN dbo.InvoiceLineGroups eilg ON eilga.InvoiceLineGroupId = eilg.InvoiceLineGroupId
 			WHERE
 			eapp.PsychometristId = i.PayableToId
 			AND YEAR(eapp.AppointmentTime) = YEAR(i.InvoiceDate)
 			AND MONTH(eapp.AppointmentTime) = MONTH(i.InvoiceDate)
 			AND eas.CanInvoice = 1
-			AND eia.InvoiceId IS NULL
+			AND eilg.InvoiceId IS NULL
 		))
 	)
 	AND (@needsToBeSentToReferralSource_local IS NULL

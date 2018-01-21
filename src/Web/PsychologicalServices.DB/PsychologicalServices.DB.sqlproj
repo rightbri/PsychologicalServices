@@ -117,7 +117,6 @@
     <Build Include="dbo\Tables\Log.sql" />
     <Build Include="dbo\Tables\InvoiceTypes.sql" />
     <Build Include="dbo\Tables\InvoiceStatusPaths.sql" />
-    <Build Include="dbo\Tables\InvoiceAppointments.sql" />
     <Build Include="dbo\Stored Procedures\DeleteAssessment.sql" />
     <Build Include="dbo\Tables\AppointmentSequences.sql" />
     <Build Include="dbo\Tables\AddressAddressTypes.sql" />
@@ -143,5 +142,7 @@
     <Build Include="dbo\Stored Procedures\ArbitrationsData.sql" />
     <Build Include="dbo\Tables\DiagnosisFoundResponses.sql" />
     <Build Include="dbo\Stored Procedures\CredibilityData.sql" />
+    <Build Include="dbo\Tables\InvoiceLineGroups.sql" />
+    <Build Include="dbo\Tables\InvoiceLineGroupAppointments.sql" />
   </ItemGroup>
 </Project>

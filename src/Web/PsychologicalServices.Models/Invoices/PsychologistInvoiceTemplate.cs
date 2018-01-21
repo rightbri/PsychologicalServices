@@ -62,7 +62,7 @@ namespace PsychologicalServices.Models.Invoices
             
             #line 138 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychologistInvoiceTemplate.tt"
 
-		var assessment = Model.Appointments.First().Appointment.Assessment;
+		var assessment = Model.LineGroups.First(lineGroup => null != lineGroup.Appointment).Appointment.Assessment;
 		var company = assessment.Company;
 	
             
@@ -259,11 +259,11 @@ namespace PsychologicalServices.Models.Invoices
             
             #line 208 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychologistInvoiceTemplate.tt"
 
-				for (var i = 0; i < Model.Appointments.Count(); i++)
+				for (var i = 0; i < Model.LineGroups.Count(); i++)
 				{
-					var invoiceAppointment = Model.Appointments.ElementAt(i);
+					var lineGroup = Model.LineGroups.ElementAt(i);
 					
-					var appointment = invoiceAppointment.Appointment;
+					var appointment = lineGroup.Appointment;
 
 					foreach (var claim in appointment.Assessment.Claims)
 					{
@@ -360,9 +360,9 @@ namespace PsychologicalServices.Models.Invoices
             
             #line 260 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychologistInvoiceTemplate.tt"
 
-					for (var j = 0; j < invoiceAppointment.Lines.Count(); j++)
+					for (var j = 0; j < lineGroup.Lines.Count(); j++)
 					{
-						var line = invoiceAppointment.Lines.ElementAt(j);
+						var line = lineGroup.Lines.ElementAt(j);
 						var amountAdjusted = line.Amount != line.OriginalAmount;
 					
             

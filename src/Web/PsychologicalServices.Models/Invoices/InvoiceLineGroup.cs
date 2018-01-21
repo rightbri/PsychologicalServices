@@ -1,14 +1,17 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
 {
-    public class InvoiceAppointment
+    public class InvoiceLineGroup
     {
-        public int InvoiceAppointmentId { get; set; }
+        public int InvoiceLineGroupId { get; set; }
 
-        public Appointment Appointment { get; set; }
+        public string Description { get; set; }
 
         public IEnumerable<InvoiceLine> Lines { get; set; }
+
+        public Appointment Appointment { get; set; }
     }
 }

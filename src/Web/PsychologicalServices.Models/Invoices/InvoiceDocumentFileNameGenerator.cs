@@ -24,9 +24,9 @@ namespace PsychologicalServices.Models.Invoices
             {
                 //Last, First AssessmentType INVOICE ReferralSource Month Year
 
-                if (invoice.Appointments.Any())
+                if (invoice.LineGroups.Any(lineGroup => null != lineGroup.Appointment))
                 {
-                    var appointment = _appointmentRepository.GetAppointment(invoice.Appointments.First().Appointment.AppointmentId);
+                    var appointment = _appointmentRepository.GetAppointment(invoice.LineGroups.First(lineGroup => null != lineGroup.Appointment).Appointment.AppointmentId);
 
                     var claimant = appointment.Assessment.Claims.Any()
                         ? appointment.Assessment.Claims.First().Claimant

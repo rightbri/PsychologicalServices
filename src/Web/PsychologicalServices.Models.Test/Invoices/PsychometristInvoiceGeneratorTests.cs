@@ -136,7 +136,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void GetInvoiceAppointmentsThrowsExceptionForPsychologistInvoice()
+        public void GetInvoiceLineGroupsThrowsExceptionForPsychologistInvoice()
         {
             var psychometristInvoiceGenerator = GetService();
 
@@ -148,11 +148,11 @@ namespace PsychologicalServices.Models.Test.Invoices
                 }
             };
 
-            psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
+            psychometristInvoiceGenerator.GetInvoiceLineGroups(invoice);
         }
 
         [TestMethod]
-        public void GetInvoiceAppointmentsRetainsCustomInvoiceLines()
+        public void GetInvoiceLineGroupsRetainsCustomInvoiceLines()
         {
             var appointmentStatusId = 5;
             var taxRate = 0.15m;
@@ -165,10 +165,12 @@ namespace PsychologicalServices.Models.Test.Invoices
             var timezone = "Eastern Standard Time";
             var userId = 1;
             var isCompletion = false;
+            var appointmentId = 123;
             var appointmentSequenceId = isCompletion ? Appointments.AppointmentSequence.Subsequent : Appointments.AppointmentSequence.First;
-            var invoiceAppointmentId = 456;
+            var invoiceLineGroupId = 456;
             var appointment = new Appointments.Appointment
             {
+                AppointmentId = appointmentId,
                 AppointmentStatus = new Appointments.AppointmentStatus
                 {
                     AppointmentStatusId = appointmentStatusId,
@@ -250,21 +252,18 @@ namespace PsychologicalServices.Models.Test.Invoices
                 new InvoiceLine
                 {
                     InvoiceLineId = 1,
-                    InvoiceAppointmentId = invoiceAppointmentId,
                     Amount = appointmentAmount + 10000,
                     Description = "Psychological Assessment",
                 },
                 new InvoiceLine
                 {
                     InvoiceLineId = 2,
-                    InvoiceAppointmentId = invoiceAppointmentId,
                     Amount = travelFeeAmount + 5000,
                     Description = "Travel to Oakville",
                 },
                 new InvoiceLine
                 {
                     InvoiceLineId = 3,
-                    InvoiceAppointmentId = invoiceAppointmentId,
                     Amount = 2500,
                     Description = "Tip",
                     IsCustom = true,
@@ -272,7 +271,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 new InvoiceLine
                 {
                     InvoiceLineId = 4,
-                    InvoiceAppointmentId = invoiceAppointmentId,
                     Amount = 1000,
                     Description = "Gas Money",
                     IsCustom = true
@@ -296,27 +294,27 @@ namespace PsychologicalServices.Models.Test.Invoices
                         CompanyId = companyId,
                     },
                 },
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
-                        InvoiceAppointmentId = invoiceAppointmentId,
+                        InvoiceLineGroupId = invoiceLineGroupId,
                         Appointment = appointment,
                         Lines = invoiceLines,
                     }
                 }
             };
             
-            var invoiceAppointments = psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
+            var lineGroups = psychometristInvoiceGenerator.GetInvoiceLineGroups(invoice);
 
             //verify custom lines are still present
             foreach (var invoiceLine in invoiceLines.Where(il => il.IsCustom))
             {
                 Assert.IsTrue(
-                    invoiceAppointments.Any(invoiceAppointment =>
-                        invoiceAppointment.Lines.Any(line =>
+                    lineGroups.Any(lineGroup =>
+                        lineGroup.InvoiceLineGroupId == invoiceLineGroupId &&
+                        lineGroup.Lines.Any(line =>
                             line.InvoiceLineId == invoiceLine.InvoiceLineId &&
-                            line.InvoiceAppointmentId == invoiceLine.InvoiceAppointmentId &&
                             line.IsCustom == invoiceLine.IsCustom &&
                             line.Amount == invoiceLine.Amount &&
                             line.Description == invoiceLine.Description
@@ -332,7 +330,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var expectedAmount = Convert.ToInt32((appointmentAmount + travelFeeAmount + customLineTotal) * (1 + taxRate));
 
-            invoice.Appointments = invoiceAppointments;
+            invoice.LineGroups = lineGroups;
 
             var actualAmount = psychometristInvoiceGenerator.GetInvoiceTotal(invoice);
 
@@ -340,7 +338,7 @@ namespace PsychologicalServices.Models.Test.Invoices
         }
 
         [TestMethod]
-        public void GetInvoiceAppointmentsCalculatesCompletionCorrectly()
+        public void GetInvoiceLineGroupsCalculatesCompletionCorrectly()
         {
             var taxRate = 0.15m;
             var assessmentTypeId = 4;
@@ -352,7 +350,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             var appointmentIncompleteAmount = 35000;
             var appointmentCompletionAmount = 17500;
             var userId = 1;
-            var invoiceAppointmentId = 456;
             var year = 2017;
             var month = 10;
             
@@ -545,7 +542,9 @@ namespace PsychologicalServices.Models.Test.Invoices
                             },
                         });
                 });
-            
+
+            var invoiceLineGroupWithCustomLinesId = 2;
+
             var invoice = new Invoice
             {
                 InvoiceId = 1,
@@ -563,54 +562,49 @@ namespace PsychologicalServices.Models.Test.Invoices
                         CompanyId = companyId,
                     },
                 },
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
-                        InvoiceAppointmentId = 1,
+                        InvoiceLineGroupId = 1,
                         Appointment = appointments[0],
                         Lines = new List<InvoiceLine>(new[]
                         {
                             new InvoiceLine
                             {
                                 InvoiceLineId = 1,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = appointmentCompletionAmount,
                                 Description = "Psychological Assessment - No Show",
                             },
                             new InvoiceLine
                             {
                                 InvoiceLineId = 2,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = travelFeeAmount + 5000,
                                 Description = "Travel to Oakville",
                             },
                         }),
                     },
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
-                        InvoiceAppointmentId = 2,
+                        InvoiceLineGroupId = invoiceLineGroupWithCustomLinesId,
                         Appointment = appointments[1],
                         Lines = new List<InvoiceLine>(new[]
                         {
                             new InvoiceLine
                             {
                                 InvoiceLineId = 3,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = appointmentIncompleteAmount,
                                 Description = "Psychological Assessment - Incomplete",
                             },
                             new InvoiceLine
                             {
                                 InvoiceLineId = 4,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = travelFeeAmount + 5000,
                                 Description = "Travel to Oakville",
                             },
                             new InvoiceLine
                             {
                                 InvoiceLineId = 5,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = 2500,
                                 Description = "Tip",
                                 IsCustom = true,
@@ -618,30 +612,27 @@ namespace PsychologicalServices.Models.Test.Invoices
                             new InvoiceLine
                             {
                                 InvoiceLineId = 6,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = 1000,
                                 Description = "Gas Money",
                                 IsCustom = true
                             },
                         }),
                     },
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
-                        InvoiceAppointmentId = 3,
+                        InvoiceLineGroupId = 3,
                         Appointment = appointments[2],
                         Lines = new List<InvoiceLine>(new[]
                         {
                             new InvoiceLine
                             {
                                 InvoiceLineId = 7,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = appointmentIncompleteAmount,
                                 Description = "Psychological Assessment - Complete (Completion)",
                             },
                             new InvoiceLine
                             {
                                 InvoiceLineId = 8,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = travelFeeAmount,
                                 Description = "Travel to Oakville",
                             },
@@ -650,16 +641,16 @@ namespace PsychologicalServices.Models.Test.Invoices
                 }
             };
 
-            var invoiceAppointments = psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
+            var lineGroups = psychometristInvoiceGenerator.GetInvoiceLineGroups(invoice);
 
             //verify custom lines are still present
-            foreach (var invoiceLine in invoice.Appointments.SelectMany(ia => ia.Lines).Where(il => il.IsCustom))
+            foreach (var invoiceLine in invoice.LineGroups.SelectMany(ia => ia.Lines).Where(il => il.IsCustom))
             {
                 Assert.IsTrue(
-                    invoiceAppointments.Any(invoiceAppointment =>
-                        invoiceAppointment.Lines.Any(line =>
+                    lineGroups.Any(lineGroup =>
+                        lineGroup.InvoiceLineGroupId == invoiceLineGroupWithCustomLinesId &&
+                        lineGroup.Lines.Any(line =>
                             line.InvoiceLineId == invoiceLine.InvoiceLineId &&
-                            line.InvoiceAppointmentId == invoiceLine.InvoiceAppointmentId &&
                             line.IsCustom == invoiceLine.IsCustom &&
                             line.Amount == invoiceLine.Amount &&
                             line.Description == invoiceLine.Description
@@ -668,7 +659,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 );
             }
 
-            var customLineTotal = invoice.Appointments.SelectMany(ia => ia.Lines)
+            var customLineTotal = invoice.LineGroups.SelectMany(ia => ia.Lines)
                 .Where(invoiceLine => invoiceLine.IsCustom)
                 .Select(invoiceLine => invoiceLine.Amount)
                 .Sum();
@@ -685,7 +676,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 ) * (1 + taxRate)
             );
 
-            invoice.Appointments = invoiceAppointments;
+            invoice.LineGroups = lineGroups;
 
             var actualAmount = psychometristInvoiceGenerator.GetInvoiceTotal(invoice);
 
@@ -693,7 +684,7 @@ namespace PsychologicalServices.Models.Test.Invoices
         }
 
         [TestMethod]
-        public void GetInvoiceAppointmentsFindsNewInvoiceableAppointments()
+        public void GetInvoiceLineGroupsFindsNewInvoiceableAppointments()
         {
             var taxRate = 0.15m;
             var assessmentTypeId = 4;
@@ -705,7 +696,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             var appointmentIncompleteAmount = 35000;
             var appointmentCompletionAmount = 17500;
             var userId = 1;
-            var invoiceAppointmentId = 456;
             var year = 2017;
             var month = 10;
 
@@ -899,6 +889,8 @@ namespace PsychologicalServices.Models.Test.Invoices
                         });
                 });
 
+            var invoiceLineGroupWithCustomLinesId = 2;
+
             var invoice = new Invoice
             {
                 InvoiceId = 1,
@@ -916,54 +908,49 @@ namespace PsychologicalServices.Models.Test.Invoices
                         CompanyId = companyId,
                     },
                 },
-                Appointments = new[]
+                LineGroups = new[]
                 {
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
-                        InvoiceAppointmentId = 1,
+                        InvoiceLineGroupId = 1,
                         Appointment = appointments[0],
                         Lines = new List<InvoiceLine>(new[]
                         {
                             new InvoiceLine
                             {
                                 InvoiceLineId = 1,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = appointmentCompletionAmount,
                                 Description = "Psychological Assessment - No Show",
                             },
                             new InvoiceLine
                             {
                                 InvoiceLineId = 2,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = travelFeeAmount + 5000,
                                 Description = "Travel to Oakville",
                             },
                         }),
                     },
-                    new InvoiceAppointment
+                    new InvoiceLineGroup
                     {
-                        InvoiceAppointmentId = 2,
+                        InvoiceLineGroupId = invoiceLineGroupWithCustomLinesId,
                         Appointment = appointments[1],
                         Lines = new List<InvoiceLine>(new[]
                         {
                             new InvoiceLine
                             {
                                 InvoiceLineId = 3,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = appointmentIncompleteAmount,
                                 Description = "Psychological Assessment - Incomplete",
                             },
                             new InvoiceLine
                             {
                                 InvoiceLineId = 4,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = travelFeeAmount + 5000,
                                 Description = "Travel to Oakville",
                             },
                             new InvoiceLine
                             {
                                 InvoiceLineId = 5,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = 2500,
                                 Description = "Tip",
                                 IsCustom = true,
@@ -971,7 +958,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                             new InvoiceLine
                             {
                                 InvoiceLineId = 6,
-                                InvoiceAppointmentId = invoiceAppointmentId,
                                 Amount = 1000,
                                 Description = "Gas Money",
                                 IsCustom = true
@@ -981,16 +967,16 @@ namespace PsychologicalServices.Models.Test.Invoices
                 }
             };
 
-            var invoiceAppointments = psychometristInvoiceGenerator.GetInvoiceAppointments(invoice);
+            var lineGroups = psychometristInvoiceGenerator.GetInvoiceLineGroups(invoice);
 
             //verify custom lines are still present
-            foreach (var invoiceLine in invoice.Appointments.SelectMany(ia => ia.Lines).Where(il => il.IsCustom))
+            foreach (var invoiceLine in invoice.LineGroups.SelectMany(ia => ia.Lines).Where(il => il.IsCustom))
             {
                 Assert.IsTrue(
-                    invoiceAppointments.Any(invoiceAppointment =>
-                        invoiceAppointment.Lines.Any(line =>
+                    lineGroups.Any(lineGroup =>
+                        lineGroup.InvoiceLineGroupId == invoiceLineGroupWithCustomLinesId &&
+                        lineGroup.Lines.Any(line =>
                             line.InvoiceLineId == invoiceLine.InvoiceLineId &&
-                            line.InvoiceAppointmentId == invoiceLine.InvoiceAppointmentId &&
                             line.IsCustom == invoiceLine.IsCustom &&
                             line.Amount == invoiceLine.Amount &&
                             line.Description == invoiceLine.Description
@@ -999,7 +985,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 );
             }
 
-            var customLineTotal = invoice.Appointments.SelectMany(ia => ia.Lines)
+            var customLineTotal = invoice.LineGroups.SelectMany(ia => ia.Lines)
                 .Where(invoiceLine => invoiceLine.IsCustom)
                 .Select(invoiceLine => invoiceLine.Amount)
                 .Sum();
@@ -1016,7 +1002,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 ) * (1 + taxRate)
             );
 
-            invoice.Appointments = invoiceAppointments;
+            invoice.LineGroups = lineGroups;
 
             var actualAmount = psychometristInvoiceGenerator.GetInvoiceTotal(invoice);
 
@@ -1031,10 +1017,10 @@ namespace PsychologicalServices.Models.Test.Invoices
             var invoice = new Invoice
             {
                 TaxRate = taxRate,
-                Appointments = new List<InvoiceAppointment>(
+                LineGroups = new List<InvoiceLineGroup>(
                     new[]
                     {
-                        new InvoiceAppointment
+                        new InvoiceLineGroup
                         {
                             Lines = new[]
                             {
@@ -1050,7 +1036,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                                 },
                             }
                         },
-                        new InvoiceAppointment
+                        new InvoiceLineGroup
                         {
                             Lines = new[]
                             {

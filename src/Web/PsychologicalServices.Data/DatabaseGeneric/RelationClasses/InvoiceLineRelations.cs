@@ -32,7 +32,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 
 
-			toReturn.Add(this.InvoiceAppointmentEntityUsingInvoiceAppointmentId);
+			toReturn.Add(this.InvoiceLineGroupEntityUsingInvoiceLineGroupId);
 			return toReturn;
 		}
 
@@ -40,16 +40,16 @@ namespace PsychologicalServices.Data.RelationClasses
 
 
 
-		/// <summary>Returns a new IEntityRelation object, between InvoiceLineEntity and InvoiceAppointmentEntity over the m:1 relation they have, using the relation between the fields:
-		/// InvoiceLine.InvoiceAppointmentId - InvoiceAppointment.InvoiceAppointmentId
+		/// <summary>Returns a new IEntityRelation object, between InvoiceLineEntity and InvoiceLineGroupEntity over the m:1 relation they have, using the relation between the fields:
+		/// InvoiceLine.InvoiceLineGroupId - InvoiceLineGroup.InvoiceLineGroupId
 		/// </summary>
-		public virtual IEntityRelation InvoiceAppointmentEntityUsingInvoiceAppointmentId
+		public virtual IEntityRelation InvoiceLineGroupEntityUsingInvoiceLineGroupId
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "InvoiceAppointment", false);
-				relation.AddEntityFieldPair(InvoiceAppointmentFields.InvoiceAppointmentId, InvoiceLineFields.InvoiceAppointmentId);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceAppointmentEntity", false);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "InvoiceLineGroup", false);
+				relation.AddEntityFieldPair(InvoiceLineGroupFields.InvoiceLineGroupId, InvoiceLineFields.InvoiceLineGroupId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineEntity", true);
 				return relation;
 			}
