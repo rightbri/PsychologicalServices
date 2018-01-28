@@ -1058,7 +1058,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             (
                                 arbitration.Title != assessmentArbitration.Title ||
                                 (null == arbitration.DefenseLawyer && assessmentArbitration.DefenseLawyerId.HasValue) ||
-                                (arbitration.DefenseLawyer.ContactId != assessmentArbitration.DefenseLawyerId) ||
+                                (null != arbitration.DefenseLawyer && !assessmentArbitration.DefenseLawyerId.HasValue) ||
+                                (null != arbitration.DefenseLawyer && assessmentArbitration.DefenseLawyerId.HasValue && arbitration.DefenseLawyer.ContactId != assessmentArbitration.DefenseLawyerId) ||
                                 arbitration.DefenseFileNumber != assessmentArbitration.DefenseFileNumber ||
                                 arbitration.StartDate != assessmentArbitration.StartDate ||
                                 arbitration.EndDate != assessmentArbitration.EndDate ||

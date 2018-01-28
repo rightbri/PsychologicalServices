@@ -42,7 +42,7 @@
 					<div class="uk-form-controls">
 						<select id="lawFirmContact" class="uk-select" value.bind="model.arbitration.defenseLawyer" matcher.bind="contactMatcher">
 							<option></option>
-							<option repeat.for="contact of defenseLawyers" model.bind="defenseLawyer">
+							<option repeat.for="contact of defenseLawyers" model.bind="contact">
 								${contact.firstName} ${contact.lastName} (${contact.contactType.name} - ${contact.employer.name})
 							</option>
 						</select>
