@@ -148,7 +148,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     .Prefetch<UserEntity>(invoice => invoice.PayableTo)
                     .Prefetch<InvoiceLineGroupEntity>(invoice => invoice.InvoiceLineGroups)
                         .SubPath(invoiceLineGroupPath => invoiceLineGroupPath
-                            .Prefetch<InvoiceLineGroupAppointmentEntity>(invoiceLineGroup => invoiceLineGroup)
+                            .Prefetch<InvoiceLineGroupAppointmentEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupAppointment)
                                 .SubPath(invoiceLineGroupAppointmentPath => invoiceLineGroupAppointmentPath
                                     .Prefetch<AppointmentEntity>(invoiceAppointment => invoiceAppointment.Appointment)
                                         .SubPath(appointmentPath => appointmentPath
@@ -530,7 +530,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 invoiceEntity.InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId;
                 invoiceEntity.InvoiceTypeId = invoice.InvoiceType.InvoiceTypeId;
                 invoiceEntity.PayableToId = invoice.PayableTo.UserId;
-                invoiceEntity.InvoiceRate = invoice.InvoiceRate;
                 invoiceEntity.TaxRate = invoice.TaxRate;
                 invoiceEntity.Total = invoice.Total;
                 invoiceEntity.UpdateDate = _date.UtcNow;
@@ -572,6 +571,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                 lineGroup.InvoiceLineGroupId == lg.InvoiceLineGroupId &&
                                 (
                                     lg.Description != lineGroup.Description ||
+                                    lg.Sort != lineGroup.Sort ||
                                     (null != lg.Appointment && null != lineGroup.InvoiceLineGroupAppointment && lg.Appointment.AppointmentId != lineGroup.InvoiceLineGroupAppointment.AppointmentId) ||
                                     (null != lg.Appointment && null == lineGroup.InvoiceLineGroupAppointment) ||
                                     (null == lg.Appointment && null != lineGroup.InvoiceLineGroupAppointment) ||
@@ -585,7 +585,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                             (
                                             line.Amount != invoiceLine.Amount ||
                                             line.Description != invoiceLine.Description ||
-                                            line.ApplyInvoiceRate != invoiceLine.ApplyInvoiceRate ||
                                             line.IsCustom != invoiceLine.IsCustom
                                             )
                                         )
@@ -601,6 +600,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         if (null != lineGroupEntity)
                         {
                             lineGroupEntity.Description = lg.Description;
+                            lineGroupEntity.Sort = lg.Sort;
 
                             if (null != lg.Appointment && null != lineGroupEntity.InvoiceLineGroupAppointment && lg.Appointment.AppointmentId != lineGroupEntity.InvoiceLineGroupAppointment.AppointmentId)
                             {
@@ -670,7 +670,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     Amount = line.Amount,
                                     Description = line.Description,
                                     IsCustom = line.IsCustom,
-                                    ApplyInvoiceRate = line.ApplyInvoiceRate,
                                     OriginalAmount = line.IsCustom ? line.Amount : line.OriginalAmount,
                                 })
                             );
@@ -680,12 +679,13 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     }
                 }
 
-                //new invoice appointments
+                //new invoice line groups
                 foreach (var lg in invoiceLineGroupsToAdd)
                 {
                     var lineGroup = new InvoiceLineGroupEntity
                     {
                         Description = lg.Description,
+                        Sort = lg.Sort,
                         InvoiceLineGroupAppointment = new InvoiceLineGroupAppointmentEntity { AppointmentId = lg.Appointment.AppointmentId },
                     };
                     
@@ -694,7 +694,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         {
                             Amount = line.Amount,
                             Description = line.Description,
-                            ApplyInvoiceRate = line.ApplyInvoiceRate,
                             IsCustom = line.IsCustom,
                             OriginalAmount = line.IsCustom ? line.Amount : line.OriginalAmount,
                         })

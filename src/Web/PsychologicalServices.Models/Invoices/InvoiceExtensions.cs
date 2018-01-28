@@ -58,5 +58,12 @@ namespace PsychologicalServices.Models.Invoices
         {
             return data.InvoiceRate < 1.0m;
         }
+
+        public static string ToInvoiceLineGroupDescription(this Appointments.Appointment appointment)
+        {
+            var claimant = appointment.Assessment.Claims.FirstOrDefault()?.Claimant;
+
+            return $@"{appointment.AppointmentTime.ToString("MMMM")} {appointment.AppointmentTime.Day}, {appointment.AppointmentTime.Year}, {appointment.Assessment.AssessmentType.Description} Assessment in {appointment.Location.City.Name} for {appointment.Assessment.ReferralSource.Name}/{claimant?.FirstName} {claimant?.LastName}";
+        }
     }
 }

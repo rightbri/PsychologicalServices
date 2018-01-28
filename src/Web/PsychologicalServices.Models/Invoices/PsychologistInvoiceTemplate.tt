@@ -261,7 +261,6 @@
 					for (var j = 0; j < lineGroup.Lines.Count(); j++)
 					{
 						var line = lineGroup.Lines.ElementAt(j);
-						var amountAdjusted = line.Amount != line.OriginalAmount;
 					#>
 						<tr>
 							<td class="label">

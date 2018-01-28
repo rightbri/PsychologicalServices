@@ -525,6 +525,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Description", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("Sort", fieldHashtable);
 		}
 		#endregion
 
@@ -712,12 +715,23 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> The Description property of the Entity InvoiceLineGroup<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "InvoiceLineGroups"."Description"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 200<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Description
 		{
 			get { return (System.String)GetValue((int)InvoiceLineGroupFieldIndex.Description, true); }
 			set	{ SetValue((int)InvoiceLineGroupFieldIndex.Description, value); }
+		}
+
+		/// <summary> The Sort property of the Entity InvoiceLineGroup<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "InvoiceLineGroups"."Sort"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 Sort
+		{
+			get { return (System.Int32)GetValue((int)InvoiceLineGroupFieldIndex.Sort, true); }
+			set	{ SetValue((int)InvoiceLineGroupFieldIndex.Sort, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineEntity' which are related to this entity via a relation of type '1:n'.

@@ -286,7 +286,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 IsNew = invoice.IsNew(),
                 Identifier = invoice.Identifier,
                 InvoiceDate = invoice.InvoiceDate,
-                InvoiceRate = invoice.InvoiceRate,
                 InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId,
                 InvoiceTypeId = invoice.InvoiceType.InvoiceTypeId,
                 TaxRate = invoice.TaxRate,
@@ -303,11 +302,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
             return new InvoiceLineEntity
             {
                 InvoiceLineId = invoiceLine.InvoiceLineId,
-                //InvoiceAppointmentId = invoiceLine.InvoiceAppointmentId,
                 Amount = invoiceLine.Amount,
                 Description = invoiceLine.Description,
                 IsCustom = invoiceLine.IsCustom,
-                ApplyInvoiceRate = invoiceLine.ApplyInvoiceRate,
                 OriginalAmount = invoiceLine.OriginalAmount,
             };
         }
@@ -322,10 +319,13 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     InvoiceLineGroupId = lineGroup.InvoiceLineGroupId,
                     Description = lineGroup.Description,
-                    InvoiceLineGroupAppointment = new InvoiceLineGroupAppointmentEntity
+                    Sort = lineGroup.Sort,
+                    InvoiceLineGroupAppointment = null != lineGroup.Appointment
+                    ? new InvoiceLineGroupAppointmentEntity
                     {
                         AppointmentId = lineGroup.Appointment.AppointmentId
-                    },
+                    }
+                    : null,
                 };
                 
                 invoiceLineGroupEntity.InvoiceLines.AddRange(
@@ -346,7 +346,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     InvoiceId = invoice.InvoiceId,
                     Identifier = invoice.Identifier,
                     InvoiceDate = invoice.InvoiceDate,
-                    InvoiceRate = invoice.InvoiceRate,
                     InvoiceStatus = invoice.InvoiceStatus.ToInvoiceStatus(),
                     InvoiceType = invoice.InvoiceType.ToInvoiceType(),
                     PayableTo = invoice.PayableTo.ToUser(),
@@ -367,6 +366,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     InvoiceLineGroupId = invoiceLineGroup.InvoiceLineGroupId,
                     Description = invoiceLineGroup.Description,
+                    Sort = invoiceLineGroup.Sort,
                     Lines = invoiceLineGroup.InvoiceLines.Select(invoiceLine => invoiceLine.ToInvoiceLine()),
                     Appointment = null != invoiceLineGroup.InvoiceLineGroupAppointment
                         ? invoiceLineGroup.InvoiceLineGroupAppointment.Appointment.ToAppointment()
@@ -396,7 +396,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Description = invoiceLine.Description,
                     Amount = invoiceLine.Amount,
                     IsCustom = invoiceLine.IsCustom,
-                    ApplyInvoiceRate = invoiceLine.ApplyInvoiceRate,
                     OriginalAmount = invoiceLine.OriginalAmount,
                 }
                 : null;

@@ -10,6 +10,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public string Description { get; set; }
 
+        public int Sort { get; set; }
+
         public IEnumerable<InvoiceLine> Lines { get; set; }
 
         public Appointment Appointment { get; set; }

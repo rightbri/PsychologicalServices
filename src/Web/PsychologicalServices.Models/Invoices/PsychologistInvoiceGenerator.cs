@@ -50,19 +50,7 @@ namespace PsychologicalServices.Models.Invoices
             {
                 throw new InvalidOperationException("A psychologist invoice already exists for this appointment.");
             }
-
-            var assessmentAppointments = _appointmentRepository.GetAppointmentSequenceSiblings(appointment.AppointmentId);
-
-            var appointmentSequence = appointment.AppointmentSequence(assessmentAppointments);
-
-            var invoiceCalculationData = _invoiceRepository.GetPsychologistInvoiceCalculationData(
-                appointment.Assessment.Company.CompanyId,
-                appointment.Assessment.ReferralSource.ReferralSourceId,
-                appointment.Assessment.AssessmentType.AssessmentTypeId,
-                appointment.AppointmentStatus.AppointmentStatusId,
-                appointmentSequence.AppointmentSequenceId
-            );
-
+            
             var invoice = new Invoice
             {
                 InvoiceDate = _date.UtcNow,
@@ -76,11 +64,12 @@ namespace PsychologicalServices.Models.Invoices
                 {
                     new InvoiceLineGroup
                     {
-                        Appointment = appointment,
+                        Description = appointment.ToInvoiceLineGroupDescription(),
+                        Sort = 1,
                         Lines = GetInvoiceLines(appointment),
+                        Appointment = appointment,
                     }
                 }),
-                InvoiceRate = invoiceCalculationData.InvoiceRate,
                 TaxRate = _invoiceRepository.GetTaxRate(),
                 UpdateDate = _date.UtcNow,
             };
@@ -96,8 +85,13 @@ namespace PsychologicalServices.Models.Invoices
         {
             var invoiceLineGroups = new List<InvoiceLineGroup>();
 
+            var index = 0;
+
             foreach (var lineGroup in invoice.LineGroups)
             {
+                index += 1;
+                var description = null != lineGroup.Appointment ? lineGroup.Appointment.ToInvoiceLineGroupDescription() : lineGroup.Description;
+
                 var appointmentInvoiceLines =
                     null != lineGroup.Appointment
                         ? GetInvoiceLines(lineGroup.Appointment)
@@ -107,6 +101,8 @@ namespace PsychologicalServices.Models.Invoices
                     new InvoiceLineGroup
                     {
                         InvoiceLineGroupId = lineGroup.InvoiceLineGroupId,
+                        Description = description,
+                        Sort = index,
                         Appointment = lineGroup.Appointment,
                         Lines = appointmentInvoiceLines
                             .Union(lineGroup.Lines.Where(line => line.IsCustom)),

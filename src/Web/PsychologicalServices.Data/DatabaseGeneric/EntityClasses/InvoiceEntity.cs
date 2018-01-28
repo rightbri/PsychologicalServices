@@ -685,9 +685,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("PayableToId", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("InvoiceRate", fieldHashtable);
 		}
 		#endregion
 
@@ -1016,17 +1013,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)InvoiceFieldIndex.PayableToId, true); }
 			set	{ SetValue((int)InvoiceFieldIndex.PayableToId, value); }
-		}
-
-		/// <summary> The InvoiceRate property of the Entity Invoice<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Invoices"."InvoiceRate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Decimal, 3, 2, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Decimal InvoiceRate
-		{
-			get { return (System.Decimal)GetValue((int)InvoiceFieldIndex.InvoiceRate, true); }
-			set	{ SetValue((int)InvoiceFieldIndex.InvoiceRate, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceDocumentEntity' which are related to this entity via a relation of type '1:n'.

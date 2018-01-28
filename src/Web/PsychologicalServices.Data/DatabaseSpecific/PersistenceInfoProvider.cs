@@ -519,7 +519,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits InvoiceEntity's mappings</summary>
 		private void InitInvoiceEntityMappings()
 		{
-			base.AddElementMapping( "InvoiceEntity", "PsychologicalServices", @"dbo", "Invoices", 10 );
+			base.AddElementMapping( "InvoiceEntity", "PsychologicalServices", @"dbo", "Invoices", 9 );
 			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceId", "InvoiceId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "InvoiceEntity", "Identifier", "Identifier", false, (int)SqlDbType.NVarChar, 20, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceDate", "InvoiceDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
@@ -529,7 +529,6 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "InvoiceEntity", "Total", "Total", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
 			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceTypeId", "InvoiceTypeId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 7 );
 			base.AddElementFieldMapping( "InvoiceEntity", "PayableToId", "PayableToId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
-			base.AddElementFieldMapping( "InvoiceEntity", "InvoiceRate", "InvoiceRate", false, (int)SqlDbType.Decimal, 0, 2, 3, false, "", null, typeof(System.Decimal), 9 );
 		}
 		/// <summary>Inits InvoiceDocumentEntity's mappings</summary>
 		private void InitInvoiceDocumentEntityMappings()
@@ -553,22 +552,22 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits InvoiceLineEntity's mappings</summary>
 		private void InitInvoiceLineEntityMappings()
 		{
-			base.AddElementMapping( "InvoiceLineEntity", "PsychologicalServices", @"dbo", "InvoiceLines", 7 );
+			base.AddElementMapping( "InvoiceLineEntity", "PsychologicalServices", @"dbo", "InvoiceLines", 6 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "InvoiceLineId", "InvoiceLineId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "Amount", "Amount", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
 			base.AddElementFieldMapping( "InvoiceLineEntity", "IsCustom", "IsCustom", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
-			base.AddElementFieldMapping( "InvoiceLineEntity", "ApplyInvoiceRate", "ApplyInvoiceRate", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 4 );
-			base.AddElementFieldMapping( "InvoiceLineEntity", "OriginalAmount", "OriginalAmount", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
-			base.AddElementFieldMapping( "InvoiceLineEntity", "InvoiceLineGroupId", "InvoiceLineGroupId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 6 );
+			base.AddElementFieldMapping( "InvoiceLineEntity", "OriginalAmount", "OriginalAmount", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
+			base.AddElementFieldMapping( "InvoiceLineEntity", "InvoiceLineGroupId", "InvoiceLineGroupId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
 		}
 		/// <summary>Inits InvoiceLineGroupEntity's mappings</summary>
 		private void InitInvoiceLineGroupEntityMappings()
 		{
-			base.AddElementMapping( "InvoiceLineGroupEntity", "PsychologicalServices", @"dbo", "InvoiceLineGroups", 3 );
+			base.AddElementMapping( "InvoiceLineGroupEntity", "PsychologicalServices", @"dbo", "InvoiceLineGroups", 4 );
 			base.AddElementFieldMapping( "InvoiceLineGroupEntity", "InvoiceLineGroupId", "InvoiceLineGroupId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "InvoiceLineGroupEntity", "InvoiceId", "InvoiceId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-			base.AddElementFieldMapping( "InvoiceLineGroupEntity", "Description", "Description", true, (int)SqlDbType.NVarChar, 100, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "InvoiceLineGroupEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 200, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "InvoiceLineGroupEntity", "Sort", "Sort", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 3 );
 		}
 		/// <summary>Inits InvoiceLineGroupAppointmentEntity's mappings</summary>
 		private void InitInvoiceLineGroupAppointmentEntityMappings()

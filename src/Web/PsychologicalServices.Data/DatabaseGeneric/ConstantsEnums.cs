@@ -815,8 +815,6 @@ namespace PsychologicalServices.Data
 		InvoiceTypeId,
 		///<summary>PayableToId. </summary>
 		PayableToId,
-		///<summary>InvoiceRate. </summary>
-		InvoiceRate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -873,8 +871,6 @@ namespace PsychologicalServices.Data
 		Amount,
 		///<summary>IsCustom. </summary>
 		IsCustom,
-		///<summary>ApplyInvoiceRate. </summary>
-		ApplyInvoiceRate,
 		///<summary>OriginalAmount. </summary>
 		OriginalAmount,
 		///<summary>InvoiceLineGroupId. </summary>
@@ -895,6 +891,8 @@ namespace PsychologicalServices.Data
 		InvoiceId,
 		///<summary>Description. </summary>
 		Description,
+		///<summary>Sort. </summary>
+		Sort,
 		/// <summary></summary>
 		AmountOfFields
 	}

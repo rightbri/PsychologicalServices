@@ -476,9 +476,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("IsCustom", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ApplyInvoiceRate", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
 			_fieldsCustomProperties.Add("OriginalAmount", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
@@ -633,17 +630,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)InvoiceLineFieldIndex.IsCustom, true); }
 			set	{ SetValue((int)InvoiceLineFieldIndex.IsCustom, value); }
-		}
-
-		/// <summary> The ApplyInvoiceRate property of the Entity InvoiceLine<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "InvoiceLines"."ApplyInvoiceRate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean ApplyInvoiceRate
-		{
-			get { return (System.Boolean)GetValue((int)InvoiceLineFieldIndex.ApplyInvoiceRate, true); }
-			set	{ SetValue((int)InvoiceLineFieldIndex.ApplyInvoiceRate, value); }
 		}
 
 		/// <summary> The OriginalAmount property of the Entity InvoiceLine<br/><br/>

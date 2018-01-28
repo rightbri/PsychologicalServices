@@ -126,7 +126,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychometrist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -187,7 +186,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,
@@ -249,7 +247,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychologist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -304,7 +301,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,
@@ -364,7 +360,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychologist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -426,7 +421,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,
@@ -486,7 +480,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychologist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -559,7 +552,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,
@@ -620,7 +612,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychologist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -693,7 +684,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,
@@ -755,7 +745,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychologist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -829,7 +818,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,
@@ -894,7 +882,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychologist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -968,7 +955,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,
@@ -1065,7 +1051,6 @@ namespace PsychologicalServices.Models.Test.Invoices
             };
             var taxRate = 0.1m;
             var utcNow = DateTimeOffset.UtcNow;
-            var invoiceRate = 1.0m;
             var invoiceTypeId = InvoiceType.Psychologist;
             var invoiceDocumentId = 1;
             var document = new InvoiceDocument
@@ -1139,7 +1124,6 @@ namespace PsychologicalServices.Models.Test.Invoices
                 Identifier = "1",
                 InvoiceDate = DateTimeOffset.UtcNow,
                 InvoiceId = 1,
-                InvoiceRate = invoiceRate,
                 InvoiceStatus = new InvoiceStatus
                 {
                     InvoiceStatusId = InvoiceStatus.Open,

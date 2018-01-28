@@ -1272,11 +1272,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.PayableToId);}
 		}
-		/// <summary>Creates a new InvoiceEntity.InvoiceRate field instance</summary>
-		public static EntityField2 InvoiceRate
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.InvoiceRate);}
-		}
 	}
 
 	/// <summary>Field Creation Class for entity InvoiceDocumentEntity</summary>
@@ -1357,11 +1352,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.IsCustom);}
 		}
-		/// <summary>Creates a new InvoiceLineEntity.ApplyInvoiceRate field instance</summary>
-		public static EntityField2 ApplyInvoiceRate
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.ApplyInvoiceRate);}
-		}
 		/// <summary>Creates a new InvoiceLineEntity.OriginalAmount field instance</summary>
 		public static EntityField2 OriginalAmount
 		{
@@ -1391,6 +1381,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 Description
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupFieldIndex.Description);}
+		}
+		/// <summary>Creates a new InvoiceLineGroupEntity.Sort field instance</summary>
+		public static EntityField2 Sort
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupFieldIndex.Sort);}
 		}
 	}
 

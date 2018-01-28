@@ -53,7 +53,6 @@
 				</div>
 				
 				<div class="uk-width-1-1">
-					<label>Appointments</label>
 					<div class="uk-form-controls uk-overflow-auto">
 						
 						<table class="uk-table uk-table-divider uk-table-small">
@@ -69,23 +68,18 @@
 								</tr>
 							</thead>
 							<tbody>
-								<template repeat.for="invoiceAppointment of invoice.appointments | sortArray:[{ 'property': 'appointment.appointmentTime', 'direction': 'asc' }]">
+								<template repeat.for="lineGroup of invoice.lineGroups | sortArray:[{ 'property': 'sort', 'direction': 'asc' }]">
 									<tr class="uk-background-muted">
 										<td colspan="2">
-											${invoiceAppointment.appointment.appointmentTime | dateFormat:config.longDateFormat},
-											${invoiceAppointment.appointment.assessment.assessmentType.description} Assessment
-											in ${invoiceAppointment.appointment.location.city.name}
-											<template repeat.for="claim of invoiceAppointment.appointment.assessment.claims">
-											&nbsp;for ${invoiceAppointment.appointment.assessment.referralSource.name}/${claim.claimant.firstName} ${claim.claimant.lastName}
-											</template>
+											${lineGroup.description}
 										</td>
 										<td>
-											<a href="#" click.delegate="addLine(invoiceAppointment)" if.bind="invoice.invoiceStatus.canEdit">
+											<a href="#" click.delegate="addLine(lineGroup)" if.bind="invoice.invoiceStatus.canEdit">
 												<i class="fa fa-plus"></i>
 											</a>
 										</td>
 									</tr>
-									<tr repeat.for="line of invoiceAppointment.lines">
+									<tr repeat.for="line of lineGroup.lines">
 										<td>
 											<input type="text" class="uk-input" value.bind="line.description" disabled.bind="!invoice.invoiceStatus.canEdit" />
 										</td>
@@ -93,7 +87,7 @@
 											<input type="number" step="0.01" class="uk-input uk-form-width-small" value.bind="line.amount | money:'0.[00]'" change.delegate="calculateTotals()" disabled.bind="!invoice.invoiceStatus.canEdit" />
 										</td>
 										<td class="uk-table-shrink">
-											<a href="#" click.delegate="removeLine(invoiceAppointment, line)" if.bind="invoice.invoiceStatus.canEdit">
+											<a href="#" click.delegate="removeLine(lineGroup, line)" if.bind="invoice.invoiceStatus.canEdit">
 												<i class="fa fa-times"></i>
 											</a>
 										</td>

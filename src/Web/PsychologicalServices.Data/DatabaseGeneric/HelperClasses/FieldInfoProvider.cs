@@ -492,7 +492,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceEntity", "Total", typeof(System.Int32), false, false, false, false,  (int)InvoiceFieldIndex.Total, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceEntity", "InvoiceTypeId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.InvoiceTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceEntity", "PayableToId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.PayableToId, 0, 0, 10);
-			base.AddElementFieldInfo("InvoiceEntity", "InvoiceRate", typeof(System.Decimal), false, false, false, false,  (int)InvoiceFieldIndex.InvoiceRate, 0, 2, 3);
 		}
 		/// <summary>Inits InvoiceDocumentEntity's FieldInfo objects</summary>
 		private void InitInvoiceDocumentEntityInfos()
@@ -518,7 +517,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceLineEntity", "Description", typeof(System.String), false, false, false, false,  (int)InvoiceLineFieldIndex.Description, 100, 0, 0);
 			base.AddElementFieldInfo("InvoiceLineEntity", "Amount", typeof(System.Int32), false, false, false, false,  (int)InvoiceLineFieldIndex.Amount, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceLineEntity", "IsCustom", typeof(System.Boolean), false, false, false, false,  (int)InvoiceLineFieldIndex.IsCustom, 0, 0, 0);
-			base.AddElementFieldInfo("InvoiceLineEntity", "ApplyInvoiceRate", typeof(System.Boolean), false, false, false, false,  (int)InvoiceLineFieldIndex.ApplyInvoiceRate, 0, 0, 0);
 			base.AddElementFieldInfo("InvoiceLineEntity", "OriginalAmount", typeof(System.Int32), false, false, false, false,  (int)InvoiceLineFieldIndex.OriginalAmount, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceLineEntity", "InvoiceLineGroupId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineFieldIndex.InvoiceLineGroupId, 0, 0, 10);
 		}
@@ -527,7 +525,8 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("InvoiceLineGroupEntity", "InvoiceLineGroupId", typeof(System.Int32), true, false, true, false,  (int)InvoiceLineGroupFieldIndex.InvoiceLineGroupId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceLineGroupEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineGroupFieldIndex.InvoiceId, 0, 0, 10);
-			base.AddElementFieldInfo("InvoiceLineGroupEntity", "Description", typeof(System.String), false, false, false, true,  (int)InvoiceLineGroupFieldIndex.Description, 100, 0, 0);
+			base.AddElementFieldInfo("InvoiceLineGroupEntity", "Description", typeof(System.String), false, false, false, false,  (int)InvoiceLineGroupFieldIndex.Description, 200, 0, 0);
+			base.AddElementFieldInfo("InvoiceLineGroupEntity", "Sort", typeof(System.Int32), false, false, false, false,  (int)InvoiceLineGroupFieldIndex.Sort, 0, 0, 10);
 		}
 		/// <summary>Inits InvoiceLineGroupAppointmentEntity's FieldInfo objects</summary>
 		private void InitInvoiceLineGroupAppointmentEntityInfos()

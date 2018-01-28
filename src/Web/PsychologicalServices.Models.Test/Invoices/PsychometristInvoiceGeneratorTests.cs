@@ -157,6 +157,10 @@ namespace PsychologicalServices.Models.Test.Invoices
             var appointmentStatusId = 5;
             var taxRate = 0.15m;
             var assessmentTypeId = 4;
+            var assessmentTypeDescription = "Assessment Type";
+            var referralSourceName = "Referral Source";
+            var claimantFirstName = "First";
+            var claimantLastName = "Last";
             var companyId = 5;
             var cityId = 44;
             var cityName = "Oakville";
@@ -181,6 +185,22 @@ namespace PsychologicalServices.Models.Test.Invoices
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
+                        Description = assessmentTypeDescription,
+                    },
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = claimantFirstName,
+                                LastName = claimantLastName,
+                            },
+                        }
+                    },
+                    ReferralSource = new Referrals.ReferralSource
+                    {
+                        Name = referralSourceName,
                     },
                     Company = new Companies.Company
                     {
@@ -342,6 +362,10 @@ namespace PsychologicalServices.Models.Test.Invoices
         {
             var taxRate = 0.15m;
             var assessmentTypeId = 4;
+            var assessmentTypeDescription = "Assessment Type";
+            var referralSourceName = "Referral Source";
+            var claimantFirstName = "First";
+            var claimantLastName = "Last";
             var companyId = 5;
             var timezone = "Eastern Standard Time";
             var cityId = 44;
@@ -369,6 +393,22 @@ namespace PsychologicalServices.Models.Test.Invoices
                         AssessmentType = new Assessments.AssessmentType
                         {
                             AssessmentTypeId = assessmentTypeId,
+                            Description = assessmentTypeDescription,
+                        },
+                        Claims = new[]
+                        {
+                            new Claims.Claim
+                            {
+                                Claimant = new Claims.Claimant
+                                {
+                                    FirstName = claimantFirstName,
+                                    LastName = claimantLastName,
+                                },
+                            }
+                        },
+                        ReferralSource = new Referrals.ReferralSource
+                        {
+                            Name = referralSourceName,
                         },
                         Company = new Companies.Company
                         {
@@ -403,6 +443,22 @@ namespace PsychologicalServices.Models.Test.Invoices
                         AssessmentType = new Assessments.AssessmentType
                         {
                             AssessmentTypeId = assessmentTypeId,
+                            Description = assessmentTypeDescription,
+                        },
+                        Claims = new[]
+                        {
+                            new Claims.Claim
+                            {
+                                Claimant = new Claims.Claimant
+                                {
+                                    FirstName = claimantFirstName,
+                                    LastName = claimantLastName,
+                                },
+                            }
+                        },
+                        ReferralSource = new Referrals.ReferralSource
+                        {
+                            Name = referralSourceName,
                         },
                         Company = new Companies.Company
                         {
@@ -437,6 +493,22 @@ namespace PsychologicalServices.Models.Test.Invoices
                         AssessmentType = new Assessments.AssessmentType
                         {
                             AssessmentTypeId = assessmentTypeId,
+                            Description = assessmentTypeDescription,
+                        },
+                        Claims = new[]
+                        {
+                            new Claims.Claim
+                            {
+                                Claimant = new Claims.Claimant
+                                {
+                                    FirstName = claimantFirstName,
+                                    LastName = claimantLastName,
+                                },
+                            }
+                        },
+                        ReferralSource = new Referrals.ReferralSource
+                        {
+                            Name = referralSourceName,
                         },
                         Company = new Companies.Company
                         {
@@ -688,6 +760,10 @@ namespace PsychologicalServices.Models.Test.Invoices
         {
             var taxRate = 0.15m;
             var assessmentTypeId = 4;
+            var assessmentTypeDescription = "Assessment Type";
+            var referralSourceName = "Referral Source";
+            var claimantFirstName = "First";
+            var claimantLastName = "Last";
             var companyId = 5;
             var timezone = "Eastern Standard Time";
             var cityId = 44;
@@ -715,6 +791,22 @@ namespace PsychologicalServices.Models.Test.Invoices
                         AssessmentType = new Assessments.AssessmentType
                         {
                             AssessmentTypeId = assessmentTypeId,
+                            Description = assessmentTypeDescription,
+                        },
+                        Claims = new[]
+                        {
+                            new Claims.Claim
+                            {
+                                Claimant = new Claims.Claimant
+                                {
+                                    FirstName = claimantFirstName,
+                                    LastName = claimantLastName,
+                                },
+                            }
+                        },
+                        ReferralSource = new Referrals.ReferralSource
+                        {
+                            Name = referralSourceName,
                         },
                         Company = new Companies.Company
                         {
@@ -749,6 +841,22 @@ namespace PsychologicalServices.Models.Test.Invoices
                         AssessmentType = new Assessments.AssessmentType
                         {
                             AssessmentTypeId = assessmentTypeId,
+                            Description = assessmentTypeDescription,
+                        },
+                        Claims = new[]
+                        {
+                            new Claims.Claim
+                            {
+                                Claimant = new Claims.Claimant
+                                {
+                                    FirstName = claimantFirstName,
+                                    LastName = claimantLastName,
+                                },
+                            }
+                        },
+                        ReferralSource = new Referrals.ReferralSource
+                        {
+                            Name = referralSourceName,
                         },
                         Company = new Companies.Company
                         {
@@ -783,6 +891,22 @@ namespace PsychologicalServices.Models.Test.Invoices
                         AssessmentType = new Assessments.AssessmentType
                         {
                             AssessmentTypeId = assessmentTypeId,
+                            Description = assessmentTypeDescription,
+                        },
+                        Claims = new[]
+                        {
+                            new Claims.Claim
+                            {
+                                Claimant = new Claims.Claimant
+                                {
+                                    FirstName = claimantFirstName,
+                                    LastName = claimantLastName,
+                                },
+                            }
+                        },
+                        ReferralSource = new Referrals.ReferralSource
+                        {
+                            Name = referralSourceName,
                         },
                         Company = new Companies.Company
                         {

@@ -2114,6 +2114,9 @@ namespace PsychologicalServices.Models.Test.Invoices
             var cityId = 2;
             var assessmentTypeId = 3;
             var assessmentTypeDescription = "Assessment Type";
+            var referralSourceName = "Referral Source";
+            var claimantFirstName = "First";
+            var claimantLastName = "Last";
             var fileSize = 500;
             var isLargeFile = false;
             var largeFileSize = 1000;
@@ -2230,6 +2233,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                     ReferralSource = new Referrals.ReferralSource
                     {
                         ReferralSourceId = referralSourceId,
+                        Name = referralSourceName,
                     },
                     Reports = new[] {
                         new Reports.Report
@@ -2241,6 +2245,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                     Company = new Companies.Company
                     {
                         CompanyId = companyId,
+                    },
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = claimantFirstName,
+                                LastName = claimantLastName,
+                            },
+                        }
                     },
                 },
                 Psychologist = new Users.User { UserId = psychologistId },

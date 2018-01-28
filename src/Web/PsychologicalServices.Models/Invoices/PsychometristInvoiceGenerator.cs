@@ -48,10 +48,13 @@ namespace PsychologicalServices.Models.Invoices
             };
 
             var lineGroups = GetInvoiceableAppointments(psychometrist.UserId, invoiceDate, psychometrist.Company.Timezone)
-                .Select(appointment =>
+                .OrderBy(appointment => appointment.AppointmentTime)
+                .Select((appointment, index) =>
                 {
                     return new InvoiceLineGroup
                     {
+                        Description = appointment.ToInvoiceLineGroupDescription(),
+                        Sort = index + 1,
                         Lines = GetInvoiceLines(appointment),
                         Appointment = appointment,
                     };
@@ -61,7 +64,6 @@ namespace PsychologicalServices.Models.Invoices
             {
                 Identifier = string.Format("{0}-{1:00#}", psychometrist.UserId, _invoiceRepository.GetInvoiceCount(psychometrist.UserId) + 1),
                 InvoiceDate = invoiceDate,
-                InvoiceRate = 1.0m,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = invoiceType,
                 PayableTo = psychometrist,
@@ -85,14 +87,17 @@ namespace PsychologicalServices.Models.Invoices
             var psychometrist = _userRepository.GetUserById(invoice.PayableTo.UserId);
 
             var lineGroups = GetInvoiceableAppointments(psychometrist.UserId, invoice.InvoiceDate, psychometrist.Company.Timezone)
-                .Select(appointment =>
+                .OrderBy(appointment => appointment.AppointmentTime)
+                .Select((appointment, index) =>
                 {
                     var matchingLineGroup = invoice.LineGroups.SingleOrDefault(lg => null != lg.Appointment && lg.Appointment.AppointmentId == appointment.AppointmentId);
                     var matchingLineGroupId = null != matchingLineGroup ? matchingLineGroup.InvoiceLineGroupId : 0;
-
+                    
                     var lineGroup = new InvoiceLineGroup
                     {
                         InvoiceLineGroupId = matchingLineGroupId,
+                        Description = appointment.ToInvoiceLineGroupDescription(),
+                        Sort = index + 1,
                         Appointment = appointment,
                         Lines = GetInvoiceLines(appointment)
                             .Union(

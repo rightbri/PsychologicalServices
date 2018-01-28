@@ -78,33 +78,33 @@ export class EditInvoice {
 		this.dataRepository.refreshInvoiceLines(this.invoice)
 			.then(data => {
 				
-				this.invoice.appointments = (data || []);
+				this.invoice.lineGroups = (data || []);
 				
 				this.calculateTotals();
 			});
 	}
 	
-    removeLine(invoiceAppointment, line) {
+    removeLine(lineGroup, line) {
 		if (confirm('Remove Invoice Line\nAre you sure?')) {
 			
-			invoiceAppointment.lines.splice(invoiceAppointment.lines.indexOf(line), 1);
+			lineGroup.lines.splice(lineGroup.lines.indexOf(line), 1);
 			
 			this.calculateTotals();
 		}
     }
 
-    addLine(invoiceAppointment) {
-        invoiceAppointment.lines.push({ 'description': '', 'amount': 0, 'isCustom': true });
+    addLine(lineGroup) {
+        lineGroup.lines.push({ 'description': '', 'amount': 0, 'isCustom': true });
     }
 
     calculateTotals() {
         
 		this.subtotal = 0;
 		
-		this.invoice.appointments.forEach(invoiceAppointment =>
+		this.invoice.lineGroups.forEach(lineGroup =>
 		{
 			this.subtotal += 
-				invoiceAppointment.lines
+			lineGroup.lines
 					.map(line => line.amount)
 					.reduce((accumulator, value) => accumulator + value, 0);
 		}, this);
