@@ -58,14 +58,21 @@ BEGIN
 	LEFT JOIN dbo.AssessmentClaims ac ON ass.AssessmentId = ac.AssessmentId
 	LEFT JOIN dbo.Claims cl ON ac.ClaimId = cl.ClaimId
 	LEFT JOIN (
-		SELECT TOP 1
-		 id.InvoiceId
-		,id.InvoiceDocumentId
-		,idsl.SentDate
-		FROM dbo.InvoiceDocuments id
-		LEFT JOIN dbo.InvoiceDocumentSendLogs idsl ON id.InvoiceDocumentId = idsl.InvoiceDocumentId
-		ORDER BY
-		id.InvoiceDocumentId DESC
+		SELECT
+		 InvoiceId
+		,InvoiceDocumentId
+		,SentDate
+		FROM (
+			SELECT
+			 id.InvoiceId
+			,id.InvoiceDocumentId
+			,idsl.SentDate
+			,ROW_NUMBER() OVER (PARTITION BY id.InvoiceId ORDER BY id.InvoiceDocumentId DESC) AS RowNum
+			FROM dbo.InvoiceDocuments id
+			LEFT JOIN dbo.InvoiceDocumentSendLogs idsl ON id.InvoiceDocumentId = idsl.InvoiceDocumentId
+		) x
+		WHERE 
+		x.RowNum = 1
 	) id ON i.InvoiceId = id.InvoiceId
 	WHERE
 	u.CompanyId = @companyId_local
