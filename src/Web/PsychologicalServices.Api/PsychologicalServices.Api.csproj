@@ -258,6 +258,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AssessmentTypeCountController.cs" />
     <Compile Include="Controllers\ArbitrationDataController.cs" />
+    <Compile Include="Controllers\CredibilityDataController.cs" />
     <Compile Include="Controllers\DiagnosisFoundResponseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\CredibilityController.cs" />

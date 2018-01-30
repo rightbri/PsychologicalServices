@@ -1,5 +1,4 @@
-﻿using PsychologicalServices.Models.Assessments;
-using PsychologicalServices.Models.Common.Utility;
+﻿using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
 using System;
 using System.Collections.Generic;
@@ -69,6 +68,13 @@ namespace PsychologicalServices.Models.Analysis
             var counts = _analysisRepository.GetNumberOfCompletedAssessments(repositoryCriteria);
 
             return counts;
+        }
+
+        public IEnumerable<CredibilityData> GetCredibilityData(CredibilityDataSearchCriteria criteria)
+        {
+            var data = _analysisRepository.GetCredibilityData(criteria);
+
+            return data;
         }
     }
 }

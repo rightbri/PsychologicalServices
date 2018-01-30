@@ -411,6 +411,94 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 	
 
 		/// <summary>
+		/// Calls stored procedure 'CredibilityData'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable CredibilityData(System.Int32 companyId)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return CredibilityData(companyId,  adapter);
+			}
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'CredibilityData'.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable CredibilityData(System.Int32 companyId, DataAccessAdapter adapter)
+		{
+			SqlParameter[] parameters = new SqlParameter[1];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+
+			DataTable toReturn = new DataTable("CredibilityData");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[CredibilityData]", parameters, toReturn);
+
+			return toReturn;
+		}
+
+
+		/// <summary>
+		/// Calls stored procedure 'CredibilityData'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable CredibilityData(System.Int32 companyId, ref System.Int32 returnValue)
+		{
+			using(DataAccessAdapter adapter = new DataAccessAdapter()) 
+			{
+				return CredibilityData(companyId, ref returnValue, adapter);
+			}
+		}
+	
+	
+		/// <summary>
+		/// Calls stored procedure 'CredibilityData'. This version also returns the return value of the stored procedure.<br/><br/>
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="returnValue">Return value of the stored procedure</param>
+		/// <param name="adapter">The DataAccessAdapter object to use for the call</param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable CredibilityData(System.Int32 companyId, ref System.Int32 returnValue, DataAccessAdapter adapter)
+		{
+			// create parameters. Add 1 to make room for the return value parameter.
+			SqlParameter[] parameters = new SqlParameter[1 + 1];
+			parameters[0] = new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId);
+
+			parameters[1] = new SqlParameter("RETURNVALUE", SqlDbType.Int, 0, ParameterDirection.ReturnValue, true, 10, 0, "",  DataRowVersion.Current, returnValue);
+			DataTable toReturn = new DataTable("CredibilityData");
+			bool hasSucceeded = adapter.CallRetrievalStoredProcedure("[PsychologicalServices].[dbo].[CredibilityData]", parameters, toReturn);
+
+
+			returnValue = (int)parameters[1].Value;
+			return toReturn;
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'CredibilityData'.
+		/// 
+		/// </summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetCredibilityDataCallAsQuery( System.Int32 companyId)
+		{
+			RetrievalQuery toReturn = new RetrievalQuery( new SqlCommand("[PsychologicalServices].[dbo].[CredibilityData]" ) );
+			toReturn.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, companyId));
+
+			toReturn.Command.CommandType = CommandType.StoredProcedure;
+			return toReturn;
+		}
+	
+
+		/// <summary>
 		/// Calls stored procedure 'InvoiceableAppointmentData'.<br/><br/>
 		/// 
 		/// </summary>

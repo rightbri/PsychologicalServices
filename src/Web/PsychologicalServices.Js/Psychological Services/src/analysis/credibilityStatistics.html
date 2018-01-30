@@ -1,0 +1,56 @@
+<template>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+<fieldset class="uk-fieldset">
+    <legend class="uk-legend">Credibility Statistics</legend>
+</fieldset>
+
+<div class="uk-overflow-auto" if.bind="credibilityData">
+
+    <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+        <thead>
+            <tr>
+                <th>Assessment Type</th>
+                <th># Neuro</th>
+                <th>% Neuro Credible</th>
+                <th>% Neuro Not Credible</th>
+                <th>% Neuro Questionable</th>
+                <th># Psych</th>
+                <th>% Psych Credible</th>
+                <th>% Psych Not Credible</th>
+                <th>% Psych Questionable</th>
+                <th>% Diagnosis Found Yes</th>
+                <th>% Diagnosis Found No</th>
+                <th>% Diagnosis Found Rule Out</th>
+                <th>% Issue In Dispute Approved Yes</th>
+                <th>% Issue In Dispute Approved No</th>
+                <th>% Issue In Dispute Approved Unknown</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="item of credibilitiesByAssessmentType | sortArray:[{ property: 'assessmentType', direction: 'asc' }]">
+                <td>${item.assessmentType}</td>
+                <td>${item.neuroCredibilityTotal | numeric:'0,0'}</td>
+                <td>${item.percentNeuroCredible | numeric:'0.00%'}</td>
+                <td>${item.percentNeuroNotCredible | numeric:'0.00%'}</td>
+                <td>${item.percentNeuroQuestionable | numeric:'0.00%'}</td>
+                <td>${item.psychCredibilityTotal | numeric:'0,0'}</td>
+                <td>${item.percentPsychCredible | numeric:'0.00%'}</td>
+                <td>${item.percentPsychNotCredible | numeric:'0.00%'}</td>
+                <td>${item.percentPsychQuestionable | numeric:'0.00%'}</td>
+                <td>${item.percentDiagnosisFoundYes | numeric:'0.00%'}</td>
+                <td>${item.percentDiagnosisFoundNo | numeric:'0.00%'}</td>
+                <td>${item.percentDiagnosisFoundRuleOut | numeric:'0.00%'}</td>
+                <td>${item.percentIssueInDisputeApprovedYes | numeric:'0.00%'}</td>
+                <td>${item.percentIssueInDisputeApprovedNo | numeric:'0.00%'}</td>
+                <td>${item.percentIssueInDisputeApprovedUnknown | numeric:'0.00%'}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</template>

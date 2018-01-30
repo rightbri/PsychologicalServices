@@ -142,8 +142,6 @@
     <Build Include="dbo\Tables\Events.sql" />
     <Build Include="dbo\Stored Procedures\ArbitrationsData.sql" />
     <Build Include="dbo\Tables\DiagnosisFoundResponses.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PsychologicalServices.DB.refactorlog" />
+    <Build Include="dbo\Stored Procedures\CredibilityData.sql" />
   </ItemGroup>
 </Project>

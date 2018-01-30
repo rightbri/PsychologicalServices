@@ -149,5 +149,37 @@ namespace PsychologicalServices.Infrastructure.Analysis
                     });
             }
         }
+
+        public IEnumerable<CredibilityData> GetCredibilityData(CredibilityDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.CredibilityData(criteria.CompanyId, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new CredibilityData
+                        {
+                            AssessmentTypeId = Convert.ToInt32(row["AssessmentTypeId"]),
+                            AssessmentTypeName = Convert.ToString(row["AssessmentTypeName"]),
+                            CountNeurocognitiveCredibility = Convert.ToBoolean(row["CountNeurocognitiveCredibility"]),
+                            CountPsychologicalCredibility = Convert.ToBoolean(row["CountPsychologicalCredibility"]),
+                            DiagnosisFoundNo = Convert.ToBoolean(row["DiagnosisFoundNo"]),
+                            DiagnosisFoundRuleOut = Convert.ToBoolean(row["DiagnosisFoundRuleOut"]),
+                            DiagnosisFoundYes = Convert.ToBoolean(row["DiagnosisFoundYes"]),
+                            NeurocognitiveCredibilityCredible = Convert.ToBoolean(row["NeurocognitiveCredibilityCredible"]),
+                            NeurocognitiveCredibilityNotCredible = Convert.ToBoolean(row["NeurocognitiveCredibilityNotCredible"]),
+                            NeurocognitiveCredibilityQuestionable = Convert.ToBoolean(row["NeurocognitiveCredibilityQuestionable"]),
+                            PsychologicalCredibilityCredible = Convert.ToBoolean(row["PsychologicalCredibilityCredible"]),
+                            PsychologicalCredibilityNotCredible = Convert.ToBoolean(row["PsychologicalCredibilityNotCredible"]),
+                            PsychologicalCredibilityQuestionable = Convert.ToBoolean(row["PsychologicalCredibilityQuestionable"]),
+                            PsychologistFoundInFavorOfClaimantNo = Convert.ToBoolean(row["PsychologistFoundInFavorOfClaimantNo"]),
+                            PsychologistFoundInFavorOfClaimantUnknown = Convert.ToBoolean(row["PsychologistFoundInFavorOfClaimantUnknown"]),
+                            PsychologistFoundInFavorOfClaimantYes = Convert.ToBoolean(row["PsychologistFoundInFavorOfClaimantYes"]),
+                        })
+                    .ToList();
+            }
+        }
     }
 }

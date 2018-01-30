@@ -68,6 +68,8 @@
     <Compile Include="Analysis\CancellationData.cs" />
     <Compile Include="Analysis\BookingDataSearchCriteria.cs" />
     <Compile Include="Analysis\CancellationDataSearchCriteria.cs" />
+    <Compile Include="Analysis\CredibilityData.cs" />
+    <Compile Include="Analysis\CredibilityDataSearchCriteria.cs" />
     <Compile Include="Analysis\IAnalysisRepository.cs" />
     <Compile Include="Analysis\IAnalysisService.cs" />
     <Compile Include="Analysis\CompletionData.cs" />

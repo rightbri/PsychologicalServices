@@ -14,5 +14,7 @@ namespace PsychologicalServices.Models.Analysis
         IEnumerable<ArbitrationData> GetArbitrationData(ArbitrationDataSearchCriteria criteria);
 
         IEnumerable<AssessmentTypeCount> GetAssessmentTypeCountsForYear(AssessmentTypeCountSearchCriteria criteria);
+
+        IEnumerable<CredibilityData> GetCredibilityData(CredibilityDataSearchCriteria criteria);
     }
 }

@@ -199,6 +199,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'assessmenttypecount');
 	}
 
+	searchCredibilityData(criteria) {
+		return this.searchBasic(criteria, 'credibilitydata');
+	}
+
 	getAddress(id) {
 		return this.getSingleBasic(id, 'address');
 	}
