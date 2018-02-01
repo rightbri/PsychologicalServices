@@ -13,6 +13,45 @@
     <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
         <thead>
             <tr>
+                <th># Neuro</th>
+                <th>% Neuro Credible</th>
+                <th>% Neuro Not Credible</th>
+                <th>% Neuro Questionable</th>
+                <th># Psych</th>
+                <th>% Psych Credible</th>
+                <th>% Psych Not Credible</th>
+                <th>% Psych Questionable</th>
+                <th>% Diagnosis Found Yes</th>
+                <th>% Diagnosis Found No</th>
+                <th>% Diagnosis Found Rule Out</th>
+                <th>% Issue In Dispute Approved Yes</th>
+                <th>% Issue In Dispute Approved No</th>
+                <th>% Issue In Dispute Approved Unknown</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>${credibilityTotal.neuroCredibilityTotal | numeric:'0,0'}</td>
+                <td>${credibilityTotal.percentNeuroCredible | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentNeuroNotCredible | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentNeuroQuestionable | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.psychCredibilityTotal | numeric:'0,0'}</td>
+                <td>${credibilityTotal.percentPsychCredible | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentPsychNotCredible | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentPsychQuestionable | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentDiagnosisFoundYes | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentDiagnosisFoundNo | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentDiagnosisFoundRuleOut | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentIssueInDisputeApprovedYes | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentIssueInDisputeApprovedNo | numeric:'0.00%'}</td>
+                <td>${credibilityTotal.percentIssueInDisputeApprovedUnknown | numeric:'0.00%'}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+        <thead>
+            <tr>
                 <th>Assessment Type</th>
                 <th># Neuro</th>
                 <th>% Neuro Credible</th>

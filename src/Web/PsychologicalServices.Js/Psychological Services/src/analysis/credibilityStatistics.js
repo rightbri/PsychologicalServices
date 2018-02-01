@@ -78,49 +78,6 @@ export class CredibilityStatistics {
                 return accumulator;
             }.bind(this), []);
 
-            console.log('ok');
-/*
-            this.credibilityTotal = {
-                'assessmentTypeId': currentValue.assessmentTypeId,
-                'assessmentType': currentValue.assessmentTypeName,
-                'neuroCredibilityTotal': 0,
-                'psychCredibilityTotal': 0,
-                'neuroCredibleCount': 0,
-                'neuroNotCredibleCount': 0,
-                'neuroQuestionableCount': 0,
-                'psychCredibleCount': 0,
-                'psychNotCredibleCount': 0,
-                'psychQuestionableCount': 0,
-                'diagnosisFoundTotal': 0,
-                'diagnosisFoundYesCount': 0,
-                'diagnosisFoundNoCount': 0,
-                'diagnosisFoundRuleOutCount': 0,
-                'issueInDisputeApprovedTotal': 0,
-                'issueInDisputeApprovedYes': 0,
-                'issueInDisputeApprovedNo': 0,
-                'issueInDisputeApprovedUnknown': 0
-            };
-            
-            for (let i = 0; i < this.credibilityData.length; i++) {
-                this.credibilityTotal.neuroCredibilityTotal += countNeurocognitiveCredibility ? 1 : 0;
-                this.credibilityTotal.psychCredibilityTotal += countPsychologicalCredibility ? 1 : 0;
-                this.credibilityTotal.neuroCredibleCount += neurocognitiveCredibilityCredible ? 1 : 0;
-                this.credibilityTotal.neuroNotCredibleCount += neurocognitiveCredibilityNotCredible ? 1 : 0;
-                this.credibilityTotal.neuroQuestionableCount += neurocognitiveCredibilityQuestionable ? 1 : 0;
-                this.credibilityTotal.psychCredibleCount += psychologicalCredibilityCredible ? 1 : 0;
-                this.credibilityTotal.psychNotCredibleCount += psychologicalCredibilityNotCredible ? 1 : 0;
-                this.credibilityTotal.psychQuestionableCount += psychologicalCredibilityQuestionable ? 1 : 0;
-                this.credibilityTotal.diagnosisFoundTotal += 1;
-                this.credibilityTotal.diagnosisFoundYesCount += diagnosisFoundYes ? 1 : 0;
-                this.credibilityTotal.diagnosisFoundNoCount += diagnosisFoundNo ? 1 : 0;
-                this.credibilityTotal.diagnosisFoundRuleOutCount += diagnosisFoundRuleOut ? 1 : 0;
-                this.credibilityTotal.issueInDisputeApprovedTotal += 1;
-                this.credibilityTotal.issueInDisputeApprovedYes += psychologistFoundInFavorOfClaimantYes ? 1 : 0;
-                this.credibilityTotal.issueInDisputeApprovedNo += psychologistFoundInFavorOfClaimantNo ? 1 : 0;
-                this.credibilityTotal.issueInDisputeApprovedUnknown += psychologistFoundInFavorOfClaimantUnknown ? 1 : 0;
-            }
-            */
-
             for (let i = 0; i < this.credibilitiesByAssessmentType.length; i++) {
                 let x = this.credibilitiesByAssessmentType[i];
 
@@ -140,6 +97,65 @@ export class CredibilityStatistics {
                 x.percentIssueInDisputeApprovedNo = x.issueInDisputeApprovedNo / x.issueInDisputeApprovedTotal;
                 x.percentIssueInDisputeApprovedUnknown = x.issueInDisputeApprovedUnknown / x.issueInDisputeApprovedTotal;
             }
+
+            this.credibilityTotal = {
+                'neuroCredibilityTotal': 0,
+                'psychCredibilityTotal': 0,
+                'neuroCredibleCount': 0,
+                'neuroNotCredibleCount': 0,
+                'neuroQuestionableCount': 0,
+                'psychCredibleCount': 0,
+                'psychNotCredibleCount': 0,
+                'psychQuestionableCount': 0,
+                'diagnosisFoundTotal': 0,
+                'diagnosisFoundYesCount': 0,
+                'diagnosisFoundNoCount': 0,
+                'diagnosisFoundRuleOutCount': 0,
+                'issueInDisputeApprovedTotal': 0,
+                'issueInDisputeApprovedYes': 0,
+                'issueInDisputeApprovedNo': 0,
+                'issueInDisputeApprovedUnknown': 0
+            };
+            
+            for (let i = 0; i < this.credibilityData.length; i++) {
+                let item = this.credibilityData[i];
+
+                this.credibilityTotal.neuroCredibilityTotal += item.countNeurocognitiveCredibility ? 1 : 0;
+                this.credibilityTotal.psychCredibilityTotal += item.countPsychologicalCredibility ? 1 : 0;
+                this.credibilityTotal.neuroCredibleCount += item.neurocognitiveCredibilityCredible ? 1 : 0;
+                this.credibilityTotal.neuroNotCredibleCount += item.neurocognitiveCredibilityNotCredible ? 1 : 0;
+                this.credibilityTotal.neuroQuestionableCount += item.neurocognitiveCredibilityQuestionable ? 1 : 0;
+                this.credibilityTotal.psychCredibleCount += item.psychologicalCredibilityCredible ? 1 : 0;
+                this.credibilityTotal.psychNotCredibleCount += item.psychologicalCredibilityNotCredible ? 1 : 0;
+                this.credibilityTotal.psychQuestionableCount += item.psychologicalCredibilityQuestionable ? 1 : 0;
+                this.credibilityTotal.diagnosisFoundTotal += 1;
+                this.credibilityTotal.diagnosisFoundYesCount += item.diagnosisFoundYes ? 1 : 0;
+                this.credibilityTotal.diagnosisFoundNoCount += item.diagnosisFoundNo ? 1 : 0;
+                this.credibilityTotal.diagnosisFoundRuleOutCount += item.diagnosisFoundRuleOut ? 1 : 0;
+                this.credibilityTotal.issueInDisputeApprovedTotal += 1;
+                this.credibilityTotal.issueInDisputeApprovedYes += item.psychologistFoundInFavorOfClaimantYes ? 1 : 0;
+                this.credibilityTotal.issueInDisputeApprovedNo += item.psychologistFoundInFavorOfClaimantNo ? 1 : 0;
+                this.credibilityTotal.issueInDisputeApprovedUnknown += item.psychologistFoundInFavorOfClaimantUnknown ? 1 : 0;
+            }
+
+            let x = this.credibilityTotal;
+
+            x.percentNeuroCredible = x.neuroCredibleCount / x.neuroCredibilityTotal;
+            x.percentNeuroNotCredible = x.neuroNotCredibleCount / x.neuroCredibilityTotal;
+            x.percentNeuroQuestionable = x.neuroQuestionableCount / x.neuroCredibilityTotal;
+
+            x.percentPsychCredible = x.psychCredibleCount / x.psychCredibilityTotal;
+            x.percentPsychNotCredible = x.psychNotCredibleCount / x.psychCredibilityTotal;
+            x.percentPsychQuestionable = x.psychQuestionableCount / x.psychCredibilityTotal;
+
+            x.percentDiagnosisFoundYes = x.diagnosisFoundYesCount / x.diagnosisFoundTotal;
+            x.percentDiagnosisFoundNo = x.diagnosisFoundNoCount / x.diagnosisFoundTotal;
+            x.percentDiagnosisFoundRuleOut = x.diagnosisFoundRuleOutCount / x.diagnosisFoundTotal;
+
+            x.percentIssueInDisputeApprovedYes = x.issueInDisputeApprovedYes / x.issueInDisputeApprovedTotal;
+            x.percentIssueInDisputeApprovedNo = x.issueInDisputeApprovedNo / x.issueInDisputeApprovedTotal;
+            x.percentIssueInDisputeApprovedUnknown = x.issueInDisputeApprovedUnknown / x.issueInDisputeApprovedTotal;
+
         });
     }
     
