@@ -1,5 +1,6 @@
 ﻿using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Contacts;
+using PsychologicalServices.Models.Notes;
 using System;
 
 namespace PsychologicalServices.Models.Arbitrations
@@ -21,5 +22,7 @@ namespace PsychologicalServices.Models.Arbitrations
         public Contact DefenseLawyer { get; set; }
 
         public string DefenseFileNumber { get; set; }
+
+        public Note Note { get; set; }
     }
 }

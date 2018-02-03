@@ -57,6 +57,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		private AssessmentTypeEntity _assessmentType;
 		private CompanyEntity _company;
 		private CredibilityEntity _psychologicalCredibility;
@@ -138,6 +139,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 		#endregion
 		
@@ -204,6 +206,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>)info.GetValue("_assessmentMedRehabs", typeof(EntityCollection<AssessmentMedRehabEntity>));
 				_assessmentNotes = (EntityCollection<AssessmentNoteEntity>)info.GetValue("_assessmentNotes", typeof(EntityCollection<AssessmentNoteEntity>));
 				_assessmentReports = (EntityCollection<AssessmentReportEntity>)info.GetValue("_assessmentReports", typeof(EntityCollection<AssessmentReportEntity>));
+
 
 
 
@@ -433,6 +436,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					break;
 			}
@@ -517,6 +521,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReports":
 					toReturn.Add(AssessmentEntity.Relations.AssessmentReportEntityUsingAssessmentId);
 					break;
+
 
 
 
@@ -849,6 +854,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				info.AddValue("_assessmentType", (!this.MarkedForDeletion?_assessmentType:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
 				info.AddValue("_psychologicalCredibility", (!this.MarkedForDeletion?_psychologicalCredibility:null));
@@ -976,6 +982,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentReportFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
 			return bucket;
 		}
+
 
 
 
@@ -1167,6 +1174,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -1182,6 +1190,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>) collectionsQueue.Dequeue();
 			this._assessmentNotes = (EntityCollection<AssessmentNoteEntity>) collectionsQueue.Dequeue();
 			this._assessmentReports = (EntityCollection<AssessmentReportEntity>) collectionsQueue.Dequeue();
+
 
 
 
@@ -1244,6 +1253,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -1261,6 +1271,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentMedRehabEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentMedRehabEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory))) : null);
+
 
 
 
@@ -1316,6 +1327,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 			return toReturn;
 		}
 		
@@ -1354,6 +1366,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_assessmentReports.ActiveContext = base.ActiveContext;
 			}
+
 
 
 
@@ -1433,6 +1446,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_assessmentMedRehabs = null;
 			_assessmentNotes = null;
 			_assessmentReports = null;
+
 
 
 
@@ -2106,6 +2120,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentType' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -2656,6 +2671,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _assessmentReports;
 			}
 		}
+
 
 
 

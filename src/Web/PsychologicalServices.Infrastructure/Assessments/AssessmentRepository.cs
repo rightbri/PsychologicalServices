@@ -138,6 +138,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                     .Prefetch<EmployerEntity>(contact => contact.Employer)
                                     .Prefetch<AddressEntity>(contact => contact.Address)
                                 )
+                            .Prefetch<NoteEntity>(arbitration => arbitration.Note)
+                                .SubPath(notePath => notePath
+                                    .Prefetch<UserEntity>(note => note.CreateUser)
+                                    .Prefetch<UserEntity>(note => note.UpdateUser)
+                                )
                         )
                     .Prefetch<NoteEntity>(assessment => assessment.Summary)
                     .Prefetch<UserEntity>(assessment => assessment.CreateUser)
@@ -364,7 +369,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         .SubPath.Add(AssessmentReportEntity.PrefetchPathAssessmentReportIssuesInDispute)
                             .SubPath.Add(AssessmentReportIssueInDisputeEntity.PrefetchPathIssueInDispute);
 
-                    prefetch.Add(AssessmentEntity.PrefetchPathArbitrations);
+                    var arbitrationsPath = prefetch.Add(AssessmentEntity.PrefetchPathArbitrations);
+
+                    arbitrationsPath
+                        .SubPath.Add(ArbitrationEntity.PrefetchPathNote);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
@@ -1063,7 +1071,10 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 arbitration.DefenseFileNumber != assessmentArbitration.DefenseFileNumber ||
                                 arbitration.StartDate != assessmentArbitration.StartDate ||
                                 arbitration.EndDate != assessmentArbitration.EndDate ||
-                                arbitration.AvailableDate != assessmentArbitration.AvailableDate
+                                arbitration.AvailableDate != assessmentArbitration.AvailableDate ||
+                                (null == arbitration.Note && assessmentArbitration.NoteId.HasValue) ||
+                                (null != arbitration.Note && !assessmentArbitration.NoteId.HasValue && !string.IsNullOrWhiteSpace(arbitration.Note.NoteText)) ||
+                                (null != arbitration.Note && assessmentArbitration.NoteId.HasValue && arbitration.Note.NoteText != assessmentArbitration.Note.Note)
                             )
                         )
                     )
@@ -1072,6 +1083,11 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 foreach (var arbitration in arbitrationsToRemove)
                 {
                     uow.AddForDelete(arbitration);
+
+                    if (null != arbitration.Note)
+                    {
+                        uow.AddForDelete(arbitration.Note);
+                    }
                 }
 
                 foreach (var arbitration in arbitrationsToUpdate)
@@ -1118,6 +1134,28 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         {
                             arbitrationEntity.DefenseFileNumber = arbitration.DefenseFileNumber;
                         }
+
+                        if (null != arbitration.Note)
+                        {
+                            if (null == arbitrationEntity.Note)
+                            {
+                                if (!string.IsNullOrWhiteSpace(arbitration.Note.NoteText))
+                                {
+                                    arbitrationEntity.Note = new NoteEntity
+                                    {
+                                        Note = arbitration.Note.NoteText,
+                                        CreateUserId = arbitration.Note.CreateUser.UserId,
+                                        UpdateUserId = arbitration.Note.UpdateUser.UserId,
+                                    };
+                                }
+                            }
+                            else if (arbitrationEntity.Note.Note != arbitration.Note.NoteText)
+                            {
+                                arbitrationEntity.Note.Note = arbitration.Note.NoteText;
+                                arbitrationEntity.Note.UpdateUserId = arbitration.Note.UpdateUser.UserId;
+                                arbitrationEntity.Note.UpdateDate = _date.UtcNow;
+                            }
+                        }
                     }
                 }
 
@@ -1128,10 +1166,19 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         StartDate = arbitration.StartDate,
                         EndDate = arbitration.EndDate,
                         AvailableDate = arbitration.AvailableDate,
-                        DefenseLawyerId = (null != arbitration.DefenseLawyer ? arbitration.DefenseLawyer.ContactId : (int?) null),
+                        DefenseLawyerId = (null != arbitration.DefenseLawyer ? arbitration.DefenseLawyer.ContactId : (int?)null),
                         DefenseFileNumber = arbitration.DefenseFileNumber,
+                        Note = null != arbitration.Note && !string.IsNullOrWhiteSpace(arbitration.Note.NoteText)
+                            ? new NoteEntity
+                            {
+                                CreateUserId = arbitration.Note.CreateUser.UserId,
+                                Note = arbitration.Note.NoteText,
+                                UpdateUserId = arbitration.Note.UpdateUser.UserId,
+                            }
+                            : null,
                     })
                 );
+
                 #endregion
 
                 #region summary

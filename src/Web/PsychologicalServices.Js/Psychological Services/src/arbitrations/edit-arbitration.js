@@ -16,13 +16,11 @@ export class EditArbitration {
 		
 		this.contactMatcher = (a, b) => a !== null && b !== null && a.contactId === b.contactId;
 	}
-	
+
 	modelChanged(oldValue, newValue) {
 		this.backup = getBackup(oldValue.arbitration);
 		
-		let model = this.model;
-		
-		this.defenseLawyers = model.defenseLawyers;
+		this.defenseLawyers = this.model.defenseLawyers;
 	}
 
 	ok(e) {

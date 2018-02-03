@@ -213,6 +213,8 @@ namespace PsychologicalServices.Data
 		DefenseFileNumber,
 		///<summary>Title. </summary>
 		Title,
+		///<summary>NoteId. </summary>
+		NoteId,
 		/// <summary></summary>
 		AmountOfFields
 	}

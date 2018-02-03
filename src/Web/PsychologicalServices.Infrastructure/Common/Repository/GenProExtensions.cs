@@ -167,6 +167,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     AvailableDate = arbitration.AvailableDate,
                     DefenseLawyer = arbitration.DefenseLawyer.ToContact(),
                     DefenseFileNumber = arbitration.DefenseFileNumber,
+                    Note = arbitration.Note.ToNote(),
                 }
                 : null;
         }

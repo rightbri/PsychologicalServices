@@ -41,6 +41,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		private AssessmentEntity _assessment;
 		private ContactEntity _defenseLawyer;
+		private NoteEntity _note;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -58,6 +59,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Assessment = "Assessment";
 			/// <summary>Member name DefenseLawyer</summary>
 			public static readonly string DefenseLawyer = "DefenseLawyer";
+			/// <summary>Member name Note</summary>
+			public static readonly string Note = "Note";
 
 
 
@@ -131,6 +134,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_defenseLawyer.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_note = (NoteEntity)info.GetValue("_note", typeof(NoteEntity));
+				if(_note!=null)
+				{
+					_note.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
@@ -151,6 +159,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case ArbitrationFieldIndex.DefenseLawyerId:
 					DesetupSyncDefenseLawyer(true, false);
+					break;
+				case ArbitrationFieldIndex.NoteId:
+					DesetupSyncNote(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -179,6 +190,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "DefenseLawyer":
 					this.DefenseLawyer = (ContactEntity)entity;
+					break;
+				case "Note":
+					this.Note = (NoteEntity)entity;
 					break;
 
 
@@ -210,6 +224,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "DefenseLawyer":
 					toReturn.Add(ArbitrationEntity.Relations.ContactEntityUsingDefenseLawyerId);
 					break;
+				case "Note":
+					toReturn.Add(ArbitrationEntity.Relations.NoteEntityUsingNoteId);
+					break;
 
 
 
@@ -236,6 +253,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -254,6 +272,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "DefenseLawyer":
 					SetupSyncDefenseLawyer(relatedEntity);
+					break;
+				case "Note":
+					SetupSyncNote(relatedEntity);
 					break;
 
 
@@ -276,6 +297,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "DefenseLawyer":
 					DesetupSyncDefenseLawyer(false, true);
+					break;
+				case "Note":
+					DesetupSyncNote(false, true);
 					break;
 
 
@@ -307,6 +331,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_defenseLawyer);
 			}
+			if(_note!=null)
+			{
+				toReturn.Add(_note);
+			}
 
 			return toReturn;
 		}
@@ -335,6 +363,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
 				info.AddValue("_defenseLawyer", (!this.MarkedForDeletion?_defenseLawyer:null));
+				info.AddValue("_note", (!this.MarkedForDeletion?_note:null));
 
 			}
 			
@@ -389,6 +418,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ContactFields.ContactId, null, ComparisonOperator.Equal, this.DefenseLawyerId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entity of type 'Note' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoNote()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
 			return bucket;
 		}
 
@@ -461,6 +500,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Assessment", _assessment);
 			toReturn.Add("DefenseLawyer", _defenseLawyer);
+			toReturn.Add("Note", _note);
 
 
 
@@ -480,6 +520,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_defenseLawyer.ActiveContext = base.ActiveContext;
 			}
+			if(_note!=null)
+			{
+				_note.ActiveContext = base.ActiveContext;
+			}
 
 		}
 
@@ -491,6 +535,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			_assessment = null;
 			_defenseLawyer = null;
+			_note = null;
 
 			PerformDependencyInjection();
 			
@@ -531,6 +576,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+
+			_fieldsCustomProperties.Add("NoteId", fieldHashtable);
 		}
 		#endregion
 
@@ -600,6 +648,39 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _note</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncNote(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", ArbitrationEntity.Relations.NoteEntityUsingNoteId, true, signalRelatedEntity, "Arbitration", resetFKFields, new int[] { (int)ArbitrationFieldIndex.NoteId } );		
+			_note = null;
+		}
+
+		/// <summary> setups the sync logic for member _note</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncNote(IEntity2 relatedEntity)
+		{
+			if(_note!=relatedEntity)
+			{
+				DesetupSyncNote(true, true);
+				_note = (NoteEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", ArbitrationEntity.Relations.NoteEntityUsingNoteId, true, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnNotePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
 		/// <param name="validator">The validator object for this ArbitrationEntity</param>
@@ -656,6 +737,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ContactEntityFactory))),
 					(IEntityRelation)GetRelationsForField("DefenseLawyer")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.ContactEntity, 0, null, null, null, null, "DefenseLawyer", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathNote
+		{
+			get
+			{
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Note")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "Note", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -772,6 +865,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ArbitrationFieldIndex.Title, value); }
 		}
 
+		/// <summary> The NoteId property of the Entity Arbitration<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on  table field: "Arbitrations"."NoteId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> NoteId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)ArbitrationFieldIndex.NoteId, false); }
+			set	{ SetValue((int)ArbitrationFieldIndex.NoteId, value); }
+		}
+
 
 
 		/// <summary> Gets / sets related entity of type 'AssessmentEntity' which has to be set using a fetch action earlier. If no related entity
@@ -838,6 +942,41 @@ namespace PsychologicalServices.Data.EntityClasses
 						if(_defenseLawyer!=value)
 						{
 							((IEntity2)value).SetRelatedEntity(this, "Arbitrations");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'NoteEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual NoteEntity Note
+		{
+			get
+			{
+				return _note;
+			}
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncNote(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_note != null)
+						{
+							_note.UnsetRelatedEntity(this, "Arbitration");
+						}
+					}
+					else
+					{
+						if(_note!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Arbitration");
 						}
 					}
 				}

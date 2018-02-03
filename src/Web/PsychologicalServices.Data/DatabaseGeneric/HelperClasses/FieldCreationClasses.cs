@@ -347,6 +347,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.Title);}
 		}
+		/// <summary>Creates a new ArbitrationEntity.NoteId field instance</summary>
+		public static EntityField2 NoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.NoteId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentEntity</summary>

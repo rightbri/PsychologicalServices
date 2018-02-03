@@ -34,6 +34,7 @@ namespace PsychologicalServices.Data.RelationClasses
 
 			toReturn.Add(this.AssessmentEntityUsingAssessmentId);
 			toReturn.Add(this.ContactEntityUsingDefenseLawyerId);
+			toReturn.Add(this.NoteEntityUsingNoteId);
 			return toReturn;
 		}
 
@@ -65,6 +66,20 @@ namespace PsychologicalServices.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "DefenseLawyer", false);
 				relation.AddEntityFieldPair(ContactFields.ContactId, ArbitrationFields.DefenseLawyerId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between ArbitrationEntity and NoteEntity over the m:1 relation they have, using the relation between the fields:
+		/// Arbitration.NoteId - Note.NoteId
+		/// </summary>
+		public virtual IEntityRelation NoteEntityUsingNoteId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Note", false);
+				relation.AddEntityFieldPair(NoteFields.NoteId, ArbitrationFields.NoteId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", true);
 				return relation;
 			}

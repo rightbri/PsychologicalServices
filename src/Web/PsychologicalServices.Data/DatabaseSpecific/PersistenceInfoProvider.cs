@@ -218,7 +218,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits ArbitrationEntity's mappings</summary>
 		private void InitArbitrationEntityMappings()
 		{
-			base.AddElementMapping( "ArbitrationEntity", "PsychologicalServices", @"dbo", "Arbitrations", 8 );
+			base.AddElementMapping( "ArbitrationEntity", "PsychologicalServices", @"dbo", "Arbitrations", 9 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "ArbitrationId", "ArbitrationId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "AssessmentId", "AssessmentId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "StartDate", "StartDate", false, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
@@ -227,6 +227,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			base.AddElementFieldMapping( "ArbitrationEntity", "DefenseLawyerId", "DefenseLawyerId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "DefenseFileNumber", "DefenseFileNumber", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 6 );
 			base.AddElementFieldMapping( "ArbitrationEntity", "Title", "Title", false, (int)SqlDbType.NVarChar, 250, 0, 0, false, "", null, typeof(System.String), 7 );
+			base.AddElementFieldMapping( "ArbitrationEntity", "NoteId", "NoteId", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
 		}
 		/// <summary>Inits AssessmentEntity's mappings</summary>
 		private void InitAssessmentEntityMappings()

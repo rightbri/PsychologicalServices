@@ -406,11 +406,15 @@ export class EditAssessment {
 		this.dataRepository.getNewArbitration(this.assessment.assessmentId)
 			.then(data => {
 				data.isAdd = true;
+				data.note = data.note || { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user };
+
 				this.editArbitration(data);
 			});
 	}
 	
 	editArbitration(arbitration) {
+		arbitration.note = arbitration.note || { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user };
+
 		this.arbitrationEditModel = {
 			'arbitration': arbitration,
 			'defenseLawyers': this.defenseLawyers

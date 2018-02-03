@@ -219,6 +219,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ArbitrationEntity", "DefenseLawyerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.DefenseLawyerId, 0, 0, 10);
 			base.AddElementFieldInfo("ArbitrationEntity", "DefenseFileNumber", typeof(System.String), false, false, false, true,  (int)ArbitrationFieldIndex.DefenseFileNumber, 50, 0, 0);
 			base.AddElementFieldInfo("ArbitrationEntity", "Title", typeof(System.String), false, false, false, false,  (int)ArbitrationFieldIndex.Title, 250, 0, 0);
+			base.AddElementFieldInfo("ArbitrationEntity", "NoteId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.NoteId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentEntity's FieldInfo objects</summary>
 		private void InitAssessmentEntityInfos()

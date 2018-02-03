@@ -31,6 +31,11 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                                     .Prefetch<CityEntity>(address => address.City)
                                 )
                         )
+                    .Prefetch<NoteEntity>(arbitration => arbitration.Note)
+                        .SubPath(notePath => notePath
+                            .Prefetch<UserEntity>(note => note.CreateUser)
+                            .Prefetch<UserEntity>(note => note.UpdateUser)
+                        )
                 );
 
         #endregion

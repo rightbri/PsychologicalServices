@@ -39,6 +39,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		#region Class Member Declarations
 		private EntityCollection<ArbitrationEntity> _arbitrations;
 
+
 		private AddressEntity _address;
 		private ContactTypeEntity _contactType;
 		private EmployerEntity _employer;
@@ -63,6 +64,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Employer = "Employer";
 			/// <summary>Member name Arbitrations</summary>
 			public static readonly string Arbitrations = "Arbitrations";
+
 
 
 		}
@@ -124,6 +126,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_arbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations", typeof(EntityCollection<ArbitrationEntity>));
+
 
 				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
 				if(_address!=null)
@@ -200,6 +203,7 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 
 
+
 				default:
 					break;
 			}
@@ -233,6 +237,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Arbitrations":
 					toReturn.Add(ContactEntity.Relations.ArbitrationEntityUsingDefenseLawyerId);
 					break;
+
 
 
 				default:
@@ -370,6 +375,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				info.AddValue("_arbitrations", ((_arbitrations!=null) && (_arbitrations.Count>0) && !this.MarkedForDeletion)?_arbitrations:null);
 
+
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_contactType", (!this.MarkedForDeletion?_contactType:null));
 				info.AddValue("_employer", (!this.MarkedForDeletion?_employer:null));
@@ -417,6 +423,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.DefenseLawyerId, null, ComparisonOperator.Equal, this.ContactId));
 			return bucket;
 		}
+
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
@@ -479,6 +486,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._arbitrations);
 
+
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -487,6 +495,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._arbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
+
 
 		}
 		
@@ -499,6 +508,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return true;
 			}
 
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -509,6 +519,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
+
 
 		}
 #endif
@@ -525,6 +536,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Arbitrations", _arbitrations);
 
 
+
 			return toReturn;
 		}
 		
@@ -535,6 +547,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_arbitrations.ActiveContext = base.ActiveContext;
 			}
+
 
 			if(_address!=null)
 			{
@@ -556,6 +569,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_arbitrations = null;
+
 
 			_address = null;
 			_contactType = null;
@@ -748,6 +762,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -912,6 +927,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _arbitrations;
 			}
 		}
+
 
 
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity

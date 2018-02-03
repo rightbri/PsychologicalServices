@@ -37,10 +37,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private EntityCollection<ArbitrationEntity> _arbitration;
 		private EntityCollection<AssessmentEntity> _summaryAssessment;
 		private EntityCollection<AssessmentNoteEntity> _assessmentNotes;
 		private EntityCollection<CalendarNoteEntity> _calendarNote;
 		private EntityCollection<UserNoteEntity> _userNotes;
+
+
 
 
 
@@ -75,6 +78,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string UpdateUser = "UpdateUser";
 			/// <summary>Member name CreateUser</summary>
 			public static readonly string CreateUser = "CreateUser";
+			/// <summary>Member name Arbitration</summary>
+			public static readonly string Arbitration = "Arbitration";
 			/// <summary>Member name SummaryAssessment</summary>
 			public static readonly string SummaryAssessment = "SummaryAssessment";
 			/// <summary>Member name AssessmentNotes</summary>
@@ -83,6 +88,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string CalendarNote = "CalendarNote";
 			/// <summary>Member name UserNotes</summary>
 			public static readonly string UserNotes = "UserNotes";
+
+
 
 
 
@@ -157,10 +164,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_arbitration = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitration", typeof(EntityCollection<ArbitrationEntity>));
 				_summaryAssessment = (EntityCollection<AssessmentEntity>)info.GetValue("_summaryAssessment", typeof(EntityCollection<AssessmentEntity>));
 				_assessmentNotes = (EntityCollection<AssessmentNoteEntity>)info.GetValue("_assessmentNotes", typeof(EntityCollection<AssessmentNoteEntity>));
 				_calendarNote = (EntityCollection<CalendarNoteEntity>)info.GetValue("_calendarNote", typeof(EntityCollection<CalendarNoteEntity>));
 				_userNotes = (EntityCollection<UserNoteEntity>)info.GetValue("_userNotes", typeof(EntityCollection<UserNoteEntity>));
+
+
 
 
 
@@ -235,6 +245,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CreateUser":
 					this.CreateUser = (UserEntity)entity;
 					break;
+				case "Arbitration":
+					this.Arbitration.Add((ArbitrationEntity)entity);
+					break;
 				case "SummaryAssessment":
 					this.SummaryAssessment.Add((AssessmentEntity)entity);
 					break;
@@ -247,6 +260,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserNotes":
 					this.UserNotes.Add((UserNoteEntity)entity);
 					break;
+
+
 
 
 
@@ -290,6 +305,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CreateUser":
 					toReturn.Add(NoteEntity.Relations.UserEntityUsingCreateUserId);
 					break;
+				case "Arbitration":
+					toReturn.Add(NoteEntity.Relations.ArbitrationEntityUsingNoteId);
+					break;
 				case "SummaryAssessment":
 					toReturn.Add(NoteEntity.Relations.AssessmentEntityUsingSummaryNoteId);
 					break;
@@ -302,6 +320,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "UserNotes":
 					toReturn.Add(NoteEntity.Relations.UserNoteEntityUsingNoteId);
 					break;
+
+
 
 
 
@@ -360,6 +380,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "CreateUser":
 					SetupSyncCreateUser(relatedEntity);
 					break;
+				case "Arbitration":
+					this.Arbitration.Add((ArbitrationEntity)relatedEntity);
+					break;
 				case "SummaryAssessment":
 					this.SummaryAssessment.Add((AssessmentEntity)relatedEntity);
 					break;
@@ -392,6 +415,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "CreateUser":
 					DesetupSyncCreateUser(false, true);
+					break;
+				case "Arbitration":
+					base.PerformRelatedEntityRemoval(this.Arbitration, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "SummaryAssessment":
 					base.PerformRelatedEntityRemoval(this.SummaryAssessment, relatedEntity, signalRelatedEntityManyToOne);
@@ -443,6 +469,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+			toReturn.Add(this.Arbitration);
 			toReturn.Add(this.SummaryAssessment);
 			toReturn.Add(this.AssessmentNotes);
 			toReturn.Add(this.CalendarNote);
@@ -461,10 +488,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_arbitration", ((_arbitration!=null) && (_arbitration.Count>0) && !this.MarkedForDeletion)?_arbitration:null);
 				info.AddValue("_summaryAssessment", ((_summaryAssessment!=null) && (_summaryAssessment.Count>0) && !this.MarkedForDeletion)?_summaryAssessment:null);
 				info.AddValue("_assessmentNotes", ((_assessmentNotes!=null) && (_assessmentNotes.Count>0) && !this.MarkedForDeletion)?_assessmentNotes:null);
 				info.AddValue("_calendarNote", ((_calendarNote!=null) && (_calendarNote.Count>0) && !this.MarkedForDeletion)?_calendarNote:null);
 				info.AddValue("_userNotes", ((_userNotes!=null) && (_userNotes.Count>0) && !this.MarkedForDeletion)?_userNotes:null);
+
+
 
 
 
@@ -518,6 +548,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
+		/// the related entities of type 'Arbitration' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoArbitration()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'Assessment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoSummaryAssessment()
@@ -556,6 +596,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserNoteFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
 			return bucket;
 		}
+
+
 
 
 
@@ -620,10 +662,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
+			collectionsQueue.Enqueue(this._arbitration);
 			collectionsQueue.Enqueue(this._summaryAssessment);
 			collectionsQueue.Enqueue(this._assessmentNotes);
 			collectionsQueue.Enqueue(this._calendarNote);
 			collectionsQueue.Enqueue(this._userNotes);
+
+
 
 
 
@@ -646,10 +691,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+			this._arbitration = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 			this._summaryAssessment = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._assessmentNotes = (EntityCollection<AssessmentNoteEntity>) collectionsQueue.Dequeue();
 			this._calendarNote = (EntityCollection<CalendarNoteEntity>) collectionsQueue.Dequeue();
 			this._userNotes = (EntityCollection<UserNoteEntity>) collectionsQueue.Dequeue();
+
+
 
 
 
@@ -671,6 +719,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
+			if (this._arbitration != null)
+			{
+				return true;
+			}
 			if (this._summaryAssessment != null)
 			{
 				return true;
@@ -702,6 +754,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			return base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -711,10 +765,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CalendarNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CalendarNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserNoteEntityFactory))) : null);
+
+
 
 
 
@@ -741,10 +798,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("UpdateUser", _updateUser);
 			toReturn.Add("CreateUser", _createUser);
+			toReturn.Add("Arbitration", _arbitration);
 			toReturn.Add("SummaryAssessment", _summaryAssessment);
 			toReturn.Add("AssessmentNotes", _assessmentNotes);
 			toReturn.Add("CalendarNote", _calendarNote);
 			toReturn.Add("UserNotes", _userNotes);
+
+
 
 
 
@@ -767,6 +827,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+			if(_arbitration!=null)
+			{
+				_arbitration.ActiveContext = base.ActiveContext;
+			}
 			if(_summaryAssessment!=null)
 			{
 				_summaryAssessment.ActiveContext = base.ActiveContext;
@@ -798,6 +862,8 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 
+
+
 			if(_updateUser!=null)
 			{
 				_updateUser.ActiveContext = base.ActiveContext;
@@ -813,10 +879,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+			_arbitration = null;
 			_summaryAssessment = null;
 			_assessmentNotes = null;
 			_calendarNote = null;
 			_userNotes = null;
+
+
 
 
 
@@ -970,6 +1039,17 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathArbitration
+		{
+			get
+			{
+				return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Arbitration")[0], (int)PsychologicalServices.Data.EntityType.NoteEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitration", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1014,6 +1094,8 @@ namespace PsychologicalServices.Data.EntityClasses
 					(IEntityRelation)GetRelationsForField("UserNotes")[0], (int)PsychologicalServices.Data.EntityType.NoteEntity, (int)PsychologicalServices.Data.EntityType.UserNoteEntity, 0, null, null, null, null, "UserNotes", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
+
+
 
 
 
@@ -1145,6 +1227,22 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)NoteFieldIndex.CreateDate, value); }
 		}
 
+		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(ArbitrationEntity))]
+		public virtual EntityCollection<ArbitrationEntity> Arbitration
+		{
+			get
+			{
+				if(_arbitration==null)
+				{
+					_arbitration = new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory)));
+					_arbitration.SetContainingEntityInfo(this, "Note");
+				}
+				return _arbitration;
+			}
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(AssessmentEntity))]
@@ -1208,6 +1306,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _userNotes;
 			}
 		}
+
+
 
 
 

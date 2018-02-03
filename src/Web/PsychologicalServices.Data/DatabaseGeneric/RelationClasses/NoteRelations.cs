@@ -30,6 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.ArbitrationEntityUsingNoteId);
 			toReturn.Add(this.AssessmentEntityUsingSummaryNoteId);
 			toReturn.Add(this.AssessmentNoteEntityUsingNoteId);
 			toReturn.Add(this.CalendarNoteEntityUsingNoteId);
@@ -41,6 +42,21 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between NoteEntity and ArbitrationEntity over the 1:n relation they have, using the relation between the fields:
+		/// Note.NoteId - Arbitration.NoteId
+		/// </summary>
+		public virtual IEntityRelation ArbitrationEntityUsingNoteId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Arbitration" , true);
+				relation.AddEntityFieldPair(NoteFields.NoteId, ArbitrationFields.NoteId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between NoteEntity and AssessmentEntity over the 1:n relation they have, using the relation between the fields:
 		/// Note.NoteId - Assessment.SummaryNoteId
