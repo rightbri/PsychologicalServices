@@ -133,10 +133,10 @@
 				<td>${invoice.invoiceType.name}</td>
 				<td>${invoice.payableTo.firstName} ${invoice.payableTo.lastName}</td>
 				<td>${invoice.total | money}</td>
-				<td>${invoice.referralSource.name}</td>
+				<td class="uk-text-truncate">${invoice.referralSource.name}</td>
 				<td>
 					<ul class="uk-list">
-						<li>
+						<li class="uk-text-truncate">
 							${invoice.claimant.firstName} ${invoice.claimant.lastName}
 						</li>
 					</ul>

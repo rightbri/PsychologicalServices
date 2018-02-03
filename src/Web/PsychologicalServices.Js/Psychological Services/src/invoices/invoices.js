@@ -47,15 +47,18 @@ export class Invoices {
 		.then(invoices => {
 			invoices.forEach(invoice => {
 				if (invoice.invoiceType.name === 'Psychologist') {
-					let appointment = invoice.appointments[0].appointment;
-					let assessment = appointment.assessment;
+					let lineGroupsWithAppointments = invoice.lineGroups.filter(lineGroup => lineGroup.appointment);
+					if (lineGroupsWithAppointments.length > 0) {
+						let appointment = lineGroupsWithAppointments[0].appointment;
+						let assessment = appointment.assessment;
 					
-					invoice.referralSource = appointment.assessment.referralSource;
-					
-					if (assessment.claims) {
-						assessment.claims.forEach(claim => {
-							invoice.claimant = claim.claimant;
-						});
+						invoice.referralSource = appointment.assessment.referralSource;
+						
+						if (assessment.claims) {
+							assessment.claims.forEach(claim => {
+								invoice.claimant = claim.claimant;
+							});
+						}
 					}
 				}
 			})
