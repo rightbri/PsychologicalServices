@@ -549,6 +549,8 @@ namespace PsychologicalServices.Data
 		ClaimNumber,
 		///<summary>Lawyer. </summary>
 		Lawyer,
+		///<summary>InsuranceCompany. </summary>
+		InsuranceCompany,
 		/// <summary></summary>
 		AmountOfFields
 	}

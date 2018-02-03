@@ -203,6 +203,7 @@ namespace PsychologicalServices.Infrastructure.Claims
                 entity.ClaimNumber = claim.ClaimNumber;
                 entity.DateOfLoss = claim.DateOfLoss;
                 entity.Lawyer = claim.Lawyer;
+                entity.InsuranceCompany = claim.InsuranceCompany;
                 
                 adapter.SaveEntity(entity, false);
 

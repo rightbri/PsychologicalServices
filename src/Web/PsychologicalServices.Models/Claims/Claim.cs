@@ -14,6 +14,8 @@ namespace PsychologicalServices.Models.Claims
 
         public string Lawyer { get; set; }
 
+        public string InsuranceCompany { get; set; }
+
         public bool IsNew()
         {
             return ClaimId == 0;

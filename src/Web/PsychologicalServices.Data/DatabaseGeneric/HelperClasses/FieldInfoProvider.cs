@@ -370,6 +370,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("ClaimEntity", "DateOfLoss", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ClaimFieldIndex.DateOfLoss, 0, 0, 0);
 			base.AddElementFieldInfo("ClaimEntity", "ClaimNumber", typeof(System.String), false, false, false, true,  (int)ClaimFieldIndex.ClaimNumber, 50, 0, 0);
 			base.AddElementFieldInfo("ClaimEntity", "Lawyer", typeof(System.String), false, false, false, true,  (int)ClaimFieldIndex.Lawyer, 50, 0, 0);
+			base.AddElementFieldInfo("ClaimEntity", "InsuranceCompany", typeof(System.String), false, false, false, true,  (int)ClaimFieldIndex.InsuranceCompany, 50, 0, 0);
 		}
 		/// <summary>Inits ClaimantEntity's FieldInfo objects</summary>
 		private void InitClaimantEntityInfos()

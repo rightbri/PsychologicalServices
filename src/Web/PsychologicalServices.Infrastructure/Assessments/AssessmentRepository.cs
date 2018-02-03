@@ -665,7 +665,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             assessmentClaim.Claim.ClaimantId != claim.Claimant.ClaimantId ||
                             assessmentClaim.Claim.ClaimNumber != claim.ClaimNumber ||
                             assessmentClaim.Claim.DateOfLoss != claim.DateOfLoss ||
-                            assessmentClaim.Claim.Lawyer != claim.Lawyer
+                            assessmentClaim.Claim.Lawyer != claim.Lawyer ||
+                            assessmentClaim.Claim.InsuranceCompany != claim.InsuranceCompany
                             )
                         )
                     )
@@ -689,6 +690,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         claimEntity.ClaimNumber = claim.ClaimNumber;
                         claimEntity.DateOfLoss = claim.DateOfLoss;
                         claimEntity.Lawyer = claim.Lawyer;
+                        claimEntity.InsuranceCompany = claim.InsuranceCompany;
                         claimEntity.ClaimantId = claim.Claimant.ClaimantId;
 
                         if (claim.Claimant.IsNew())
@@ -724,6 +726,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             ClaimNumber = claim.ClaimNumber,
                             DateOfLoss = claim.DateOfLoss,
                             Lawyer = claim.Lawyer,
+                            InsuranceCompany = claim.InsuranceCompany,
                         },
                     })
                 );

@@ -389,12 +389,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits ClaimEntity's mappings</summary>
 		private void InitClaimEntityMappings()
 		{
-			base.AddElementMapping( "ClaimEntity", "PsychologicalServices", @"dbo", "Claims", 5 );
+			base.AddElementMapping( "ClaimEntity", "PsychologicalServices", @"dbo", "Claims", 6 );
 			base.AddElementFieldMapping( "ClaimEntity", "ClaimId", "ClaimId", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ClaimEntity", "ClaimantId", "ClaimantId", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "ClaimEntity", "DateOfLoss", "DateOfLoss", true, (int)SqlDbType.DateTimeOffset, 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2 );
 			base.AddElementFieldMapping( "ClaimEntity", "ClaimNumber", "ClaimNumber", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 3 );
 			base.AddElementFieldMapping( "ClaimEntity", "Lawyer", "Lawyer", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 4 );
+			base.AddElementFieldMapping( "ClaimEntity", "InsuranceCompany", "InsuranceCompany", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 5 );
 		}
 		/// <summary>Inits ClaimantEntity's mappings</summary>
 		private void InitClaimantEntityMappings()

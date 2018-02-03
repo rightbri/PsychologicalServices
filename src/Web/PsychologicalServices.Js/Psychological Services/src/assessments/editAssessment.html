@@ -206,6 +206,7 @@
 								<th>Claim #</th>
 								<th>Date of Loss</th>
 								<th>Lawyer</th>
+								<th>Insurance Company</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -218,7 +219,8 @@
 								</td>
 								<td>${claim.claimNumber}</td>
 								<td>${claim.dateOfLoss | dateFormat:config.longDateFormat}</td>
-								<td>${claim.lawyer}</td>
+								<td class="uk-text-truncate">${claim.lawyer}</td>
+								<td class="uk-text-truncate">${claim.insuranceCompany}</td>
 								<td>
 									<button type="button" class="uk-button uk-button-link" click.delegate="removeClaim(claim)" title="Remove claim" uk-tooltip>
 										<i class="fa fa-times"></i>

@@ -847,6 +847,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ClaimFieldIndex.Lawyer);}
 		}
+		/// <summary>Creates a new ClaimEntity.InsuranceCompany field instance</summary>
+		public static EntityField2 InsuranceCompany
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ClaimFieldIndex.InsuranceCompany);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity ClaimantEntity</summary>

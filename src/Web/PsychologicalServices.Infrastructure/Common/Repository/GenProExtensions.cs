@@ -634,6 +634,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     DateOfLoss = claim.DateOfLoss,
                     Claimant = claim.Claimant.ToClaimant(),
                     Lawyer = claim.Lawyer,
+                    InsuranceCompany = claim.InsuranceCompany,
                 }
                 : null;
         }

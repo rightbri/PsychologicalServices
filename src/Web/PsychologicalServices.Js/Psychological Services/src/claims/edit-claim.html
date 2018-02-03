@@ -9,36 +9,48 @@
 		<fieldset class="uk-fieldset">
 			<legend class="uk-legend">Claim</legend>
 			
-			<div class="uk-margin" if.bind="model.claimant">
-				<label class="uk-form-label">Claimant</label>
-				<div class="uk-form-controls">
-					<p>
-						${model.claimant.firstName} ${model.claimant.lastName}
-						<br>${model.claimant.dateOfBirth | age} - ${model.claimant.gender | gender}
-					</p>
+			<div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
+
+				<div class="uk-width-1-1" if.bind="model.claimant">
+					<label class="uk-form-label">Claimant</label>
+					<div class="uk-form-controls">
+						<p>
+							${model.claimant.firstName} ${model.claimant.lastName}
+							<br>${model.claimant.dateOfBirth | age} - ${model.claimant.gender | gender}
+						</p>
+					</div>
 				</div>
-			</div>
-			
-			<div class="uk-margin">
-				<label class="uk-form-label" for="dateOfLoss">Date of loss</label>
-				<div class="uk-form-controls">
-					<input id="dateOfLoss" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.dateOfLoss | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+				
+				<div>
+					<label class="uk-form-label" for="dateOfLoss">Date of loss</label>
+					<div class="uk-form-controls">
+						<input id="dateOfLoss" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.dateOfLoss | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+					</div>
 				</div>
-			</div>
-			
-			<div class="uk-margin">
-				<label class="uk-form-label" for="claimNumber">Claim Number</label>
-				<div class="uk-form-controls">
-					<input id="claimNumber" type="text" class="uk-input" pattern="[A-Za-z0-9-]+" value.bind="model.claimNumber" />
+				
+				<div>
+					<label class="uk-form-label" for="claimNumber">Claim Number</label>
+					<div class="uk-form-controls">
+						<input id="claimNumber" type="text" class="uk-input" pattern="[A-Za-z0-9-]+" value.bind="model.claimNumber" />
+					</div>
 				</div>
-			</div>
-			
-			<div class="uk-margin">
-				<label class="uk-form-label" for="lawyer">Lawyer</label>
-				<div class="uk-form-controls">
-					<input id="lawyer" type="text" class="uk-input" value.bind="model.lawyer" />
+				
+				<div>
+					<label class="uk-form-label" for="lawyer">Lawyer</label>
+					<div class="uk-form-controls">
+						<input id="lawyer" type="text" class="uk-input" value.bind="model.lawyer" />
+					</div>
 				</div>
+	
+				<div>
+					<label class="uk-form-label" for="insuranceCompany">Insurance Company</label>
+					<div class="uk-form-controls">
+						<input id="insuranceCompany" type="text" class="uk-input" value.bind="model.insuranceCompany" />
+					</div>
+				</div>
+
 			</div>
+
 		</fieldset>
 	</edit-panel>
 </template>
