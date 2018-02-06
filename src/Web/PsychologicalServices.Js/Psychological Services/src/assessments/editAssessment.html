@@ -251,6 +251,7 @@
 								<th>Start Date</th>
 								<th>End Date</th>
 								<th>Defense Lawyer</th>
+								<th>Notes</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -265,6 +266,7 @@
 								<td>${arbitration.startDate | dateFormat:config.longDateFormat}</td>
 								<td>${arbitration.endDate | dateFormat:config.longDateFormat}</td>
 								<td>${arbitration.defenseLawyer.firstName} ${arbitration.defenseLawyer.lastName}</td>
+								<td>${arbitration.note.noteText}</td>
 								<td>
 									<button type="button" class="uk-button uk-button-link" click.delegate="removeArbitration(arbitration)" title="Remove arbitration" uk-tooltip>
 										<i class="fa fa-times"></i>
