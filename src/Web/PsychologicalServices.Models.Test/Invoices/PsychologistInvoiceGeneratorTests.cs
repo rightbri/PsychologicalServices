@@ -211,6 +211,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -363,6 +374,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -520,6 +542,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -672,6 +705,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -824,6 +868,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -976,6 +1031,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -1128,6 +1194,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -1288,6 +1365,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -1448,6 +1536,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -1604,6 +1703,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -1756,6 +1866,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -1914,6 +2035,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,
@@ -2068,6 +2200,17 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
+                    Claims = new[]
+                    {
+                        new Claims.Claim
+                        {
+                            Claimant = new Claims.Claimant
+                            {
+                                FirstName = "First",
+                                LastName = "Last",
+                            }
+                        }
+                    },
                     AssessmentType = new Assessments.AssessmentType
                     {
                         AssessmentTypeId = assessmentTypeId,

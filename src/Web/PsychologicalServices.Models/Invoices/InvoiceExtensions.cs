@@ -61,9 +61,9 @@ namespace PsychologicalServices.Models.Invoices
 
         public static string ToInvoiceLineGroupDescription(this Appointments.Appointment appointment)
         {
-            var claimant = appointment.Assessment.Claims.FirstOrDefault()?.Claimant;
+            var claim = appointment.Assessment.Claims.FirstOrDefault();
 
-            return $@"{appointment.AppointmentTime.ToString("MMMM")} {appointment.AppointmentTime.Day}, {appointment.AppointmentTime.Year}, {appointment.Assessment.AssessmentType.Description} Assessment in {appointment.Location.City.Name} for {appointment.Assessment.ReferralSource.Name}/{claimant?.FirstName} {claimant?.LastName}";
+            return $@"{appointment.AppointmentTime.ToString("MMMM")} {appointment.AppointmentTime.Day}, {appointment.AppointmentTime.Year}, {appointment.Assessment.AssessmentType.Description} Assessment in {appointment.Location.City.Name} for {appointment.Assessment.ReferralSource.Name}/{claim?.Claimant?.FirstName} {claim?.Claimant?.LastName}";
         }
     }
 }

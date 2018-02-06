@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Arbitrations] (
     [ArbitrationId]     INT                IDENTITY (1, 1) NOT NULL,
     [AssessmentId]      INT                NOT NULL,
-    [StartDate]         DATETIMEOFFSET (7) NOT NULL,
+    [StartDate]         DATETIMEOFFSET (7) NULL,
     [EndDate]           DATETIMEOFFSET (7) NULL,
     [AvailableDate]     DATETIMEOFFSET (7) NULL,
     [DefenseLawyerId]   INT                NULL,
@@ -13,6 +13,8 @@
     CONSTRAINT [FK_Arbitrations_Contacts] FOREIGN KEY ([DefenseLawyerId]) REFERENCES [dbo].[Contacts] ([ContactId]),
     CONSTRAINT [FK_Arbitrations_Notes] FOREIGN KEY ([NoteId]) REFERENCES [dbo].[Notes] ([NoteId])
 );
+
+
 
 
 

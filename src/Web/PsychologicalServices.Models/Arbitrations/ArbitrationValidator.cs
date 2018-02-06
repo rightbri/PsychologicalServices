@@ -52,7 +52,7 @@ namespace PsychologicalServices.Models.Arbitrations
                 );
             }
 
-            if (item.EndDate.HasValue && item.StartDate > item.EndDate)
+            if (item.StartDate.HasValue && item.EndDate.HasValue && item.StartDate > item.EndDate)
             {
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "EndDate", Message = GetValidationMessage(item, "End Date must be after Start Date") }

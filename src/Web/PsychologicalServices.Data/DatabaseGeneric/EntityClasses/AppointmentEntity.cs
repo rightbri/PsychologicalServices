@@ -38,7 +38,9 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentAttributeEntity> _appointmentAttributes;
+
 		private EntityCollection<InvoiceLineGroupAppointmentEntity> _invoiceLineGroupAppointments;
+
 
 		private AddressEntity _location;
 		private AppointmentStatusEntity _appointmentStatus;
@@ -76,8 +78,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Psychometrist = "Psychometrist";
 			/// <summary>Member name AppointmentAttributes</summary>
 			public static readonly string AppointmentAttributes = "AppointmentAttributes";
+
 			/// <summary>Member name InvoiceLineGroupAppointments</summary>
 			public static readonly string InvoiceLineGroupAppointments = "InvoiceLineGroupAppointments";
+
 
 
 		}
@@ -139,7 +143,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_appointmentAttributes = (EntityCollection<AppointmentAttributeEntity>)info.GetValue("_appointmentAttributes", typeof(EntityCollection<AppointmentAttributeEntity>));
+
 				_invoiceLineGroupAppointments = (EntityCollection<InvoiceLineGroupAppointmentEntity>)info.GetValue("_invoiceLineGroupAppointments", typeof(EntityCollection<InvoiceLineGroupAppointmentEntity>));
+
 
 				_location = (AddressEntity)info.GetValue("_location", typeof(AddressEntity));
 				if(_location!=null)
@@ -258,9 +264,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentAttributes":
 					this.AppointmentAttributes.Add((AppointmentAttributeEntity)entity);
 					break;
+
 				case "InvoiceLineGroupAppointments":
 					this.InvoiceLineGroupAppointments.Add((InvoiceLineGroupAppointmentEntity)entity);
 					break;
+
 
 
 				default:
@@ -308,9 +316,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentAttributes":
 					toReturn.Add(AppointmentEntity.Relations.AppointmentAttributeEntityUsingAppointmentId);
 					break;
+
 				case "InvoiceLineGroupAppointments":
 					toReturn.Add(AppointmentEntity.Relations.InvoiceLineGroupAppointmentEntityUsingAppointmentId);
 					break;
+
 
 
 				default:
@@ -381,6 +391,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentAttributes":
 					this.AppointmentAttributes.Add((AppointmentAttributeEntity)relatedEntity);
 					break;
+
 				case "InvoiceLineGroupAppointments":
 					this.InvoiceLineGroupAppointments.Add((InvoiceLineGroupAppointmentEntity)relatedEntity);
 					break;
@@ -423,6 +434,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AppointmentAttributes":
 					base.PerformRelatedEntityRemoval(this.AppointmentAttributes, relatedEntity, signalRelatedEntityManyToOne);
 					break;
+
 				case "InvoiceLineGroupAppointments":
 					base.PerformRelatedEntityRemoval(this.InvoiceLineGroupAppointments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -485,6 +497,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.AppointmentAttributes);
+
 			toReturn.Add(this.InvoiceLineGroupAppointments);
 
 			return toReturn;
@@ -501,7 +514,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_appointmentAttributes", ((_appointmentAttributes!=null) && (_appointmentAttributes.Count>0) && !this.MarkedForDeletion)?_appointmentAttributes:null);
+
 				info.AddValue("_invoiceLineGroupAppointments", ((_invoiceLineGroupAppointments!=null) && (_invoiceLineGroupAppointments.Count>0) && !this.MarkedForDeletion)?_invoiceLineGroupAppointments:null);
+
 
 				info.AddValue("_location", (!this.MarkedForDeletion?_location:null));
 				info.AddValue("_appointmentStatus", (!this.MarkedForDeletion?_appointmentStatus:null));
@@ -555,6 +570,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
 		/// the related entities of type 'InvoiceLineGroupAppointment' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
@@ -564,6 +580,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineGroupAppointmentFields.AppointmentId, null, ComparisonOperator.Equal, this.AppointmentId));
 			return bucket;
 		}
+
 
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
@@ -665,7 +682,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._appointmentAttributes);
+
 			collectionsQueue.Enqueue(this._invoiceLineGroupAppointments);
+
 
 		}
 		
@@ -675,7 +694,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._appointmentAttributes = (EntityCollection<AppointmentAttributeEntity>) collectionsQueue.Dequeue();
+
 			this._invoiceLineGroupAppointments = (EntityCollection<InvoiceLineGroupAppointmentEntity>) collectionsQueue.Dequeue();
+
 
 		}
 		
@@ -687,10 +708,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				return true;
 			}
+
 			if (this._invoiceLineGroupAppointments != null)
 			{
 				return true;
 			}
+
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -702,7 +725,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentAttributeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentAttributeEntityFactory))) : null);
+
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceLineGroupAppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineGroupAppointmentEntityFactory))) : null);
+
 
 		}
 #endif
@@ -721,7 +746,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Psychologist", _psychologist);
 			toReturn.Add("Psychometrist", _psychometrist);
 			toReturn.Add("AppointmentAttributes", _appointmentAttributes);
+
 			toReturn.Add("InvoiceLineGroupAppointments", _invoiceLineGroupAppointments);
+
 
 
 			return toReturn;
@@ -734,10 +761,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_appointmentAttributes.ActiveContext = base.ActiveContext;
 			}
+
 			if(_invoiceLineGroupAppointments!=null)
 			{
 				_invoiceLineGroupAppointments.ActiveContext = base.ActiveContext;
 			}
+
 
 			if(_location!=null)
 			{
@@ -775,7 +804,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 
 			_appointmentAttributes = null;
+
 			_invoiceLineGroupAppointments = null;
+
 
 			_location = null;
 			_appointmentStatus = null;
@@ -1127,6 +1158,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
@@ -1384,6 +1416,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineGroupAppointmentEntity' which are related to this entity via a relation of type '1:n'.
 		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
 		[TypeContainedAttribute(typeof(InvoiceLineGroupAppointmentEntity))]
@@ -1399,6 +1432,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				return _invoiceLineGroupAppointments;
 			}
 		}
+
 
 
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity

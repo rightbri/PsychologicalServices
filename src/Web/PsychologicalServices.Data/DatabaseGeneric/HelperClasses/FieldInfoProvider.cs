@@ -56,7 +56,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			base.InitClass( (66 + 0));
+			base.InitClass( (67 + 0));
 			InitAddressEntityInfos();
 			InitAddressAddressTypeEntityInfos();
 			InitAddressTypeEntityInfos();
@@ -95,6 +95,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitEmployerTypeEntityInfos();
 			InitEventEntityInfos();
 			InitInvoiceEntityInfos();
+			InitInvoiceAppointmentEntityInfos();
 			InitInvoiceDocumentEntityInfos();
 			InitInvoiceDocumentSendLogEntityInfos();
 			InitInvoiceLineEntityInfos();
@@ -214,7 +215,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			base.AddElementFieldInfo("ArbitrationEntity", "ArbitrationId", typeof(System.Int32), true, false, true, false,  (int)ArbitrationFieldIndex.ArbitrationId, 0, 0, 10);
 			base.AddElementFieldInfo("ArbitrationEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.AssessmentId, 0, 0, 10);
-			base.AddElementFieldInfo("ArbitrationEntity", "StartDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)ArbitrationFieldIndex.StartDate, 0, 0, 0);
+			base.AddElementFieldInfo("ArbitrationEntity", "StartDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.StartDate, 0, 0, 0);
 			base.AddElementFieldInfo("ArbitrationEntity", "EndDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.EndDate, 0, 0, 0);
 			base.AddElementFieldInfo("ArbitrationEntity", "AvailableDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.AvailableDate, 0, 0, 0);
 			base.AddElementFieldInfo("ArbitrationEntity", "DefenseLawyerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.DefenseLawyerId, 0, 0, 10);
@@ -492,6 +493,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			base.AddElementFieldInfo("InvoiceEntity", "Total", typeof(System.Int32), false, false, false, false,  (int)InvoiceFieldIndex.Total, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceEntity", "InvoiceTypeId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.InvoiceTypeId, 0, 0, 10);
 			base.AddElementFieldInfo("InvoiceEntity", "PayableToId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.PayableToId, 0, 0, 10);
+		}
+		/// <summary>Inits InvoiceAppointmentEntity's FieldInfo objects</summary>
+		private void InitInvoiceAppointmentEntityInfos()
+		{
+			base.AddElementFieldInfo("InvoiceAppointmentEntity", "InvoiceAppointmentId", typeof(System.Int32), true, false, true, false,  (int)InvoiceAppointmentFieldIndex.InvoiceAppointmentId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceAppointmentEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceAppointmentFieldIndex.InvoiceId, 0, 0, 10);
+			base.AddElementFieldInfo("InvoiceAppointmentEntity", "AppointmentId", typeof(System.Int32), false, true, false, false,  (int)InvoiceAppointmentFieldIndex.AppointmentId, 0, 0, 10);
 		}
 		/// <summary>Inits InvoiceDocumentEntity's FieldInfo objects</summary>
 		private void InitInvoiceDocumentEntityInfos()

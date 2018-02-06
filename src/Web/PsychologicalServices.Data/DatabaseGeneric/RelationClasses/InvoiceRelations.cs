@@ -30,6 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.InvoiceAppointmentEntityUsingInvoiceId);
 			toReturn.Add(this.InvoiceDocumentEntityUsingInvoiceId);
 			toReturn.Add(this.InvoiceLineGroupEntityUsingInvoiceId);
 			toReturn.Add(this.InvoiceStatusChangeEntityUsingInvoiceId);
@@ -41,6 +42,21 @@ namespace PsychologicalServices.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between InvoiceEntity and InvoiceAppointmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// Invoice.InvoiceId - InvoiceAppointment.InvoiceId
+		/// </summary>
+		public virtual IEntityRelation InvoiceAppointmentEntityUsingInvoiceId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceAppointments" , true);
+				relation.AddEntityFieldPair(InvoiceFields.InvoiceId, InvoiceAppointmentFields.InvoiceId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceAppointmentEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between InvoiceEntity and InvoiceDocumentEntity over the 1:n relation they have, using the relation between the fields:
 		/// Invoice.InvoiceId - InvoiceDocument.InvoiceId

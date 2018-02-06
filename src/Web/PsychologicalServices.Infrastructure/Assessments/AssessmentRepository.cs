@@ -1091,7 +1091,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     if (null != arbitrationEntity)
                     {
                         arbitrationEntity.Title = arbitration.Title;
-                        arbitrationEntity.StartDate = arbitration.StartDate;
+
+                        if (null == arbitration.StartDate)
+                        {
+                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.StartDate, null);
+                        }
+                        else
+                        {
+                            arbitrationEntity.StartDate = arbitration.StartDate;
+                        }
 
                         if (null == arbitration.EndDate)
                         {

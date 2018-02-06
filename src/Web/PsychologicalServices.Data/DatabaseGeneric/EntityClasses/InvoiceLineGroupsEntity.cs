@@ -26,26 +26,27 @@ namespace PsychologicalServices.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 
 	/// <summary>
-	/// Entity class which represents the entity 'Arbitration'.<br/><br/>
+	/// Entity class which represents the entity 'InvoiceLineGroups'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class ArbitrationEntity : CommonEntityBase, ISerializable
+	public partial class InvoiceLineGroupsEntity : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
+		private EntityCollection<InvoiceLineEntity> _invoiceLines;
 
-
-		private AssessmentEntity _assessment;
-		private ContactEntity _defenseLawyer;
-		private NoteEntity _note;
+		private InvoiceEntity _invoice;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -55,26 +56,23 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Assessment</summary>
-			public static readonly string Assessment = "Assessment";
-			/// <summary>Member name DefenseLawyer</summary>
-			public static readonly string DefenseLawyer = "DefenseLawyer";
-			/// <summary>Member name Note</summary>
-			public static readonly string Note = "Note";
-
+			/// <summary>Member name Invoice</summary>
+			public static readonly string Invoice = "Invoice";
+			/// <summary>Member name InvoiceLines</summary>
+			public static readonly string InvoiceLines = "InvoiceLines";
 
 
 		}
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static ArbitrationEntity()
+		static InvoiceLineGroupsEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 
 		/// <summary> CTor</summary>
-		public ArbitrationEntity():base("ArbitrationEntity")
+		public InvoiceLineGroupsEntity():base("InvoiceLineGroupsEntity")
 		{
 			InitClassEmpty(null, CreateFields());
 		}
@@ -82,62 +80,52 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public ArbitrationEntity(IEntityFields2 fields):base("ArbitrationEntity")
+		public InvoiceLineGroupsEntity(IEntityFields2 fields):base("InvoiceLineGroupsEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this ArbitrationEntity</param>
-		public ArbitrationEntity(IValidator validator):base("ArbitrationEntity")
+		/// <param name="validator">The custom validator object for this InvoiceLineGroupsEntity</param>
+		public InvoiceLineGroupsEntity(IValidator validator):base("InvoiceLineGroupsEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
 		}
 				
 
 		/// <summary> CTor</summary>
-		/// <param name="arbitrationId">PK value for Arbitration which data should be fetched into this Arbitration object</param>
+		/// <param name="invoiceLineGroupId">PK value for InvoiceLineGroups which data should be fetched into this InvoiceLineGroups object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ArbitrationEntity(System.Int32 arbitrationId):base("ArbitrationEntity")
+		public InvoiceLineGroupsEntity(System.Int32 invoiceLineGroupId):base("InvoiceLineGroupsEntity")
 		{
 			InitClassEmpty(null, CreateFields());
-			this.ArbitrationId = arbitrationId;
+			this.InvoiceLineGroupId = invoiceLineGroupId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="arbitrationId">PK value for Arbitration which data should be fetched into this Arbitration object</param>
-		/// <param name="validator">The custom validator object for this ArbitrationEntity</param>
+		/// <param name="invoiceLineGroupId">PK value for InvoiceLineGroups which data should be fetched into this InvoiceLineGroups object</param>
+		/// <param name="validator">The custom validator object for this InvoiceLineGroupsEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ArbitrationEntity(System.Int32 arbitrationId, IValidator validator):base("ArbitrationEntity")
+		public InvoiceLineGroupsEntity(System.Int32 invoiceLineGroupId, IValidator validator):base("InvoiceLineGroupsEntity")
 		{
 			InitClassEmpty(validator, CreateFields());
-			this.ArbitrationId = arbitrationId;
+			this.InvoiceLineGroupId = invoiceLineGroupId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected ArbitrationEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected InvoiceLineGroupsEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_invoiceLines = (EntityCollection<InvoiceLineEntity>)info.GetValue("_invoiceLines", typeof(EntityCollection<InvoiceLineEntity>));
 
-
-				_assessment = (AssessmentEntity)info.GetValue("_assessment", typeof(AssessmentEntity));
-				if(_assessment!=null)
+				_invoice = (InvoiceEntity)info.GetValue("_invoice", typeof(InvoiceEntity));
+				if(_invoice!=null)
 				{
-					_assessment.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
-				_defenseLawyer = (ContactEntity)info.GetValue("_defenseLawyer", typeof(ContactEntity));
-				if(_defenseLawyer!=null)
-				{
-					_defenseLawyer.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
-				_note = (NoteEntity)info.GetValue("_note", typeof(NoteEntity));
-				if(_note!=null)
-				{
-					_note.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_invoice.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 
 				base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
@@ -145,6 +133,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 		
@@ -152,16 +141,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((ArbitrationFieldIndex)fieldIndex)
+			switch((InvoiceLineGroupsFieldIndex)fieldIndex)
 			{
-				case ArbitrationFieldIndex.AssessmentId:
-					DesetupSyncAssessment(true, false);
-					break;
-				case ArbitrationFieldIndex.DefenseLawyerId:
-					DesetupSyncDefenseLawyer(true, false);
-					break;
-				case ArbitrationFieldIndex.NoteId:
-					DesetupSyncNote(true, false);
+				case InvoiceLineGroupsFieldIndex.InvoiceId:
+					DesetupSyncInvoice(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -185,16 +168,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Assessment":
-					this.Assessment = (AssessmentEntity)entity;
+				case "Invoice":
+					this.Invoice = (InvoiceEntity)entity;
 					break;
-				case "DefenseLawyer":
-					this.DefenseLawyer = (ContactEntity)entity;
+				case "InvoiceLines":
+					this.InvoiceLines.Add((InvoiceLineEntity)entity);
 					break;
-				case "Note":
-					this.Note = (NoteEntity)entity;
-					break;
-
 
 
 				default:
@@ -207,7 +186,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
 		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			return ArbitrationEntity.GetRelationsForField(fieldName);
+			return InvoiceLineGroupsEntity.GetRelationsForField(fieldName);
 		}
 
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -218,16 +197,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Assessment":
-					toReturn.Add(ArbitrationEntity.Relations.AssessmentEntityUsingAssessmentId);
+				case "Invoice":
+					toReturn.Add(InvoiceLineGroupsEntity.Relations.InvoiceEntityUsingInvoiceId);
 					break;
-				case "DefenseLawyer":
-					toReturn.Add(ArbitrationEntity.Relations.ContactEntityUsingDefenseLawyerId);
+				case "InvoiceLines":
+					toReturn.Add(InvoiceLineGroupsEntity.Relations.InvoiceLineEntityUsingInvoiceLineGroupId);
 					break;
-				case "Note":
-					toReturn.Add(ArbitrationEntity.Relations.NoteEntityUsingNoteId);
-					break;
-
 
 
 				default:
@@ -252,8 +227,6 @@ namespace PsychologicalServices.Data.EntityClasses
 					return ((numberOfOneWayRelations > 0) || base.CheckOneWayRelations(null));
 
 
-
-
 				default:
 					return base.CheckOneWayRelations(propertyName);
 			}
@@ -267,16 +240,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Assessment":
-					SetupSyncAssessment(relatedEntity);
+				case "Invoice":
+					SetupSyncInvoice(relatedEntity);
 					break;
-				case "DefenseLawyer":
-					SetupSyncDefenseLawyer(relatedEntity);
+				case "InvoiceLines":
+					this.InvoiceLines.Add((InvoiceLineEntity)relatedEntity);
 					break;
-				case "Note":
-					SetupSyncNote(relatedEntity);
-					break;
-
 
 				default:
 					break;
@@ -292,16 +261,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Assessment":
-					DesetupSyncAssessment(false, true);
+				case "Invoice":
+					DesetupSyncInvoice(false, true);
 					break;
-				case "DefenseLawyer":
-					DesetupSyncDefenseLawyer(false, true);
+				case "InvoiceLines":
+					base.PerformRelatedEntityRemoval(this.InvoiceLines, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "Note":
-					DesetupSyncNote(false, true);
-					break;
-
 
 				default:
 					break;
@@ -323,17 +288,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_assessment!=null)
+			if(_invoice!=null)
 			{
-				toReturn.Add(_assessment);
-			}
-			if(_defenseLawyer!=null)
-			{
-				toReturn.Add(_defenseLawyer);
-			}
-			if(_note!=null)
-			{
-				toReturn.Add(_note);
+				toReturn.Add(_invoice);
 			}
 
 			return toReturn;
@@ -344,7 +301,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-
+			toReturn.Add(this.InvoiceLines);
 
 			return toReturn;
 		}
@@ -359,16 +316,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_invoiceLines", ((_invoiceLines!=null) && (_invoiceLines.Count>0) && !this.MarkedForDeletion)?_invoiceLines:null);
 
-
-				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
-				info.AddValue("_defenseLawyer", (!this.MarkedForDeletion?_defenseLawyer:null));
-				info.AddValue("_note", (!this.MarkedForDeletion?_note:null));
+				info.AddValue("_invoice", (!this.MarkedForDeletion?_invoice:null));
 
 			}
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -376,7 +332,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the current value is NULL, use <see cref="TestCurrentFieldValueForNull"/> for that.</summary>
 		/// <param name="fieldIndex">Index of the field to test if that field was NULL in the persistent storage</param>
 		/// <returns>true if the field with the passed in index was NULL in the persistent storage, false otherwise</returns>
-		public bool TestOriginalFieldValueForNull(ArbitrationFieldIndex fieldIndex)
+		public bool TestOriginalFieldValueForNull(InvoiceLineGroupsFieldIndex fieldIndex)
 		{
 			return base.Fields[(int)fieldIndex].IsNull;
 		}
@@ -385,7 +341,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// Should not be used for testing if the original value (read from the db) is NULL</summary>
 		/// <param name="fieldIndex">Index of the field to test if its currentvalue is null/undefined</param>
 		/// <returns>true if the field's value isn't defined yet, false otherwise</returns>
-		public bool TestCurrentFieldValueForNull(ArbitrationFieldIndex fieldIndex)
+		public bool TestCurrentFieldValueForNull(InvoiceLineGroupsFieldIndex fieldIndex)
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
@@ -395,39 +351,28 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		public override List<IEntityRelation> GetAllRelations()
 		{
-			return new ArbitrationRelations().GetAllRelations();
+			return new InvoiceLineGroupsRelations().GetAllRelations();
 		}
 		
 
-
-
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Assessment' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// the related entities of type 'InvoiceLine' to this entity. Use DataAccessAdapter.FetchEntityCollection() to fetch these related entities.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoAssessment()
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceLines()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineFields.InvoiceLineGroupId, null, ComparisonOperator.Equal, this.InvoiceLineGroupId));
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Contact' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoDefenseLawyer()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ContactFields.ContactId, null, ComparisonOperator.Equal, this.DefenseLawyerId));
-			return bucket;
-		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch
-		/// the related entity of type 'Note' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
+		/// the related entity of type 'Invoice' to this entity. Use DataAccessAdapter.FetchNewEntity() to fetch this related entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoNote()
+		public virtual IRelationPredicateBucket GetRelationInfoInvoice()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceFields.InvoiceId, null, ComparisonOperator.Equal, this.InvoiceId));
 			return bucket;
 		}
 
@@ -436,7 +381,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
 		protected virtual IEntityFields2 CreateFields()
 		{
-			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.ArbitrationEntity);
+			return EntityFieldsFactory.CreateEntityFieldsObject(PsychologicalServices.Data.EntityType.InvoiceLineGroupsEntity);
 		}
 
 		/// <summary>
@@ -451,7 +396,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineGroupsEntityFactory));
 		}
 #if !CF
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -459,7 +404,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-
+			collectionsQueue.Enqueue(this._invoiceLines);
 
 		}
 		
@@ -468,7 +413,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-
+			this._invoiceLines = (EntityCollection<InvoiceLineEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -476,7 +421,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>true if the entity has populated member collections.</returns>
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
-
+			if (this._invoiceLines != null)
+			{
+				return true;
+			}
 
 			return base.HasPopulatedMemberEntityCollections();
 		}
@@ -487,7 +435,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceLineEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineEntityFactory))) : null);
 
 		}
 #endif
@@ -498,10 +446,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Assessment", _assessment);
-			toReturn.Add("DefenseLawyer", _defenseLawyer);
-			toReturn.Add("Note", _note);
-
+			toReturn.Add("Invoice", _invoice);
+			toReturn.Add("InvoiceLines", _invoiceLines);
 
 
 			return toReturn;
@@ -510,19 +456,14 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-
-
-			if(_assessment!=null)
+			if(_invoiceLines!=null)
 			{
-				_assessment.ActiveContext = base.ActiveContext;
+				_invoiceLines.ActiveContext = base.ActiveContext;
 			}
-			if(_defenseLawyer!=null)
+
+			if(_invoice!=null)
 			{
-				_defenseLawyer.ActiveContext = base.ActiveContext;
-			}
-			if(_note!=null)
-			{
-				_note.ActiveContext = base.ActiveContext;
+				_invoice.ActiveContext = base.ActiveContext;
 			}
 
 		}
@@ -531,16 +472,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected virtual void InitClassMembers()
 		{
 
+			_invoiceLines = null;
 
-
-			_assessment = null;
-			_defenseLawyer = null;
-			_note = null;
+			_invoice = null;
 
 			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -554,125 +494,44 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ArbitrationId", fieldHashtable);
+			_fieldsCustomProperties.Add("InvoiceLineGroupId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("AssessmentId", fieldHashtable);
+			_fieldsCustomProperties.Add("InvoiceId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
+			_fieldsCustomProperties.Add("Description", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("AvailableDate", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("DefenseLawyerId", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("DefenseFileNumber", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("Title", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-
-			_fieldsCustomProperties.Add("NoteId", fieldHashtable);
+			_fieldsCustomProperties.Add("Sort", fieldHashtable);
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _assessment</summary>
+		/// <summary> Removes the sync logic for member _invoice</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncAssessment(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncInvoice(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", ArbitrationEntity.Relations.AssessmentEntityUsingAssessmentId, true, signalRelatedEntity, "Arbitrations", resetFKFields, new int[] { (int)ArbitrationFieldIndex.AssessmentId } );		
-			_assessment = null;
+			base.PerformDesetupSyncRelatedEntity( _invoice, new PropertyChangedEventHandler( OnInvoicePropertyChanged ), "Invoice", InvoiceLineGroupsEntity.Relations.InvoiceEntityUsingInvoiceId, true, signalRelatedEntity, "InvoiceLineGroups", resetFKFields, new int[] { (int)InvoiceLineGroupsFieldIndex.InvoiceId } );		
+			_invoice = null;
 		}
 
-		/// <summary> setups the sync logic for member _assessment</summary>
+		/// <summary> setups the sync logic for member _invoice</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncAssessment(IEntity2 relatedEntity)
+		private void SetupSyncInvoice(IEntity2 relatedEntity)
 		{
-			if(_assessment!=relatedEntity)
+			if(_invoice!=relatedEntity)
 			{
-				DesetupSyncAssessment(true, true);
-				_assessment = (AssessmentEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _assessment, new PropertyChangedEventHandler( OnAssessmentPropertyChanged ), "Assessment", ArbitrationEntity.Relations.AssessmentEntityUsingAssessmentId, true, new string[] {  } );
+				DesetupSyncInvoice(true, true);
+				_invoice = (InvoiceEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _invoice, new PropertyChangedEventHandler( OnInvoicePropertyChanged ), "Invoice", InvoiceLineGroupsEntity.Relations.InvoiceEntityUsingInvoiceId, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnAssessmentPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
-		/// <summary> Removes the sync logic for member _defenseLawyer</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncDefenseLawyer(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _defenseLawyer, new PropertyChangedEventHandler( OnDefenseLawyerPropertyChanged ), "DefenseLawyer", ArbitrationEntity.Relations.ContactEntityUsingDefenseLawyerId, true, signalRelatedEntity, "Arbitrations", resetFKFields, new int[] { (int)ArbitrationFieldIndex.DefenseLawyerId } );		
-			_defenseLawyer = null;
-		}
-
-		/// <summary> setups the sync logic for member _defenseLawyer</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncDefenseLawyer(IEntity2 relatedEntity)
-		{
-			if(_defenseLawyer!=relatedEntity)
-			{
-				DesetupSyncDefenseLawyer(true, true);
-				_defenseLawyer = (ContactEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _defenseLawyer, new PropertyChangedEventHandler( OnDefenseLawyerPropertyChanged ), "DefenseLawyer", ArbitrationEntity.Relations.ContactEntityUsingDefenseLawyerId, true, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnDefenseLawyerPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
-		/// <summary> Removes the sync logic for member _note</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncNote(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", ArbitrationEntity.Relations.NoteEntityUsingNoteId, true, signalRelatedEntity, "Arbitration", resetFKFields, new int[] { (int)ArbitrationFieldIndex.NoteId } );		
-			_note = null;
-		}
-
-		/// <summary> setups the sync logic for member _note</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncNote(IEntity2 relatedEntity)
-		{
-			if(_note!=relatedEntity)
-			{
-				DesetupSyncNote(true, true);
-				_note = (NoteEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _note, new PropertyChangedEventHandler( OnNotePropertyChanged ), "Note", ArbitrationEntity.Relations.NoteEntityUsingNoteId, true, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnNotePropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnInvoicePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -683,7 +542,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this ArbitrationEntity</param>
+		/// <param name="validator">The validator object for this InvoiceLineGroupsEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		protected virtual void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -696,15 +555,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 		}
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static ArbitrationRelations Relations
+		public  static InvoiceLineGroupsRelations Relations
 		{
-			get	{ return new ArbitrationRelations(); }
+			get	{ return new InvoiceLineGroupsRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -714,41 +574,28 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceLine' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathAssessment
+		public static IPrefetchPathElement2 PrefetchPathInvoiceLines
 		{
 			get
 			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Assessment")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessment", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+				return new PrefetchPathElement2( new EntityCollection<InvoiceLineEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineEntityFactory))),
+					(IEntityRelation)GetRelationsForField("InvoiceLines")[0], (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupsEntity, (int)PsychologicalServices.Data.EntityType.InvoiceLineEntity, 0, null, null, null, null, "InvoiceLines", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Contact' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathDefenseLawyer
-		{
-			get
-			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ContactEntityFactory))),
-					(IEntityRelation)GetRelationsForField("DefenseLawyer")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.ContactEntity, 0, null, null, null, null, "DefenseLawyer", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Invoice' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath2 instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathNote
+		public static IPrefetchPathElement2 PrefetchPathInvoice
 		{
 			get
 			{
-				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))),
-					(IEntityRelation)GetRelationsForField("Note")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "Note", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+				return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))),
+					(IEntityRelation)GetRelationsForField("Invoice")[0], (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupsEntity, (int)PsychologicalServices.Data.EntityType.InvoiceEntity, 0, null, null, null, null, "Invoice", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -758,7 +605,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, string> CustomPropertiesOfType
 		{
-			get { return ArbitrationEntity.CustomProperties;}
+			get { return InvoiceLineGroupsEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value
@@ -774,209 +621,99 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
-			get { return ArbitrationEntity.FieldsCustomProperties;}
+			get { return InvoiceLineGroupsEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The ArbitrationId property of the Entity Arbitration<br/><br/>
+		/// <summary> The InvoiceLineGroupId property of the Entity InvoiceLineGroups<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."ArbitrationId"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceLineGroups"."InvoiceLineGroupId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ArbitrationId
+		public virtual System.Int32 InvoiceLineGroupId
 		{
-			get { return (System.Int32)GetValue((int)ArbitrationFieldIndex.ArbitrationId, true); }
-			set	{ SetValue((int)ArbitrationFieldIndex.ArbitrationId, value); }
+			get { return (System.Int32)GetValue((int)InvoiceLineGroupsFieldIndex.InvoiceLineGroupId, true); }
+			set	{ SetValue((int)InvoiceLineGroupsFieldIndex.InvoiceLineGroupId, value); }
 		}
 
-		/// <summary> The AssessmentId property of the Entity Arbitration<br/><br/>
+		/// <summary> The InvoiceId property of the Entity InvoiceLineGroups<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."AssessmentId"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceLineGroups"."InvoiceId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AssessmentId
+		public virtual System.Int32 InvoiceId
 		{
-			get { return (System.Int32)GetValue((int)ArbitrationFieldIndex.AssessmentId, true); }
-			set	{ SetValue((int)ArbitrationFieldIndex.AssessmentId, value); }
+			get { return (System.Int32)GetValue((int)InvoiceLineGroupsFieldIndex.InvoiceId, true); }
+			set	{ SetValue((int)InvoiceLineGroupsFieldIndex.InvoiceId, value); }
 		}
 
-		/// <summary> The StartDate property of the Entity Arbitration<br/><br/>
+		/// <summary> The Description property of the Entity InvoiceLineGroups<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."StartDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTimeOffset> StartDate
-		{
-			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ArbitrationFieldIndex.StartDate, false); }
-			set	{ SetValue((int)ArbitrationFieldIndex.StartDate, value); }
-		}
-
-		/// <summary> The EndDate property of the Entity Arbitration<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."EndDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTimeOffset> EndDate
-		{
-			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ArbitrationFieldIndex.EndDate, false); }
-			set	{ SetValue((int)ArbitrationFieldIndex.EndDate, value); }
-		}
-
-		/// <summary> The AvailableDate property of the Entity Arbitration<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."AvailableDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.DateTimeOffset> AvailableDate
-		{
-			get { return (Nullable<System.DateTimeOffset>)GetValue((int)ArbitrationFieldIndex.AvailableDate, false); }
-			set	{ SetValue((int)ArbitrationFieldIndex.AvailableDate, value); }
-		}
-
-		/// <summary> The DefenseLawyerId property of the Entity Arbitration<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."DefenseLawyerId"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> DefenseLawyerId
-		{
-			get { return (Nullable<System.Int32>)GetValue((int)ArbitrationFieldIndex.DefenseLawyerId, false); }
-			set	{ SetValue((int)ArbitrationFieldIndex.DefenseLawyerId, value); }
-		}
-
-		/// <summary> The DefenseFileNumber property of the Entity Arbitration<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."DefenseFileNumber"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual System.String DefenseFileNumber
-		{
-			get { return (System.String)GetValue((int)ArbitrationFieldIndex.DefenseFileNumber, true); }
-			set	{ SetValue((int)ArbitrationFieldIndex.DefenseFileNumber, value); }
-		}
-
-		/// <summary> The Title property of the Entity Arbitration<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."Title"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 250<br/>
+		/// <remarks>Mapped on  table field: "InvoiceLineGroups"."Description"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 200<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Title
+		public virtual System.String Description
 		{
-			get { return (System.String)GetValue((int)ArbitrationFieldIndex.Title, true); }
-			set	{ SetValue((int)ArbitrationFieldIndex.Title, value); }
+			get { return (System.String)GetValue((int)InvoiceLineGroupsFieldIndex.Description, true); }
+			set	{ SetValue((int)InvoiceLineGroupsFieldIndex.Description, value); }
 		}
 
-		/// <summary> The NoteId property of the Entity Arbitration<br/><br/>
+		/// <summary> The Sort property of the Entity InvoiceLineGroups<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."NoteId"<br/>
+		/// <remarks>Mapped on  table field: "InvoiceLineGroups"."Sort"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> NoteId
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 Sort
 		{
-			get { return (Nullable<System.Int32>)GetValue((int)ArbitrationFieldIndex.NoteId, false); }
-			set	{ SetValue((int)ArbitrationFieldIndex.NoteId, value); }
+			get { return (System.Int32)GetValue((int)InvoiceLineGroupsFieldIndex.Sort, true); }
+			set	{ SetValue((int)InvoiceLineGroupsFieldIndex.Sort, value); }
 		}
 
-
-
-		/// <summary> Gets / sets related entity of type 'AssessmentEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual AssessmentEntity Assessment
+		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineEntity' which are related to this entity via a relation of type '1:n'.
+		/// If the EntityCollection hasn't been fetched yet, the collection returned will be empty.</summary>
+		[TypeContainedAttribute(typeof(InvoiceLineEntity))]
+		public virtual EntityCollection<InvoiceLineEntity> InvoiceLines
 		{
 			get
 			{
-				return _assessment;
+				if(_invoiceLines==null)
+				{
+					_invoiceLines = new EntityCollection<InvoiceLineEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineEntityFactory)));
+					_invoiceLines.SetContainingEntityInfo(this, "InvoiceLineGroup");
+				}
+				return _invoiceLines;
+			}
+		}
+
+
+		/// <summary> Gets / sets related entity of type 'InvoiceEntity' which has to be set using a fetch action earlier. If no related entity
+		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
+		[Browsable(false)]
+		public virtual InvoiceEntity Invoice
+		{
+			get
+			{
+				return _invoice;
 			}
 			set
 			{
 				if(base.IsDeserializing)
 				{
-					SetupSyncAssessment(value);
+					SetupSyncInvoice(value);
 				}
 				else
 				{
 					if(value==null)
 					{
-						if(_assessment != null)
+						if(_invoice != null)
 						{
-							_assessment.UnsetRelatedEntity(this, "Arbitrations");
+							_invoice.UnsetRelatedEntity(this, "InvoiceLineGroups");
 						}
 					}
 					else
 					{
-						if(_assessment!=value)
+						if(_invoice!=value)
 						{
-							((IEntity2)value).SetRelatedEntity(this, "Arbitrations");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets related entity of type 'ContactEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual ContactEntity DefenseLawyer
-		{
-			get
-			{
-				return _defenseLawyer;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncDefenseLawyer(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_defenseLawyer != null)
-						{
-							_defenseLawyer.UnsetRelatedEntity(this, "Arbitrations");
-						}
-					}
-					else
-					{
-						if(_defenseLawyer!=value)
-						{
-							((IEntity2)value).SetRelatedEntity(this, "Arbitrations");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets related entity of type 'NoteEntity' which has to be set using a fetch action earlier. If no related entity
-		/// is set for this property, null is returned. This property is not visible in databound grids.</summary>
-		[Browsable(false)]
-		public virtual NoteEntity Note
-		{
-			get
-			{
-				return _note;
-			}
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncNote(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_note != null)
-						{
-							_note.UnsetRelatedEntity(this, "Arbitration");
-						}
-					}
-					else
-					{
-						if(_note!=value)
-						{
-							((IEntity2)value).SetRelatedEntity(this, "Arbitration");
+							((IEntity2)value).SetRelatedEntity(this, "InvoiceLineGroups");
 						}
 					}
 				}
@@ -1001,7 +738,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.ArbitrationEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupsEntity; }
 		}
 		#endregion
 
@@ -1010,6 +747,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

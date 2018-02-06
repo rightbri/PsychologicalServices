@@ -175,6 +175,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceAppointmentEntity:
+					toReturn = this.InvoiceAppointment;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
 					toReturn = this.InvoiceDocument;
 					break;
@@ -492,6 +495,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<InvoiceEntity> Invoice
 		{
 			get { return new DataSource2<InvoiceEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceAppointmentEntity instances in the database.</summary>
+		public DataSource2<InvoiceAppointmentEntity> InvoiceAppointment
+		{
+			get { return new DataSource2<InvoiceAppointmentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceDocumentEntity instances in the database.</summary>
