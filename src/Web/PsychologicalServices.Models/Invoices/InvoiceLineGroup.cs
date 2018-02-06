@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using System;
 using System.Collections.Generic;
 
@@ -15,5 +16,7 @@ namespace PsychologicalServices.Models.Invoices
         public IEnumerable<InvoiceLine> Lines { get; set; }
 
         public Appointment Appointment { get; set; }
+
+        public Arbitration Arbitration { get; set; }
     }
 }

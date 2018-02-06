@@ -193,6 +193,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupAppointmentEntity:
 					toReturn = this.InvoiceLineGroupAppointment;
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity:
+					toReturn = this.InvoiceLineGroupArbitration;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceStatusEntity:
 					toReturn = this.InvoiceStatus;
 					break;
@@ -540,6 +543,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<InvoiceLineGroupAppointmentEntity> InvoiceLineGroupAppointment
 		{
 			get { return new DataSource2<InvoiceLineGroupAppointmentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineGroupArbitrationEntity instances in the database.</summary>
+		public DataSource2<InvoiceLineGroupArbitrationEntity> InvoiceLineGroupArbitration
+		{
+			get { return new DataSource2<InvoiceLineGroupArbitrationEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceStatusEntity instances in the database.</summary>

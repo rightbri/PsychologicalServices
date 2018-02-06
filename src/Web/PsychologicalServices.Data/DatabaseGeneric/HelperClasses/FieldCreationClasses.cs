@@ -356,6 +356,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.NoteId);}
 		}
+		/// <summary>Creates a new ArbitrationEntity.ClaimantId field instance</summary>
+		public static EntityField2 ClaimantId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ClaimantId);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.NotifiedDate field instance</summary>
+		public static EntityField2 NotifiedDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.NotifiedDate);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.LetterOfUnderstandingSentDate field instance</summary>
+		public static EntityField2 LetterOfUnderstandingSentDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.LetterOfUnderstandingSentDate);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.PlaintiffLawyerId field instance</summary>
+		public static EntityField2 PlaintiffLawyerId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.PlaintiffLawyerId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentEntity</summary>
@@ -1361,6 +1381,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceLineId);}
 		}
+		/// <summary>Creates a new InvoiceLineEntity.InvoiceAppointmentId field instance</summary>
+		public static EntityField2 InvoiceAppointmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceAppointmentId);}
+		}
 		/// <summary>Creates a new InvoiceLineEntity.Description field instance</summary>
 		public static EntityField2 Description
 		{
@@ -1425,6 +1450,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 AppointmentId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupAppointmentFieldIndex.AppointmentId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity InvoiceLineGroupArbitrationEntity</summary>
+	public partial class InvoiceLineGroupArbitrationFields
+	{
+		/// <summary>Creates a new InvoiceLineGroupArbitrationEntity.InvoiceLineGroupId field instance</summary>
+		public static EntityField2 InvoiceLineGroupId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupArbitrationFieldIndex.InvoiceLineGroupId);}
+		}
+		/// <summary>Creates a new InvoiceLineGroupArbitrationEntity.ArbitrationId field instance</summary>
+		public static EntityField2 ArbitrationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupArbitrationFieldIndex.ArbitrationId);}
 		}
 	}
 

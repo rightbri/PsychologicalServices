@@ -18,13 +18,19 @@ namespace PsychologicalServices.Models.Arbitrations
             _arbitrationRepository = arbitrationRepository;
         }
 
+        public Arbitration GetArbitration(int arbitrationId)
+        {
+            var arbitration = _arbitrationRepository.GetArbitration(arbitrationId);
+
+            return arbitration;
+        }
+
         public Arbitration GetNewArbitration(int assessmentId)
         {
             var assessment = _assessmentRepository.GetAssessment(assessmentId);
 
             return new Arbitration
             {
-                Assessment = assessment,
             };
         }
 

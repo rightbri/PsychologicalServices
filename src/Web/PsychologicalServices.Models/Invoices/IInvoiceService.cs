@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Invoices
 
         Invoice CreatePsychometristInvoice(PsychometristInvoiceCreationParameters parameters);
 
+        Invoice CreateArbitrationInvoice(ArbitrationInvoiceCreationParameters parameters);
+
         InvoiceDocument GetInvoiceDocument(int invoiceDocumentId);
 
         PsychologistInvoiceSendResult SendPsychologistInvoiceDocument(PsychologistInvoiceSendParameters parameters);

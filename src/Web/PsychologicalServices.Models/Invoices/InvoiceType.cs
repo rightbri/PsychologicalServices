@@ -6,6 +6,7 @@ namespace PsychologicalServices.Models.Invoices
     {
         public const int Psychologist = 1;
         public const int Psychometrist = 2;
+        public const int Arbitration = 3;
 
         public int InvoiceTypeId { get; set; }
 

@@ -94,9 +94,11 @@
     <Compile Include="Events\IEventService.cs" />
     <Compile Include="Events\IEventValidator.cs" />
     <Compile Include="Invoices\AppointmentStatusInvoiceRate.cs" />
+    <Compile Include="Invoices\ArbitrationInvoiceCreationParameters.cs" />
     <Compile Include="Invoices\AssessmentTypeInvoiceAmount.cs" />
     <Compile Include="Invoices\IInvoiceConfigurationValidator.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
+    <Compile Include="Invoices\IArbitrationInvoiceGenerator.cs" />
     <Compile Include="Invoices\InvoiceConfiguration.cs" />
     <Compile Include="Invoices\InvoiceConfigurationValidator.cs" />
     <Compile Include="Invoices\InvoiceDefaults.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Invoices\InvoiceDocumentSendLog.cs" />
     <Compile Include="Invoices\InvoiceExtensions.cs" />
     <Compile Include="Invoices\InvoiceLineGroup.cs" />
+    <Compile Include="Invoices\ArbitrationInvoiceGenerator.cs" />
     <Compile Include="Invoices\PsychologistInvoiceCalculationData.cs" />
     <Compile Include="Invoices\IssueInDisputeInvoiceAmount.cs" />
     <Compile Include="Invoices\PsychologistInvoiceGenerator.cs" />
@@ -111,6 +114,11 @@
     <Compile Include="Invoices\PsychologistInvoiceSendModel.cs" />
     <Compile Include="Invoices\PsychologistInvoiceSendParameters.cs" />
     <Compile Include="Invoices\PsychologistInvoiceSendResult.cs" />
+    <Compile Include="Invoices\ArbitrationInvoiceTemplate.cs">
+      <DependentUpon>ArbitrationInvoiceTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Invoices\ReferralSourceInvoiceConfiguration.cs" />
     <Compile Include="Outstanding\IOutstandingRepository.cs" />
     <Compile Include="Outstanding\IOutstandingService.cs" />
@@ -350,6 +358,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Invoices\ArbitrationInvoiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ArbitrationInvoiceTemplate.cs</LastGenOutput>
+    </Content>
     <Content Include="Invoices\PsychologistInvoiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PsychologistInvoiceTemplate.cs</LastGenOutput>

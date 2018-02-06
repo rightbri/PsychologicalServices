@@ -4,20 +4,21 @@ using System.Linq;
 using PsychologicalServices.Models.Common.Validation;
 using PsychologicalServices.Models.Contacts;
 using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.Claims;
 
 namespace PsychologicalServices.Models.Arbitrations
 {
     public class ArbitrationValidator : IArbitrationValidator
     {
-        private readonly IAssessmentRepository _assessmentRepository = null;
+        private readonly IClaimRepository _claimRepository = null;
         private readonly IContactRepository _contactRepository = null;
 
         public ArbitrationValidator(
-            IAssessmentRepository assessmentRepository,
+            IClaimRepository claimRepository,
             IContactRepository contactRepository
         )
         {
-            _assessmentRepository = assessmentRepository;
+            _claimRepository = claimRepository;
             _contactRepository = contactRepository;
         }
 
@@ -33,14 +34,20 @@ namespace PsychologicalServices.Models.Arbitrations
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            if (null != item.Assessment)
+            if (null == item.Claimant)
             {
-                var assessment = _assessmentRepository.GetAssessment(item.Assessment.AssessmentId);
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "ClaimantId", Message = GetValidationMessage(item, "Claimant is required") }
+                );
+            }
+            else
+            {
+                var claimant = _claimRepository.GetClaimant(item.Claimant.ClaimantId);
 
-                if (null == assessment)
+                if (null == claimant)
                 {
                     result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "AssessmentId", Message = GetValidationMessage(item, "Invalid Assessment") }
+                        new ValidationError { PropertyName = "ClaimantId", Message = GetValidationMessage(item, "Invalid Claimant") }
                     );
                 }
             }

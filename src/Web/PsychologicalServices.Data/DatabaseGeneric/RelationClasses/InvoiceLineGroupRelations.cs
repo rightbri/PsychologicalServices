@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.InvoiceLineEntityUsingInvoiceLineGroupId);
 			toReturn.Add(this.InvoiceLineGroupAppointmentEntityUsingInvoiceLineGroupId);
+			toReturn.Add(this.InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupId);
 			toReturn.Add(this.InvoiceEntityUsingInvoiceId);
 			return toReturn;
 		}
@@ -67,6 +68,25 @@ namespace PsychologicalServices.Data.RelationClasses
 
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupAppointmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between InvoiceLineGroupEntity and InvoiceLineGroupArbitrationEntity over the 1:1 relation they have, using the relation between the fields:
+		/// InvoiceLineGroup.InvoiceLineGroupId - InvoiceLineGroupArbitration.InvoiceLineGroupId
+		/// </summary>
+		public virtual IEntityRelation InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "InvoiceLineGroupArbitration", true);
+
+				relation.AddEntityFieldPair(InvoiceLineGroupFields.InvoiceLineGroupId, InvoiceLineGroupArbitrationFields.InvoiceLineGroupId);
+
+
+
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupArbitrationEntity", false);
 				return relation;
 			}
 		}

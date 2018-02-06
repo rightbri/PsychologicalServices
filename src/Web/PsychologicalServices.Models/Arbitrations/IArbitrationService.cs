@@ -5,6 +5,8 @@ namespace PsychologicalServices.Models.Arbitrations
 {
     public interface IArbitrationService
     {
+        Arbitration GetArbitration(int arbitrationId);
+
         Arbitration GetNewArbitration(int assessmentId);
 
         IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria);

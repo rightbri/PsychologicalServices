@@ -201,13 +201,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     .Prefetch<AppointmentEntity>(invoiceAppointment => invoiceAppointment.Appointment)
                                         .SubPath(appointmentPath => appointmentPath
                                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
-                                                //.SubPath(appointmentStatusPath => appointmentStatusPath
-                                                //    .Prefetch<ReferralSourceAppointmentStatusSettingEntity>(appointmentStatus => appointmentStatus.ReferralSourceAppointmentStatusSettings)
-                                                //        .SubPath(referralSourceAppointmentStatusSettingPath => referralSourceAppointmentStatusSettingPath
-                                                //            .Prefetch<InvoiceTypeEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.InvoiceType)
-                                                //            .Prefetch<ReferralSourceEntity>(referralSourceAppointmentStatusSetting => referralSourceAppointmentStatusSetting.ReferralSource)
-                                                //        )
-                                                //)
                                             .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                                                 .SubPath(psychologistPath => psychologistPath
                                                     .Prefetch<UserTravelFeeEntity>(psychologist => psychologist.UserTravelFees)
@@ -260,6 +253,15 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                                 )
                                                         )
                                                 )
+                                        )
+                                )
+                            .Prefetch<InvoiceLineGroupArbitrationEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupArbitration)
+                                .SubPath(invoiceLineGroupArbitrationPath => invoiceLineGroupArbitrationPath
+                                    .Prefetch<ArbitrationEntity>(invoiceLineGroupArbitration => invoiceLineGroupArbitration.Arbitration)
+                                        .SubPath(arbitrationPath => arbitrationPath
+                                            .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
+                                            .Prefetch<ContactEntity>(arbitration => arbitration.DefenseLawyer)
+                                            .Prefetch<ContactEntity>(arbitration => arbitration.PlaintiffLawyer)
                                         )
                                 )
                         )
@@ -572,9 +574,14 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                 (
                                     lg.Description != lineGroup.Description ||
                                     lg.Sort != lineGroup.Sort ||
+                                    //appointment
                                     (null != lg.Appointment && null != lineGroup.InvoiceLineGroupAppointment && lg.Appointment.AppointmentId != lineGroup.InvoiceLineGroupAppointment.AppointmentId) ||
                                     (null != lg.Appointment && null == lineGroup.InvoiceLineGroupAppointment) ||
                                     (null == lg.Appointment && null != lineGroup.InvoiceLineGroupAppointment) ||
+                                    //arbitration
+                                    (null != lg.Arbitration && null != lineGroup.InvoiceLineGroupArbitration && lg.Arbitration.ArbitrationId != lineGroup.InvoiceLineGroupArbitration.ArbitrationId) ||
+                                    (null != lg.Arbitration && null == lineGroup.InvoiceLineGroupArbitration) ||
+                                    (null == lg.Arbitration && null != lineGroup.InvoiceLineGroupArbitration) ||
                                     //new lines
                                     lg.Lines.Any(line => !lineGroup.InvoiceLines.Any(invoiceLine => invoiceLine.InvoiceLineId == line.InvoiceLineId)) ||
                                     lineGroup.InvoiceLines.Any(invoiceLine =>
@@ -602,6 +609,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             lineGroupEntity.Description = lg.Description;
                             lineGroupEntity.Sort = lg.Sort;
 
+                            //appointment
                             if (null != lg.Appointment && null != lineGroupEntity.InvoiceLineGroupAppointment && lg.Appointment.AppointmentId != lineGroupEntity.InvoiceLineGroupAppointment.AppointmentId)
                             {
                                 lineGroupEntity.InvoiceLineGroupAppointment.AppointmentId = lg.Appointment.AppointmentId;
@@ -618,6 +626,25 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             if (null == lg.Appointment && null != lineGroupEntity.InvoiceLineGroupAppointment)
                             {
                                 uow.AddForDelete(lineGroupEntity.InvoiceLineGroupAppointment);
+                            }
+
+                            //arbitration
+                            if (null != lg.Arbitration && null != lineGroupEntity.InvoiceLineGroupArbitration && lg.Arbitration.ArbitrationId != lineGroupEntity.InvoiceLineGroupArbitration.ArbitrationId)
+                            {
+                                lineGroupEntity.InvoiceLineGroupArbitration.ArbitrationId = lg.Arbitration.ArbitrationId;
+                            }
+
+                            if (null != lg.Arbitration && null == lineGroupEntity.InvoiceLineGroupArbitration)
+                            {
+                                lineGroupEntity.InvoiceLineGroupArbitration = new InvoiceLineGroupArbitrationEntity
+                                {
+                                    ArbitrationId = lg.Arbitration.ArbitrationId,
+                                };
+                            }
+
+                            if (null == lg.Arbitration && null != lineGroupEntity.InvoiceLineGroupArbitration)
+                            {
+                                uow.AddForDelete(lineGroupEntity.InvoiceLineGroupArbitration);
                             }
 
                             #region invoice lines
@@ -686,7 +713,12 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     {
                         Description = lg.Description,
                         Sort = lg.Sort,
-                        InvoiceLineGroupAppointment = new InvoiceLineGroupAppointmentEntity { AppointmentId = lg.Appointment.AppointmentId },
+                        InvoiceLineGroupAppointment = null != lg.Appointment
+                            ? new InvoiceLineGroupAppointmentEntity { AppointmentId = lg.Appointment.AppointmentId }
+                            : null,
+                        InvoiceLineGroupArbitration = null != lg.Arbitration
+                            ? new InvoiceLineGroupArbitrationEntity { ArbitrationId = lg.Arbitration.ArbitrationId }
+                            : null,
                     };
                     
                     lineGroup.InvoiceLines.AddRange(

@@ -1,4 +1,5 @@
 <template>
+	<require from="claimants/search-claimant"></require>
 	<require from="common/date-mask"></require>
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/elements/edit-panel"></require>
@@ -15,7 +16,20 @@
 						<input id="title" type="text" class="uk-input" value.bind="model.arbitration.title"/>
 					</div>
 				</div>
-						
+
+				<div>
+					<label class="uk-form-label">Claimant</label>
+					<div class="uk-form-controls">
+						<search-claimant claimant.bind="searchClaimant"></search-claimant>
+					</div>
+				</div>
+				
+				<div if.bind="searchClaimant">
+					<p>
+						${searchClaimant.firstName} ${searchClaimant.lastName}
+					</p>
+				</div>
+
 				<div>
 					<label class="uk-form-label" for="startDate">Start Date</label>
 					<div class="uk-form-controls">
@@ -30,17 +44,35 @@
 					</div>
 				</div>
 			
-				<div class="uk-width-1-1">
+				<div>
 					<label class="uk-form-label" for="availableDate">Available Date</label>
 					<div class="uk-form-controls">
 						<input id="availableDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.arbitration.availableDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
 					</div>
 				</div>
+
+				<div>
+					<label class="uk-form-label" for="notifiedDate">Notified Date</label>
+					<div class="uk-form-controls">
+						<input id="notifiedDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.arbitration.notifiedDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+					</div>
+				</div>
 			
 				<div>
-					<label class="uk-form-label" for="lawFirmContact">Law Firm Contact</label>
+					<label class="uk-form-label" for="letterOfUnderstandingSentDate">Letter of Understanding Sent Date</label>
 					<div class="uk-form-controls">
-						<select id="lawFirmContact" class="uk-select" value.bind="model.arbitration.defenseLawyer" matcher.bind="contactMatcher">
+						<input id="letterOfUnderstandingSentDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.arbitration.letterOfUnderstandingSentDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+					</div>
+				</div>
+
+				<div>
+					<!-- -->
+				</div>
+
+				<div>
+					<label class="uk-form-label" for="defenseLawyer">Defense Lawyer</label>
+					<div class="uk-form-controls">
+						<select id="defenseLawyer" class="uk-select" value.bind="model.arbitration.defenseLawyer" matcher.bind="contactMatcher">
 							<option></option>
 							<option repeat.for="contact of defenseLawyers" model.bind="contact">
 								${contact.firstName} ${contact.lastName} (${contact.contactType.name} - ${contact.employer.name})
@@ -54,6 +86,22 @@
 					<div class="uk-form-controls">
 						<input id="defenseFileNumber" type="text" class="uk-input" value.bind="model.arbitration.defenseFileNumber" />
 					</div>
+				</div>
+
+				<div>
+					<label class="uk-form-label" for="plaintiffLawyer">Plaintiff Lawyer</label>
+					<div class="uk-form-controls">
+						<select id="plaintiffLawyer" class="uk-select" value.bind="model.arbitration.plaintiffLawyer" matcher.bind="contactMatcher">
+							<option></option>
+							<option repeat.for="contact of plaintiffLawyers" model.bind="contact">
+								${contact.firstName} ${contact.lastName} (${contact.contactType.name} - ${contact.employer.name})
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div>
+					<!-- -->
 				</div>
 				
 				<div class="uk-width-1-1">

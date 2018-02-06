@@ -15,12 +15,17 @@ export class EditArbitration {
 		this.eventHelper = eventHelper;
 		
 		this.contactMatcher = (a, b) => a !== null && b !== null && a.contactId === b.contactId;
+
+		this.searchClaimant = null;
+		this.searchCompanyId = null;
 	}
 
 	modelChanged(oldValue, newValue) {
 		this.backup = getBackup(oldValue.arbitration);
 		
 		this.defenseLawyers = this.model.defenseLawyers;
+		this.plaintiffLawyers = this.model.plaintiffLawyers;
+		this.user = this.model.user;
 	}
 
 	ok(e) {

@@ -22,7 +22,17 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
         private static readonly Func<IPathEdgeRootParser<ArbitrationEntity>, IPathEdgeRootParser<ArbitrationEntity>>
             ArbitrationPath =
                 (arbitrationPath => arbitrationPath
+                    .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
                     .Prefetch<ContactEntity>(arbitration => arbitration.DefenseLawyer)
+                        .SubPath(contactPath => contactPath
+                            .Prefetch<ContactTypeEntity>(contact => contact.ContactType)
+                            .Prefetch<EmployerEntity>(contact => contact.Employer)
+                            .Prefetch<AddressEntity>(contact => contact.Address)
+                                .SubPath(addressPath => addressPath
+                                    .Prefetch<CityEntity>(address => address.City)
+                                )
+                        )
+                    .Prefetch<ContactEntity>(arbitration => arbitration.PlaintiffLawyer)
                         .SubPath(contactPath => contactPath
                             .Prefetch<ContactTypeEntity>(contact => contact.ContactType)
                             .Prefetch<EmployerEntity>(contact => contact.Employer)
@@ -40,6 +50,22 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
 
         #endregion
 
+        public Arbitration GetArbitration(int arbitrationId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var arbitration = meta.Arbitration
+                    .WithPath(ArbitrationPath)
+                    .Where(a => a.ArbitrationId == arbitrationId)
+                    .SingleOrDefault()
+                    .ToArbitration();
+
+                return arbitration;
+            }
+        }
+
         public IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -47,6 +73,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                 var meta = new LinqMetaData(adapter);
 
                 var arbitrations = meta.Arbitration
+                    .WithPath(ArbitrationPath)
                     .Where(arbitration =>
                         arbitration.StartDate <= criteria.EndDate &&
                         (arbitration.EndDate == null || arbitration.EndDate >= criteria.StartDate)

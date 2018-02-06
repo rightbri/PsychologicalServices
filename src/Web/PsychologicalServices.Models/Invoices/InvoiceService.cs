@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Common;
@@ -19,6 +20,7 @@ namespace PsychologicalServices.Models.Invoices
     {
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IAssessmentRepository _assessmentRepository = null;
+        private readonly IArbitrationRepository _arbitrationRepository = null;
         private readonly IClaimRepository _claimRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
         private readonly IReferralRepository _referralRepository = null;
@@ -28,6 +30,7 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IInvoiceConfigurationValidator _invoiceConfigurationValidator = null;
         private readonly IPsychologistInvoiceGenerator _psychologistInvoiceGenerator = null;
         private readonly IPsychometristInvoiceGenerator _psychometristInvoiceGenerator = null;
+        private readonly IArbitrationInvoiceGenerator _arbitrationInvoiceGenerator = null;
         private readonly IDate _date = null;
         private readonly ILog _log = null;
         private readonly ITimezoneService _timezoneService = null;
@@ -36,6 +39,7 @@ namespace PsychologicalServices.Models.Invoices
         public InvoiceService(
             IAppointmentRepository appointmentRepository,
             IAssessmentRepository assessmentRepository,
+            IArbitrationRepository arbitrationRepository,
             IClaimRepository claimRepository,
             ICompanyRepository companyRepository,
             IReferralRepository referralRepository,
@@ -45,6 +49,7 @@ namespace PsychologicalServices.Models.Invoices
             IInvoiceConfigurationValidator invoiceConfigurationValidator,
             IPsychologistInvoiceGenerator psychologistInvoiceGenerator,
             IPsychometristInvoiceGenerator psychometristInvoiceGenerator,
+            IArbitrationInvoiceGenerator arbitrationInvoiceGenerator,
             IDate date,
             ILog log,
             ITimezoneService timezoneService,
@@ -60,6 +65,7 @@ namespace PsychologicalServices.Models.Invoices
             _invoiceRepository = invoiceRepository;
             _psychologistInvoiceGenerator = psychologistInvoiceGenerator;
             _psychometristInvoiceGenerator = psychometristInvoiceGenerator;
+            _arbitrationInvoiceGenerator = arbitrationInvoiceGenerator;
             _invoiceValidator = invoiceValidator;
             _invoiceConfigurationValidator = invoiceConfigurationValidator;
             _date = date;
@@ -101,6 +107,27 @@ namespace PsychologicalServices.Models.Invoices
             return _invoiceRepository.GetInvoice(invoiceId);
         }
 
+        public Invoice CreateArbitrationInvoice(ArbitrationInvoiceCreationParameters parameters)
+        {
+            var psychologist = _userService.GetUserById(parameters.PsychologistId);
+
+            if (null == psychologist)
+            {
+                throw new ArgumentOutOfRangeException("parameters.PsychologistId", $"Cannot find psychologist with id {parameters.PsychologistId}");
+            }
+
+            var arbitration = _arbitrationRepository.GetArbitration(parameters.ArbitrationId);
+
+            if (null == arbitration)
+            {
+                throw new ArgumentOutOfRangeException("parameters.ArbitrationId", $"Cannot find arbitration with id {parameters.ArbitrationId}");
+            }
+
+            var invoice = _arbitrationInvoiceGenerator.CreateInvoice(psychologist, arbitration);
+
+            return invoice;
+        }
+
         public InvoiceDocument GetInvoiceDocument(int invoiceDocumentId)
         {
             var invoiceDocument = _invoiceRepository.GetInvoiceDocument(invoiceDocumentId);
@@ -128,6 +155,10 @@ namespace PsychologicalServices.Models.Invoices
             else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychometrist)
             {
                 invoiceLineGroups = _psychometristInvoiceGenerator.GetInvoiceLineGroups(invoice);
+            }
+            else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Arbitration)
+            {
+                invoiceLineGroups = _arbitrationInvoiceGenerator.GetInvoiceLineGroups(invoice);
             }
             else
             {
@@ -193,6 +224,9 @@ namespace PsychologicalServices.Models.Invoices
                             break;
                         case InvoiceType.Psychologist:
                             total = _psychologistInvoiceGenerator.GetInvoiceTotal(invoice);
+                            break;
+                        case InvoiceType.Arbitration:
+                            total = _arbitrationInvoiceGenerator.GetInvoiceTotal(invoice);
                             break;
                         default:
                             break;
