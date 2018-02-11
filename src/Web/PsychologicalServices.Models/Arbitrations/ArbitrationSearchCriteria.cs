@@ -9,5 +9,7 @@ namespace PsychologicalServices.Models.Arbitrations
         public DateTimeOffset EndDate { get; set; }
 
         public int? CompanyId { get; set; }
+
+        public int? ClaimantId { get; set; }
     }
 }

@@ -160,8 +160,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 ? new Arbitration
                 {
                     ArbitrationId = arbitration.ArbitrationId,
-                    Claimant = arbitration.Claimant.ToClaimant(),
                     Title = arbitration.Title,
+                    Claims = arbitration.ArbitrationClaims.Select(arbitrationClaim => arbitrationClaim.Claim.ToClaim()),
                     StartDate = arbitration.StartDate,
                     EndDate = arbitration.EndDate,
                     AvailableDate = arbitration.AvailableDate,
@@ -170,6 +170,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     DefenseLawyer = arbitration.DefenseLawyer.ToContact(),
                     DefenseFileNumber = arbitration.DefenseFileNumber,
                     PlaintiffLawyer = arbitration.PlaintiffLawyer.ToContact(),
+                    BillToContact = arbitration.BillToContact.ToContact(),
                     Note = arbitration.Note.ToNote(),
                 }
                 : null;

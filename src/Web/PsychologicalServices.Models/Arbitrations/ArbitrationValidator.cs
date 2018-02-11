@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using PsychologicalServices.Models.Common.Validation;
 using PsychologicalServices.Models.Contacts;
-using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Claims;
 
 namespace PsychologicalServices.Models.Arbitrations
@@ -34,21 +33,23 @@ namespace PsychologicalServices.Models.Arbitrations
                 ValidationErrors = new List<IValidationError>(),
             };
 
-            if (null == item.Claimant)
+            if (null == item.Claims || !item.Claims.Any())
             {
                 result.ValidationErrors.Add(
-                    new ValidationError { PropertyName = "ClaimantId", Message = GetValidationMessage(item, "Claimant is required") }
+                    new ValidationError { PropertyName = "Claims", Message = GetValidationMessage(item, "At least one claim must be selected") }
                 );
             }
             else
             {
-                var claimant = _claimRepository.GetClaimant(item.Claimant.ClaimantId);
-
-                if (null == claimant)
+                foreach (var claim in item.Claims)
                 {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "ClaimantId", Message = GetValidationMessage(item, "Invalid Claimant") }
-                    );
+                    var c = _claimRepository.GetClaim(claim.ClaimId);
+                    if (null == c)
+                    {
+                        result.ValidationErrors.Add(
+                            new ValidationError { PropertyName = "ClaimId", Message = GetValidationMessage(item, $"Invalid Claim with claim number: {claim.ClaimNumber}") }
+                        );
+                    }
                 }
             }
 
@@ -88,6 +89,40 @@ namespace PsychologicalServices.Models.Arbitrations
                 {
                     result.ValidationErrors.Add(
                         new ValidationError { PropertyName = "DefenseLawyerId", Message = GetValidationMessage(item, "Selected Defense Lawyer is not a lawyer contact type") }
+                    );
+                }
+            }
+
+            if (null != item.PlaintiffLawyer)
+            {
+                var lawyer = _contactRepository.GetContactById(item.PlaintiffLawyer.ContactId);
+
+                if (null == lawyer)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "PlaintiffLawyerId", Message = GetValidationMessage(item, "Invalid Plaintiff Lawyer") }
+                    );
+                }
+                else if (lawyer.ContactType.ContactTypeId != ContactType.Lawyer)
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "PlaintiffLawyerId", Message = GetValidationMessage(item, "Selected Plaintiff Lawyer is not a lawyer contact type") }
+                    );
+                }
+            }
+
+            if (null != item.BillToContact)
+            {
+                if (null == item.DefenseLawyer ||
+                    null == item.PlaintiffLawyer ||
+                        (
+                        item.BillToContact.ContactId != item.DefenseLawyer.ContactId &&
+                        item.BillToContact.ContactId != item.PlaintiffLawyer.ContactId
+                        )
+                    )
+                {
+                    result.ValidationErrors.Add(
+                        new ValidationError { PropertyName = "BillToContactId", Message = GetValidationMessage(item, "Bill To Contact must be either Defense Lawyer or Plaintiff Lawyer") }
                     );
                 }
             }

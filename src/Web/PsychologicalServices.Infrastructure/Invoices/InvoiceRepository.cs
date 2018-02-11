@@ -259,9 +259,16 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                 .SubPath(invoiceLineGroupArbitrationPath => invoiceLineGroupArbitrationPath
                                     .Prefetch<ArbitrationEntity>(invoiceLineGroupArbitration => invoiceLineGroupArbitration.Arbitration)
                                         .SubPath(arbitrationPath => arbitrationPath
-                                            .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
+                                            .Prefetch<ArbitrationClaimEntity>(arbitration => arbitration.ArbitrationClaims)
+                                                .SubPath(arbitrationClaimPath => arbitrationClaimPath
+                                                    .Prefetch<ClaimEntity>(arbitrationClaim => arbitrationClaim.Claim)
+                                                        .SubPath(claimPath => claimPath
+                                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
+                                                        )
+                                                )
                                             .Prefetch<ContactEntity>(arbitration => arbitration.DefenseLawyer)
                                             .Prefetch<ContactEntity>(arbitration => arbitration.PlaintiffLawyer)
+                                            .Prefetch<ContactEntity>(arbitration => arbitration.BillToContact)
                                         )
                                 )
                         )
