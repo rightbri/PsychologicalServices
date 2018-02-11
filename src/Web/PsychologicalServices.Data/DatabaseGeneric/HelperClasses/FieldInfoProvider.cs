@@ -15,7 +15,6 @@ namespace PsychologicalServices.Data.HelperClasses
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	
-	
 	/// <summary>Singleton implementation of the FieldInfoProvider. This class is the singleton wrapper through which the actual instance is retrieved.</summary>
 	/// <remarks>It uses a single instance of an internal class. The access isn't marked with locks as the FieldInfoProviderBase class is threadsafe.</remarks>
 	internal static class FieldInfoProviderSingleton
@@ -59,6 +58,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAppointmentStatusEntityInfos();
 			InitAppointmentStatusInvoiceRateEntityInfos();
 			InitArbitrationEntityInfos();
+			InitArbitrationClaimEntityInfos();
 			InitAssessmentEntityInfos();
 			InitAssessmentAttributeEntityInfos();
 			InitAssessmentClaimEntityInfos();
@@ -94,6 +94,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitInvoiceLineEntityInfos();
 			InitInvoiceLineGroupEntityInfos();
 			InitInvoiceLineGroupAppointmentEntityInfos();
+			InitInvoiceLineGroupArbitrationEntityInfos();
 			InitInvoiceStatusEntityInfos();
 			InitInvoiceStatusChangeEntityInfos();
 			InitInvoiceStatusPathsEntityInfos();
@@ -217,7 +218,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(ArbitrationFieldIndex), "ArbitrationEntity");
 			this.AddElementFieldInfo("ArbitrationEntity", "ArbitrationId", typeof(System.Int32), true, false, true, false,  (int)ArbitrationFieldIndex.ArbitrationId, 0, 0, 10);
-			this.AddElementFieldInfo("ArbitrationEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.AssessmentId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationEntity", "AssessmentId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.AssessmentId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationEntity", "StartDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.StartDate, 0, 0, 0);
 			this.AddElementFieldInfo("ArbitrationEntity", "EndDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.EndDate, 0, 0, 0);
 			this.AddElementFieldInfo("ArbitrationEntity", "AvailableDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.AvailableDate, 0, 0, 0);
@@ -225,6 +226,17 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("ArbitrationEntity", "DefenseFileNumber", typeof(System.String), false, false, false, true,  (int)ArbitrationFieldIndex.DefenseFileNumber, 50, 0, 0);
 			this.AddElementFieldInfo("ArbitrationEntity", "Title", typeof(System.String), false, false, false, false,  (int)ArbitrationFieldIndex.Title, 250, 0, 0);
 			this.AddElementFieldInfo("ArbitrationEntity", "NoteId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.NoteId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationEntity", "NotifiedDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.NotifiedDate, 0, 0, 0);
+			this.AddElementFieldInfo("ArbitrationEntity", "LetterOfUnderstandingSentDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.LetterOfUnderstandingSentDate, 0, 0, 0);
+			this.AddElementFieldInfo("ArbitrationEntity", "PlaintiffLawyerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.PlaintiffLawyerId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationEntity", "BillToContactId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.BillToContactId, 0, 0, 10);
+		}
+		/// <summary>Inits ArbitrationClaimEntity's FieldInfo objects</summary>
+		private void InitArbitrationClaimEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(ArbitrationClaimFieldIndex), "ArbitrationClaimEntity");
+			this.AddElementFieldInfo("ArbitrationClaimEntity", "ArbitrationId", typeof(System.Int32), true, true, false, false,  (int)ArbitrationClaimFieldIndex.ArbitrationId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationClaimEntity", "ClaimId", typeof(System.Int32), true, true, false, false,  (int)ArbitrationClaimFieldIndex.ClaimId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentEntity's FieldInfo objects</summary>
 		private void InitAssessmentEntityInfos()
@@ -579,6 +591,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddFieldIndexEnumForElementName(typeof(InvoiceLineGroupAppointmentFieldIndex), "InvoiceLineGroupAppointmentEntity");
 			this.AddElementFieldInfo("InvoiceLineGroupAppointmentEntity", "InvoiceLineGroupId", typeof(System.Int32), true, true, false, false,  (int)InvoiceLineGroupAppointmentFieldIndex.InvoiceLineGroupId, 0, 0, 10);
 			this.AddElementFieldInfo("InvoiceLineGroupAppointmentEntity", "AppointmentId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineGroupAppointmentFieldIndex.AppointmentId, 0, 0, 10);
+		}
+		/// <summary>Inits InvoiceLineGroupArbitrationEntity's FieldInfo objects</summary>
+		private void InitInvoiceLineGroupArbitrationEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(InvoiceLineGroupArbitrationFieldIndex), "InvoiceLineGroupArbitrationEntity");
+			this.AddElementFieldInfo("InvoiceLineGroupArbitrationEntity", "InvoiceLineGroupId", typeof(System.Int32), true, true, false, false,  (int)InvoiceLineGroupArbitrationFieldIndex.InvoiceLineGroupId, 0, 0, 10);
+			this.AddElementFieldInfo("InvoiceLineGroupArbitrationEntity", "ArbitrationId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineGroupArbitrationFieldIndex.ArbitrationId, 0, 0, 10);
 		}
 		/// <summary>Inits InvoiceStatusEntity's FieldInfo objects</summary>
 		private void InitInvoiceStatusEntityInfos()

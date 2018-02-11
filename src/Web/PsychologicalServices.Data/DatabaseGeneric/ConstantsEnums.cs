@@ -181,6 +181,24 @@ namespace PsychologicalServices.Data
 		Title,
 		///<summary>NoteId. </summary>
 		NoteId,
+		///<summary>NotifiedDate. </summary>
+		NotifiedDate,
+		///<summary>LetterOfUnderstandingSentDate. </summary>
+		LetterOfUnderstandingSentDate,
+		///<summary>PlaintiffLawyerId. </summary>
+		PlaintiffLawyerId,
+		///<summary>BillToContactId. </summary>
+		BillToContactId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ArbitrationClaim.</summary>
+	public enum ArbitrationClaimFieldIndex
+	{
+		///<summary>ArbitrationId. </summary>
+		ArbitrationId,
+		///<summary>ClaimId. </summary>
+		ClaimId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -752,6 +770,16 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceLineGroupArbitration.</summary>
+	public enum InvoiceLineGroupArbitrationFieldIndex
+	{
+		///<summary>InvoiceLineGroupId. </summary>
+		InvoiceLineGroupId,
+		///<summary>ArbitrationId. </summary>
+		ArbitrationId,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceStatus.</summary>
 	public enum InvoiceStatusFieldIndex
 	{
@@ -1092,6 +1120,8 @@ namespace PsychologicalServices.Data
 		AppointmentStatusInvoiceRateEntity,
 		///<summary>Arbitration</summary>
 		ArbitrationEntity,
+		///<summary>ArbitrationClaim</summary>
+		ArbitrationClaimEntity,
 		///<summary>Assessment</summary>
 		AssessmentEntity,
 		///<summary>AssessmentAttribute</summary>
@@ -1162,6 +1192,8 @@ namespace PsychologicalServices.Data
 		InvoiceLineGroupEntity,
 		///<summary>InvoiceLineGroupAppointment</summary>
 		InvoiceLineGroupAppointmentEntity,
+		///<summary>InvoiceLineGroupArbitration</summary>
+		InvoiceLineGroupArbitrationEntity,
 		///<summary>InvoiceStatus</summary>
 		InvoiceStatusEntity,
 		///<summary>InvoiceStatusChange</summary>
@@ -1215,7 +1247,6 @@ namespace PsychologicalServices.Data
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	#endregion
 
 	#region Included code

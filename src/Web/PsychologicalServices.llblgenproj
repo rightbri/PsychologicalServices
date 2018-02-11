@@ -218,14 +218,24 @@
       <EntityDefinition Name="Arbitration" ObjectID="65b0695a-4c15-4dcc-8539-68de839e8043">
         <Fields>
           <Field Name="ArbitrationId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
-          <Field Name="AssessmentId" Type="int" IsAutoCreated="true" FieldIndex="1" />
+          <Field Name="AssessmentId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="1" />
           <Field Name="AvailableDate" Type="datetimeoffset" IsOptional="true" FieldIndex="4" />
+          <Field Name="BillToContactId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="12" />
           <Field Name="DefenseFileNumber" Type="string" IsOptional="true" MaxLength="50" FieldIndex="6" />
           <Field Name="DefenseLawyerId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="5" />
           <Field Name="EndDate" Type="datetimeoffset" IsOptional="true" FieldIndex="3" />
+          <Field Name="LetterOfUnderstandingSentDate" Type="datetimeoffset" IsOptional="true" FieldIndex="10" />
           <Field Name="NoteId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="8" />
+          <Field Name="NotifiedDate" Type="datetimeoffset" IsOptional="true" FieldIndex="9" />
+          <Field Name="PlaintiffLawyerId" Type="int" IsOptional="true" FieldIndex="11" />
           <Field Name="StartDate" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
           <Field Name="Title" Type="string" MaxLength="250" FieldIndex="7" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ArbitrationClaim" ObjectID="48339bc5-2575-41b6-a3b3-fcb0040441e8">
+        <Fields>
+          <Field Name="ArbitrationId" Type="int" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="ClaimId" Type="int" IsPrimaryKey="true" FieldIndex="1" />
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Assessment" ObjectID="c1c06618-c608-4052-b870-2575388d78c6">
@@ -547,6 +557,12 @@
           <Field Name="InvoiceLineGroupId" Type="int" IsPrimaryKey="true" IsAutoCreated="true" FieldIndex="0" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="InvoiceLineGroupArbitration" ObjectID="f9cfbae0-e388-42df-a734-8ba1f5d3a59a">
+        <Fields>
+          <Field Name="ArbitrationId" Type="int" FieldIndex="1" />
+          <Field Name="InvoiceLineGroupId" Type="int" IsPrimaryKey="true" FieldIndex="0" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="InvoiceStatus" ObjectID="2056cf2b-2ec7-4048-911a-91adf9d0abc7">
         <Fields>
           <Field Name="ActionName" Type="string" MaxLength="50" FieldIndex="5" />
@@ -810,9 +826,14 @@
           <FieldFieldRelationship FkField="ReferralSourceId" PkField="ReferralSourceId" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Arbitration.Assessment-Assessment.Arbitrations" Start=":Arbitration" End=":Assessment" StartNavigator="Assessment" EndNavigator="Arbitrations" Type="4">
+      <NormalRelationship Name="Arbitration.Assessment-Assessment.Arbitrations" Start=":Arbitration" End=":Assessment" StartNavigator="Assessment" EndNavigator="Arbitrations" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="AssessmentId" PkField="AssessmentId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Arbitration.BillToContact-Contact.Arbitrations__" Start=":Arbitration" End=":Contact" StartNavigator="BillToContact" EndNavigator="Arbitrations__" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="BillToContactId" PkField="ContactId" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Arbitration.DefenseLawyer-Contact.Arbitrations" Start=":Arbitration" End=":Contact" StartNavigator="DefenseLawyer" EndNavigator="Arbitrations" Type="4" EndIsOptional="true">
@@ -823,6 +844,21 @@
       <NormalRelationship Name="Arbitration.Note-Note.Arbitration" Start=":Arbitration" End=":Note" StartNavigator="Note" EndNavigator="Arbitration" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="NoteId" PkField="NoteId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Arbitration.PlaintiffLawyer-Contact.Arbitrations_" Start=":Arbitration" End=":Contact" StartNavigator="PlaintiffLawyer" EndNavigator="Arbitrations_" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="PlaintiffLawyerId" PkField="ContactId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ArbitrationClaim.Arbitration-Arbitration.ArbitrationClaims" Start=":ArbitrationClaim" End=":Arbitration" StartNavigator="Arbitration" EndNavigator="ArbitrationClaims" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ArbitrationId" PkField="ArbitrationId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ArbitrationClaim.Claim-Claim.ArbitrationClaims" Start=":ArbitrationClaim" End=":Claim" StartNavigator="Claim" EndNavigator="ArbitrationClaims" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ClaimId" PkField="ClaimId" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Assessment.AssessmentType-AssessmentType.Assessments" Start=":Assessment" End=":AssessmentType" StartNavigator="AssessmentType" EndNavigator="Assessments" Type="4">
@@ -1131,6 +1167,16 @@
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="InvoiceLineGroupAppointment.InvoiceLineGroup-InvoiceLineGroup.InvoiceLineGroupAppointment" Start=":InvoiceLineGroupAppointment" End=":InvoiceLineGroup" StartNavigator="InvoiceLineGroup" EndNavigator="InvoiceLineGroupAppointment" Type="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="InvoiceLineGroupId" PkField="InvoiceLineGroupId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="InvoiceLineGroupArbitration.Arbitration-Arbitration.InvoiceLineGroupArbitrations" Start=":InvoiceLineGroupArbitration" End=":Arbitration" StartNavigator="Arbitration" EndNavigator="InvoiceLineGroupArbitrations" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ArbitrationId" PkField="ArbitrationId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="InvoiceLineGroupArbitration.InvoiceLineGroup-InvoiceLineGroup.InvoiceLineGroupArbitration" Start=":InvoiceLineGroupArbitration" End=":InvoiceLineGroup" StartNavigator="InvoiceLineGroup" EndNavigator="InvoiceLineGroupArbitration" Type="1" StartIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="InvoiceLineGroupId" PkField="InvoiceLineGroupId" />
         </FieldRelationships>
@@ -1609,11 +1655,18 @@
                     <Field Name="ApplyExtraReportFees" Ordinal="10" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                   </Fields>
                 </Table>
+                <Table Name="ArbitrationClaims">
+                  <PkConstraintName Name="PK_ArbitrationClaims" />
+                  <Fields>
+                    <Field Name="ArbitrationId" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="ClaimId" Ordinal="2" IsPrimaryKey="true" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
                 <Table Name="Arbitrations">
                   <PkConstraintName Name="PK_Arbitrations" />
                   <Fields>
                     <Field Name="ArbitrationId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
-                    <Field Name="AssessmentId" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="AssessmentId" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="StartDate" Ordinal="3" IsOptional="true" DbType="30" />
                     <Field Name="EndDate" Ordinal="4" IsOptional="true" DbType="30" />
                     <Field Name="AvailableDate" Ordinal="5" IsOptional="true" DbType="30" />
@@ -1621,6 +1674,10 @@
                     <Field Name="DefenseFileNumber" Ordinal="7" IsOptional="true" DbType="12" Length="50" />
                     <Field Name="Title" Ordinal="8" DbType="12" Length="250" />
                     <Field Name="NoteId" Ordinal="9" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="NotifiedDate" Ordinal="10" IsOptional="true" DbType="30" />
+                    <Field Name="LetterOfUnderstandingSentDate" Ordinal="11" IsOptional="true" DbType="30" />
+                    <Field Name="PlaintiffLawyerId" Ordinal="12" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="BillToContactId" Ordinal="13" IsOptional="true" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
                 <Table Name="AssessmentAttributes">
@@ -2466,12 +2523,27 @@
                 <FieldPair PkField="dbo:ReferralSources:ReferralSourceId" FkField="dbo:AppointmentStatusInvoiceRates:ReferralSourceId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:ArbitrationClaims:FK_ArbitrationClaims_Arbitrations">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Arbitrations:ArbitrationId" FkField="dbo:ArbitrationClaims:ArbitrationId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:ArbitrationClaims:FK_ArbitrationClaims_Claims">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Claims:ClaimId" FkField="dbo:ArbitrationClaims:ClaimId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_Assessments">
               <FieldPairs>
                 <FieldPair PkField="dbo:Assessments:AssessmentId" FkField="dbo:Arbitrations:AssessmentId" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_Contacts">
+            <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_BillToContact">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Contacts:ContactId" FkField="dbo:Arbitrations:BillToContactId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_DefenseLawyer">
               <FieldPairs>
                 <FieldPair PkField="dbo:Contacts:ContactId" FkField="dbo:Arbitrations:DefenseLawyerId" />
               </FieldPairs>
@@ -2479,6 +2551,11 @@
             <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_Notes">
               <FieldPairs>
                 <FieldPair PkField="dbo:Notes:NoteId" FkField="dbo:Arbitrations:NoteId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_PlaintiffLawyer">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Contacts:ContactId" FkField="dbo:Arbitrations:PlaintiffLawyerId" />
               </FieldPairs>
             </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:AssessmentAttributes:FK_AssessmentAttributes_Assessments">
@@ -3042,12 +3119,22 @@
             <FieldMapping FieldName="ArbitrationId" TargetFieldName="ArbitrationId" SequenceToUse="SCOPE_IDENTITY()" />
             <FieldMapping FieldName="AssessmentId" TargetFieldName="AssessmentId" />
             <FieldMapping FieldName="AvailableDate" TargetFieldName="AvailableDate" />
+            <FieldMapping FieldName="BillToContactId" TargetFieldName="BillToContactId" />
             <FieldMapping FieldName="DefenseFileNumber" TargetFieldName="DefenseFileNumber" />
             <FieldMapping FieldName="DefenseLawyerId" TargetFieldName="DefenseLawyerId" />
             <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
+            <FieldMapping FieldName="LetterOfUnderstandingSentDate" TargetFieldName="LetterOfUnderstandingSentDate" />
             <FieldMapping FieldName="NoteId" TargetFieldName="NoteId" />
+            <FieldMapping FieldName="NotifiedDate" TargetFieldName="NotifiedDate" />
+            <FieldMapping FieldName="PlaintiffLawyerId" TargetFieldName="PlaintiffLawyerId" />
             <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
             <FieldMapping FieldName="Title" TargetFieldName="Title" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":ArbitrationClaim" TargetName="PsychologicalServices:dbo:ArbitrationClaims">
+          <FieldMappings>
+            <FieldMapping FieldName="ArbitrationId" TargetFieldName="ArbitrationId" />
+            <FieldMapping FieldName="ClaimId" TargetFieldName="ClaimId" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Assessment" TargetName="PsychologicalServices:dbo:Assessments">
@@ -3366,6 +3453,12 @@
         <EntityMapping EntityName=":InvoiceLineGroupAppointment" TargetName="PsychologicalServices:dbo:InvoiceLineGroupAppointments">
           <FieldMappings>
             <FieldMapping FieldName="AppointmentId" TargetFieldName="AppointmentId" />
+            <FieldMapping FieldName="InvoiceLineGroupId" TargetFieldName="InvoiceLineGroupId" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":InvoiceLineGroupArbitration" TargetName="PsychologicalServices:dbo:InvoiceLineGroupArbitrations">
+          <FieldMappings>
+            <FieldMapping FieldName="ArbitrationId" TargetFieldName="ArbitrationId" />
             <FieldMapping FieldName="InvoiceLineGroupId" TargetFieldName="InvoiceLineGroupId" />
           </FieldMappings>
         </EntityMapping>

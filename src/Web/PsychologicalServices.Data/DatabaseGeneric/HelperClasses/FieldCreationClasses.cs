@@ -356,11 +356,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.NoteId);}
 		}
-		/// <summary>Creates a new ArbitrationEntity.ClaimantId field instance</summary>
-		public static EntityField2 ClaimantId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ClaimantId);}
-		}
 		/// <summary>Creates a new ArbitrationEntity.NotifiedDate field instance</summary>
 		public static EntityField2 NotifiedDate
 		{
@@ -375,6 +370,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 PlaintiffLawyerId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.PlaintiffLawyerId);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.BillToContactId field instance</summary>
+		public static EntityField2 BillToContactId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.BillToContactId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ArbitrationClaimEntity</summary>
+	public partial class ArbitrationClaimFields
+	{
+		/// <summary>Creates a new ArbitrationClaimEntity.ArbitrationId field instance</summary>
+		public static EntityField2 ArbitrationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationClaimFieldIndex.ArbitrationId);}
+		}
+		/// <summary>Creates a new ArbitrationClaimEntity.ClaimId field instance</summary>
+		public static EntityField2 ClaimId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationClaimFieldIndex.ClaimId);}
 		}
 	}
 
@@ -1380,11 +1395,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 InvoiceLineId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceLineId);}
-		}
-		/// <summary>Creates a new InvoiceLineEntity.InvoiceAppointmentId field instance</summary>
-		public static EntityField2 InvoiceAppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineFieldIndex.InvoiceAppointmentId);}
 		}
 		/// <summary>Creates a new InvoiceLineEntity.Description field instance</summary>
 		public static EntityField2 Description

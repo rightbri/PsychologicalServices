@@ -29,12 +29,28 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.ArbitrationClaimEntityUsingClaimId);
 			toReturn.Add(this.AssessmentClaimEntityUsingClaimId);
 			toReturn.Add(this.ClaimantEntityUsingClaimantId);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between ClaimEntity and ArbitrationClaimEntity over the 1:n relation they have, using the relation between the fields:
+		/// Claim.ClaimId - ArbitrationClaim.ClaimId
+		/// </summary>
+		public virtual IEntityRelation ArbitrationClaimEntityUsingClaimId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ArbitrationClaims" , true);
+				relation.AddEntityFieldPair(ClaimFields.ClaimId, ArbitrationClaimFields.ClaimId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ClaimEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationClaimEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between ClaimEntity and AssessmentClaimEntity over the 1:n relation they have, using the relation between the fields:
 		/// Claim.ClaimId - AssessmentClaim.ClaimId
@@ -80,6 +96,7 @@ namespace PsychologicalServices.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticClaimRelations
 	{
+		internal static readonly IEntityRelation ArbitrationClaimEntityUsingClaimIdStatic = new ClaimRelations().ArbitrationClaimEntityUsingClaimId;
 		internal static readonly IEntityRelation AssessmentClaimEntityUsingClaimIdStatic = new ClaimRelations().AssessmentClaimEntityUsingClaimId;
 		internal static readonly IEntityRelation ClaimantEntityUsingClaimantIdStatic = new ClaimRelations().ClaimantEntityUsingClaimantId;
 

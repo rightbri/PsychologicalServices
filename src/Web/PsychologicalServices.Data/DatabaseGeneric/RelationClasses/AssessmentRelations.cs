@@ -46,9 +46,9 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.ReferralSourceEntityUsingReferralSourceId);
 			toReturn.Add(this.ReferralTypeEntityUsingReferralTypeId);
 			toReturn.Add(this.ReportStatusEntityUsingReportStatusId);
+			toReturn.Add(this.UserEntityUsingCreateUserId);
 			toReturn.Add(this.UserEntityUsingDocListWriterId);
 			toReturn.Add(this.UserEntityUsingNotesWriterId);
-			toReturn.Add(this.UserEntityUsingCreateUserId);
 			toReturn.Add(this.UserEntityUsingUpdateUserId);
 			return toReturn;
 		}
@@ -303,6 +303,20 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between AssessmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
+		/// Assessment.CreateUserId - User.UserId
+		/// </summary>
+		public virtual IEntityRelation UserEntityUsingCreateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CreateUser", false);
+				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.CreateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between AssessmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
 		/// Assessment.DocListWriterId - User.UserId
 		/// </summary>
 		public virtual IEntityRelation UserEntityUsingDocListWriterId
@@ -325,20 +339,6 @@ namespace PsychologicalServices.Data.RelationClasses
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "NotesWriter", false);
 				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.NotesWriterId);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
-				return relation;
-			}
-		}
-		/// <summary>Returns a new IEntityRelation object, between AssessmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
-		/// Assessment.CreateUserId - User.UserId
-		/// </summary>
-		public virtual IEntityRelation UserEntityUsingCreateUserId
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CreateUser", false);
-				relation.AddEntityFieldPair(UserFields.UserId, AssessmentFields.CreateUserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
 				return relation;
@@ -389,9 +389,9 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation ReferralSourceEntityUsingReferralSourceIdStatic = new AssessmentRelations().ReferralSourceEntityUsingReferralSourceId;
 		internal static readonly IEntityRelation ReferralTypeEntityUsingReferralTypeIdStatic = new AssessmentRelations().ReferralTypeEntityUsingReferralTypeId;
 		internal static readonly IEntityRelation ReportStatusEntityUsingReportStatusIdStatic = new AssessmentRelations().ReportStatusEntityUsingReportStatusId;
+		internal static readonly IEntityRelation UserEntityUsingCreateUserIdStatic = new AssessmentRelations().UserEntityUsingCreateUserId;
 		internal static readonly IEntityRelation UserEntityUsingDocListWriterIdStatic = new AssessmentRelations().UserEntityUsingDocListWriterId;
 		internal static readonly IEntityRelation UserEntityUsingNotesWriterIdStatic = new AssessmentRelations().UserEntityUsingNotesWriterId;
-		internal static readonly IEntityRelation UserEntityUsingCreateUserIdStatic = new AssessmentRelations().UserEntityUsingCreateUserId;
 		internal static readonly IEntityRelation UserEntityUsingUpdateUserIdStatic = new AssessmentRelations().UserEntityUsingUpdateUserId;
 
 		/// <summary>CTor</summary>

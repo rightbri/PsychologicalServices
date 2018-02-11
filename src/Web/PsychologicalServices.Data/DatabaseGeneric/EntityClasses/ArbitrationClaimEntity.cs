@@ -22,15 +22,15 @@ namespace PsychologicalServices.Data.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	/// <summary>Entity class which represents the entity 'InvoiceStatusPaths'.<br/><br/></summary>
+	/// <summary>Entity class which represents the entity 'ArbitrationClaim'.<br/><br/></summary>
 	[Serializable]
-	public partial class InvoiceStatusPathsEntity : CommonEntityBase
+	public partial class ArbitrationClaimEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private InvoiceStatusEntity _invoiceStatus;
-		private InvoiceStatusEntity _nextInvoiceStatus;
+		private ArbitrationEntity _arbitration;
+		private ClaimEntity _claim;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -43,21 +43,21 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name InvoiceStatus</summary>
-			public static readonly string InvoiceStatus = "InvoiceStatus";
-			/// <summary>Member name NextInvoiceStatus</summary>
-			public static readonly string NextInvoiceStatus = "NextInvoiceStatus";
+			/// <summary>Member name Arbitration</summary>
+			public static readonly string Arbitration = "Arbitration";
+			/// <summary>Member name Claim</summary>
+			public static readonly string Claim = "Claim";
 		}
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static InvoiceStatusPathsEntity()
+		static ArbitrationClaimEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 		
 		/// <summary> CTor</summary>
-		public InvoiceStatusPathsEntity():base("InvoiceStatusPathsEntity")
+		public ArbitrationClaimEntity():base("ArbitrationClaimEntity")
 		{
 			InitClassEmpty(null, null);
 		}
@@ -65,54 +65,58 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public InvoiceStatusPathsEntity(IEntityFields2 fields):base("InvoiceStatusPathsEntity")
+		public ArbitrationClaimEntity(IEntityFields2 fields):base("ArbitrationClaimEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this InvoiceStatusPathsEntity</param>
-		public InvoiceStatusPathsEntity(IValidator validator):base("InvoiceStatusPathsEntity")
+		/// <param name="validator">The custom validator object for this ArbitrationClaimEntity</param>
+		public ArbitrationClaimEntity(IValidator validator):base("ArbitrationClaimEntity")
 		{
 			InitClassEmpty(validator, null);
 		}
 				
 		/// <summary> CTor</summary>
-		/// <param name="invoiceStatusPathId">PK value for InvoiceStatusPaths which data should be fetched into this InvoiceStatusPaths object</param>
+		/// <param name="arbitrationId">PK value for ArbitrationClaim which data should be fetched into this ArbitrationClaim object</param>
+		/// <param name="claimId">PK value for ArbitrationClaim which data should be fetched into this ArbitrationClaim object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public InvoiceStatusPathsEntity(System.Int32 invoiceStatusPathId):base("InvoiceStatusPathsEntity")
+		public ArbitrationClaimEntity(System.Int32 arbitrationId, System.Int32 claimId):base("ArbitrationClaimEntity")
 		{
 			InitClassEmpty(null, null);
-			this.InvoiceStatusPathId = invoiceStatusPathId;
+			this.ArbitrationId = arbitrationId;
+			this.ClaimId = claimId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="invoiceStatusPathId">PK value for InvoiceStatusPaths which data should be fetched into this InvoiceStatusPaths object</param>
-		/// <param name="validator">The custom validator object for this InvoiceStatusPathsEntity</param>
+		/// <param name="arbitrationId">PK value for ArbitrationClaim which data should be fetched into this ArbitrationClaim object</param>
+		/// <param name="claimId">PK value for ArbitrationClaim which data should be fetched into this ArbitrationClaim object</param>
+		/// <param name="validator">The custom validator object for this ArbitrationClaimEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public InvoiceStatusPathsEntity(System.Int32 invoiceStatusPathId, IValidator validator):base("InvoiceStatusPathsEntity")
+		public ArbitrationClaimEntity(System.Int32 arbitrationId, System.Int32 claimId, IValidator validator):base("ArbitrationClaimEntity")
 		{
 			InitClassEmpty(validator, null);
-			this.InvoiceStatusPathId = invoiceStatusPathId;
+			this.ArbitrationId = arbitrationId;
+			this.ClaimId = claimId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected InvoiceStatusPathsEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected ArbitrationClaimEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_invoiceStatus = (InvoiceStatusEntity)info.GetValue("_invoiceStatus", typeof(InvoiceStatusEntity));
-				if(_invoiceStatus!=null)
+				_arbitration = (ArbitrationEntity)info.GetValue("_arbitration", typeof(ArbitrationEntity));
+				if(_arbitration!=null)
 				{
-					_invoiceStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_arbitration.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_nextInvoiceStatus = (InvoiceStatusEntity)info.GetValue("_nextInvoiceStatus", typeof(InvoiceStatusEntity));
-				if(_nextInvoiceStatus!=null)
+				_claim = (ClaimEntity)info.GetValue("_claim", typeof(ClaimEntity));
+				if(_claim!=null)
 				{
-					_nextInvoiceStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_claim.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
@@ -125,13 +129,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="fieldIndex">The fieldindex.</param>
 		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			switch((InvoiceStatusPathsFieldIndex)fieldIndex)
+			switch((ArbitrationClaimFieldIndex)fieldIndex)
 			{
-				case InvoiceStatusPathsFieldIndex.InvoiceStatusId:
-					DesetupSyncInvoiceStatus(true, false);
+				case ArbitrationClaimFieldIndex.ArbitrationId:
+					DesetupSyncArbitration(true, false);
 					break;
-				case InvoiceStatusPathsFieldIndex.NextInvoiceStatusId:
-					DesetupSyncNextInvoiceStatus(true, false);
+				case ArbitrationClaimFieldIndex.ClaimId:
+					DesetupSyncClaim(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -147,11 +151,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "InvoiceStatus":
-					this.InvoiceStatus = (InvoiceStatusEntity)entity;
+				case "Arbitration":
+					this.Arbitration = (ArbitrationEntity)entity;
 					break;
-				case "NextInvoiceStatus":
-					this.NextInvoiceStatus = (InvoiceStatusEntity)entity;
+				case "Claim":
+					this.Claim = (ClaimEntity)entity;
 					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
@@ -175,11 +179,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "InvoiceStatus":
-					toReturn.Add(Relations.InvoiceStatusEntityUsingInvoiceStatusId);
+				case "Arbitration":
+					toReturn.Add(Relations.ArbitrationEntityUsingArbitrationId);
 					break;
-				case "NextInvoiceStatus":
-					toReturn.Add(Relations.InvoiceStatusEntityUsingNextInvoiceStatusId);
+				case "Claim":
+					toReturn.Add(Relations.ClaimEntityUsingClaimId);
 					break;
 				default:
 					break;				
@@ -209,11 +213,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "InvoiceStatus":
-					SetupSyncInvoiceStatus(relatedEntity);
+				case "Arbitration":
+					SetupSyncArbitration(relatedEntity);
 					break;
-				case "NextInvoiceStatus":
-					SetupSyncNextInvoiceStatus(relatedEntity);
+				case "Claim":
+					SetupSyncClaim(relatedEntity);
 					break;
 				default:
 					break;
@@ -228,11 +232,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "InvoiceStatus":
-					DesetupSyncInvoiceStatus(false, true);
+				case "Arbitration":
+					DesetupSyncArbitration(false, true);
 					break;
-				case "NextInvoiceStatus":
-					DesetupSyncNextInvoiceStatus(false, true);
+				case "Claim":
+					DesetupSyncClaim(false, true);
 					break;
 				default:
 					break;
@@ -253,13 +257,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_invoiceStatus!=null)
+			if(_arbitration!=null)
 			{
-				toReturn.Add(_invoiceStatus);
+				toReturn.Add(_arbitration);
 			}
-			if(_nextInvoiceStatus!=null)
+			if(_claim!=null)
 			{
-				toReturn.Add(_nextInvoiceStatus);
+				toReturn.Add(_claim);
 			}
 			return toReturn;
 		}
@@ -280,8 +284,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_invoiceStatus", (!this.MarkedForDeletion?_invoiceStatus:null));
-				info.AddValue("_nextInvoiceStatus", (!this.MarkedForDeletion?_nextInvoiceStatus:null));
+				info.AddValue("_arbitration", (!this.MarkedForDeletion?_arbitration:null));
+				info.AddValue("_claim", (!this.MarkedForDeletion?_claim:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -294,24 +298,24 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		protected override List<IEntityRelation> GetAllRelations()
 		{
-			return new InvoiceStatusPathsRelations().GetAllRelations();
+			return new ArbitrationClaimRelations().GetAllRelations();
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'InvoiceStatus' to this entity.</summary>
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Arbitration' to this entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoInvoiceStatus()
+		public virtual IRelationPredicateBucket GetRelationInfoArbitration()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceStatusFields.InvoiceStatusId, null, ComparisonOperator.Equal, this.InvoiceStatusId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.ArbitrationId, null, ComparisonOperator.Equal, this.ArbitrationId));
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'InvoiceStatus' to this entity.</summary>
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Claim' to this entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoNextInvoiceStatus()
+		public virtual IRelationPredicateBucket GetRelationInfoClaim()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceStatusFields.InvoiceStatusId, null, ComparisonOperator.Equal, this.NextInvoiceStatusId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ClaimFields.ClaimId, null, ComparisonOperator.Equal, this.ClaimId));
 			return bucket;
 		}
 		
@@ -319,7 +323,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusPathsEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationClaimEntityFactory));
 		}
 
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -358,8 +362,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("InvoiceStatus", _invoiceStatus);
-			toReturn.Add("NextInvoiceStatus", _nextInvoiceStatus);
+			toReturn.Add("Arbitration", _arbitration);
+			toReturn.Add("Claim", _claim);
 			return toReturn;
 		}
 
@@ -382,33 +386,31 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("InvoiceStatusPathId", fieldHashtable);
+			_fieldsCustomProperties.Add("ArbitrationId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("InvoiceStatusId", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("NextInvoiceStatusId", fieldHashtable);
+			_fieldsCustomProperties.Add("ClaimId", fieldHashtable);
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _invoiceStatus</summary>
+		/// <summary> Removes the sync logic for member _arbitration</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncInvoiceStatus(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncArbitration(bool signalRelatedEntity, bool resetFKFields)
 		{
-			DesetupSync(signalRelatedEntity, resetFKFields, ref _invoiceStatus, new PropertyChangedEventHandler(OnInvoiceStatusPropertyChanged), "InvoiceStatus", "InvoiceStatusPaths", PsychologicalServices.Data.RelationClasses.StaticInvoiceStatusPathsRelations.InvoiceStatusEntityUsingInvoiceStatusIdStatic, true, new int[] { (int)InvoiceStatusPathsFieldIndex.InvoiceStatusId });
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _arbitration, new PropertyChangedEventHandler(OnArbitrationPropertyChanged), "Arbitration", "ArbitrationClaims", PsychologicalServices.Data.RelationClasses.StaticArbitrationClaimRelations.ArbitrationEntityUsingArbitrationIdStatic, true, new int[] { (int)ArbitrationClaimFieldIndex.ArbitrationId });
 		}
 
-		/// <summary> setups the sync logic for member _invoiceStatus</summary>
+		/// <summary> setups the sync logic for member _arbitration</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncInvoiceStatus(IEntityCore relatedEntity)
+		private void SetupSyncArbitration(IEntityCore relatedEntity)
 		{
-			SetupSync(relatedEntity, ref _invoiceStatus, new PropertyChangedEventHandler( OnInvoiceStatusPropertyChanged ), "InvoiceStatus", "InvoiceStatusPaths", PsychologicalServices.Data.RelationClasses.StaticInvoiceStatusPathsRelations.InvoiceStatusEntityUsingInvoiceStatusIdStatic, true, new string[] {  }, new int[] { (int)InvoiceStatusPathsFieldIndex.InvoiceStatusId }); 
+			SetupSync(relatedEntity, ref _arbitration, new PropertyChangedEventHandler( OnArbitrationPropertyChanged ), "Arbitration", "ArbitrationClaims", PsychologicalServices.Data.RelationClasses.StaticArbitrationClaimRelations.ArbitrationEntityUsingArbitrationIdStatic, true, new string[] {  }, new int[] { (int)ArbitrationClaimFieldIndex.ArbitrationId }); 
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnInvoiceStatusPropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnArbitrationPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -417,25 +419,25 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _nextInvoiceStatus</summary>
+		/// <summary> Removes the sync logic for member _claim</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncNextInvoiceStatus(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncClaim(bool signalRelatedEntity, bool resetFKFields)
 		{
-			DesetupSync(signalRelatedEntity, resetFKFields, ref _nextInvoiceStatus, new PropertyChangedEventHandler(OnNextInvoiceStatusPropertyChanged), "NextInvoiceStatus", "NextInvoiceStatusPaths", PsychologicalServices.Data.RelationClasses.StaticInvoiceStatusPathsRelations.InvoiceStatusEntityUsingNextInvoiceStatusIdStatic, true, new int[] { (int)InvoiceStatusPathsFieldIndex.NextInvoiceStatusId });
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _claim, new PropertyChangedEventHandler(OnClaimPropertyChanged), "Claim", "ArbitrationClaims", PsychologicalServices.Data.RelationClasses.StaticArbitrationClaimRelations.ClaimEntityUsingClaimIdStatic, true, new int[] { (int)ArbitrationClaimFieldIndex.ClaimId });
 		}
 
-		/// <summary> setups the sync logic for member _nextInvoiceStatus</summary>
+		/// <summary> setups the sync logic for member _claim</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncNextInvoiceStatus(IEntityCore relatedEntity)
+		private void SetupSyncClaim(IEntityCore relatedEntity)
 		{
-			SetupSync(relatedEntity, ref _nextInvoiceStatus, new PropertyChangedEventHandler( OnNextInvoiceStatusPropertyChanged ), "NextInvoiceStatus", "NextInvoiceStatusPaths", PsychologicalServices.Data.RelationClasses.StaticInvoiceStatusPathsRelations.InvoiceStatusEntityUsingNextInvoiceStatusIdStatic, true, new string[] {  }, new int[] { (int)InvoiceStatusPathsFieldIndex.NextInvoiceStatusId }); 
+			SetupSync(relatedEntity, ref _claim, new PropertyChangedEventHandler( OnClaimPropertyChanged ), "Claim", "ArbitrationClaims", PsychologicalServices.Data.RelationClasses.StaticArbitrationClaimRelations.ClaimEntityUsingClaimIdStatic, true, new string[] {  }, new int[] { (int)ArbitrationClaimFieldIndex.ClaimId }); 
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnNextInvoiceStatusPropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnClaimPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -445,7 +447,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this InvoiceStatusPathsEntity</param>
+		/// <param name="validator">The validator object for this ArbitrationClaimEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		private void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -463,9 +465,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static InvoiceStatusPathsRelations Relations
+		public  static ArbitrationClaimRelations Relations
 		{
-			get	{ return new InvoiceStatusPathsRelations(); }
+			get	{ return new ArbitrationClaimRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -475,18 +477,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceStatus' for this entity.</summary>
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathInvoiceStatus
+		public static IPrefetchPathElement2 PrefetchPathArbitration
 		{
-			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusEntityFactory))),	(IEntityRelation)GetRelationsForField("InvoiceStatus")[0], (int)PsychologicalServices.Data.EntityType.InvoiceStatusPathsEntity, (int)PsychologicalServices.Data.EntityType.InvoiceStatusEntity, 0, null, null, null, null, "InvoiceStatus", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))),	(IEntityRelation)GetRelationsForField("Arbitration")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationClaimEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitration", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceStatus' for this entity.</summary>
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Claim' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathNextInvoiceStatus
+		public static IPrefetchPathElement2 PrefetchPathClaim
 		{
-			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceStatusEntityFactory))),	(IEntityRelation)GetRelationsForField("NextInvoiceStatus")[0], (int)PsychologicalServices.Data.EntityType.InvoiceStatusPathsEntity, (int)PsychologicalServices.Data.EntityType.InvoiceStatusEntity, 0, null, null, null, null, "NextInvoiceStatus", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ClaimEntityFactory))),	(IEntityRelation)GetRelationsForField("Claim")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationClaimEntity, (int)PsychologicalServices.Data.EntityType.ClaimEntity, 0, null, null, null, null, "Claim", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 
@@ -513,68 +515,58 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The InvoiceStatusPathId property of the Entity InvoiceStatusPaths<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "InvoiceStatusPaths"."InvoiceStatusPathId"<br/>
+		/// <summary> The ArbitrationId property of the Entity ArbitrationClaim<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "ArbitrationClaims"."ArbitrationId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 InvoiceStatusPathId
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual System.Int32 ArbitrationId
 		{
-			get { return (System.Int32)GetValue((int)InvoiceStatusPathsFieldIndex.InvoiceStatusPathId, true); }
-			set	{ SetValue((int)InvoiceStatusPathsFieldIndex.InvoiceStatusPathId, value); }
+			get { return (System.Int32)GetValue((int)ArbitrationClaimFieldIndex.ArbitrationId, true); }
+			set	{ SetValue((int)ArbitrationClaimFieldIndex.ArbitrationId, value); }
 		}
 
-		/// <summary> The InvoiceStatusId property of the Entity InvoiceStatusPaths<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "InvoiceStatusPaths"."InvoiceStatusId"<br/>
+		/// <summary> The ClaimId property of the Entity ArbitrationClaim<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "ArbitrationClaims"."ClaimId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 InvoiceStatusId
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual System.Int32 ClaimId
 		{
-			get { return (System.Int32)GetValue((int)InvoiceStatusPathsFieldIndex.InvoiceStatusId, true); }
-			set	{ SetValue((int)InvoiceStatusPathsFieldIndex.InvoiceStatusId, value); }
+			get { return (System.Int32)GetValue((int)ArbitrationClaimFieldIndex.ClaimId, true); }
+			set	{ SetValue((int)ArbitrationClaimFieldIndex.ClaimId, value); }
 		}
 
-		/// <summary> The NextInvoiceStatusId property of the Entity InvoiceStatusPaths<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "InvoiceStatusPaths"."NextInvoiceStatusId"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> NextInvoiceStatusId
-		{
-			get { return (Nullable<System.Int32>)GetValue((int)InvoiceStatusPathsFieldIndex.NextInvoiceStatusId, false); }
-			set	{ SetValue((int)InvoiceStatusPathsFieldIndex.NextInvoiceStatusId, value); }
-		}
-
-		/// <summary> Gets / sets related entity of type 'InvoiceStatusEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		/// <summary> Gets / sets related entity of type 'ArbitrationEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
 		[Browsable(true)]
-		public virtual InvoiceStatusEntity InvoiceStatus
+		public virtual ArbitrationEntity Arbitration
 		{
-			get	{ return _invoiceStatus; }
+			get	{ return _arbitration; }
 			set
 			{
 				if(this.IsDeserializing)
 				{
-					SetupSyncInvoiceStatus(value);
+					SetupSyncArbitration(value);
 				}
 				else
 				{
-					SetSingleRelatedEntityNavigator(value, "InvoiceStatusPaths", "InvoiceStatus", _invoiceStatus, true); 
+					SetSingleRelatedEntityNavigator(value, "ArbitrationClaims", "Arbitration", _arbitration, true); 
 				}
 			}
 		}
 
-		/// <summary> Gets / sets related entity of type 'InvoiceStatusEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		/// <summary> Gets / sets related entity of type 'ClaimEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
 		[Browsable(true)]
-		public virtual InvoiceStatusEntity NextInvoiceStatus
+		public virtual ClaimEntity Claim
 		{
-			get	{ return _nextInvoiceStatus; }
+			get	{ return _claim; }
 			set
 			{
 				if(this.IsDeserializing)
 				{
-					SetupSyncNextInvoiceStatus(value);
+					SetupSyncClaim(value);
 				}
 				else
 				{
-					SetSingleRelatedEntityNavigator(value, "NextInvoiceStatusPaths", "NextInvoiceStatus", _nextInvoiceStatus, true); 
+					SetSingleRelatedEntityNavigator(value, "ArbitrationClaims", "Claim", _claim, true); 
 				}
 			}
 		}
@@ -595,7 +587,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		protected override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.InvoiceStatusPathsEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.ArbitrationClaimEntity; }
 		}
 
 		#endregion

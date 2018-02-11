@@ -19,7 +19,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	
-	
 	/// <summary>general base class for the generated factories</summary>
 	[Serializable]
 	public partial class EntityFactoryBase2<TEntity> : EntityFactoryCore2
@@ -112,7 +111,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AddressEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddressUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -133,7 +131,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AddressAddressTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddressAddressTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -154,7 +151,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AddressTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddressTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -175,7 +171,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AppointmentEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -196,7 +191,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AppointmentAttributeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentAttributeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -217,7 +211,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AppointmentSequenceEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentSequenceUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -238,7 +231,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AppointmentStatusEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentStatusUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -259,7 +251,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AppointmentStatusInvoiceRateEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentStatusInvoiceRateUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -280,7 +271,26 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ArbitrationEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewArbitrationUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty ArbitrationClaimEntity objects.</summary>
+	[Serializable]
+	public partial class ArbitrationClaimEntityFactory : EntityFactoryBase2<ArbitrationClaimEntity> {
+		/// <summary>CTor</summary>
+		public ArbitrationClaimEntityFactory() : base("ArbitrationClaimEntity", PsychologicalServices.Data.EntityType.ArbitrationClaimEntity, false) { }
+		
+		/// <summary>Creates a new ArbitrationClaimEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new ArbitrationClaimEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewArbitrationClaimUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
 		#region Included Code
@@ -301,7 +311,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -322,7 +331,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentAttributeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentAttributeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -343,7 +351,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentClaimEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentClaimUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -364,7 +371,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentColorEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentColorUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -385,7 +391,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentMedRehabEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentMedRehabUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -406,7 +411,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentNoteEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentNoteUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -427,7 +431,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentReportEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentReportUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -448,7 +451,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentReportIssueInDisputeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentReportIssueInDisputeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -469,7 +471,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -490,7 +491,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentTypeAttributeTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTypeAttributeTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -511,7 +511,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentTypeInvoiceAmountEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTypeInvoiceAmountUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -532,7 +531,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentTypeReportTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTypeReportTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -553,7 +551,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AttributeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAttributeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -574,7 +571,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AttributeTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAttributeTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -595,7 +591,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new CalendarNoteEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCalendarNoteUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -616,7 +611,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new CityEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCityUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -637,7 +631,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ClaimEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewClaimUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -658,7 +651,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ClaimantEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewClaimantUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -679,7 +671,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ColorEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewColorUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -700,7 +691,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new CompanyEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCompanyUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -721,7 +711,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new CompanyAttributeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCompanyAttributeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -742,7 +731,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ContactEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewContactUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -763,7 +751,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ContactTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewContactTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -784,7 +771,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new CredibilityEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCredibilityUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -805,7 +791,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new DiagnosisFoundResponseEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDiagnosisFoundResponseUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -826,7 +811,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new EmployerEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEmployerUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -847,7 +831,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new EmployerTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEmployerTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -868,7 +851,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new EventEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEventUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -889,7 +871,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -910,7 +891,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceAppointmentEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceAppointmentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -931,7 +911,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceDocumentEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceDocumentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -952,7 +931,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceDocumentSendLogEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceDocumentSendLogUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -973,7 +951,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceLineEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceLineUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -994,7 +971,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceLineGroupEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceLineGroupUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1015,7 +991,26 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceLineGroupAppointmentEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceLineGroupAppointmentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty InvoiceLineGroupArbitrationEntity objects.</summary>
+	[Serializable]
+	public partial class InvoiceLineGroupArbitrationEntityFactory : EntityFactoryBase2<InvoiceLineGroupArbitrationEntity> {
+		/// <summary>CTor</summary>
+		public InvoiceLineGroupArbitrationEntityFactory() : base("InvoiceLineGroupArbitrationEntity", PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity, false) { }
+		
+		/// <summary>Creates a new InvoiceLineGroupArbitrationEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new InvoiceLineGroupArbitrationEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceLineGroupArbitrationUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
 		#region Included Code
@@ -1036,7 +1031,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceStatusEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceStatusUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1057,7 +1051,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceStatusChangeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceStatusChangeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1078,7 +1071,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceStatusPathsEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceStatusPathsUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1099,7 +1091,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new InvoiceTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1120,7 +1111,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new IssueInDisputeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewIssueInDisputeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1141,7 +1131,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new IssueInDisputeInvoiceAmountEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewIssueInDisputeInvoiceAmountUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1162,7 +1151,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new NoteEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewNoteUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1183,7 +1171,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new PsychometristInvoiceAmountEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewPsychometristInvoiceAmountUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1204,7 +1191,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ReferralSourceEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralSourceUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1225,7 +1211,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ReferralSourceInvoiceConfigurationEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralSourceInvoiceConfigurationUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1246,7 +1231,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ReferralSourceTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralSourceTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1267,7 +1251,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ReferralTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1288,7 +1271,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ReferralTypeIssueInDisputeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReferralTypeIssueInDisputeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1309,7 +1291,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ReportStatusEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReportStatusUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1330,7 +1311,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ReportTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewReportTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1351,7 +1331,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new RightEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewRightUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1372,7 +1351,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new RoleEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewRoleUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1393,7 +1371,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new RoleRightEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewRoleRightUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1414,7 +1391,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new UserEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewUserUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1435,7 +1411,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new UserNoteEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewUserNoteUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1456,7 +1431,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new UserRoleEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewUserRoleUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1477,7 +1451,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new UserTravelFeeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewUserTravelFeeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1498,7 +1471,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new UserUnavailabilityEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewUserUnavailabilityUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1544,6 +1516,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.ArbitrationEntity:
 					factoryToUse = new ArbitrationEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.ArbitrationClaimEntity:
+					factoryToUse = new ArbitrationClaimEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentEntity:
 					factoryToUse = new AssessmentEntityFactory();
@@ -1649,6 +1624,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupAppointmentEntity:
 					factoryToUse = new InvoiceLineGroupAppointmentEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity:
+					factoryToUse = new InvoiceLineGroupArbitrationEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceStatusEntity:
 					factoryToUse = new InvoiceStatusEntityFactory();

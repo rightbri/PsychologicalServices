@@ -35,9 +35,9 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AddressEntityUsingLocationId);
 			toReturn.Add(this.AppointmentStatusEntityUsingAppointmentStatusId);
 			toReturn.Add(this.AssessmentEntityUsingAssessmentId);
+			toReturn.Add(this.UserEntityUsingCreateUserId);
 			toReturn.Add(this.UserEntityUsingPsychologistId);
 			toReturn.Add(this.UserEntityUsingPsychometristId);
-			toReturn.Add(this.UserEntityUsingCreateUserId);
 			toReturn.Add(this.UserEntityUsingUpdateUserId);
 			return toReturn;
 		}
@@ -133,6 +133,20 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
+		/// Appointment.CreateUserId - User.UserId
+		/// </summary>
+		public virtual IEntityRelation UserEntityUsingCreateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CreateUser", false);
+				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.CreateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
 		/// Appointment.PsychologistId - User.UserId
 		/// </summary>
 		public virtual IEntityRelation UserEntityUsingPsychologistId
@@ -155,20 +169,6 @@ namespace PsychologicalServices.Data.RelationClasses
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Psychometrist", false);
 				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.PsychometristId);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
-				return relation;
-			}
-		}
-		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and UserEntity over the m:1 relation they have, using the relation between the fields:
-		/// Appointment.CreateUserId - User.UserId
-		/// </summary>
-		public virtual IEntityRelation UserEntityUsingCreateUserId
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CreateUser", false);
-				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.CreateUserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
 				return relation;
@@ -208,9 +208,9 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AddressEntityUsingLocationIdStatic = new AppointmentRelations().AddressEntityUsingLocationId;
 		internal static readonly IEntityRelation AppointmentStatusEntityUsingAppointmentStatusIdStatic = new AppointmentRelations().AppointmentStatusEntityUsingAppointmentStatusId;
 		internal static readonly IEntityRelation AssessmentEntityUsingAssessmentIdStatic = new AppointmentRelations().AssessmentEntityUsingAssessmentId;
+		internal static readonly IEntityRelation UserEntityUsingCreateUserIdStatic = new AppointmentRelations().UserEntityUsingCreateUserId;
 		internal static readonly IEntityRelation UserEntityUsingPsychologistIdStatic = new AppointmentRelations().UserEntityUsingPsychologistId;
 		internal static readonly IEntityRelation UserEntityUsingPsychometristIdStatic = new AppointmentRelations().UserEntityUsingPsychometristId;
-		internal static readonly IEntityRelation UserEntityUsingCreateUserIdStatic = new AppointmentRelations().UserEntityUsingCreateUserId;
 		internal static readonly IEntityRelation UserEntityUsingUpdateUserIdStatic = new AppointmentRelations().UserEntityUsingUpdateUserId;
 
 		/// <summary>CTor</summary>

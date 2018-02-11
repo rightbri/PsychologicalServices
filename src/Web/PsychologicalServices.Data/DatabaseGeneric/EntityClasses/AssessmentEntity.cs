@@ -22,13 +22,11 @@ namespace PsychologicalServices.Data.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity class which represents the entity 'Assessment'.<br/><br/></summary>
 	[Serializable]
 	public partial class AssessmentEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentEntity> _appointments;
@@ -48,14 +46,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		private ReferralSourceEntity _referralSource;
 		private ReferralTypeEntity _referralType;
 		private ReportStatusEntity _reportStatus;
+		private UserEntity _createUser;
 		private UserEntity _docListWriter;
 		private UserEntity _notesWriter;
-		private UserEntity _createUser;
 		private UserEntity _updateUser;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -83,12 +80,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ReferralType = "ReferralType";
 			/// <summary>Member name ReportStatus</summary>
 			public static readonly string ReportStatus = "ReportStatus";
+			/// <summary>Member name CreateUser</summary>
+			public static readonly string CreateUser = "CreateUser";
 			/// <summary>Member name DocListWriter</summary>
 			public static readonly string DocListWriter = "DocListWriter";
 			/// <summary>Member name NotesWriter</summary>
 			public static readonly string NotesWriter = "NotesWriter";
-			/// <summary>Member name CreateUser</summary>
-			public static readonly string CreateUser = "CreateUser";
 			/// <summary>Member name UpdateUser</summary>
 			public static readonly string UpdateUser = "UpdateUser";
 			/// <summary>Member name Appointments</summary>
@@ -217,6 +214,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_reportStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_createUser = (UserEntity)info.GetValue("_createUser", typeof(UserEntity));
+				if(_createUser!=null)
+				{
+					_createUser.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_docListWriter = (UserEntity)info.GetValue("_docListWriter", typeof(UserEntity));
 				if(_docListWriter!=null)
 				{
@@ -227,11 +229,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_notesWriter.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_createUser = (UserEntity)info.GetValue("_createUser", typeof(UserEntity));
-				if(_createUser!=null)
-				{
-					_createUser.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
 				_updateUser = (UserEntity)info.GetValue("_updateUser", typeof(UserEntity));
 				if(_updateUser!=null)
 				{
@@ -241,7 +238,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -331,14 +327,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					this.ReportStatus = (ReportStatusEntity)entity;
 					break;
+				case "CreateUser":
+					this.CreateUser = (UserEntity)entity;
+					break;
 				case "DocListWriter":
 					this.DocListWriter = (UserEntity)entity;
 					break;
 				case "NotesWriter":
 					this.NotesWriter = (UserEntity)entity;
-					break;
-				case "CreateUser":
-					this.CreateUser = (UserEntity)entity;
 					break;
 				case "UpdateUser":
 					this.UpdateUser = (UserEntity)entity;
@@ -416,14 +412,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					toReturn.Add(Relations.ReportStatusEntityUsingReportStatusId);
 					break;
+				case "CreateUser":
+					toReturn.Add(Relations.UserEntityUsingCreateUserId);
+					break;
 				case "DocListWriter":
 					toReturn.Add(Relations.UserEntityUsingDocListWriterId);
 					break;
 				case "NotesWriter":
 					toReturn.Add(Relations.UserEntityUsingNotesWriterId);
-					break;
-				case "CreateUser":
-					toReturn.Add(Relations.UserEntityUsingCreateUserId);
 					break;
 				case "UpdateUser":
 					toReturn.Add(Relations.UserEntityUsingUpdateUserId);
@@ -474,11 +470,11 @@ namespace PsychologicalServices.Data.EntityClasses
 					return true;
 				case "DiagnosisFoundResponse":
 					return true;
+				case "CreateUser":
+					return true;
 				case "DocListWriter":
 					return true;
 				case "NotesWriter":
-					return true;
-				case "CreateUser":
 					return true;
 				case "UpdateUser":
 					return true;
@@ -521,14 +517,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					SetupSyncReportStatus(relatedEntity);
 					break;
+				case "CreateUser":
+					SetupSyncCreateUser(relatedEntity);
+					break;
 				case "DocListWriter":
 					SetupSyncDocListWriter(relatedEntity);
 					break;
 				case "NotesWriter":
 					SetupSyncNotesWriter(relatedEntity);
-					break;
-				case "CreateUser":
-					SetupSyncCreateUser(relatedEntity);
 					break;
 				case "UpdateUser":
 					SetupSyncUpdateUser(relatedEntity);
@@ -597,14 +593,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "ReportStatus":
 					DesetupSyncReportStatus(false, true);
 					break;
+				case "CreateUser":
+					DesetupSyncCreateUser(false, true);
+					break;
 				case "DocListWriter":
 					DesetupSyncDocListWriter(false, true);
 					break;
 				case "NotesWriter":
 					DesetupSyncNotesWriter(false, true);
-					break;
-				case "CreateUser":
-					DesetupSyncCreateUser(false, true);
 					break;
 				case "UpdateUser":
 					DesetupSyncUpdateUser(false, true);
@@ -688,6 +684,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_reportStatus);
 			}
+			if(_createUser!=null)
+			{
+				toReturn.Add(_createUser);
+			}
 			if(_docListWriter!=null)
 			{
 				toReturn.Add(_docListWriter);
@@ -695,10 +695,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(_notesWriter!=null)
 			{
 				toReturn.Add(_notesWriter);
-			}
-			if(_createUser!=null)
-			{
-				toReturn.Add(_createUser);
 			}
 			if(_updateUser!=null)
 			{
@@ -748,14 +744,13 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_referralSource", (!this.MarkedForDeletion?_referralSource:null));
 				info.AddValue("_referralType", (!this.MarkedForDeletion?_referralType:null));
 				info.AddValue("_reportStatus", (!this.MarkedForDeletion?_reportStatus:null));
+				info.AddValue("_createUser", (!this.MarkedForDeletion?_createUser:null));
 				info.AddValue("_docListWriter", (!this.MarkedForDeletion?_docListWriter:null));
 				info.AddValue("_notesWriter", (!this.MarkedForDeletion?_notesWriter:null));
-				info.AddValue("_createUser", (!this.MarkedForDeletion?_createUser:null));
 				info.AddValue("_updateUser", (!this.MarkedForDeletion?_updateUser:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -923,6 +918,15 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'User' to this entity.</summary>
 		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoCreateUser()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.CreateUserId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'User' to this entity.</summary>
+		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoDocListWriter()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
@@ -936,15 +940,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.NotesWriterId));
-			return bucket;
-		}
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'User' to this entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoCreateUser()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.CreateUserId));
 			return bucket;
 		}
 
@@ -1041,9 +1036,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("ReferralSource", _referralSource);
 			toReturn.Add("ReferralType", _referralType);
 			toReturn.Add("ReportStatus", _reportStatus);
+			toReturn.Add("CreateUser", _createUser);
 			toReturn.Add("DocListWriter", _docListWriter);
 			toReturn.Add("NotesWriter", _notesWriter);
-			toReturn.Add("CreateUser", _createUser);
 			toReturn.Add("UpdateUser", _updateUser);
 			toReturn.Add("Appointments", _appointments);
 			toReturn.Add("Arbitrations", _arbitrations);
@@ -1063,7 +1058,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -1365,6 +1359,33 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _createUser</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncCreateUser(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _createUser, new PropertyChangedEventHandler(OnCreateUserPropertyChanged), "CreateUser", "", PsychologicalServices.Data.RelationClasses.StaticAssessmentRelations.UserEntityUsingCreateUserIdStatic, true, new int[] { (int)AssessmentFieldIndex.CreateUserId });
+		}
+
+		/// <summary> setups the sync logic for member _createUser</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncCreateUser(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", "", PsychologicalServices.Data.RelationClasses.StaticAssessmentRelations.UserEntityUsingCreateUserIdStatic, true, new string[] {  }, new int[] { (int)AssessmentFieldIndex.CreateUserId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCreateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Removes the sync logic for member _docListWriter</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -1419,33 +1440,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _createUser</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncCreateUser(bool signalRelatedEntity, bool resetFKFields)
-		{
-			DesetupSync(signalRelatedEntity, resetFKFields, ref _createUser, new PropertyChangedEventHandler(OnCreateUserPropertyChanged), "CreateUser", "", PsychologicalServices.Data.RelationClasses.StaticAssessmentRelations.UserEntityUsingCreateUserIdStatic, true, new int[] { (int)AssessmentFieldIndex.CreateUserId });
-		}
-
-		/// <summary> setups the sync logic for member _createUser</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCreateUser(IEntityCore relatedEntity)
-		{
-			SetupSync(relatedEntity, ref _createUser, new PropertyChangedEventHandler( OnCreateUserPropertyChanged ), "CreateUser", "", PsychologicalServices.Data.RelationClasses.StaticAssessmentRelations.UserEntityUsingCreateUserIdStatic, true, new string[] {  }, new int[] { (int)AssessmentFieldIndex.CreateUserId }); 
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnCreateUserPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
 		/// <summary> Removes the sync logic for member _updateUser</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -1485,7 +1479,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 
@@ -1626,6 +1619,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCreateUser
+		{
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),	(IEntityRelation)GetRelationsForField("CreateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "CreateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathDocListWriter
 		{
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),	(IEntityRelation)GetRelationsForField("DocListWriter")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "DocListWriter", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
@@ -1636,13 +1636,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathNotesWriter
 		{
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),	(IEntityRelation)GetRelationsForField("NotesWriter")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "NotesWriter", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
-		}
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathCreateUser
-		{
-			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),	(IEntityRelation)GetRelationsForField("CreateUser")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "CreateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' for this entity.</summary>
@@ -2116,6 +2109,24 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
 		[Browsable(true)]
+		public virtual UserEntity CreateUser
+		{
+			get	{ return _createUser; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncCreateUser(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "", "CreateUser", _createUser, false); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		[Browsable(true)]
 		public virtual UserEntity DocListWriter
 		{
 			get	{ return _docListWriter; }
@@ -2146,24 +2157,6 @@ namespace PsychologicalServices.Data.EntityClasses
 				else
 				{
 					SetSingleRelatedEntityNavigator(value, "", "NotesWriter", _notesWriter, false); 
-				}
-			}
-		}
-
-		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
-		[Browsable(true)]
-		public virtual UserEntity CreateUser
-		{
-			get	{ return _createUser; }
-			set
-			{
-				if(this.IsDeserializing)
-				{
-					SetupSyncCreateUser(value);
-				}
-				else
-				{
-					SetSingleRelatedEntityNavigator(value, "", "CreateUser", _createUser, false); 
 				}
 			}
 		}
@@ -2212,7 +2205,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

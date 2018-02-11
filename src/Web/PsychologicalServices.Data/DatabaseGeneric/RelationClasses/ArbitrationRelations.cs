@@ -29,14 +29,47 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.ArbitrationClaimEntityUsingArbitrationId);
+			toReturn.Add(this.InvoiceLineGroupArbitrationEntityUsingArbitrationId);
 			toReturn.Add(this.AssessmentEntityUsingAssessmentId);
 			toReturn.Add(this.ContactEntityUsingDefenseLawyerId);
+			toReturn.Add(this.ContactEntityUsingPlaintiffLawyerId);
+			toReturn.Add(this.ContactEntityUsingBillToContactId);
 			toReturn.Add(this.NoteEntityUsingNoteId);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
 
+		/// <summary>Returns a new IEntityRelation object, between ArbitrationEntity and ArbitrationClaimEntity over the 1:n relation they have, using the relation between the fields:
+		/// Arbitration.ArbitrationId - ArbitrationClaim.ArbitrationId
+		/// </summary>
+		public virtual IEntityRelation ArbitrationClaimEntityUsingArbitrationId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ArbitrationClaims" , true);
+				relation.AddEntityFieldPair(ArbitrationFields.ArbitrationId, ArbitrationClaimFields.ArbitrationId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationClaimEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ArbitrationEntity and InvoiceLineGroupArbitrationEntity over the 1:n relation they have, using the relation between the fields:
+		/// Arbitration.ArbitrationId - InvoiceLineGroupArbitration.ArbitrationId
+		/// </summary>
+		public virtual IEntityRelation InvoiceLineGroupArbitrationEntityUsingArbitrationId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "InvoiceLineGroupArbitrations" , true);
+				relation.AddEntityFieldPair(ArbitrationFields.ArbitrationId, InvoiceLineGroupArbitrationFields.ArbitrationId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupArbitrationEntity", false);
+				return relation;
+			}
+		}
 
 
 		/// <summary>Returns a new IEntityRelation object, between ArbitrationEntity and AssessmentEntity over the m:1 relation they have, using the relation between the fields:
@@ -62,6 +95,34 @@ namespace PsychologicalServices.Data.RelationClasses
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "DefenseLawyer", false);
 				relation.AddEntityFieldPair(ContactFields.ContactId, ArbitrationFields.DefenseLawyerId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between ArbitrationEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
+		/// Arbitration.PlaintiffLawyerId - Contact.ContactId
+		/// </summary>
+		public virtual IEntityRelation ContactEntityUsingPlaintiffLawyerId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "PlaintiffLawyer", false);
+				relation.AddEntityFieldPair(ContactFields.ContactId, ArbitrationFields.PlaintiffLawyerId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between ArbitrationEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
+		/// Arbitration.BillToContactId - Contact.ContactId
+		/// </summary>
+		public virtual IEntityRelation ContactEntityUsingBillToContactId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "BillToContact", false);
+				relation.AddEntityFieldPair(ContactFields.ContactId, ArbitrationFields.BillToContactId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", true);
 				return relation;
@@ -95,8 +156,12 @@ namespace PsychologicalServices.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticArbitrationRelations
 	{
+		internal static readonly IEntityRelation ArbitrationClaimEntityUsingArbitrationIdStatic = new ArbitrationRelations().ArbitrationClaimEntityUsingArbitrationId;
+		internal static readonly IEntityRelation InvoiceLineGroupArbitrationEntityUsingArbitrationIdStatic = new ArbitrationRelations().InvoiceLineGroupArbitrationEntityUsingArbitrationId;
 		internal static readonly IEntityRelation AssessmentEntityUsingAssessmentIdStatic = new ArbitrationRelations().AssessmentEntityUsingAssessmentId;
 		internal static readonly IEntityRelation ContactEntityUsingDefenseLawyerIdStatic = new ArbitrationRelations().ContactEntityUsingDefenseLawyerId;
+		internal static readonly IEntityRelation ContactEntityUsingPlaintiffLawyerIdStatic = new ArbitrationRelations().ContactEntityUsingPlaintiffLawyerId;
+		internal static readonly IEntityRelation ContactEntityUsingBillToContactIdStatic = new ArbitrationRelations().ContactEntityUsingBillToContactId;
 		internal static readonly IEntityRelation NoteEntityUsingNoteIdStatic = new ArbitrationRelations().NoteEntityUsingNoteId;
 
 		/// <summary>CTor</summary>

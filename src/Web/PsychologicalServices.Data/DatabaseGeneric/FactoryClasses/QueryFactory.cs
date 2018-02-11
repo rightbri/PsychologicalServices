@@ -159,6 +159,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<ArbitrationEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the ArbitrationClaim entity</summary>
+		public EntityQuery<ArbitrationClaimEntity> ArbitrationClaim
+		{
+			get { return Create<ArbitrationClaimEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the Assessment entity</summary>
 		public EntityQuery<AssessmentEntity> Assessment
 		{
@@ -367,6 +373,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public EntityQuery<InvoiceLineGroupAppointmentEntity> InvoiceLineGroupAppointment
 		{
 			get { return Create<InvoiceLineGroupAppointmentEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the InvoiceLineGroupArbitration entity</summary>
+		public EntityQuery<InvoiceLineGroupArbitrationEntity> InvoiceLineGroupArbitration
+		{
+			get { return Create<InvoiceLineGroupArbitrationEntity>(); }
 		}
 
 		/// <summary>Creates and returns a new EntityQuery for the InvoiceStatus entity</summary>

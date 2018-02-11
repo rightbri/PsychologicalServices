@@ -121,6 +121,7 @@ namespace PsychologicalServices.Data.RelationClasses
 	{
 		internal static readonly IEntityRelation InvoiceLineEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineEntityUsingInvoiceLineGroupId;
 		internal static readonly IEntityRelation InvoiceLineGroupAppointmentEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineGroupAppointmentEntityUsingInvoiceLineGroupId;
+		internal static readonly IEntityRelation InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupId;
 		internal static readonly IEntityRelation InvoiceEntityUsingInvoiceIdStatic = new InvoiceLineGroupRelations().InvoiceEntityUsingInvoiceId;
 
 		/// <summary>CTor</summary>
