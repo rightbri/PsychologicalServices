@@ -97,8 +97,8 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                 var arbitrations = meta.Arbitration
                     .WithPath(ArbitrationPath)
                     .Where(arbitration =>
-                        (arbitration.StartDate == null || arbitration.StartDate <= criteria.EndDate) &&
-                        (arbitration.EndDate == null || arbitration.EndDate >= criteria.StartDate)
+                        (criteria.StartDate == null || arbitration.StartDate == null || arbitration.StartDate <= criteria.EndDate) &&
+                        (criteria.EndDate == null || arbitration.EndDate == null || arbitration.EndDate >= criteria.StartDate)
                     );
 
                 if (criteria.CompanyId.HasValue)

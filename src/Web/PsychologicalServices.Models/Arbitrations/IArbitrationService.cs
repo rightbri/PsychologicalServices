@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Common;
+using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Arbitrations
@@ -10,5 +11,7 @@ namespace PsychologicalServices.Models.Arbitrations
         Arbitration GetNewArbitration(int assessmentId);
 
         IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria);
+
+        SaveResult<Arbitration> SaveArbitration(Arbitration arbitration);
     }
 }
