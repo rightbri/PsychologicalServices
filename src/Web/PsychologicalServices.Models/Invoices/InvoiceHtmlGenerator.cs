@@ -39,19 +39,19 @@ namespace PsychologicalServices.Models.Invoices
                     html = psychometristTemplate.TransformText();
 
                     break;
-                case InvoiceType.Arbitration:
-                    var arbitrationTemplate = new ArbitrationInvoiceTemplate();
+                //case InvoiceType.Arbitration:
+                //    var arbitrationTemplate = new ArbitrationInvoiceTemplate();
 
-                    arbitrationTemplate.Session = new Dictionary<string, object>()
-                    {
-                        { "Model", invoice }
-                    };
+                //    arbitrationTemplate.Session = new Dictionary<string, object>()
+                //    {
+                //        { "Model", invoice }
+                //    };
 
-                    arbitrationTemplate.Initialize();
+                //    arbitrationTemplate.Initialize();
 
-                    html = arbitrationTemplate.TransformText();
+                //    html = arbitrationTemplate.TransformText();
 
-                    break;
+                //    break;
                 default:
                     throw new NotImplementedException(
                         string.Format("Invoice HTML Generator not implemented for invoice type {0}", invoice.InvoiceType.InvoiceTypeId)
