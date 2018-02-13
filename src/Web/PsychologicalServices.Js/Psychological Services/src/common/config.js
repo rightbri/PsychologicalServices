@@ -48,8 +48,10 @@ export class Config {
 		};
 
 		this.contactTypes = {
-			'lawyer': 1,
-			'lawClerk': 2
+			'defenseLawyer': 1,
+			'defenseLawClerk': 2,
+			'plaintiffLawyer': 3,
+			'plaintiffLawClerk': 4
 		};
 		
 		this.invoiceTypes = {

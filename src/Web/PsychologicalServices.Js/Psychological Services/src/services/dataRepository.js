@@ -346,9 +346,21 @@ export class DataRepository {
 	getContactTypes() {
 		return this.getManyBasic('contacttype', true);
 	}
+
+	getArbitration(arbitrationId) {
+		return this.getSingleBasic(arbitrationId, 'arbitration');
+	}
 	
 	getNewArbitration(assessmentId) {
 		return this.getBasic(`arbitration/assessment/${assessmentId}`);
+	}
+
+	searchArbitrations(criteria) {
+		return this.searchBasic(criteria, 'arbitration');
+	}
+
+	saveArbitration(arbitration) {
+		return this.saveBasic(arbitration, 'arbitration');
 	}
 	
 	getReportStatuses() {

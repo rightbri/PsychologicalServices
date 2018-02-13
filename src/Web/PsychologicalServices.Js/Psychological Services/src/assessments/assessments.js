@@ -27,9 +27,7 @@ export class Assessments {
 	
 	getData() {
 		return Promise.all([
-			this.context.getUser().then(user => this.searchCompanyId = user.company.companyId).catch(err => {
-				return;
-			}), 
+			this.context.getUser().then(user => this.searchCompanyId = user.company.companyId), 
 			this.dataRepository.getReferralSources().then(data => this.referralSources = data)
 		]);
 	}

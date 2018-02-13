@@ -1,9 +1,77 @@
 <template>
-
-
+    <require from="claimants/search-claimant"></require>
+    <require from="arbitrations/edit-arbitration"></require>
+	<require from="resources/value-converters/date-format"></require>
+    
     <div class="uk-container">
 
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Search Arbitrations</legend>
+
+            <div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
+
+                <div>
+                    <label class="uk-form-label">Claimant</label>
+                    <div class="uk-form-controls">
+                        <search-claimant claimant.bind="searchClaimant"></search-claimant>
+                    </div>
+                </div>
+                
+                <div><!-- if.bind="searchClaimant"-->
+                    <p>
+                        ${searchClaimant.firstName} ${searchClaimant.lastName}
+                    </p>
+                </div>
+        
+
+                <div class="uk-width-1-1">
+                    <button class="uk-button uk-button-default" click.delegate="search()">Search</button>
+                </div>
+
+            </div>
+
+        </fieldset>
         
     </div>
+
+<div class="uk-overflow-auto" if.bind="arbitrations">
+    <table class="uk-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Claimant</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Available Date</th>
+                <th>Defense Lawyer</th>
+                <th>Plaintiff Lawyer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template repeat.for="arbitration of arbitrations">
+                <tr>
+                    <td>
+                        <button class="uk-button uk-button-primary" click.delegate="editArbitration(arbitration)">
+                            Edit
+                        </button>
+                    </td>
+                    <td>${arbitration.title}</td>
+                    <td>${arbitration.claimant.firstName} ${arbitration.claimant.lastName}</td>
+                    <td>${arbitration.startDate | dateFormat:config.shortDateFormat}</td>
+                    <td>${arbitration.endDate | dateFormat:config.shortDateFormat}</td>
+                    <td>${arbitration.availableDate | dateFormat:config.shortDateFormat}</td>
+                    <td>${arbitration.defenseLawyer.firstName} ${arbitration.defenseLawyer.lastName}</td>
+                    <td>${arbitration.plaintiffLawyer.firstName} ${arbitration.plaintiffLawyer.lastName}</td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+
+    <div if.bind="arbitrationEditModel">
+        <edit-arbitration model.bind="arbitrationEditModel" edited.delegate="arbitrationEdited($event)" canceled.delegate="arbitrationCanceled($event)"></edit-arbitration>
+    </div>
+    
+</div>
 
 </template>

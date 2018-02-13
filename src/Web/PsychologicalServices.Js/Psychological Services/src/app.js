@@ -74,7 +74,8 @@ export class App {
 			{ route: 'events', name: 'events', moduleId: 'events/events', title: 'Events', nav: true },
 			{ route: 'events/:id', name: 'editEvent', moduleId: 'events/editEvent', title: 'Edit Event', nav: false },
 			{ route: 'events/add', name: 'addEvent', moduleId: 'events/editEvent', title: 'Add Event', nav: false },
-			{ route: 'invoiceConfiguration', name: 'invoiceConfiguration', moduleId: 'invoiceConfiguration/invoiceConfiguration', title: 'Invoice Configuration', nav: true }
+			{ route: 'invoiceConfiguration', name: 'invoiceConfiguration', moduleId: 'invoiceConfiguration/invoiceConfiguration', title: 'Invoice Configuration', nav: true },
+			{ route: 'arbitrations', name: 'arbitrations', moduleId: 'arbitrations/arbitrations', title: 'Arbitrations', nav: true }
 		]);
 		
 		this.context.getUser().then(user => this.user = user).then(() => this.isClaire = this.user.firstName === 'Claire');
