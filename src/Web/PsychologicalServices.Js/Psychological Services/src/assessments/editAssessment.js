@@ -599,6 +599,8 @@ export class EditAssessment {
 		}
 
 		this.setCredibilityVisibility(this.assessment.assessmentType.name);
+		
+		this.setDiagnosisFoundVisibility(this.assessment.assessmentType.name);
 	}
 
 	setCredibilityVisibility(assessmentType) {
@@ -610,6 +612,12 @@ export class EditAssessment {
 		let psychologicalCredibilityAssessmentTypes = ['P', 'PVOC', 'NP', 'NC/P'];
 
 		this.showPsychologicalCredibility = psychologicalCredibilityAssessmentTypes.some(type => type === assessmentType);
+	}
+
+	setDiagnosisFoundVisibility(assessmentType) {
+		let diagnosisFoundAssessmentTypes = ['NP', 'NC', 'P', 'PVOC', 'NC/P', 'Interview'];
+
+		this.showDiagnosisFound = diagnosisFoundAssessmentTypes.some(type => type === assessmentType);
 	}
 
 	summaryEditFocus(e) {
