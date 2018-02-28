@@ -857,6 +857,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateUser = appointment.UpdateUser.ToUser(),
                     RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                     IsCompletion = appointment.IsCompletion(),
+                    PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                 }
                 : null;
         }
@@ -880,6 +881,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateUser = appointment.UpdateUser.ToUser(),
                     RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                     IsCompletion = appointment.IsCompletion(),
+                    PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                 }
                 : null;
         }

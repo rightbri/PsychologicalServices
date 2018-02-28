@@ -96,10 +96,19 @@
 					</div>
 				</div>
 
-				<div class="uk-width-1-1">
+				<div>
 					<label class="uk-form-label" for="roomRentalBillableAmount">Room Rental Billable Amount</label>
 					<div class="uk-form-controls">
 						<input type="number" class="uk-input uk-form-width-small" value.bind="model.appointment.roomRentalBillableAmount | money:'0'" />
+					</div>
+				</div>
+
+				<div>
+					<label class="uk-form-label"></label>
+					<div class="uk-form-controls">
+						<label>
+							<input type="checkbox" class="uk-checkbox" checked.bind="model.appointment.psychologistInvoiceLock" />&nbsp;Lock Psychologist Invoice
+						</label>
 					</div>
 				</div>
 

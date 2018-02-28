@@ -166,6 +166,7 @@
           <Field Name="CreateUserId" Type="int" IsAutoCreated="true" FieldIndex="8" />
           <Field Name="LocationId" Type="int" IsAutoCreated="true" FieldIndex="1" />
           <Field Name="PsychologistId" Type="int" IsAutoCreated="true" FieldIndex="4" />
+          <Field Name="PsychologistInvoiceLock" Type="bool" FieldIndex="12" />
           <Field Name="PsychometristId" Type="int" IsAutoCreated="true" FieldIndex="3" />
           <Field Name="RoomRentalBillableAmount" Type="int" IsOptional="true" FieldIndex="11" />
           <Field Name="UpdateDate" Type="datetimeoffset" FieldIndex="9" />
@@ -1515,7 +1516,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-02-11T16:32:17.1266741Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-02-27T01:40:52.6666608Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1567,6 +1568,7 @@
                     <Field Name="UpdateDate" Ordinal="10" HasDefaultValue="true" DefaultValue="getdate()" DbType="30" />
                     <Field Name="UpdateUserId" Ordinal="11" DbType="8" Precision="10" />
                     <Field Name="RoomRentalBillableAmount" Ordinal="12" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="PsychologistInvoiceLock" Ordinal="13" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                   </Fields>
                 </Table>
                 <Table Name="AppointmentSequences">
@@ -2986,6 +2988,7 @@
             <FieldMapping FieldName="CreateUserId" TargetFieldName="CreateUserId" />
             <FieldMapping FieldName="LocationId" TargetFieldName="LocationId" />
             <FieldMapping FieldName="PsychologistId" TargetFieldName="PsychologistId" />
+            <FieldMapping FieldName="PsychologistInvoiceLock" TargetFieldName="PsychologistInvoiceLock" />
             <FieldMapping FieldName="PsychometristId" TargetFieldName="PsychometristId" />
             <FieldMapping FieldName="RoomRentalBillableAmount" TargetFieldName="RoomRentalBillableAmount" />
             <FieldMapping FieldName="UpdateDate" TargetFieldName="UpdateDate" />

@@ -671,6 +671,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("UpdateUserId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("RoomRentalBillableAmount", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("PsychologistInvoiceLock", fieldHashtable);
 		}
 		#endregion
 
@@ -1100,6 +1102,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.Int32>)GetValue((int)AppointmentFieldIndex.RoomRentalBillableAmount, false); }
 			set	{ SetValue((int)AppointmentFieldIndex.RoomRentalBillableAmount, value); }
+		}
+
+		/// <summary> The PsychologistInvoiceLock property of the Entity Appointment<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Appointments"."PsychologistInvoiceLock"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean PsychologistInvoiceLock
+		{
+			get { return (System.Boolean)GetValue((int)AppointmentFieldIndex.PsychologistInvoiceLock, true); }
+			set	{ SetValue((int)AppointmentFieldIndex.PsychologistInvoiceLock, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentAttributeEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

@@ -36,6 +36,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public int? RoomRentalBillableAmount { get; set; }
 
+        public bool PsychologistInvoiceLock { get; set; }
+
         public bool IsNew()
         {
             return AppointmentId == 0;

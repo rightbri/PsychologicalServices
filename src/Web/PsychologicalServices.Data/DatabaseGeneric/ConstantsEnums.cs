@@ -79,6 +79,8 @@ namespace PsychologicalServices.Data
 		UpdateUserId,
 		///<summary>RoomRentalBillableAmount. </summary>
 		RoomRentalBillableAmount,
+		///<summary>PsychologistInvoiceLock. </summary>
+		PsychologistInvoiceLock,
 		/// <summary></summary>
 		AmountOfFields
 	}

@@ -519,7 +519,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                         appointmentAttribute.Value != attributeValue.Value
                                     )
                                 ) ||
-                                appointmentEntity.RoomRentalBillableAmount != appointment.RoomRentalBillableAmount
+                                appointmentEntity.RoomRentalBillableAmount != appointment.RoomRentalBillableAmount ||
+                                appointmentEntity.PsychologistInvoiceLock != appointment.PsychologistInvoiceLock
                             )
                         )
                     )
@@ -546,6 +547,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.PsychometristId = appointment.Psychometrist.UserId;
                     appointmentEntity.UpdateDate = _date.UtcNow;
                     appointmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
+                    appointmentEntity.PsychologistInvoiceLock = appointment.PsychologistInvoiceLock;
 
                     if (null == appointment.RoomRentalBillableAmount)
                     {
@@ -621,6 +623,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         UpdateDate = _date.UtcNow,
                         UpdateUserId = assessment.UpdateUser.UserId,
                         RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
+                        PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                     };
 
                     appointmentEntity.AppointmentAttributes.AddRange(
