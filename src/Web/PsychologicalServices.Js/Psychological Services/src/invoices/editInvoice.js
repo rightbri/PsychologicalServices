@@ -45,7 +45,7 @@ export class EditInvoice {
 
     save() {
 		
-		this.dataRepository.saveInvoice(this.invoice)
+		return this.dataRepository.saveInvoice(this.invoice)
             .then(data => {
 
 				this.validationErrors = (data.validationResult && data.validationResult.validationErrors && data.validationResult.validationErrors.length > 0)
@@ -67,6 +67,8 @@ export class EditInvoice {
 				if (data.isError) {
 					this.notifier.error(data.errorDetails);
 				}
+
+				return data;
             });
 	}
 	
@@ -114,8 +116,16 @@ export class EditInvoice {
 	
 	setStatus(nextStatus) {
 		if (confirm('Update invoice status to ' + nextStatus.name + '?')) {
+			let currentStatus = this.invoice.invoiceStatus;
+
 			this.invoice.invoiceStatus = nextStatus;
-			this.save();
+			
+			this.save()
+				.then(data => {
+					if (!data.isSaved) {
+						this.invoice.invoiceStatus = currentStatus;
+					}
+				});
 		}
 	}
 
