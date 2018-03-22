@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common;
 using log4net;
 
@@ -28,14 +27,6 @@ namespace PsychologicalServices.Models.Arbitrations
             var arbitration = _arbitrationRepository.GetArbitration(arbitrationId);
 
             return arbitration;
-        }
-
-        public Arbitration GetNewArbitration(int assessmentId)
-        {
-            
-            return new Arbitration
-            {
-            };
         }
 
         public IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria)

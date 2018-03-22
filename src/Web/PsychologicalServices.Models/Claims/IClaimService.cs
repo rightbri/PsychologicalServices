@@ -10,6 +10,8 @@ namespace PsychologicalServices.Models.Claims
 
         IEnumerable<Claim> GetAssessmentClaims(int assessmentId);
 
+        IEnumerable<Claim> GetClaimsForClaimant(int claimantId);
+
         IEnumerable<Claimant> SearchClaimants(string name);
 
         IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId);

@@ -49,6 +49,13 @@ namespace PsychologicalServices.Models.Claims
             return claims;
         }
 
+        public IEnumerable<Claim> GetClaimsForClaimant(int claimantId)
+        {
+            var claims = _claimRepository.GetClaimsForClaimant(claimantId);
+
+            return claims;
+        }
+
         public IEnumerable<Claimant> SearchClaimants(string name)
         {
             var claimants = _claimRepository.SearchClaimants(name);

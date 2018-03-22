@@ -32,6 +32,16 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(assessmentClaims);
         }
 
+        [Route("claimants/{claimantId}")]
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Claim>))]
+        public IHttpActionResult ClaimantClaims(int claimantId)
+        {
+            var claims = _claimService.GetClaimsForClaimant(claimantId);
+
+            return Ok(claims);
+        }
+
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Claim>))]

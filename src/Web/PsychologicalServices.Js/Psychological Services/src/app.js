@@ -40,6 +40,7 @@ export class App {
 			{ route: 'invoices/:id', name: 'editInvoice', moduleId: 'invoices/editInvoice', title: 'Edit Invoice', nav: false },
 			{ route: 'invoices/psychometrist', name: 'psychometristInvoices', moduleId: 'invoices/psychometristInvoices', title: 'Create Psychometrist Invoices', nav: false },
 			{ route: 'invoices/psychologist', name: 'psychologistInvoices', moduleId: 'invoices/psychologistInvoices', title: 'Create Psychologist Invoices', nav: false },
+			{ route: 'invoices/arbitration', name: 'arbitrationInvoices', moduleId: 'invoices/arbitrationInvoices', title: 'Create Arbitration Invoices', nav: true },
 			{ route: 'addresses', name: 'addresses', moduleId: 'addresses/addresses', title: 'Addresses', nav: true },
 			{ route: 'addresses/:id', name: 'editAddress', moduleId: 'addresses/editAddress', title: 'Edit Address', nav: false },
 			{ route: 'addresses/add', name: 'addAddress', moduleId: 'addresses/editAddress', title: 'Add Address', nav: false },
@@ -75,7 +76,9 @@ export class App {
 			{ route: 'events/:id', name: 'editEvent', moduleId: 'events/editEvent', title: 'Edit Event', nav: false },
 			{ route: 'events/add', name: 'addEvent', moduleId: 'events/editEvent', title: 'Add Event', nav: false },
 			{ route: 'invoiceConfiguration', name: 'invoiceConfiguration', moduleId: 'invoiceConfiguration/invoiceConfiguration', title: 'Invoice Configuration', nav: true },
-			{ route: 'arbitrations', name: 'arbitrations', moduleId: 'arbitrations/arbitrations', title: 'Arbitrations', nav: true }
+			{ route: 'arbitrations', name: 'arbitrations', moduleId: 'arbitrations/arbitrations', title: 'Arbitrations', nav: true },
+			{ route: 'arbitrations/:id', name: 'editArbitration', moduleId: 'arbitrations/editArbitration', title: 'Edit Arbitration', nav: false },
+			{ route: 'arbitrations/add', name: 'addArbitration', moduleId: 'arbitrations/editArbitration', title: 'Add Arbitration', nav: false }
 		]);
 		
 		this.context.getUser().then(user => this.user = user).then(() => this.isClaire = this.user.firstName === 'Claire');

@@ -1,0 +1,185 @@
+<template>
+	<require from="claims/edit-claim"></require>
+    <require from="claimants/search-claimant"></require>
+	<require from="common/date-mask"></require>
+	<require from="common/validation-summary.html"></require>
+	<require from="resources/value-converters/age"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
+    
+    
+    <div id="editAssessment" class="uk-container uk-container-expand">
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">${editType} Arbitration</legend>
+            
+            <div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
+            
+                <div class="uk-width-1-1" if.bind="validationErrors">
+                    <validation-summary errors.bind="validationErrors"></validation-summary>
+                </div>
+            
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label" for="title">Title</label>
+                    <div class="uk-form-controls">
+                        <input id="title" type="text" class="uk-input" value.bind="arbitration.title"/>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="psychologist">Psychologist</label>
+                    <div class="uk-form-controls">
+                        <select id="psychologist" class="uk-select" value.bind="arbitration.psychologist" matcher.bind="userMatcher">
+                            <option></option>
+                            <option repeat.for="psychologist of psychologists" model.bind="psychologist">
+                                ${psychologist.firstName} ${psychologist.lastName}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label">Claimant</label>
+                    <div class="uk-form-controls">
+                        <span if.bind="searchClaimant">
+                            ${searchClaimant.firstName} ${searchClaimant.lastName}
+                        </span>
+                        <search-claimant claimant.bind="searchClaimant" selected.delegate="claimantSelected($event)"></search-claimant>
+                    </div>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label">Claims</label>
+                    <div class="uk-form-controls uk-overflow-auto">
+                        <table class="uk-table uk-table-small uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Date of Loss</th>
+                                    <th>Claim Number</th>
+                                    <th>Lawyer</th>
+                                    <th>Insurance Company</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr repeat.for="claim of arbitration.claimant.claims">
+                                    <td>
+                                        <input type="checkbox" class="uk-checkbox" model.bind="claim" checked.bind="arbitration.claims" matcher.bind="claimMatcher" />
+                                    </td>
+                                    <td>${claim.dateOfLoss | dateFormat:config.shortDateFormat}</td>
+                                    <td>${claim.claimNumber}</td>
+                                    <td>${claim.lawyer}</td>
+                                    <td>${claim.insuranceCompany}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="uk-form-label" for="startDate">Start Date</label>
+                    <div class="uk-form-controls">
+                        <input id="startDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="arbitration.startDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="uk-form-label" for="endDate">End Date</label>
+                    <div class="uk-form-controls">
+                        <input id="endDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="arbitration.endDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="uk-form-label" for="availableDate">Available Date</label>
+                    <div class="uk-form-controls">
+                        <input id="availableDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="arbitration.availableDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="notifiedDate">Notified Date</label>
+                    <div class="uk-form-controls">
+                        <input id="notifiedDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="arbitration.notifiedDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="uk-form-label" for="letterOfUnderstandingSentDate">Letter of Understanding Sent Date</label>
+                    <div class="uk-form-controls">
+                        <input id="letterOfUnderstandingSentDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="arbitration.letterOfUnderstandingSentDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- -->
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="defenseLawyer">Defense Lawyer</label>
+                    <div class="uk-form-controls">
+                        <select id="defenseLawyer" class="uk-select" value.bind="arbitration.defenseLawyer" matcher.bind="contactMatcher" change.delegate="defenseLawyerChanged()">
+                            <option></option>
+                            <option repeat.for="contact of defenseLawyers" model.bind="contact">
+                                ${contact.firstName} ${contact.lastName} (${contact.contactType.name} - ${contact.employer.name})
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="uk-form-label" for="defenseFileNumber">Defense File Number</label>
+                    <div class="uk-form-controls">
+                        <input id="defenseFileNumber" type="text" class="uk-input" value.bind="arbitration.defenseFileNumber" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="plaintiffLawyer">Plaintiff Lawyer</label>
+                    <div class="uk-form-controls">
+                        <select id="plaintiffLawyer" class="uk-select" value.bind="arbitration.plaintiffLawyer" matcher.bind="contactMatcher" change.delegate="plaintiffLawyerChanged()">
+                            <option></option>
+                            <option repeat.for="contact of plaintiffLawyers" model.bind="contact">
+                                ${contact.firstName} ${contact.lastName} (${contact.contactType.name} - ${contact.employer.name})
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="billTo">Bill To</label>
+                    <div class="uk-form-controls">
+                        <template repeat.for="contact of billToContacts">
+                            <br if.bind="!$first">
+                            <label><input type="radio" name="billTo" class="uk-radio" model.bind="contact" checked.bind="arbitration.billToContact" matcher.bind="contactMatcher" />&nbsp;${contact.firstName} ${contact.lastName}</label>	
+                        </template>
+                    </div>
+                </div>
+                
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label" for="arbitrationNotes">Notes</label>
+                    <div class="uk-form-controls">
+                        <textarea id="arbitrationNotes" class="uk-textarea" value.bind="arbitration.note.noteText"></textarea>
+                    </div>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <hr>
+                </div>
+    
+                <div class="uk-width-1-2@s">
+                    <button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="save()" disabled.bind="saveDisabled">
+                        Save <i class="fa fa-save"></i>
+                    </button>
+                </div>
+                
+            </div>
+            
+        </fieldset>
+
+    </div>
+
+</template>

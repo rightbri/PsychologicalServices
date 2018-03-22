@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Claims
 {
@@ -15,6 +16,8 @@ namespace PsychologicalServices.Models.Claims
         public string Gender { get; set; }
 
         public bool IsActive { get; set; }
+
+        public IEnumerable<Claim> Claims { get; set; }
 
         public bool IsNew()
         {

@@ -113,13 +113,11 @@ namespace PsychologicalServices.Models.Arbitrations
 
             if (null != item.BillToContact)
             {
-                if (null == item.DefenseLawyer ||
-                    null == item.PlaintiffLawyer ||
-                        (
-                        item.BillToContact.ContactId != item.DefenseLawyer.ContactId &&
-                        item.BillToContact.ContactId != item.PlaintiffLawyer.ContactId
-                        )
+                if (!(
+                        (null != item.DefenseLawyer && item.BillToContact.ContactId == item.DefenseLawyer.ContactId) ||
+                        (null != item.PlaintiffLawyer && item.BillToContact.ContactId == item.PlaintiffLawyer.ContactId)
                     )
+                )
                 {
                     result.ValidationErrors.Add(
                         new ValidationError { PropertyName = "BillToContactId", Message = GetValidationMessage(item, "Bill To Contact must be either Defense Lawyer or Plaintiff Lawyer") }

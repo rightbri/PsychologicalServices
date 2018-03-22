@@ -144,6 +144,7 @@
     <Build Include="dbo\Stored Procedures\CredibilityData.sql" />
     <Build Include="dbo\Tables\InvoiceLineGroups.sql" />
     <Build Include="dbo\Tables\InvoiceLineGroupAppointments.sql" />
+    <Build Include="dbo\Tables\InvoiceLineGroupArbitrations.sql" />
     <Build Include="dbo\Tables\ArbitrationClaims.sql" />
     <Build Include="dbo\Stored Procedures\InvoiceableArbitrationData.sql" />
   </ItemGroup>

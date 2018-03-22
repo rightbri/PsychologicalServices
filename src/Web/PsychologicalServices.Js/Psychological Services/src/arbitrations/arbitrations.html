@@ -1,6 +1,5 @@
 <template>
     <require from="claimants/search-claimant"></require>
-    <require from="arbitrations/edit-arbitration"></require>
 	<require from="resources/value-converters/date-format"></require>
     
     <div class="uk-container">
@@ -17,15 +16,18 @@
                     </div>
                 </div>
                 
-                <div><!-- if.bind="searchClaimant"-->
-                    <p>
+                <div>
+                    <p if.bind="searchClaimant">
                         ${searchClaimant.firstName} ${searchClaimant.lastName}
                     </p>
                 </div>
-        
 
                 <div class="uk-width-1-1">
                     <button class="uk-button uk-button-default" click.delegate="search()">Search</button>
+
+                    <a route-href="route: addArbitration" class="uk-button uk-button-secondary">
+                        <i class="fa fa-plus"></i>&nbsp;Add
+                    </a>
                 </div>
 
             </div>
@@ -35,7 +37,7 @@
     </div>
 
 <div class="uk-overflow-auto" if.bind="arbitrations">
-    <table class="uk-table">
+    <table class="uk-table uk-table-divider">
         <thead>
             <tr>
                 <th></th>
@@ -49,29 +51,23 @@
             </tr>
         </thead>
         <tbody>
-            <template repeat.for="arbitration of arbitrations">
-                <tr>
-                    <td>
-                        <button class="uk-button uk-button-primary" click.delegate="editArbitration(arbitration)">
-                            Edit
-                        </button>
-                    </td>
-                    <td>${arbitration.title}</td>
-                    <td>${arbitration.claimant.firstName} ${arbitration.claimant.lastName}</td>
-                    <td>${arbitration.startDate | dateFormat:config.shortDateFormat}</td>
-                    <td>${arbitration.endDate | dateFormat:config.shortDateFormat}</td>
-                    <td>${arbitration.availableDate | dateFormat:config.shortDateFormat}</td>
-                    <td>${arbitration.defenseLawyer.firstName} ${arbitration.defenseLawyer.lastName}</td>
-                    <td>${arbitration.plaintiffLawyer.firstName} ${arbitration.plaintiffLawyer.lastName}</td>
-                </tr>
-            </template>
+            <tr repeat.for="arbitration of arbitrations">
+                <td>
+                    <a route-href="route: editArbitration; params.bind: { id: arbitration.arbitrationId }" class="uk-button uk-button-primary">
+                        Edit
+                    </a>
+                </td>
+                <td>${arbitration.title}</td>
+                <td>${arbitration.claimant.firstName} ${arbitration.claimant.lastName}</td>
+                <td>${arbitration.startDate | dateFormat:config.shortDateFormat}</td>
+                <td>${arbitration.endDate | dateFormat:config.shortDateFormat}</td>
+                <td>${arbitration.availableDate | dateFormat:config.shortDateFormat}</td>
+                <td>${arbitration.defenseLawyer.firstName} ${arbitration.defenseLawyer.lastName}</td>
+                <td>${arbitration.plaintiffLawyer.firstName} ${arbitration.plaintiffLawyer.lastName}</td>
+            </tr>
         </tbody>
     </table>
 
-    <div if.bind="arbitrationEditModel">
-        <edit-arbitration model.bind="arbitrationEditModel" edited.delegate="arbitrationEdited($event)" canceled.delegate="arbitrationCanceled($event)"></edit-arbitration>
-    </div>
-    
 </div>
 
 </template>

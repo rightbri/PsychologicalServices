@@ -287,6 +287,10 @@ export class DataRepository {
 		return this.saveBasic(claim, 'claim');
 	}
 	
+	getClaimsForClaimant(id) {
+		return this.getManyBasic('claim/claimants/' + id);
+	}
+
 	getIssuesInDispute() {
 		return this.getManyBasic('issueindispute', true);
 	}
@@ -355,14 +359,14 @@ export class DataRepository {
 		return this.getSingleBasic(arbitrationId, 'arbitration');
 	}
 	
-	getNewArbitration(assessmentId) {
-		return this.getBasic(`arbitration/assessment/${assessmentId}`);
-	}
-
 	searchArbitrations(criteria) {
 		return this.searchBasic(criteria, 'arbitration');
 	}
 
+	getArbitrations(criteria) {
+		return this.searchBasic(criteria, 'arbitration');
+	}
+	
 	saveArbitration(arbitration) {
 		return this.saveBasic(arbitration, 'arbitration');
 	}
@@ -449,10 +453,6 @@ export class DataRepository {
 	
 	getCalendarNotes(criteria) {
 		return this.searchBasic(criteria, 'calendarNote');
-	}
-	
-	getArbitrations(criteria) {
-		return this.searchBasic(criteria, 'arbitration');
 	}
 	
 	saveCalendarNote(calendarNote) {

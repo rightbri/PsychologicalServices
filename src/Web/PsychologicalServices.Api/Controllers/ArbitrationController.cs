@@ -18,16 +18,16 @@ namespace PsychologicalServices.Api.Controllers
             _arbitrationService = arbitrationService;
         }
 
-        [Route("assessment/{assessmentId}")]
+        [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Arbitration))]
-        public IHttpActionResult GetNewArbitration(int assessmentId)
+        public IHttpActionResult Get(int id)
         {
-            var arbitration = _arbitrationService.GetNewArbitration(assessmentId);
+            var arbitration = _arbitrationService.GetArbitration(id);
 
             return Ok(arbitration);
         }
-        
+
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Arbitration>))]

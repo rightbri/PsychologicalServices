@@ -29,12 +29,23 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
         private static readonly Func<IPathEdgeRootParser<ArbitrationEntity>, IPathEdgeRootParser<ArbitrationEntity>>
             ArbitrationPath =
                 (arbitrationPath => arbitrationPath
+                    .Prefetch<UserEntity>(arbitration => arbitration.Psychologist)
+                        .SubPath(psychologistPath => psychologistPath
+                            .Prefetch<CompanyEntity>(psychologist => psychologist.Company)
+                                .SubPath(companyPath => companyPath
+                                    .Prefetch<AddressEntity>(company => company.Address)
+                                        .SubPath(addressPath => addressPath
+                                            .Prefetch<CityEntity>(address => address.City)
+                                        )
+                                )
+                        )
+                    .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
+                        .SubPath(claimantPath => claimantPath
+                            .Prefetch<ClaimEntity>(claimant => claimant.Claims)
+                        )
                     .Prefetch<ArbitrationClaimEntity>(arbitration => arbitration.ArbitrationClaims)
                         .SubPath(arbitrationClaimPath => arbitrationClaimPath
                             .Prefetch<ClaimEntity>(arbitrationClaim => arbitrationClaim.Claim)
-                                .SubPath(claimPath => claimPath
-                                    .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                )
                         )
                     .Prefetch<ContactEntity>(arbitration => arbitration.DefenseLawyer)
                         .SubPath(contactPath => contactPath
@@ -108,9 +119,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
 
                 if (criteria.ClaimantId.HasValue)
                 {
-                    arbitrations = arbitrations.Where(arbitration =>
-                        arbitration.ArbitrationClaims.Any(arbitrationClaim => arbitrationClaim.Claim.ClaimantId == criteria.ClaimantId)
-                    );
+                    arbitrations = arbitrations.Where(arbitration => arbitration.ClaimantId == criteria.ClaimantId);
                 }
                 
                 return Execute<ArbitrationEntity>(
@@ -146,8 +155,11 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                 }
                 
                 entity.Title = arbitration.Title;
+
+                entity.PsychologistId = arbitration.Psychologist.UserId;
+                entity.ClaimantId = arbitration.Claimant.ClaimantId;
                 
-                if (entity.StartDate.HasValue)
+                if (arbitration.StartDate.HasValue)
                 {
                     entity.StartDate = arbitration.StartDate;
                 }
@@ -156,7 +168,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                     entity.SetNewFieldValue((int)ArbitrationFieldIndex.StartDate, null);
                 }
 
-                if (entity.EndDate.HasValue)
+                if (arbitration.EndDate.HasValue)
                 {
                     entity.EndDate = arbitration.EndDate;
                 }
@@ -165,7 +177,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                     entity.SetNewFieldValue((int)ArbitrationFieldIndex.EndDate, null);
                 }
 
-                if (entity.AvailableDate.HasValue)
+                if (arbitration.AvailableDate.HasValue)
                 {
                     entity.AvailableDate = arbitration.AvailableDate;
                 }
@@ -174,7 +186,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                     entity.SetNewFieldValue((int)ArbitrationFieldIndex.AvailableDate, null);
                 }
 
-                if (entity.NotifiedDate.HasValue)
+                if (arbitration.NotifiedDate.HasValue)
                 {
                     entity.NotifiedDate = arbitration.NotifiedDate;
                 }
@@ -183,7 +195,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                     entity.SetNewFieldValue((int)ArbitrationFieldIndex.NotifiedDate, null);
                 }
 
-                if (entity.LetterOfUnderstandingSentDate.HasValue)
+                if (arbitration.LetterOfUnderstandingSentDate.HasValue)
                 {
                     entity.LetterOfUnderstandingSentDate = arbitration.LetterOfUnderstandingSentDate;
                 }

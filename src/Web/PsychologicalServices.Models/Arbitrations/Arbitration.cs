@@ -1,6 +1,7 @@
 ﻿using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Contacts;
 using PsychologicalServices.Models.Notes;
+using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,8 @@ namespace PsychologicalServices.Models.Arbitrations
     public class Arbitration
     {
         public int ArbitrationId { get; set; }
+
+        public Claimant Claimant { get; set; }
 
         public IEnumerable<Claim> Claims { get; set; }
 
@@ -33,6 +36,8 @@ namespace PsychologicalServices.Models.Arbitrations
         public Contact BillToContact { get; set; }
 
         public Note Note { get; set; }
+
+        public User Psychologist { get; set; }
 
         public bool IsNew()
         {
