@@ -1,5 +1,4 @@
-﻿using PsychologicalServices.Models.Companies;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Invoices
@@ -45,6 +44,8 @@ namespace PsychologicalServices.Models.Invoices
         int LogInvoiceDocumentSent(int invoiceDocumentId, string recipients);
         
         IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria);
+
+        IEnumerable<InvoiceableArbitrationData> GetInvoiceableArbitrationData(InvoiceableArbitrationDataSearchCriteria criteria);
 
         PsychometristInvoiceAmount GetPsychometristInvoiceAmount(int assessmentTypeId, int appointmentStatusId, int appointmentSequenceId, int companyId);
     }

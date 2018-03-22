@@ -262,6 +262,7 @@
     <Compile Include="Controllers\DiagnosisFoundResponseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\CredibilityController.cs" />
+    <Compile Include="Controllers\InvoiceableArbitrationDataController.cs" />
     <Compile Include="Controllers\InvoiceConfigurationController.cs" />
     <Compile Include="Controllers\OutstandingReportController.cs" />
     <Compile Include="Controllers\PsychologistInvoiceController.cs" />

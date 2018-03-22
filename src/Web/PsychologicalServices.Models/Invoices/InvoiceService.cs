@@ -203,6 +203,13 @@ namespace PsychologicalServices.Models.Invoices
             return data;
         }
 
+        public IEnumerable<InvoiceableArbitrationData> GetInvoiceableArbitrationData(InvoiceableArbitrationDataSearchCriteria criteria)
+        {
+            var data = _invoiceRepository.GetInvoiceableArbitrationData(criteria);
+
+            return data;
+        }
+
         public SaveResult<Invoice> SaveInvoice(Invoice invoice)
         {
             var result = new SaveResult<Invoice>();

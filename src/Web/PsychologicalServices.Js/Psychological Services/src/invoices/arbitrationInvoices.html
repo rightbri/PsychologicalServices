@@ -1,0 +1,57 @@
+<template>
+	<require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+	
+	<div class="uk-container">
+	
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Arbitration Invoices</legend>
+			
+			<form class="uk-form-stacked">
+			
+				<div class="uk-margin">
+					<button class="uk-button uk-button-primary" click.delegate="searchInvoices()">Search</button>
+				</div>
+				
+			</form>
+			
+		</fieldset>
+
+	</div>
+
+	<div class="uk-overflow-auto" if.bind="invoiceableArbitrations">
+		<table class="uk-table uk-table-divider" fixed-header>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Start Date</th>
+					<th>Available Date</th>
+					<th>Claimant</th>
+					<th>Payable To</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr repeat.for="arbitration of invoiceableArbitrations | sortArray:[{ property: 'startDate', direction: 'asc' },{ property: 'payableTo', direction: 'asc' }]">
+					<td>
+						<button type="button" class="uk-button uk-button-primary" click.delegate="createInvoice(arbitration)" if.bind="arbitration.canCreateInvoice">
+							Create Invoice
+						</button>
+						<a route-href="route: editInvoice; params.bind: {'id': arbitration.invoiceId }" class="uk-button uk-button-secondary" if.bind="arbitration.invoiceId">
+							Edit Invoice
+						</a>
+					</td>
+					<td>${arbitration.title}</td>
+					<td>${arbitration.startDate | dateFormat:config.shortDateFormat}</td>
+					<td>${arbitration.availableDate | dateFormat:config.shortDateFormat}</td>
+					<td class="uk-text-truncate">${arbitration.claimant}</td>
+					<td>${arbitration.payableTo}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</template>

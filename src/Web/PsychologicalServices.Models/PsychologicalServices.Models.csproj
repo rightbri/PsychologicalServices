@@ -99,6 +99,8 @@
     <Compile Include="Invoices\IInvoiceConfigurationValidator.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\IArbitrationInvoiceGenerator.cs" />
+    <Compile Include="Invoices\InvoiceableArbitrationDataSearchCriteria.cs" />
+    <Compile Include="Invoices\InvoiceableArbitrationData.cs" />
     <Compile Include="Invoices\InvoiceConfiguration.cs" />
     <Compile Include="Invoices\InvoiceConfigurationValidator.cs" />
     <Compile Include="Invoices\InvoiceDefaults.cs" />

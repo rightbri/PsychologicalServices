@@ -1245,6 +1245,29 @@ namespace PsychologicalServices.Infrastructure.Invoices
             }
         }
 
+        public IEnumerable<InvoiceableArbitrationData> GetInvoiceableArbitrationData(InvoiceableArbitrationDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.InvoiceableArbitrationData(criteria.CompanyId, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new InvoiceableArbitrationData
+                        {
+                            ArbitrationId = Convert.ToInt32(row["ArbitrationId"]),
+                            Title = Convert.ToString(row["Title"]),
+                            Claimant = Convert.ToString(row["Claimant"]),
+                            PayableTo = Convert.ToString(row["PayableTo"]),
+                            PayableToId = Convert.ToInt32(row["PayableToId"]),
+                            StartDate = row["StartDate"] as DateTimeOffset?,
+                            AvailableDate = row["AvailableDate"] as DateTimeOffset?,
+                        })
+                    .ToList();
+            }
+        }
+
         public int LogInvoiceDocumentSent(int invoiceDocumentId, string recipients)
         {
             using (var adapter = AdapterFactory.CreateAdapter())

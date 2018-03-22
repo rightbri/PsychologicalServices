@@ -31,6 +31,8 @@ namespace PsychologicalServices.Models.Invoices
 
         IEnumerable<InvoiceableAppointmentData> GetInvoiceableAppointmentData(InvoiceableAppointmentDataSearchCriteria criteria);
 
+        IEnumerable<InvoiceableArbitrationData> GetInvoiceableArbitrationData(InvoiceableArbitrationDataSearchCriteria criteria);
+
         SaveResult<Invoice> SaveInvoice(Invoice invoice);
 
         SaveResult<InvoiceConfiguration> SaveInvoiceConfiguration(InvoiceConfiguration invoiceConfiguration);

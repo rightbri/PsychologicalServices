@@ -74,6 +74,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'invoiceableappointmentdata');
 	}
 
+	searchInvoiceableArbitrationData(criteria) {
+		return this.searchBasic(criteria, 'invoiceablearbitrationdata');
+	}
+
 	createPsychometristInvoice(companyId, psychometristId, year, month) {
 		return this.postBasic('psychometristinvoice/create', {
 			'companyId': companyId,
