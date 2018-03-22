@@ -17,7 +17,6 @@
 	<require from="claims/edit-claim"></require>
 	<require from="reports/edit-report"></require>
 	<require from="medRehab/edit-med-rehab"></require>
-	<require from="arbitrations/edit-arbitration"></require>
 	<require from="assessments/edit-assessment-note"></require>
 	
 <div id="editAssessment" class="uk-container uk-container-expand">
@@ -234,52 +233,6 @@
 			
 			<div class="uk-width-1-1 uk-background-muted" if.bind="claimEditModel">
 				<edit-claim model.bind="claimEditModel" edited.delegate="claimEdited($event)" canceled.delegate="claimCanceled($event)"></edit-claim>
-			</div>
-			
-			<div class="uk-width-1-1">
-				<label class="uk-form-label">Arbitrations</label>
-				<div class="uk-form-controls uk-overflow-auto">
-					<table class="uk-table uk-table-divider uk-table-small">
-						<thead>
-							<tr>
-								<th>
-									<button type="button" class="uk-button uk-button-link" click.delegate="newArbitration()" title="Add arbitration" uk-tooltip>
-										<i class="fa fa-plus"></i>
-									</button>
-								</th>
-								<th>Title</th>
-								<th>Start Date</th>
-								<th>End Date</th>
-								<th>Defense Lawyer</th>
-								<th>Notes</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr repeat.for="arbitration of assessment.arbitrations">
-								<td>
-									<button type="button" class="uk-button uk-button-default" click.delegate="editArbitration(arbitration)">
-										Edit
-									</button>
-								</td>
-								<td>${arbitration.title}</td>
-								<td>${arbitration.startDate | dateFormat:config.longDateFormat}</td>
-								<td>${arbitration.endDate | dateFormat:config.longDateFormat}</td>
-								<td>${arbitration.defenseLawyer.firstName} ${arbitration.defenseLawyer.lastName}</td>
-								<td>${arbitration.note.noteText}</td>
-								<td>
-									<button type="button" class="uk-button uk-button-link" click.delegate="removeArbitration(arbitration)" title="Remove arbitration" uk-tooltip>
-										<i class="fa fa-times"></i>
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			
-			<div class="uk-width-1-1 uk-background-muted" if.bind="arbitrationEditModel">
-				<edit-arbitration model.bind="arbitrationEditModel" edited.delegate="arbitrationEdited($event)" canceled.delegate="arbitrationCanceled($event)"></edit-arbitration>
 			</div>
 			
 			<div class="uk-width-1-3@s">

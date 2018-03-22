@@ -30,7 +30,6 @@ namespace PsychologicalServices.Models.Assessments
         private readonly IMedRehabValidator _medRehabValidator = null;
         private readonly INoteValidator _noteValidator = null;
         private readonly IColorValidator _colorValidator = null;
-        private readonly IArbitrationValidator _arbitrationValidator = null;
 
         public AssessmentValidator(
             IAssessmentRepository assessmentRepository,
@@ -44,8 +43,7 @@ namespace PsychologicalServices.Models.Assessments
             IEmailAddressValidator emailAddressValidator,
             IMedRehabValidator medRehabValidator,
             INoteValidator noteValidator,
-            IColorValidator colorValidator,
-            IArbitrationValidator arbitrationValidator
+            IColorValidator colorValidator
         )
         {
             _assessmentRepository = assessmentRepository;
@@ -60,7 +58,6 @@ namespace PsychologicalServices.Models.Assessments
             _medRehabValidator = medRehabValidator;
             _noteValidator = noteValidator;
             _colorValidator = colorValidator;
-            _arbitrationValidator = arbitrationValidator;
         }
 
         public IValidationResult Validate(Assessment item)
@@ -345,16 +342,6 @@ namespace PsychologicalServices.Models.Assessments
                             Message = string.Format("{0} report type is not valid for {1} assessments", report.ReportType.Name, item.AssessmentType.Description),
                         })
                 );
-            }
-
-            if (null != item.Arbitrations)
-            {
-                foreach (var arbitration in item.Arbitrations)
-                {
-                    result.ValidationErrors.AddRange(
-                        _arbitrationValidator.Validate(arbitration).ValidationErrors
-                    );
-                }
             }
 
             result.IsValid = !result.ValidationErrors.Any();

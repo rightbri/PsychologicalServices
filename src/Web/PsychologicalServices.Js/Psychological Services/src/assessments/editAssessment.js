@@ -66,7 +66,7 @@ export class EditAssessment {
 								
 								this.checkMedRehab();
 
-								this.scroller.scrollTo(0)
+								this.scroller.scrollTo(0);
 							});
 						});
 				}
@@ -400,50 +400,6 @@ export class EditAssessment {
 		}
 
 		return null;
-	}
-	
-	newArbitration() {
-		this.dataRepository.getNewArbitration(this.assessment.assessmentId)
-			.then(data => {
-				data.isAdd = true;
-				data.note = data.note || { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user };
-
-				this.editArbitration(data);
-			});
-	}
-	
-	editArbitration(arbitration) {
-		arbitration.note = arbitration.note || { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user };
-
-		this.arbitrationEditModel = {
-			'arbitration': arbitration,
-			'defenseLawyers': this.defenseLawyers
-		};
-	}
-	
-	arbitrationEdited(e) {
-		let arbitration = e.detail.arbitration;
-		
-		if (arbitration.isAdd) {
-			delete arbitration['isAdd'];
-			this.assessment.arbitrations.push(arbitration);
-		}
-		
-		this.arbitrationEditModel = null;
-	}
-	
-	arbitrationCanceled(e) {
-		let arbitration = e.detail.arbitration;
-
-		if (!arbitration.isAdd) {
-			copyValues(arbitration, this.arbitrationEditModel.arbitration);
-		}
-		
-		this.arbitrationEditModel = null;
-	}
-	
-	removeArbitration(arbitration) {
-		this.assessment.arbitrations.splice(this.assessment.arbitrations.indexOf(arbitration), 1);
 	}
 	
 	newNote() {

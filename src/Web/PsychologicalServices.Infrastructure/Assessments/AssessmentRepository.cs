@@ -130,20 +130,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                     .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
                                 )
                         )
-                    .Prefetch<ArbitrationEntity>(assessment => assessment.Arbitrations)
-                        .SubPath(arbitrationPath => arbitrationPath
-                            .Prefetch<ContactEntity>(arbitration => arbitration.DefenseLawyer)
-                                .SubPath(contactPath => contactPath
-                                    .Prefetch<ContactTypeEntity>(contact => contact.ContactType)
-                                    .Prefetch<EmployerEntity>(contact => contact.Employer)
-                                    .Prefetch<AddressEntity>(contact => contact.Address)
-                                )
-                            .Prefetch<NoteEntity>(arbitration => arbitration.Note)
-                                .SubPath(notePath => notePath
-                                    .Prefetch<UserEntity>(note => note.CreateUser)
-                                    .Prefetch<UserEntity>(note => note.UpdateUser)
-                                )
-                        )
                     .Prefetch<NoteEntity>(assessment => assessment.Summary)
                     .Prefetch<UserEntity>(assessment => assessment.CreateUser)
                     .Prefetch<UserEntity>(assessment => assessment.UpdateUser)
@@ -209,7 +195,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
             {
                 AssessmentType = company.NewAssessmentAssessmentType,
                 Appointments = new List<Appointment>(new[] { appointment }),
-                Arbitrations = Enumerable.Empty<Models.Arbitrations.Arbitration>(),
                 Attributes = Enumerable.Empty<Models.Attributes.AttributeValue>(),
                 Claims = Enumerable.Empty<Models.Claims.Claim>(),
                 Colors = Enumerable.Empty<Models.Colors.Color>(),
@@ -359,11 +344,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     prefetch.Add(AssessmentEntity.PrefetchPathAssessmentReports)
                         .SubPath.Add(AssessmentReportEntity.PrefetchPathAssessmentReportIssuesInDispute)
                             .SubPath.Add(AssessmentReportIssueInDisputeEntity.PrefetchPathIssueInDispute);
-
-                    var arbitrationsPath = prefetch.Add(AssessmentEntity.PrefetchPathArbitrations);
-
-                    arbitrationsPath
-                        .SubPath.Add(ArbitrationEntity.PrefetchPathNote);
 
                     adapter.FetchEntity(assessmentEntity, prefetch);
                 }
@@ -1041,151 +1021,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 );
 
                 #endregion
-
-                #region arbitrations
-
-                var arbitrationsToAdd = assessment.Arbitrations
-                    .Where(arbitration =>
-                        !assessmentEntity.Arbitrations.Any(assessmentArbitration => assessmentArbitration.ArbitrationId == arbitration.ArbitrationId)
-                    )
-                    .ToList();
-
-                var arbitrationsToRemove = assessmentEntity.Arbitrations
-                    .Where(assessmentArbitration =>
-                        !assessment.Arbitrations.Any(arbitration => arbitration.ArbitrationId == assessmentArbitration.ArbitrationId)
-                    )
-                    .ToList();
-
-                var arbitrationsToUpdate = assessment.Arbitrations
-                    .Where(arbitration =>
-                        assessmentEntity.Arbitrations.Any(assessmentArbitration =>
-                            arbitration.ArbitrationId == assessmentArbitration.ArbitrationId &&
-                            (
-                                arbitration.Title != assessmentArbitration.Title ||
-                                (null == arbitration.DefenseLawyer && assessmentArbitration.DefenseLawyerId.HasValue) ||
-                                (null != arbitration.DefenseLawyer && !assessmentArbitration.DefenseLawyerId.HasValue) ||
-                                (null != arbitration.DefenseLawyer && assessmentArbitration.DefenseLawyerId.HasValue && arbitration.DefenseLawyer.ContactId != assessmentArbitration.DefenseLawyerId) ||
-                                arbitration.DefenseFileNumber != assessmentArbitration.DefenseFileNumber ||
-                                arbitration.StartDate != assessmentArbitration.StartDate ||
-                                arbitration.EndDate != assessmentArbitration.EndDate ||
-                                arbitration.AvailableDate != assessmentArbitration.AvailableDate ||
-                                (null == arbitration.Note && assessmentArbitration.NoteId.HasValue) ||
-                                (null != arbitration.Note && !assessmentArbitration.NoteId.HasValue && !string.IsNullOrWhiteSpace(arbitration.Note.NoteText)) ||
-                                (null != arbitration.Note && assessmentArbitration.NoteId.HasValue && arbitration.Note.NoteText != assessmentArbitration.Note.Note)
-                            )
-                        )
-                    )
-                    .ToList();
-
-                foreach (var arbitration in arbitrationsToRemove)
-                {
-                    uow.AddForDelete(arbitration);
-
-                    if (null != arbitration.Note)
-                    {
-                        uow.AddForDelete(arbitration.Note);
-                    }
-                }
-
-                foreach (var arbitration in arbitrationsToUpdate)
-                {
-                    var arbitrationEntity = assessmentEntity.Arbitrations.SingleOrDefault(assessmentArbitration => assessmentArbitration.ArbitrationId == arbitration.ArbitrationId);
-
-                    if (null != arbitrationEntity)
-                    {
-                        arbitrationEntity.Title = arbitration.Title;
-
-                        if (null == arbitration.StartDate)
-                        {
-                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.StartDate, null);
-                        }
-                        else
-                        {
-                            arbitrationEntity.StartDate = arbitration.StartDate;
-                        }
-
-                        if (null == arbitration.EndDate)
-                        {
-                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.EndDate, null);
-                        }
-                        else
-                        {
-                            arbitrationEntity.EndDate = arbitration.EndDate;
-                        }
-                        
-                        if (null == arbitrationEntity.AvailableDate)
-                        {
-                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.AvailableDate, null);
-                        }
-                        else
-                        {
-                            arbitrationEntity.AvailableDate = arbitration.AvailableDate;
-                        }
-                        
-                        if (null == arbitration.DefenseLawyer)
-                        {
-                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.DefenseLawyerId, null);
-                        }
-                        else
-                        {
-                            arbitrationEntity.DefenseLawyerId = arbitration.DefenseLawyer.ContactId;
-                        }
-                        
-                        if (string.IsNullOrWhiteSpace(arbitration.DefenseFileNumber))
-                        {
-                            arbitrationEntity.SetNewFieldValue((int)ArbitrationFieldIndex.DefenseFileNumber, null);
-                        }
-                        else
-                        {
-                            arbitrationEntity.DefenseFileNumber = arbitration.DefenseFileNumber;
-                        }
-
-                        if (null != arbitration.Note)
-                        {
-                            if (null == arbitrationEntity.Note)
-                            {
-                                if (!string.IsNullOrWhiteSpace(arbitration.Note.NoteText))
-                                {
-                                    arbitrationEntity.Note = new NoteEntity
-                                    {
-                                        Note = arbitration.Note.NoteText,
-                                        CreateUserId = arbitration.Note.CreateUser.UserId,
-                                        UpdateUserId = arbitration.Note.UpdateUser.UserId,
-                                    };
-                                }
-                            }
-                            else if (arbitrationEntity.Note.Note != arbitration.Note.NoteText)
-                            {
-                                arbitrationEntity.Note.Note = arbitration.Note.NoteText;
-                                arbitrationEntity.Note.UpdateUserId = arbitration.Note.UpdateUser.UserId;
-                                arbitrationEntity.Note.UpdateDate = _date.UtcNow;
-                            }
-                        }
-                    }
-                }
-
-                assessmentEntity.Arbitrations.AddRange(
-                    arbitrationsToAdd.Select(arbitration => new ArbitrationEntity
-                    {
-                        Title = arbitration.Title,
-                        StartDate = arbitration.StartDate,
-                        EndDate = arbitration.EndDate,
-                        AvailableDate = arbitration.AvailableDate,
-                        DefenseLawyerId = (null != arbitration.DefenseLawyer ? arbitration.DefenseLawyer.ContactId : (int?)null),
-                        DefenseFileNumber = arbitration.DefenseFileNumber,
-                        Note = null != arbitration.Note && !string.IsNullOrWhiteSpace(arbitration.Note.NoteText)
-                            ? new NoteEntity
-                            {
-                                CreateUserId = arbitration.Note.CreateUser.UserId,
-                                Note = arbitration.Note.NoteText,
-                                UpdateUserId = arbitration.Note.UpdateUser.UserId,
-                            }
-                            : null,
-                    })
-                );
-
-                #endregion
-
+                
                 #region summary
 
                 var updateSummaryNote =

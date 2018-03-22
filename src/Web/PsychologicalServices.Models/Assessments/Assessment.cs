@@ -58,8 +58,6 @@ namespace PsychologicalServices.Models.Assessments
 
         public IEnumerable<Report> Reports { get; set; }
 
-        public IEnumerable<Arbitration> Arbitrations { get; set; }
-
         public DateTimeOffset CreateDate { get; set; }
 
         public User CreateUser { get; set; }

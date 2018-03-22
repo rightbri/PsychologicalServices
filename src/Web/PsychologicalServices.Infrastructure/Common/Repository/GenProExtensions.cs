@@ -811,7 +811,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Attributes = assessment.AssessmentAttributes.Select(assessmentAttribute => assessmentAttribute.ToAttributeValue()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
-                    Arbitrations = assessment.Arbitrations.Select(arbitration => arbitration.ToArbitration()),
                     CreateDate = assessment.CreateDate,
                     CreateUser = assessment.CreateUser.ToUser(),
                     UpdateDate = assessment.UpdateDate,
