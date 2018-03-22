@@ -161,7 +161,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 {
                     ArbitrationId = arbitration.ArbitrationId,
                     Title = arbitration.Title,
-                    Claims = arbitration.ArbitrationClaims.Select(arbitrationClaim => arbitrationClaim.Claim.ToClaim()),
+                    Psychologist = arbitration.Psychologist.ToUser(),
+                    Claimant = arbitration.Claimant.ToArbitrationClaimant(),
+                    Claims = arbitration.ArbitrationClaims.Select(arbitrationClaim => arbitrationClaim.Claim.ToArbitrationClaim()),
                     StartDate = arbitration.StartDate,
                     EndDate = arbitration.EndDate,
                     AvailableDate = arbitration.AvailableDate,
@@ -172,6 +174,36 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     PlaintiffLawyer = arbitration.PlaintiffLawyer.ToContact(),
                     BillToContact = arbitration.BillToContact.ToContact(),
                     Note = arbitration.Note.ToNote(),
+                }
+                : null;
+        }
+
+        public static Claimant ToArbitrationClaimant(this ClaimantEntity claimant)
+        {
+            return null != claimant
+                ? new Claimant
+                {
+                    ClaimantId = claimant.ClaimantId,
+                    FirstName = claimant.FirstName,
+                    LastName = claimant.LastName,
+                    DateOfBirth = claimant.DateOfBirth,
+                    Gender = claimant.Gender,
+                    IsActive = claimant.IsActive,
+                    Claims = claimant.Claims.Select(claim => claim.ToArbitrationClaim()),
+                }
+                : null;
+        }
+
+        public static Claim ToArbitrationClaim(this ClaimEntity claim)
+        {
+            return null != claim
+                ? new Claim
+                {
+                    ClaimId = claim.ClaimId,
+                    ClaimNumber = claim.ClaimNumber,
+                    DateOfLoss = claim.DateOfLoss,
+                    Lawyer = claim.Lawyer,
+                    InsuranceCompany = claim.InsuranceCompany,
                 }
                 : null;
         }

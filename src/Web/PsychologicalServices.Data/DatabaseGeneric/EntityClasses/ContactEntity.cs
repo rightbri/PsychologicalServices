@@ -29,9 +29,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private EntityCollection<ArbitrationEntity> _arbitrations__;
 		private EntityCollection<ArbitrationEntity> _arbitrations;
 		private EntityCollection<ArbitrationEntity> _arbitrations_;
-		private EntityCollection<ArbitrationEntity> _arbitrations__;
 		private AddressEntity _address;
 		private ContactTypeEntity _contactType;
 		private EmployerEntity _employer;
@@ -53,12 +53,12 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string ContactType = "ContactType";
 			/// <summary>Member name Employer</summary>
 			public static readonly string Employer = "Employer";
+			/// <summary>Member name Arbitrations__</summary>
+			public static readonly string Arbitrations__ = "Arbitrations__";
 			/// <summary>Member name Arbitrations</summary>
 			public static readonly string Arbitrations = "Arbitrations";
 			/// <summary>Member name Arbitrations_</summary>
 			public static readonly string Arbitrations_ = "Arbitrations_";
-			/// <summary>Member name Arbitrations__</summary>
-			public static readonly string Arbitrations__ = "Arbitrations__";
 		}
 		#endregion
 		
@@ -116,9 +116,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_arbitrations__ = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations__", typeof(EntityCollection<ArbitrationEntity>));
 				_arbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations", typeof(EntityCollection<ArbitrationEntity>));
 				_arbitrations_ = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations_", typeof(EntityCollection<ArbitrationEntity>));
-				_arbitrations__ = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations__", typeof(EntityCollection<ArbitrationEntity>));
 				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
 				if(_address!=null)
 				{
@@ -179,14 +179,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					this.Employer = (EmployerEntity)entity;
 					break;
+				case "Arbitrations__":
+					this.Arbitrations__.Add((ArbitrationEntity)entity);
+					break;
 				case "Arbitrations":
 					this.Arbitrations.Add((ArbitrationEntity)entity);
 					break;
 				case "Arbitrations_":
 					this.Arbitrations_.Add((ArbitrationEntity)entity);
-					break;
-				case "Arbitrations__":
-					this.Arbitrations__.Add((ArbitrationEntity)entity);
 					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
@@ -219,14 +219,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					toReturn.Add(Relations.EmployerEntityUsingEmployerId);
 					break;
+				case "Arbitrations__":
+					toReturn.Add(Relations.ArbitrationEntityUsingBillToContactId);
+					break;
 				case "Arbitrations":
 					toReturn.Add(Relations.ArbitrationEntityUsingDefenseLawyerId);
 					break;
 				case "Arbitrations_":
 					toReturn.Add(Relations.ArbitrationEntityUsingPlaintiffLawyerId);
-					break;
-				case "Arbitrations__":
-					toReturn.Add(Relations.ArbitrationEntityUsingBillToContactId);
 					break;
 				default:
 					break;				
@@ -265,14 +265,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					SetupSyncEmployer(relatedEntity);
 					break;
+				case "Arbitrations__":
+					this.Arbitrations__.Add((ArbitrationEntity)relatedEntity);
+					break;
 				case "Arbitrations":
 					this.Arbitrations.Add((ArbitrationEntity)relatedEntity);
 					break;
 				case "Arbitrations_":
 					this.Arbitrations_.Add((ArbitrationEntity)relatedEntity);
-					break;
-				case "Arbitrations__":
-					this.Arbitrations__.Add((ArbitrationEntity)relatedEntity);
 					break;
 				default:
 					break;
@@ -296,14 +296,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Employer":
 					DesetupSyncEmployer(false, true);
 					break;
+				case "Arbitrations__":
+					this.PerformRelatedEntityRemoval(this.Arbitrations__, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "Arbitrations":
 					this.PerformRelatedEntityRemoval(this.Arbitrations, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "Arbitrations_":
 					this.PerformRelatedEntityRemoval(this.Arbitrations_, relatedEntity, signalRelatedEntityManyToOne);
-					break;
-				case "Arbitrations__":
-					this.PerformRelatedEntityRemoval(this.Arbitrations__, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				default:
 					break;
@@ -344,9 +344,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+			toReturn.Add(this.Arbitrations__);
 			toReturn.Add(this.Arbitrations);
 			toReturn.Add(this.Arbitrations_);
-			toReturn.Add(this.Arbitrations__);
 			return toReturn;
 		}
 
@@ -358,9 +358,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_arbitrations__", ((_arbitrations__!=null) && (_arbitrations__.Count>0) && !this.MarkedForDeletion)?_arbitrations__:null);
 				info.AddValue("_arbitrations", ((_arbitrations!=null) && (_arbitrations.Count>0) && !this.MarkedForDeletion)?_arbitrations:null);
 				info.AddValue("_arbitrations_", ((_arbitrations_!=null) && (_arbitrations_.Count>0) && !this.MarkedForDeletion)?_arbitrations_:null);
-				info.AddValue("_arbitrations__", ((_arbitrations__!=null) && (_arbitrations__.Count>0) && !this.MarkedForDeletion)?_arbitrations__:null);
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_contactType", (!this.MarkedForDeletion?_contactType:null));
 				info.AddValue("_employer", (!this.MarkedForDeletion?_employer:null));
@@ -381,6 +381,15 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Arbitration' to this entity.</summary>
 		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoArbitrations__()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.BillToContactId, null, ComparisonOperator.Equal, this.ContactId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Arbitration' to this entity.</summary>
+		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoArbitrations()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
@@ -394,15 +403,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.PlaintiffLawyerId, null, ComparisonOperator.Equal, this.ContactId));
-			return bucket;
-		}
-
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Arbitration' to this entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoArbitrations__()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.BillToContactId, null, ComparisonOperator.Equal, this.ContactId));
 			return bucket;
 		}
 
@@ -445,9 +445,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
+			collectionsQueue.Enqueue(this._arbitrations__);
 			collectionsQueue.Enqueue(this._arbitrations);
 			collectionsQueue.Enqueue(this._arbitrations_);
-			collectionsQueue.Enqueue(this._arbitrations__);
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -455,9 +455,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+			this._arbitrations__ = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 			this._arbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 			this._arbitrations_ = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
-			this._arbitrations__ = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -466,9 +466,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
 			bool toReturn = false;
+			toReturn |=(this._arbitrations__ != null);
 			toReturn |=(this._arbitrations != null);
 			toReturn |=(this._arbitrations_ != null);
-			toReturn |=(this._arbitrations__ != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -491,9 +491,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Address", _address);
 			toReturn.Add("ContactType", _contactType);
 			toReturn.Add("Employer", _employer);
+			toReturn.Add("Arbitrations__", _arbitrations__);
 			toReturn.Add("Arbitrations", _arbitrations);
 			toReturn.Add("Arbitrations_", _arbitrations_);
-			toReturn.Add("Arbitrations__", _arbitrations__);
 			return toReturn;
 		}
 
@@ -648,6 +648,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathArbitrations__
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("Arbitrations__")[0], (int)PsychologicalServices.Data.EntityType.ContactEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations__", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathArbitrations
 		{
 			get	{ return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("Arbitrations")[0], (int)PsychologicalServices.Data.EntityType.ContactEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
@@ -658,13 +665,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathArbitrations_
 		{
 			get	{ return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("Arbitrations_")[0], (int)PsychologicalServices.Data.EntityType.ContactEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathArbitrations__
-		{
-			get	{ return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("Arbitrations__")[0], (int)PsychologicalServices.Data.EntityType.ContactEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations__", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Address' for this entity.</summary>
@@ -794,6 +794,13 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
 		[TypeContainedAttribute(typeof(ArbitrationEntity))]
+		public virtual EntityCollection<ArbitrationEntity> Arbitrations__
+		{
+			get { return GetOrCreateEntityCollection<ArbitrationEntity, ArbitrationEntityFactory>("BillToContact", true, false, ref _arbitrations__);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(ArbitrationEntity))]
 		public virtual EntityCollection<ArbitrationEntity> Arbitrations
 		{
 			get { return GetOrCreateEntityCollection<ArbitrationEntity, ArbitrationEntityFactory>("DefenseLawyer", true, false, ref _arbitrations);	}
@@ -804,13 +811,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<ArbitrationEntity> Arbitrations_
 		{
 			get { return GetOrCreateEntityCollection<ArbitrationEntity, ArbitrationEntityFactory>("PlaintiffLawyer", true, false, ref _arbitrations_);	}
-		}
-
-		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
-		[TypeContainedAttribute(typeof(ArbitrationEntity))]
-		public virtual EntityCollection<ArbitrationEntity> Arbitrations__
-		{
-			get { return GetOrCreateEntityCollection<ArbitrationEntity, ArbitrationEntityFactory>("BillToContact", true, false, ref _arbitrations__);	}
 		}
 
 		/// <summary> Gets / sets related entity of type 'AddressEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>

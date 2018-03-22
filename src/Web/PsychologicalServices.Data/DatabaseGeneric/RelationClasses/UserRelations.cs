@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AppointmentEntityUsingPsychologistId);
 			toReturn.Add(this.AppointmentEntityUsingPsychometristId);
 			toReturn.Add(this.AppointmentEntityUsingUpdateUserId);
+			toReturn.Add(this.ArbitrationEntityUsingPsychologistId);
 			toReturn.Add(this.AssessmentEntityUsingCreateUserId);
 			toReturn.Add(this.AssessmentEntityUsingDocListWriterId);
 			toReturn.Add(this.AssessmentEntityUsingNotesWriterId);
@@ -109,6 +110,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(UserFields.UserId, AppointmentFields.UpdateUserId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and ArbitrationEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - Arbitration.PsychologistId
+		/// </summary>
+		public virtual IEntityRelation ArbitrationEntityUsingPsychologistId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PsychologistArbitrations" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, ArbitrationFields.PsychologistId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", false);
 				return relation;
 			}
 		}
@@ -355,6 +371,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AppointmentEntityUsingPsychologistIdStatic = new UserRelations().AppointmentEntityUsingPsychologistId;
 		internal static readonly IEntityRelation AppointmentEntityUsingPsychometristIdStatic = new UserRelations().AppointmentEntityUsingPsychometristId;
 		internal static readonly IEntityRelation AppointmentEntityUsingUpdateUserIdStatic = new UserRelations().AppointmentEntityUsingUpdateUserId;
+		internal static readonly IEntityRelation ArbitrationEntityUsingPsychologistIdStatic = new UserRelations().ArbitrationEntityUsingPsychologistId;
 		internal static readonly IEntityRelation AssessmentEntityUsingCreateUserIdStatic = new UserRelations().AssessmentEntityUsingCreateUserId;
 		internal static readonly IEntityRelation AssessmentEntityUsingDocListWriterIdStatic = new UserRelations().AssessmentEntityUsingDocListWriterId;
 		internal static readonly IEntityRelation AssessmentEntityUsingNotesWriterIdStatic = new UserRelations().AssessmentEntityUsingNotesWriterId;

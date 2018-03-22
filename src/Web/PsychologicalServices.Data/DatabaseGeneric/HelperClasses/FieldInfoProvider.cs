@@ -230,6 +230,8 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("ArbitrationEntity", "LetterOfUnderstandingSentDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.LetterOfUnderstandingSentDate, 0, 0, 0);
 			this.AddElementFieldInfo("ArbitrationEntity", "PlaintiffLawyerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.PlaintiffLawyerId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationEntity", "BillToContactId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.BillToContactId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationEntity", "ClaimantId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.ClaimantId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationEntity", "PsychologistId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.PsychologistId, 0, 0, 10);
 		}
 		/// <summary>Inits ArbitrationClaimEntity's FieldInfo objects</summary>
 		private void InitArbitrationClaimEntityInfos()

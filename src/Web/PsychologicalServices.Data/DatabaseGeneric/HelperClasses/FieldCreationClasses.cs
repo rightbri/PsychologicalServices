@@ -376,6 +376,16 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.BillToContactId);}
 		}
+		/// <summary>Creates a new ArbitrationEntity.ClaimantId field instance</summary>
+		public static EntityField2 ClaimantId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ClaimantId);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.PsychologistId field instance</summary>
+		public static EntityField2 PsychologistId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.PsychologistId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity ArbitrationClaimEntity</summary>

@@ -29,6 +29,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private EntityCollection<ArbitrationEntity> _arbitrations;
 		private EntityCollection<ClaimEntity> _claims;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -42,6 +43,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
+			/// <summary>Member name Arbitrations</summary>
+			public static readonly string Arbitrations = "Arbitrations";
 			/// <summary>Member name Claims</summary>
 			public static readonly string Claims = "Claims";
 		}
@@ -101,6 +104,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				_arbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations", typeof(EntityCollection<ArbitrationEntity>));
 				_claims = (EntityCollection<ClaimEntity>)info.GetValue("_claims", typeof(EntityCollection<ClaimEntity>));
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
@@ -117,6 +121,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
+				case "Arbitrations":
+					this.Arbitrations.Add((ArbitrationEntity)entity);
+					break;
 				case "Claims":
 					this.Claims.Add((ClaimEntity)entity);
 					break;
@@ -142,6 +149,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
+				case "Arbitrations":
+					toReturn.Add(Relations.ArbitrationEntityUsingClaimantId);
+					break;
 				case "Claims":
 					toReturn.Add(Relations.ClaimEntityUsingClaimantId);
 					break;
@@ -173,6 +183,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Arbitrations":
+					this.Arbitrations.Add((ArbitrationEntity)relatedEntity);
+					break;
 				case "Claims":
 					this.Claims.Add((ClaimEntity)relatedEntity);
 					break;
@@ -189,6 +202,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "Arbitrations":
+					this.PerformRelatedEntityRemoval(this.Arbitrations, relatedEntity, signalRelatedEntityManyToOne);
+					break;
 				case "Claims":
 					this.PerformRelatedEntityRemoval(this.Claims, relatedEntity, signalRelatedEntityManyToOne);
 					break;
@@ -219,6 +235,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
+			toReturn.Add(this.Arbitrations);
 			toReturn.Add(this.Claims);
 			return toReturn;
 		}
@@ -231,6 +248,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
+				info.AddValue("_arbitrations", ((_arbitrations!=null) && (_arbitrations.Count>0) && !this.MarkedForDeletion)?_arbitrations:null);
 				info.AddValue("_claims", ((_claims!=null) && (_claims.Count>0) && !this.MarkedForDeletion)?_claims:null);
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -245,6 +263,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override List<IEntityRelation> GetAllRelations()
 		{
 			return new ClaimantRelations().GetAllRelations();
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Arbitration' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoArbitrations()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.ClaimantId, null, ComparisonOperator.Equal, this.ClaimantId));
+			return bucket;
 		}
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Claim' to this entity.</summary>
@@ -268,6 +295,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
+			collectionsQueue.Enqueue(this._arbitrations);
 			collectionsQueue.Enqueue(this._claims);
 		}
 		
@@ -276,6 +304,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
+			this._arbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 			this._claims = (EntityCollection<ClaimEntity>) collectionsQueue.Dequeue();
 
 		}
@@ -285,6 +314,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
 			bool toReturn = false;
+			toReturn |=(this._arbitrations != null);
 			toReturn |=(this._claims != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
@@ -295,6 +325,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ClaimEntityFactory))) : null);
 		}
 
@@ -303,6 +334,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("Arbitrations", _arbitrations);
 			toReturn.Add("Claims", _claims);
 			return toReturn;
 		}
@@ -369,6 +401,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public  static Dictionary<string, string> CustomProperties
 		{
 			get { return _customProperties;}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathArbitrations
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("Arbitrations")[0], (int)PsychologicalServices.Data.EntityType.ClaimantEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Claim' for this entity.</summary>
@@ -460,6 +499,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.DateTimeOffset)GetValue((int)ClaimantFieldIndex.DateOfBirth, true); }
 			set	{ SetValue((int)ClaimantFieldIndex.DateOfBirth, value); }
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(ArbitrationEntity))]
+		public virtual EntityCollection<ArbitrationEntity> Arbitrations
+		{
+			get { return GetOrCreateEntityCollection<ArbitrationEntity, ArbitrationEntityFactory>("Claimant", true, false, ref _arbitrations);	}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'ClaimEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

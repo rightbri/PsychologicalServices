@@ -29,11 +29,27 @@ namespace PsychologicalServices.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.ArbitrationEntityUsingClaimantId);
 			toReturn.Add(this.ClaimEntityUsingClaimantId);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between ClaimantEntity and ArbitrationEntity over the 1:n relation they have, using the relation between the fields:
+		/// Claimant.ClaimantId - Arbitration.ClaimantId
+		/// </summary>
+		public virtual IEntityRelation ArbitrationEntityUsingClaimantId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Arbitrations" , true);
+				relation.AddEntityFieldPair(ClaimantFields.ClaimantId, ArbitrationFields.ClaimantId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ClaimantEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between ClaimantEntity and ClaimEntity over the 1:n relation they have, using the relation between the fields:
 		/// Claimant.ClaimantId - Claim.ClaimantId
@@ -65,6 +81,7 @@ namespace PsychologicalServices.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticClaimantRelations
 	{
+		internal static readonly IEntityRelation ArbitrationEntityUsingClaimantIdStatic = new ClaimantRelations().ArbitrationEntityUsingClaimantId;
 		internal static readonly IEntityRelation ClaimEntityUsingClaimantIdStatic = new ClaimantRelations().ClaimEntityUsingClaimantId;
 
 		/// <summary>CTor</summary>

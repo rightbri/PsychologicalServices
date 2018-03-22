@@ -189,6 +189,10 @@ namespace PsychologicalServices.Data
 		PlaintiffLawyerId,
 		///<summary>BillToContactId. </summary>
 		BillToContactId,
+		///<summary>ClaimantId. </summary>
+		ClaimantId,
+		///<summary>PsychologistId. </summary>
+		PsychologistId,
 		/// <summary></summary>
 		AmountOfFields
 	}

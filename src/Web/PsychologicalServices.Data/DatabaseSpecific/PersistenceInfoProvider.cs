@@ -219,7 +219,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits ArbitrationEntity's mappings</summary>
 		private void InitArbitrationEntityMappings()
 		{
-			this.AddElementMapping("ArbitrationEntity", @"PsychologicalServices", @"dbo", "Arbitrations", 13, 0);
+			this.AddElementMapping("ArbitrationEntity", @"PsychologicalServices", @"dbo", "Arbitrations", 15, 0);
 			this.AddElementFieldMapping("ArbitrationEntity", "ArbitrationId", "ArbitrationId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("ArbitrationEntity", "AssessmentId", "AssessmentId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 			this.AddElementFieldMapping("ArbitrationEntity", "StartDate", "StartDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2);
@@ -233,6 +233,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("ArbitrationEntity", "LetterOfUnderstandingSentDate", "LetterOfUnderstandingSentDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 10);
 			this.AddElementFieldMapping("ArbitrationEntity", "PlaintiffLawyerId", "PlaintiffLawyerId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 11);
 			this.AddElementFieldMapping("ArbitrationEntity", "BillToContactId", "BillToContactId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 12);
+			this.AddElementFieldMapping("ArbitrationEntity", "ClaimantId", "ClaimantId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 13);
+			this.AddElementFieldMapping("ArbitrationEntity", "PsychologistId", "PsychologistId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 14);
 		}
 
 		/// <summary>Inits ArbitrationClaimEntity's mappings</summary>

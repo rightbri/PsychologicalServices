@@ -32,10 +32,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<ArbitrationClaimEntity> _arbitrationClaims;
 		private EntityCollection<InvoiceLineGroupArbitrationEntity> _invoiceLineGroupArbitrations;
 		private AssessmentEntity _assessment;
+		private ClaimantEntity _claimant;
+		private ContactEntity _billToContact;
 		private ContactEntity _defenseLawyer;
 		private ContactEntity _plaintiffLawyer;
-		private ContactEntity _billToContact;
 		private NoteEntity _note;
+		private UserEntity _psychologist;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -50,14 +52,18 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			/// <summary>Member name Assessment</summary>
 			public static readonly string Assessment = "Assessment";
+			/// <summary>Member name Claimant</summary>
+			public static readonly string Claimant = "Claimant";
+			/// <summary>Member name BillToContact</summary>
+			public static readonly string BillToContact = "BillToContact";
 			/// <summary>Member name DefenseLawyer</summary>
 			public static readonly string DefenseLawyer = "DefenseLawyer";
 			/// <summary>Member name PlaintiffLawyer</summary>
 			public static readonly string PlaintiffLawyer = "PlaintiffLawyer";
-			/// <summary>Member name BillToContact</summary>
-			public static readonly string BillToContact = "BillToContact";
 			/// <summary>Member name Note</summary>
 			public static readonly string Note = "Note";
+			/// <summary>Member name Psychologist</summary>
+			public static readonly string Psychologist = "Psychologist";
 			/// <summary>Member name ArbitrationClaims</summary>
 			public static readonly string ArbitrationClaims = "ArbitrationClaims";
 			/// <summary>Member name InvoiceLineGroupArbitrations</summary>
@@ -126,6 +132,16 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_assessment.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_claimant = (ClaimantEntity)info.GetValue("_claimant", typeof(ClaimantEntity));
+				if(_claimant!=null)
+				{
+					_claimant.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_billToContact = (ContactEntity)info.GetValue("_billToContact", typeof(ContactEntity));
+				if(_billToContact!=null)
+				{
+					_billToContact.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_defenseLawyer = (ContactEntity)info.GetValue("_defenseLawyer", typeof(ContactEntity));
 				if(_defenseLawyer!=null)
 				{
@@ -136,15 +152,15 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_plaintiffLawyer.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
-				_billToContact = (ContactEntity)info.GetValue("_billToContact", typeof(ContactEntity));
-				if(_billToContact!=null)
-				{
-					_billToContact.AfterSave+=new EventHandler(OnEntityAfterSave);
-				}
 				_note = (NoteEntity)info.GetValue("_note", typeof(NoteEntity));
 				if(_note!=null)
 				{
 					_note.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_psychologist = (UserEntity)info.GetValue("_psychologist", typeof(UserEntity));
+				if(_psychologist!=null)
+				{
+					_psychologist.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
@@ -174,6 +190,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case ArbitrationFieldIndex.BillToContactId:
 					DesetupSyncBillToContact(true, false);
 					break;
+				case ArbitrationFieldIndex.ClaimantId:
+					DesetupSyncClaimant(true, false);
+					break;
+				case ArbitrationFieldIndex.PsychologistId:
+					DesetupSyncPsychologist(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -191,17 +213,23 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessment":
 					this.Assessment = (AssessmentEntity)entity;
 					break;
+				case "Claimant":
+					this.Claimant = (ClaimantEntity)entity;
+					break;
+				case "BillToContact":
+					this.BillToContact = (ContactEntity)entity;
+					break;
 				case "DefenseLawyer":
 					this.DefenseLawyer = (ContactEntity)entity;
 					break;
 				case "PlaintiffLawyer":
 					this.PlaintiffLawyer = (ContactEntity)entity;
 					break;
-				case "BillToContact":
-					this.BillToContact = (ContactEntity)entity;
-					break;
 				case "Note":
 					this.Note = (NoteEntity)entity;
+					break;
+				case "Psychologist":
+					this.Psychologist = (UserEntity)entity;
 					break;
 				case "ArbitrationClaims":
 					this.ArbitrationClaims.Add((ArbitrationClaimEntity)entity);
@@ -234,17 +262,23 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessment":
 					toReturn.Add(Relations.AssessmentEntityUsingAssessmentId);
 					break;
+				case "Claimant":
+					toReturn.Add(Relations.ClaimantEntityUsingClaimantId);
+					break;
+				case "BillToContact":
+					toReturn.Add(Relations.ContactEntityUsingBillToContactId);
+					break;
 				case "DefenseLawyer":
 					toReturn.Add(Relations.ContactEntityUsingDefenseLawyerId);
 					break;
 				case "PlaintiffLawyer":
 					toReturn.Add(Relations.ContactEntityUsingPlaintiffLawyerId);
 					break;
-				case "BillToContact":
-					toReturn.Add(Relations.ContactEntityUsingBillToContactId);
-					break;
 				case "Note":
 					toReturn.Add(Relations.NoteEntityUsingNoteId);
+					break;
+				case "Psychologist":
+					toReturn.Add(Relations.UserEntityUsingPsychologistId);
 					break;
 				case "ArbitrationClaims":
 					toReturn.Add(Relations.ArbitrationClaimEntityUsingArbitrationId);
@@ -283,17 +317,23 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessment":
 					SetupSyncAssessment(relatedEntity);
 					break;
+				case "Claimant":
+					SetupSyncClaimant(relatedEntity);
+					break;
+				case "BillToContact":
+					SetupSyncBillToContact(relatedEntity);
+					break;
 				case "DefenseLawyer":
 					SetupSyncDefenseLawyer(relatedEntity);
 					break;
 				case "PlaintiffLawyer":
 					SetupSyncPlaintiffLawyer(relatedEntity);
 					break;
-				case "BillToContact":
-					SetupSyncBillToContact(relatedEntity);
-					break;
 				case "Note":
 					SetupSyncNote(relatedEntity);
+					break;
+				case "Psychologist":
+					SetupSyncPsychologist(relatedEntity);
 					break;
 				case "ArbitrationClaims":
 					this.ArbitrationClaims.Add((ArbitrationClaimEntity)relatedEntity);
@@ -317,17 +357,23 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Assessment":
 					DesetupSyncAssessment(false, true);
 					break;
+				case "Claimant":
+					DesetupSyncClaimant(false, true);
+					break;
+				case "BillToContact":
+					DesetupSyncBillToContact(false, true);
+					break;
 				case "DefenseLawyer":
 					DesetupSyncDefenseLawyer(false, true);
 					break;
 				case "PlaintiffLawyer":
 					DesetupSyncPlaintiffLawyer(false, true);
 					break;
-				case "BillToContact":
-					DesetupSyncBillToContact(false, true);
-					break;
 				case "Note":
 					DesetupSyncNote(false, true);
+					break;
+				case "Psychologist":
+					DesetupSyncPsychologist(false, true);
 					break;
 				case "ArbitrationClaims":
 					this.PerformRelatedEntityRemoval(this.ArbitrationClaims, relatedEntity, signalRelatedEntityManyToOne);
@@ -358,6 +404,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_assessment);
 			}
+			if(_claimant!=null)
+			{
+				toReturn.Add(_claimant);
+			}
+			if(_billToContact!=null)
+			{
+				toReturn.Add(_billToContact);
+			}
 			if(_defenseLawyer!=null)
 			{
 				toReturn.Add(_defenseLawyer);
@@ -366,13 +420,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_plaintiffLawyer);
 			}
-			if(_billToContact!=null)
-			{
-				toReturn.Add(_billToContact);
-			}
 			if(_note!=null)
 			{
 				toReturn.Add(_note);
+			}
+			if(_psychologist!=null)
+			{
+				toReturn.Add(_psychologist);
 			}
 			return toReturn;
 		}
@@ -398,10 +452,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_arbitrationClaims", ((_arbitrationClaims!=null) && (_arbitrationClaims.Count>0) && !this.MarkedForDeletion)?_arbitrationClaims:null);
 				info.AddValue("_invoiceLineGroupArbitrations", ((_invoiceLineGroupArbitrations!=null) && (_invoiceLineGroupArbitrations.Count>0) && !this.MarkedForDeletion)?_invoiceLineGroupArbitrations:null);
 				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
+				info.AddValue("_claimant", (!this.MarkedForDeletion?_claimant:null));
+				info.AddValue("_billToContact", (!this.MarkedForDeletion?_billToContact:null));
 				info.AddValue("_defenseLawyer", (!this.MarkedForDeletion?_defenseLawyer:null));
 				info.AddValue("_plaintiffLawyer", (!this.MarkedForDeletion?_plaintiffLawyer:null));
-				info.AddValue("_billToContact", (!this.MarkedForDeletion?_billToContact:null));
 				info.AddValue("_note", (!this.MarkedForDeletion?_note:null));
+				info.AddValue("_psychologist", (!this.MarkedForDeletion?_psychologist:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -444,6 +500,24 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Claimant' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoClaimant()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ClaimantFields.ClaimantId, null, ComparisonOperator.Equal, this.ClaimantId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Contact' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoBillToContact()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ContactFields.ContactId, null, ComparisonOperator.Equal, this.BillToContactId));
+			return bucket;
+		}
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Contact' to this entity.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoDefenseLawyer()
@@ -462,21 +536,21 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Contact' to this entity.</summary>
-		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoBillToContact()
-		{
-			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ContactFields.ContactId, null, ComparisonOperator.Equal, this.BillToContactId));
-			return bucket;
-		}
-
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Note' to this entity.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoNote()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.NoteId, null, ComparisonOperator.Equal, this.NoteId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'User' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPsychologist()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.PsychologistId));
 			return bucket;
 		}
 		
@@ -532,10 +606,12 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Assessment", _assessment);
+			toReturn.Add("Claimant", _claimant);
+			toReturn.Add("BillToContact", _billToContact);
 			toReturn.Add("DefenseLawyer", _defenseLawyer);
 			toReturn.Add("PlaintiffLawyer", _plaintiffLawyer);
-			toReturn.Add("BillToContact", _billToContact);
 			toReturn.Add("Note", _note);
+			toReturn.Add("Psychologist", _psychologist);
 			toReturn.Add("ArbitrationClaims", _arbitrationClaims);
 			toReturn.Add("InvoiceLineGroupArbitrations", _invoiceLineGroupArbitrations);
 			return toReturn;
@@ -585,6 +661,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("PlaintiffLawyerId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("BillToContactId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("ClaimantId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("PsychologistId", fieldHashtable);
 		}
 		#endregion
 
@@ -607,6 +687,60 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnAssessmentPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _claimant</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncClaimant(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _claimant, new PropertyChangedEventHandler(OnClaimantPropertyChanged), "Claimant", "Arbitrations", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ClaimantEntityUsingClaimantIdStatic, true, new int[] { (int)ArbitrationFieldIndex.ClaimantId });
+		}
+
+		/// <summary> setups the sync logic for member _claimant</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncClaimant(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _claimant, new PropertyChangedEventHandler( OnClaimantPropertyChanged ), "Claimant", "Arbitrations", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ClaimantEntityUsingClaimantIdStatic, true, new string[] {  }, new int[] { (int)ArbitrationFieldIndex.ClaimantId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClaimantPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _billToContact</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncBillToContact(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _billToContact, new PropertyChangedEventHandler(OnBillToContactPropertyChanged), "BillToContact", "Arbitrations__", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ContactEntityUsingBillToContactIdStatic, true, new int[] { (int)ArbitrationFieldIndex.BillToContactId });
+		}
+
+		/// <summary> setups the sync logic for member _billToContact</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncBillToContact(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _billToContact, new PropertyChangedEventHandler( OnBillToContactPropertyChanged ), "BillToContact", "Arbitrations__", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ContactEntityUsingBillToContactIdStatic, true, new string[] {  }, new int[] { (int)ArbitrationFieldIndex.BillToContactId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnBillToContactPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -669,33 +803,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _billToContact</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncBillToContact(bool signalRelatedEntity, bool resetFKFields)
-		{
-			DesetupSync(signalRelatedEntity, resetFKFields, ref _billToContact, new PropertyChangedEventHandler(OnBillToContactPropertyChanged), "BillToContact", "Arbitrations__", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ContactEntityUsingBillToContactIdStatic, true, new int[] { (int)ArbitrationFieldIndex.BillToContactId });
-		}
-
-		/// <summary> setups the sync logic for member _billToContact</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncBillToContact(IEntityCore relatedEntity)
-		{
-			SetupSync(relatedEntity, ref _billToContact, new PropertyChangedEventHandler( OnBillToContactPropertyChanged ), "BillToContact", "Arbitrations__", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ContactEntityUsingBillToContactIdStatic, true, new string[] {  }, new int[] { (int)ArbitrationFieldIndex.BillToContactId }); 
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnBillToContactPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
 		/// <summary> Removes the sync logic for member _note</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -715,6 +822,33 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnNotePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _psychologist</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncPsychologist(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _psychologist, new PropertyChangedEventHandler(OnPsychologistPropertyChanged), "Psychologist", "PsychologistArbitrations", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.UserEntityUsingPsychologistIdStatic, true, new int[] { (int)ArbitrationFieldIndex.PsychologistId });
+		}
+
+		/// <summary> setups the sync logic for member _psychologist</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncPsychologist(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _psychologist, new PropertyChangedEventHandler( OnPsychologistPropertyChanged ), "Psychologist", "PsychologistArbitrations", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.UserEntityUsingPsychologistIdStatic, true, new string[] {  }, new int[] { (int)ArbitrationFieldIndex.PsychologistId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPsychologistPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -775,6 +909,20 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))),	(IEntityRelation)GetRelationsForField("Assessment")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.AssessmentEntity, 0, null, null, null, null, "Assessment", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Claimant' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathClaimant
+		{
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ClaimantEntityFactory))),	(IEntityRelation)GetRelationsForField("Claimant")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.ClaimantEntity, 0, null, null, null, null, "Claimant", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Contact' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathBillToContact
+		{
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ContactEntityFactory))),	(IEntityRelation)GetRelationsForField("BillToContact")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.ContactEntity, 0, null, null, null, null, "BillToContact", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Contact' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathDefenseLawyer
@@ -789,18 +937,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ContactEntityFactory))),	(IEntityRelation)GetRelationsForField("PlaintiffLawyer")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.ContactEntity, 0, null, null, null, null, "PlaintiffLawyer", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Contact' for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathBillToContact
-		{
-			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ContactEntityFactory))),	(IEntityRelation)GetRelationsForField("BillToContact")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.ContactEntity, 0, null, null, null, null, "BillToContact", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
-		}
-
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Note' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathNote
 		{
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))),	(IEntityRelation)GetRelationsForField("Note")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "Note", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPsychologist
+		{
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),	(IEntityRelation)GetRelationsForField("Psychologist")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "Psychologist", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 
@@ -957,6 +1105,26 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ArbitrationFieldIndex.BillToContactId, value); }
 		}
 
+		/// <summary> The ClaimantId property of the Entity Arbitration<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Arbitrations"."ClaimantId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 ClaimantId
+		{
+			get { return (System.Int32)GetValue((int)ArbitrationFieldIndex.ClaimantId, true); }
+			set	{ SetValue((int)ArbitrationFieldIndex.ClaimantId, value); }
+		}
+
+		/// <summary> The PsychologistId property of the Entity Arbitration<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Arbitrations"."PsychologistId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 PsychologistId
+		{
+			get { return (System.Int32)GetValue((int)ArbitrationFieldIndex.PsychologistId, true); }
+			set	{ SetValue((int)ArbitrationFieldIndex.PsychologistId, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationClaimEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
 		[TypeContainedAttribute(typeof(ArbitrationClaimEntity))]
 		public virtual EntityCollection<ArbitrationClaimEntity> ArbitrationClaims
@@ -985,6 +1153,42 @@ namespace PsychologicalServices.Data.EntityClasses
 				else
 				{
 					SetSingleRelatedEntityNavigator(value, "Arbitrations", "Assessment", _assessment, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'ClaimantEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		[Browsable(true)]
+		public virtual ClaimantEntity Claimant
+		{
+			get	{ return _claimant; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncClaimant(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "Arbitrations", "Claimant", _claimant, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'ContactEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		[Browsable(true)]
+		public virtual ContactEntity BillToContact
+		{
+			get	{ return _billToContact; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncBillToContact(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "Arbitrations__", "BillToContact", _billToContact, true); 
 				}
 			}
 		}
@@ -1025,24 +1229,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Gets / sets related entity of type 'ContactEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
-		[Browsable(true)]
-		public virtual ContactEntity BillToContact
-		{
-			get	{ return _billToContact; }
-			set
-			{
-				if(this.IsDeserializing)
-				{
-					SetupSyncBillToContact(value);
-				}
-				else
-				{
-					SetSingleRelatedEntityNavigator(value, "Arbitrations__", "BillToContact", _billToContact, true); 
-				}
-			}
-		}
-
 		/// <summary> Gets / sets related entity of type 'NoteEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
 		[Browsable(true)]
 		public virtual NoteEntity Note
@@ -1057,6 +1243,24 @@ namespace PsychologicalServices.Data.EntityClasses
 				else
 				{
 					SetSingleRelatedEntityNavigator(value, "Arbitration", "Note", _note, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'UserEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		[Browsable(true)]
+		public virtual UserEntity Psychologist
+		{
+			get	{ return _psychologist; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncPsychologist(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "PsychologistArbitrations", "Psychologist", _psychologist, true); 
 				}
 			}
 		}

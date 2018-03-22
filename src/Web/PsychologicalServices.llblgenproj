@@ -221,6 +221,7 @@
           <Field Name="AssessmentId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="1" />
           <Field Name="AvailableDate" Type="datetimeoffset" IsOptional="true" FieldIndex="4" />
           <Field Name="BillToContactId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="12" />
+          <Field Name="ClaimantId" Type="int" IsAutoCreated="true" FieldIndex="13" />
           <Field Name="DefenseFileNumber" Type="string" IsOptional="true" MaxLength="50" FieldIndex="6" />
           <Field Name="DefenseLawyerId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="5" />
           <Field Name="EndDate" Type="datetimeoffset" IsOptional="true" FieldIndex="3" />
@@ -228,6 +229,7 @@
           <Field Name="NoteId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="8" />
           <Field Name="NotifiedDate" Type="datetimeoffset" IsOptional="true" FieldIndex="9" />
           <Field Name="PlaintiffLawyerId" Type="int" IsOptional="true" FieldIndex="11" />
+          <Field Name="PsychologistId" Type="int" IsAutoCreated="true" FieldIndex="14" />
           <Field Name="StartDate" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
           <Field Name="Title" Type="string" MaxLength="250" FieldIndex="7" />
         </Fields>
@@ -836,6 +838,11 @@
           <FieldFieldRelationship FkField="BillToContactId" PkField="ContactId" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="Arbitration.Claimant-Claimant.Arbitrations" Start=":Arbitration" End=":Claimant" StartNavigator="Claimant" EndNavigator="Arbitrations" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ClaimantId" PkField="ClaimantId" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="Arbitration.DefenseLawyer-Contact.Arbitrations" Start=":Arbitration" End=":Contact" StartNavigator="DefenseLawyer" EndNavigator="Arbitrations" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="DefenseLawyerId" PkField="ContactId" />
@@ -849,6 +856,11 @@
       <NormalRelationship Name="Arbitration.PlaintiffLawyer-Contact.Arbitrations_" Start=":Arbitration" End=":Contact" StartNavigator="PlaintiffLawyer" EndNavigator="Arbitrations_" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="PlaintiffLawyerId" PkField="ContactId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Arbitration.Psychologist-User.PsychologistArbitrations" Start=":Arbitration" End=":User" StartNavigator="Psychologist" EndNavigator="PsychologistArbitrations" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="PsychologistId" PkField="UserId" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="ArbitrationClaim.Arbitration-Arbitration.ArbitrationClaims" Start=":ArbitrationClaim" End=":Arbitration" StartNavigator="Arbitration" EndNavigator="ArbitrationClaims" Type="4">
@@ -1523,6 +1535,11 @@
         <Parameter Name="StartSearch" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
       </Parameters>
     </SPCallDefinition>
+    <SPCallDefinition Name="InvoiceableArbitrationData" ObjectID="10f5170a-b358-43f3-b0b6-a73c4fb869ae">
+      <Parameters>
+        <Parameter Name="CompanyId" Type="int" Precision="10" />
+      </Parameters>
+    </SPCallDefinition>
     <SPCallDefinition Name="InvoiceSearch" ObjectID="6dd27b81-10f9-4282-902a-72cbe482f53f">
       <Parameters>
         <Parameter Name="AppointmentId" Type="int" IsOptional="true" FieldIndex="1" />
@@ -1562,7 +1579,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-02-27T01:40:52.6666608Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-03-11T22:05:57.5571495Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1678,6 +1695,8 @@
                     <Field Name="LetterOfUnderstandingSentDate" Ordinal="11" IsOptional="true" DbType="30" />
                     <Field Name="PlaintiffLawyerId" Ordinal="12" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="BillToContactId" Ordinal="13" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="ClaimantId" Ordinal="14" DbType="8" Precision="10" />
+                    <Field Name="PsychologistId" Ordinal="15" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
                 <Table Name="AssessmentAttributes">
@@ -2400,6 +2419,25 @@
                     </Resultset>
                   </Resultsets>
                 </StoredProcedure>
+                <StoredProcedure Name="InvoiceableArbitrationData" NumberOfResultsets="1">
+                  <Parameters>
+                    <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                  </Parameters>
+                  <Resultsets>
+                    <Resultset Name="Resultset1">
+                      <Fields>
+                        <Field Name="ArbitrationId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="Title" Ordinal="2" DbType="12" Length="250" />
+                        <Field Name="PayableTo" Ordinal="3" DbType="12" Length="201" />
+                        <Field Name="PayableToId" Ordinal="4" DbType="8" Precision="10" />
+                        <Field Name="InvoiceTypeId" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="Claimant" Ordinal="6" IsOptional="true" DbType="12" Length="101" />
+                        <Field Name="StartDate" Ordinal="7" IsOptional="true" DbType="30" />
+                        <Field Name="AvailableDate" Ordinal="8" IsOptional="true" DbType="30" />
+                      </Fields>
+                    </Resultset>
+                  </Resultsets>
+                </StoredProcedure>
                 <StoredProcedure Name="InvoiceSearch" NumberOfResultsets="1">
                   <Parameters>
                     <Parameter Name="@CompanyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
@@ -2543,6 +2581,11 @@
                 <FieldPair PkField="dbo:Contacts:ContactId" FkField="dbo:Arbitrations:BillToContactId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_Claimants">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Claimants:ClaimantId" FkField="dbo:Arbitrations:ClaimantId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_DefenseLawyer">
               <FieldPairs>
                 <FieldPair PkField="dbo:Contacts:ContactId" FkField="dbo:Arbitrations:DefenseLawyerId" />
@@ -2556,6 +2599,11 @@
             <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_PlaintiffLawyer">
               <FieldPairs>
                 <FieldPair PkField="dbo:Contacts:ContactId" FkField="dbo:Arbitrations:PlaintiffLawyerId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_Psychologist">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:Arbitrations:PsychologistId" />
               </FieldPairs>
             </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:AssessmentAttributes:FK_AssessmentAttributes_Assessments">
@@ -3120,6 +3168,7 @@
             <FieldMapping FieldName="AssessmentId" TargetFieldName="AssessmentId" />
             <FieldMapping FieldName="AvailableDate" TargetFieldName="AvailableDate" />
             <FieldMapping FieldName="BillToContactId" TargetFieldName="BillToContactId" />
+            <FieldMapping FieldName="ClaimantId" TargetFieldName="ClaimantId" />
             <FieldMapping FieldName="DefenseFileNumber" TargetFieldName="DefenseFileNumber" />
             <FieldMapping FieldName="DefenseLawyerId" TargetFieldName="DefenseLawyerId" />
             <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
@@ -3127,6 +3176,7 @@
             <FieldMapping FieldName="NoteId" TargetFieldName="NoteId" />
             <FieldMapping FieldName="NotifiedDate" TargetFieldName="NotifiedDate" />
             <FieldMapping FieldName="PlaintiffLawyerId" TargetFieldName="PlaintiffLawyerId" />
+            <FieldMapping FieldName="PsychologistId" TargetFieldName="PsychologistId" />
             <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
             <FieldMapping FieldName="Title" TargetFieldName="Title" />
           </FieldMappings>
@@ -3685,6 +3735,11 @@
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
             <FieldMapping FieldName="InvoiceTypeId" TargetFieldName="@invoiceTypeId" />
             <FieldMapping FieldName="StartSearch" TargetFieldName="@startSearch" />
+          </FieldMappings>
+        </SPCallMapping>
+        <SPCallMapping SPCallName=":InvoiceableArbitrationData" TargetName="PsychologicalServices:dbo:InvoiceableArbitrationData">
+          <FieldMappings>
+            <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":InvoiceSearch" TargetName="PsychologicalServices:dbo:InvoiceSearch">
