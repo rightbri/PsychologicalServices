@@ -56,7 +56,8 @@ export class Config {
 		
 		this.invoiceTypes = {
 			'psychologist': 1,
-			'psychometrist': 2
+			'psychometrist': 2,
+			'arbitration': 3
 		}
 		
 		this.addressDefaults = {

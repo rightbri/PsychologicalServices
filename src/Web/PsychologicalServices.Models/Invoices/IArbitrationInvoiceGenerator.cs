@@ -7,7 +7,7 @@ namespace PsychologicalServices.Models.Invoices
 {
     public interface IArbitrationInvoiceGenerator
     {
-        Invoice CreateInvoice(User psychologist, Arbitration arbitration);
+        Invoice CreateInvoice(Arbitration arbitration);
 
         IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice);
 

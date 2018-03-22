@@ -265,6 +265,7 @@
     <Compile Include="Controllers\InvoiceableArbitrationDataController.cs" />
     <Compile Include="Controllers\InvoiceConfigurationController.cs" />
     <Compile Include="Controllers\OutstandingReportController.cs" />
+    <Compile Include="Controllers\ArbitrationInvoiceController.cs" />
     <Compile Include="Controllers\PsychologistInvoiceController.cs" />
     <Compile Include="Controllers\PsychometristInvoiceController.cs" />
     <Compile Include="Controllers\ArbitrationController.cs" />

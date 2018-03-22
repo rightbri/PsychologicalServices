@@ -92,6 +92,12 @@ export class DataRepository {
 			'appointmentId': appointmentId
 		});
 	}
+
+	createArbitrationInvoice(arbitrationId) {
+		return this.postBasic('arbitrationinvoice/create', {
+			'arbitrationId': arbitrationId
+		});
+	}
 	
 	saveInvoice(invoice) {
 		return this.saveBasic(invoice, 'invoice');

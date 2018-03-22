@@ -117,6 +117,11 @@
     <Compile Include="Invoices\PsychologistInvoiceSendParameters.cs" />
     <Compile Include="Invoices\PsychologistInvoiceSendResult.cs" />
     <Compile Include="Invoices\ReferralSourceInvoiceConfiguration.cs" />
+    <Compile Include="Invoices\ArbitrationInvoiceTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArbitrationInvoiceTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Outstanding\IOutstandingRepository.cs" />
     <Compile Include="Outstanding\IOutstandingService.cs" />
     <Compile Include="Outstanding\OutstandingReport.cs" />
@@ -362,6 +367,10 @@
     <Content Include="Invoices\PsychometristInvoiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PsychometristInvoiceTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Invoices\ArbitrationInvoiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ArbitrationInvoiceTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="Schedule\PsychometristScheduleTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

@@ -21,7 +21,7 @@ namespace PsychologicalServices.Models.Invoices
             _dateService = dateService;
         }
 
-        public Invoice CreateInvoice(User psychologist, Arbitration arbitration)
+        public Invoice CreateInvoice(Arbitration arbitration)
         {
             var lineGroups = new List<InvoiceLineGroup>
             {
@@ -34,10 +34,12 @@ namespace PsychologicalServices.Models.Invoices
                         {
                             new InvoiceLine
                             {
-                                Description = "",
+                                Description = "Services rendered on ...",
+                                Amount = 0,
                                 IsCustom = true,
                             }
                         },
+                        Arbitration = arbitration,
                     }
                 }
             };
@@ -46,14 +48,14 @@ namespace PsychologicalServices.Models.Invoices
 
             var invoice = new Invoice
             {
-                Identifier = $"{invoiceDate:yy-MM-}{_invoiceRepository.IncrementCompanyInvoiceCounter(psychologist.Company.CompanyId):00#}",
+                Identifier = $"{invoiceDate:yy-MM-}{_invoiceRepository.IncrementCompanyInvoiceCounter(arbitration.Psychologist.Company.CompanyId):00#}",
                 InvoiceDate = invoiceDate,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = new InvoiceType
                 {
                     InvoiceTypeId = InvoiceType.Arbitration,
                 },
-                PayableTo = psychologist,
+                PayableTo = arbitration.Psychologist,
                 LineGroups = lineGroups,
                 TaxRate = _invoiceRepository.GetTaxRate(),
                 UpdateDate = _dateService.UtcNow,

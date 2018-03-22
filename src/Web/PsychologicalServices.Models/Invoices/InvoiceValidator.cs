@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Common.Validation;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,17 @@ namespace PsychologicalServices.Models.Invoices
     {
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IAppointmentRepository _appointmentRepository = null;
+        private readonly IArbitrationRepository _arbitrationRepository = null;
 
         public InvoiceValidator(
             IInvoiceRepository invoiceRepository,
-            IAppointmentRepository appointmentRepository
+            IAppointmentRepository appointmentRepository,
+            IArbitrationRepository arbitrationRepository
         )
         {
             _invoiceRepository = invoiceRepository;
             _appointmentRepository = appointmentRepository;
+            _arbitrationRepository = arbitrationRepository;
         }
 
         public IValidationResult Validate(Invoice item)
@@ -57,6 +61,22 @@ namespace PsychologicalServices.Models.Invoices
                     {
                         result.ValidationErrors.Add(
                             new ValidationError { PropertyName = "", Message = "The invoice is locked and cannot be submitted." }
+                        );
+                    }
+                }
+            }
+            else if (item.InvoiceType.InvoiceTypeId == InvoiceType.Arbitration && item.InvoiceStatus.InvoiceStatusId == InvoiceStatus.Submitted)
+            {
+                var lineGroup = item.LineGroups.Where(lg => null != lg.Arbitration).FirstOrDefault();
+
+                if (null != lineGroup)
+                {
+                    var arbitration = _arbitrationRepository.GetArbitration(lineGroup.Arbitration.ArbitrationId);
+
+                    if (null == arbitration.BillToContact)
+                    {
+                        result.ValidationErrors.Add(
+                            new ValidationError { PropertyName = "", Message = "The arbitration has no 'Bill To' contact and cannot be submitted." }
                         );
                     }
                 }

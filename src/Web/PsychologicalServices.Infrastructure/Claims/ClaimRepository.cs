@@ -3,6 +3,7 @@ using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Claims;
 using SD.LLBLGen.Pro.LinqSupportClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -74,6 +75,22 @@ namespace PsychologicalServices.Infrastructure.Claims
                         .Select(claim => claim.ToClaim())
                         .ToList()
                     : Enumerable.Empty<Claim>();
+            }
+        }
+
+        public IEnumerable<Claim> GetClaimsForClaimant(int claimantId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return Execute<ClaimEntity>(
+                        (ILLBLGenProQuery)
+                        meta.Claim
+                            .Where(claim => claim.ClaimantId == claimantId)
+                    )
+                    .Select(claim => claim.ToClaim())
+                    .ToList();
             }
         }
 

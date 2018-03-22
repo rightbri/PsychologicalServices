@@ -58,6 +58,7 @@ namespace PsychologicalServices.Models.Invoices
         {
             _appointmentRepository = appointmentRepository;
             _assessmentRepository = assessmentRepository;
+            _arbitrationRepository = arbitrationRepository;
             _claimRepository = claimRepository;
             _companyRepository = companyRepository;
             _referralRepository = referralRepository;
@@ -109,13 +110,6 @@ namespace PsychologicalServices.Models.Invoices
 
         public Invoice CreateArbitrationInvoice(ArbitrationInvoiceCreationParameters parameters)
         {
-            var psychologist = _userService.GetUserById(parameters.PsychologistId);
-
-            if (null == psychologist)
-            {
-                throw new ArgumentOutOfRangeException("parameters.PsychologistId", $"Cannot find psychologist with id {parameters.PsychologistId}");
-            }
-
             var arbitration = _arbitrationRepository.GetArbitration(parameters.ArbitrationId);
 
             if (null == arbitration)
@@ -123,9 +117,11 @@ namespace PsychologicalServices.Models.Invoices
                 throw new ArgumentOutOfRangeException("parameters.ArbitrationId", $"Cannot find arbitration with id {parameters.ArbitrationId}");
             }
 
-            var invoice = _arbitrationInvoiceGenerator.CreateInvoice(psychologist, arbitration);
+            var invoice = _arbitrationInvoiceGenerator.CreateInvoice(arbitration);
 
-            return invoice;
+            var invoiceId = _invoiceRepository.SaveInvoice(invoice);
+
+            return _invoiceRepository.GetInvoice(invoiceId);
         }
 
         public InvoiceDocument GetInvoiceDocument(int invoiceDocumentId)

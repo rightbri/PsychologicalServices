@@ -407,6 +407,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Appointment = null != invoiceLineGroup.InvoiceLineGroupAppointment
                         ? invoiceLineGroup.InvoiceLineGroupAppointment.Appointment.ToAppointment()
                         : null,
+                    Arbitration = null != invoiceLineGroup.InvoiceLineGroupArbitration
+                        ? invoiceLineGroup.InvoiceLineGroupArbitration.Arbitration.ToArbitration()
+                        : null,
                 }
                 : null;
         }
@@ -628,7 +631,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 }
                 : null;
         }
-        
+
         public static Claimant ToClaimant(this ClaimantEntity claimant)
         {
             return null != claimant

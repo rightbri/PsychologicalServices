@@ -166,6 +166,13 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                 )
                                         )
                                 )
+                            //.Prefetch<InvoiceLineGroupArbitrationEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupArbitration)
+                            //    .SubPath(invoiceLineGroupArbitrationPath => invoiceLineGroupArbitrationPath
+                            //        .Prefetch<ArbitrationEntity>(invoiceLineGroupArbitration => invoiceLineGroupArbitration.Arbitration)
+                            //            .SubPath(arbitrationPath => arbitrationPath
+                            //                .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
+                            //            )
+                            //    )
                         )
                 );
 
@@ -181,9 +188,15 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         )
                     .Prefetch<InvoiceTypeEntity>(invoice => invoice.InvoiceType)
                     .Prefetch<UserEntity>(invoice => invoice.PayableTo)
-                        //.SubPath(payableToPath => payableToPath
-                        //    .Prefetch<CompanyEntity>(payableTo => payableTo.Company)
-                        //)
+                        .SubPath(payableToPath => payableToPath
+                            .Prefetch<CompanyEntity>(payableTo => payableTo.Company)
+                                .SubPath(companyPath => companyPath
+                                    .Prefetch<AddressEntity>(company => company.Address)
+                                    .SubPath(addressPath => addressPath
+                                        .Prefetch<CityEntity>(address => address.City)
+                                    )
+                                )
+                        )
                     .Prefetch<InvoiceStatusChangeEntity>(invoice => invoice.InvoiceStatusChanges)
                         .SubPath(invoiceStatusChangePath => invoiceStatusChangePath
                             .Prefetch<InvoiceStatusEntity>(invoiceStatusChange => invoiceStatusChange.InvoiceStatus)
@@ -259,16 +272,22 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                 .SubPath(invoiceLineGroupArbitrationPath => invoiceLineGroupArbitrationPath
                                     .Prefetch<ArbitrationEntity>(invoiceLineGroupArbitration => invoiceLineGroupArbitration.Arbitration)
                                         .SubPath(arbitrationPath => arbitrationPath
+                                            .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
                                             .Prefetch<ArbitrationClaimEntity>(arbitration => arbitration.ArbitrationClaims)
                                                 .SubPath(arbitrationClaimPath => arbitrationClaimPath
                                                     .Prefetch<ClaimEntity>(arbitrationClaim => arbitrationClaim.Claim)
-                                                        .SubPath(claimPath => claimPath
-                                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                                        )
                                                 )
                                             .Prefetch<ContactEntity>(arbitration => arbitration.DefenseLawyer)
                                             .Prefetch<ContactEntity>(arbitration => arbitration.PlaintiffLawyer)
                                             .Prefetch<ContactEntity>(arbitration => arbitration.BillToContact)
+                                                .SubPath(contactPath => contactPath
+                                                    .Prefetch<ContactTypeEntity>(contact => contact.ContactType)
+                                                    .Prefetch<EmployerEntity>(contact => contact.Employer)
+                                                    .Prefetch<AddressEntity>(contact => contact.Address)
+                                                        .SubPath(addressPath => addressPath
+                                                            .Prefetch<CityEntity>(address => address.City)
+                                                        )
+                                                )
                                         )
                                 )
                         )
@@ -521,7 +540,10 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                     invoiceLineGroupPath
                         .SubPath.Add(InvoiceLineGroupEntity.PrefetchPathInvoiceLineGroupAppointment);
-                    
+
+                    invoiceLineGroupPath
+                        .SubPath.Add(InvoiceLineGroupEntity.PrefetchPathInvoiceLineGroupArbitration);
+                        
                     adapter.FetchEntity(invoiceEntity, prefetch);
                 }
                 else
@@ -570,6 +592,11 @@ namespace PsychologicalServices.Infrastructure.Invoices
                         if (null != lineGroup.InvoiceLineGroupAppointment)
                         {
                             uow.AddForDelete(lineGroup.InvoiceLineGroupAppointment);
+                        }
+
+                        if (null != lineGroup.InvoiceLineGroupArbitration)
+                        {
+                            uow.AddForDelete(lineGroup.InvoiceLineGroupArbitration);
                         }
                         
                         uow.AddForDelete(lineGroup);

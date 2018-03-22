@@ -37,30 +37,32 @@ namespace PsychologicalServices.Models.Invoices
                     "\r\n\t\t\r\n\t\ttable {\r\n\t\t\tfont-family:\"Times New Roman\",serif;\r\n\t\t\tborder-collapse: co" +
                     "llapse;\r\n\t\t\tmargin-left: auto;\r\n\t\t\tmargin-right: auto;\r\n\t\t\twidth: 80%;\r\n\t\t}\r\n\t\t\r" +
                     "\n\t\ttd {\r\n\t\t\tborder-width: 1px 3px;\r\n\t\t\tborder-style: solid;\r\n\t\t\tborder-color: #0" +
-                    "00;\r\n\t\t\tpadding: 1px 5px;\r\n\t\t\tvertical-align: top;\r\n\t\t}\r\n\t\t\r\n\t\t.label {\r\n\t\t\tfont" +
-                    "-weight: bold;\r\n\t\t\tfont-style: italic;\r\n\t\t\twidth: 25%;\r\n\t\t}\r\n\t\t\r\n\t\t.title {\r\n\t\t\t" +
-                    "font-size: 24pt;\r\n\t\t\ttext-decoration: underline;\r\n\t\t\tline-height: 0.8;\r\n\t\t}\r\n\t\t." +
-                    "subtitle {\r\n\t\t\tfont-size: 16pt;\r\n\t\t\ttext-align: right;\r\n\t\t\tline-height: 0.8;\r\n\t\t" +
-                    "}\r\n\t\t.referral-source-address {\r\n\t\t\tfont-size: 12pt;\r\n\t\t\tline-height: 1.25;\r\n\t\t\t" +
-                    "margin-left: 10%;\r\n\t\t}\r\n\t\t.message {\r\n\t\t\ttext-align: center;\r\n\t\t\tline-height: 1;" +
-                    "\r\n\t\t}\r\n\t\t\r\n\t\tfooter {\r\n\t\t\ttext-align: center;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-title {\r\n\t\t\tf" +
-                    "ont-size: 16pt;\r\n\t\t\ttext-transform: uppercase;\r\n\t\t\tfont-weight: bold;\r\n\t\t\ttext-a" +
-                    "lign: center;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-data {\r\n\t\t\tfont-size: 12pt;\r\n\t\t\tfont-weight: " +
-                    "bold;\r\n\t\t\tline-height: 1;\r\n\t\t\tmargin-left: 55%;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-amount {\r\n\t" +
-                    "\t\ttext-align: right;\r\n\t\t\tpadding-right: 5px;\r\n\t\t\twidth: 5%;\r\n\t\t}\r\n\t\t\r\n\t\t.spacer " +
-                    "{\r\n\t\t\tbackground-color: #f5f5f5;\r\n\t\t\tborder-width: 3px;\r\n\t\t}\r\n\t\t\r\n\t\t.separator-t" +
-                    "op {\r\n\t\t\tborder-top-width: 3px;\r\n\t\t}\r\n\t\t.total td {\r\n\t\t\tborder-width: 3px;\r\n\t\t}\r" +
-                    "\n\t\t\r\n\t\ttr:first-child td,\r\n\t\ttr:last-child td {\r\n\t\t\tborder-width: 3px;\r\n\t\t}\r\n\t\t\r" +
-                    "\n\t\t/* Sticky footer styles\r\n\t\t--------------------------------------------------" +
-                    " */\r\n\t\thtml {\r\n\t\t  position: relative;\r\n\t\t  min-height: 100%;\r\n\t\t}\r\n\t\tbody {\r\n\t\t" +
-                    "  /* Margin bottom by footer height */\r\n\t\t  margin-bottom: 75px;\r\n\t\t}\r\n\r\n\t\tfoote" +
-                    "r {\r\n\t\t  position: absolute;\r\n\t\t  bottom: 0;\r\n\t\t  width: 100%;\r\n\t\t  /* Set the f" +
-                    "ixed height of the footer here */\r\n\t\t  height: 75px;\r\n\t\t  border-width: 1px 0 0 " +
-                    "0;\r\n\t\t  border-style: solid;\r\n\t\t  border-color: #666;\r\n\t\t  color: #666;\r\n\t\t}\r\n\r\n" +
-                    "\t\t.footer > div > div {\r\n\t\t\tpadding-top: 20px;   \r\n\t\t}\r\n\t\t\r\n\t</style>\r\n</head>\r\n" +
-                    "<body>\r\n\t");
+                    "00;\r\n\t\t\tpadding: 1px 5px;\r\n\t\t\tvertical-align: top;\r\n\t\t}\r\n\r\n\t\t.label {\r\n\t\t\tfont-w" +
+                    "eight: bold;\r\n\t\t\tfont-style: italic;\r\n\t\t\twidth: 25%;\r\n\t\t}\r\n\t\t\r\n\t\t.title {\r\n\t\t\tfo" +
+                    "nt-size: 24pt;\r\n\t\t\ttext-decoration: underline;\r\n\t\t\tline-height: 0.8;\r\n\t\t}\r\n\t\t.su" +
+                    "btitle {\r\n\t\t\tfont-size: 16pt;\r\n\t\t\ttext-align: right;\r\n\t\t\tline-height: 0.8;\r\n\t\t}\r" +
+                    "\n\t\t.referral-source-address {\r\n\t\t\tfont-size: 12pt;\r\n\t\t\tline-height: 1.25;\r\n\t\t\tma" +
+                    "rgin-left: 10%;\r\n\t\t}\r\n\t\t.message {\r\n\t\t\ttext-align: center;\r\n\t\t\tline-height: 1;\r\n" +
+                    "\t\t}\r\n\t\t\r\n\t\tfooter {\r\n\t\t\ttext-align: center;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-title {\r\n\t\t\tfon" +
+                    "t-size: 16pt;\r\n\t\t\ttext-transform: uppercase;\r\n\t\t\tfont-weight: bold;\r\n\t\t\ttext-ali" +
+                    "gn: center;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-data {\r\n\t\t\tfont-size: 12pt;\r\n\t\t\tfont-weight: bo" +
+                    "ld;\r\n\t\t\tline-height: 1;\r\n\t\t\tmargin-left: 55%;\r\n\t\t}\r\n\t\t\r\n\t\t.invoice-amount {\r\n\t\t\t" +
+                    "text-align: right;\r\n\t\t\tpadding-right: 5px;\r\n\t\t\twidth: 5%;\r\n\t\t}\r\n\t\t\r\n\t\t.spacer {\r" +
+                    "\n\t\t\tbackground-color: #f5f5f5;\r\n\t\t\tborder-width: 3px;\r\n\t\t}\r\n\t\t\r\n\t\t.separator-top" +
+                    " {\r\n\t\t\tborder-top-width: 3px;\r\n\t\t}\r\n\t\t.total td {\r\n\t\t\tborder-width: 3px;\r\n\t\t}\r\n\t" +
+                    "\t\r\n\t\ttr:first-child td,\r\n\t\ttr:last-child td {\r\n\t\t\tborder-width: 3px;\r\n\t\t}\r\n\r\n\t\t." +
+                    "claims {\r\n\t\t\tmargin-left: 0;\r\n\t\t}\r\n\r\n\t\t.claims th {\r\n\t\t\ttext-align: left;\r\n\t\t\tfo" +
+                    "nt-weight: normal;\r\n\t\t}\r\n\t\t\r\n\t\t.claims td,\r\n\t\t.claims tr:first-child td,\r\n\t\t.cla" +
+                    "ims tr:last-child td {\r\n\t\t\tborder-width: 0;\r\n\t\t}\r\n\t\t\r\n\t\t/* Sticky footer styles\r" +
+                    "\n\t\t-------------------------------------------------- */\r\n\t\thtml {\r\n\t\t  position" +
+                    ": relative;\r\n\t\t  min-height: 100%;\r\n\t\t}\r\n\t\tbody {\r\n\t\t  /* Margin bottom by foote" +
+                    "r height */\r\n\t\t  margin-bottom: 75px;\r\n\t\t}\r\n\r\n\t\tfooter {\r\n\t\t  position: absolute" +
+                    ";\r\n\t\t  bottom: 0;\r\n\t\t  width: 100%;\r\n\t\t  /* Set the fixed height of the footer h" +
+                    "ere */\r\n\t\t  height: 75px;\r\n\t\t  border-width: 1px 0 0 0;\r\n\t\t  border-style: solid" +
+                    ";\r\n\t\t  border-color: #666;\r\n\t\t  color: #666;\r\n\t\t}\r\n\r\n\t\t.footer > div > div {\r\n\t\t" +
+                    "\tpadding-top: 20px;   \r\n\t\t}\r\n\t\t\r\n\t</style>\r\n</head>\r\n<body>\r\n\t");
             
-            #line 138 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 153 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
 
 		var arbitration = Model.LineGroups.First(lineGroup => null != lineGroup.Arbitration).Arbitration;
 		var company = Model.PayableTo.Company;
@@ -70,98 +72,105 @@ namespace PsychologicalServices.Models.Invoices
             #line hidden
             this.Write("\t<header>\r\n\t\t<h1 class=\"title\">\r\n\t\t\t");
             
-            #line 144 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 159 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Name));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t</h1>\r\n\t</header>\r\n\t\r\n\t<p class=\"referral-source-address\">\r\n\t\t");
+            this.Write("\r\n\t\t</h1>\r\n\t</header>\r\n\r\n\t<p class=\"bill-to-address\">\r\n\t\t");
             
-            #line 149 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
- var referralSource = assessment.ReferralSource; 
+            #line 164 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+ var billToContact = arbitration.BillToContact; 
             
             #line default
             #line hidden
             this.Write("\t\t");
             
-            #line 150 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Name));
+            #line 165 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture($"{billToContact.FirstName} {billToContact.LastName}"));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t<br>");
+            
+            #line 166 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(billToContact.Employer.Name));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t");
             
-            #line 151 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
- if (null != referralSource.Address) { 
+            #line 167 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+ if (null != billToContact.Address) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t<br />");
             
-            #line 152 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.Street));
+            #line 168 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(billToContact.Address.Street));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t");
             
-            #line 153 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
- if (!string.IsNullOrWhiteSpace(referralSource.Address.Suite)) { 
+            #line 169 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(billToContact.Address.Suite)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t<br />");
             
-            #line 154 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.Suite));
+            #line 170 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(billToContact.Address.Suite));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t");
             
-            #line 155 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 171 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t<br />");
             
-            #line 156 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.City.Name));
+            #line 172 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(billToContact.Address.City.Name));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 156 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.City.Province));
+            #line 172 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(billToContact.Address.City.Province));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 156 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Address.PostalCode));
+            #line 172 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(billToContact.Address.PostalCode));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t");
             
-            #line 157 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 173 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t<br />&nbsp;\r\n\t</p>\r\n\t\t\r\n\t<p class=\"invoice-data\">\r\n\t\tInvoice Number:&nbsp;");
+            this.Write("\t\t<br />&nbsp;\r\n\t</p>\r\n\r\n\t<p class=\"invoice-data\">\r\n\t\tInvoice Number:&nbsp;");
             
-            #line 162 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 178 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.Identifier));
             
             #line default
             #line hidden
             this.Write("\r\n\t</p>\r\n\t<p class=\"invoice-data\">\r\n\t\tDate of Invoice:&nbsp;");
             
-            #line 165 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 181 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture($"{Model.InvoiceDate:MMMM d, yyyy}"));
             
             #line default
@@ -170,8 +179,8 @@ namespace PsychologicalServices.Models.Invoices
                     "\t\r\n\t\t<table>\r\n\t\t\t<tbody>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Bill to:</td>\r\n\t\t\t\t\t<" +
                     "td colspan=\"3\">\r\n\t\t\t\t\t\t");
             
-            #line 177 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(referralSource.Name));
+            #line 193 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture($"{billToContact.FirstName} {billToContact.LastName}"));
             
             #line default
             #line hidden
@@ -179,187 +188,176 @@ namespace PsychologicalServices.Models.Invoices
                     ">\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">\r\n\t\t\t\t\t\tPlease Remit<br />Payment" +
                     " to:\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"1\">\r\n\t\t\t\t\t\t");
             
-            #line 188 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 204 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Name));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t<br />");
             
-            #line 189 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 205 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Street));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t");
             
-            #line 190 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 206 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t<br />");
             
-            #line 191 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 207 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Suite));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t");
             
-            #line 192 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 208 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t<br />");
             
-            #line 193 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 209 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Name));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 193 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 209 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Province));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 193 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 209 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.PostalCode));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td colspan=\"2\">\r\n\t\t\t\t\t\tOffice No.: ");
             
-            #line 197 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 213 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Phone));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t<br />Email: <a href=\"mailto:");
             
-            #line 198 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 214 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Email));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t");
             
-            #line 199 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 215 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Email));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<br />&nbsp;\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td colsp" +
-                    "an=\"4\" class=\"spacer\">&nbsp;</td>\r\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t");
+                    "an=\"4\" class=\"spacer\">&nbsp;</td>\r\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\"" +
+                    ">File Name:</td>\r\n\t\t\t\t\t<td colspan=\"3\">\r\n\t\t\t\t\t\t");
             
-            #line 208 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-
-				for (var i = 0; i < Model.LineGroups.Count(); i++)
-				{
-					var lineGroup = Model.LineGroups.ElementAt(i);
-					
-					var appointment = lineGroup.Appointment;
-
-					foreach (var claim in appointment.Assessment.Claims)
-					{
-					
+            #line 227 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arbitration.Title));
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td class=\"label\">Client Name:</td>\r\n\t\t\t\t\t\t\t<td colspan=\"3\">\r\n" +
-                    "\t\t\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Claimant:</td>\r\n\t\t\t\t\t" +
+                    "<td colspan=\"3\">\r\n\t\t\t\t\t\t");
             
-            #line 221 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.FirstName));
+            #line 234 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arbitration.Claimant.FirstName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 221 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.LastName));
+            #line 234 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arbitration.Claimant.LastName));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td class=\"label\">Client File No." +
-                    ":</td>\r\n\t\t\t\t\t\t\t<td colspan=\"3\">\r\n\t\t\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\r\n\t\t\t\t");
             
-            #line 227 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.ReferralSourceFileNumber));
+            #line 238 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+	for (var i = 0; i < arbitration.Claims.Count(); i++)
+					{
+						var claim = arbitration.Claims.ElementAt(i);
+				
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td class=\"label\">Date of Loss:</" +
-                    "td>\r\n\t\t\t\t\t\t\t<td colspan=\"3\">\r\n\t\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Date of Loss:</td>\r\n\t\t\t\t\t<td colspan=\"3\">\r\n\t\t\t\t\t" +
+                    "\t");
             
-            #line 233 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 245 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  if (claim.DateOfLoss.HasValue) { 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t\t\t");
             
-            #line 234 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 246 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture($"{claim.DateOfLoss:MMMM d, yyyy}"));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t\t");
             
-            #line 235 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 247 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td class=\"label\">Claim No.:</td>\r\n" +
-                    "\t\t\t\t\t\t\t<td colspan=\"3\">\r\n\t\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td class=\"label\">Claim Number:</td>\r\n\t\t\t\t\t" +
+                    "<td colspan=\"3\">\r\n\t\t\t\t\t\t");
             
-            #line 241 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 253 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  if (!string.IsNullOrWhiteSpace(claim.ClaimNumber)) { 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t\t\t");
             
-            #line 242 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 254 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(claim.ClaimNumber));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t\t");
             
-            #line 243 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 255 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t");
+            this.Write("\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t");
             
-            #line 246 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 258 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
 
 					}
-					
+				
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td class=\"label\">Assessment Date:</td>\r\n\t\t\t\t\t\t<td colspan=\"3\"" +
-                    ">\r\n\t\t\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t");
             
-            #line 253 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture($"{appointment.AppointmentTime:MMMM d, yyyy}"));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t</td>\r\n\t\t\t\t\t</tr>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td colspan=\"4\" class=\"spacer\">&nbsp;" +
-                    "</td>\r\n\t\t\t\t\t</tr>\r\n\r\n\t\t\t\t\t");
-            
-            #line 260 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 262 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
 
+				for (var i = 0; i < Model.LineGroups.Count(); i++)
+				{
+					var lineGroup = Model.LineGroups.ElementAt(i);
+					
 					for (var j = 0; j < lineGroup.Lines.Count(); j++)
 					{
 						var line = lineGroup.Lines.ElementAt(j);
@@ -367,30 +365,24 @@ namespace PsychologicalServices.Models.Invoices
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td class=\"label\">\r\n\t\t\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td class=\"label\">&nbsp;</td>\r\n\t\t\t\t\t\t\t<td colspan=\"2\">\r\n\t\t\t\t\t\t" +
+                    "\t\t");
             
-            #line 267 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(j == 0 ? "Type of Report:" : "&nbsp;"));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t<td colspan=\"2\">\r\n\t\t\t\t\t\t\t\t");
-            
-            #line 270 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 274 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(line.Description));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 273 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 277 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture($"{(line.Amount / 100):$#,##0.00}"));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t");
             
-            #line 276 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 280 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
 
 					}
 				}
@@ -400,7 +392,7 @@ namespace PsychologicalServices.Models.Invoices
             #line hidden
             this.Write("\t\t\t\t\r\n\t\t\t\t");
             
-            #line 281 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 285 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
 
 					var subtotal = Model.Subtotal;
 				
@@ -410,7 +402,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\t\t\t\t<tr>\r\n\t\t\t\t\t<td>&nbsp;</td>\r\n\t\t\t\t\t<td colspan=\"2\">Subtotal</td>\r\n\t\t\t\t\t<td clas" +
                     "s=\"invoice-amount separator-top\">\r\n\t\t\t\t\t\t");
             
-            #line 288 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 292 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture($"{(subtotal / 100.0m):$#,##0.00}"));
             
             #line default
@@ -418,7 +410,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr>\r\n\t\t\t\t\t<td>&nbsp;</td>\r\n\t\t\t\t\t<td colspan=\"2\">+H." +
                     "S.T.</td>\r\n\t\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t\t");
             
-            #line 295 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 299 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", ((subtotal * Model.TaxRate) / 100.0m))));
             
             #line default
@@ -426,7 +418,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t<tr class=\"invoice-amount total\">\r\n\t\t\t\t\t<td class=\"l" +
                     "abel\" colspan=\"3\">Total Invoice Amount:</td>\r\n\t\t\t\t\t<td>\r\n\t\t\t\t\t\t");
             
-            #line 301 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 305 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", Model.Total / 100.0m)));
             
             #line default
@@ -434,6 +426,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write(@"
 					</td>
 				</tr>
+
 				<tr>
 					<td colspan=""4"">&nbsp;</td>
 				</tr>
@@ -454,7 +447,7 @@ namespace PsychologicalServices.Models.Invoices
 		<p class=""message"">
 			H.S.T. Number ");
             
-            #line 322 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 327 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.TaxId));
             
             #line default
@@ -462,56 +455,56 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\r\n\t\t</p>\r\n\t</section>\r\n\t\r\n\t<br />\r\n\t\r\n\t<footer>\r\n\t\t<div>\r\n\t\t\t<div>\r\n\t\t\t\t<p>\r\n\t\t\t\t" +
                     "\t");
             
-            #line 332 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 337 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Street));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t");
             
-            #line 333 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 338 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t~ ");
             
-            #line 334 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 339 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Suite));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t");
             
-            #line 335 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 340 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t~ ");
             
-            #line 336 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 341 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Name));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t~ ");
             
-            #line 337 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 342 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Province));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t~ ");
             
-            #line 338 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 343 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.PostalCode));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t<br />Phone:&nbsp;");
             
-            #line 339 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
+            #line 344 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ArbitrationInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Phone));
             
             #line default

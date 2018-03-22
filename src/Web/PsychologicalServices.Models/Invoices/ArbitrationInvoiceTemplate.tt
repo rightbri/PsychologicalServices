@@ -37,7 +37,7 @@
 			padding: 1px 5px;
 			vertical-align: top;
 		}
-		
+
 		.label {
 			font-weight: bold;
 			font-style: italic;
@@ -104,6 +104,21 @@
 		tr:last-child td {
 			border-width: 3px;
 		}
+
+		.claims {
+			margin-left: 0;
+		}
+
+		.claims th {
+			text-align: left;
+			font-weight: normal;
+		}
+		
+		.claims td,
+		.claims tr:first-child td,
+		.claims tr:last-child td {
+			border-width: 0;
+		}
 		
 		/* Sticky footer styles
 		-------------------------------------------------- */
@@ -144,20 +159,21 @@
 			<#= company.Name #>
 		</h1>
 	</header>
-	
-	<p class="referral-source-address">
-		<# var referralSource = assessment.ReferralSource; #>
-		<#= referralSource.Name #>
-		<# if (null != referralSource.Address) { #>
-			<br /><#= referralSource.Address.Street #>
-			<# if (!string.IsNullOrWhiteSpace(referralSource.Address.Suite)) { #>
-			<br /><#= referralSource.Address.Suite #>
+
+	<p class="bill-to-address">
+		<# var billToContact = arbitration.BillToContact; #>
+		<#= $"{billToContact.FirstName} {billToContact.LastName}" #>
+		<br><#= billToContact.Employer.Name #>
+		<# if (null != billToContact.Address) { #>
+			<br /><#= billToContact.Address.Street #>
+			<# if (!string.IsNullOrWhiteSpace(billToContact.Address.Suite)) { #>
+			<br /><#= billToContact.Address.Suite #>
 			<# } #>
-			<br /><#= referralSource.Address.City.Name #>, <#= referralSource.Address.City.Province #>, <#= referralSource.Address.PostalCode #>
+			<br /><#= billToContact.Address.City.Name #>, <#= billToContact.Address.City.Province #>, <#= billToContact.Address.PostalCode #>
 		<# } #>
 		<br />&nbsp;
 	</p>
-		
+
 	<p class="invoice-data">
 		Invoice Number:&nbsp;<#= Model.Identifier #>
 	</p>
@@ -174,7 +190,7 @@
 				<tr>
 					<td class="label">Bill to:</td>
 					<td colspan="3">
-						<#= referralSource.Name #>
+						<#= $"{billToContact.FirstName} {billToContact.LastName}" #>
 					</td>
 				</tr>
 				<tr>
@@ -205,67 +221,55 @@
 					<td colspan="4" class="spacer">&nbsp;</td>
 				</tr>
 
+				<tr>
+					<td class="label">File Name:</td>
+					<td colspan="3">
+						<#= arbitration.Title #>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="label">Claimant:</td>
+					<td colspan="3">
+						<#= arbitration.Claimant.FirstName #> <#= arbitration.Claimant.LastName #>
+					</td>
+				</tr>
+
+				<#	for (var i = 0; i < arbitration.Claims.Count(); i++)
+					{
+						var claim = arbitration.Claims.ElementAt(i);
+				#>
+				<tr>
+					<td class="label">Date of Loss:</td>
+					<td colspan="3">
+						<# if (claim.DateOfLoss.HasValue) { #>
+							<#= $"{claim.DateOfLoss:MMMM d, yyyy}" #>
+						<# } #>
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Claim Number:</td>
+					<td colspan="3">
+						<# if (!string.IsNullOrWhiteSpace(claim.ClaimNumber)) { #>
+							<#= claim.ClaimNumber #>
+						<# } #>
+					</td>
+				</tr>
+				<#
+					}
+				#>
+
 				<#
 				for (var i = 0; i < Model.LineGroups.Count(); i++)
 				{
 					var lineGroup = Model.LineGroups.ElementAt(i);
 					
-					var appointment = lineGroup.Appointment;
-
-					foreach (var claim in appointment.Assessment.Claims)
-					{
-					#>
-						<tr>
-							<td class="label">Client Name:</td>
-							<td colspan="3">
-								<#= claim.Claimant.FirstName #> <#= claim.Claimant.LastName #>
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Client File No.:</td>
-							<td colspan="3">
-								<#= appointment.Assessment.ReferralSourceFileNumber #>
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Date of Loss:</td>
-							<td colspan="3">
-								<# if (claim.DateOfLoss.HasValue) { #>
-									<#= $"{claim.DateOfLoss:MMMM d, yyyy}" #>
-								<# } #>
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Claim No.:</td>
-							<td colspan="3">
-								<# if (!string.IsNullOrWhiteSpace(claim.ClaimNumber)) { #>
-									<#= claim.ClaimNumber #>
-								<# } #>
-							</td>
-						</tr>
-					<#
-					}
-					#>
-
-					<tr>
-						<td class="label">Assessment Date:</td>
-						<td colspan="3">
-							<#= $"{appointment.AppointmentTime:MMMM d, yyyy}" #>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4" class="spacer">&nbsp;</td>
-					</tr>
-
-					<#
 					for (var j = 0; j < lineGroup.Lines.Count(); j++)
 					{
 						var line = lineGroup.Lines.ElementAt(j);
 					#>
 						<tr>
-							<td class="label">
-								<#= j == 0 ? "Type of Report:" : "&nbsp;" #>
-							</td>
+							<td class="label">&nbsp;</td>
 							<td colspan="2">
 								<#= line.Description #>
 							</td>
@@ -301,6 +305,7 @@
 						<#= string.Format("{0:$#,##0.00}", Model.Total / 100.0m) #>
 					</td>
 				</tr>
+
 				<tr>
 					<td colspan="4">&nbsp;</td>
 				</tr>
