@@ -17,7 +17,7 @@
 				<div class="uk-form-controls">
 					<select id="searchReferralSource" class="uk-select" value.bind="searchReferralSourceId">
 						<option></option>
-						<option repeat.for="referralSource of referralSources" value.bind="referralSource.referralSourceId">${referralSource.name}</option>
+						<option repeat.for="referralSource of referralSources | sortArray:{ property: 'name', direction: 'asc' }" value.bind="referralSource.referralSourceId">${referralSource.name}</option>
 					</select>
 				</div>
 			</div>
