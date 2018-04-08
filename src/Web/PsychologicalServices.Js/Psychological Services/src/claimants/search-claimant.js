@@ -18,23 +18,28 @@ export class SearchClaimantCustomElement {
 		
 		this.claimantSearchMinLength = 2;
 		this.claimantSearch = null;
+		this.claimantDob = null;
 	}
 	
 	search() {
-		if (this.claimantSearch) {
+		if (this.claimantSearch || this.claimantDob) {
 			this.claimant = null;
-			this.searchClaimant(this.claimantSearch);
+			this.searchClaimant({
+				'name': this.claimantSearch,
+				'dateOfBirth': this.claimantDob
+			});
 		}
 		else {
 			this.claimants = null;
 		}
 	}
 	
-	searchClaimant(name) {
-		if (this.claimantSearch.length >= this.claimantSearchMinLength) {
-			this.dataRepository.getClaimants(name).then(data => {
-				this.claimants = data;
-			});
+	searchClaimant(criteria) {
+		if (
+			(criteria.name && criteria.name.length > 0 && criteria.name.length >= this.claimantSearchMinLength) ||
+			(criteria.dateOfBirth && criteria.dateOfBirth.length > 0 && !/^\d{2}\/\d{2}\/\d{4}$/.test(criteria.dateOfBirth))
+		) {
+			this.dataRepository.searchClaimants(criteria).then(data => this.claimants = data);
 		}
 	}
 	

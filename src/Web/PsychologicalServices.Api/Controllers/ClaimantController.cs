@@ -42,6 +42,16 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(claimants);
         }
 
+        [Route("search")]
+        [HttpPost]
+        [ResponseType(typeof(IEnumerable<Claimant>))]
+        public IHttpActionResult Post(ClaimantSearchParameters parameters)
+        {
+            var claimants = _claimService.SearchClaimants(parameters);
+
+            return Ok(claimants);
+        }
+
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Claimant>))]

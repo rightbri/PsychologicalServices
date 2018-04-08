@@ -8,6 +8,8 @@ namespace PsychologicalServices.Models.Claims
 
         public string LastName { get; set; }
 
+        public string Name { get; set; }
+
         public DateTimeOffset? DateOfBirth { get; set; }
     }
 }

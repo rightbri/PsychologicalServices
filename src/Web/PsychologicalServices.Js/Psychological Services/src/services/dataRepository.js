@@ -280,6 +280,10 @@ export class DataRepository {
 	getClaimants(name) {
 		return this.getManyBasic('claimant/search/' + name);
 	}
+
+	searchClaimants(criteria) {
+		return this.searchBasic(criteria, 'claimant');
+	}
 	
 	saveClaimant(claimant) {
 		return this.saveBasic(claimant, 'claimant');

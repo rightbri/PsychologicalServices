@@ -131,6 +131,11 @@ namespace PsychologicalServices.Infrastructure.Claims
                         claimants = claimants.Where(claimant => claimant.LastName.Contains(parameters.LastName));
                     }
 
+                    if (!string.IsNullOrWhiteSpace(parameters.Name))
+                    {
+                        claimants = claimants.Where(claimant => claimant.LastName.Contains(parameters.Name) || claimant.FirstName.Contains(parameters.Name));
+                    }
+
                     if (parameters.DateOfBirth.HasValue)
                     {
                         claimants = claimants.Where(claimant => claimant.DateOfBirth == parameters.DateOfBirth);
@@ -140,6 +145,7 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return Execute<ClaimantEntity>(
                     (ILLBLGenProQuery)
                     claimants
+                    .Take(20)
                 )
                 .Select(claimant => claimant.ToClaimant())
                 .ToList();

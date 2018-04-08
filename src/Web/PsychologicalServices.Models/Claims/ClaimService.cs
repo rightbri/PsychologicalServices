@@ -63,6 +63,13 @@ namespace PsychologicalServices.Models.Claims
             return claimants;
         }
 
+        public IEnumerable<Claimant> SearchClaimants(ClaimantSearchParameters parameters)
+        {
+            var claimants = _claimRepository.SearchClaimants(parameters);
+
+            return claimants;
+        }
+
         public IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId)
         {
             var issuesInDispute = _claimRepository.GetReferralTypeIssuesInDispute(referralTypeId);
