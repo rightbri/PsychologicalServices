@@ -20,7 +20,7 @@ export class EditUser {
 		this.notifier = notifier;
 		
 		this.user = null;
-		this.unavailableDates = [];
+		this.unavailableDate = null;
 		
 		this.datepickerOptions = {
 			dateFormat: "d-m-Y",
@@ -31,6 +31,8 @@ export class EditUser {
 		this.roleMatcher = (a, b) => a !== null && b !== null && a.roleId === b.roleId;
 		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
 		
+		this.unavailabilityFocus = false;
+
 		this.saveDisabled = false;
 		this.validationErrors = null;
 	}
@@ -44,12 +46,6 @@ export class EditUser {
 			return this.dataRepository.getUser(id)
 				.then(user => {
 					this.user = user;
-					
-					this.unavailableDates =
-						this.user.unavailability.map(u => {
-							let startDate = new Date(u.startDate);
-							return startDate;
-						});
 					
 					return this.getData();
 				});
@@ -141,20 +137,38 @@ export class EditUser {
 	back() {
 		this.router.navigateBack();
 	}
-	
-	dateChanged(e) {
-		this.user.unavailability = e.detail.dates.map(d => {
-			return {
-				'startDate': d,
-				'endDate': moment(d).add(1, 'days').subtract(1, 'seconds').toDate()
-			};
-		});
+
+	addUnavailability() {
+		let index = this.user.unavailability.findIndex(unavailability => unavailability.startDate === this.unavailableDate);
+
+		if (Date.parse(this.unavailableDate) && index === -1) {
+			let unavailability = getUnavailability(this.unavailableDate);
+
+			this.user.unavailability.push(unavailability);
+
+			this.unavailableDate = null;
+
+			this.unavailabilityFocus = true;
+		}
 	}
-	
+
+	removeUnavailability(unavailability) {
+		let index = this.user.unavailability.indexOf(unavailability);
+		if (index > -1) {
+			this.user.unavailability.splice(index, 1);
+		}
+	}
 }
 
 function getMissingTravelFees(cities, travelFees) {
 	return cities.filter(city => 
 		!travelFees.some(travelFee => travelFee.city.cityId === city.cityId)
 	).map(function(city) { return { city: city, amount: 0 };});
+}
+
+function getUnavailability(date) {
+	return {
+		'startDate': date,
+		'endDate': moment(date).add(1, 'days').subtract(1, 'seconds').toDate()
+	};
 }

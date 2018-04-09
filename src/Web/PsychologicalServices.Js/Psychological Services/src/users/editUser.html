@@ -1,11 +1,9 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
-	<require from="resources/value-converters/sort-array"></require>
 	<require from="resources/value-converters/money"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-mask"></require>
-	<require from="common/date-picker"></require>
-	<require from="flatpickr/flatpickr.css"></require>
 	
 <div class="uk-container">
 
@@ -78,9 +76,14 @@
 			</div>
 			
 			<div class="uk-width-1-2@s">
-				<label class="uk-form-label">Pick unavailability dates</label>
-				<div class="uk-form-controls">
-					<div date-picker="options.bind: datepickerOptions; dates.bind: unavailableDates" datechanged.delegate="dateChanged($event)"></div>
+				<label class="uk-form-label">Select unavailability dates</label>
+				<div class="uk-form-controls" uk-grid>
+					<div class="uk-width-expand">
+						<input type="text" class="uk-input" date-mask.bind="config.datemaskOptions" focus.bind="unavailabilityFocus" value.bind="unavailableDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+					</div>
+					<div class="uk-width-auto">
+						<button type="button" class="uk-button uk-button-primary" click.delegate="addUnavailability()">Add</button>
+					</div>
 				</div>
 			</div>
 			
@@ -88,8 +91,9 @@
 				<label class="uk-form-label">Selected unavailability dates</label>
 				<div class="uk-form-controls">
 					<ul class="uk-list">
-						<li repeat.for="unavailability of user.unavailability | sortArray:{property:'startDate',direction:'asc'}">
+						<li repeat.for="unavailability of user.unavailability | sortArray:{property:'startDate',direction:'desc'}">
 							${unavailability.startDate | dateFormat:config.longDateFormat}
+							<button type="button" class="uk-button uk-button-danger uk-button-small" click.delegate="removeUnavailability(unavailability)">&times;</button>
 						</li>
 					</ul>
 				</div>
