@@ -59,7 +59,7 @@ export class EditAppointment {
 		this.model.appointment.appointmentTime =
 			moment.tz(
 				moment.utc(this.appointmentDate).format(this.config.isoShortDateFormat) + ' ' + this.appointmentTime,
-				this.config.isoShortDateFormat + ' ' + this.config.isoShortTimeFormat,
+				this.config.isoShortDateFormat + ' ' + this.config.shortTimeFormat,
 				this.config.timezone
 			).utc().format();
 		
