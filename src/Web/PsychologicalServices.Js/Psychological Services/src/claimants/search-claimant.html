@@ -12,7 +12,7 @@
 	<div class="uk-margin">
 		<form>
 			<div class="uk-margin">
-				<input type="text" class="uk-input" placeholder="Name" value.bind="claimantSearch" input.delegate="search() & debounce:200" cancel-enter />
+				<input type="text" class="uk-input" placeholder="First or Last Name" value.bind="claimantSearch" input.delegate="search() & debounce:200" cancel-enter />
 			</div>
 			<div class="uk-margin">
 				<input type="text" class="uk-input" placeholder="Date of Birth" date-mask.bind="config.datemaskOptions" value.bind="claimantDob | dateFormat:config.shortDateFormat & updateTrigger:'blur':'enterpress'" change.delegate="search()" enter enterpress.delegate="enterpressed($event)" />
