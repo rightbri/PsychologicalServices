@@ -14,7 +14,9 @@
     [BillToContactId]               INT                NULL,
     [ClaimantId]                    INT                NOT NULL,
     [PsychologistId]                INT                NOT NULL,
+    [ArbitrationStatusId]           INT                NULL,
     CONSTRAINT [PK_Arbitrations] PRIMARY KEY CLUSTERED ([ArbitrationId] ASC),
+    CONSTRAINT [FK_Arbitrations_ArbitrationStatuses] FOREIGN KEY ([ArbitrationStatusId]) REFERENCES [dbo].[ArbitrationStatuses] ([ArbitrationStatusId]),
     CONSTRAINT [FK_Arbitrations_Assessments] FOREIGN KEY ([AssessmentId]) REFERENCES [dbo].[Assessments] ([AssessmentId]),
     CONSTRAINT [FK_Arbitrations_BillToContact] FOREIGN KEY ([BillToContactId]) REFERENCES [dbo].[Contacts] ([ContactId]),
     CONSTRAINT [FK_Arbitrations_Claimants] FOREIGN KEY ([ClaimantId]) REFERENCES [dbo].[Claimants] ([ClaimantId]),
@@ -23,6 +25,8 @@
     CONSTRAINT [FK_Arbitrations_PlaintiffLawyer] FOREIGN KEY ([PlaintiffLawyerId]) REFERENCES [dbo].[Contacts] ([ContactId]),
     CONSTRAINT [FK_Arbitrations_Psychologist] FOREIGN KEY ([PsychologistId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

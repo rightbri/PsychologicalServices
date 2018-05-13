@@ -154,6 +154,19 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
+        public static ArbitrationStatus ToArbitrationStatus(this ArbitrationStatusEntity arbitrationStatus)
+        {
+            return null != arbitrationStatus
+                ? new ArbitrationStatus
+                {
+                    ArbitrationStatusId = arbitrationStatus.ArbitrationStatusId,
+                    Name = arbitrationStatus.Name,
+                    IsActive = arbitrationStatus.IsActive,
+                    ShowOnCalendar = arbitrationStatus.ShowOnCalendar,
+                }
+                : null;
+        }
+
         public static Arbitration ToArbitration(this ArbitrationEntity arbitration)
         {
             return null != arbitration
@@ -174,6 +187,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     PlaintiffLawyer = arbitration.PlaintiffLawyer.ToContact(),
                     BillToContact = arbitration.BillToContact.ToContact(),
                     Note = arbitration.Note.ToNote(),
+                    ArbitrationStatus = arbitration.ArbitrationStatus.ToArbitrationStatus(),
                 }
                 : null;
         }

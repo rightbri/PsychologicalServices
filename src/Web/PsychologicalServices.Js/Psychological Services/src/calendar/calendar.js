@@ -148,41 +148,46 @@ export class Calendar {
 		return this.context.getUser().then(user => {
 			this.user = user;
 			this.searchCompany = user.company.companyId;
-				
-			return Promise.all([
-				this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
-				this.userSettings.setting('calendarAppointmentStatusIds').then(value => this.appointmentStatusIds = value || this.config.calendarDefaults.appointmentStatusIds),
-				this.dataRepository.getCalendarNotes({
-					'fromDate': this.searchStart,
-					'toDate': this.searchEnd,
-					'companyId': this.searchCompany
-				}).then(data => this.calendarNotes = data),
-				this.dataRepository.getArbitrations({
-					'startDate': this.searchStart,
-					'endDate': this.searchEnd,
-					'companyId': this.searchCompany
-				}).then(data => this.arbitrations = data),
-				this.dataRepository.searchUnavailability({
-					'unavailabilityStart': this.searchStart,
-					'unavailabilityEnd': this.searchEnd,
-					'companyId': this.searchCompany
-				}).then(data => this.unavailabilities = data),
-				this.dataRepository.searchAppointments({
-					'appointmentStatusIds': this.searchStatuses,
-					'appointmentTimeStart': this.searchStart,
-					'appointmentTimeEnd': this.searchEnd,
-					'companyId': this.searchCompany
-				}).then(data => this.appointments = data)
-				.then(appointments => {
-					appointments.forEach(appointment => {
-						appointment.summaryModalContainerId = this.getSummaryModalContainerId(appointment);
+			
+			return this.dataRepository.getArbitrationStatuses().then(arbitrationStatuses => {
+				this.arbitrationStatuses = arbitrationStatuses;
+
+				return Promise.all([
+					this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data),
+					this.userSettings.setting('calendarAppointmentStatusIds').then(value => this.appointmentStatusIds = value || this.config.calendarDefaults.appointmentStatusIds),
+					this.dataRepository.getCalendarNotes({
+						'fromDate': this.searchStart,
+						'toDate': this.searchEnd,
+						'companyId': this.searchCompany
+					}).then(data => this.calendarNotes = data),
+					this.dataRepository.getArbitrations({
+						'startDate': this.searchStart,
+						'endDate': this.searchEnd,
+						'companyId': this.searchCompany,
+						'arbitrationStatusIds': arbitrationStatuses.filter(arbitrationStatus => arbitrationStatus.showOnCalendar).map(arbitrationStatus => arbitrationStatus.arbitrationStatusId)
+					}).then(data => this.arbitrations = data),
+					this.dataRepository.searchUnavailability({
+						'unavailabilityStart': this.searchStart,
+						'unavailabilityEnd': this.searchEnd,
+						'companyId': this.searchCompany
+					}).then(data => this.unavailabilities = data),
+					this.dataRepository.searchAppointments({
+						'appointmentStatusIds': this.searchStatuses,
+						'appointmentTimeStart': this.searchStart,
+						'appointmentTimeEnd': this.searchEnd,
+						'companyId': this.searchCompany
+					}).then(data => this.appointments = data)
+					.then(appointments => {
+						appointments.forEach(appointment => {
+							appointment.summaryModalContainerId = this.getSummaryModalContainerId(appointment);
+							
+							appointment.summaryModalToggleValue = this.getSummaryModalToggleValue(appointment);
+						});
 						
-						appointment.summaryModalToggleValue = this.getSummaryModalToggleValue(appointment);
-					});
-					
-					this.days = this.getDays(this.searchDate.getFullYear(), this.searchDate.getMonth());
-				})
-			]);
+						this.days = this.getDays(this.searchDate.getFullYear(), this.searchDate.getMonth());
+					})
+				]);
+			});
 		});
 	}
 

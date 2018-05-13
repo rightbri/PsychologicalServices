@@ -380,6 +380,10 @@ export class DataRepository {
 	saveArbitration(arbitration) {
 		return this.saveBasic(arbitration, 'arbitration');
 	}
+
+	getArbitrationStatuses() {
+		return this.getManyBasic('arbitrationstatus', true);
+	}
 	
 	getReportStatuses() {
 		return this.getManyBasic('reportstatus', true);

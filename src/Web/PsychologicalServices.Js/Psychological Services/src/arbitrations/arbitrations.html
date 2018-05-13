@@ -48,6 +48,7 @@
                 <th>Available Date</th>
                 <th>Defense Lawyer</th>
                 <th>Plaintiff Lawyer</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +65,7 @@
                 <td>${arbitration.availableDate | dateFormat:config.shortDateFormat}</td>
                 <td>${arbitration.defenseLawyer.firstName} ${arbitration.defenseLawyer.lastName}</td>
                 <td>${arbitration.plaintiffLawyer.firstName} ${arbitration.plaintiffLawyer.lastName}</td>
+                <td>${arbitration.arbitrationStatus.name}</td>
             </tr>
         </tbody>
     </table>

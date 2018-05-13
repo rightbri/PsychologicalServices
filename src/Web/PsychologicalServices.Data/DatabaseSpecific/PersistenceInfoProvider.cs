@@ -56,6 +56,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAppointmentStatusInvoiceRateEntityMappings();
 			InitArbitrationEntityMappings();
 			InitArbitrationClaimEntityMappings();
+			InitArbitrationStatusEntityMappings();
 			InitAssessmentEntityMappings();
 			InitAssessmentAttributeEntityMappings();
 			InitAssessmentClaimEntityMappings();
@@ -219,7 +220,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits ArbitrationEntity's mappings</summary>
 		private void InitArbitrationEntityMappings()
 		{
-			this.AddElementMapping("ArbitrationEntity", @"PsychologicalServices", @"dbo", "Arbitrations", 15, 0);
+			this.AddElementMapping("ArbitrationEntity", @"PsychologicalServices", @"dbo", "Arbitrations", 16, 0);
 			this.AddElementFieldMapping("ArbitrationEntity", "ArbitrationId", "ArbitrationId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("ArbitrationEntity", "AssessmentId", "AssessmentId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 			this.AddElementFieldMapping("ArbitrationEntity", "StartDate", "StartDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2);
@@ -235,6 +236,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("ArbitrationEntity", "BillToContactId", "BillToContactId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 12);
 			this.AddElementFieldMapping("ArbitrationEntity", "ClaimantId", "ClaimantId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 13);
 			this.AddElementFieldMapping("ArbitrationEntity", "PsychologistId", "PsychologistId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 14);
+			this.AddElementFieldMapping("ArbitrationEntity", "ArbitrationStatusId", "ArbitrationStatusId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 15);
 		}
 
 		/// <summary>Inits ArbitrationClaimEntity's mappings</summary>
@@ -243,6 +245,16 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementMapping("ArbitrationClaimEntity", @"PsychologicalServices", @"dbo", "ArbitrationClaims", 2, 0);
 			this.AddElementFieldMapping("ArbitrationClaimEntity", "ArbitrationId", "ArbitrationId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("ArbitrationClaimEntity", "ClaimId", "ClaimId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+		}
+
+		/// <summary>Inits ArbitrationStatusEntity's mappings</summary>
+		private void InitArbitrationStatusEntityMappings()
+		{
+			this.AddElementMapping("ArbitrationStatusEntity", @"PsychologicalServices", @"dbo", "ArbitrationStatuses", 4, 0);
+			this.AddElementFieldMapping("ArbitrationStatusEntity", "ArbitrationStatusId", "ArbitrationStatusId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("ArbitrationStatusEntity", "Name", "Name", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
+			this.AddElementFieldMapping("ArbitrationStatusEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
+			this.AddElementFieldMapping("ArbitrationStatusEntity", "ShowOnCalendar", "ShowOnCalendar", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 3);
 		}
 
 		/// <summary>Inits AssessmentEntity's mappings</summary>

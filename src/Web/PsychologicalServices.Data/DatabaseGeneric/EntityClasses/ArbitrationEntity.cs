@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		#region Class Member Declarations
 		private EntityCollection<ArbitrationClaimEntity> _arbitrationClaims;
 		private EntityCollection<InvoiceLineGroupArbitrationEntity> _invoiceLineGroupArbitrations;
+		private ArbitrationStatusEntity _arbitrationStatus;
 		private AssessmentEntity _assessment;
 		private ClaimantEntity _claimant;
 		private ContactEntity _billToContact;
@@ -50,6 +51,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
+			/// <summary>Member name ArbitrationStatus</summary>
+			public static readonly string ArbitrationStatus = "ArbitrationStatus";
 			/// <summary>Member name Assessment</summary>
 			public static readonly string Assessment = "Assessment";
 			/// <summary>Member name Claimant</summary>
@@ -127,6 +130,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_arbitrationClaims = (EntityCollection<ArbitrationClaimEntity>)info.GetValue("_arbitrationClaims", typeof(EntityCollection<ArbitrationClaimEntity>));
 				_invoiceLineGroupArbitrations = (EntityCollection<InvoiceLineGroupArbitrationEntity>)info.GetValue("_invoiceLineGroupArbitrations", typeof(EntityCollection<InvoiceLineGroupArbitrationEntity>));
+				_arbitrationStatus = (ArbitrationStatusEntity)info.GetValue("_arbitrationStatus", typeof(ArbitrationStatusEntity));
+				if(_arbitrationStatus!=null)
+				{
+					_arbitrationStatus.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_assessment = (AssessmentEntity)info.GetValue("_assessment", typeof(AssessmentEntity));
 				if(_assessment!=null)
 				{
@@ -196,6 +204,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case ArbitrationFieldIndex.PsychologistId:
 					DesetupSyncPsychologist(true, false);
 					break;
+				case ArbitrationFieldIndex.ArbitrationStatusId:
+					DesetupSyncArbitrationStatus(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -210,6 +221,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
+				case "ArbitrationStatus":
+					this.ArbitrationStatus = (ArbitrationStatusEntity)entity;
+					break;
 				case "Assessment":
 					this.Assessment = (AssessmentEntity)entity;
 					break;
@@ -259,6 +273,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
+				case "ArbitrationStatus":
+					toReturn.Add(Relations.ArbitrationStatusEntityUsingArbitrationStatusId);
+					break;
 				case "Assessment":
 					toReturn.Add(Relations.AssessmentEntityUsingAssessmentId);
 					break;
@@ -314,6 +331,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "ArbitrationStatus":
+					SetupSyncArbitrationStatus(relatedEntity);
+					break;
 				case "Assessment":
 					SetupSyncAssessment(relatedEntity);
 					break;
@@ -354,6 +374,9 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
+				case "ArbitrationStatus":
+					DesetupSyncArbitrationStatus(false, true);
+					break;
 				case "Assessment":
 					DesetupSyncAssessment(false, true);
 					break;
@@ -400,6 +423,10 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
+			if(_arbitrationStatus!=null)
+			{
+				toReturn.Add(_arbitrationStatus);
+			}
 			if(_assessment!=null)
 			{
 				toReturn.Add(_assessment);
@@ -451,6 +478,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				info.AddValue("_arbitrationClaims", ((_arbitrationClaims!=null) && (_arbitrationClaims.Count>0) && !this.MarkedForDeletion)?_arbitrationClaims:null);
 				info.AddValue("_invoiceLineGroupArbitrations", ((_invoiceLineGroupArbitrations!=null) && (_invoiceLineGroupArbitrations.Count>0) && !this.MarkedForDeletion)?_invoiceLineGroupArbitrations:null);
+				info.AddValue("_arbitrationStatus", (!this.MarkedForDeletion?_arbitrationStatus:null));
 				info.AddValue("_assessment", (!this.MarkedForDeletion?_assessment:null));
 				info.AddValue("_claimant", (!this.MarkedForDeletion?_claimant:null));
 				info.AddValue("_billToContact", (!this.MarkedForDeletion?_billToContact:null));
@@ -488,6 +516,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineGroupArbitrationFields.ArbitrationId, null, ComparisonOperator.Equal, this.ArbitrationId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'ArbitrationStatus' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoArbitrationStatus()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationStatusFields.ArbitrationStatusId, null, ComparisonOperator.Equal, this.ArbitrationStatusId));
 			return bucket;
 		}
 
@@ -605,6 +642,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("ArbitrationStatus", _arbitrationStatus);
 			toReturn.Add("Assessment", _assessment);
 			toReturn.Add("Claimant", _claimant);
 			toReturn.Add("BillToContact", _billToContact);
@@ -665,8 +703,37 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("ClaimantId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PsychologistId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("ArbitrationStatusId", fieldHashtable);
 		}
 		#endregion
+
+		/// <summary> Removes the sync logic for member _arbitrationStatus</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncArbitrationStatus(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _arbitrationStatus, new PropertyChangedEventHandler(OnArbitrationStatusPropertyChanged), "ArbitrationStatus", "Arbitrations", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ArbitrationStatusEntityUsingArbitrationStatusIdStatic, true, new int[] { (int)ArbitrationFieldIndex.ArbitrationStatusId });
+		}
+
+		/// <summary> setups the sync logic for member _arbitrationStatus</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncArbitrationStatus(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _arbitrationStatus, new PropertyChangedEventHandler( OnArbitrationStatusPropertyChanged ), "ArbitrationStatus", "Arbitrations", PsychologicalServices.Data.RelationClasses.StaticArbitrationRelations.ArbitrationStatusEntityUsingArbitrationStatusIdStatic, true, new string[] {  }, new int[] { (int)ArbitrationFieldIndex.ArbitrationStatusId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnArbitrationStatusPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
 
 		/// <summary> Removes the sync logic for member _assessment</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
@@ -902,6 +969,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2( new EntityCollection<InvoiceLineGroupArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineGroupArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("InvoiceLineGroupArbitrations")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity, 0, null, null, null, null, "InvoiceLineGroupArbitrations", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ArbitrationStatus' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathArbitrationStatus
+		{
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationStatusEntityFactory))),	(IEntityRelation)GetRelationsForField("ArbitrationStatus")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationStatusEntity, 0, null, null, null, null, "ArbitrationStatus", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Assessment' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathAssessment
@@ -1125,6 +1199,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ArbitrationFieldIndex.PsychologistId, value); }
 		}
 
+		/// <summary> The ArbitrationStatusId property of the Entity Arbitration<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Arbitrations"."ArbitrationStatusId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> ArbitrationStatusId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)ArbitrationFieldIndex.ArbitrationStatusId, false); }
+			set	{ SetValue((int)ArbitrationFieldIndex.ArbitrationStatusId, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationClaimEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
 		[TypeContainedAttribute(typeof(ArbitrationClaimEntity))]
 		public virtual EntityCollection<ArbitrationClaimEntity> ArbitrationClaims
@@ -1137,6 +1221,24 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<InvoiceLineGroupArbitrationEntity> InvoiceLineGroupArbitrations
 		{
 			get { return GetOrCreateEntityCollection<InvoiceLineGroupArbitrationEntity, InvoiceLineGroupArbitrationEntityFactory>("Arbitration", true, false, ref _invoiceLineGroupArbitrations);	}
+		}
+
+		/// <summary> Gets / sets related entity of type 'ArbitrationStatusEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		[Browsable(true)]
+		public virtual ArbitrationStatusEntity ArbitrationStatus
+		{
+			get	{ return _arbitrationStatus; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncArbitrationStatus(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "Arbitrations", "ArbitrationStatus", _arbitrationStatus, true); 
+				}
+			}
 		}
 
 		/// <summary> Gets / sets related entity of type 'AssessmentEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>

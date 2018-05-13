@@ -147,5 +147,6 @@
     <Build Include="dbo\Tables\InvoiceLineGroupArbitrations.sql" />
     <Build Include="dbo\Tables\ArbitrationClaims.sql" />
     <Build Include="dbo\Stored Procedures\InvoiceableArbitrationData.sql" />
+    <Build Include="dbo\Tables\ArbitrationStatuses.sql" />
   </ItemGroup>
 </Project>

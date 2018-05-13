@@ -8,6 +8,8 @@ namespace PsychologicalServices.Models.Arbitrations
     {
         Arbitration GetArbitration(int arbitrationId);
 
+        IEnumerable<ArbitrationStatus> GetArbitrationStatuses(bool? isActive = true);
+
         IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria);
 
         int SaveArbitration(Arbitration arbitration);

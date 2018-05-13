@@ -155,6 +155,22 @@
                         </template>
                     </div>
                 </div>
+
+                <div>
+                    <label class="uk-form-label" for="arbitrationStatus">Status</label>
+                    <div class="uk-form-controls">
+                        <select id="arbitrationStatus" class="uk-select" value.bind="arbitration.arbitrationStatus" matcher.bind="arbitrationStatusMatcher">
+                            <option></option>
+                            <option repeat.for="arbitrationStatus of arbitrationStatuses" model.bind="arbitrationStatus">
+                                ${arbitrationStatus.name}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- -->
+                </div>
                 
                 <div class="uk-width-1-1">
                     <label class="uk-form-label" for="arbitrationNotes">Notes</label>

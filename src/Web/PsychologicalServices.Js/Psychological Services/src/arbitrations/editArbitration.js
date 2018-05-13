@@ -20,6 +20,7 @@ export class EditArbitration {
 		this.userMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
 		this.contactMatcher = (a, b) => a !== null && b !== null && a.contactId === b.contactId;
 		this.claimMatcher = (a, b) => a !== null && b !== null && a.claimId === b.claimId;
+		this.arbitrationStatusMatcher = (a, b) => a !== null && b != null && a.arbitrationStatusId === b.arbitrationStatusId;
 
 		this.searchClaimant = null;
         this.searchCompanyId = null;
@@ -89,8 +90,9 @@ export class EditArbitration {
                 contactTypeIds: [this.config.contactTypes.plaintiffLawyer, this.config.contactTypes.plaintiffLawClerk]
             }).then(data => this.plaintiffLawyers = data),
 
-            this.dataRepository.getPsychologists(this.user.company.companyId).then(data => this.psychologists = data)
+            this.dataRepository.getPsychologists(this.user.company.companyId).then(data => this.psychologists = data),
 
+			this.dataRepository.getArbitrationStatuses().then(data => this.arbitrationStatuses = data)
         ]);
     }
 

@@ -386,6 +386,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.PsychologistId);}
 		}
+		/// <summary>Creates a new ArbitrationEntity.ArbitrationStatusId field instance</summary>
+		public static EntityField2 ArbitrationStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ArbitrationStatusId);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity ArbitrationClaimEntity</summary>
@@ -400,6 +405,31 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 ClaimId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationClaimFieldIndex.ClaimId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ArbitrationStatusEntity</summary>
+	public partial class ArbitrationStatusFields
+	{
+		/// <summary>Creates a new ArbitrationStatusEntity.ArbitrationStatusId field instance</summary>
+		public static EntityField2 ArbitrationStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationStatusFieldIndex.ArbitrationStatusId);}
+		}
+		/// <summary>Creates a new ArbitrationStatusEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationStatusFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ArbitrationStatusEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationStatusFieldIndex.IsActive);}
+		}
+		/// <summary>Creates a new ArbitrationStatusEntity.ShowOnCalendar field instance</summary>
+		public static EntityField2 ShowOnCalendar
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationStatusFieldIndex.ShowOnCalendar);}
 		}
 	}
 

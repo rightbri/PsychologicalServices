@@ -165,6 +165,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<ArbitrationClaimEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the ArbitrationStatus entity</summary>
+		public EntityQuery<ArbitrationStatusEntity> ArbitrationStatus
+		{
+			get { return Create<ArbitrationStatusEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the Assessment entity</summary>
 		public EntityQuery<AssessmentEntity> Assessment
 		{

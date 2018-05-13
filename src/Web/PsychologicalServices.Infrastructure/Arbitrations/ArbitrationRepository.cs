@@ -79,6 +79,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                             .Prefetch<UserEntity>(note => note.CreateUser)
                             .Prefetch<UserEntity>(note => note.UpdateUser)
                         )
+                    .Prefetch<ArbitrationStatusEntity>(arbitration => arbitration.ArbitrationStatus)
                 );
 
         #endregion
@@ -96,6 +97,23 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                     .ToArbitration();
 
                 return arbitration;
+            }
+        }
+
+        public IEnumerable<ArbitrationStatus> GetArbitrationStatuses(bool? isActive = true)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return
+                    Execute<ArbitrationStatusEntity>(
+                        (ILLBLGenProQuery)
+                        meta.ArbitrationStatus
+                        .Where(arbitrationStatus => isActive == null || arbitrationStatus.IsActive == isActive.Value)
+                    )
+                    .Select(arbitrationStatus => arbitrationStatus.ToArbitrationStatus())
+                    .ToList();
             }
         }
 
@@ -120,6 +138,14 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                 if (criteria.ClaimantId.HasValue)
                 {
                     arbitrations = arbitrations.Where(arbitration => arbitration.ClaimantId == criteria.ClaimantId);
+                }
+
+                if (null != criteria.ArbitrationStatusIds && criteria.ArbitrationStatusIds.Any())
+                {
+                    arbitrations = arbitrations.Where(arbitration =>
+                        arbitration.ArbitrationStatusId == null ||
+                        criteria.ArbitrationStatusIds.Contains(arbitration.ArbitrationStatusId.Value)
+                    );
                 }
                 
                 return Execute<ArbitrationEntity>(
@@ -238,6 +264,15 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
                 else
                 {
                     entity.BillToContactId = arbitration.BillToContact.ContactId;
+                }
+
+                if (null == arbitration.ArbitrationStatus)
+                {
+                    entity.SetNewFieldValue((int)ArbitrationFieldIndex.ArbitrationStatusId, null);
+                }
+                else
+                {
+                    entity.ArbitrationStatusId = arbitration.ArbitrationStatus.ArbitrationStatusId;
                 }
 
                 if (null != arbitration.Note)

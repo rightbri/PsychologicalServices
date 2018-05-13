@@ -39,6 +39,8 @@ namespace PsychologicalServices.Models.Arbitrations
 
         public User Psychologist { get; set; }
 
+        public ArbitrationStatus ArbitrationStatus { get; set; }
+
         public bool IsNew()
         {
             return ArbitrationId == 0;

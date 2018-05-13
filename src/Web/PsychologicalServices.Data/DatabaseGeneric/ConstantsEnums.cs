@@ -193,6 +193,8 @@ namespace PsychologicalServices.Data
 		ClaimantId,
 		///<summary>PsychologistId. </summary>
 		PsychologistId,
+		///<summary>ArbitrationStatusId. </summary>
+		ArbitrationStatusId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -203,6 +205,20 @@ namespace PsychologicalServices.Data
 		ArbitrationId,
 		///<summary>ClaimId. </summary>
 		ClaimId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ArbitrationStatus.</summary>
+	public enum ArbitrationStatusFieldIndex
+	{
+		///<summary>ArbitrationStatusId. </summary>
+		ArbitrationStatusId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
+		///<summary>ShowOnCalendar. </summary>
+		ShowOnCalendar,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1126,6 +1142,8 @@ namespace PsychologicalServices.Data
 		ArbitrationEntity,
 		///<summary>ArbitrationClaim</summary>
 		ArbitrationClaimEntity,
+		///<summary>ArbitrationStatus</summary>
+		ArbitrationStatusEntity,
 		///<summary>Assessment</summary>
 		AssessmentEntity,
 		///<summary>AssessmentAttribute</summary>

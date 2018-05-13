@@ -218,6 +218,7 @@
       <EntityDefinition Name="Arbitration" ObjectID="65b0695a-4c15-4dcc-8539-68de839e8043">
         <Fields>
           <Field Name="ArbitrationId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="ArbitrationStatusId" Type="int" IsOptional="true" Precision="10" IsAutoCreated="true" FieldIndex="15" />
           <Field Name="AssessmentId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="1" />
           <Field Name="AvailableDate" Type="datetimeoffset" IsOptional="true" FieldIndex="4" />
           <Field Name="BillToContactId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="12" />
@@ -238,6 +239,14 @@
         <Fields>
           <Field Name="ArbitrationId" Type="int" IsPrimaryKey="true" FieldIndex="0" />
           <Field Name="ClaimId" Type="int" IsPrimaryKey="true" FieldIndex="1" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ArbitrationStatus" ObjectID="193d3721-b658-49b4-a145-c1f6cc01d368">
+        <Fields>
+          <Field Name="ArbitrationStatusId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="IsActive" Type="bool" FieldIndex="2" />
+          <Field Name="Name" Type="string" MaxLength="50" FieldIndex="1" />
+          <Field Name="ShowOnCalendar" Type="bool" FieldIndex="3" />
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Assessment" ObjectID="c1c06618-c608-4052-b870-2575388d78c6">
@@ -826,6 +835,11 @@
       <NormalRelationship Name="AppointmentStatusInvoiceRate.ReferralSource-ReferralSource.AppointmentStatusInvoiceRates" Start=":AppointmentStatusInvoiceRate" End=":ReferralSource" StartNavigator="ReferralSource" EndNavigator="AppointmentStatusInvoiceRates" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="ReferralSourceId" PkField="ReferralSourceId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Arbitration.ArbitrationStatus-ArbitrationStatus.Arbitrations" Start=":Arbitration" End=":ArbitrationStatus" StartNavigator="ArbitrationStatus" EndNavigator="Arbitrations" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ArbitrationStatusId" PkField="ArbitrationStatusId" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Arbitration.Assessment-Assessment.Arbitrations" Start=":Arbitration" End=":Assessment" StartNavigator="Assessment" EndNavigator="Arbitrations" Type="4" EndIsOptional="true">
@@ -1579,7 +1593,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-03-11T22:05:57.5571495Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-04-18T00:39:12.6247047Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1697,6 +1711,16 @@
                     <Field Name="BillToContactId" Ordinal="13" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="ClaimantId" Ordinal="14" DbType="8" Precision="10" />
                     <Field Name="PsychologistId" Ordinal="15" DbType="8" Precision="10" />
+                    <Field Name="ArbitrationStatusId" Ordinal="16" IsOptional="true" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="ArbitrationStatuses">
+                  <PkConstraintName Name="PK_ArbitrationStatuses" />
+                  <Fields>
+                    <Field Name="ArbitrationStatusId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Name" Ordinal="2" DbType="12" Length="50" />
+                    <Field Name="IsActive" Ordinal="3" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
+                    <Field Name="ShowOnCalendar" Ordinal="4" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                   </Fields>
                 </Table>
                 <Table Name="AssessmentAttributes">
@@ -2571,6 +2595,11 @@
                 <FieldPair PkField="dbo:Claims:ClaimId" FkField="dbo:ArbitrationClaims:ClaimId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_ArbitrationStatuses">
+              <FieldPairs>
+                <FieldPair PkField="dbo:ArbitrationStatuses:ArbitrationStatusId" FkField="dbo:Arbitrations:ArbitrationStatusId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:Arbitrations:FK_Arbitrations_Assessments">
               <FieldPairs>
                 <FieldPair PkField="dbo:Assessments:AssessmentId" FkField="dbo:Arbitrations:AssessmentId" />
@@ -3165,6 +3194,7 @@
         <EntityMapping EntityName=":Arbitration" TargetName="PsychologicalServices:dbo:Arbitrations">
           <FieldMappings>
             <FieldMapping FieldName="ArbitrationId" TargetFieldName="ArbitrationId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ArbitrationStatusId" TargetFieldName="ArbitrationStatusId" />
             <FieldMapping FieldName="AssessmentId" TargetFieldName="AssessmentId" />
             <FieldMapping FieldName="AvailableDate" TargetFieldName="AvailableDate" />
             <FieldMapping FieldName="BillToContactId" TargetFieldName="BillToContactId" />
@@ -3185,6 +3215,14 @@
           <FieldMappings>
             <FieldMapping FieldName="ArbitrationId" TargetFieldName="ArbitrationId" />
             <FieldMapping FieldName="ClaimId" TargetFieldName="ClaimId" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":ArbitrationStatus" TargetName="PsychologicalServices:dbo:ArbitrationStatuses">
+          <FieldMappings>
+            <FieldMapping FieldName="ArbitrationStatusId" TargetFieldName="ArbitrationStatusId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="IsActive" TargetFieldName="IsActive" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="ShowOnCalendar" TargetFieldName="ShowOnCalendar" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Assessment" TargetName="PsychologicalServices:dbo:Assessments">

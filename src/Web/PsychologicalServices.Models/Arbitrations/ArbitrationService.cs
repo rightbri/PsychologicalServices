@@ -29,6 +29,13 @@ namespace PsychologicalServices.Models.Arbitrations
             return arbitration;
         }
 
+        public IEnumerable<ArbitrationStatus> GetArbitrationStatuses(bool? isActive = true)
+        {
+            var arbitrationStatuses = _arbitrationRepository.GetArbitrationStatuses(isActive);
+
+            return arbitrationStatuses;
+        }
+
         public IEnumerable<Arbitration> GetArbitrations(ArbitrationSearchCriteria criteria)
         {
             var arbitrations = _arbitrationRepository.GetArbitrations(criteria);

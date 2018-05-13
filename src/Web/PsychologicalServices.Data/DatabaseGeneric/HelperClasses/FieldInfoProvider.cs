@@ -59,6 +59,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAppointmentStatusInvoiceRateEntityInfos();
 			InitArbitrationEntityInfos();
 			InitArbitrationClaimEntityInfos();
+			InitArbitrationStatusEntityInfos();
 			InitAssessmentEntityInfos();
 			InitAssessmentAttributeEntityInfos();
 			InitAssessmentClaimEntityInfos();
@@ -232,6 +233,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("ArbitrationEntity", "BillToContactId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.BillToContactId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationEntity", "ClaimantId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.ClaimantId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationEntity", "PsychologistId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.PsychologistId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationEntity", "ArbitrationStatusId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.ArbitrationStatusId, 0, 0, 10);
 		}
 		/// <summary>Inits ArbitrationClaimEntity's FieldInfo objects</summary>
 		private void InitArbitrationClaimEntityInfos()
@@ -239,6 +241,15 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddFieldIndexEnumForElementName(typeof(ArbitrationClaimFieldIndex), "ArbitrationClaimEntity");
 			this.AddElementFieldInfo("ArbitrationClaimEntity", "ArbitrationId", typeof(System.Int32), true, true, false, false,  (int)ArbitrationClaimFieldIndex.ArbitrationId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationClaimEntity", "ClaimId", typeof(System.Int32), true, true, false, false,  (int)ArbitrationClaimFieldIndex.ClaimId, 0, 0, 10);
+		}
+		/// <summary>Inits ArbitrationStatusEntity's FieldInfo objects</summary>
+		private void InitArbitrationStatusEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(ArbitrationStatusFieldIndex), "ArbitrationStatusEntity");
+			this.AddElementFieldInfo("ArbitrationStatusEntity", "ArbitrationStatusId", typeof(System.Int32), true, false, true, false,  (int)ArbitrationStatusFieldIndex.ArbitrationStatusId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationStatusEntity", "Name", typeof(System.String), false, false, false, false,  (int)ArbitrationStatusFieldIndex.Name, 50, 0, 0);
+			this.AddElementFieldInfo("ArbitrationStatusEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ArbitrationStatusFieldIndex.IsActive, 0, 0, 0);
+			this.AddElementFieldInfo("ArbitrationStatusEntity", "ShowOnCalendar", typeof(System.Boolean), false, false, false, false,  (int)ArbitrationStatusFieldIndex.ShowOnCalendar, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentEntity's FieldInfo objects</summary>
 		private void InitAssessmentEntityInfos()

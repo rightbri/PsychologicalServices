@@ -75,6 +75,7 @@
     <Compile Include="Analysis\CompletionData.cs" />
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
     <Compile Include="Analysis\AssessmentTypeCountDataSearchCriteria.cs" />
+    <Compile Include="Arbitrations\ArbitrationStatus.cs" />
     <Compile Include="Assessments\AssessmentSearchResult.cs" />
     <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
     <Compile Include="Claims\ClaimantSearchParameters.cs" />
