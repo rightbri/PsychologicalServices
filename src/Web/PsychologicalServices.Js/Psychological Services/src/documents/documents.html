@@ -1,0 +1,65 @@
+<template>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="common/fixed-header"></require>
+	<require from="../../content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">Search Documents</legend>
+		
+		<form class="uk-form-stacked uk-grid-medium" uk-grid>
+		
+			<div class="uk-width-1-1">
+				<label for="searchName" class="uk-form-label">Name</label>
+				<div class="uk-form-controls">
+					<input id="searchName" type="text" class="uk-input" value.bind="searchName" />
+				</div>
+			</div>
+
+			<div class="uk-width-1-1">
+				<button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+					Search
+				</button>
+				
+				<a route-href="route: addDocument" class="uk-button uk-button-secondary">
+					<i class="fa fa-plus"></i>&nbsp;Add
+				</a>
+			</div>
+			
+		</form>
+		
+	</fieldset>
+	
+</div>
+
+<div class="uk-overflow-auto" if.bind="documents">
+	<table class="uk-table uk-table-divider" fixed-header>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Size</th>
+				<th>Data</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr if.bind="noDocuments">
+				<td colspan="4">
+					No documents
+				</td>
+			</tr>
+			<tr repeat.for="document of documents | sortArray:{ property: 'name', direction: 'asc' }">
+				<td>
+					<a route-href="route: editDocument; params.bind: { id: document.documentId }" class="uk-button uk-button-default">
+						Edit
+					</a>
+				</td>
+				<td>${document.name}</td>
+				<td>${document.size}</td>
+				<td>${document.data}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</template>

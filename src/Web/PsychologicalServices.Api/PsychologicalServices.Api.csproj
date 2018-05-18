@@ -261,6 +261,7 @@
     <Compile Include="Controllers\ArbitrationDataController.cs" />
     <Compile Include="Controllers\CredibilityDataController.cs" />
     <Compile Include="Controllers\DiagnosisFoundResponseController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\CredibilityController.cs" />
     <Compile Include="Controllers\InvoiceableArbitrationDataController.cs" />
@@ -308,6 +309,7 @@
     <Compile Include="Controllers\RightController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
+    <Compile Include="Controllers\UserSpinnerController.cs" />
     <Compile Include="Controllers\UserUnavailabilityController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -329,6 +331,8 @@
     <Compile Include="Infrastructure\Services\GoogleAuthTokenSigningKeysProvider.cs" />
     <Compile Include="Infrastructure\Services\IGoogleAuthTokenSigningKeysProvider.cs" />
     <Compile Include="Infrastructure\Services\UserLookupService.cs" />
+    <Compile Include="Models\DocumentModel.cs" />
+    <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\UserPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

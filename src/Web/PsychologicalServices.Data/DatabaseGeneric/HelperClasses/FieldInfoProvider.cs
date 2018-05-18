@@ -85,6 +85,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitContactTypeEntityInfos();
 			InitCredibilityEntityInfos();
 			InitDiagnosisFoundResponseEntityInfos();
+			InitDocumentEntityInfos();
 			InitEmployerEntityInfos();
 			InitEmployerTypeEntityInfos();
 			InitEventEntityInfos();
@@ -507,6 +508,15 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("DiagnosisFoundResponseEntity", "Name", typeof(System.String), false, false, false, false,  (int)DiagnosisFoundResponseFieldIndex.Name, 50, 0, 0);
 			this.AddElementFieldInfo("DiagnosisFoundResponseEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)DiagnosisFoundResponseFieldIndex.IsActive, 0, 0, 0);
 		}
+		/// <summary>Inits DocumentEntity's FieldInfo objects</summary>
+		private void InitDocumentEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(DocumentFieldIndex), "DocumentEntity");
+			this.AddElementFieldInfo("DocumentEntity", "DocumentId", typeof(System.Int32), true, false, true, false,  (int)DocumentFieldIndex.DocumentId, 0, 0, 10);
+			this.AddElementFieldInfo("DocumentEntity", "Name", typeof(System.String), false, false, false, false,  (int)DocumentFieldIndex.Name, 200, 0, 0);
+			this.AddElementFieldInfo("DocumentEntity", "Size", typeof(System.Int32), false, false, false, false,  (int)DocumentFieldIndex.Size, 0, 0, 10);
+			this.AddElementFieldInfo("DocumentEntity", "Data", typeof(System.Byte[]), false, false, false, false,  (int)DocumentFieldIndex.Data, 2147483647, 0, 0);
+		}
 		/// <summary>Inits EmployerEntity's FieldInfo objects</summary>
 		private void InitEmployerEntityInfos()
 		{
@@ -784,6 +794,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("UserEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)UserFieldIndex.CompanyId, 0, 0, 10);
 			this.AddElementFieldInfo("UserEntity", "AddressId", typeof(System.Int32), false, true, false, false,  (int)UserFieldIndex.AddressId, 0, 0, 10);
 			this.AddElementFieldInfo("UserEntity", "DateInactivated", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)UserFieldIndex.DateInactivated, 0, 0, 0);
+			this.AddElementFieldInfo("UserEntity", "SpinnerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)UserFieldIndex.SpinnerId, 0, 0, 10);
 		}
 		/// <summary>Inits UserNoteEntity's FieldInfo objects</summary>
 		private void InitUserNoteEntityInfos()

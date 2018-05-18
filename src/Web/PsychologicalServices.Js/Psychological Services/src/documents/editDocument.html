@@ -1,0 +1,47 @@
+<template>
+	<require from="common/validation-summary.html"></require>
+
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">${editType} Document</legend>
+		
+		<form class="uk-form-stacked uk-grid-medium" uk-grid>
+		
+			<div class="uk-width-1-1" if.bind="validationErrors">
+				<validation-summary errors.bind="validationErrors"></validation-summary>
+			</div>
+			
+			<div class="uk-width-1-1">
+				<label for="name" class="uk-form-label">Name</label>
+				<div class="uk-form-controls">
+					<input id="name" type="text" class="uk-input" value.bind="document.name" />
+				</div>
+			</div>
+			
+			<div class="uk-width-1-1">
+				<label for="file" class="uk-form-label">File</label>
+				<div class="uk-form-controls">
+					<input id="file" type="file" accept="image/*" class="uk-input" change.delegate="fileChanged($event)" />
+				</div>
+			</div>
+
+			<div class="uk-width-1-1" if.bind="document.data">
+				<img src.bind="document.data" />
+			</div>
+		
+			<div class="uk-width-1-1">
+				<button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
+					<i class="fa fa-arrow-left"></i>&nbsp;Back
+				</button>
+				<button type="button" class="uk-button uk-button-primary" click.delegate="save()" disabled.bind="saveDisabled">
+					<i class="fa fa-save"></i>&nbsp;Save
+				</button>
+			</div>
+		
+		</form>
+		
+	</fieldset>
+
+</div>
+</template>

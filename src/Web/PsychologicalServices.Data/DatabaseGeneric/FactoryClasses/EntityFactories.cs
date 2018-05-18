@@ -311,7 +311,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new ArbitrationStatusEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewArbitrationStatusUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -812,6 +811,27 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new DiagnosisFoundResponseEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDiagnosisFoundResponseUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty DocumentEntity objects.</summary>
+	[Serializable]
+	public partial class DocumentEntityFactory : EntityFactoryBase2<DocumentEntity> {
+		/// <summary>CTor</summary>
+		public DocumentEntityFactory() : base("DocumentEntity", PsychologicalServices.Data.EntityType.DocumentEntity, false) { }
+		
+		/// <summary>Creates a new DocumentEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new DocumentEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDocumentUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			return toReturn;
 		}
 		#region Included Code
@@ -1618,6 +1638,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.DiagnosisFoundResponseEntity:
 					factoryToUse = new DiagnosisFoundResponseEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.DocumentEntity:
+					factoryToUse = new DocumentEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.EmployerEntity:
 					factoryToUse = new EmployerEntityFactory();

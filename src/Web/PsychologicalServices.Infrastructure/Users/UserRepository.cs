@@ -5,6 +5,7 @@ using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Common.Configuration;
 using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Documents;
 using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Schedule;
 using PsychologicalServices.Models.Users;
@@ -603,6 +604,38 @@ namespace PsychologicalServices.Infrastructure.Users
                 _cache.Remove(user.Email);
 
                 return userEntity.UserId;
+            }
+        }
+
+        public Document GetSpinnerForUser(int userId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var spinner = meta.User
+                    .Where(user => user.UserId == userId)
+                    .Select(user => user.Spinner.ToDocument())
+                    .SingleOrDefault();
+
+                return spinner;
+            }
+        }
+
+        public void SaveUserSpinner(int userId, int documentId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var user = meta.User.Where(u => u.UserId == userId).SingleOrDefault();
+
+                if (null != user)
+                {
+                    user.SpinnerId = documentId;
+
+                    adapter.SaveEntity(user);
+                }
             }
         }
     }

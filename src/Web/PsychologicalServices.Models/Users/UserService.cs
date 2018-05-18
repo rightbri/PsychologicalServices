@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Documents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace PsychologicalServices.Models.Users
     {
         private readonly IUserRepository _userRepository = null;
         private readonly IUserValidator _userValidator = null;
+        private readonly IDocumentRepository _documentRepository = null;
         private readonly ILog _log = null;
 
         public UserService(
@@ -105,6 +107,63 @@ namespace PsychologicalServices.Models.Users
             }
 
             return result;
+        }
+
+        public SaveResult<Document> SaveUserSpinner(int userId, int documentId)
+        {
+            var result = new SaveResult<Document>();
+
+            try
+            {
+                var validation = new Common.Validation.ValidationResult
+                {
+                    ValidationErrors = new List<Common.Validation.IValidationError>(),
+                };
+
+                var user = _userRepository.GetUserById(userId);
+
+                if (null == user)
+                {
+                    validation.ValidationErrors.Add(
+                        new Common.Validation.ValidationError { PropertyName = "UserId", Message = "User does not exist" }
+                    );
+                }
+
+                var documentExists = _documentRepository.DocumentExists(documentId);
+
+                if (!documentExists)
+                {
+                    validation.ValidationErrors.Add(
+                        new Common.Validation.ValidationError { PropertyName = "DocumentId", Message = "Document does not exist" }
+                    );
+                }
+                
+                result.ValidationResult = validation;
+
+                if (result.ValidationResult.IsValid)
+                {
+                    _userRepository.SaveUserSpinner(userId, documentId);
+
+                    result.Item = _documentRepository.GetDocument(documentId);
+
+                    result.IsSaved = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error("SaveUserSpinner", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
+
+        public Document GetSpinnerForUser(int userId)
+        {
+            var spinner = _userRepository.GetSpinnerForUser(userId);
+
+            return spinner;
         }
     }
 }

@@ -12,6 +12,7 @@ using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Contacts;
 using PsychologicalServices.Models.Credibilities;
 using PsychologicalServices.Models.DiagnosisFoundResponses;
+using PsychologicalServices.Models.Documents;
 using PsychologicalServices.Models.Employers;
 using PsychologicalServices.Models.Events;
 using PsychologicalServices.Models.Invoices;
@@ -29,6 +30,19 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Document ToDocument(this DocumentEntity document)
+        {
+            return null != document
+                ? new Document
+                {
+                    DocumentId = document.DocumentId,
+                    Name = document.Name,
+                    Size = document.Size,
+                    Data = document.Data
+                }
+                : null;
+        }
+
         public static DiagnosisFoundResponse ToDiagnosisFoundResponse(this DiagnosisFoundResponseEntity diagnosisFoundResponse)
         {
             return null != diagnosisFoundResponse

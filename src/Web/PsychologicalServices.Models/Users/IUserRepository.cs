@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Schedule;
+﻿using PsychologicalServices.Models.Documents;
+using PsychologicalServices.Models.Schedule;
 using System;
 using System.Collections.Generic;
 
@@ -25,5 +26,9 @@ namespace PsychologicalServices.Models.Users
         IEnumerable<User> GetUsersWithUnavailability(UnavailabilitySearchCriteria criteria);
 
         int SaveUser(User user);
+
+        Document GetSpinnerForUser(int userId);
+
+        void SaveUserSpinner(int userId, int documentId);
     }
 }

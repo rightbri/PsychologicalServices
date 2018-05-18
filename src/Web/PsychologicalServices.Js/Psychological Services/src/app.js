@@ -78,7 +78,10 @@ export class App {
 			{ route: 'invoiceConfiguration', name: 'invoiceConfiguration', moduleId: 'invoiceConfiguration/invoiceConfiguration', title: 'Invoice Configuration', nav: true },
 			{ route: 'arbitrations', name: 'arbitrations', moduleId: 'arbitrations/arbitrations', title: 'Arbitrations', nav: true },
 			{ route: 'arbitrations/:id', name: 'editArbitration', moduleId: 'arbitrations/editArbitration', title: 'Edit Arbitration', nav: false },
-			{ route: 'arbitrations/add', name: 'addArbitration', moduleId: 'arbitrations/editArbitration', title: 'Add Arbitration', nav: false }
+			{ route: 'arbitrations/add', name: 'addArbitration', moduleId: 'arbitrations/editArbitration', title: 'Add Arbitration', nav: false },
+			{ route: 'documents', name: 'documents', moduleId: 'documents/documents', title: 'Documents', nav: true },
+			{ route: 'documents/:id', name: 'editDocument', moduleId: 'documents/editDocument', title: 'Edit Document', nav: false },
+			{ route: 'documents/add', name: 'addDocument', moduleId: 'documents/editDocument', title: 'Add Document', nav: false }
 		]);
 		
 		this.context.getUser().then(user => this.user = user).then(() => this.isClaire = this.user.firstName === 'Claire');

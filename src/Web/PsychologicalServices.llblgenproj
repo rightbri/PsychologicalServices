@@ -480,6 +480,14 @@
           <Field Name="Name" Type="string" MaxLength="50" FieldIndex="1" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="Document" ObjectID="34a18030-b9dc-40a5-bfa6-8c80dbab60ed">
+        <Fields>
+          <Field Name="Data" Type="byte[]" MaxLength="2147483647" FieldIndex="3" />
+          <Field Name="DocumentId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="Name" Type="string" MaxLength="200" FieldIndex="1" />
+          <Field Name="Size" Type="int" Precision="10" FieldIndex="2" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="Employer" ObjectID="e687feaf-7631-4399-a643-5fc2473f6fb2">
         <Fields>
           <Field Name="EmployerId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
@@ -725,6 +733,7 @@
           <Field Name="FirstName" Type="string" MaxLength="100" FieldIndex="1" />
           <Field Name="IsActive" Type="bool" FieldIndex="4" />
           <Field Name="LastName" Type="string" MaxLength="100" FieldIndex="2" />
+          <Field Name="SpinnerId" Type="int" IsOptional="true" Precision="10" IsAutoCreated="true" FieldIndex="8" />
           <Field Name="UserId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
         </Fields>
       </EntityDefinition>
@@ -1317,6 +1326,11 @@
           <FieldFieldRelationship FkField="CompanyId" PkField="CompanyId" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="User.Spinner-Document.Users" Start=":User" End=":Document" StartNavigator="Spinner" EndNavigator="Users" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SpinnerId" PkField="DocumentId" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="UserNote.Note-Note.UserNotes" Start=":UserNote" End=":Note" StartNavigator="Note" EndNavigator="UserNotes" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="NoteId" PkField="NoteId" />
@@ -1593,7 +1607,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-04-18T00:39:12.6247047Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-05-13T20:46:54.2092531Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1979,6 +1993,15 @@
                     <Field Name="IsActive" Ordinal="3" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
                   </Fields>
                 </Table>
+                <Table Name="Documents">
+                  <PkConstraintName Name="PK_Documents" />
+                  <Fields>
+                    <Field Name="DocumentId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Name" Ordinal="2" DbType="12" Length="200" />
+                    <Field Name="Size" Ordinal="3" DbType="8" Precision="10" />
+                    <Field Name="Data" Ordinal="4" DbType="23" Length="2147483647" />
+                  </Fields>
+                </Table>
                 <Table Name="Employers">
                   <PkConstraintName Name="PK_Employers" />
                   <Fields>
@@ -2281,6 +2304,7 @@
                     <Field Name="CompanyId" Ordinal="6" DbType="8" Precision="10" />
                     <Field Name="AddressId" Ordinal="7" DbType="8" Precision="10" />
                     <Field Name="DateInactivated" Ordinal="8" IsOptional="true" DbType="30" />
+                    <Field Name="SpinnerId" Ordinal="9" IsOptional="true" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
                 <Table Name="UserTravelFees">
@@ -3075,6 +3099,11 @@
                 <FieldPair PkField="dbo:Users:UserId" FkField="dbo:UserRoles:UserId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:Users:FK_Spinner_Users">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Documents:DocumentId" FkField="dbo:Users:SpinnerId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:Users:FK_Users_Addresses">
               <FieldPairs>
                 <FieldPair PkField="dbo:Addresses:AddressId" FkField="dbo:Users:AddressId" />
@@ -3456,6 +3485,14 @@
             <FieldMapping FieldName="Name" TargetFieldName="Name" />
           </FieldMappings>
         </EntityMapping>
+        <EntityMapping EntityName=":Document" TargetName="PsychologicalServices:dbo:Documents">
+          <FieldMappings>
+            <FieldMapping FieldName="Data" TargetFieldName="Data" />
+            <FieldMapping FieldName="DocumentId" TargetFieldName="DocumentId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="Size" TargetFieldName="Size" />
+          </FieldMappings>
+        </EntityMapping>
         <EntityMapping EntityName=":Employer" TargetName="PsychologicalServices:dbo:Employers">
           <FieldMappings>
             <FieldMapping FieldName="EmployerId" TargetFieldName="EmployerId" SequenceToUse="SCOPE_IDENTITY()" />
@@ -3701,6 +3738,7 @@
             <FieldMapping FieldName="FirstName" TargetFieldName="FirstName" />
             <FieldMapping FieldName="IsActive" TargetFieldName="IsActive" />
             <FieldMapping FieldName="LastName" TargetFieldName="LastName" />
+            <FieldMapping FieldName="SpinnerId" TargetFieldName="SpinnerId" />
             <FieldMapping FieldName="UserId" TargetFieldName="UserId" SequenceToUse="SCOPE_IDENTITY()" />
           </FieldMappings>
         </EntityMapping>

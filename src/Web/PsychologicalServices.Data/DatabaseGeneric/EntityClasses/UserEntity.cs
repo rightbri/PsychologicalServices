@@ -40,6 +40,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<UserUnavailabilityEntity> _userUnavailabilities;
 		private AddressEntity _address;
 		private CompanyEntity _company;
+		private DocumentEntity _spinner;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -56,6 +57,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Address = "Address";
 			/// <summary>Member name Company</summary>
 			public static readonly string Company = "Company";
+			/// <summary>Member name Spinner</summary>
+			public static readonly string Spinner = "Spinner";
 			/// <summary>Member name PsychometristAppointments</summary>
 			public static readonly string PsychometristAppointments = "PsychometristAppointments";
 			/// <summary>Member name PsychologistArbitrations</summary>
@@ -150,6 +153,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_company.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_spinner = (DocumentEntity)info.GetValue("_spinner", typeof(DocumentEntity));
+				if(_spinner!=null)
+				{
+					_spinner.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
@@ -168,6 +176,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case UserFieldIndex.AddressId:
 					DesetupSyncAddress(true, false);
+					break;
+				case UserFieldIndex.SpinnerId:
+					DesetupSyncSpinner(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -188,6 +199,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Company":
 					this.Company = (CompanyEntity)entity;
+					break;
+				case "Spinner":
+					this.Spinner = (DocumentEntity)entity;
 					break;
 				case "PsychometristAppointments":
 					this.PsychometristAppointments.Add((AppointmentEntity)entity);
@@ -243,6 +257,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Company":
 					toReturn.Add(Relations.CompanyEntityUsingCompanyId);
+					break;
+				case "Spinner":
+					toReturn.Add(Relations.DocumentEntityUsingSpinnerId);
 					break;
 				case "PsychometristAppointments":
 					toReturn.Add(Relations.AppointmentEntityUsingPsychometristId);
@@ -305,6 +322,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Company":
 					SetupSyncCompany(relatedEntity);
 					break;
+				case "Spinner":
+					SetupSyncSpinner(relatedEntity);
+					break;
 				case "PsychometristAppointments":
 					this.PsychometristAppointments.Add((AppointmentEntity)relatedEntity);
 					break;
@@ -350,6 +370,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Company":
 					DesetupSyncCompany(false, true);
+					break;
+				case "Spinner":
+					DesetupSyncSpinner(false, true);
 					break;
 				case "PsychometristAppointments":
 					this.PerformRelatedEntityRemoval(this.PsychometristAppointments, relatedEntity, signalRelatedEntityManyToOne);
@@ -405,6 +428,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_company);
 			}
+			if(_spinner!=null)
+			{
+				toReturn.Add(_spinner);
+			}
 			return toReturn;
 		}
 		
@@ -444,6 +471,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_userUnavailabilities", ((_userUnavailabilities!=null) && (_userUnavailabilities.Count>0) && !this.MarkedForDeletion)?_userUnavailabilities:null);
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
+				info.AddValue("_spinner", (!this.MarkedForDeletion?_spinner:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -557,6 +585,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CompanyFields.CompanyId, null, ComparisonOperator.Equal, this.CompanyId));
 			return bucket;
 		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Document' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoSpinner()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(DocumentFields.DocumentId, null, ComparisonOperator.Equal, this.SpinnerId));
+			return bucket;
+		}
 		
 
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
@@ -639,6 +676,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Address", _address);
 			toReturn.Add("Company", _company);
+			toReturn.Add("Spinner", _spinner);
 			toReturn.Add("PsychometristAppointments", _psychometristAppointments);
 			toReturn.Add("PsychologistArbitrations", _psychologistArbitrations);
 			toReturn.Add("Invoices", _invoices);
@@ -685,6 +723,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("DateInactivated", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("SpinnerId", fieldHashtable);
 		}
 		#endregion
 
@@ -734,6 +774,33 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnCompanyPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _spinner</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSpinner(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _spinner, new PropertyChangedEventHandler(OnSpinnerPropertyChanged), "Spinner", "Users", PsychologicalServices.Data.RelationClasses.StaticUserRelations.DocumentEntityUsingSpinnerIdStatic, true, new int[] { (int)UserFieldIndex.SpinnerId });
+		}
+
+		/// <summary> setups the sync logic for member _spinner</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncSpinner(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _spinner, new PropertyChangedEventHandler( OnSpinnerPropertyChanged ), "Spinner", "Users", PsychologicalServices.Data.RelationClasses.StaticUserRelations.DocumentEntityUsingSpinnerIdStatic, true, new string[] {  }, new int[] { (int)UserFieldIndex.SpinnerId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSpinnerPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -850,6 +917,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(CompanyEntityFactory))),	(IEntityRelation)GetRelationsForField("Company")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.CompanyEntity, 0, null, null, null, null, "Company", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Document' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathSpinner
+		{
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(DocumentEntityFactory))),	(IEntityRelation)GetRelationsForField("Spinner")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.DocumentEntity, 0, null, null, null, null, "Spinner", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -954,6 +1028,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)UserFieldIndex.DateInactivated, value); }
 		}
 
+		/// <summary> The SpinnerId property of the Entity User<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Users"."SpinnerId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> SpinnerId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)UserFieldIndex.SpinnerId, false); }
+			set	{ SetValue((int)UserFieldIndex.SpinnerId, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
 		[TypeContainedAttribute(typeof(AppointmentEntity))]
 		public virtual EntityCollection<AppointmentEntity> PsychometristAppointments
@@ -1049,6 +1133,24 @@ namespace PsychologicalServices.Data.EntityClasses
 				else
 				{
 					SetSingleRelatedEntityNavigator(value, "Users", "Company", _company, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'DocumentEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		[Browsable(true)]
+		public virtual DocumentEntity Spinner
+		{
+			get	{ return _spinner; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncSpinner(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "Users", "Spinner", _spinner, true); 
 				}
 			}
 		}

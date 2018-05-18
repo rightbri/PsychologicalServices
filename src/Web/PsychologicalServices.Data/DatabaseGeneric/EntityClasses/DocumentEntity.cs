@@ -22,17 +22,20 @@ namespace PsychologicalServices.Data.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	/// <summary>Entity class which represents the entity 'ArbitrationStatus'.<br/><br/></summary>
+	
+	/// <summary>Entity class which represents the entity 'Document'.<br/><br/></summary>
 	[Serializable]
-	public partial class ArbitrationStatusEntity : CommonEntityBase
+	public partial class DocumentEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END	
+		// __LLBLGENPRO_USER_CODE_REGION_END
+			
 	{
 		#region Class Member Declarations
-		private EntityCollection<ArbitrationEntity> _arbitrations;
+		private EntityCollection<UserEntity> _users;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Statics
@@ -42,19 +45,19 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Arbitrations</summary>
-			public static readonly string Arbitrations = "Arbitrations";
+			/// <summary>Member name Users</summary>
+			public static readonly string Users = "Users";
 		}
 		#endregion
 		
 		/// <summary> Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
-		static ArbitrationStatusEntity()
+		static DocumentEntity()
 		{
 			SetupCustomPropertyHashtables();
 		}
 		
 		/// <summary> CTor</summary>
-		public ArbitrationStatusEntity():base("ArbitrationStatusEntity")
+		public DocumentEntity():base("DocumentEntity")
 		{
 			InitClassEmpty(null, null);
 		}
@@ -62,50 +65,51 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary> CTor</summary>
 		/// <remarks>For framework usage.</remarks>
 		/// <param name="fields">Fields object to set as the fields for this entity.</param>
-		public ArbitrationStatusEntity(IEntityFields2 fields):base("ArbitrationStatusEntity")
+		public DocumentEntity(IEntityFields2 fields):base("DocumentEntity")
 		{
 			InitClassEmpty(null, fields);
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="validator">The custom validator object for this ArbitrationStatusEntity</param>
-		public ArbitrationStatusEntity(IValidator validator):base("ArbitrationStatusEntity")
+		/// <param name="validator">The custom validator object for this DocumentEntity</param>
+		public DocumentEntity(IValidator validator):base("DocumentEntity")
 		{
 			InitClassEmpty(validator, null);
 		}
 				
 		/// <summary> CTor</summary>
-		/// <param name="arbitrationStatusId">PK value for ArbitrationStatus which data should be fetched into this ArbitrationStatus object</param>
+		/// <param name="documentId">PK value for Document which data should be fetched into this Document object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ArbitrationStatusEntity(System.Int32 arbitrationStatusId):base("ArbitrationStatusEntity")
+		public DocumentEntity(System.Int32 documentId):base("DocumentEntity")
 		{
 			InitClassEmpty(null, null);
-			this.ArbitrationStatusId = arbitrationStatusId;
+			this.DocumentId = documentId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="arbitrationStatusId">PK value for ArbitrationStatus which data should be fetched into this ArbitrationStatus object</param>
-		/// <param name="validator">The custom validator object for this ArbitrationStatusEntity</param>
+		/// <param name="documentId">PK value for Document which data should be fetched into this Document object</param>
+		/// <param name="validator">The custom validator object for this DocumentEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public ArbitrationStatusEntity(System.Int32 arbitrationStatusId, IValidator validator):base("ArbitrationStatusEntity")
+		public DocumentEntity(System.Int32 documentId, IValidator validator):base("DocumentEntity")
 		{
 			InitClassEmpty(validator, null);
-			this.ArbitrationStatusId = arbitrationStatusId;
+			this.DocumentId = documentId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected ArbitrationStatusEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected DocumentEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_arbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations", typeof(EntityCollection<ArbitrationEntity>));
+				_users = (EntityCollection<UserEntity>)info.GetValue("_users", typeof(EntityCollection<UserEntity>));
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 		}
 
 
@@ -117,8 +121,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Arbitrations":
-					this.Arbitrations.Add((ArbitrationEntity)entity);
+				case "Users":
+					this.Users.Add((UserEntity)entity);
 					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
@@ -142,8 +146,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Arbitrations":
-					toReturn.Add(Relations.ArbitrationEntityUsingArbitrationStatusId);
+				case "Users":
+					toReturn.Add(Relations.UserEntityUsingSpinnerId);
 					break;
 				default:
 					break;				
@@ -173,8 +177,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Arbitrations":
-					this.Arbitrations.Add((ArbitrationEntity)relatedEntity);
+				case "Users":
+					this.Users.Add((UserEntity)relatedEntity);
 					break;
 				default:
 					break;
@@ -189,8 +193,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Arbitrations":
-					this.PerformRelatedEntityRemoval(this.Arbitrations, relatedEntity, signalRelatedEntityManyToOne);
+				case "Users":
+					this.PerformRelatedEntityRemoval(this.Users, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				default:
 					break;
@@ -219,7 +223,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.Arbitrations);
+			toReturn.Add(this.Users);
 			return toReturn;
 		}
 
@@ -231,10 +235,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_arbitrations", ((_arbitrations!=null) && (_arbitrations.Count>0) && !this.MarkedForDeletion)?_arbitrations:null);
+				info.AddValue("_users", ((_users!=null) && (_users.Count>0) && !this.MarkedForDeletion)?_users:null);
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			base.GetObjectData(info, context);
 		}
 
@@ -244,15 +249,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
 		protected override List<IEntityRelation> GetAllRelations()
 		{
-			return new ArbitrationStatusRelations().GetAllRelations();
+			return new DocumentRelations().GetAllRelations();
 		}
 
-		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Arbitration' to this entity.</summary>
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'User' to this entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoArbitrations()
+		public virtual IRelationPredicateBucket GetRelationInfoUsers()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
-			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ArbitrationFields.ArbitrationStatusId, null, ComparisonOperator.Equal, this.ArbitrationStatusId));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.SpinnerId, null, ComparisonOperator.Equal, this.DocumentId));
 			return bucket;
 		}
 		
@@ -260,7 +265,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
 		protected override IEntityFactory2 CreateEntityFactory()
 		{
-			return EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationStatusEntityFactory));
+			return EntityFactoryCache2.GetEntityFactory(typeof(DocumentEntityFactory));
 		}
 
 		/// <summary>Adds the member collections to the collections queue (base first)</summary>
@@ -268,7 +273,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._arbitrations);
+			collectionsQueue.Enqueue(this._users);
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -276,7 +281,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._arbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
+			this._users = (EntityCollection<UserEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -285,7 +290,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
 			bool toReturn = false;
-			toReturn |=(this._arbitrations != null);
+			toReturn |=(this._users != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -295,7 +300,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
-			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))) : null);
 		}
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -303,7 +308,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Arbitrations", _arbitrations);
+			toReturn.Add("Users", _users);
 			return toReturn;
 		}
 
@@ -314,6 +319,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 			OnInitClassMembersComplete();
 		}
 
@@ -326,18 +332,18 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("ArbitrationStatusId", fieldHashtable);
+			_fieldsCustomProperties.Add("DocumentId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			_fieldsCustomProperties.Add("Size", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("ShowOnCalendar", fieldHashtable);
+			_fieldsCustomProperties.Add("Data", fieldHashtable);
 		}
 		#endregion
 
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="validator">The validator object for this ArbitrationStatusEntity</param>
+		/// <param name="validator">The validator object for this DocumentEntity</param>
 		/// <param name="fields">Fields of this entity</param>
 		private void InitClassEmpty(IValidator validator, IEntityFields2 fields)
 		{
@@ -348,6 +354,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			
 
 			OnInitialized();
 
@@ -355,9 +362,9 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static ArbitrationStatusRelations Relations
+		public  static DocumentRelations Relations
 		{
-			get	{ return new ArbitrationStatusRelations(); }
+			get	{ return new DocumentRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
@@ -367,11 +374,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' for this entity.</summary>
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'User' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathArbitrations
+		public static IPrefetchPathElement2 PrefetchPathUsers
 		{
-			get	{ return new PrefetchPathElement2( new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("Arbitrations")[0], (int)PsychologicalServices.Data.EntityType.ArbitrationStatusEntity, (int)PsychologicalServices.Data.EntityType.ArbitrationEntity, 0, null, null, null, null, "Arbitrations", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+			get	{ return new PrefetchPathElement2( new EntityCollection<UserEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))), (IEntityRelation)GetRelationsForField("Users")[0], (int)PsychologicalServices.Data.EntityType.DocumentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "Users", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 
@@ -398,51 +405,51 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ArbitrationStatusId property of the Entity ArbitrationStatus<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "ArbitrationStatuses"."ArbitrationStatusId"<br/>
+		/// <summary> The DocumentId property of the Entity Document<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Documents"."DocumentId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ArbitrationStatusId
+		public virtual System.Int32 DocumentId
 		{
-			get { return (System.Int32)GetValue((int)ArbitrationStatusFieldIndex.ArbitrationStatusId, true); }
-			set	{ SetValue((int)ArbitrationStatusFieldIndex.ArbitrationStatusId, value); }
+			get { return (System.Int32)GetValue((int)DocumentFieldIndex.DocumentId, true); }
+			set	{ SetValue((int)DocumentFieldIndex.DocumentId, value); }
 		}
 
-		/// <summary> The Name property of the Entity ArbitrationStatus<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "ArbitrationStatuses"."Name"<br/>
-		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
+		/// <summary> The Name property of the Entity Document<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Documents"."Name"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 200<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Name
 		{
-			get { return (System.String)GetValue((int)ArbitrationStatusFieldIndex.Name, true); }
-			set	{ SetValue((int)ArbitrationStatusFieldIndex.Name, value); }
+			get { return (System.String)GetValue((int)DocumentFieldIndex.Name, true); }
+			set	{ SetValue((int)DocumentFieldIndex.Name, value); }
 		}
 
-		/// <summary> The IsActive property of the Entity ArbitrationStatus<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "ArbitrationStatuses"."IsActive"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// <summary> The Size property of the Entity Document<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Documents"."Size"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean IsActive
+		public virtual System.Int32 Size
 		{
-			get { return (System.Boolean)GetValue((int)ArbitrationStatusFieldIndex.IsActive, true); }
-			set	{ SetValue((int)ArbitrationStatusFieldIndex.IsActive, value); }
+			get { return (System.Int32)GetValue((int)DocumentFieldIndex.Size, true); }
+			set	{ SetValue((int)DocumentFieldIndex.Size, value); }
 		}
 
-		/// <summary> The ShowOnCalendar property of the Entity ArbitrationStatus<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "ArbitrationStatuses"."ShowOnCalendar"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// <summary> The Data property of the Entity Document<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Documents"."Data"<br/>
+		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean ShowOnCalendar
+		public virtual System.Byte[] Data
 		{
-			get { return (System.Boolean)GetValue((int)ArbitrationStatusFieldIndex.ShowOnCalendar, true); }
-			set	{ SetValue((int)ArbitrationStatusFieldIndex.ShowOnCalendar, value); }
+			get { return (System.Byte[])GetValue((int)DocumentFieldIndex.Data, true); }
+			set	{ SetValue((int)DocumentFieldIndex.Data, value); }
 		}
 
-		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
-		[TypeContainedAttribute(typeof(ArbitrationEntity))]
-		public virtual EntityCollection<ArbitrationEntity> Arbitrations
+		/// <summary> Gets the EntityCollection with the related entities of type 'UserEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(UserEntity))]
+		public virtual EntityCollection<UserEntity> Users
 		{
-			get { return GetOrCreateEntityCollection<ArbitrationEntity, ArbitrationEntityFactory>("ArbitrationStatus", true, false, ref _arbitrations);	}
+			get { return GetOrCreateEntityCollection<UserEntity, UserEntityFactory>("Spinner", true, false, ref _users);	}
 		}
 	
 		/// <summary> Gets the type of the hierarchy this entity is in. </summary>
@@ -461,7 +468,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		[Browsable(false), XmlIgnore]
 		protected override int LLBLGenProEntityTypeValue 
 		{ 
-			get { return (int)PsychologicalServices.Data.EntityType.ArbitrationStatusEntity; }
+			get { return (int)PsychologicalServices.Data.EntityType.DocumentEntity; }
 		}
 
 		#endregion
@@ -471,6 +478,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
+		
 		#endregion
 
 		#region Included code

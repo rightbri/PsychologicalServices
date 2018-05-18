@@ -49,6 +49,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.UserUnavailabilityEntityUsingUserId);
 			toReturn.Add(this.AddressEntityUsingAddressId);
 			toReturn.Add(this.CompanyEntityUsingCompanyId);
+			toReturn.Add(this.DocumentEntityUsingSpinnerId);
 			return toReturn;
 		}
 
@@ -353,6 +354,20 @@ namespace PsychologicalServices.Data.RelationClasses
 				return relation;
 			}
 		}
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and DocumentEntity over the m:1 relation they have, using the relation between the fields:
+		/// User.SpinnerId - Document.DocumentId
+		/// </summary>
+		public virtual IEntityRelation DocumentEntityUsingSpinnerId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Spinner", false);
+				relation.AddEntityFieldPair(DocumentFields.DocumentId, UserFields.SpinnerId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("DocumentEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				return relation;
+			}
+		}
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
@@ -387,6 +402,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation UserUnavailabilityEntityUsingUserIdStatic = new UserRelations().UserUnavailabilityEntityUsingUserId;
 		internal static readonly IEntityRelation AddressEntityUsingAddressIdStatic = new UserRelations().AddressEntityUsingAddressId;
 		internal static readonly IEntityRelation CompanyEntityUsingCompanyIdStatic = new UserRelations().CompanyEntityUsingCompanyId;
+		internal static readonly IEntityRelation DocumentEntityUsingSpinnerIdStatic = new UserRelations().DocumentEntityUsingSpinnerId;
 
 		/// <summary>CTor</summary>
 		static StaticUserRelations()

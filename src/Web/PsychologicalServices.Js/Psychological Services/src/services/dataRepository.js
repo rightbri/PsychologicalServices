@@ -213,6 +213,29 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'credibilitydata');
 	}
 
+	getDocument(id) {
+		return this.getSingleBasic(id, 'document');
+	}
+
+	searchDocuments(criteria) {
+		return this.searchBasic(criteria, 'document');
+	}
+
+	saveDocument(document) {
+		return this.saveBasic(document, 'document');
+	}
+
+	getUserSpinner(userId) {
+		return this.getSingleBasic(userId, 'userspinner');
+	}
+
+	saveUserSpinner(userId, documentId) {
+		return this.saveBasic({
+			'userId': userId,
+			'documentId': documentId
+		}, 'userspinner');
+	}
+
 	getAddress(id) {
 		return this.getSingleBasic(id, 'address');
 	}

@@ -87,6 +87,13 @@
     <Compile Include="DiagnosisFoundResponses\DiagnosisFoundResponseService.cs" />
     <Compile Include="DiagnosisFoundResponses\IDiagnosisFoundResponseRepository.cs" />
     <Compile Include="DiagnosisFoundResponses\IDiagnosisFoundResponseService.cs" />
+    <Compile Include="Documents\Document.cs" />
+    <Compile Include="Documents\DocumentSearchCriteria.cs" />
+    <Compile Include="Documents\DocumentService.cs" />
+    <Compile Include="Documents\DocumentValidator.cs" />
+    <Compile Include="Documents\IDocumentRepository.cs" />
+    <Compile Include="Documents\IDocumentService.cs" />
+    <Compile Include="Documents\IDocumentValidator.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventSearchCriteria.cs" />
     <Compile Include="Events\EventService.cs" />
@@ -353,6 +360,7 @@
     <Compile Include="Users\User.cs" />
     <Compile Include="Users\UserSearchCriteria.cs" />
     <Compile Include="Users\UserService.cs" />
+    <Compile Include="Users\UserSpinner.cs" />
     <Compile Include="Users\UserTravelFee.cs" />
     <Compile Include="Users\UserTravelFeeValidator.cs" />
     <Compile Include="Users\UserValidator.cs" />

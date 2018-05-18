@@ -634,6 +634,20 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Document.</summary>
+	public enum DocumentFieldIndex
+	{
+		///<summary>DocumentId. </summary>
+		DocumentId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>Size. </summary>
+		Size,
+		///<summary>Data. </summary>
+		Data,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Employer.</summary>
 	public enum EmployerFieldIndex
 	{
@@ -1067,6 +1081,8 @@ namespace PsychologicalServices.Data
 		AddressId,
 		///<summary>DateInactivated. </summary>
 		DateInactivated,
+		///<summary>SpinnerId. </summary>
+		SpinnerId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1194,6 +1210,8 @@ namespace PsychologicalServices.Data
 		CredibilityEntity,
 		///<summary>DiagnosisFoundResponse</summary>
 		DiagnosisFoundResponseEntity,
+		///<summary>Document</summary>
+		DocumentEntity,
 		///<summary>Employer</summary>
 		EmployerEntity,
 		///<summary>EmployerType</summary>

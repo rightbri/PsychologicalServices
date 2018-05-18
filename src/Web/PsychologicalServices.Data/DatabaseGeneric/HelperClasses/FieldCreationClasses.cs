@@ -1213,6 +1213,31 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity DocumentEntity</summary>
+	public partial class DocumentFields
+	{
+		/// <summary>Creates a new DocumentEntity.DocumentId field instance</summary>
+		public static EntityField2 DocumentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(DocumentFieldIndex.DocumentId);}
+		}
+		/// <summary>Creates a new DocumentEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(DocumentFieldIndex.Name);}
+		}
+		/// <summary>Creates a new DocumentEntity.Size field instance</summary>
+		public static EntityField2 Size
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(DocumentFieldIndex.Size);}
+		}
+		/// <summary>Creates a new DocumentEntity.Data field instance</summary>
+		public static EntityField2 Data
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(DocumentFieldIndex.Data);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity EmployerEntity</summary>
 	public partial class EmployerFields
 	{
@@ -2000,6 +2025,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 DateInactivated
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(UserFieldIndex.DateInactivated);}
+		}
+		/// <summary>Creates a new UserEntity.SpinnerId field instance</summary>
+		public static EntityField2 SpinnerId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(UserFieldIndex.SpinnerId);}
 		}
 	}
 

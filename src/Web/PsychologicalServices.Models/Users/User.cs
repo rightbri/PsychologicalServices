@@ -1,6 +1,7 @@
 ﻿using PsychologicalServices.Models.Addresses;
 using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Documents;
 using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Roles;
 using System;

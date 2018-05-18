@@ -321,6 +321,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<DiagnosisFoundResponseEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the Document entity</summary>
+		public EntityQuery<DocumentEntity> Document
+		{
+			get { return Create<DocumentEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the Employer entity</summary>
 		public EntityQuery<EmployerEntity> Employer
 		{

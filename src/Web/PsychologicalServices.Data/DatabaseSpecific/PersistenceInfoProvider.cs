@@ -82,6 +82,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitContactTypeEntityMappings();
 			InitCredibilityEntityMappings();
 			InitDiagnosisFoundResponseEntityMappings();
+			InitDocumentEntityMappings();
 			InitEmployerEntityMappings();
 			InitEmployerTypeEntityMappings();
 			InitEventEntityMappings();
@@ -538,6 +539,16 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("DiagnosisFoundResponseEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
 		}
 
+		/// <summary>Inits DocumentEntity's mappings</summary>
+		private void InitDocumentEntityMappings()
+		{
+			this.AddElementMapping("DocumentEntity", @"PsychologicalServices", @"dbo", "Documents", 4, 0);
+			this.AddElementFieldMapping("DocumentEntity", "DocumentId", "DocumentId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("DocumentEntity", "Name", "Name", false, "NVarChar", 200, 0, 0, false, "", null, typeof(System.String), 1);
+			this.AddElementFieldMapping("DocumentEntity", "Size", "Size", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("DocumentEntity", "Data", "Data", false, "VarBinary", 2147483647, 0, 0, false, "", null, typeof(System.Byte[]), 3);
+		}
+
 		/// <summary>Inits EmployerEntity's mappings</summary>
 		private void InitEmployerEntityMappings()
 		{
@@ -835,7 +846,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits UserEntity's mappings</summary>
 		private void InitUserEntityMappings()
 		{
-			this.AddElementMapping("UserEntity", @"PsychologicalServices", @"dbo", "Users", 8, 0);
+			this.AddElementMapping("UserEntity", @"PsychologicalServices", @"dbo", "Users", 9, 0);
 			this.AddElementFieldMapping("UserEntity", "UserId", "UserId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("UserEntity", "FirstName", "FirstName", false, "NVarChar", 100, 0, 0, false, "", null, typeof(System.String), 1);
 			this.AddElementFieldMapping("UserEntity", "LastName", "LastName", false, "NVarChar", 100, 0, 0, false, "", null, typeof(System.String), 2);
@@ -844,6 +855,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("UserEntity", "CompanyId", "CompanyId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 5);
 			this.AddElementFieldMapping("UserEntity", "AddressId", "AddressId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 6);
 			this.AddElementFieldMapping("UserEntity", "DateInactivated", "DateInactivated", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 7);
+			this.AddElementFieldMapping("UserEntity", "SpinnerId", "SpinnerId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
 		}
 
 		/// <summary>Inits UserNoteEntity's mappings</summary>

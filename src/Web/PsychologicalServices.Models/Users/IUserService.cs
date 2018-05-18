@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Documents;
 using System;
 using System.Collections.Generic;
 
@@ -23,5 +24,9 @@ namespace PsychologicalServices.Models.Users
         IEnumerable<User> GetNotesWriters(int? companyId = null);
 
         SaveResult<User> SaveUser(User user);
+
+        Document GetSpinnerForUser(int userId);
+
+        SaveResult<Document> SaveUserSpinner(int userId, int documentId);
     }
 }

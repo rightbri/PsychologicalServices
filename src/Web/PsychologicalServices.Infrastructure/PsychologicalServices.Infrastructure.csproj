@@ -99,6 +99,7 @@
     <Compile Include="Contacts\ContactRepository.cs" />
     <Compile Include="Credibilities\CredibilityRepository.cs" />
     <Compile Include="DiagnosisFoundResponses\DiagnosisFoundResponseRepository.cs" />
+    <Compile Include="Documents\DocumentRepository.cs" />
     <Compile Include="Employers\EmployerRepository.cs" />
     <Compile Include="Events\EventRepository.cs" />
     <Compile Include="Invoices\InvoiceRepository.cs" />
