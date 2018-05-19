@@ -81,7 +81,8 @@ export class App {
 			{ route: 'arbitrations/add', name: 'addArbitration', moduleId: 'arbitrations/editArbitration', title: 'Add Arbitration', nav: false },
 			{ route: 'documents', name: 'documents', moduleId: 'documents/documents', title: 'Documents', nav: true },
 			{ route: 'documents/:id', name: 'editDocument', moduleId: 'documents/editDocument', title: 'Edit Document', nav: false },
-			{ route: 'documents/add', name: 'addDocument', moduleId: 'documents/editDocument', title: 'Add Document', nav: false }
+			{ route: 'documents/add', name: 'addDocument', moduleId: 'documents/editDocument', title: 'Add Document', nav: false },
+			{ route: 'users/spinner', name: 'userSpinner', moduleId: 'users/userSpinner', title: 'Edit User Spinner', nav: true }
 		]);
 		
 		this.context.getUser().then(user => this.user = user);

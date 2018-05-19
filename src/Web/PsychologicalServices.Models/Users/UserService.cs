@@ -17,11 +17,13 @@ namespace PsychologicalServices.Models.Users
         public UserService(
             IUserRepository userRepository,
             IUserValidator userValidator,
+            IDocumentRepository documentRepository,
             ILog log
         )
         {
             _userRepository = userRepository;
             _userValidator = userValidator;
+            _documentRepository = documentRepository;
             _log = log;
         }
 
@@ -139,6 +141,8 @@ namespace PsychologicalServices.Models.Users
                 }
                 
                 result.ValidationResult = validation;
+
+                result.ValidationResult.IsValid = !result.ValidationResult.ValidationErrors.Any();
 
                 if (result.ValidationResult.IsValid)
                 {
