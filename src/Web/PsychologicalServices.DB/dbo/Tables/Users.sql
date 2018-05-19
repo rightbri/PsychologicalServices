@@ -7,10 +7,14 @@
     [CompanyId]       INT                NOT NULL,
     [AddressId]       INT                NOT NULL,
     [DateInactivated] DATETIMEOFFSET (7) NULL,
+    [SpinnerId]       INT                NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([UserId] ASC),
+    CONSTRAINT [FK_Spinner_Users] FOREIGN KEY ([SpinnerId]) REFERENCES [dbo].[Documents] ([DocumentId]),
     CONSTRAINT [FK_Users_Addresses] FOREIGN KEY ([AddressId]) REFERENCES [dbo].[Addresses] ([AddressId]),
     CONSTRAINT [FK_Users_Companies] FOREIGN KEY ([CompanyId]) REFERENCES [dbo].[Companies] ([CompanyId])
 );
+
+
 
 
 
