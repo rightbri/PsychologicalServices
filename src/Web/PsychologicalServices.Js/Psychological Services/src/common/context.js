@@ -42,6 +42,9 @@ export class Context {
 				this.dataRepository.getUserByUsername(this.username)
 					.then(data => {
 						this.user = data;
+
+						this.dataRepository.getUserSpinner(this.user.userId).then(spinner => this.user.spinner = spinner);
+						
 						resolve(data);
 					})
 					.catch(err => {

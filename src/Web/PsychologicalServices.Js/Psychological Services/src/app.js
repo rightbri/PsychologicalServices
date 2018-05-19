@@ -84,7 +84,7 @@ export class App {
 			{ route: 'documents/add', name: 'addDocument', moduleId: 'documents/editDocument', title: 'Add Document', nav: false }
 		]);
 		
-		this.context.getUser().then(user => this.user = user).then(() => this.isClaire = this.user.firstName === 'Claire');
+		this.context.getUser().then(user => this.user = user);
 	}
 }
 

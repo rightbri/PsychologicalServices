@@ -163,8 +163,8 @@
 
 	<div id="overlay" if.bind="router.isNavigating">
 		<p>
-			<img src="../content/images/snoopy-easter.jpg" if.bind="isClaire"/>
-			<i class="fa fa-spinner fa-spin fa-pulse fa-5x fa-fw" if.bind="!isClaire"></i>
+			<img src="data:image/jpeg;base64,${user.spinner.data}" if.bind="user.spinner"/>
+			<i class="fa fa-spinner fa-spin fa-pulse fa-5x fa-fw" if.bind="!user.spinner"></i>
 			<span class="sr-only">Loading...</span>
 		</p>
 	</div>
