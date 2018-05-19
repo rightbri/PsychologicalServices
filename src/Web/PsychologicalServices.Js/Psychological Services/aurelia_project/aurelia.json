@@ -206,7 +206,12 @@
 			"resources": [
 				"../css/inputmask.css"
 			]
-		  }
+      },
+      {
+        "name": "downloadjs",
+        "path": "../node_modules/downloadjs",
+        "main": "download.min"
+      }
         ],
 		"copyFiles": {
 		}
