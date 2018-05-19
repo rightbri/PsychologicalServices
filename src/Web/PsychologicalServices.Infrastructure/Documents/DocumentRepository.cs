@@ -64,7 +64,7 @@ namespace PsychologicalServices.Infrastructure.Documents
                 return Execute<DocumentEntity>(
                     (ILLBLGenProQuery)
                     documents
-                    .ExcludeFields(document => document.Data)
+                    //.ExcludeFields(document => document.Data)
                 )
                 .Select(document => document.ToDocument())
                 .ToList();

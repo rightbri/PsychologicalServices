@@ -41,6 +41,7 @@
 				<th>Name</th>
 				<th>Size</th>
 				<th>Data</th>
+				<th>Download</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -57,7 +58,12 @@
 				</td>
 				<td>${document.name}</td>
 				<td>${document.size}</td>
-				<td>${document.data}</td>
+				<td>
+					<img src.bind="document.dataUrl" width="100" />
+				</td>
+				<td>
+					<a href.bind="document.dataUrl" download.bind="document.name">download</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>

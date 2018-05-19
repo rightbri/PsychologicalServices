@@ -23,12 +23,20 @@ export class Documents {
 		});
 	}
 
+	
+	dataUrlFromData(data) {
+		return 'data:image/jpeg;base64,' + data;
+	}
+
 	searchDocuments(criteria) {
 		return this.dataRepository.searchDocuments(criteria)
 			.then(data => {
-				this.documents = data;
+				this.documents = data.map((document) => {
+					document.dataUrl = this.dataUrlFromData(document.data);
+					return document;
+				});
 
-				this.noDocuments = !data;
+				this.noDocuments = data.length === 0;
 			});
 	}
 }

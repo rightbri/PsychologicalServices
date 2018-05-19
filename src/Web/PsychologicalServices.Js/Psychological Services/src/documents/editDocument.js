@@ -29,7 +29,7 @@ export class EditDocument {
 			return this.dataRepository.getDocument(id).then(data => {
 				this.document = data;
 
-				this.document.data = 'data:image/jpeg;base64,' + this.document.data;
+				this.document.dataUrl = this.dataUrlFromData(this.document.data);
 			});
 		}
 		else {
@@ -37,6 +37,14 @@ export class EditDocument {
 			
 			this.document = { documentId: 0, name: '' };
 		}
+	}
+
+	dataUrlFromData(data) {
+		return 'data:image/jpeg;base64,' + data;
+	}
+
+	dataFromDataUrl(dataUrl) {
+		return dataUrl.substring(dataUrl.indexOf(",") + 1);//after "data:image/jpeg;base64,"
 	}
 
 	fileChanged(e) {
@@ -50,9 +58,11 @@ export class EditDocument {
 			reader.addEventListener("load", () => {
 				let result = reader.result;
 
-				let data = result.substring(result.indexOf(",") + 1);//after "data:image/jpeg;base64,"
+				let data = this.dataFromDataUrl(result);
 
 				this.document.data = data;
+
+				this.document.dataUrl = result;
 
 				this.document.originalName = files[0].name;
 				
