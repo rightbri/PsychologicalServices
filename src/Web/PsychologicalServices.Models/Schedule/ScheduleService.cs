@@ -214,7 +214,7 @@ namespace PsychologicalServices.Models.Schedule
                 MarginRight = 5,
                 MarginBottom = 5,
                 MarginLeft = 5,
-                PageSize = "Letter",
+                PageSize = "Legal",
             };
 
             result.Content = _htmlToPdfService.GetPdf(html, htmlToPdfParameters);
