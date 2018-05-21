@@ -29,6 +29,6 @@ namespace PsychologicalServices.Models.Users
 
         Document GetSpinnerForUser(int userId);
 
-        void SaveUserSpinner(int userId, int documentId);
+        void SaveUserSpinner(int userId, int? documentId);
     }
 }

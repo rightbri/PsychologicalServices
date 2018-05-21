@@ -622,7 +622,7 @@ namespace PsychologicalServices.Infrastructure.Users
             }
         }
 
-        public void SaveUserSpinner(int userId, int documentId)
+        public void SaveUserSpinner(int userId, int? documentId)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
@@ -632,7 +632,14 @@ namespace PsychologicalServices.Infrastructure.Users
 
                 if (null != user)
                 {
-                    user.SpinnerId = documentId;
+                    if (documentId.HasValue)
+                    {
+                        user.SpinnerId = documentId;
+                    }
+                    else
+                    {
+                        user.SetNewFieldValue((int)UserFieldIndex.SpinnerId, null);
+                    }
 
                     adapter.SaveEntity(user);
                 }

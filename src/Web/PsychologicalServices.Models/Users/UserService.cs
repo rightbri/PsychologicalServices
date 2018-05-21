@@ -111,7 +111,7 @@ namespace PsychologicalServices.Models.Users
             return result;
         }
 
-        public SaveResult<Document> SaveUserSpinner(int userId, int documentId)
+        public SaveResult<Document> SaveUserSpinner(int userId, int? documentId)
         {
             var result = new SaveResult<Document>();
 
@@ -131,13 +131,16 @@ namespace PsychologicalServices.Models.Users
                     );
                 }
 
-                var documentExists = _documentRepository.DocumentExists(documentId);
-
-                if (!documentExists)
+                if (documentId.HasValue)
                 {
-                    validation.ValidationErrors.Add(
-                        new Common.Validation.ValidationError { PropertyName = "DocumentId", Message = "Document does not exist" }
-                    );
+                    var documentExists = _documentRepository.DocumentExists(documentId.Value);
+
+                    if (!documentExists)
+                    {
+                        validation.ValidationErrors.Add(
+                            new Common.Validation.ValidationError { PropertyName = "DocumentId", Message = "Document does not exist" }
+                        );
+                    }
                 }
                 
                 result.ValidationResult = validation;
@@ -148,7 +151,7 @@ namespace PsychologicalServices.Models.Users
                 {
                     _userRepository.SaveUserSpinner(userId, documentId);
 
-                    result.Item = _documentRepository.GetDocument(documentId);
+                    result.Item = documentId.HasValue ? _documentRepository.GetDocument(documentId.Value) : null;
 
                     result.IsSaved = true;
                 }

@@ -6,6 +6,6 @@ namespace PsychologicalServices.Models.Users
     {
         public int UserId { get; set; }
 
-        public int DocumentId { get; set; }
+        public int? DocumentId { get; set; }
     }
 }
