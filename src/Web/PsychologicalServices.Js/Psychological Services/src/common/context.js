@@ -39,7 +39,7 @@ export class Context {
 				resolve(this.user);
 			}
 			else {
-				this.dataRepository.getUserByUsername(this.username)
+				return this.dataRepository.getUserByUsername(this.username)
 					.then(data => {
 						this.user = data;
 
