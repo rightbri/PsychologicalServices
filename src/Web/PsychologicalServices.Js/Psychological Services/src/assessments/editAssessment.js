@@ -364,7 +364,9 @@ export class EditAssessment {
 	}
 	
 	removeAppointment(appointment) {
-		this.assessment.appointments.splice(this.assessment.appointments.indexOf(appointment), 1);
+		if (confirm("Remove appointment\nAre you sure?")) {
+			this.assessment.appointments.splice(this.assessment.appointments.indexOf(appointment), 1);
+		}		
 	}
 
 	filterDocListWriters(assessment) {
