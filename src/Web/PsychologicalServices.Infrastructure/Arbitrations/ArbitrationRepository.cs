@@ -132,7 +132,7 @@ namespace PsychologicalServices.Infrastructure.Arbitrations
 
                 if (criteria.CompanyId.HasValue)
                 {
-                    arbitrations = arbitrations.Where(arbitration => arbitration.Assessment.CompanyId == criteria.CompanyId);
+                    arbitrations = arbitrations.Where(arbitration => arbitration.AssessmentId == null || arbitration.Assessment.CompanyId == criteria.CompanyId);
                 }
 
                 if (criteria.ClaimantId.HasValue)
