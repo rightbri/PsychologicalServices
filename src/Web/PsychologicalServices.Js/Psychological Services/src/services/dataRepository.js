@@ -116,7 +116,7 @@ export class DataRepository {
 	}
 
 	sendInvoiceDocument(invoiceDocumentId) {
-		return this.postBasic('psychologistinvoice/send', {
+		return this.postBasic('invoicedocument/send', {
 			'invoiceDocumentId': invoiceDocumentId
 		});
 	}

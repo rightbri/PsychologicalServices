@@ -1,8 +1,6 @@
 ﻿using PsychologicalServices.Api.Infrastructure.Results;
 using PsychologicalServices.Models.Invoices;
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Collections.Generic;
@@ -39,6 +37,16 @@ namespace PsychologicalServices.Api.Controllers
             var invoiceDocuments = _invoiceService.GetInvoiceDocuments(id);
 
             return Ok(invoiceDocuments);
+        }
+
+        [Route("send")]
+        [HttpPost]
+        [ResponseType(typeof(InvoiceSendResult))]
+        public IHttpActionResult Send(InvoiceSendParameters parameters)
+        {
+            var sendResult = _invoiceService.SendInvoiceDocument(parameters);
+
+            return Ok(sendResult);
         }
     }
 }

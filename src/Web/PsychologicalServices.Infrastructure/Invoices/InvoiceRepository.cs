@@ -137,6 +137,18 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                             .Prefetch<UserEntity>(appointment => appointment.Psychologist)
                                         )
                                 )
+                            .Prefetch<InvoiceLineGroupArbitrationEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupArbitration)
+                                .SubPath(invoiceLineGroupArbitrationPath => invoiceLineGroupArbitrationPath
+                                    .Prefetch<ArbitrationEntity>(invoiceLineGroupArbitration => invoiceLineGroupArbitration.Arbitration)
+                                        .SubPath(arbitrationPath => arbitrationPath
+                                            .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
+                                            .Prefetch<ContactEntity>(arbitration => arbitration.BillToContact)
+                                            .Prefetch<UserEntity>(arbitration => arbitration.Psychologist)
+                                                .SubPath(psychologistPath => psychologistPath
+                                                    .Prefetch<CompanyEntity>(psychologist => psychologist.Company)
+                                                )
+                                        )
+                                )
                         )
                 );
 

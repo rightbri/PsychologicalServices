@@ -15,7 +15,7 @@ namespace PsychologicalServices.Models.Invoices
 
         InvoiceDocument GetInvoiceDocument(int invoiceDocumentId);
 
-        PsychologistInvoiceSendResult SendPsychologistInvoiceDocument(PsychologistInvoiceSendParameters parameters);
+        InvoiceSendResult SendInvoiceDocument(InvoiceSendParameters parameters);
 
         InvoiceConfiguration GetInvoiceConfiguration(int companyId);
 

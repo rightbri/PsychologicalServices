@@ -104,9 +104,13 @@
     <Compile Include="Invoices\AppointmentStatusInvoiceRate.cs" />
     <Compile Include="Invoices\ArbitrationInvoiceCreationParameters.cs" />
     <Compile Include="Invoices\AssessmentTypeInvoiceAmount.cs" />
+    <Compile Include="Invoices\Enumerations.cs" />
     <Compile Include="Invoices\IInvoiceConfigurationValidator.cs" />
     <Compile Include="Invoices\IInvoiceDocumentFileNameGenerator.cs" />
     <Compile Include="Invoices\IArbitrationInvoiceGenerator.cs" />
+    <Compile Include="Invoices\IInvoiceSender.cs" />
+    <Compile Include="Invoices\IInvoiceSendModel.cs" />
+    <Compile Include="Invoices\IInvoiceSendModelFactory.cs" />
     <Compile Include="Invoices\InvoiceableArbitrationDataSearchCriteria.cs" />
     <Compile Include="Invoices\InvoiceableArbitrationData.cs" />
     <Compile Include="Invoices\InvoiceConfiguration.cs" />
@@ -117,13 +121,17 @@
     <Compile Include="Invoices\InvoiceExtensions.cs" />
     <Compile Include="Invoices\InvoiceLineGroup.cs" />
     <Compile Include="Invoices\ArbitrationInvoiceGenerator.cs" />
+    <Compile Include="Invoices\InvoiceSender.cs" />
+    <Compile Include="Invoices\InvoiceSendError.cs" />
+    <Compile Include="Invoices\InvoiceSendModelFactory.cs" />
     <Compile Include="Invoices\PsychologistInvoiceCalculationData.cs" />
     <Compile Include="Invoices\IssueInDisputeInvoiceAmount.cs" />
     <Compile Include="Invoices\PsychologistInvoiceGenerator.cs" />
     <Compile Include="Invoices\PsychologistInvoiceCreationParameters.cs" />
+    <Compile Include="Invoices\ArbitrationInvoiceSendModel.cs" />
     <Compile Include="Invoices\PsychologistInvoiceSendModel.cs" />
-    <Compile Include="Invoices\PsychologistInvoiceSendParameters.cs" />
-    <Compile Include="Invoices\PsychologistInvoiceSendResult.cs" />
+    <Compile Include="Invoices\InvoiceSendParameters.cs" />
+    <Compile Include="Invoices\InvoiceSendResult.cs" />
     <Compile Include="Invoices\ReferralSourceInvoiceConfiguration.cs" />
     <Compile Include="Invoices\ArbitrationInvoiceTemplate.cs">
       <AutoGen>True</AutoGen>

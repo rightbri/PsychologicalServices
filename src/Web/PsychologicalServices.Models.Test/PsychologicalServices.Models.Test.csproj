@@ -63,8 +63,11 @@
     <Compile Include="Common\Utility\DateExtensionsTests.cs" />
     <Compile Include="Common\Utility\TimezoneServiceTests.cs" />
     <Compile Include="Invoices\InvoiceDocumentFileNameGeneratorTests.cs" />
+    <Compile Include="Invoices\InvoiceSenderTests.cs" />
     <Compile Include="Invoices\InvoiceServiceTests.cs" />
     <Compile Include="Invoices\PsychologistInvoiceGeneratorTests.cs" />
+    <Compile Include="Invoices\ArbitrationInvoiceSendModelTests.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceSendModelTests.cs" />
     <Compile Include="Invoices\PsychometristInvoiceGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedule\PsychologistScheduleModelTests.cs" />

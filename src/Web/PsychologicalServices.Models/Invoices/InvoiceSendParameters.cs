@@ -2,7 +2,7 @@
 
 namespace PsychologicalServices.Models.Invoices
 {
-    public class PsychologistInvoiceSendParameters
+    public class InvoiceSendParameters
     {
         public int InvoiceDocumentId { get; set; }
     }

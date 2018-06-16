@@ -25,15 +25,5 @@ namespace PsychologicalServices.Api.Controllers
 
             return Ok(invoice);
         }
-        
-        [Route("send")]
-        [HttpPost]
-        [ResponseType(typeof(PsychologistInvoiceSendResult))]
-        public IHttpActionResult Send(PsychologistInvoiceSendParameters parameters)
-        {
-            var sendResult = _invoiceService.SendPsychologistInvoiceDocument(parameters);
-
-            return Ok(sendResult);
-        }
     }
 }
