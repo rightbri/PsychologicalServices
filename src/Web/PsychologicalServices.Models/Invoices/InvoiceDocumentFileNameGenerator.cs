@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Models.Appointments;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Users;
 using System.Linq;
 
@@ -22,8 +23,6 @@ namespace PsychologicalServices.Models.Invoices
         {
             if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychologist)
             {
-                //Last, First AssessmentType INVOICE ReferralSource Month Year
-
                 if (invoice.LineGroups.Any(lineGroup => null != lineGroup.Appointment))
                 {
                     var appointment = _appointmentRepository.GetAppointment(invoice.LineGroups.First(lineGroup => null != lineGroup.Appointment).Appointment.AppointmentId);
@@ -36,17 +35,23 @@ namespace PsychologicalServices.Models.Invoices
 
                     var referralSource = appointment.Assessment.ReferralSource;
 
-                    return $"{claimant?.LastName}, {claimant?.FirstName} {assessmentType.Name} INVOICE {referralSource.Name} {appointment.AppointmentTime.ToString("MMM")} {appointment.AppointmentTime.Year}";
+                    return $"{claimant?.LastName}, {claimant?.FirstName} {assessmentType.Name} INVOICE {referralSource.Name} {appointment.AppointmentTime:MMM yyyy}";
                 }
             }
             else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychometrist)
             {
                 var psychometrist = _userRepository.GetUserById(invoice.PayableTo.UserId);
 
-                return $"{invoice.InvoiceDate.ToString("MMM")} {invoice.InvoiceDate.Year} {psychometrist.FirstName} INVOICE";
+                return $"{invoice.InvoiceDate:MMM yyyy} {psychometrist.FirstName} INVOICE";
+            }
+            else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Arbitration)
+            {
+                var arbitration = invoice.LineGroups.First(lineGroup => null != lineGroup.Arbitration).Arbitration;
+
+                return $"{arbitration.Claimant.LastName} {arbitration.Claimant.FirstName} INVOICE {invoice.InvoiceDate:MMM dd yyyy}";
             }
 
-            return $"{invoice.Identifier} INVOICE {invoice.InvoiceDate.ToString("MMM dd YYYY")}";
+            return $"{invoice.Identifier} INVOICE {invoice.InvoiceDate:MMM dd yyyy}";
         }
     }
 }
