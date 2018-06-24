@@ -1,18 +1,12 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Appointments;
-using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Common;
-using PsychologicalServices.Models.Common.Utility;
-using PsychologicalServices.Models.Companies;
 using PsychologicalServices.Models.Referrals;
-using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Mail;
 
 namespace PsychologicalServices.Models.Invoices
 {
@@ -20,62 +14,41 @@ namespace PsychologicalServices.Models.Invoices
     {
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IAssessmentRepository _assessmentRepository = null;
-        private readonly IArbitrationRepository _arbitrationRepository = null;
         private readonly IClaimRepository _claimRepository = null;
-        private readonly ICompanyRepository _companyRepository = null;
         private readonly IReferralRepository _referralRepository = null;
-        private readonly IUserService _userService = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly IInvoiceValidator _invoiceValidator = null;
         private readonly IInvoiceConfigurationValidator _invoiceConfigurationValidator = null;
-        private readonly IPsychologistInvoiceGenerator _psychologistInvoiceGenerator = null;
-        private readonly IPsychometristInvoiceGenerator _psychometristInvoiceGenerator = null;
-        private readonly IArbitrationInvoiceGenerator _arbitrationInvoiceGenerator = null;
-        private readonly IDate _date = null;
         private readonly ILog _log = null;
-        private readonly ITimezoneService _timezoneService = null;
         private readonly IInvoiceSender _invoiceSender = null;
         private readonly IInvoiceSendModelFactory _invoiceSendModelFactory = null;
+        private readonly IInvoiceGenerator _invoiceGenerator = null;
 
         public InvoiceService(
             IAppointmentRepository appointmentRepository,
             IAssessmentRepository assessmentRepository,
-            IArbitrationRepository arbitrationRepository,
             IClaimRepository claimRepository,
-            ICompanyRepository companyRepository,
             IReferralRepository referralRepository,
-            IUserService userService,
             IInvoiceRepository invoiceRepository,
             IInvoiceValidator invoiceValidator,
             IInvoiceConfigurationValidator invoiceConfigurationValidator,
-            IPsychologistInvoiceGenerator psychologistInvoiceGenerator,
-            IPsychometristInvoiceGenerator psychometristInvoiceGenerator,
-            IArbitrationInvoiceGenerator arbitrationInvoiceGenerator,
-            IDate date,
             ILog log,
-            ITimezoneService timezoneService,
             IInvoiceSender invoiceSender,
-            IInvoiceSendModelFactory invoiceSendModelFactory
+            IInvoiceSendModelFactory invoiceSendModelFactory,
+            IInvoiceGenerator invoiceGenerator
         )
         {
             _appointmentRepository = appointmentRepository;
             _assessmentRepository = assessmentRepository;
-            _arbitrationRepository = arbitrationRepository;
             _claimRepository = claimRepository;
-            _companyRepository = companyRepository;
             _referralRepository = referralRepository;
-            _userService = userService;
             _invoiceRepository = invoiceRepository;
-            _psychologistInvoiceGenerator = psychologistInvoiceGenerator;
-            _psychometristInvoiceGenerator = psychometristInvoiceGenerator;
-            _arbitrationInvoiceGenerator = arbitrationInvoiceGenerator;
             _invoiceValidator = invoiceValidator;
             _invoiceConfigurationValidator = invoiceConfigurationValidator;
-            _date = date;
             _log = log;
-            _timezoneService = timezoneService;
             _invoiceSender = invoiceSender;
             _invoiceSendModelFactory = invoiceSendModelFactory;
+            _invoiceGenerator = invoiceGenerator;
         }
         
         public Invoice GetInvoice(int id)
@@ -87,44 +60,30 @@ namespace PsychologicalServices.Models.Invoices
 
         public Invoice CreatePsychologistInvoice(int appointmentId)
         {
-            var appointment = _appointmentRepository.GetAppointmentForPsychologistInvoice(appointmentId);
+            var invoice = _invoiceGenerator.CreatePsychologistInvoice(appointmentId);
 
-            var invoice = _psychologistInvoiceGenerator.CreateInvoice(appointment);
-
-            var invoiceId = _invoiceRepository.SaveInvoice(invoice);
-
-            return _invoiceRepository.GetInvoice(invoiceId);
+            return invoice;
         }
-        
+
         public Invoice CreatePsychometristInvoice(PsychometristInvoiceCreationParameters parameters)
         {
-            var user = _userService.GetUserById(parameters.PsychometristId);
+            var invoice = _invoiceGenerator.CreatePsychometristInvoice(parameters);
 
-            var company = _companyRepository.GetCompany(parameters.CompanyId);
-            
-            var invoiceDate = new DateTimeOffset(parameters.Year, parameters.Month, 1, 0, 0, 0, _timezoneService.GetTimeZoneInfo(company.Timezone).BaseUtcOffset).EndOfMonth(company.Timezone);
-
-            var invoice = _psychometristInvoiceGenerator.CreateInvoice(user, invoiceDate);
-
-            var invoiceId = _invoiceRepository.SaveInvoice(invoice);
-
-            return _invoiceRepository.GetInvoice(invoiceId);
+            return invoice;
         }
 
         public Invoice CreateArbitrationInvoice(ArbitrationInvoiceCreationParameters parameters)
         {
-            var arbitration = _arbitrationRepository.GetArbitration(parameters.ArbitrationId);
+            var invoice = _invoiceGenerator.CreateArbitrationInvoice(parameters);
 
-            if (null == arbitration)
-            {
-                throw new ArgumentOutOfRangeException("parameters.ArbitrationId", $"Cannot find arbitration with id {parameters.ArbitrationId}");
-            }
+            return invoice;
+        }
 
-            var invoice = _arbitrationInvoiceGenerator.CreateInvoice(arbitration);
+        public Invoice CreateRawTestDataInvoice(RawTestDataInvoiceCreationParameters parameters)
+        {
+            var invoice = _invoiceGenerator.CreateRawTestDataInvoice(parameters);
 
-            var invoiceId = _invoiceRepository.SaveInvoice(invoice);
-
-            return _invoiceRepository.GetInvoice(invoiceId);
+            return invoice;
         }
 
         public InvoiceDocument GetInvoiceDocument(int invoiceDocumentId)
@@ -145,24 +104,7 @@ namespace PsychologicalServices.Models.Invoices
 
         public IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice)
         {
-            IEnumerable<InvoiceLineGroup> invoiceLineGroups = null;
-
-            if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychologist)
-            {
-                invoiceLineGroups = _psychologistInvoiceGenerator.GetInvoiceLineGroups(invoice);
-            }
-            else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Psychometrist)
-            {
-                invoiceLineGroups = _psychometristInvoiceGenerator.GetInvoiceLineGroups(invoice);
-            }
-            else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Arbitration)
-            {
-                invoiceLineGroups = _arbitrationInvoiceGenerator.GetInvoiceLineGroups(invoice);
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("invoice", $"Invoice type {invoice.InvoiceType.InvoiceTypeId} is not supported");
-            }
+            var invoiceLineGroups = _invoiceGenerator.GetInvoiceLineGroups(invoice);
 
             return invoiceLineGroups;
         }
@@ -209,6 +151,13 @@ namespace PsychologicalServices.Models.Invoices
             return data;
         }
 
+        public IEnumerable<InvoiceableRawTestDataData> GetInvoiceableRawTestDataData(InvoiceableRawTestDataSearchCriteria criteria)
+        {
+            var data = _invoiceRepository.GetInvoiceableRawTestData(criteria);
+
+            return data;
+        }
+
         public SaveResult<Invoice> SaveInvoice(Invoice invoice)
         {
             var result = new SaveResult<Invoice>();
@@ -221,22 +170,7 @@ namespace PsychologicalServices.Models.Invoices
 
                 if (result.ValidationResult.IsValid)
                 {
-                    var total = 0;
-
-                    switch (invoice.InvoiceType.InvoiceTypeId)
-                    {
-                        case InvoiceType.Psychometrist:
-                            total = _psychometristInvoiceGenerator.GetInvoiceTotal(invoice);
-                            break;
-                        case InvoiceType.Psychologist:
-                            total = _psychologistInvoiceGenerator.GetInvoiceTotal(invoice);
-                            break;
-                        case InvoiceType.Arbitration:
-                            total = _arbitrationInvoiceGenerator.GetInvoiceTotal(invoice);
-                            break;
-                        default:
-                            break;
-                    }
+                    var total = _invoiceGenerator.GetInvoiceTotal(invoice);
 
                     invoice.Total = total;
 

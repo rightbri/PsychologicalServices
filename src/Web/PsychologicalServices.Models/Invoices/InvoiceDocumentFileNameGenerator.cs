@@ -50,6 +50,12 @@ namespace PsychologicalServices.Models.Invoices
 
                 return $"{arbitration.Claimant.LastName} {arbitration.Claimant.FirstName} INVOICE {invoice.InvoiceDate:MMM dd yyyy}";
             }
+            else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.RawTestData)
+            {
+                var rawTestData = invoice.LineGroups.First(lineGroup => null != lineGroup.RawTestData).RawTestData;
+
+                return $"{rawTestData.Claimant.LastName} {rawTestData.Claimant.FirstName} INVOICE {invoice.InvoiceDate:MMM dd yyyy}";
+            }
 
             return $"{invoice.Identifier} INVOICE {invoice.InvoiceDate:MMM dd yyyy}";
         }

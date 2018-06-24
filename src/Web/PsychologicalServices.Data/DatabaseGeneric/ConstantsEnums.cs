@@ -814,6 +814,16 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceLineGroupRawTestData.</summary>
+	public enum InvoiceLineGroupRawTestDataFieldIndex
+	{
+		///<summary>InvoiceLineGroupId. </summary>
+		InvoiceLineGroupId,
+		///<summary>RawTestDataId. </summary>
+		RawTestDataId,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceStatus.</summary>
 	public enum InvoiceStatusFieldIndex
 	{
@@ -927,6 +937,44 @@ namespace PsychologicalServices.Data
 		AppointmentSequenceId,
 		///<summary>InvoiceAmount. </summary>
 		InvoiceAmount,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: RawTestData.</summary>
+	public enum RawTestDataFieldIndex
+	{
+		///<summary>RawTestDataId. </summary>
+		RawTestDataId,
+		///<summary>ClaimantId. </summary>
+		ClaimantId,
+		///<summary>BillToReferralSourceId. </summary>
+		BillToReferralSourceId,
+		///<summary>RequestReceivedDate. </summary>
+		RequestReceivedDate,
+		///<summary>SignedAuthorizationReceivedDate. </summary>
+		SignedAuthorizationReceivedDate,
+		///<summary>DataSentDate. </summary>
+		DataSentDate,
+		///<summary>RawTestDataStatusId. </summary>
+		RawTestDataStatusId,
+		///<summary>NoteId. </summary>
+		NoteId,
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>PsychologistId. </summary>
+		PsychologistId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: RawTestDataStatus.</summary>
+	public enum RawTestDataStatusFieldIndex
+	{
+		///<summary>RawTestDataStatusId. </summary>
+		RawTestDataStatusId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>IsActive. </summary>
+		IsActive,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1234,6 +1282,8 @@ namespace PsychologicalServices.Data
 		InvoiceLineGroupAppointmentEntity,
 		///<summary>InvoiceLineGroupArbitration</summary>
 		InvoiceLineGroupArbitrationEntity,
+		///<summary>InvoiceLineGroupRawTestData</summary>
+		InvoiceLineGroupRawTestDataEntity,
 		///<summary>InvoiceStatus</summary>
 		InvoiceStatusEntity,
 		///<summary>InvoiceStatusChange</summary>
@@ -1250,6 +1300,10 @@ namespace PsychologicalServices.Data
 		NoteEntity,
 		///<summary>PsychometristInvoiceAmount</summary>
 		PsychometristInvoiceAmountEntity,
+		///<summary>RawTestData</summary>
+		RawTestDataEntity,
+		///<summary>RawTestDataStatus</summary>
+		RawTestDataStatusEntity,
 		///<summary>ReferralSource</summary>
 		ReferralSourceEntity,
 		///<summary>ReferralSourceInvoiceConfiguration</summary>

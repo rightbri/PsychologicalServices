@@ -54,11 +54,14 @@ namespace PsychologicalServices.Models.Invoices
                     );
                 }
 
-                var logId = _invoiceRepository.LogInvoiceDocumentSent(model.InvoiceDocument.InvoiceDocumentId, model.RecipientEmail);
-
                 success = mailResult.MailSent && !mailResult.IsError;
 
-                sendLogs = _invoiceRepository.GetInvoiceDocumentSendLogs(model.InvoiceDocument.InvoiceDocumentId);
+                if (success)
+                {
+                    var logId = _invoiceRepository.LogInvoiceDocumentSent(model.InvoiceDocument.InvoiceDocumentId, model.RecipientEmail);
+
+                    sendLogs = _invoiceRepository.GetInvoiceDocumentSendLogs(model.InvoiceDocument.InvoiceDocumentId);
+                }
             }
             else
             {

@@ -102,7 +102,20 @@
     <Compile Include="Events\IEventService.cs" />
     <Compile Include="Events\IEventValidator.cs" />
     <Compile Include="Invoices\AppointmentStatusInvoiceRate.cs" />
+    <Compile Include="Invoices\IInvoiceGenerator.cs" />
+    <Compile Include="Invoices\InvoiceableRawTestDataSearchCriteria.cs" />
+    <Compile Include="Invoices\InvoiceableRawTestDataData.cs" />
+    <Compile Include="Invoices\InvoiceGenerator.cs" />
+    <Compile Include="Invoices\RawTestDataInvoiceTemplate.cs">
+      <DependentUpon>RawTestDataInvoiceTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Invoices\IRawTestDataInvoiceGenerator.cs" />
+    <Compile Include="Invoices\RawTestDataInvoiceGenerator.cs" />
+    <Compile Include="Invoices\RawTestDataInvoiceCreationParameters.cs" />
     <Compile Include="Invoices\ArbitrationInvoiceCreationParameters.cs" />
+    <Compile Include="Invoices\RawTestDataInvoiceSendModel.cs" />
     <Compile Include="Invoices\AssessmentTypeInvoiceAmount.cs" />
     <Compile Include="Invoices\Enumerations.cs" />
     <Compile Include="Invoices\IInvoiceConfigurationValidator.cs" />
@@ -295,6 +308,14 @@
     <Compile Include="Notes\Note.cs" />
     <Compile Include="Notes\NoteValidator.cs" />
     <Compile Include="Outstanding\OutstandingService.cs" />
+    <Compile Include="RawTestData\IRawTestDataRepository.cs" />
+    <Compile Include="RawTestData\IRawTestDataService.cs" />
+    <Compile Include="RawTestData\IRawTestDataValidator.cs" />
+    <Compile Include="RawTestData\RawTestData.cs" />
+    <Compile Include="RawTestData\RawTestDataSearchCriteria.cs" />
+    <Compile Include="RawTestData\RawTestDataService.cs" />
+    <Compile Include="RawTestData\RawTestDataStatus.cs" />
+    <Compile Include="RawTestData\RawTestDataValidator.cs" />
     <Compile Include="Referrals\IReferralRepository.cs" />
     <Compile Include="Referrals\IReferralService.cs" />
     <Compile Include="Referrals\IReferralSourceTypeValidator.cs" />
@@ -377,6 +398,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Invoices\RawTestDataInvoiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>RawTestDataInvoiceTemplate.cs</LastGenOutput>
+    </Content>
     <Content Include="Invoices\PsychologistInvoiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>PsychologistInvoiceTemplate.cs</LastGenOutput>

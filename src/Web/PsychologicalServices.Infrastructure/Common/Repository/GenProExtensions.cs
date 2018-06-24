@@ -17,6 +17,7 @@ using PsychologicalServices.Models.Employers;
 using PsychologicalServices.Models.Events;
 using PsychologicalServices.Models.Invoices;
 using PsychologicalServices.Models.Notes;
+using PsychologicalServices.Models.RawTestData;
 using PsychologicalServices.Models.Referrals;
 using PsychologicalServices.Models.Reports;
 using PsychologicalServices.Models.Rights;
@@ -30,6 +31,37 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Models.RawTestData.RawTestData ToRawTestData(this RawTestDataEntity rawTestData)
+        {
+            return null != rawTestData
+                ? new Models.RawTestData.RawTestData
+                {
+                    RawTestDataId = rawTestData.RawTestDataId,
+                    Claimant = rawTestData.Claimant.ToClaimant(),
+                    BillToReferralSource = rawTestData.BillToReferralSource.ToReferralSource(),
+                    Status = rawTestData.RawTestDataStatus.ToRawTestDataStatus(),
+                    RequestReceivedDate = rawTestData.RequestReceivedDate,
+                    SignedAuthorizationReceivedDate = rawTestData.SignedAuthorizationReceivedDate,
+                    DataSentDate = rawTestData.DataSentDate,
+                    Company = rawTestData.Company.ToCompany(),
+                    Psychologist = rawTestData.Psychologist.ToUser(),
+                    Note = rawTestData.Note.ToNote()
+                }
+                : null;
+        }
+
+        public static RawTestDataStatus ToRawTestDataStatus(this RawTestDataStatusEntity rawTestDataStatus)
+        {
+            return null != rawTestDataStatus
+                ? new RawTestDataStatus
+                {
+                    RawTestDataStatusId = rawTestDataStatus.RawTestDataStatusId,
+                    Name = rawTestDataStatus.Name,
+                    IsActive = rawTestDataStatus.IsActive,
+                }
+                : null;
+        }
+
         public static Document ToDocument(this DocumentEntity document)
         {
             return null != document
@@ -437,6 +469,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                         : null,
                     Arbitration = null != invoiceLineGroup.InvoiceLineGroupArbitration
                         ? invoiceLineGroup.InvoiceLineGroupArbitration.Arbitration.ToArbitration()
+                        : null,
+                    RawTestData = null != invoiceLineGroup.InvoiceLineGroupRawTestData
+                        ? invoiceLineGroup.InvoiceLineGroupRawTestData.RawTestData.ToRawTestData()
                         : null,
                 }
                 : null;
@@ -874,7 +909,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Summary = assessment.Summary.ToNote(),
                     //Appointments
-                    //Arbitrations
                     //CreateUser
                     //UpdateUser
                     //PsychologistFoundInFavorOfClaimant

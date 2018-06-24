@@ -1,0 +1,71 @@
+<template>
+    <require from="claimants/search-claimant"></require>
+	<require from="resources/value-converters/date-format"></require>
+    
+    <div class="uk-container">
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Search Raw Test Data</legend>
+
+            <div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
+
+                <div>
+                    <label class="uk-form-label">Claimant</label>
+                    <div class="uk-form-controls">
+                        <search-claimant claimant.bind="searchClaimant"></search-claimant>
+                    </div>
+                </div>
+                
+                <div>
+                    <p if.bind="searchClaimant">
+                        ${searchClaimant.firstName} ${searchClaimant.lastName}
+                    </p>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <button class="uk-button uk-button-default" click.delegate="search()">Search</button>
+
+                    <a route-href="route: addRawTestData" class="uk-button uk-button-secondary">
+                        <i class="fa fa-plus"></i>&nbsp;Add
+                    </a>
+                </div>
+
+            </div>
+
+        </fieldset>
+        
+    </div>
+
+<div class="uk-overflow-auto" if.bind="rawTestDatas">
+    <table class="uk-table uk-table-divider">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Referral Source</th>
+                <th>Claimant</th>
+                <th>Request Received Date</th>
+                <th>Signed Authorization Received Date</th>
+                <th>Date Send Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="rawTestData of rawTestDatas">
+                <td>
+                    <a route-href="route: editRawTestData; params.bind: { id: rawTestData.rawTestDataId }" class="uk-button uk-button-primary">
+                        Edit
+                    </a>
+                </td>
+                <td>${rawTestData.billToReferralSource.name}</td>
+                <td>${rawTestData.claimant.firstName} ${rawTestData.claimant.lastName}</td>
+                <td>${rawTestData.requestReceivedDate | dateFormat:config.shortDateFormat}</td>
+                <td>${rawTestData.signedAuthorizationReceivedDate | dateFormat:config.shortDateFormat}</td>
+                <td>${rawTestData.dataSentDate | dateFormat:config.shortDateFormat}</td>
+                <td>${rawTestData.status.name}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</template>

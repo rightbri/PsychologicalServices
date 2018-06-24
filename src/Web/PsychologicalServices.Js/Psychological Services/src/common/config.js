@@ -57,7 +57,8 @@ export class Config {
 		this.invoiceTypes = {
 			'psychologist': 1,
 			'psychometrist': 2,
-			'arbitration': 3
+			'arbitration': 3,
+			'rawTestData': 4
 		}
 		
 		this.addressDefaults = {
@@ -84,6 +85,12 @@ export class Config {
 				'psychiatrist': 6,
 				'reader': 1,
 				'translator': 1
+			}
+		};
+
+		this.rawTestDataDefaults = {
+			'referralSourceTypeIds': {
+				'psychologist': 5
 			}
 		};
 

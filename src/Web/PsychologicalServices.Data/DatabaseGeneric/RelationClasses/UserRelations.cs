@@ -43,6 +43,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.InvoiceEntityUsingPayableToId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
+			toReturn.Add(this.RawTestDataEntityUsingPsychologistId);
 			toReturn.Add(this.UserNoteEntityUsingUserId);
 			toReturn.Add(this.UserRoleEntityUsingUserId);
 			toReturn.Add(this.UserTravelFeeEntityUsingUserId);
@@ -265,6 +266,21 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and RawTestDataEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - RawTestData.PsychologistId
+		/// </summary>
+		public virtual IEntityRelation RawTestDataEntityUsingPsychologistId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "RawTestDatas" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, RawTestDataFields.PsychologistId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("RawTestDataEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between UserEntity and UserNoteEntity over the 1:n relation they have, using the relation between the fields:
 		/// User.UserId - UserNote.UserId
 		/// </summary>
@@ -396,6 +412,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation InvoiceEntityUsingPayableToIdStatic = new UserRelations().InvoiceEntityUsingPayableToId;
 		internal static readonly IEntityRelation NoteEntityUsingCreateUserIdStatic = new UserRelations().NoteEntityUsingCreateUserId;
 		internal static readonly IEntityRelation NoteEntityUsingUpdateUserIdStatic = new UserRelations().NoteEntityUsingUpdateUserId;
+		internal static readonly IEntityRelation RawTestDataEntityUsingPsychologistIdStatic = new UserRelations().RawTestDataEntityUsingPsychologistId;
 		internal static readonly IEntityRelation UserNoteEntityUsingUserIdStatic = new UserRelations().UserNoteEntityUsingUserId;
 		internal static readonly IEntityRelation UserRoleEntityUsingUserIdStatic = new UserRelations().UserRoleEntityUsingUserId;
 		internal static readonly IEntityRelation UserTravelFeeEntityUsingUserIdStatic = new UserRelations().UserTravelFeeEntityUsingUserId;

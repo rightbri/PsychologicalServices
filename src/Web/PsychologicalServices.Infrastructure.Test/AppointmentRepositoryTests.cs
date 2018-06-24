@@ -12,7 +12,7 @@ namespace PsychologicalServices.Infrastructure.Test
         public void TestMethod1()
         {
             var configurationServiceMock = new Mock<Models.Common.Configuration.IConfigurationService>();
-            var connectionString = @"Data Source=(local)\SQLEXPRESS2008;Initial Catalog=PsychologicalServices;Integrated Security=True";
+            var connectionString = @"Data Source=(local)\SQLEXPRESS2017;Initial Catalog=PsychologicalServices;Integrated Security=True";
             configurationServiceMock.Setup(cs => cs.ConnectionStringValue(It.IsAny<string>())).Returns(() => connectionString);
             
             var adapterFactory = new Common.Repository.SqlServerAdapterFactory(

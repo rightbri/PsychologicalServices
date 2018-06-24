@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		#region Class Member Declarations
 		private EntityCollection<ArbitrationEntity> _arbitrations;
 		private EntityCollection<ClaimEntity> _claims;
+		private EntityCollection<RawTestDataEntity> _rawTestDatas;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -47,6 +48,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Arbitrations = "Arbitrations";
 			/// <summary>Member name Claims</summary>
 			public static readonly string Claims = "Claims";
+			/// <summary>Member name RawTestDatas</summary>
+			public static readonly string RawTestDatas = "RawTestDatas";
 		}
 		#endregion
 		
@@ -106,6 +109,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				_arbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_arbitrations", typeof(EntityCollection<ArbitrationEntity>));
 				_claims = (EntityCollection<ClaimEntity>)info.GetValue("_claims", typeof(EntityCollection<ClaimEntity>));
+				_rawTestDatas = (EntityCollection<RawTestDataEntity>)info.GetValue("_rawTestDatas", typeof(EntityCollection<RawTestDataEntity>));
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
@@ -126,6 +130,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Claims":
 					this.Claims.Add((ClaimEntity)entity);
+					break;
+				case "RawTestDatas":
+					this.RawTestDatas.Add((RawTestDataEntity)entity);
 					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
@@ -154,6 +161,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Claims":
 					toReturn.Add(Relations.ClaimEntityUsingClaimantId);
+					break;
+				case "RawTestDatas":
+					toReturn.Add(Relations.RawTestDataEntityUsingClaimantId);
 					break;
 				default:
 					break;				
@@ -189,6 +199,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "Claims":
 					this.Claims.Add((ClaimEntity)relatedEntity);
 					break;
+				case "RawTestDatas":
+					this.RawTestDatas.Add((RawTestDataEntity)relatedEntity);
+					break;
 				default:
 					break;
 			}
@@ -207,6 +220,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "Claims":
 					this.PerformRelatedEntityRemoval(this.Claims, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "RawTestDatas":
+					this.PerformRelatedEntityRemoval(this.RawTestDatas, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				default:
 					break;
@@ -237,6 +253,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.Arbitrations);
 			toReturn.Add(this.Claims);
+			toReturn.Add(this.RawTestDatas);
 			return toReturn;
 		}
 
@@ -250,6 +267,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				info.AddValue("_arbitrations", ((_arbitrations!=null) && (_arbitrations.Count>0) && !this.MarkedForDeletion)?_arbitrations:null);
 				info.AddValue("_claims", ((_claims!=null) && (_claims.Count>0) && !this.MarkedForDeletion)?_claims:null);
+				info.AddValue("_rawTestDatas", ((_rawTestDatas!=null) && (_rawTestDatas.Count>0) && !this.MarkedForDeletion)?_rawTestDatas:null);
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -282,6 +300,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ClaimFields.ClaimantId, null, ComparisonOperator.Equal, this.ClaimantId));
 			return bucket;
 		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'RawTestData' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoRawTestDatas()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(RawTestDataFields.ClaimantId, null, ComparisonOperator.Equal, this.ClaimantId));
+			return bucket;
+		}
 		
 
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
@@ -297,6 +324,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._arbitrations);
 			collectionsQueue.Enqueue(this._claims);
+			collectionsQueue.Enqueue(this._rawTestDatas);
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -306,6 +334,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._arbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 			this._claims = (EntityCollection<ClaimEntity>) collectionsQueue.Dequeue();
+			this._rawTestDatas = (EntityCollection<RawTestDataEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -316,6 +345,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			bool toReturn = false;
 			toReturn |=(this._arbitrations != null);
 			toReturn |=(this._claims != null);
+			toReturn |=(this._rawTestDatas != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -327,6 +357,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ClaimEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<RawTestDataEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RawTestDataEntityFactory))) : null);
 		}
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -336,6 +367,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Arbitrations", _arbitrations);
 			toReturn.Add("Claims", _claims);
+			toReturn.Add("RawTestDatas", _rawTestDatas);
 			return toReturn;
 		}
 
@@ -415,6 +447,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathClaims
 		{
 			get	{ return new PrefetchPathElement2( new EntityCollection<ClaimEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ClaimEntityFactory))), (IEntityRelation)GetRelationsForField("Claims")[0], (int)PsychologicalServices.Data.EntityType.ClaimantEntity, (int)PsychologicalServices.Data.EntityType.ClaimEntity, 0, null, null, null, null, "Claims", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'RawTestData' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathRawTestDatas
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<RawTestDataEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RawTestDataEntityFactory))), (IEntityRelation)GetRelationsForField("RawTestDatas")[0], (int)PsychologicalServices.Data.EntityType.ClaimantEntity, (int)PsychologicalServices.Data.EntityType.RawTestDataEntity, 0, null, null, null, null, "RawTestDatas", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 
@@ -513,6 +552,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<ClaimEntity> Claims
 		{
 			get { return GetOrCreateEntityCollection<ClaimEntity, ClaimEntityFactory>("Claimant", true, false, ref _claims);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'RawTestDataEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(RawTestDataEntity))]
+		public virtual EntityCollection<RawTestDataEntity> RawTestDatas
+		{
+			get { return GetOrCreateEntityCollection<RawTestDataEntity, RawTestDataEntityFactory>("Claimant", true, false, ref _rawTestDatas);	}
 		}
 	
 		/// <summary> Gets the type of the hierarchy this entity is in. </summary>

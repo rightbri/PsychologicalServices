@@ -26,6 +26,9 @@ namespace PsychologicalServices.Models.Invoices
                 case InvoiceType.Arbitration:
                     model = new ArbitrationInvoiceSendModel(invoiceDocument, invoice);
                     break;
+                case InvoiceType.RawTestData:
+                    model = new RawTestDataInvoiceSendModel(invoiceDocument, invoice);
+                    break;
                 default:
                     break;
             }

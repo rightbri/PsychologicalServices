@@ -97,6 +97,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitInvoiceLineGroupEntityInfos();
 			InitInvoiceLineGroupAppointmentEntityInfos();
 			InitInvoiceLineGroupArbitrationEntityInfos();
+			InitInvoiceLineGroupRawTestDataEntityInfos();
 			InitInvoiceStatusEntityInfos();
 			InitInvoiceStatusChangeEntityInfos();
 			InitInvoiceStatusPathsEntityInfos();
@@ -105,6 +106,8 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitIssueInDisputeInvoiceAmountEntityInfos();
 			InitNoteEntityInfos();
 			InitPsychometristInvoiceAmountEntityInfos();
+			InitRawTestDataEntityInfos();
+			InitRawTestDataStatusEntityInfos();
 			InitReferralSourceEntityInfos();
 			InitReferralSourceInvoiceConfigurationEntityInfos();
 			InitReferralSourceTypeEntityInfos();
@@ -622,6 +625,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("InvoiceLineGroupArbitrationEntity", "InvoiceLineGroupId", typeof(System.Int32), true, true, false, false,  (int)InvoiceLineGroupArbitrationFieldIndex.InvoiceLineGroupId, 0, 0, 10);
 			this.AddElementFieldInfo("InvoiceLineGroupArbitrationEntity", "ArbitrationId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineGroupArbitrationFieldIndex.ArbitrationId, 0, 0, 10);
 		}
+		/// <summary>Inits InvoiceLineGroupRawTestDataEntity's FieldInfo objects</summary>
+		private void InitInvoiceLineGroupRawTestDataEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(InvoiceLineGroupRawTestDataFieldIndex), "InvoiceLineGroupRawTestDataEntity");
+			this.AddElementFieldInfo("InvoiceLineGroupRawTestDataEntity", "InvoiceLineGroupId", typeof(System.Int32), true, true, false, false,  (int)InvoiceLineGroupRawTestDataFieldIndex.InvoiceLineGroupId, 0, 0, 10);
+			this.AddElementFieldInfo("InvoiceLineGroupRawTestDataEntity", "RawTestDataId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineGroupRawTestDataFieldIndex.RawTestDataId, 0, 0, 10);
+		}
 		/// <summary>Inits InvoiceStatusEntity's FieldInfo objects</summary>
 		private void InitInvoiceStatusEntityInfos()
 		{
@@ -695,6 +705,29 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("PsychometristInvoiceAmountEntity", "CompanyId", typeof(System.Int32), true, true, false, false,  (int)PsychometristInvoiceAmountFieldIndex.CompanyId, 0, 0, 10);
 			this.AddElementFieldInfo("PsychometristInvoiceAmountEntity", "AppointmentSequenceId", typeof(System.Int32), true, true, false, false,  (int)PsychometristInvoiceAmountFieldIndex.AppointmentSequenceId, 0, 0, 10);
 			this.AddElementFieldInfo("PsychometristInvoiceAmountEntity", "InvoiceAmount", typeof(System.Int32), false, false, false, false,  (int)PsychometristInvoiceAmountFieldIndex.InvoiceAmount, 0, 0, 10);
+		}
+		/// <summary>Inits RawTestDataEntity's FieldInfo objects</summary>
+		private void InitRawTestDataEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(RawTestDataFieldIndex), "RawTestDataEntity");
+			this.AddElementFieldInfo("RawTestDataEntity", "RawTestDataId", typeof(System.Int32), true, false, true, false,  (int)RawTestDataFieldIndex.RawTestDataId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataEntity", "ClaimantId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)RawTestDataFieldIndex.ClaimantId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataEntity", "BillToReferralSourceId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)RawTestDataFieldIndex.BillToReferralSourceId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataEntity", "RequestReceivedDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)RawTestDataFieldIndex.RequestReceivedDate, 0, 0, 0);
+			this.AddElementFieldInfo("RawTestDataEntity", "SignedAuthorizationReceivedDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)RawTestDataFieldIndex.SignedAuthorizationReceivedDate, 0, 0, 0);
+			this.AddElementFieldInfo("RawTestDataEntity", "DataSentDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)RawTestDataFieldIndex.DataSentDate, 0, 0, 0);
+			this.AddElementFieldInfo("RawTestDataEntity", "RawTestDataStatusId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)RawTestDataFieldIndex.RawTestDataStatusId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataEntity", "NoteId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)RawTestDataFieldIndex.NoteId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)RawTestDataFieldIndex.CompanyId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataEntity", "PsychologistId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)RawTestDataFieldIndex.PsychologistId, 0, 0, 10);
+		}
+		/// <summary>Inits RawTestDataStatusEntity's FieldInfo objects</summary>
+		private void InitRawTestDataStatusEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(RawTestDataStatusFieldIndex), "RawTestDataStatusEntity");
+			this.AddElementFieldInfo("RawTestDataStatusEntity", "RawTestDataStatusId", typeof(System.Int32), true, false, true, false,  (int)RawTestDataStatusFieldIndex.RawTestDataStatusId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataStatusEntity", "Name", typeof(System.String), false, false, false, false,  (int)RawTestDataStatusFieldIndex.Name, 50, 0, 0);
+			this.AddElementFieldInfo("RawTestDataStatusEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)RawTestDataStatusFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits ReferralSourceEntity's FieldInfo objects</summary>
 		private void InitReferralSourceEntityInfos()

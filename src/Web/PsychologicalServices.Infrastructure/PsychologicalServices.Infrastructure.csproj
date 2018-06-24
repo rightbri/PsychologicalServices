@@ -105,6 +105,7 @@
     <Compile Include="Invoices\InvoiceRepository.cs" />
     <Compile Include="Outstanding\OutstandingRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawTestData\RawTestDataRepository.cs" />
     <Compile Include="Referrals\ReferralRepository.cs" />
     <Compile Include="Reports\ReportRepository.cs" />
     <Compile Include="Rights\RightRepository.cs" />

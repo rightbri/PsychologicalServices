@@ -831,7 +831,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new DocumentEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDocumentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1059,6 +1058,26 @@ namespace PsychologicalServices.Data.FactoryClasses
 		#endregion
 	}
 
+	/// <summary>Factory to create new, empty InvoiceLineGroupRawTestDataEntity objects.</summary>
+	[Serializable]
+	public partial class InvoiceLineGroupRawTestDataEntityFactory : EntityFactoryBase2<InvoiceLineGroupRawTestDataEntity> {
+		/// <summary>CTor</summary>
+		public InvoiceLineGroupRawTestDataEntityFactory() : base("InvoiceLineGroupRawTestDataEntity", PsychologicalServices.Data.EntityType.InvoiceLineGroupRawTestDataEntity, false) { }
+		
+		/// <summary>Creates a new InvoiceLineGroupRawTestDataEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new InvoiceLineGroupRawTestDataEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceLineGroupRawTestDataUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
 	/// <summary>Factory to create new, empty InvoiceStatusEntity objects.</summary>
 	[Serializable]
 	public partial class InvoiceStatusEntityFactory : EntityFactoryBase2<InvoiceStatusEntity> {
@@ -1211,6 +1230,46 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntity2 Create(IEntityFields2 fields) {
 			IEntity2 toReturn = new PsychometristInvoiceAmountEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewPsychometristInvoiceAmountUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty RawTestDataEntity objects.</summary>
+	[Serializable]
+	public partial class RawTestDataEntityFactory : EntityFactoryBase2<RawTestDataEntity> {
+		/// <summary>CTor</summary>
+		public RawTestDataEntityFactory() : base("RawTestDataEntity", PsychologicalServices.Data.EntityType.RawTestDataEntity, false) { }
+		
+		/// <summary>Creates a new RawTestDataEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new RawTestDataEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewRawTestDataUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty RawTestDataStatusEntity objects.</summary>
+	[Serializable]
+	public partial class RawTestDataStatusEntityFactory : EntityFactoryBase2<RawTestDataStatusEntity> {
+		/// <summary>CTor</summary>
+		public RawTestDataStatusEntityFactory() : base("RawTestDataStatusEntity", PsychologicalServices.Data.EntityType.RawTestDataStatusEntity, false) { }
+		
+		/// <summary>Creates a new RawTestDataStatusEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new RawTestDataStatusEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewRawTestDataStatusUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1675,6 +1734,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity:
 					factoryToUse = new InvoiceLineGroupArbitrationEntityFactory();
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupRawTestDataEntity:
+					factoryToUse = new InvoiceLineGroupRawTestDataEntityFactory();
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceStatusEntity:
 					factoryToUse = new InvoiceStatusEntityFactory();
 					break;
@@ -1698,6 +1760,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity:
 					factoryToUse = new PsychometristInvoiceAmountEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.RawTestDataEntity:
+					factoryToUse = new RawTestDataEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.RawTestDataStatusEntity:
+					factoryToUse = new RawTestDataStatusEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.ReferralSourceEntity:
 					factoryToUse = new ReferralSourceEntityFactory();

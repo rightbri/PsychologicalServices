@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private InvoiceEntity _invoice;
 		private InvoiceLineGroupAppointmentEntity _invoiceLineGroupAppointment;
 		private InvoiceLineGroupArbitrationEntity _invoiceLineGroupArbitration;
+		private InvoiceLineGroupRawTestDataEntity _invoiceLineGroupRawTestData;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -53,6 +54,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string InvoiceLineGroupAppointment = "InvoiceLineGroupAppointment";
 			/// <summary>Member name InvoiceLineGroupArbitration</summary>
 			public static readonly string InvoiceLineGroupArbitration = "InvoiceLineGroupArbitration";
+			/// <summary>Member name InvoiceLineGroupRawTestData</summary>
+			public static readonly string InvoiceLineGroupRawTestData = "InvoiceLineGroupRawTestData";
 		}
 		#endregion
 		
@@ -126,6 +129,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_invoiceLineGroupArbitration.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_invoiceLineGroupRawTestData = (InvoiceLineGroupRawTestDataEntity)info.GetValue("_invoiceLineGroupRawTestData", typeof(InvoiceLineGroupRawTestDataEntity));
+				if(_invoiceLineGroupRawTestData!=null)
+				{
+					_invoiceLineGroupRawTestData.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
@@ -168,6 +176,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupArbitration":
 					this.InvoiceLineGroupArbitration = (InvoiceLineGroupArbitrationEntity)entity;
 					break;
+				case "InvoiceLineGroupRawTestData":
+					this.InvoiceLineGroupRawTestData = (InvoiceLineGroupRawTestDataEntity)entity;
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -201,6 +212,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "InvoiceLineGroupArbitration":
 					toReturn.Add(Relations.InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupId);
+					break;
+				case "InvoiceLineGroupRawTestData":
+					toReturn.Add(Relations.InvoiceLineGroupRawTestDataEntityUsingInvoiceLineGroupId);
 					break;
 				default:
 					break;				
@@ -242,6 +256,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupArbitration":
 					SetupSyncInvoiceLineGroupArbitration(relatedEntity);
 					break;
+				case "InvoiceLineGroupRawTestData":
+					SetupSyncInvoiceLineGroupRawTestData(relatedEntity);
+					break;
 				default:
 					break;
 			}
@@ -267,6 +284,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupArbitration":
 					DesetupSyncInvoiceLineGroupArbitration(false, true);
 					break;
+				case "InvoiceLineGroupRawTestData":
+					DesetupSyncInvoiceLineGroupRawTestData(false, true);
+					break;
 				default:
 					break;
 			}
@@ -287,6 +307,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				toReturn.Add(_invoiceLineGroupArbitration);
 			}
 
+			if(_invoiceLineGroupRawTestData!=null)
+			{
+				toReturn.Add(_invoiceLineGroupRawTestData);
+			}
+
 			return toReturn;
 		}
 		
@@ -300,6 +325,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_invoice);
 			}
+
+
 
 
 
@@ -328,6 +355,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_invoice", (!this.MarkedForDeletion?_invoice:null));
 				info.AddValue("_invoiceLineGroupAppointment", (!this.MarkedForDeletion?_invoiceLineGroupAppointment:null));
 				info.AddValue("_invoiceLineGroupArbitration", (!this.MarkedForDeletion?_invoiceLineGroupArbitration:null));
+				info.AddValue("_invoiceLineGroupRawTestData", (!this.MarkedForDeletion?_invoiceLineGroupRawTestData:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -376,6 +404,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineGroupArbitrationFields.InvoiceLineGroupId, null, ComparisonOperator.Equal, this.InvoiceLineGroupId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'InvoiceLineGroupRawTestData' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceLineGroupRawTestData()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineGroupRawTestDataFields.InvoiceLineGroupId, null, ComparisonOperator.Equal, this.InvoiceLineGroupId));
 			return bucket;
 		}
 		
@@ -430,6 +467,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("InvoiceLines", _invoiceLines);
 			toReturn.Add("InvoiceLineGroupAppointment", _invoiceLineGroupAppointment);
 			toReturn.Add("InvoiceLineGroupArbitration", _invoiceLineGroupArbitration);
+			toReturn.Add("InvoiceLineGroupRawTestData", _invoiceLineGroupRawTestData);
 			return toReturn;
 		}
 
@@ -543,6 +581,33 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _invoiceLineGroupRawTestData</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncInvoiceLineGroupRawTestData(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, false, ref _invoiceLineGroupRawTestData, new PropertyChangedEventHandler(OnInvoiceLineGroupRawTestDataPropertyChanged), "InvoiceLineGroupRawTestData", "InvoiceLineGroup", PsychologicalServices.Data.RelationClasses.StaticInvoiceLineGroupRelations.InvoiceLineGroupRawTestDataEntityUsingInvoiceLineGroupIdStatic, false, new int[] { (int)InvoiceLineGroupFieldIndex.InvoiceLineGroupId });
+		}
+		
+		/// <summary> setups the sync logic for member _invoiceLineGroupRawTestData</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncInvoiceLineGroupRawTestData(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _invoiceLineGroupRawTestData, new PropertyChangedEventHandler( OnInvoiceLineGroupRawTestDataPropertyChanged ), "InvoiceLineGroupRawTestData", "InvoiceLineGroup", PsychologicalServices.Data.RelationClasses.StaticInvoiceLineGroupRelations.InvoiceLineGroupRawTestDataEntityUsingInvoiceLineGroupIdStatic, false, new string[] {  }, new int[] { (int)InvoiceLineGroupFieldIndex.InvoiceLineGroupId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnInvoiceLineGroupRawTestDataPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
 		/// <param name="validator">The validator object for this InvoiceLineGroupEntity</param>
 		/// <param name="fields">Fields of this entity</param>
@@ -600,6 +665,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathInvoiceLineGroupArbitration
 		{
 			get { return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineGroupArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("InvoiceLineGroupArbitration")[0], (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupEntity, (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity, 0, null, null, null, null, "InvoiceLineGroupArbitration", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceLineGroupRawTestData' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceLineGroupRawTestData
+		{
+			get { return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineGroupRawTestDataEntityFactory))), (IEntityRelation)GetRelationsForField("InvoiceLineGroupRawTestData")[0], (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupEntity, (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupRawTestDataEntity, 0, null, null, null, null, "InvoiceLineGroupRawTestData", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 
@@ -757,6 +829,42 @@ namespace PsychologicalServices.Data.EntityClasses
 						{
 							((IEntity2)value).SetRelatedEntity(this, "InvoiceLineGroup");
 							SetupSyncInvoiceLineGroupArbitration(value);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'InvoiceLineGroupRawTestDataEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned.<br/><br/>
+		/// </summary>
+		[Browsable(true)]
+		public virtual InvoiceLineGroupRawTestDataEntity InvoiceLineGroupRawTestData
+		{
+			get { return _invoiceLineGroupRawTestData; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncInvoiceLineGroupRawTestData(value);
+					CallSetRelatedEntityDuringDeserialization(value, "InvoiceLineGroup");
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_invoiceLineGroupRawTestData !=null);
+						DesetupSyncInvoiceLineGroupRawTestData(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("InvoiceLineGroupRawTestData");
+						}
+					}
+					else
+					{
+						if(_invoiceLineGroupRawTestData!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "InvoiceLineGroup");
+							SetupSyncInvoiceLineGroupRawTestData(value);
 						}
 					}
 				}

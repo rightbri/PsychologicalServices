@@ -1,5 +1,4 @@
 ﻿using PsychologicalServices.Models.Arbitrations;
-using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
 

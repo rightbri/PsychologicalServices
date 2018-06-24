@@ -149,6 +149,16 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                 )
                                         )
                                 )
+                            .Prefetch<InvoiceLineGroupRawTestDataEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupRawTestData)
+                                .SubPath(invoiceLineGroupRawTestDataPath => invoiceLineGroupRawTestDataPath
+                                    .Prefetch<RawTestDataEntity>(invoiceLineGroupRawTestData => invoiceLineGroupRawTestData.RawTestData)
+                                        .SubPath(rawTestDataPath => rawTestDataPath
+                                            .Prefetch<UserEntity>(rawTestData => rawTestData.Psychologist)
+                                            .Prefetch<ClaimantEntity>(rawTestData => rawTestData.Claimant)
+                                            .Prefetch<ReferralSourceEntity>(rawTestData => rawTestData.BillToReferralSource)
+                                            .Prefetch<CompanyEntity>(rawTestData => rawTestData.Company)
+                                        )
+                                )
                         )
                 );
 
@@ -300,6 +310,23 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                             .Prefetch<CityEntity>(address => address.City)
                                                         )
                                                 )
+                                        )
+                                )
+                            .Prefetch<InvoiceLineGroupRawTestDataEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupRawTestData)
+                                .SubPath(invoiceLineGroupRawTestDataPath => invoiceLineGroupRawTestDataPath
+                                    .Prefetch<RawTestDataEntity>(invoiceLineGroupRawTestData => invoiceLineGroupRawTestData.RawTestData)
+                                        .SubPath(rawTestDataPath => rawTestDataPath
+                                            .Prefetch<UserEntity>(rawTestData => rawTestData.Psychologist)
+                                            .Prefetch<ClaimantEntity>(rawTestData => rawTestData.Claimant)
+                                            .Prefetch<ReferralSourceEntity>(rawTestData => rawTestData.BillToReferralSource)
+                                                .SubPath(referralSourcePath => referralSourcePath
+                                                    .Prefetch<AddressEntity>(referralSource => referralSource.Address)
+                                                        .SubPath(addressPath => addressPath
+                                                            .Prefetch<CityEntity>(address => address.City)
+                                                        )
+                                                )
+                                            .Prefetch<CompanyEntity>(rawTestData => rawTestData.Company)
+                                            .Prefetch<RawTestDataStatusEntity>(rawTestData => rawTestData.RawTestDataStatus)
                                         )
                                 )
                         )
@@ -555,7 +582,10 @@ namespace PsychologicalServices.Infrastructure.Invoices
 
                     invoiceLineGroupPath
                         .SubPath.Add(InvoiceLineGroupEntity.PrefetchPathInvoiceLineGroupArbitration);
-                        
+
+                    invoiceLineGroupPath
+                        .SubPath.Add(InvoiceLineGroupEntity.PrefetchPathInvoiceLineGroupRawTestData);
+
                     adapter.FetchEntity(invoiceEntity, prefetch);
                 }
                 else
@@ -611,6 +641,11 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             uow.AddForDelete(lineGroup.InvoiceLineGroupArbitration);
                         }
                         
+                        if (null != lineGroup.InvoiceLineGroupRawTestData)
+                        {
+                            uow.AddForDelete(lineGroup.InvoiceLineGroupRawTestData);
+                        }
+
                         uow.AddForDelete(lineGroup);
                     }
 
@@ -628,6 +663,10 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     (null != lg.Arbitration && null != lineGroup.InvoiceLineGroupArbitration && lg.Arbitration.ArbitrationId != lineGroup.InvoiceLineGroupArbitration.ArbitrationId) ||
                                     (null != lg.Arbitration && null == lineGroup.InvoiceLineGroupArbitration) ||
                                     (null == lg.Arbitration && null != lineGroup.InvoiceLineGroupArbitration) ||
+                                    //raw test data
+                                    (null != lg.RawTestData && null != lineGroup.InvoiceLineGroupRawTestData && lg.RawTestData.RawTestDataId != lineGroup.InvoiceLineGroupRawTestData.RawTestDataId) ||
+                                    (null != lg.RawTestData && null == lineGroup.InvoiceLineGroupRawTestData) ||
+                                    (null == lg.RawTestData && null != lineGroup.InvoiceLineGroupRawTestData) ||
                                     //new lines
                                     lg.Lines.Any(line => !lineGroup.InvoiceLines.Any(invoiceLine => invoiceLine.InvoiceLineId == line.InvoiceLineId)) ||
                                     lineGroup.InvoiceLines.Any(invoiceLine =>
@@ -691,6 +730,25 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             if (null == lg.Arbitration && null != lineGroupEntity.InvoiceLineGroupArbitration)
                             {
                                 uow.AddForDelete(lineGroupEntity.InvoiceLineGroupArbitration);
+                            }
+
+                            //raw test data
+                            if (null != lg.RawTestData && null != lineGroupEntity.InvoiceLineGroupRawTestData && lg.RawTestData.RawTestDataId != lineGroupEntity.InvoiceLineGroupRawTestData.RawTestDataId)
+                            {
+                                lineGroupEntity.InvoiceLineGroupRawTestData.RawTestDataId = lg.RawTestData.RawTestDataId;
+                            }
+
+                            if (null != lg.RawTestData && null == lineGroupEntity.InvoiceLineGroupRawTestData)
+                            {
+                                lineGroupEntity.InvoiceLineGroupRawTestData = new InvoiceLineGroupRawTestDataEntity
+                                {
+                                    RawTestDataId = lg.RawTestData.RawTestDataId,
+                                };
+                            }
+
+                            if (null == lg.RawTestData && null != lineGroupEntity.InvoiceLineGroupRawTestData)
+                            {
+                                uow.AddForDelete(lineGroupEntity.InvoiceLineGroupRawTestData);
                             }
 
                             #region invoice lines
@@ -764,6 +822,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             : null,
                         InvoiceLineGroupArbitration = null != lg.Arbitration
                             ? new InvoiceLineGroupArbitrationEntity { ArbitrationId = lg.Arbitration.ArbitrationId }
+                            : null,
+                        InvoiceLineGroupRawTestData = null != lg.RawTestData
+                            ? new InvoiceLineGroupRawTestDataEntity { RawTestDataId = lg.RawTestData.RawTestDataId }
                             : null,
                     };
                     
@@ -1302,6 +1363,28 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             PayableToId = Convert.ToInt32(row["PayableToId"]),
                             StartDate = row["StartDate"] as DateTimeOffset?,
                             AvailableDate = row["AvailableDate"] as DateTimeOffset?,
+                        })
+                    .ToList();
+            }
+        }
+
+        public IEnumerable<InvoiceableRawTestDataData> GetInvoiceableRawTestData(InvoiceableRawTestDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.InvoiceableRawTestDataData(criteria.CompanyId, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new InvoiceableRawTestDataData
+                        {
+                            RawTestDataId = Convert.ToInt32(row["RawTestDataId"]),
+                            ReferralSource = Convert.ToString(row["ReferralSource"]),
+                            Claimant = Convert.ToString(row["Claimant"]),
+                            PayableTo = Convert.ToString(row["PayableTo"]),
+                            PayableToId = Convert.ToInt32(row["PayableToId"]),
+                            RequestReceivedDate = row["RequestReceivedDate"] as DateTimeOffset?,
                         })
                     .ToList();
             }

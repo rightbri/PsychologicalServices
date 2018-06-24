@@ -34,6 +34,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<InvoiceEntity> _invoices;
 		private EntityCollection<NoteEntity> _noteCreator;
 		private EntityCollection<NoteEntity> _noteUpdater;
+		private EntityCollection<RawTestDataEntity> _rawTestDatas;
 		private EntityCollection<UserNoteEntity> _userNotes;
 		private EntityCollection<UserRoleEntity> _userRoles;
 		private EntityCollection<UserTravelFeeEntity> _userTravelFees;
@@ -69,6 +70,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string NoteCreator = "NoteCreator";
 			/// <summary>Member name NoteUpdater</summary>
 			public static readonly string NoteUpdater = "NoteUpdater";
+			/// <summary>Member name RawTestDatas</summary>
+			public static readonly string RawTestDatas = "RawTestDatas";
 			/// <summary>Member name UserNotes</summary>
 			public static readonly string UserNotes = "UserNotes";
 			/// <summary>Member name UserRoles</summary>
@@ -139,6 +142,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_invoices = (EntityCollection<InvoiceEntity>)info.GetValue("_invoices", typeof(EntityCollection<InvoiceEntity>));
 				_noteCreator = (EntityCollection<NoteEntity>)info.GetValue("_noteCreator", typeof(EntityCollection<NoteEntity>));
 				_noteUpdater = (EntityCollection<NoteEntity>)info.GetValue("_noteUpdater", typeof(EntityCollection<NoteEntity>));
+				_rawTestDatas = (EntityCollection<RawTestDataEntity>)info.GetValue("_rawTestDatas", typeof(EntityCollection<RawTestDataEntity>));
 				_userNotes = (EntityCollection<UserNoteEntity>)info.GetValue("_userNotes", typeof(EntityCollection<UserNoteEntity>));
 				_userRoles = (EntityCollection<UserRoleEntity>)info.GetValue("_userRoles", typeof(EntityCollection<UserRoleEntity>));
 				_userTravelFees = (EntityCollection<UserTravelFeeEntity>)info.GetValue("_userTravelFees", typeof(EntityCollection<UserTravelFeeEntity>));
@@ -218,6 +222,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "NoteUpdater":
 					this.NoteUpdater.Add((NoteEntity)entity);
 					break;
+				case "RawTestDatas":
+					this.RawTestDatas.Add((RawTestDataEntity)entity);
+					break;
 				case "UserNotes":
 					this.UserNotes.Add((UserNoteEntity)entity);
 					break;
@@ -275,6 +282,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "NoteUpdater":
 					toReturn.Add(Relations.NoteEntityUsingUpdateUserId);
+					break;
+				case "RawTestDatas":
+					toReturn.Add(Relations.RawTestDataEntityUsingPsychologistId);
 					break;
 				case "UserNotes":
 					toReturn.Add(Relations.UserNoteEntityUsingUserId);
@@ -340,6 +350,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "NoteUpdater":
 					this.NoteUpdater.Add((NoteEntity)relatedEntity);
 					break;
+				case "RawTestDatas":
+					this.RawTestDatas.Add((RawTestDataEntity)relatedEntity);
+					break;
 				case "UserNotes":
 					this.UserNotes.Add((UserNoteEntity)relatedEntity);
 					break;
@@ -388,6 +401,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "NoteUpdater":
 					this.PerformRelatedEntityRemoval(this.NoteUpdater, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "RawTestDatas":
+					this.PerformRelatedEntityRemoval(this.RawTestDatas, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "UserNotes":
 					this.PerformRelatedEntityRemoval(this.UserNotes, relatedEntity, signalRelatedEntityManyToOne);
@@ -445,6 +461,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.Invoices);
 			toReturn.Add(this.NoteCreator);
 			toReturn.Add(this.NoteUpdater);
+			toReturn.Add(this.RawTestDatas);
 			toReturn.Add(this.UserNotes);
 			toReturn.Add(this.UserRoles);
 			toReturn.Add(this.UserTravelFees);
@@ -465,6 +482,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_invoices", ((_invoices!=null) && (_invoices.Count>0) && !this.MarkedForDeletion)?_invoices:null);
 				info.AddValue("_noteCreator", ((_noteCreator!=null) && (_noteCreator.Count>0) && !this.MarkedForDeletion)?_noteCreator:null);
 				info.AddValue("_noteUpdater", ((_noteUpdater!=null) && (_noteUpdater.Count>0) && !this.MarkedForDeletion)?_noteUpdater:null);
+				info.AddValue("_rawTestDatas", ((_rawTestDatas!=null) && (_rawTestDatas.Count>0) && !this.MarkedForDeletion)?_rawTestDatas:null);
 				info.AddValue("_userNotes", ((_userNotes!=null) && (_userNotes.Count>0) && !this.MarkedForDeletion)?_userNotes:null);
 				info.AddValue("_userRoles", ((_userRoles!=null) && (_userRoles.Count>0) && !this.MarkedForDeletion)?_userRoles:null);
 				info.AddValue("_userTravelFees", ((_userTravelFees!=null) && (_userTravelFees.Count>0) && !this.MarkedForDeletion)?_userTravelFees:null);
@@ -529,6 +547,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(NoteFields.UpdateUserId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'RawTestData' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoRawTestDatas()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(RawTestDataFields.PsychologistId, null, ComparisonOperator.Equal, this.UserId));
 			return bucket;
 		}
 
@@ -612,6 +639,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._invoices);
 			collectionsQueue.Enqueue(this._noteCreator);
 			collectionsQueue.Enqueue(this._noteUpdater);
+			collectionsQueue.Enqueue(this._rawTestDatas);
 			collectionsQueue.Enqueue(this._userNotes);
 			collectionsQueue.Enqueue(this._userRoles);
 			collectionsQueue.Enqueue(this._userTravelFees);
@@ -628,6 +656,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._invoices = (EntityCollection<InvoiceEntity>) collectionsQueue.Dequeue();
 			this._noteCreator = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._noteUpdater = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
+			this._rawTestDatas = (EntityCollection<RawTestDataEntity>) collectionsQueue.Dequeue();
 			this._userNotes = (EntityCollection<UserNoteEntity>) collectionsQueue.Dequeue();
 			this._userRoles = (EntityCollection<UserRoleEntity>) collectionsQueue.Dequeue();
 			this._userTravelFees = (EntityCollection<UserTravelFeeEntity>) collectionsQueue.Dequeue();
@@ -645,6 +674,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn |=(this._invoices != null);
 			toReturn |=(this._noteCreator != null);
 			toReturn |=(this._noteUpdater != null);
+			toReturn |=(this._rawTestDatas != null);
 			toReturn |=(this._userNotes != null);
 			toReturn |=(this._userRoles != null);
 			toReturn |=(this._userTravelFees != null);
@@ -663,6 +693,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<RawTestDataEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RawTestDataEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserRoleEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserRoleEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserTravelFeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserTravelFeeEntityFactory))) : null);
@@ -682,6 +713,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Invoices", _invoices);
 			toReturn.Add("NoteCreator", _noteCreator);
 			toReturn.Add("NoteUpdater", _noteUpdater);
+			toReturn.Add("RawTestDatas", _rawTestDatas);
 			toReturn.Add("UserNotes", _userNotes);
 			toReturn.Add("UserRoles", _userRoles);
 			toReturn.Add("UserTravelFees", _userTravelFees);
@@ -873,6 +905,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathNoteUpdater
 		{
 			get	{ return new PrefetchPathElement2( new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))), (IEntityRelation)GetRelationsForField("NoteUpdater")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "NoteUpdater", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'RawTestData' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathRawTestDatas
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<RawTestDataEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RawTestDataEntityFactory))), (IEntityRelation)GetRelationsForField("RawTestDatas")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.RawTestDataEntity, 0, null, null, null, null, "RawTestDatas", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'UserNote' for this entity.</summary>
@@ -1071,6 +1110,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<NoteEntity> NoteUpdater
 		{
 			get { return GetOrCreateEntityCollection<NoteEntity, NoteEntityFactory>("UpdateUser", true, false, ref _noteUpdater);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'RawTestDataEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(RawTestDataEntity))]
+		public virtual EntityCollection<RawTestDataEntity> RawTestDatas
+		{
+			get { return GetOrCreateEntityCollection<RawTestDataEntity, RawTestDataEntityFactory>("Psychologist", true, false, ref _rawTestDatas);	}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'UserNoteEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

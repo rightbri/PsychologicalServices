@@ -1543,6 +1543,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity InvoiceLineGroupRawTestDataEntity</summary>
+	public partial class InvoiceLineGroupRawTestDataFields
+	{
+		/// <summary>Creates a new InvoiceLineGroupRawTestDataEntity.InvoiceLineGroupId field instance</summary>
+		public static EntityField2 InvoiceLineGroupId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupRawTestDataFieldIndex.InvoiceLineGroupId);}
+		}
+		/// <summary>Creates a new InvoiceLineGroupRawTestDataEntity.RawTestDataId field instance</summary>
+		public static EntityField2 RawTestDataId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupRawTestDataFieldIndex.RawTestDataId);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity InvoiceStatusEntity</summary>
 	public partial class InvoiceStatusFields
 	{
@@ -1750,6 +1765,81 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 InvoiceAmount
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(PsychometristInvoiceAmountFieldIndex.InvoiceAmount);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity RawTestDataEntity</summary>
+	public partial class RawTestDataFields
+	{
+		/// <summary>Creates a new RawTestDataEntity.RawTestDataId field instance</summary>
+		public static EntityField2 RawTestDataId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.RawTestDataId);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.ClaimantId field instance</summary>
+		public static EntityField2 ClaimantId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.ClaimantId);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.BillToReferralSourceId field instance</summary>
+		public static EntityField2 BillToReferralSourceId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.BillToReferralSourceId);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.RequestReceivedDate field instance</summary>
+		public static EntityField2 RequestReceivedDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.RequestReceivedDate);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.SignedAuthorizationReceivedDate field instance</summary>
+		public static EntityField2 SignedAuthorizationReceivedDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.SignedAuthorizationReceivedDate);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.DataSentDate field instance</summary>
+		public static EntityField2 DataSentDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.DataSentDate);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.RawTestDataStatusId field instance</summary>
+		public static EntityField2 RawTestDataStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.RawTestDataStatusId);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.NoteId field instance</summary>
+		public static EntityField2 NoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.NoteId);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.CompanyId field instance</summary>
+		public static EntityField2 CompanyId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.CompanyId);}
+		}
+		/// <summary>Creates a new RawTestDataEntity.PsychologistId field instance</summary>
+		public static EntityField2 PsychologistId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.PsychologistId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity RawTestDataStatusEntity</summary>
+	public partial class RawTestDataStatusFields
+	{
+		/// <summary>Creates a new RawTestDataStatusEntity.RawTestDataStatusId field instance</summary>
+		public static EntityField2 RawTestDataStatusId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataStatusFieldIndex.RawTestDataStatusId);}
+		}
+		/// <summary>Creates a new RawTestDataStatusEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataStatusFieldIndex.Name);}
+		}
+		/// <summary>Creates a new RawTestDataStatusEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataStatusFieldIndex.IsActive);}
 		}
 	}
 

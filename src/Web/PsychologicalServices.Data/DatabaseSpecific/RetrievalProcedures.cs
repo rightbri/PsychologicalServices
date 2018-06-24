@@ -351,6 +351,50 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			return CreateInvoiceableArbitrationDataCall(dataAccessProvider, companyId).ToRetrievalQuery();
 		}
 
+		/// <summary>Calls stored procedure 'InvoiceableRawTestDataData'.<br/><br/></summary>
+		/// <param name="companyId">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableRawTestDataData(System.Int32 companyId)
+		{
+			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
+			{
+				return InvoiceableRawTestDataData(companyId, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Calls stored procedure 'InvoiceableRawTestDataData'.<br/><br/></summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableRawTestDataData(System.Int32 companyId, IDataAccessCore dataAccessProvider)
+		{
+			using(StoredProcedureCall call = CreateInvoiceableRawTestDataDataCall(dataAccessProvider, companyId))
+			{
+				DataTable toReturn = call.FillDataTable();
+				return toReturn;
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'InvoiceableRawTestDataData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetInvoiceableRawTestDataDataCallAsQuery(System.Int32 companyId)
+		{
+			using(var dataAccessProvider = new DataAccessAdapter())
+			{
+				return GetInvoiceableRawTestDataDataCallAsQuery(companyId, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'InvoiceableRawTestDataData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetInvoiceableRawTestDataDataCallAsQuery(System.Int32 companyId, IDataAccessCore dataAccessProvider)
+		{
+			return CreateInvoiceableRawTestDataDataCall(dataAccessProvider, companyId).ToRetrievalQuery();
+		}
+
 		/// <summary>Calls stored procedure 'InvoiceSearch'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="appointmentId">Input parameter. </param>
@@ -574,6 +618,16 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		private static StoredProcedureCall CreateInvoiceableArbitrationDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId)
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[InvoiceableArbitrationData]", "InvoiceableArbitrationData")
+							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId);
+		}
+
+		/// <summary>Creates the call object for the call 'InvoiceableRawTestDataData' to stored procedure 'InvoiceableRawTestDataData'.</summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter</param>
+		/// <returns>Ready to use StoredProcedureCall object</returns>
+		private static StoredProcedureCall CreateInvoiceableRawTestDataDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId)
+		{
+			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[InvoiceableRawTestDataData]", "InvoiceableRawTestDataData")
 							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId);
 		}
 

@@ -52,6 +52,19 @@ namespace PsychologicalServices.Models.Invoices
                     html = arbitrationTemplate.TransformText();
 
                     break;
+                case InvoiceType.RawTestData:
+                    var rawTestDataTemplate = new RawTestDataInvoiceTemplate();
+
+                    rawTestDataTemplate.Session = new Dictionary<string, object>()
+                    {
+                        { "Model", invoice }
+                    };
+
+                    rawTestDataTemplate.Initialize();
+
+                    html = rawTestDataTemplate.TransformText();
+
+                    break;
                 default:
                     throw new NotImplementedException(
                         string.Format("Invoice HTML Generator not implemented for invoice type {0}", invoice.InvoiceType.InvoiceTypeId)

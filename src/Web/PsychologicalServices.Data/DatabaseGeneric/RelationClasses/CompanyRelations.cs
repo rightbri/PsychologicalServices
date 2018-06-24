@@ -37,6 +37,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.EventEntityUsingCompanyId);
 			toReturn.Add(this.IssueInDisputeInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.PsychometristInvoiceAmountEntityUsingCompanyId);
+			toReturn.Add(this.RawTestDataEntityUsingCompanyId);
 			toReturn.Add(this.ReferralSourceInvoiceConfigurationEntityUsingCompanyId);
 			toReturn.Add(this.UserEntityUsingCompanyId);
 			toReturn.Add(this.AddressEntityUsingAddressId);
@@ -167,6 +168,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, PsychometristInvoiceAmountFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PsychometristInvoiceAmountEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and RawTestDataEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - RawTestData.CompanyId
+		/// </summary>
+		public virtual IEntityRelation RawTestDataEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "RawTestDatas" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, RawTestDataFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("RawTestDataEntity", false);
 				return relation;
 			}
 		}
@@ -322,6 +338,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation EventEntityUsingCompanyIdStatic = new CompanyRelations().EventEntityUsingCompanyId;
 		internal static readonly IEntityRelation IssueInDisputeInvoiceAmountEntityUsingCompanyIdStatic = new CompanyRelations().IssueInDisputeInvoiceAmountEntityUsingCompanyId;
 		internal static readonly IEntityRelation PsychometristInvoiceAmountEntityUsingCompanyIdStatic = new CompanyRelations().PsychometristInvoiceAmountEntityUsingCompanyId;
+		internal static readonly IEntityRelation RawTestDataEntityUsingCompanyIdStatic = new CompanyRelations().RawTestDataEntityUsingCompanyId;
 		internal static readonly IEntityRelation ReferralSourceInvoiceConfigurationEntityUsingCompanyIdStatic = new CompanyRelations().ReferralSourceInvoiceConfigurationEntityUsingCompanyId;
 		internal static readonly IEntityRelation UserEntityUsingCompanyIdStatic = new CompanyRelations().UserEntityUsingCompanyId;
 		internal static readonly IEntityRelation AddressEntityUsingAddressIdStatic = new CompanyRelations().AddressEntityUsingAddressId;

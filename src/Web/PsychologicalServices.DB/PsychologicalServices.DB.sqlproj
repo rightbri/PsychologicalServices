@@ -149,5 +149,9 @@
     <Build Include="dbo\Stored Procedures\InvoiceableArbitrationData.sql" />
     <Build Include="dbo\Tables\ArbitrationStatuses.sql" />
     <Build Include="dbo\Tables\Documents.sql" />
+    <Build Include="dbo\Tables\RawTestDataStatuses.sql" />
+    <Build Include="dbo\Tables\RawTestDatas.sql" />
+    <Build Include="dbo\Tables\InvoiceLineGroupRawTestData.sql" />
+    <Build Include="dbo\Stored Procedures\InvoiceableRawTestDataData.sql" />
   </ItemGroup>
 </Project>

@@ -256,6 +256,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\InvoiceableRawTestDataDataController.cs" />
+    <Compile Include="Controllers\RawTestDataStatusController.cs" />
+    <Compile Include="Controllers\RawTestDataInvoiceController.cs" />
+    <Compile Include="Controllers\RawTestDataController.cs" />
     <Compile Include="Controllers\ArbitrationStatusController.cs" />
     <Compile Include="Controllers\AssessmentTypeCountController.cs" />
     <Compile Include="Controllers\ArbitrationDataController.cs" />

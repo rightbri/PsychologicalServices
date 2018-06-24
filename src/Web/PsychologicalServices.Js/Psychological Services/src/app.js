@@ -41,6 +41,7 @@ export class App {
 			{ route: 'invoices/psychometrist', name: 'psychometristInvoices', moduleId: 'invoices/psychometristInvoices', title: 'Create Psychometrist Invoices', nav: false },
 			{ route: 'invoices/psychologist', name: 'psychologistInvoices', moduleId: 'invoices/psychologistInvoices', title: 'Create Psychologist Invoices', nav: false },
 			{ route: 'invoices/arbitration', name: 'arbitrationInvoices', moduleId: 'invoices/arbitrationInvoices', title: 'Create Arbitration Invoices', nav: true },
+			{ route: 'invoices/rawtestdata', name: 'rawTestDataInvoices', moduleId: 'invoices/rawTestDataInvoices', title: 'Create Raw Test Data Invoices', nav: true },
 			{ route: 'addresses', name: 'addresses', moduleId: 'addresses/addresses', title: 'Addresses', nav: true },
 			{ route: 'addresses/:id', name: 'editAddress', moduleId: 'addresses/editAddress', title: 'Edit Address', nav: false },
 			{ route: 'addresses/add', name: 'addAddress', moduleId: 'addresses/editAddress', title: 'Add Address', nav: false },
@@ -79,10 +80,14 @@ export class App {
 			{ route: 'arbitrations', name: 'arbitrations', moduleId: 'arbitrations/arbitrations', title: 'Arbitrations', nav: true },
 			{ route: 'arbitrations/:id', name: 'editArbitration', moduleId: 'arbitrations/editArbitration', title: 'Edit Arbitration', nav: false },
 			{ route: 'arbitrations/add', name: 'addArbitration', moduleId: 'arbitrations/editArbitration', title: 'Add Arbitration', nav: false },
+			{ route: 'rawtestdata', name: 'rawTestData', moduleId: 'rawTestData/rawTestData', title: 'Raw Test Data', nav: true },
+			{ route: 'rawtestdata/:id', name: 'editRawTestData', moduleId: 'rawTestData/editRawTestData', title: 'Edit Raw Test Data', nav: false },
+			{ route: 'rawtestdata/add', name: 'addRawTestData', moduleId: 'rawTestData/editRawTestData', title: 'Add Raw Test Data', nav: false },
 			{ route: 'documents', name: 'documents', moduleId: 'documents/documents', title: 'Documents', nav: true },
 			{ route: 'documents/:id', name: 'editDocument', moduleId: 'documents/editDocument', title: 'Edit Document', nav: false },
 			{ route: 'documents/add', name: 'addDocument', moduleId: 'documents/editDocument', title: 'Add Document', nav: false },
 			{ route: 'users/spinner', name: 'userSpinner', moduleId: 'users/userSpinner', title: 'Edit User Spinner', nav: true }
+			//{ route: '', name: '', moduleId: '', title: '', nav: false },
 		]);
 		
 		this.context.getUser().then(user => this.user = user);

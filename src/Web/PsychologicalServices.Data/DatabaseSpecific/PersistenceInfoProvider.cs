@@ -94,6 +94,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitInvoiceLineGroupEntityMappings();
 			InitInvoiceLineGroupAppointmentEntityMappings();
 			InitInvoiceLineGroupArbitrationEntityMappings();
+			InitInvoiceLineGroupRawTestDataEntityMappings();
 			InitInvoiceStatusEntityMappings();
 			InitInvoiceStatusChangeEntityMappings();
 			InitInvoiceStatusPathsEntityMappings();
@@ -102,6 +103,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitIssueInDisputeInvoiceAmountEntityMappings();
 			InitNoteEntityMappings();
 			InitPsychometristInvoiceAmountEntityMappings();
+			InitRawTestDataEntityMappings();
+			InitRawTestDataStatusEntityMappings();
 			InitReferralSourceEntityMappings();
 			InitReferralSourceInvoiceConfigurationEntityMappings();
 			InitReferralSourceTypeEntityMappings();
@@ -665,6 +668,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("InvoiceLineGroupArbitrationEntity", "ArbitrationId", "ArbitrationId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 		}
 
+		/// <summary>Inits InvoiceLineGroupRawTestDataEntity's mappings</summary>
+		private void InitInvoiceLineGroupRawTestDataEntityMappings()
+		{
+			this.AddElementMapping("InvoiceLineGroupRawTestDataEntity", @"PsychologicalServices", @"dbo", "InvoiceLineGroupRawTestData", 2, 0);
+			this.AddElementFieldMapping("InvoiceLineGroupRawTestDataEntity", "InvoiceLineGroupId", "InvoiceLineGroupId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("InvoiceLineGroupRawTestDataEntity", "RawTestDataId", "RawTestDataId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+		}
+
 		/// <summary>Inits InvoiceStatusEntity's mappings</summary>
 		private void InitInvoiceStatusEntityMappings()
 		{
@@ -745,6 +756,31 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("PsychometristInvoiceAmountEntity", "CompanyId", "CompanyId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
 			this.AddElementFieldMapping("PsychometristInvoiceAmountEntity", "AppointmentSequenceId", "AppointmentSequenceId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 3);
 			this.AddElementFieldMapping("PsychometristInvoiceAmountEntity", "InvoiceAmount", "InvoiceAmount", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 4);
+		}
+
+		/// <summary>Inits RawTestDataEntity's mappings</summary>
+		private void InitRawTestDataEntityMappings()
+		{
+			this.AddElementMapping("RawTestDataEntity", @"PsychologicalServices", @"dbo", "RawTestDatas", 10, 0);
+			this.AddElementFieldMapping("RawTestDataEntity", "RawTestDataId", "RawTestDataId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("RawTestDataEntity", "ClaimantId", "ClaimantId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("RawTestDataEntity", "BillToReferralSourceId", "BillToReferralSourceId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("RawTestDataEntity", "RequestReceivedDate", "RequestReceivedDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3);
+			this.AddElementFieldMapping("RawTestDataEntity", "SignedAuthorizationReceivedDate", "SignedAuthorizationReceivedDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 4);
+			this.AddElementFieldMapping("RawTestDataEntity", "DataSentDate", "DataSentDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5);
+			this.AddElementFieldMapping("RawTestDataEntity", "RawTestDataStatusId", "RawTestDataStatusId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 6);
+			this.AddElementFieldMapping("RawTestDataEntity", "NoteId", "NoteId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 7);
+			this.AddElementFieldMapping("RawTestDataEntity", "CompanyId", "CompanyId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
+			this.AddElementFieldMapping("RawTestDataEntity", "PsychologistId", "PsychologistId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 9);
+		}
+
+		/// <summary>Inits RawTestDataStatusEntity's mappings</summary>
+		private void InitRawTestDataStatusEntityMappings()
+		{
+			this.AddElementMapping("RawTestDataStatusEntity", @"PsychologicalServices", @"dbo", "RawTestDataStatuses", 3, 0);
+			this.AddElementFieldMapping("RawTestDataStatusEntity", "RawTestDataStatusId", "RawTestDataStatusId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("RawTestDataStatusEntity", "Name", "Name", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
+			this.AddElementFieldMapping("RawTestDataStatusEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
 		}
 
 		/// <summary>Inits ReferralSourceEntity's mappings</summary>

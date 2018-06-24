@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentEntityUsingSummaryNoteId);
 			toReturn.Add(this.AssessmentNoteEntityUsingNoteId);
 			toReturn.Add(this.CalendarNoteEntityUsingNoteId);
+			toReturn.Add(this.RawTestDataEntityUsingNoteId);
 			toReturn.Add(this.UserNoteEntityUsingNoteId);
 			toReturn.Add(this.UserEntityUsingCreateUserId);
 			toReturn.Add(this.UserEntityUsingUpdateUserId);
@@ -101,6 +102,21 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between NoteEntity and RawTestDataEntity over the 1:n relation they have, using the relation between the fields:
+		/// Note.NoteId - RawTestData.NoteId
+		/// </summary>
+		public virtual IEntityRelation RawTestDataEntityUsingNoteId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "RawTestDatas" , true);
+				relation.AddEntityFieldPair(NoteFields.NoteId, RawTestDataFields.NoteId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("RawTestDataEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between NoteEntity and UserNoteEntity over the 1:n relation they have, using the relation between the fields:
 		/// Note.NoteId - UserNote.NoteId
 		/// </summary>
@@ -163,6 +179,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AssessmentEntityUsingSummaryNoteIdStatic = new NoteRelations().AssessmentEntityUsingSummaryNoteId;
 		internal static readonly IEntityRelation AssessmentNoteEntityUsingNoteIdStatic = new NoteRelations().AssessmentNoteEntityUsingNoteId;
 		internal static readonly IEntityRelation CalendarNoteEntityUsingNoteIdStatic = new NoteRelations().CalendarNoteEntityUsingNoteId;
+		internal static readonly IEntityRelation RawTestDataEntityUsingNoteIdStatic = new NoteRelations().RawTestDataEntityUsingNoteId;
 		internal static readonly IEntityRelation UserNoteEntityUsingNoteIdStatic = new NoteRelations().UserNoteEntityUsingNoteId;
 		internal static readonly IEntityRelation UserEntityUsingCreateUserIdStatic = new NoteRelations().UserEntityUsingCreateUserId;
 		internal static readonly IEntityRelation UserEntityUsingUpdateUserIdStatic = new NoteRelations().UserEntityUsingUpdateUserId;

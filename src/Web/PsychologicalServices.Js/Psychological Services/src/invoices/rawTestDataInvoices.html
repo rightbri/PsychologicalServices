@@ -1,0 +1,55 @@
+<template>
+	<require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+	
+	<div class="uk-container">
+	
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Raw Test Data Invoices</legend>
+			
+			<form class="uk-form-stacked">
+			
+				<div class="uk-margin">
+					<button class="uk-button uk-button-primary" click.delegate="searchInvoices()">Search</button>
+				</div>
+				
+			</form>
+			
+		</fieldset>
+
+	</div>
+
+	<div class="uk-overflow-auto" if.bind="invoiceableRawTestData">
+		<table class="uk-table uk-table-divider" fixed-header>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Request Received</th>
+					<th>Referral Source</th>
+					<th>Claimant</th>
+					<th>Payable To</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr repeat.for="rawTestData of invoiceableRawTestData | sortArray:[{ property: 'requestReceivedDate', direction: 'asc' },{ property: 'referralSource', direction: 'asc' }]">
+					<td>
+						<button type="button" class="uk-button uk-button-primary" click.delegate="createInvoice(rawTestData)" if.bind="rawTestData.canCreateInvoice">
+							Create Invoice
+						</button>
+						<a route-href="route: editInvoice; params.bind: {'id': rawTestData.invoiceId }" class="uk-button uk-button-secondary" if.bind="rawTestData.invoiceId">
+							Edit Invoice
+						</a>
+					</td>
+					<td>${rawTestData.requestReceivedDate | dateFormat:config.shortDateFormat}</td>
+					<td>${rawTestData.referralSource}</td>
+					<td>${rawTestData.claimant}</td>
+					<td>${rawTestData.payableTo}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</template>

@@ -393,6 +393,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<InvoiceLineGroupArbitrationEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the InvoiceLineGroupRawTestData entity</summary>
+		public EntityQuery<InvoiceLineGroupRawTestDataEntity> InvoiceLineGroupRawTestData
+		{
+			get { return Create<InvoiceLineGroupRawTestDataEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the InvoiceStatus entity</summary>
 		public EntityQuery<InvoiceStatusEntity> InvoiceStatus
 		{
@@ -439,6 +445,18 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public EntityQuery<PsychometristInvoiceAmountEntity> PsychometristInvoiceAmount
 		{
 			get { return Create<PsychometristInvoiceAmountEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the RawTestData entity</summary>
+		public EntityQuery<RawTestDataEntity> RawTestData
+		{
+			get { return Create<RawTestDataEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the RawTestDataStatus entity</summary>
+		public EntityQuery<RawTestDataStatusEntity> RawTestDataStatus
+		{
+			get { return Create<RawTestDataStatusEntity>(); }
 		}
 
 		/// <summary>Creates and returns a new EntityQuery for the ReferralSource entity</summary>

@@ -31,6 +31,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.ArbitrationEntityUsingClaimantId);
 			toReturn.Add(this.ClaimEntityUsingClaimantId);
+			toReturn.Add(this.RawTestDataEntityUsingClaimantId);
 			return toReturn;
 		}
 
@@ -66,6 +67,21 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between ClaimantEntity and RawTestDataEntity over the 1:n relation they have, using the relation between the fields:
+		/// Claimant.ClaimantId - RawTestData.ClaimantId
+		/// </summary>
+		public virtual IEntityRelation RawTestDataEntityUsingClaimantId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "RawTestDatas" , true);
+				relation.AddEntityFieldPair(ClaimantFields.ClaimantId, RawTestDataFields.ClaimantId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ClaimantEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("RawTestDataEntity", false);
+				return relation;
+			}
+		}
+
 
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
@@ -83,6 +99,7 @@ namespace PsychologicalServices.Data.RelationClasses
 	{
 		internal static readonly IEntityRelation ArbitrationEntityUsingClaimantIdStatic = new ClaimantRelations().ArbitrationEntityUsingClaimantId;
 		internal static readonly IEntityRelation ClaimEntityUsingClaimantIdStatic = new ClaimantRelations().ClaimEntityUsingClaimantId;
+		internal static readonly IEntityRelation RawTestDataEntityUsingClaimantIdStatic = new ClaimantRelations().RawTestDataEntityUsingClaimantId;
 
 		/// <summary>CTor</summary>
 		static StaticClaimantRelations()

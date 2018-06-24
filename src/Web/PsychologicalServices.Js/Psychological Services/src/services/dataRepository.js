@@ -78,6 +78,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'invoiceablearbitrationdata');
 	}
 
+	searchInvoiceableRawTestData(criteria) {
+		return this.searchBasic(criteria, 'invoiceablerawtestdata');
+	}
+
 	createPsychometristInvoice(companyId, psychometristId, year, month) {
 		return this.postBasic('psychometristinvoice/create', {
 			'companyId': companyId,
@@ -96,6 +100,12 @@ export class DataRepository {
 	createArbitrationInvoice(arbitrationId) {
 		return this.postBasic('arbitrationinvoice/create', {
 			'arbitrationId': arbitrationId
+		});
+	}
+
+	createRawTestDataInvoice(rawTestDataId) {
+		return this.postBasic('rawtestdatainvoice/create', {
+			'rawTestDataId': rawTestDataId
 		});
 	}
 	
@@ -406,6 +416,22 @@ export class DataRepository {
 
 	getArbitrationStatuses() {
 		return this.getManyBasic('arbitrationstatus', true);
+	}
+
+	getRawTestData(rawTestDataId) {
+		return this.getSingleBasic(rawTestDataId, 'rawtestdata');
+	}
+
+	searchRawTestData(criteria) {
+		return this.searchBasic(criteria, 'rawtestdata');
+	}
+
+	saveRawTestData(rawTestData) {
+		return this.saveBasic(rawTestData, 'rawtestdata');
+	}
+
+	getRawTestDataStatuses() {
+		return this.getManyBasic('rawtestdatastatus', true);
 	}
 	
 	getReportStatuses() {

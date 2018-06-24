@@ -1,0 +1,114 @@
+<template>
+	<require from="claims/edit-claim"></require>
+    <require from="claimants/search-claimant"></require>
+	<require from="common/date-mask"></require>
+	<require from="common/validation-summary.html"></require>
+	<require from="resources/value-converters/age"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
+    
+    <div id="editRawTestData" class="uk-container uk-container-expand">
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">${editType} Raw Test Data</legend>
+            
+            <div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
+            
+                <div class="uk-width-1-1" if.bind="validationErrors">
+                    <validation-summary errors.bind="validationErrors"></validation-summary>
+                </div>
+            
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label">Claimant</label>
+                    <div class="uk-form-controls">
+                        <span if.bind="searchClaimant">
+                            ${searchClaimant.firstName} ${searchClaimant.lastName}
+                        </span>
+                        <search-claimant claimant.bind="searchClaimant" selected.delegate="claimantSelected($event)"></search-claimant>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="referralSource">Bill To Referral Source</label>
+                    <div class="uk-form-controls">
+                        <select id="referralSource" class="uk-select" value.bind="rawTestData.billToReferralSource" matcher.bind="referralSourceMatcher">
+                            <option></option>
+                            <option repeat.for="referralSource of referralSources" model.bind="referralSource">
+                                ${referralSource.name}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="psychologist">Payable To</label>
+                    <div class="uk-form-controls">
+                        <select id="psychologist" class="uk-select" value.bind="rawTestData.psychologist" matcher.bind="userMatcher">
+                            <option></option>
+                            <option repeat.for="psychologist of psychologists" model.bind="psychologist">
+                                ${psychologist.firstName} ${psychologist.lastName}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="requestReceivedDate">Request Received Date</label>
+                    <div class="uk-form-controls">
+                        <input id="requestReceivedDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="rawTestData.requestReceivedDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="uk-form-label" for="signedAuthorizationReceivedDate">Signed Authorization Received Date</label>
+                    <div class="uk-form-controls">
+                        <input id="signedAuthorizationReceivedDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="rawTestData.signedAuthorizationReceivedDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="uk-form-label" for="dataSentDate">Data Sent Date</label>
+                    <div class="uk-form-controls">
+                        <input id="dataSentDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="rawTestData.dataSentDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'"/>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="rawTestDataStatus">Status</label>
+                    <div class="uk-form-controls">
+                        <select id="rawTestDataStatus" class="uk-select" value.bind="rawTestData.status" matcher.bind="rawTestDataStatusMatcher">
+                            <option></option>
+                            <option repeat.for="rawTestDataStatus of rawTestDataStatuses" model.bind="rawTestDataStatus">
+                                ${rawTestDataStatus.name}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label" for="rawTestDataNotes">Notes</label>
+                    <div class="uk-form-controls">
+                        <textarea id="rawTestDataNotes" class="uk-textarea" value.bind="rawTestData.note.noteText"></textarea>
+                    </div>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <hr>
+                </div>
+    
+                <div class="uk-width-1-2@s">
+                    <button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="save()" disabled.bind="saveDisabled">
+                        Save <i class="fa fa-save"></i>
+                    </button>
+                </div>
+                
+            </div>
+            
+        </fieldset>
+
+    </div>
+
+</template>

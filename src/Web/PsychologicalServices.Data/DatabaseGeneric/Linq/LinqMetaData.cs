@@ -205,6 +205,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity:
 					toReturn = this.InvoiceLineGroupArbitration;
 					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupRawTestDataEntity:
+					toReturn = this.InvoiceLineGroupRawTestData;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceStatusEntity:
 					toReturn = this.InvoiceStatus;
 					break;
@@ -228,6 +231,12 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity:
 					toReturn = this.PsychometristInvoiceAmount;
+					break;
+				case PsychologicalServices.Data.EntityType.RawTestDataEntity:
+					toReturn = this.RawTestData;
+					break;
+				case PsychologicalServices.Data.EntityType.RawTestDataStatusEntity:
+					toReturn = this.RawTestDataStatus;
 					break;
 				case PsychologicalServices.Data.EntityType.ReferralSourceEntity:
 					toReturn = this.ReferralSource;
@@ -578,6 +587,12 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<InvoiceLineGroupArbitrationEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineGroupRawTestDataEntity instances in the database.</summary>
+		public DataSource2<InvoiceLineGroupRawTestDataEntity> InvoiceLineGroupRawTestData
+		{
+			get { return new DataSource2<InvoiceLineGroupRawTestDataEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceStatusEntity instances in the database.</summary>
 		public DataSource2<InvoiceStatusEntity> InvoiceStatus
 		{
@@ -624,6 +639,18 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<PsychometristInvoiceAmountEntity> PsychometristInvoiceAmount
 		{
 			get { return new DataSource2<PsychometristInvoiceAmountEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting RawTestDataEntity instances in the database.</summary>
+		public DataSource2<RawTestDataEntity> RawTestData
+		{
+			get { return new DataSource2<RawTestDataEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting RawTestDataStatusEntity instances in the database.</summary>
+		public DataSource2<RawTestDataStatusEntity> RawTestDataStatus
+		{
+			get { return new DataSource2<RawTestDataStatusEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting ReferralSourceEntity instances in the database.</summary>
