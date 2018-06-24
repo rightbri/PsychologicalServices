@@ -344,6 +344,20 @@ namespace PsychologicalServices.Models.Assessments
                 );
             }
 
+            if (item.IsReassessment && !item.PreviouslySeenDate.HasValue)
+            {
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "PreviouslySeenDate", Message = "Previously seen date is required for re-assessments" }
+                );
+            }
+
+            if (item.PreviouslySeenDate.HasValue && item.PreviouslySeenDate.Value > _now.UtcNow)
+            {
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "PreviouslySeenDate", Message = "Previously seen date cannot be in the future" }
+                );
+            }
+
             result.IsValid = !result.ValidationErrors.Any();
 
             return result;

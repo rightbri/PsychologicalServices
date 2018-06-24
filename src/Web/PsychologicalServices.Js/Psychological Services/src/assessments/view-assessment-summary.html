@@ -59,6 +59,13 @@
 						</div>
 					</div>
 					
+					<div if.bind="isReassessment">
+						<label class="uk-form-label reassessment">Re-assessment</label>
+						<div class="uk-form-controls">
+							<p>Previously seen: ${previouslySeenDate | dateFormat:config.longDateFormat}</p>
+						</div>
+					</div>
+
 				</div>
 				
 				<div class="uk-padding-small">

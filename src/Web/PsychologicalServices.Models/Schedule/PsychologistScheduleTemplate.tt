@@ -26,8 +26,8 @@
 			var bodyCellStyles = "padding: 4px; white-space: nowrap; vertical-align: top; border-style: none none solid none; border-width: 2px; border-color: #d8d8d8;";
 			var noteCellStyles = "padding: 4px; vertical-align: top; border-style: dotted none solid none; border-width: 1px 0 2px 0; border-color: #d8d8d8;";
 			var listStyles = "list-style-type: none; padding: 0; margin: 0;";
-			var listItemStyles = "font-size: 1.25rem; padding: 2px 0 0 0";
-			var smallListItemStyles = "font-size: 1.1rem; padding: 2px 0 0 0";
+			var listItemStyles = "font-size: 1.25rem; padding: 2px 0 0 0;";
+			var smallListItemStyles = "font-size: 1.1rem; padding: 2px 0 0 0;";
 			var addressItemStyle = "width: 225px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;";
 			var arbitrationLabelStyles = "text-transform: uppercase; background-color: #1e87f0; border-radius: 2px; color: #fff; padding: 1px 10px;";
 			#>
@@ -91,6 +91,16 @@
 							<li style="<#= smallListItemStyles #>">
 								<#= appointment.AppointmentStatus.Name #>
 							</li>
+							<# if (appointment.Assessment.IsReassessment) { #>
+							<li style="<#= smallListItemStyles #> color: orange;">
+								Re-assessment
+							</li>
+								<# if (appointment.Assessment.PreviouslySeenDate.HasValue) { #>
+								<li style="<#= smallListItemStyles #>">
+									Previously Seen: <#= string.Format("{0:dd/MM/yyyy}", appointment.Assessment.PreviouslySeenDate) #>
+								</li>
+								<# } #>
+							<# } #>
 						</ul>
 					</td>
 					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Type -->

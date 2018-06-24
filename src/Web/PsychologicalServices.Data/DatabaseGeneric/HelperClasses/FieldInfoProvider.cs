@@ -281,6 +281,8 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("AssessmentEntity", "NeurocognitiveCredibilityId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.NeurocognitiveCredibilityId, 0, 0, 10);
 			this.AddElementFieldInfo("AssessmentEntity", "PsychologicalCredibilityId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.PsychologicalCredibilityId, 0, 0, 10);
 			this.AddElementFieldInfo("AssessmentEntity", "DiagnosisFoundReponseId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.DiagnosisFoundReponseId, 0, 0, 10);
+			this.AddElementFieldInfo("AssessmentEntity", "IsReassessment", typeof(System.Boolean), false, false, false, false,  (int)AssessmentFieldIndex.IsReassessment, 0, 0, 0);
+			this.AddElementFieldInfo("AssessmentEntity", "PreviouslySeenDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)AssessmentFieldIndex.PreviouslySeenDate, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAssessmentAttributeEntityInfos()

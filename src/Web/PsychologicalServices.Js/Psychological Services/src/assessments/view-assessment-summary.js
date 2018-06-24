@@ -67,5 +67,8 @@ export class ViewAssessmentSummaryCustomElement {
 		this.medRehabs = appointment.assessment.medRehabs;
 	
 		this.summary = appointment.assessment.summary ? appointment.assessment.summary.noteText : '';
+
+		this.isReassessment = appointment.assessment.isReassessment;
+		this.previouslySeenDate = appointment.assessment.previouslySeenDate;
 	}
 }

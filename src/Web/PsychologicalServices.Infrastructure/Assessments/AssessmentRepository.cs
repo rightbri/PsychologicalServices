@@ -359,6 +359,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.ReportStatusId = assessment.ReportStatus.ReportStatusId;
                 assessmentEntity.CompanyId = assessment.Company.CompanyId;
                 assessmentEntity.IsLargeFile = assessment.IsLargeFile;
+                assessmentEntity.IsReassessment = assessment.IsReassessment;
                 assessmentEntity.UpdateDate = _date.UtcNow;
                 assessmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
 
@@ -450,6 +451,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 else
                 {
                     assessmentEntity.DiagnosisFoundReponseId = assessment.DiagnosisFoundResponse.DiagnosisFoundResponseId;
+                }
+
+                if (null == assessment.PreviouslySeenDate)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.PreviouslySeenDate, null);
+                }
+                else
+                {
+                    assessmentEntity.PreviouslySeenDate = assessment.PreviouslySeenDate;
                 }
 
                 #region appointments

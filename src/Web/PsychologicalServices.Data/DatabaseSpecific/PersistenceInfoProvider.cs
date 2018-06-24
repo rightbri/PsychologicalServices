@@ -264,7 +264,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AssessmentEntity's mappings</summary>
 		private void InitAssessmentEntityMappings()
 		{
-			this.AddElementMapping("AssessmentEntity", @"PsychologicalServices", @"dbo", "Assessments", 22, 0);
+			this.AddElementMapping("AssessmentEntity", @"PsychologicalServices", @"dbo", "Assessments", 24, 0);
 			this.AddElementFieldMapping("AssessmentEntity", "AssessmentId", "AssessmentId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("AssessmentEntity", "ReferralTypeId", "ReferralTypeId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 			this.AddElementFieldMapping("AssessmentEntity", "ReferralSourceId", "ReferralSourceId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
@@ -287,6 +287,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("AssessmentEntity", "NeurocognitiveCredibilityId", "NeurocognitiveCredibilityId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 19);
 			this.AddElementFieldMapping("AssessmentEntity", "PsychologicalCredibilityId", "PsychologicalCredibilityId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 20);
 			this.AddElementFieldMapping("AssessmentEntity", "DiagnosisFoundReponseId", "DiagnosisFoundReponseId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 21);
+			this.AddElementFieldMapping("AssessmentEntity", "IsReassessment", "IsReassessment", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 22);
+			this.AddElementFieldMapping("AssessmentEntity", "PreviouslySeenDate", "PreviouslySeenDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 23);
 		}
 
 		/// <summary>Inits AssessmentAttributeEntity's mappings</summary>

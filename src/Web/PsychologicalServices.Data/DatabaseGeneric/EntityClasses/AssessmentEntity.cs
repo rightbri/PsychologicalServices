@@ -1113,6 +1113,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("PsychologicalCredibilityId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("DiagnosisFoundReponseId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("IsReassessment", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("PreviouslySeenDate", fieldHashtable);
 		}
 		#endregion
 
@@ -1887,6 +1891,26 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.Int32>)GetValue((int)AssessmentFieldIndex.DiagnosisFoundReponseId, false); }
 			set	{ SetValue((int)AssessmentFieldIndex.DiagnosisFoundReponseId, value); }
+		}
+
+		/// <summary> The IsReassessment property of the Entity Assessment<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Assessments"."IsReassessment"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean IsReassessment
+		{
+			get { return (System.Boolean)GetValue((int)AssessmentFieldIndex.IsReassessment, true); }
+			set	{ SetValue((int)AssessmentFieldIndex.IsReassessment, value); }
+		}
+
+		/// <summary> The PreviouslySeenDate property of the Entity Assessment<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Assessments"."PreviouslySeenDate"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.DateTimeOffset> PreviouslySeenDate
+		{
+			get { return (Nullable<System.DateTimeOffset>)GetValue((int)AssessmentFieldIndex.PreviouslySeenDate, false); }
+			set	{ SetValue((int)AssessmentFieldIndex.PreviouslySeenDate, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

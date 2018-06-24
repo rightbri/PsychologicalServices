@@ -546,6 +546,16 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.DiagnosisFoundReponseId);}
 		}
+		/// <summary>Creates a new AssessmentEntity.IsReassessment field instance</summary>
+		public static EntityField2 IsReassessment
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.IsReassessment);}
+		}
+		/// <summary>Creates a new AssessmentEntity.PreviouslySeenDate field instance</summary>
+		public static EntityField2 PreviouslySeenDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.PreviouslySeenDate);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentAttributeEntity</summary>

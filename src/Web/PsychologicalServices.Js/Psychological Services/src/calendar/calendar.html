@@ -130,6 +130,10 @@
 								${attribute | attributeValue}
 							</li>
 						</template>
+						<template if.bind="appointment.assessment.isReassessment">
+							<li title="Reassessment" class="reassessment">Re-assessment</li>
+							<li title="PreviouslySeen" class="reassessment">${appointment.assessment.previouslySeenDate | dateFormat:config.shortDateFormat}</li>
+						</template>
 					</ul>
 				</td>
 				<td>
@@ -251,6 +255,11 @@
 			<td>
 				${appointment.location.name}
 				<br>${appointment.assessment.referralSource.name}
+				
+				<template if.bind="appointment.assessment.isReassessment">
+					<br><span title="Reassessment" class="reassessment">Re-assessment</span>
+					<br><span title="PreviouslySeen" class="reassessment">${appointment.assessment.previouslySeenDate | dateFormat:config.shortDateFormat}</span>
+				</template>
 			</td>
 			<td>
 				<template repeat.for="claim of appointment.assessment.claims">

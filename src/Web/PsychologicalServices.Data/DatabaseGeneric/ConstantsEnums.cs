@@ -269,6 +269,10 @@ namespace PsychologicalServices.Data
 		PsychologicalCredibilityId,
 		///<summary>DiagnosisFoundReponseId. </summary>
 		DiagnosisFoundReponseId,
+		///<summary>IsReassessment. </summary>
+		IsReassessment,
+		///<summary>PreviouslySeenDate. </summary>
+		PreviouslySeenDate,
 		/// <summary></summary>
 		AmountOfFields
 	}

@@ -77,6 +77,7 @@
 	color: #f0506e;
 }
 
-.reassessment {
+.reassessment,
+.assessment-summary .reassessment {
 	color: orange;
 }

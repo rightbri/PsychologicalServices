@@ -21,6 +21,8 @@
     [NeurocognitiveCredibilityId]        INT                NULL,
     [PsychologicalCredibilityId]         INT                NULL,
     [DiagnosisFoundReponseId]            INT                NULL,
+    [IsReassessment]                     BIT                CONSTRAINT [DF_Assessments_IsReassessment] DEFAULT ((0)) NOT NULL,
+    [PreviouslySeenDate]                 DATETIMEOFFSET (7) NULL,
     CONSTRAINT [PK_Assessments] PRIMARY KEY CLUSTERED ([AssessmentId] ASC),
     CONSTRAINT [FK_Assessments_AssessmentTypes] FOREIGN KEY ([AssessmentTypeId]) REFERENCES [dbo].[AssessmentTypes] ([AssessmentTypeId]),
     CONSTRAINT [FK_Assessments_Companies] FOREIGN KEY ([CompanyId]) REFERENCES [dbo].[Companies] ([CompanyId]),
@@ -36,6 +38,8 @@
     CONSTRAINT [FK_Assessments_Users] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Assessments_Users1] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

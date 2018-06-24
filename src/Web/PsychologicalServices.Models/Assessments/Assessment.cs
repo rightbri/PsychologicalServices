@@ -27,6 +27,10 @@ namespace PsychologicalServices.Models.Assessments
         public string ReferralSourceContactEmail { get; set; }
 
         public bool IsLargeFile { get; set; }
+
+        public bool IsReassessment { get; set; }
+
+        public DateTimeOffset? PreviouslySeenDate { get; set; }
         
         public AssessmentType AssessmentType { get; set; }
 

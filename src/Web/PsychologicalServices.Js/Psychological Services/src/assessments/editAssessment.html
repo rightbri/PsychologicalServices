@@ -171,6 +171,22 @@
 			<div class="uk-width-1-3@s"></div>
 			
 			<div class="uk-width-1-3@s">
+				<label class="uk-form-label"></label>
+				<div class="uk-form-controls">
+					<label>
+						<input type="checkbox" class="uk-checkbox" checked.bind="assessment.isReassessment" />&nbsp;Re-assessment?
+					</label>
+				</div>
+			</div>
+			<div class="uk-width-1-3@s">
+				<label class="uk-form-label" for="previouslySeenDate">Previously Seen Date</label>
+				<div class="uk-form-controls">
+					<input id="previouslySeenDate" type="text" class="uk-input" value.bind="assessment.previouslySeenDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions" disabled.bind="!assessment.isReassessment"/>
+				</div>
+			</div>
+			<div class="uk-width-1-3@s"></div>
+
+			<div class="uk-width-1-3@s">
 				<label class="uk-form-label">Claimant</label>
 				<div class="uk-form-controls">
 					<search-claimant claimant.bind="claimant" selected.delegate="claimantSelected($event)" if.bind="!claimantEditModel"></search-claimant>
