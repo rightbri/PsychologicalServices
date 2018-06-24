@@ -76,3 +76,7 @@
 .has-doc-list-writer.sent-to-doc-list-writer-yes.doc-list-completed-unknown .doc-list-writer {
 	color: #f0506e;
 }
+
+.reassessment {
+	color: orange;
+}
