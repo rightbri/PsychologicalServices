@@ -58,6 +58,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     RawTestDataStatusId = rawTestDataStatus.RawTestDataStatusId,
                     Name = rawTestDataStatus.Name,
                     IsActive = rawTestDataStatus.IsActive,
+                    CanInvoice = rawTestDataStatus.CanInvoice,
                 }
                 : null;
         }

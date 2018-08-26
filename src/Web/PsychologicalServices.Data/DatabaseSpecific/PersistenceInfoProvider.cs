@@ -779,10 +779,11 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits RawTestDataStatusEntity's mappings</summary>
 		private void InitRawTestDataStatusEntityMappings()
 		{
-			this.AddElementMapping("RawTestDataStatusEntity", @"PsychologicalServices", @"dbo", "RawTestDataStatuses", 3, 0);
+			this.AddElementMapping("RawTestDataStatusEntity", @"PsychologicalServices", @"dbo", "RawTestDataStatuses", 4, 0);
 			this.AddElementFieldMapping("RawTestDataStatusEntity", "RawTestDataStatusId", "RawTestDataStatusId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("RawTestDataStatusEntity", "Name", "Name", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
 			this.AddElementFieldMapping("RawTestDataStatusEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
+			this.AddElementFieldMapping("RawTestDataStatusEntity", "CanInvoice", "CanInvoice", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 3);
 		}
 
 		/// <summary>Inits ReferralSourceEntity's mappings</summary>

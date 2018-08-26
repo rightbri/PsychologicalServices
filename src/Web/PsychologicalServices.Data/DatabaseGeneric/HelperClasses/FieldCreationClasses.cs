@@ -1851,6 +1851,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataStatusFieldIndex.IsActive);}
 		}
+		/// <summary>Creates a new RawTestDataStatusEntity.CanInvoice field instance</summary>
+		public static EntityField2 CanInvoice
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataStatusFieldIndex.CanInvoice);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity ReferralSourceEntity</summary>

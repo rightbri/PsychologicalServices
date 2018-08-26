@@ -979,6 +979,8 @@ namespace PsychologicalServices.Data
 		Name,
 		///<summary>IsActive. </summary>
 		IsActive,
+		///<summary>CanInvoice. </summary>
+		CanInvoice,
 		/// <summary></summary>
 		AmountOfFields
 	}

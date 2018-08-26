@@ -9,5 +9,7 @@ namespace PsychologicalServices.Models.RawTestData
         public string Name { get; set; }
 
         public bool IsActive { get; set; }
+
+        public bool CanInvoice { get; set; }
     }
 }

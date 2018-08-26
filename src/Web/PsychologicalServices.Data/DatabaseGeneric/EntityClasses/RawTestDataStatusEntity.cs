@@ -331,6 +331,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("CanInvoice", fieldHashtable);
 		}
 		#endregion
 
@@ -424,6 +426,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)RawTestDataStatusFieldIndex.IsActive, true); }
 			set	{ SetValue((int)RawTestDataStatusFieldIndex.IsActive, value); }
+		}
+
+		/// <summary> The CanInvoice property of the Entity RawTestDataStatus<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "RawTestDataStatuses"."CanInvoice"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean CanInvoice
+		{
+			get { return (System.Boolean)GetValue((int)RawTestDataStatusFieldIndex.CanInvoice, true); }
+			set	{ SetValue((int)RawTestDataStatusFieldIndex.CanInvoice, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'RawTestDataEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

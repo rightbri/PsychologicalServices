@@ -29,8 +29,10 @@ BEGIN
 	INNER JOIN dbo.Users psychologists ON rtd.PsychologistId = psychologists.UserId
 	INNER JOIN dbo.Claimants clm ON rtd.ClaimantId = clm.ClaimantId
 	INNER JOIN dbo.ReferralSources rs ON rtd.BillToReferralSourceId = rs.ReferralSourceId
+	INNER JOIN dbo.RawTestDataStatuses rtds ON rtd.RawTestDataStatusId = rtds.RawTestDataStatusId
 	WHERE 
-	NOT EXISTS (
+	rtds.CanInvoice = 1
+	AND NOT EXISTS (
 		SELECT
 		*
 		FROM dbo.InvoiceLineGroupRawTestData ilgr

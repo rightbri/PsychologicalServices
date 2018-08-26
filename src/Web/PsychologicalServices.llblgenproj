@@ -672,6 +672,7 @@
       </EntityDefinition>
       <EntityDefinition Name="RawTestDataStatus" ObjectID="bc95478f-6933-47de-b46d-35db2373f5fa">
         <Fields>
+          <Field Name="CanInvoice" Type="bool" FieldIndex="3" />
           <Field Name="IsActive" Type="bool" FieldIndex="2" />
           <Field Name="Name" Type="string" MaxLength="50" FieldIndex="1" />
           <Field Name="RawTestDataStatusId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
@@ -2297,6 +2298,7 @@
                     <Field Name="RawTestDataStatusId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" DbType="12" Length="50" />
                     <Field Name="IsActive" Ordinal="3" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
+                    <Field Name="CanInvoice" Ordinal="4" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                   </Fields>
                 </Table>
                 <Table Name="ReferralSourceInvoiceConfiguration">
@@ -3841,6 +3843,7 @@
         </EntityMapping>
         <EntityMapping EntityName=":RawTestDataStatus" TargetName="PsychologicalServices:dbo:RawTestDataStatuses">
           <FieldMappings>
+            <FieldMapping FieldName="CanInvoice" TargetFieldName="CanInvoice" />
             <FieldMapping FieldName="IsActive" TargetFieldName="IsActive" />
             <FieldMapping FieldName="Name" TargetFieldName="Name" />
             <FieldMapping FieldName="RawTestDataStatusId" TargetFieldName="RawTestDataStatusId" SequenceToUse="SCOPE_IDENTITY()" />

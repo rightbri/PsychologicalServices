@@ -730,6 +730,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("RawTestDataStatusEntity", "RawTestDataStatusId", typeof(System.Int32), true, false, true, false,  (int)RawTestDataStatusFieldIndex.RawTestDataStatusId, 0, 0, 10);
 			this.AddElementFieldInfo("RawTestDataStatusEntity", "Name", typeof(System.String), false, false, false, false,  (int)RawTestDataStatusFieldIndex.Name, 50, 0, 0);
 			this.AddElementFieldInfo("RawTestDataStatusEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)RawTestDataStatusFieldIndex.IsActive, 0, 0, 0);
+			this.AddElementFieldInfo("RawTestDataStatusEntity", "CanInvoice", typeof(System.Boolean), false, false, false, false,  (int)RawTestDataStatusFieldIndex.CanInvoice, 0, 0, 0);
 		}
 		/// <summary>Inits ReferralSourceEntity's FieldInfo objects</summary>
 		private void InitReferralSourceEntityInfos()
