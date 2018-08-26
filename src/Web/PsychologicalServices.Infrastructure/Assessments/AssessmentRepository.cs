@@ -89,6 +89,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
                             .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
                             .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
+                                .FilterOn(appointmentAttribute => appointmentAttribute.Attribute.IsActive)
                                 .SubPath(appointmentAttributePath => appointmentAttributePath
                                     .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
                                         .SubPath(attributePath => attributePath
@@ -116,6 +117,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                             .Prefetch<ColorEntity>(assessmentColor => assessmentColor.Color)
                         )
                     .Prefetch<AssessmentAttributeEntity>(assessment => assessment.AssessmentAttributes)
+                        .FilterOn(assessmentAttribute => assessmentAttribute.Attribute.IsActive)
                         .SubPath(assessmentAttributePath => assessmentAttributePath
                             .Prefetch<AttributeEntity>(assessmentAttribute => assessmentAttribute.Attribute)
                                 .SubPath(attributePath => attributePath

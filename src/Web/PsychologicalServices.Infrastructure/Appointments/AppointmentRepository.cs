@@ -59,6 +59,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                         //        )
                         //)
                     .Prefetch<AppointmentAttributeEntity>(appointment => appointment.AppointmentAttributes)
+                        .FilterOn(appointmentAttribute => appointmentAttribute.Attribute.IsActive)
                         .SubPath(appointmentAttributePath => appointmentAttributePath
                             .Prefetch<AttributeEntity>(appointmentAttribute => appointmentAttribute.Attribute)
                                 .SubPath(attributePath => attributePath
@@ -93,6 +94,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                         )
                                 )
                             .Prefetch<AssessmentAttributeEntity>(assessment => assessment.AssessmentAttributes)
+                                .FilterOn(assessmentAttribute => assessmentAttribute.Attribute.IsActive)
                                 .SubPath(assessmentAttributePath => assessmentAttributePath
                                     .Prefetch<AttributeEntity>(assessmentAttribute => assessmentAttribute.Attribute)
                                         .SubPath(attributePath => attributePath
