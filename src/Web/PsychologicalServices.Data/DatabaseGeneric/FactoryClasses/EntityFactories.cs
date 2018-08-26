@@ -918,26 +918,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 		#endregion
 	}
 
-	/// <summary>Factory to create new, empty InvoiceAppointmentEntity objects.</summary>
-	[Serializable]
-	public partial class InvoiceAppointmentEntityFactory : EntityFactoryBase2<InvoiceAppointmentEntity> {
-		/// <summary>CTor</summary>
-		public InvoiceAppointmentEntityFactory() : base("InvoiceAppointmentEntity", PsychologicalServices.Data.EntityType.InvoiceAppointmentEntity, false) { }
-		
-		/// <summary>Creates a new InvoiceAppointmentEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
-		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
-		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
-		public override IEntity2 Create(IEntityFields2 fields) {
-			IEntity2 toReturn = new InvoiceAppointmentEntity(fields);
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceAppointmentUsingFields
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-		#region Included Code
-
-		#endregion
-	}
-
 	/// <summary>Factory to create new, empty InvoiceDocumentEntity objects.</summary>
 	[Serializable]
 	public partial class InvoiceDocumentEntityFactory : EntityFactoryBase2<InvoiceDocumentEntity> {
@@ -1712,9 +1692,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					factoryToUse = new InvoiceEntityFactory();
-					break;
-				case PsychologicalServices.Data.EntityType.InvoiceAppointmentEntity:
-					factoryToUse = new InvoiceAppointmentEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceDocumentEntity:
 					factoryToUse = new InvoiceDocumentEntityFactory();

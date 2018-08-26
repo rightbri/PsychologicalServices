@@ -724,18 +724,6 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
-	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceAppointment.</summary>
-	public enum InvoiceAppointmentFieldIndex
-	{
-		///<summary>InvoiceAppointmentId. </summary>
-		InvoiceAppointmentId,
-		///<summary>InvoiceId. </summary>
-		InvoiceId,
-		///<summary>AppointmentId. </summary>
-		AppointmentId,
-		/// <summary></summary>
-		AmountOfFields
-	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceDocument.</summary>
 	public enum InvoiceDocumentFieldIndex
 	{
@@ -1274,8 +1262,6 @@ namespace PsychologicalServices.Data
 		EventEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
-		///<summary>InvoiceAppointment</summary>
-		InvoiceAppointmentEntity,
 		///<summary>InvoiceDocument</summary>
 		InvoiceDocumentEntity,
 		///<summary>InvoiceDocumentSendLog</summary>

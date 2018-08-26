@@ -530,13 +530,6 @@
           <Field Name="UpdateDate" Type="datetimeoffset" FieldIndex="4" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="InvoiceAppointment" ObjectID="8289fb7e-151c-4467-ac87-f72a74eacbdf">
-        <Fields>
-          <Field Name="AppointmentId" Type="int" IsAutoCreated="true" FieldIndex="2" />
-          <Field Name="InvoiceAppointmentId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
-          <Field Name="InvoiceId" Type="int" IsAutoCreated="true" FieldIndex="1" />
-        </Fields>
-      </EntityDefinition>
       <EntityDefinition Name="InvoiceDocument" ObjectID="40c3e1d2-b7e4-4927-86fc-90e13eb3571e">
         <Fields>
           <Field Name="CreateDate" Type="datetimeoffset" FieldIndex="3" />
@@ -1196,16 +1189,6 @@
           <FieldFieldRelationship FkField="PayableToId" PkField="UserId" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="InvoiceAppointment.Appointment-Appointment." Start=":InvoiceAppointment" End=":Appointment" StartNavigator="Appointment" Type="4">
-        <FieldRelationships>
-          <FieldFieldRelationship FkField="AppointmentId" PkField="AppointmentId" />
-        </FieldRelationships>
-      </NormalRelationship>
-      <NormalRelationship Name="InvoiceAppointment.Invoice-Invoice.InvoiceAppointments" Start=":InvoiceAppointment" End=":Invoice" StartNavigator="Invoice" EndNavigator="InvoiceAppointments" Type="4">
-        <FieldRelationships>
-          <FieldFieldRelationship FkField="InvoiceId" PkField="InvoiceId" />
-        </FieldRelationships>
-      </NormalRelationship>
       <NormalRelationship Name="InvoiceDocument.Invoice-Invoice.InvoiceDocuments" Start=":InvoiceDocument" End=":Invoice" StartNavigator="Invoice" EndNavigator="InvoiceDocuments" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="InvoiceId" PkField="InvoiceId" />
@@ -1458,7 +1441,6 @@
       <IndirectRelationship Start=":Address" End=":User" Relationship1="Company.NewAppointmentLocation-Address." Relationship2="Company.NewAppointmentPsychologist-User." />
       <IndirectRelationship Start=":Address" End=":User" Relationship1="Company.NewAppointmentLocation-Address." Relationship2="Company.NewAppointmentPsychometrist-User." />
       <IndirectRelationship Start=":Appointment" End=":Attribute" Relationship1="AppointmentAttribute.Appointment-Appointment.AppointmentAttributes" Relationship2="AppointmentAttribute.Attribute-Attribute.AppointmentAttributes" />
-      <IndirectRelationship Start=":Appointment" End=":Invoice" Relationship1="InvoiceAppointment.Appointment-Appointment." Relationship2="InvoiceAppointment.Invoice-Invoice.InvoiceAppointments" />
       <IndirectRelationship Start=":AppointmentStatus" End=":AppointmentSequence" Relationship1="AppointmentStatusInvoiceRate.AppointmentStatus-AppointmentStatus.AppointmentStatusInvoiceRates" Relationship2="AppointmentStatusInvoiceRate.AppointmentSequence-AppointmentSequence.AppointmentStatusInvoiceRates" />
       <IndirectRelationship Start=":AppointmentStatus" End=":AppointmentSequence" Relationship1="PsychometristInvoiceAmount.AppointmentStatus-AppointmentStatus.PsychometristInvoiceAmounts" Relationship2="PsychometristInvoiceAmount.AppointmentSequence-AppointmentSequence.PsychometristInvoiceAmounts" />
       <IndirectRelationship Start=":AppointmentStatus" End=":Assessment" Relationship1="Appointment.AppointmentStatus-AppointmentStatus.Appointments" Relationship2="Appointment.Assessment-Assessment.Appointments" />
@@ -1682,7 +1664,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-06-20T01:45:08.1186745Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-08-26T16:26:48.4889297Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2107,14 +2089,6 @@
                     <Field Name="Expires" Ordinal="6" DbType="30" />
                     <Field Name="IsActive" Ordinal="7" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
                     <Field Name="CompanyId" Ordinal="8" DbType="8" Precision="10" />
-                  </Fields>
-                </Table>
-                <Table Name="InvoiceAppointments">
-                  <PkConstraintName Name="PK_InvoiceAppointments" />
-                  <Fields>
-                    <Field Name="InvoiceAppointmentId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
-                    <Field Name="InvoiceId" Ordinal="2" DbType="8" Precision="10" />
-                    <Field Name="AppointmentId" Ordinal="3" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
                 <Table Name="InvoiceDocuments">
@@ -3040,16 +3014,6 @@
                 <FieldPair PkField="dbo:Companies:CompanyId" FkField="dbo:Events:CompanyId" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="dbo:InvoiceAppointments:FK_InvoiceAppointments_Appointments">
-              <FieldPairs>
-                <FieldPair PkField="dbo:Appointments:AppointmentId" FkField="dbo:InvoiceAppointments:AppointmentId" />
-              </FieldPairs>
-            </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="dbo:InvoiceAppointments:FK_InvoiceAppointments_Invoices">
-              <FieldPairs>
-                <FieldPair PkField="dbo:Invoices:InvoiceId" FkField="dbo:InvoiceAppointments:InvoiceId" />
-              </FieldPairs>
-            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:InvoiceDocuments:FK_InvoiceDocuments_Invoices">
               <FieldPairs>
                 <FieldPair PkField="dbo:Invoices:InvoiceId" FkField="dbo:InvoiceDocuments:InvoiceId" />
@@ -3699,13 +3663,6 @@
             <FieldMapping FieldName="TaxRate" TargetFieldName="TaxRate" />
             <FieldMapping FieldName="Total" TargetFieldName="Total" />
             <FieldMapping FieldName="UpdateDate" TargetFieldName="UpdateDate" />
-          </FieldMappings>
-        </EntityMapping>
-        <EntityMapping EntityName=":InvoiceAppointment" TargetName="PsychologicalServices:dbo:InvoiceAppointments">
-          <FieldMappings>
-            <FieldMapping FieldName="AppointmentId" TargetFieldName="AppointmentId" />
-            <FieldMapping FieldName="InvoiceAppointmentId" TargetFieldName="InvoiceAppointmentId" SequenceToUse="SCOPE_IDENTITY()" />
-            <FieldMapping FieldName="InvoiceId" TargetFieldName="InvoiceId" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":InvoiceDocument" TargetName="PsychologicalServices:dbo:InvoiceDocuments">

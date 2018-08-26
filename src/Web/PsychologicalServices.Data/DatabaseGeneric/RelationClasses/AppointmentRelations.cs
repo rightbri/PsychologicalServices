@@ -30,7 +30,6 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.AppointmentAttributeEntityUsingAppointmentId);
-			toReturn.Add(this.InvoiceAppointmentEntityUsingAppointmentId);
 			toReturn.Add(this.InvoiceLineGroupAppointmentEntityUsingAppointmentId);
 			toReturn.Add(this.AddressEntityUsingLocationId);
 			toReturn.Add(this.AppointmentStatusEntityUsingAppointmentStatusId);
@@ -55,21 +54,6 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, AppointmentAttributeFields.AppointmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentAttributeEntity", false);
-				return relation;
-			}
-		}
-
-		/// <summary>Returns a new IEntityRelation object, between AppointmentEntity and InvoiceAppointmentEntity over the 1:n relation they have, using the relation between the fields:
-		/// Appointment.AppointmentId - InvoiceAppointment.AppointmentId
-		/// </summary>
-		public virtual IEntityRelation InvoiceAppointmentEntityUsingAppointmentId
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "" , true);
-				relation.AddEntityFieldPair(AppointmentFields.AppointmentId, InvoiceAppointmentFields.AppointmentId);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AppointmentEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceAppointmentEntity", false);
 				return relation;
 			}
 		}
@@ -203,7 +187,6 @@ namespace PsychologicalServices.Data.RelationClasses
 	internal static class StaticAppointmentRelations
 	{
 		internal static readonly IEntityRelation AppointmentAttributeEntityUsingAppointmentIdStatic = new AppointmentRelations().AppointmentAttributeEntityUsingAppointmentId;
-		internal static readonly IEntityRelation InvoiceAppointmentEntityUsingAppointmentIdStatic = new AppointmentRelations().InvoiceAppointmentEntityUsingAppointmentId;
 		internal static readonly IEntityRelation InvoiceLineGroupAppointmentEntityUsingAppointmentIdStatic = new AppointmentRelations().InvoiceLineGroupAppointmentEntityUsingAppointmentId;
 		internal static readonly IEntityRelation AddressEntityUsingLocationIdStatic = new AppointmentRelations().AddressEntityUsingLocationId;
 		internal static readonly IEntityRelation AppointmentStatusEntityUsingAppointmentStatusIdStatic = new AppointmentRelations().AppointmentStatusEntityUsingAppointmentStatusId;

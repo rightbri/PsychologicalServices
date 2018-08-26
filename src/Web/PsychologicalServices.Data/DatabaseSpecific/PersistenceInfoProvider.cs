@@ -87,7 +87,6 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitEmployerTypeEntityMappings();
 			InitEventEntityMappings();
 			InitInvoiceEntityMappings();
-			InitInvoiceAppointmentEntityMappings();
 			InitInvoiceDocumentEntityMappings();
 			InitInvoiceDocumentSendLogEntityMappings();
 			InitInvoiceLineEntityMappings();
@@ -600,15 +599,6 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("InvoiceEntity", "Total", "Total", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 6);
 			this.AddElementFieldMapping("InvoiceEntity", "InvoiceTypeId", "InvoiceTypeId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 7);
 			this.AddElementFieldMapping("InvoiceEntity", "PayableToId", "PayableToId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
-		}
-
-		/// <summary>Inits InvoiceAppointmentEntity's mappings</summary>
-		private void InitInvoiceAppointmentEntityMappings()
-		{
-			this.AddElementMapping("InvoiceAppointmentEntity", @"PsychologicalServices", @"dbo", "InvoiceAppointments", 3, 0);
-			this.AddElementFieldMapping("InvoiceAppointmentEntity", "InvoiceAppointmentId", "InvoiceAppointmentId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
-			this.AddElementFieldMapping("InvoiceAppointmentEntity", "InvoiceId", "InvoiceId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
-			this.AddElementFieldMapping("InvoiceAppointmentEntity", "AppointmentId", "AppointmentId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
 		}
 
 		/// <summary>Inits InvoiceDocumentEntity's mappings</summary>

@@ -351,12 +351,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<InvoiceEntity>(); }
 		}
 
-		/// <summary>Creates and returns a new EntityQuery for the InvoiceAppointment entity</summary>
-		public EntityQuery<InvoiceAppointmentEntity> InvoiceAppointment
-		{
-			get { return Create<InvoiceAppointmentEntity>(); }
-		}
-
 		/// <summary>Creates and returns a new EntityQuery for the InvoiceDocument entity</summary>
 		public EntityQuery<InvoiceDocumentEntity> InvoiceDocument
 		{

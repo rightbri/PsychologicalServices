@@ -1388,26 +1388,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
-	/// <summary>Field Creation Class for entity InvoiceAppointmentEntity</summary>
-	public partial class InvoiceAppointmentFields
-	{
-		/// <summary>Creates a new InvoiceAppointmentEntity.InvoiceAppointmentId field instance</summary>
-		public static EntityField2 InvoiceAppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.InvoiceAppointmentId);}
-		}
-		/// <summary>Creates a new InvoiceAppointmentEntity.InvoiceId field instance</summary>
-		public static EntityField2 InvoiceId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.InvoiceId);}
-		}
-		/// <summary>Creates a new InvoiceAppointmentEntity.AppointmentId field instance</summary>
-		public static EntityField2 AppointmentId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(InvoiceAppointmentFieldIndex.AppointmentId);}
-		}
-	}
-
 	/// <summary>Field Creation Class for entity InvoiceDocumentEntity</summary>
 	public partial class InvoiceDocumentFields
 	{

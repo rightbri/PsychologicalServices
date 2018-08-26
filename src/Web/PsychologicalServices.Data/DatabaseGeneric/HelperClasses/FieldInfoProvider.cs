@@ -90,7 +90,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitEmployerTypeEntityInfos();
 			InitEventEntityInfos();
 			InitInvoiceEntityInfos();
-			InitInvoiceAppointmentEntityInfos();
 			InitInvoiceDocumentEntityInfos();
 			InitInvoiceDocumentSendLogEntityInfos();
 			InitInvoiceLineEntityInfos();
@@ -565,14 +564,6 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("InvoiceEntity", "Total", typeof(System.Int32), false, false, false, false,  (int)InvoiceFieldIndex.Total, 0, 0, 10);
 			this.AddElementFieldInfo("InvoiceEntity", "InvoiceTypeId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.InvoiceTypeId, 0, 0, 10);
 			this.AddElementFieldInfo("InvoiceEntity", "PayableToId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.PayableToId, 0, 0, 10);
-		}
-		/// <summary>Inits InvoiceAppointmentEntity's FieldInfo objects</summary>
-		private void InitInvoiceAppointmentEntityInfos()
-		{
-			this.AddFieldIndexEnumForElementName(typeof(InvoiceAppointmentFieldIndex), "InvoiceAppointmentEntity");
-			this.AddElementFieldInfo("InvoiceAppointmentEntity", "InvoiceAppointmentId", typeof(System.Int32), true, false, true, false,  (int)InvoiceAppointmentFieldIndex.InvoiceAppointmentId, 0, 0, 10);
-			this.AddElementFieldInfo("InvoiceAppointmentEntity", "InvoiceId", typeof(System.Int32), false, true, false, false,  (int)InvoiceAppointmentFieldIndex.InvoiceId, 0, 0, 10);
-			this.AddElementFieldInfo("InvoiceAppointmentEntity", "AppointmentId", typeof(System.Int32), false, true, false, false,  (int)InvoiceAppointmentFieldIndex.AppointmentId, 0, 0, 10);
 		}
 		/// <summary>Inits InvoiceDocumentEntity's FieldInfo objects</summary>
 		private void InitInvoiceDocumentEntityInfos()
