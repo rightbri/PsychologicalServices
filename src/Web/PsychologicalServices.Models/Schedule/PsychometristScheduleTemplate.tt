@@ -12,9 +12,6 @@
     <title></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<!--
-	<link href="https://fonts.googleapis.com/css?family=Martel" rel="stylesheet">
-	-->
 </head>
 <body style="font-family: 'Martel', Helvetica, sans-serif; font-size: 16px;">
 	<table style="border-collapse: collapse; border-spacing: 0; border-style: solid; border-width: 1px; border-color: #e0e0e0;  color: #444444;">
@@ -87,7 +84,7 @@
 					<# foreach (var claim in appointment.Assessment.Claims) { #>
 						<p>
 						<#= claim.Claimant.FirstName #>
-						&nbsp;<#= claim.Claimant.LastName #>
+						&nbsp;<#= claim.Claimant.LastName.FirstOrDefault() #>.
 						&nbsp;&#45;
 						&nbsp;<#= claim.Claimant.Age #>
 						&nbsp;<#= claim.Claimant.Gender #>
