@@ -110,7 +110,7 @@ namespace PsychologicalServices.Models.Invoices
             SenderEmail = assessment.Company.Email;
             RecipientEmail = assessment.ReferralSource.InvoicesContactEmail;
             CourtesyCopyEmail = appointment.Psychologist.Email;
-            EmailSubject = "Invoice";
+            EmailSubject = $"Invoice {invoice.Identifier}";
             EmailBody = $"Please see the attached invoice regarding the services for {claimant.FirstName} {claimant.LastName}.";
         }
     }

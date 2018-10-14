@@ -106,7 +106,7 @@ namespace PsychologicalServices.Models.Invoices
             SenderEmail = arbitration.Psychologist.Company.Email;
             RecipientEmail = arbitration.BillToContact.Email;
             CourtesyCopyEmail = arbitration.Psychologist.Email;
-            EmailSubject = "Invoice";
+            EmailSubject = $"Invoice {invoice.Identifier}";
             EmailBody = $"Please see the attached invoice regarding the services for {claimant.FirstName} {claimant.LastName}.";
         }
     }
