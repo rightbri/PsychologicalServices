@@ -28,7 +28,7 @@ namespace PsychologicalServices.Models.Claims
         {
             get
             {
-                return 70;
+                return 90;
             }
         }
 
