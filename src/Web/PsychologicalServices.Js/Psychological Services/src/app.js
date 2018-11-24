@@ -86,7 +86,8 @@ export class App {
 			{ route: 'documents', name: 'documents', moduleId: 'documents/documents', title: 'Documents', nav: true },
 			{ route: 'documents/:id', name: 'editDocument', moduleId: 'documents/editDocument', title: 'Edit Document', nav: false },
 			{ route: 'documents/add', name: 'addDocument', moduleId: 'documents/editDocument', title: 'Add Document', nav: false },
-			{ route: 'users/spinner', name: 'userSpinner', moduleId: 'users/userSpinner', title: 'Edit User Spinner', nav: true }
+			{ route: 'users/spinner', name: 'userSpinner', moduleId: 'users/userSpinner', title: 'Edit User Spinner', nav: true },
+			{ route: 'forms/typicalday', name: 'typicalDay', moduleId: 'forms/typicalDay', title: 'Typical Day', nav: true }
 			//{ route: '', name: '', moduleId: '', title: '', nav: false },
 		]);
 		

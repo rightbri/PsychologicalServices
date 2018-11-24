@@ -1,0 +1,117 @@
+<template>
+    <require from="resources/value-converters/filter"></require>
+    <require from="resources/value-converters/lower"></require>
+    <require from="resources/value-converters/proper"></require>
+    
+    <div class="uk-container">
+
+        <h1>Typical Day</h1>
+
+        <h2>Current Status</h2>
+
+        <div class="uk-overflow-auto" if.bind="frequencies">
+            <table class="uk-table uk-table-divider uk-table-small">
+                <tbody>
+                    <template repeat.for="frequency of frequencies">
+                        <tr class="uk-background-secondary uk-light">
+                            <td>${frequency.description}</td>
+                            <td>Affected by?</td>
+                            <td></td>
+                        </tr>
+                    
+                        <tr repeat.for="task of tasks | filter:'frequency':frequency.name">
+                            <td class="uk-padding-remove">
+                                ${task.description}
+                            </td>
+                            <td class="uk-padding-remove">
+                                <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                    <template repeat.for="issue of issues">
+                                        <label>
+                                            <input type="checkbox" class="uk-checkbox" model.bind="issue" checked.bind="task.issues" matcher.bind="issueMatcher" change.delegate="recalculate()" title.bind="issue.description" uk-tooltip />&nbsp;${issue.abbreviation}
+                                        </label>
+                                    </template>
+                                </div>
+                            </td>
+                            <td class="uk-padding-remove">
+                                <button type="button" class="uk-button uk-button-link" click.delegate="removeTask(task)" title="Remove task" uk-tooltip if.bind="task.isCustom">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    
+        <hr>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Create Task</legend>
+
+            <form class="uk-form-stacked uk-grid-medium uk-margin" uk-grid>
+
+                <div class="uk-width-1-1">
+
+                    <label for="frequency">Frequency</label>
+                    <select id="frequency" class="uk-select" value.bind="taskFrequency">
+                        <option repeat.for="frequency of frequencies" model.bind="frequency.name">${frequency.name}</option>
+                    </select>
+
+                </div>
+
+                <div class="uk-width-1-1">
+
+                    <label for="name">Name</label>
+                    <input class="uk-input" id="name" type="text" value.bind="taskName" />
+
+                </div>
+
+                <div class="uk-width-1-1">
+
+                    <label for="description">Description</label>
+                    <input class="uk-input" id="description" type="text" value.bind="taskDescription" />
+
+                </div>
+
+                <div class="uk-width-1-1">
+				    <button type="button" class="uk-button uk-button-default" click.delegate="addTask()">
+                        Create
+                    </button>
+                </div>
+
+            </form>
+        </fieldset>
+
+        <hr>
+        
+        <form class="uk-form-stacked uk-grid-medium uk-margin" uk-grid>
+
+            <div class="uk-width-1-1">
+                <label for="pronoun">Pronoun</label>
+                <input class="uk-input" id="pronoun" type="text" value.bind="pronoun" change.delegate="recalculate()" />
+
+            </div>
+
+            <div class="uk-width-1-1" if.bind="issueDescriptions.length > 0">
+                <p>
+                    Results:
+                </p>
+                <template repeat.for="issueDescription of issueDescriptions">
+                    <ul class="uk-margin">
+                        <li>
+                            ${pronoun | proper} ${issueDescription.description | lower} affect ${pronoun | lower} ability to:
+            
+                            <ul>
+                                <li repeat.for="task of issueDescription.tasks">${task.name}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </template>
+            </div>
+
+        </form>
+
+    </div>
+    
+</template>
