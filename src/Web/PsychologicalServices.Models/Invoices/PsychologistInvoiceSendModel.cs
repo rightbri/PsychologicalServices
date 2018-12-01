@@ -77,20 +77,16 @@ namespace PsychologicalServices.Models.Invoices
                 return;
             }
 
-            Func<Claims.Claim, bool> claimWithClaimantPredicate = (claim) => null != claim.Claimant &&
-                    !string.IsNullOrWhiteSpace(claim.Claimant.FirstName) &&
-                    !string.IsNullOrWhiteSpace(claim.Claimant.LastName);
-
             var hasClaimant = hasAssessment &&
-                null != assessment.Claims &&
-                assessment.Claims.Any(claimWithClaimantPredicate);
+                null != assessment.Claimant;
+
             if (!hasClaimant)
             {
                 _errors.Add("The related assessment has no claimant");
                 return;
             }
 
-            var claimant = assessment.Claims.First(claimWithClaimantPredicate).Claimant;
+            var claimant = assessment.Claimant;
 
             var hasCompanyEmail = !string.IsNullOrWhiteSpace(assessment.Company.Email);
             if (!hasCompanyEmail)

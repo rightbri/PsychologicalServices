@@ -53,10 +53,6 @@ export class EditAssessment {
 							
 							this.setCredibilityVisibility(this.assessment.assessmentType.name);
 							
-							if (this.assessment.claims && this.assessment.claims.length > 0) {
-								this.claimant = this.assessment.claims[0].claimant;
-							}
-							
 							return this.getData().then(() => {
 								this.assessmentTypeChanged();
 								
@@ -244,8 +240,8 @@ export class EditAssessment {
 	claimantSelected(e) {
 		let claimant = e.detail.claimant;
 		
-		this.claimant = claimant;
-		
+		this.assessment.claimant = claimant;
+		/*
 		if (this.assessment.claims && this.assessment.claims.length > 0) {
 			for (var claim of this.assessment.claims) {
 				claim.claimant = claimant;
@@ -256,8 +252,19 @@ export class EditAssessment {
 				{ 'claimant': claimant }
 			];
 		}
+		*/
+
+		this.loadClaimsForClaimant().then(data => this.assessment.claims = data);
 		
 		this.claimantEditModel = null;
+	}
+
+	loadClaimsForClaimant() {
+		return this.dataRepository.getClaimsForClaimant(this.assessment.claimant.claimantId).then(data => {
+			this.assessment.claimant.claims = data.slice(0);
+
+			return data;
+		});
 	}
 	
 	newClaimant() {
@@ -281,7 +288,7 @@ export class EditAssessment {
 	}
 	
 	newClaim() {
-		let claim = { claimant: this.claimant, isAdd: true };
+		let claim = { claimant: this.assessment.claimant, isAdd: true };
 		this.editClaim(claim);
 	}
 	

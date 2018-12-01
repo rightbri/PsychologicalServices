@@ -275,14 +275,14 @@ namespace PsychologicalServices.Models.Invoices
                     "\t\t\t\t\t\t\t\t");
             
             #line 221 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychologistInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.FirstName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.FirstName));
             
             #line default
             #line hidden
             this.Write(" ");
             
             #line 221 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychologistInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.LastName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.LastName));
             
             #line default
             #line hidden

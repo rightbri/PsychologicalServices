@@ -189,11 +189,11 @@
 			<div class="uk-width-1-3@s">
 				<label class="uk-form-label">Claimant</label>
 				<div class="uk-form-controls">
-					<search-claimant claimant.bind="claimant" selected.delegate="claimantSelected($event)" if.bind="!claimantEditModel"></search-claimant>
+					<search-claimant claimant.bind="assessment.claimant" selected.delegate="claimantSelected($event)" if.bind="!claimantEditModel"></search-claimant>
 					<p if.bind="claimant && !claimantEditModel">
-						${claimant.firstName} ${claimant.lastName}
-						<br>${claimant.dateOfBirth | age} - ${claimant.gender | gender}
-						<button type="button" class="uk-button uk-button-link" click.delegate="editClaimant(claimant)" title="Edit Claimant" uk-tooltip>
+						${assessment.claimant.firstName} ${assessment.claimant.lastName}
+						<br>${assessment.claimant.dateOfBirth | age} - ${assessment.claimant.gender | gender}
+						<button type="button" class="uk-button uk-button-link" click.delegate="editClaimant(assessment.claimant)" title="Edit Claimant" uk-tooltip>
 							<i class="fa fa-edit"></i>
 						</button>
 					</p>

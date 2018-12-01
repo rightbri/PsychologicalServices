@@ -38,6 +38,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentNoteEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentReportEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentTypeEntityUsingAssessmentTypeId);
+			toReturn.Add(this.ClaimantEntityUsingClaimantId);
 			toReturn.Add(this.CompanyEntityUsingCompanyId);
 			toReturn.Add(this.CredibilityEntityUsingNeurocognitiveCredibilityId);
 			toReturn.Add(this.CredibilityEntityUsingPsychologicalCredibilityId);
@@ -186,6 +187,20 @@ namespace PsychologicalServices.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "AssessmentType", false);
 				relation.AddEntityFieldPair(AssessmentTypeFields.AssessmentTypeId, AssessmentFields.AssessmentTypeId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between AssessmentEntity and ClaimantEntity over the m:1 relation they have, using the relation between the fields:
+		/// Assessment.ClaimantId - Claimant.ClaimantId
+		/// </summary>
+		public virtual IEntityRelation ClaimantEntityUsingClaimantId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Claimant", false);
+				relation.AddEntityFieldPair(ClaimantFields.ClaimantId, AssessmentFields.ClaimantId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ClaimantEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
 				return relation;
 			}
@@ -381,6 +396,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AssessmentNoteEntityUsingAssessmentIdStatic = new AssessmentRelations().AssessmentNoteEntityUsingAssessmentId;
 		internal static readonly IEntityRelation AssessmentReportEntityUsingAssessmentIdStatic = new AssessmentRelations().AssessmentReportEntityUsingAssessmentId;
 		internal static readonly IEntityRelation AssessmentTypeEntityUsingAssessmentTypeIdStatic = new AssessmentRelations().AssessmentTypeEntityUsingAssessmentTypeId;
+		internal static readonly IEntityRelation ClaimantEntityUsingClaimantIdStatic = new AssessmentRelations().ClaimantEntityUsingClaimantId;
 		internal static readonly IEntityRelation CompanyEntityUsingCompanyIdStatic = new AssessmentRelations().CompanyEntityUsingCompanyId;
 		internal static readonly IEntityRelation CredibilityEntityUsingNeurocognitiveCredibilityIdStatic = new AssessmentRelations().CredibilityEntityUsingNeurocognitiveCredibilityId;
 		internal static readonly IEntityRelation CredibilityEntityUsingPsychologicalCredibilityIdStatic = new AssessmentRelations().CredibilityEntityUsingPsychologicalCredibilityId;

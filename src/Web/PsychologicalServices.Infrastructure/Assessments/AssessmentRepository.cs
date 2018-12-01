@@ -72,15 +72,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Prefetch<UserEntity>(assessment => assessment.DocListWriter)
                     .Prefetch<UserEntity>(assessment => assessment.NotesWriter)
                     .Prefetch<CompanyEntity>(assessment => assessment.Company)
+                    .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
+                        .SubPath(claimantPath => claimantPath
+                            .Prefetch<ClaimEntity>(claimant => claimant.Claims)
+                        )
                     .Prefetch<CredibilityEntity>(assessment => assessment.NeurocognitiveCredibility)
                     .Prefetch<CredibilityEntity>(assessment => assessment.PsychologicalCredibility)
                     .Prefetch<DiagnosisFoundResponseEntity>(assessment => assessment.DiagnosisFoundResponse)
                     .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                         .SubPath(assessmentClaimPath => assessmentClaimPath
                             .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
-                                .SubPath(claimPath => claimPath
-                                    .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                )
                         )
                     .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                         .SubPath(appointmentPath => appointmentPath
@@ -106,10 +107,6 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 .SubPath(notePath => notePath
                                     .Prefetch<UserEntity>(note => note.CreateUser)
                                     .Prefetch<UserEntity>(note => note.UpdateUser)
-                                    //.Prefetch<UserNoteEntity>(note => note.UserNotes)
-                                    //    .SubPath(userNotePath => userNotePath
-                                    //        .Prefetch<UserEntity>(userNote => userNote.User)
-                                    //    )
                                 )
                         )
                     .Prefetch<AssessmentColorEntity>(assessment => assessment.AssessmentColors)
@@ -144,13 +141,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         .SubPath(assessmentPath => assessmentPath
                             .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
                             .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
-                            .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
-                                .SubPath(assessmentClaimPath => assessmentClaimPath
-                                    .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
-                                        .SubPath(claimPath => claimPath
-                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                        )
-                                )
+                            .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
                         )
                 );
 
@@ -248,9 +239,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     if (criteria.ClaimantId.HasValue)
                     {
                         appointments = appointments.Where(appointment =>
-                            appointment.Assessment.AssessmentClaims.Any(assessmentClaim =>
-                                assessmentClaim.Claim.ClaimantId == criteria.ClaimantId
-                            )
+                            appointment.Assessment.ClaimantId == criteria.ClaimantId
                         );
                     }
 
@@ -364,6 +353,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 assessmentEntity.IsReassessment = assessment.IsReassessment;
                 assessmentEntity.UpdateDate = _date.UtcNow;
                 assessmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
+
+                if (null == assessment.Claimant)
+                {
+                    assessmentEntity.SetNewFieldValue((int)AssessmentFieldIndex.ClaimantId, null);
+                }
+                else
+                {
+                    assessmentEntity.ClaimantId = assessment.Claimant.ClaimantId;
+                }
 
                 if (null == assessment.MedicalFileReceivedDate)
                 {
@@ -679,6 +677,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         claimEntity.InsuranceCompany = claim.InsuranceCompany;
                         claimEntity.ClaimantId = claim.Claimant.ClaimantId;
 
+                        //TODO: remove if this never happens
                         if (claim.Claimant.IsNew())
                         {
                             claimEntity.Claimant = new ClaimantEntity
@@ -699,6 +698,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         Claim = new ClaimEntity
                         {
                             ClaimantId = claim.Claimant.ClaimantId,
+                            //TODO: remove if this never happens
                             Claimant = claim.Claimant.IsNew()
                             ? new ClaimantEntity
                             {

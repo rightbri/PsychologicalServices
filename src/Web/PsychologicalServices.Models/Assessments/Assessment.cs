@@ -1,5 +1,4 @@
 ﻿using PsychologicalServices.Models.Appointments;
-using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
@@ -47,6 +46,8 @@ namespace PsychologicalServices.Models.Assessments
         public Company Company { get; set; }
 
         public Note Summary { get; set; }
+
+        public Claimant Claimant { get; set; }
 
         public IEnumerable<Claim> Claims { get; set; }
 

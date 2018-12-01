@@ -234,9 +234,9 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("ArbitrationEntity", "LetterOfUnderstandingSentDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)ArbitrationFieldIndex.LetterOfUnderstandingSentDate, 0, 0, 0);
 			this.AddElementFieldInfo("ArbitrationEntity", "PlaintiffLawyerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.PlaintiffLawyerId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationEntity", "BillToContactId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.BillToContactId, 0, 0, 10);
-			this.AddElementFieldInfo("ArbitrationEntity", "ClaimantId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.ClaimantId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationEntity", "PsychologistId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.PsychologistId, 0, 0, 10);
 			this.AddElementFieldInfo("ArbitrationEntity", "ArbitrationStatusId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ArbitrationFieldIndex.ArbitrationStatusId, 0, 0, 10);
+			this.AddElementFieldInfo("ArbitrationEntity", "ClaimantId", typeof(System.Int32), false, true, false, false,  (int)ArbitrationFieldIndex.ClaimantId, 0, 0, 10);
 		}
 		/// <summary>Inits ArbitrationClaimEntity's FieldInfo objects</summary>
 		private void InitArbitrationClaimEntityInfos()
@@ -282,6 +282,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("AssessmentEntity", "DiagnosisFoundReponseId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.DiagnosisFoundReponseId, 0, 0, 10);
 			this.AddElementFieldInfo("AssessmentEntity", "IsReassessment", typeof(System.Boolean), false, false, false, false,  (int)AssessmentFieldIndex.IsReassessment, 0, 0, 0);
 			this.AddElementFieldInfo("AssessmentEntity", "PreviouslySeenDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)AssessmentFieldIndex.PreviouslySeenDate, 0, 0, 0);
+			this.AddElementFieldInfo("AssessmentEntity", "ClaimantId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AssessmentFieldIndex.ClaimantId, 0, 0, 10);
 		}
 		/// <summary>Inits AssessmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAssessmentAttributeEntityInfos()
