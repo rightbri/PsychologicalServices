@@ -11,6 +11,8 @@ namespace PsychologicalServices.Models.Invoices
 
         string CourtesyCopyEmail { get; }
 
+        string ReplyToEmail { get; }
+
         string EmailBody { get; }
 
         string EmailSubject { get; }

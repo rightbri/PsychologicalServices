@@ -41,6 +41,11 @@ namespace PsychologicalServices.Models.Invoices
                     message.CC.Add(model.CourtesyCopyEmail);
                 }
 
+                if (!string.IsNullOrWhiteSpace(model.ReplyToEmail))
+                {
+                    message.ReplyToList.Add(model.ReplyToEmail);
+                }
+
                 message.Attachments.Add(
                     new Attachment(new MemoryStream(model.InvoiceDocument.Content), model.InvoiceDocument.FileName)
                 );

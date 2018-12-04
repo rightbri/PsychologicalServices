@@ -32,6 +32,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public string CourtesyCopyEmail { get; private set; }
 
+        public string ReplyToEmail { get; private set; }
+
         public string EmailBody { get; private set; }
 
         public string EmailSubject { get; private set; }
@@ -110,6 +112,7 @@ namespace PsychologicalServices.Models.Invoices
             SenderEmail = assessment.Company.Email;
             RecipientEmail = assessment.ReferralSource.InvoicesContactEmail;
             CourtesyCopyEmail = appointment.Psychologist.Email;
+            ReplyToEmail = assessment.Company.ReplyToEmail;
             EmailSubject = $"Invoice {invoice.Identifier}";
             EmailBody = $"Please see the attached invoice regarding the services for {claimant.FirstName} {claimant.LastName}.";
         }
