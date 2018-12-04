@@ -1,0 +1,210 @@
+<template>
+    <require from="resources/value-converters/lower"></require>
+    <require from="resources/value-converters/proper"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="resources/value-converters/array-to-string"></require>
+    <require from="resources/value-converters/filter"></require>
+    
+    <div class="uk-container">
+
+        <form class="uk-form-stacked">
+
+            <div class="uk-margin">
+                <label class="uk-form-label">Gender</label>
+                <select class="uk-select uk-form-small uk-form-width-small" value.bind="results.gender" change.delegate="genderChanged(results.gender)">
+                    <option></option>
+                    <option repeat.for="gender of genders" model.bind="gender">${gender.description}</option>
+                </select>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label">
+                    <input class="uk-checkbox" type="checkbox" checked.bind="results.isCredible" />&nbsp;Is Credible?
+                </label>
+            </div>
+
+            <fieldset class="uk-fieldset">
+                <legend class="uk-legend">Psychological Tests</legend>
+
+                <div class="uk-margin">
+                    <div class="uk-form-label">Tests</div>
+                    <div class="uk-form-controls">
+                        <label class="uk-form-label" repeat.for="test of psychologicalTests">
+                            <input type="checkbox" class="uk-checkbox" model.bind="test" checked.bind="results.psychologicalTests" />&nbsp;${test.name}
+                        </label>
+                    </div>
+                </div>
+    
+                <div class="uk-section uk-section-small">
+                    <h3>Pain & Somatic Issues</h3>
+
+                    <div class="uk-section uk-section-small uk-child-width-1-2" uk-grid>
+                        <h4 class="uk-width-1-1">Visual Analogue Pain Scales</h4>
+        
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="currentPainRating">Current Pain Rating</label>
+                            <select id="currentPainRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.currentRating">
+                                <option></option>
+                                <option repeat.for="rating of painRatings" model.bind="rating">${rating.description}</option>
+                            </select>
+                        </div>
+            
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="currentPainNumber">Current Pain Number</label>
+                            <select id="currentPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.currentNumber">
+                                <option></option>
+                                <option repeat.for="i of painScale" model.bind="i">${i}</option>
+                            </select>
+                        </div>
+            
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="badDayPainNumber">Bad Day Pain Number</label>
+                            <select id="badDayPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.badDayNumber">
+                                <option></option>
+                                <option repeat.for="i of painScale" model.bind="i">${i}</option>
+                            </select>
+                        </div>
+            
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="goodDayPainNumber">Good Day Pain Number</label>
+                            <select id="goodDayPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.goodDayNumber">
+                                <option></option>
+                                <option repeat.for="i of painScale" model.bind="i">${i}</option>
+                            </select>
+                        </div>
+            
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="comparedToChronicRating">Compared to Chronic Rating</label>
+                            <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.comparedToChronicRating">
+                                <option></option>
+                                <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
+                            </select>
+                        </div>
+        
+                    </div>
+                    
+                    <div class="uk-section uk-section-small">
+                        <h4>Pain Disability Index</h4>
+            
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="comparedToChronicRating">Self Perceived Disability</label>
+                            <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.disabilityIndex.perceivedDisability">
+                                <option></option>
+                                <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
+                            </select>
+                        </div>
+        
+                        <div class="uk-margin">
+                            <div class="uk-form-label">Areas of Dysfunction</div>
+                            <div class="uk-form-controls uk-child-width-1-2" uk-grid>
+                                <div repeat.for="dysfunctionRating of results.painIssues.disabilityIndex.dysfunctionRatings">
+                                    <label class="uk-form-label" for="dysfunction-${$index}">${dysfunctionRating.area.description}</label>
+                                    <select id="dysfunction-${$index}" class="uk-select uk-form-small uk-form-width-small" value.bind="dysfunctionRating.rating">
+                                        <option></option>
+                                        <option repeat.for="rating of dysfunctionRatings" model.bind="rating">${rating.description}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+                
+            </fieldset>
+            
+
+            <fieldset class="uk-fieldset">
+                <legend class="uk-legend">Neurocognitive Tests</legend>
+
+                <div class="uk-section uk-section-small">
+                    <h4>Rivermead Post-Concussion Symptoms Questionnaire</h4>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label">
+                            <input type="checkbox" class="uk-checkbox" checked.bind="results.includeRivermead" />&nbsp;Include Rivermead section
+                        </label>
+                    </div>
+
+                    <div class="uk-margin" if.bind="results.includeRivermead">
+                        <label class="uk-form-label" for="concussionPerceivedDisability">Perceived Disability</label>
+                        <select id="concussionPerceivedDisability" class="uk-select uk-form-small uk-form-width-small" value.bind="results.concussionSymptoms.perceivedDisability">
+                            <option></option>
+                            <option repeat.for="rating of concussionDisabilityRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin" if.bind="results.includeRivermead">
+                        <div class="uk-form-label">Current Symptoms</div>
+                        <div class="uk-form-controls">
+                            <label class="uk-form-label" repeat.for="symptom of concussionSymptoms">
+                                <input type="checkbox" class="uk-checkbox" model.bind="symptom" checked.bind="results.concussionSymptoms.currentSymptoms" change.delegate="concussionSymptomChange(symptom)" />&nbsp;${symptom.description}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin" if.bind="results.includeRivermead">
+                        <div class="uk-form-label">
+                            Additional Symptoms
+                            <button type="button" class="uk-button uk-button-link" click.delegate="addAdditionalConcussionSymptom(symptom)" title="Add symptom" uk-tooltip>
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="uk-form-controls">
+                            <ul class="uk-list">
+                                <li repeat.for="i of results.concussionSymptoms.additionalSymptoms.length">
+                                    <input class="uk-input uk-form-small uk-form-width-small" type="text" placeholder="Symptom" value.bind="$parent.results.concussionSymptoms.additionalSymptoms[i]" change.delegate="concussionAdditionalSymptomChange()" />
+                                    <button type="button" class="uk-button uk-button-link" click.delegate="removeAdditionalConcussionSymptom($parent.results.concussionSymptoms.additionalSymptoms[i])" title="Remove symptom" uk-tooltip>
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </fieldset>
+
+        </form>
+
+    </div>
+
+    <div class="uk-container" style="font-family: arial, sans-serif; font-size: 11pt;">
+
+        <p>
+            In this present evaluation, the results for pain severity, as measured by Visual Analogue Pain Scales
+            <span if.bind="!results.isCredible"> (which does not have any validity measures)</span>, 
+            show a current pain rating to be in ${results.painIssues.visualScale.currentRating.templatePrefix} ${results.painIssues.visualScale.currentRating.description} band (${results.painIssues.visualScale.currentNumber}/${painScaleMax}); 
+            with respect to chronic pain patient norms, and that the pain can increase to a 
+            ${results.painIssues.visualScale.badDayNumber}/${painScaleMax} on a “bad” day, and only goes to a ${results.painIssues.visualScale.goodDayNumber}/${painScaleMax} on a “good” day.  
+            These findings indicate that a level of pain severity and associated symptomatology 
+            is being reported that is ${results.painIssues.visualScale.comparedToChronicRating.description} what is experienced by individuals who are suffering from chronic pain.
+        </p>
+
+        <p>
+            In this present evaluation, ${results.pronoun.possessiveAdjective} aggregate result for the Pain Disability Index (PDI) shows that ${results.pronoun.subject} 
+            rated in ${results.painIssues.disabilityIndex.perceivedDisability.templatePrefix} ${results.painIssues.disabilityIndex.perceivedDisability.description} for level of self-perceived disability as a result of ${results.pronoun.possessiveAdjective} pain symptomatology, 
+            with respect to chronic pain patient norms.  In particular, ${results.pronoun.subject} ascribed an above average degree of dysfunction 
+            for ${results.pronoun.possessiveAdjective} {recreational activities}; and ascribed an average level of dysfunction for ${results.pronoun.possessiveAdjective} 
+            ${results.painIssues.disabilityIndex.dysfunctionRatings | filter:"rating.description":"average" | arrayToString} {self-care tasks, 
+            social activities, life support activities, sexual behaviours, occupational pursuits, and family/home responsibilities}.
+        </p>
+        
+
+        <h5 if.bind="results.includeRivermead" style="text-decoration: underline;">Concussion Symptoms:</h5>
+        <p if.bind="results.includeRivermead">
+            On the Rivermead Post-Concussion Symptoms Questionnaire the current aggregate result 
+            (based on the self-report alone) is currently in 
+            ${results.concussionSymptoms.perceivedDisability.templatePrefix} ${results.concussionSymptoms.perceivedDisability.description} 
+            for level of self-perceived disability associated with post-concussive symptomatology with respect to individuals 
+            diagnosed with this syndrome.  
+            In particular, current issues and troubles include 
+            ${results.concussionSymptoms.currentSymptoms | sortArray:{property: 'order', direction: 'asc'} | arrayToString:getConcussionSymptomText & signal:'concussion-symptoms-updated'}.
+            <span if.bind="results.concussionSymptoms.additionalSymptoms.length">
+                He? additionally reporting experiencing ${results.concussionSymptoms.additionalSymptoms | arrayToString & signal:'concussion-additional-symptoms-updated'}.
+            </span>
+        </p>
+                
+    </div>
+
+</template>

@@ -6,7 +6,7 @@
  *
  * Usage:
  *   <require from="sort-array"></require>
- *   <pre>${object | sort:{ property: 'doc_count', direction: 'desc' } }</pre>
+ *   <pre>${object | sortArray:{ property: 'doc_count', direction: 'desc' } }</pre>
  */
 export class SortArrayValueConverter {
   /**
