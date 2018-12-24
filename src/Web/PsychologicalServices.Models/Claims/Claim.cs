@@ -6,8 +6,6 @@ namespace PsychologicalServices.Models.Claims
     {
         public int ClaimId { get; set; }
 
-        public Claimant Claimant { get; set; }
-
         public DateTimeOffset? DateOfLoss { get; set; }
 
         public string ClaimNumber { get; set; }

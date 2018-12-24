@@ -9,15 +9,12 @@ namespace PsychologicalServices.Models.Arbitrations
 {
     public class ArbitrationValidator : IArbitrationValidator
     {
-        private readonly IClaimRepository _claimRepository = null;
         private readonly IContactRepository _contactRepository = null;
 
         public ArbitrationValidator(
-            IClaimRepository claimRepository,
             IContactRepository contactRepository
         )
         {
-            _claimRepository = claimRepository;
             _contactRepository = contactRepository;
         }
 
@@ -38,19 +35,6 @@ namespace PsychologicalServices.Models.Arbitrations
                 result.ValidationErrors.Add(
                     new ValidationError { PropertyName = "Claims", Message = GetValidationMessage(item, "At least one claim must be selected") }
                 );
-            }
-            else
-            {
-                foreach (var claim in item.Claims)
-                {
-                    var c = _claimRepository.GetClaim(claim.ClaimId);
-                    if (null == c)
-                    {
-                        result.ValidationErrors.Add(
-                            new ValidationError { PropertyName = "ClaimId", Message = GetValidationMessage(item, $"Invalid Claim with claim number: {claim.ClaimNumber}") }
-                        );
-                    }
-                }
             }
 
             if (string.IsNullOrWhiteSpace(item.Title))

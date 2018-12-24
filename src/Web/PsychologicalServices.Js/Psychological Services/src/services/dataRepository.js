@@ -325,14 +325,6 @@ export class DataRepository {
 	deleteClaimant(id) {
 		return this.deleteBasic(id, 'claimant');
 	}
-	
-	saveClaim(claim) {
-		return this.saveBasic(claim, 'claim');
-	}
-	
-	getClaimsForClaimant(id) {
-		return this.getManyBasic('claim/claimants/' + id);
-	}
 
 	getIssuesInDispute() {
 		return this.getManyBasic('issueindispute', true);

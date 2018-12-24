@@ -68,6 +68,16 @@ export class EditClaimantCustomElement {
 
 		this.age = null;
 	}
+
+	newClaim() {
+		let claim = { isAdd: true };
+		this.model.claimant.claims.push(claim);
+	}
+
+	removeClaim(claim) {
+		this.model.claimant.claims.splice(this.model.claimant.claims.indexOf(claim), 1);
+	}
+	
 }
 
 function getBackup(obj) {

@@ -81,15 +81,13 @@
 					<#= appointment.Assessment.ReferralSource.Name #>
 				</td>
 				<td style="<#= bodyCellStyles #>">
-					<# foreach (var claim in appointment.Assessment.Claims) { #>
-						<p>
-						<#= claim.Claimant.FirstName #>
-						&nbsp;<#= claim.Claimant.LastName.FirstOrDefault() #>.
+					<p>
+						<#= appointment.Assessment.Claimant.FirstName #>
+						&nbsp;<#= appointment.Assessment.Claimant.LastName #>
 						&nbsp;&#45;
-						&nbsp;<#= claim.Claimant.Age #>
-						&nbsp;<#= claim.Claimant.Gender #>
-						</p>
-					<# } #>
+						&nbsp;<#= appointment.Assessment.Claimant.Age #>
+						&nbsp;<#= appointment.Assessment.Claimant.Gender #>
+					</p>
 				</td>
 				<td style="<#= bodyCellStyles #>">
 					<ul style="padding: 0; list-style-type: none;">

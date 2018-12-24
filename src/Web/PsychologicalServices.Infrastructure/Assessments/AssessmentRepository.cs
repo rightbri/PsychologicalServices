@@ -641,79 +641,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Where(assessmentClaim => !assessment.Claims.Any(claim => claim.ClaimId == assessmentClaim.ClaimId))
                     .ToList();
 
-                var claimsToUpdate = assessment.Claims
-                    .Where(claim => assessmentEntity.AssessmentClaims
-                        .Any(assessmentClaim =>
-                            assessmentClaim.ClaimId == claim.ClaimId &&
-                            (
-                            assessmentClaim.Claim.ClaimantId != claim.Claimant.ClaimantId ||
-                            assessmentClaim.Claim.ClaimNumber != claim.ClaimNumber ||
-                            assessmentClaim.Claim.DateOfLoss != claim.DateOfLoss ||
-                            assessmentClaim.Claim.Lawyer != claim.Lawyer ||
-                            assessmentClaim.Claim.InsuranceCompany != claim.InsuranceCompany
-                            )
-                        )
-                    )
-                    .ToList();
-                
                 foreach (var assessmentClaim in claimsToRemove)
                 {
                     uow.AddForDelete(assessmentClaim);
-                    uow.AddForDelete(assessmentClaim.Claim);
-                }
-
-                foreach (var claim in claimsToUpdate)
-                {
-                    var claimEntity = assessmentEntity.AssessmentClaims
-                        .Where(assessmentClaim => assessmentClaim.ClaimId == claim.ClaimId)
-                        .Select(assessmentClaim => assessmentClaim.Claim)
-                        .SingleOrDefault();
-
-                    if (null != claimEntity)
-                    {
-                        claimEntity.ClaimNumber = claim.ClaimNumber;
-                        claimEntity.DateOfLoss = claim.DateOfLoss;
-                        claimEntity.Lawyer = claim.Lawyer;
-                        claimEntity.InsuranceCompany = claim.InsuranceCompany;
-                        claimEntity.ClaimantId = claim.Claimant.ClaimantId;
-
-                        //TODO: remove if this never happens
-                        if (claim.Claimant.IsNew())
-                        {
-                            claimEntity.Claimant = new ClaimantEntity
-                            {
-                                FirstName = claim.Claimant.FirstName,
-                                LastName = claim.Claimant.LastName,
-                                DateOfBirth = claim.Claimant.DateOfBirth,
-                                Gender = claim.Claimant.Gender,
-                                IsActive = claim.Claimant.IsActive,
-                            };
-                        }
-                    }
                 }
 
                 assessmentEntity.AssessmentClaims.AddRange(
                     claimsToAdd.Select(claim => new AssessmentClaimEntity
                     {
-                        Claim = new ClaimEntity
-                        {
-                            ClaimantId = claim.Claimant.ClaimantId,
-                            //TODO: remove if this never happens
-                            Claimant = claim.Claimant.IsNew()
-                            ? new ClaimantEntity
-                            {
-                                FirstName = claim.Claimant.FirstName,
-                                LastName = claim.Claimant.LastName,
-                                DateOfBirth = claim.Claimant.DateOfBirth,
-                                Gender = claim.Claimant.Gender,
-                                IsActive = claim.Claimant.IsActive,
-                            }
-                            : null,
-                            ClaimNumber = claim.ClaimNumber,
-                            DateOfLoss = claim.DateOfLoss,
-                            Lawyer = claim.Lawyer,
-                            InsuranceCompany = claim.InsuranceCompany,
-                        },
+                        AssessmentId = assessment.AssessmentId,
+                        ClaimId = claim.ClaimId
                     })
                 );
 

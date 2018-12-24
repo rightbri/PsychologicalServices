@@ -2,6 +2,7 @@
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/gender"></require>
 	<require from="resources/value-converters/age"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-mask"></require>
 	<require from="resources/elements/edit-panel"></require>
@@ -62,6 +63,50 @@
 						<label class="uk-form-label" for="active">
 							<input id="active" type="checkbox" class="uk-checkbox" checked.bind="model.claimant.isActive" />&nbsp;Is Active?
 						</label>
+					</div>
+				</div>
+
+				<div>
+					<label class="uk-form-label">Claims</label>
+					<div class="uk-form-controls">
+						<table class="uk-table uk-table-divider uk-table-small">
+							<thead>
+								<tr>
+									<th>
+										<button type="button" class="uk-button uk-button-link" click.delegate="newClaim()" title="Add claim" uk-tooltip>
+											<i class="fa fa-plus"></i>
+										</button>
+									</th>
+									<th>Date of Loss</th>
+									<th>Lawyer</th>
+									<th>Claim #</th>
+									<th>Insurance Company</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr repeat.for="claim of model.claimant.claims">
+									<td></td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-small" date-mask.bind="config.datemaskOptions" value.bind="claim.dateOfLoss | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+									</td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-medium" value.bind="claim.lawyer" />
+									</td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-small" pattern="[A-Za-z0-9-]+" value.bind="claim.claimNumber" />
+									</td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-medium" value.bind="claim.insuranceCompany" />
+									</td>
+									<td>
+										<button type="button" class="uk-button uk-button-link" click.delegate="removeClaim(claim)" title="Remove claim" uk-tooltip>
+											<i class="fa fa-times"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

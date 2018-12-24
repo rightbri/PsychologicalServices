@@ -1,8 +1,10 @@
-﻿using PsychologicalServices.Data.EntityClasses;
+﻿using PsychologicalServices.Data;
+using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Claims;
 using SD.LLBLGen.Pro.LinqSupportClasses;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,16 @@ namespace PsychologicalServices.Infrastructure.Claims
         ) : base(adapterFactory)
         {
         }
+
+        #region Prefetch Paths
+
+        private static readonly Func<IPathEdgeRootParser<ClaimantEntity>, IPathEdgeRootParser<ClaimantEntity>>
+            ClaimantWithClaimPath =
+                (claimantPath => claimantPath
+                    .Prefetch<ClaimEntity>(claimant => claimant.Claims)
+                );
+
+        #endregion
 
         public Claim GetClaim(int id)
         {
@@ -37,9 +49,10 @@ namespace PsychologicalServices.Infrastructure.Claims
                 var meta = new LinqMetaData(adapter);
 
                 return meta.Claimant
+                    .WithPath(ClaimantWithClaimPath)
                     .Where(claimant => claimant.ClaimantId == id)
                     .SingleOrDefault()
-                    .ToClaimant();
+                    .ToClaimantWithClaims();
             }
         }
 
@@ -56,44 +69,6 @@ namespace PsychologicalServices.Infrastructure.Claims
             }
         }
 
-        public IEnumerable<Claim> GetAssessmentClaims(int assessmentId)
-        {
-            using (var adapter = AdapterFactory.CreateAdapter())
-            {
-                var meta = new LinqMetaData(adapter);
-
-                var assessmentEntity = meta.Assessment
-                    .Where(assessment => assessment.AssessmentId == assessmentId)
-                    .SingleOrDefault();
-
-                return null != assessmentEntity
-                    ? Execute<ClaimEntity>(
-                            (ILLBLGenProQuery)
-                            assessmentEntity.AssessmentClaims
-                                .Select(assessmentClaim => assessmentClaim.Claim)
-                        )
-                        .Select(claim => claim.ToClaim())
-                        .ToList()
-                    : Enumerable.Empty<Claim>();
-            }
-        }
-
-        public IEnumerable<Claim> GetClaimsForClaimant(int claimantId)
-        {
-            using (var adapter = AdapterFactory.CreateAdapter())
-            {
-                var meta = new LinqMetaData(adapter);
-
-                return Execute<ClaimEntity>(
-                        (ILLBLGenProQuery)
-                        meta.Claim
-                            .Where(claim => claim.ClaimantId == claimantId)
-                    )
-                    .Select(claim => claim.ToClaim())
-                    .ToList();
-            }
-        }
-
         public IEnumerable<Claimant> SearchClaimants(string name)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -103,10 +78,11 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return Execute<ClaimantEntity>(
                     (ILLBLGenProQuery)
                     meta.Claimant
+                    .WithPath(ClaimantWithClaimPath)
                     .Where(claimant => claimant.LastName.Contains(name) || claimant.FirstName.Contains(name))
                     .Take(20)
                 )
-                .Select(claimant => claimant.ToClaimant())
+                .Select(claimant => claimant.ToClaimantWithClaims())
                 .ToList();
             }
         }
@@ -145,9 +121,10 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return Execute<ClaimantEntity>(
                     (ILLBLGenProQuery)
                     claimants
+                    .WithPath(ClaimantWithClaimPath)
                     .Take(20)
                 )
-                .Select(claimant => claimant.ToClaimant())
+                .Select(claimant => claimant.ToClaimantWithClaims())
                 .ToList();
             }
         }
@@ -205,39 +182,12 @@ namespace PsychologicalServices.Infrastructure.Claims
             );
         }
 
-        public int SaveClaim(Claim claim)
-        {
-            using (var adapter = AdapterFactory.CreateAdapter())
-            {
-                var isNew = claim.IsNew();
-
-                var entity = new ClaimEntity
-                {
-                    IsNew = isNew,
-                    ClaimId = claim.ClaimId,
-                };
-
-                if (!isNew)
-                {
-                    adapter.FetchEntity(entity);
-                }
-
-                entity.ClaimantId = claim.Claimant.ClaimantId;
-                entity.ClaimNumber = claim.ClaimNumber;
-                entity.DateOfLoss = claim.DateOfLoss;
-                entity.Lawyer = claim.Lawyer;
-                entity.InsuranceCompany = claim.InsuranceCompany;
-                
-                adapter.SaveEntity(entity, false);
-
-                return entity.ClaimId;
-            }
-        }
-
         public int SaveClaimant(Claimant claimant)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var uow = new UnitOfWork2();
+
                 var isNew = claimant.IsNew();
 
                 var entity = new ClaimantEntity
@@ -248,7 +198,11 @@ namespace PsychologicalServices.Infrastructure.Claims
 
                 if (!isNew)
                 {
-                    adapter.FetchEntity(entity);
+                    var prefetch = new PrefetchPath2(EntityType.ClaimantEntity);
+
+                    prefetch.Add(ClaimantEntity.PrefetchPathClaims);
+
+                    adapter.FetchEntity(entity, prefetch);
                 }
 
                 entity.FirstName = claimant.FirstName;
@@ -257,7 +211,59 @@ namespace PsychologicalServices.Infrastructure.Claims
                 entity.Gender = claimant.Gender;
                 entity.IsActive = claimant.IsActive;
 
-                adapter.SaveEntity(entity, false);
+                var claimsToRemove = entity.Claims
+                    .Where(claimantClaim => !claimant.Claims.Any(claim => claim.ClaimId == claimantClaim.ClaimId))
+                    .ToList();
+
+                var claimsToAdd = claimant.Claims
+                    .Where(claim => !entity.Claims.Any(claimantClaim => claimantClaim.ClaimId == claim.ClaimId))
+                    .ToList();
+
+                var claimsToUpdate = claimant.Claims
+                    .Where(claim => entity.Claims.Any(claimantClaim =>
+                        claim.ClaimId == claimantClaim.ClaimId &&
+                        (
+                        claim.ClaimNumber != claimantClaim.ClaimNumber ||
+                        claim.DateOfLoss != claimantClaim.DateOfLoss ||
+                        claim.InsuranceCompany != claimantClaim.InsuranceCompany ||
+                        claim.Lawyer != claimantClaim.Lawyer
+                        )
+                    ))
+                    .ToList();
+
+                foreach (var claim in claimsToRemove)
+                {
+                    uow.AddForDelete(claim);
+                }
+
+                foreach (var claim in claimsToUpdate)
+                {
+                    var claimEntity = entity.Claims
+                        .Where(claimantClaim => claimantClaim.ClaimId == claim.ClaimId)
+                        .SingleOrDefault();
+
+                    if (null != claimEntity)
+                    {
+                        claimEntity.ClaimNumber = claim.ClaimNumber;
+                        claimEntity.DateOfLoss = claim.DateOfLoss;
+                        claimEntity.Lawyer = claim.Lawyer;
+                        claimEntity.InsuranceCompany = claim.InsuranceCompany;
+                    }
+                }
+
+                entity.Claims.AddRange(
+                    claimsToAdd.Select(claim => new ClaimEntity
+                    {
+                        ClaimNumber = claim.ClaimNumber,
+                        DateOfLoss = claim.DateOfLoss,
+                        Lawyer = claim.Lawyer,
+                        InsuranceCompany = claim.InsuranceCompany,
+                    })
+                );
+
+                uow.AddForSave(entity);
+
+                uow.Commit(adapter);
 
                 return entity.ClaimantId;
             }
@@ -298,7 +304,6 @@ namespace PsychologicalServices.Infrastructure.Claims
                 var success = adapter.DeleteEntity(
                     new ClaimantEntity(id)
                 );
-
 
                 return success;
             }

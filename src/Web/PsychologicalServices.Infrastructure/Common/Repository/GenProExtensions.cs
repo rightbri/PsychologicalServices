@@ -223,7 +223,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Title = arbitration.Title,
                     Psychologist = arbitration.Psychologist.ToUser(),
                     Claimant = arbitration.Claimant.ToClaimantWithClaims(),
-                    Claims = arbitration.ArbitrationClaims.Select(arbitrationClaim => arbitrationClaim.Claim.ToClaimWithoutClaimant()),
+                    Claims = arbitration.ArbitrationClaims.Select(arbitrationClaim => arbitrationClaim.Claim.ToClaim()),
                     StartDate = arbitration.StartDate,
                     EndDate = arbitration.EndDate,
                     AvailableDate = arbitration.AvailableDate,
@@ -235,36 +235,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     BillToContact = arbitration.BillToContact.ToContact(),
                     Note = arbitration.Note.ToNote(),
                     ArbitrationStatus = arbitration.ArbitrationStatus.ToArbitrationStatus(),
-                }
-                : null;
-        }
-
-        public static Claimant ToClaimantWithClaims(this ClaimantEntity claimant)
-        {
-            return null != claimant
-                ? new Claimant
-                {
-                    ClaimantId = claimant.ClaimantId,
-                    FirstName = claimant.FirstName,
-                    LastName = claimant.LastName,
-                    DateOfBirth = claimant.DateOfBirth,
-                    Gender = claimant.Gender,
-                    IsActive = claimant.IsActive,
-                    Claims = claimant.Claims.Select(claim => claim.ToClaimWithoutClaimant()),
-                }
-                : null;
-        }
-
-        public static Claim ToClaimWithoutClaimant(this ClaimEntity claim)
-        {
-            return null != claim
-                ? new Claim
-                {
-                    ClaimId = claim.ClaimId,
-                    ClaimNumber = claim.ClaimNumber,
-                    DateOfLoss = claim.DateOfLoss,
-                    Lawyer = claim.Lawyer,
-                    InsuranceCompany = claim.InsuranceCompany,
                 }
                 : null;
         }
@@ -711,6 +681,22 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
+        public static Claimant ToClaimantWithClaims(this ClaimantEntity claimant)
+        {
+            return null != claimant
+                ? new Claimant
+                {
+                    ClaimantId = claimant.ClaimantId,
+                    FirstName = claimant.FirstName,
+                    LastName = claimant.LastName,
+                    DateOfBirth = claimant.DateOfBirth,
+                    Gender = claimant.Gender,
+                    IsActive = claimant.IsActive,
+                    Claims = claimant.Claims.Select(claim => claim.ToClaim()),
+                }
+                : null;
+        }
+
         public static Claim ToClaim(this ClaimEntity claim)
         {
             return null != claim
@@ -719,7 +705,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ClaimId = claim.ClaimId,
                     ClaimNumber = claim.ClaimNumber,
                     DateOfLoss = claim.DateOfLoss,
-                    Claimant = claim.Claimant.ToClaimant(),
                     Lawyer = claim.Lawyer,
                     InsuranceCompany = claim.InsuranceCompany,
                 }

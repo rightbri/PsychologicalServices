@@ -12,21 +12,18 @@ namespace PsychologicalServices.Models.Claims
         private readonly IClaimRepository _claimRepository = null;
         private readonly IClaimValidator _claimValidator = null;
         private readonly IClaimantValidator _claimantValidator = null;
-        private readonly IDate _date = null;
         private readonly ILog _log = null;
 
         public ClaimService(
             IClaimRepository claimRepository,
             IClaimValidator claimValidator,
             IClaimantValidator claimantValidator,
-            IDate date,
             ILog log
         )
         {
             _claimRepository = claimRepository;
             _claimValidator = claimValidator;
             _claimantValidator = claimantValidator;
-            _date = date;
             _log = log;
         }
 
@@ -40,20 +37,6 @@ namespace PsychologicalServices.Models.Claims
             }
 
             return claimant;
-        }
-
-        public IEnumerable<Claim> GetAssessmentClaims(int assessmentId)
-        {
-            var claims = _claimRepository.GetAssessmentClaims(assessmentId);
-
-            return claims;
-        }
-
-        public IEnumerable<Claim> GetClaimsForClaimant(int claimantId)
-        {
-            var claims = _claimRepository.GetClaimsForClaimant(claimantId);
-
-            return claims;
         }
 
         public IEnumerable<Claimant> SearchClaimants(string name)
@@ -89,34 +72,6 @@ namespace PsychologicalServices.Models.Claims
             var genders = _claimRepository.GetGenders();
 
             return genders;
-        }
-
-        public SaveResult<Claim> SaveClaim(Claim claim)
-        {
-            var result = new SaveResult<Claim>();
-
-            try
-            {
-                var validation = _claimValidator.Validate(claim);
-
-                result.ValidationResult = validation;
-
-                if (result.ValidationResult.IsValid)
-                {
-                    var id = _claimRepository.SaveClaim(claim);
-
-                    result.Item = _claimRepository.GetClaim(id);
-                    result.IsSaved = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                _log.Error("SaveClaim", ex);
-                result.IsError = true;
-                result.ErrorDetails = ex.Message;
-            }
-
-            return result;
         }
 
         public SaveResult<Claimant> SaveClaimant(Claimant claimant)
