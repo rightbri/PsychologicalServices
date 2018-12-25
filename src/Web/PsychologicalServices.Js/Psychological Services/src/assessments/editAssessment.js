@@ -245,9 +245,9 @@ export class EditAssessment {
 		
 		this.claimantEditModel = null;
 	}
-	
+
 	newClaimant() {
-		let claimant = { isAdd: true, dateOfBirth: new Date(), isActive: true };
+		let claimant = { isAdd: true, dateOfBirth: new Date(), isActive: true, claims: [] };
 		this.editClaimant(claimant);
 	}
 	
