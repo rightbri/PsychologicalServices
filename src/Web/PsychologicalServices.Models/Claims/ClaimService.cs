@@ -1,6 +1,5 @@
 ﻿using log4net;
 using PsychologicalServices.Models.Common;
-using PsychologicalServices.Models.Common.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +36,13 @@ namespace PsychologicalServices.Models.Claims
             }
 
             return claimant;
+        }
+
+        public IEnumerable<ClaimReference> GetClaimReferences(int claimId)
+        {
+            var references = _claimRepository.GetClaimReferences(claimId);
+
+            return references;
         }
 
         public IEnumerable<Claimant> SearchClaimants(string name)

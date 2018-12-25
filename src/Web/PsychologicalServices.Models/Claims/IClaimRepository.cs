@@ -9,6 +9,8 @@ namespace PsychologicalServices.Models.Claims
 
         IssueInDispute GetIssueInDispute(int id);
 
+        IEnumerable<ClaimReference> GetClaimReferences(int claimId);
+
         IEnumerable<Claimant> SearchClaimants(string name);
 
         IEnumerable<Claimant> SearchClaimants(ClaimantSearchParameters parameters);

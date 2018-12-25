@@ -8,6 +8,8 @@ namespace PsychologicalServices.Models.Claims
     {
         Claimant GetClaimant(int id);
 
+        IEnumerable<ClaimReference> GetClaimReferences(int claimId);
+
         IEnumerable<Claimant> SearchClaimants(string name);
 
         IEnumerable<Claimant> SearchClaimants(ClaimantSearchParameters parameters);

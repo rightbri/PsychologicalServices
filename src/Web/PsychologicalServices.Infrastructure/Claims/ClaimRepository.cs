@@ -27,6 +27,13 @@ namespace PsychologicalServices.Infrastructure.Claims
                     .Prefetch<ClaimEntity>(claimant => claimant.Claims)
                 );
 
+        private static readonly Func<IPathEdgeRootParser<ClaimEntity>, IPathEdgeRootParser<ClaimEntity>>
+            ClaimReferencesPath =
+                (claimPath => claimPath
+                    .Prefetch<ArbitrationClaimEntity>(claim => claim.ArbitrationClaims)
+                    .Prefetch<AssessmentClaimEntity>(claim => claim.AssessmentClaims)
+                );
+
         #endregion
 
         public Claim GetClaim(int id)
@@ -66,6 +73,34 @@ namespace PsychologicalServices.Infrastructure.Claims
                     .Where(issueInDispute => issueInDispute.IssueInDisputeId == id)
                     .SingleOrDefault()
                     .ToIssueInDispute();
+            }
+        }
+
+        public IEnumerable<ClaimReference> GetClaimReferences(int claimId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var claim = meta.Claim
+                    .WithPath(ClaimReferencesPath)
+                    .Where(c => c.ClaimId == claimId)
+                    .SingleOrDefault();
+
+                var references = new List<ClaimReference>();
+
+                if (claim != null)
+                {
+                    references.AddRange(
+                        claim.ArbitrationClaims.Select(ac => new ClaimReference("Arbitration", ac.ArbitrationId))
+                    );
+
+                    references.AddRange(
+                        claim.AssessmentClaims.Select(ac => new ClaimReference("Assessment", ac.AssessmentId))
+                    );
+                }
+
+                return references;
             }
         }
 
@@ -294,7 +329,7 @@ namespace PsychologicalServices.Infrastructure.Claims
                 return entity.IssueInDisputeId;
             }
         }
-
+        
         public bool DeleteClaimant(int id)
         {
             using (var adapter = AdapterFactory.CreateAdapter())

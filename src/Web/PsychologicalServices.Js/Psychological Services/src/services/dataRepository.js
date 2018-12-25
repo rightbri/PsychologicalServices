@@ -326,6 +326,10 @@ export class DataRepository {
 		return this.deleteBasic(id, 'claimant');
 	}
 
+	getClaimReferences(id) {
+		return this.getBasic('claim/' + id + '/references')
+	}
+
 	getIssuesInDispute() {
 		return this.getManyBasic('issueindispute', true);
 	}

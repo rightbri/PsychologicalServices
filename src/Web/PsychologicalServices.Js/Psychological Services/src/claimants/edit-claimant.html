@@ -13,18 +13,24 @@
 		
 			<div class="uk-grid-medium uk-child-width-1-1" uk-grid>
 			
-				<div>
-					<validation-summary errors.bind="validationErrors" if.bind="validationErrors"></validation-summary>
+				<div if.bind="error">
+					<div class="uk-alert-danger" uk-alert>
+						${error}
+					</div>
+				</div>
+
+				<div if.bind="validationErrors">
+					<validation-summary errors.bind="validationErrors"></validation-summary>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="firstName">First Name</label>
 					<div class="uk-form-controls">
 						<input id="firstName" type="text" class="uk-input" value.bind="model.claimant.firstName" />
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="lastName">Last Name</label>
 					<div class="uk-form-controls">
 						<input id="lastName" type="text" class="uk-input" value.bind="model.claimant.lastName" />
@@ -45,7 +51,7 @@
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="gender">Gender</label>
 					<div class="uk-form-controls">
 						<select id="gender" class="uk-select" value.bind="model.claimant.gender">
@@ -57,7 +63,7 @@
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="active">Status</label>
 					<div class="uk-form-controls">
 						<label class="uk-form-label" for="active">
