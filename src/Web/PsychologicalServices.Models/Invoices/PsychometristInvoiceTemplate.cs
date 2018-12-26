@@ -334,8 +334,8 @@ namespace PsychologicalServices.Models.Invoices
 				foreach (var lineGroup in Model.LineGroups)
 				{
 					var appointment = lineGroup.Appointment;
-					var firstClaim = appointment.Assessment.Claims.OrderByDescending(claim => claim.DateOfLoss.HasValue ? claim.DateOfLoss.Value : DateTime.MinValue).FirstOrDefault();
-
+					var claimant = appointment.Assessment.Claimant;
+					
 					foreach (var line in lineGroup.Lines)
 					{
 						subtotal += line.Amount;
@@ -346,7 +346,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\t\t\t<tr>\r\n\t\t\t\t<td>");
             
             #line 198 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(firstClaim != null ? string.Format("{0} {1}", firstClaim.Claimant.FirstName, firstClaim.Claimant.LastName) : ""));
+            this.Write(this.ToStringHelper.ToStringWithCulture(claimant != null ? string.Format("{0} {1}", claimant.FirstName, claimant.LastName) : ""));
             
             #line default
             #line hidden

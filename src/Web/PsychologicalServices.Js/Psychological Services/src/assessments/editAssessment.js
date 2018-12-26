@@ -19,15 +19,16 @@ export class EditAssessment {
 		
 		this.assessment = null;
 
-		this.assessmentTypeMatcher = (a, b) => a != null && b != null && a.assessmentTypeId === b.assessmentTypeId;
-		this.reportStatusMatcher = (a, b) => a != null && b != null && a.reportStatusId === b.reportStatusId;
-		this.referralSourceMatcher = (a, b) => a != null && b != null && a.referralSourceId === b.referralSourceId;
-		this.referralTypeMatcher = (a, b) => a != null && b != null && a.referralTypeId === b.referralTypeId;
-		this.colorMatcher = (a, b) => a != null && b != null && a.colorId === b.colorId;
-		this.userMatcher = (a, b) => a != null && b != null && a.userId === b.userId;
-		this.attributeMatcher = (a, b) => a !== null && b !== null && a.attribute.attributeId === b.attribute.attributeId;
-		this.credibilityMatcher = (a, b) => a !== null && b !== null && a.credibilityId === b.credibilityId;
-		this.diagnosisFoundResponseMatcher = (a, b) => a !== null && b !== null && a.diagnosisFoundResponseId === b.diagnosisFoundResponseId;
+		this.assessmentTypeMatcher = (a, b) => a && b && a.assessmentTypeId === b.assessmentTypeId;
+		this.reportStatusMatcher = (a, b) => a && b && a.reportStatusId === b.reportStatusId;
+		this.referralSourceMatcher = (a, b) => a && b && a.referralSourceId === b.referralSourceId;
+		this.referralTypeMatcher = (a, b) => a && b && a.referralTypeId === b.referralTypeId;
+		this.colorMatcher = (a, b) => a && b && a.colorId === b.colorId;
+		this.userMatcher = (a, b) => a && b && a.userId === b.userId;
+		this.attributeMatcher = (a, b) => a && b && a.attribute.attributeId === b.attribute.attributeId;
+		this.credibilityMatcher = (a, b) => a && b && a.credibilityId === b.credibilityId;
+		this.diagnosisFoundResponseMatcher = (a, b) => a && b && a.diagnosisFoundResponseId === b.diagnosisFoundResponseId;
+		this.claimMatcher = (a, b) => a && b && a.claimId === b.claimId;
 
 		this.saveDisabled = false;
 		this.validationErrors = null;
@@ -52,10 +53,6 @@ export class EditAssessment {
 							this.assessment = assessment;
 							
 							this.setCredibilityVisibility(this.assessment.assessmentType.name);
-							
-							if (this.assessment.claims && this.assessment.claims.length > 0) {
-								this.claimant = this.assessment.claims[0].claimant;
-							}
 							
 							return this.getData().then(() => {
 								this.assessmentTypeChanged();
@@ -244,24 +241,13 @@ export class EditAssessment {
 	claimantSelected(e) {
 		let claimant = e.detail.claimant;
 		
-		this.claimant = claimant;
-		
-		if (this.assessment.claims && this.assessment.claims.length > 0) {
-			for (var claim of this.assessment.claims) {
-				claim.claimant = claimant;
-			}
-		}
-		else {
-			this.assessment.claims = [
-				{ 'claimant': claimant }
-			];
-		}
+		this.assessment.claimant = claimant;
 		
 		this.claimantEditModel = null;
 	}
-	
+
 	newClaimant() {
-		let claimant = { isAdd: true, dateOfBirth: new Date(), isActive: true };
+		let claimant = { isAdd: true, dateOfBirth: new Date(), isActive: true, claims: [] };
 		this.editClaimant(claimant);
 	}
 	
@@ -278,40 +264,6 @@ export class EditAssessment {
 		}
 		
 		this.claimantEditModel = null;
-	}
-	
-	newClaim() {
-		let claim = { claimant: this.claimant, isAdd: true };
-		this.editClaim(claim);
-	}
-	
-	editClaim(claim) {
-		this.claimEditModel = claim;
-	}
-	
-	claimEdited(e) {
-		let claim = e.detail.claim;
-		
-		if (claim.isAdd) {
-			delete claim['isAdd'];
-			this.assessment.claims.push(claim);
-		}
-		
-		this.claimEditModel = null;
-	}
-	
-	claimCanceled(e) {
-		let claim = e.detail.claim;
-
-		if (!claim.isAdd) {
-			copyValues(claim, this.claimEditModel);
-		}
-		
-		this.claimEditModel = null;
-	}
-
-	removeClaim(claim) {
-		this.assessment.claims.splice(this.assessment.claims.indexOf(claim), 1);
 	}
 	
 	newAppointment() {

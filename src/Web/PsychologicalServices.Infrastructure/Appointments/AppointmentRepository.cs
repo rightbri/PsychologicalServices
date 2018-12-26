@@ -86,12 +86,10 @@ namespace PsychologicalServices.Infrastructure.Appointments
                             .Prefetch<ReportStatusEntity>(assessment => assessment.ReportStatus)
                             .Prefetch<UserEntity>(assessment => assessment.DocListWriter)
                             .Prefetch<UserEntity>(assessment => assessment.NotesWriter)
+                            .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
                             .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                                 .SubPath(assessmentClaimPath => assessmentClaimPath
                                     .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
-                                        .SubPath(claimPath => claimPath
-                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                        )
                                 )
                             .Prefetch<AssessmentAttributeEntity>(assessment => assessment.AssessmentAttributes)
                                 .FilterOn(assessmentAttribute => assessmentAttribute.Attribute.IsActive)
@@ -147,12 +145,10 @@ namespace PsychologicalServices.Infrastructure.Appointments
                             .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                             .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
                             .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                            .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
                             .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                                 .SubPath(assessmentClaimPath => assessmentClaimPath
                                     .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
-                                        .SubPath(claimPath => claimPath
-                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                        )
                                 )
                             .Prefetch<CompanyEntity>(assessment => assessment.Company)
                         )
@@ -181,12 +177,10 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                 )
                             .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
                             .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
+                            .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
                             .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
                                 .SubPath(assessmentClaimPath => assessmentClaimPath
                                     .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
-                                        .SubPath(claimPath => claimPath
-                                            .Prefetch<ClaimantEntity>(claim => claim.Claimant)
-                                        )
                                 )
                             .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
                                 .SubPath(assessmentReportPath => assessmentReportPath

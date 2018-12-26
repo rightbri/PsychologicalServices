@@ -256,6 +256,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\InvoiceableRawTestDataDataController.cs" />
     <Compile Include="Controllers\RawTestDataStatusController.cs" />
     <Compile Include="Controllers\RawTestDataInvoiceController.cs" />
@@ -294,7 +295,6 @@
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\CalendarNoteController.cs" />
     <Compile Include="Controllers\ClaimantController.cs" />
-    <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\ContextController.cs" />
     <Compile Include="Controllers\GenderController.cs" />

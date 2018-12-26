@@ -218,11 +218,11 @@
       <EntityDefinition Name="Arbitration" ObjectID="65b0695a-4c15-4dcc-8539-68de839e8043">
         <Fields>
           <Field Name="ArbitrationId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
-          <Field Name="ArbitrationStatusId" Type="int" IsOptional="true" Precision="10" IsAutoCreated="true" FieldIndex="15" />
+          <Field Name="ArbitrationStatusId" Type="int" IsOptional="true" Precision="10" IsAutoCreated="true" FieldIndex="14" />
           <Field Name="AssessmentId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="1" />
           <Field Name="AvailableDate" Type="datetimeoffset" IsOptional="true" FieldIndex="4" />
           <Field Name="BillToContactId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="12" />
-          <Field Name="ClaimantId" Type="int" IsAutoCreated="true" FieldIndex="13" />
+          <Field Name="ClaimantId" Type="int" IsAutoCreated="true" FieldIndex="15" />
           <Field Name="DefenseFileNumber" Type="string" IsOptional="true" MaxLength="50" FieldIndex="6" />
           <Field Name="DefenseLawyerId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="5" />
           <Field Name="EndDate" Type="datetimeoffset" IsOptional="true" FieldIndex="3" />
@@ -230,7 +230,7 @@
           <Field Name="NoteId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="8" />
           <Field Name="NotifiedDate" Type="datetimeoffset" IsOptional="true" FieldIndex="9" />
           <Field Name="PlaintiffLawyerId" Type="int" IsOptional="true" FieldIndex="11" />
-          <Field Name="PsychologistId" Type="int" IsAutoCreated="true" FieldIndex="14" />
+          <Field Name="PsychologistId" Type="int" IsAutoCreated="true" FieldIndex="13" />
           <Field Name="StartDate" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
           <Field Name="Title" Type="string" MaxLength="250" FieldIndex="7" />
         </Fields>
@@ -253,6 +253,7 @@
         <Fields>
           <Field Name="AssessmentId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
           <Field Name="AssessmentTypeId" Type="int" IsAutoCreated="true" FieldIndex="3" />
+          <Field Name="ClaimantId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="24" />
           <Field Name="CompanyId" Type="int" IsAutoCreated="true" FieldIndex="4" />
           <Field Name="CreateDate" Type="datetimeoffset" FieldIndex="13" />
           <Field Name="CreateUserId" Type="int" IsAutoCreated="true" FieldIndex="14" />
@@ -922,6 +923,11 @@
       <NormalRelationship Name="Assessment.AssessmentType-AssessmentType.Assessments" Start=":Assessment" End=":AssessmentType" StartNavigator="AssessmentType" EndNavigator="Assessments" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="AssessmentTypeId" PkField="AssessmentTypeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Assessment.Claimant-Claimant.Assessments" Start=":Assessment" End=":Claimant" StartNavigator="Claimant" EndNavigator="Assessments" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ClaimantId" PkField="ClaimantId" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Assessment.Company-Company.Assessments" Start=":Assessment" End=":Company" StartNavigator="Company" EndNavigator="Assessments" Type="4">
@@ -1664,7 +1670,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-08-26T16:26:48.4889297Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-11-25T21:58:57.7881817Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1878,6 +1884,7 @@
                     <Field Name="DiagnosisFoundReponseId" Ordinal="22" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="IsReassessment" Ordinal="23" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                     <Field Name="PreviouslySeenDate" Ordinal="24" IsOptional="true" DbType="30" />
+                    <Field Name="ClaimantId" Ordinal="25" IsOptional="true" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
                 <Table Name="AssessmentTypeAttributeTypes">
@@ -2216,18 +2223,6 @@
                     <Field Name="IssueInDisputeId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" DbType="12" Length="50" />
                     <Field Name="IsActive" Ordinal="3" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
-                  </Fields>
-                </Table>
-                <Table Name="Log">
-                  <PkConstraintName Name="PK_Log" />
-                  <Fields>
-                    <Field Name="ID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
-                    <Field Name="Date" Ordinal="2" DbType="4" />
-                    <Field Name="Level" Ordinal="3" DbType="24" Length="20" />
-                    <Field Name="Logger" Ordinal="4" DbType="24" Length="255" />
-                    <Field Name="Message" Ordinal="5" DbType="24" Length="2147483647" />
-                    <Field Name="Username" Ordinal="6" DbType="24" Length="255" />
-                    <Field Name="Exception" Ordinal="7" IsOptional="true" DbType="24" Length="2147483647" />
                   </Fields>
                 </Table>
                 <Table Name="Notes">
@@ -2829,6 +2824,11 @@
                 <FieldPair PkField="dbo:AssessmentTypes:AssessmentTypeId" FkField="dbo:Assessments:AssessmentTypeId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:Assessments:FK_Assessments_Claimants">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Claimants:ClaimantId" FkField="dbo:Assessments:ClaimantId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:Assessments:FK_Assessments_Companies">
               <FieldPairs>
                 <FieldPair PkField="dbo:Companies:CompanyId" FkField="dbo:Assessments:CompanyId" />
@@ -3388,6 +3388,7 @@
           <FieldMappings>
             <FieldMapping FieldName="AssessmentId" TargetFieldName="AssessmentId" SequenceToUse="SCOPE_IDENTITY()" />
             <FieldMapping FieldName="AssessmentTypeId" TargetFieldName="AssessmentTypeId" />
+            <FieldMapping FieldName="ClaimantId" TargetFieldName="ClaimantId" />
             <FieldMapping FieldName="CompanyId" TargetFieldName="CompanyId" />
             <FieldMapping FieldName="CreateDate" TargetFieldName="CreateDate" />
             <FieldMapping FieldName="CreateUserId" TargetFieldName="CreateUserId" />

@@ -153,11 +153,13 @@
 					</ul>
 				</td>
 				<td>
-					<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
-						<li title="Claimant Name" class="smaller-siblings" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName}</li>
-						<li title="Claimant Age, Gender" if.bind="claim.claimant">${claim.claimant.dateOfBirth | age} ${claim.claimant.gender}</li>
-						<li title="Date of Loss">DOL: ${claim.dateOfLoss | dateFormat:config.shortDateFormat}</li>
-						<li title="Claim Number">Claim No: ${claim.claimNumber}</li>
+					<ul class="uk-list">
+						<li title="Claimant Name" class="smaller-siblings" if.bind="appointment.assessment.claimant">${appointment.assessment.claimant.firstName} ${appointment.assessment.claimant.lastName}</li>
+						<li title="Claimant Age, Gender" if.bind="appointment.assessment.claimant">${appointment.assessment.claimant.dateOfBirth | age} ${appointment.assessment.claimant.gender}</li>
+						<template repeat.for="claim of appointment.assessment.claims">
+							<li title="Date of Loss">DOL: ${claim.dateOfLoss | dateFormat:config.shortDateFormat}</li>
+							<li title="Claim Number">Claim No: ${claim.claimNumber}</li>
+						</template>
 					</ul>
 				</td>
 				<td>
@@ -262,10 +264,8 @@
 				</template>
 			</td>
 			<td>
-				<template repeat.for="claim of appointment.assessment.claims">
-					<template if.bind="claim.claimant">
-					${claim.claimant.firstName} ${claim.claimant.lastName}<br>
-					</template>
+				<template if.bind="appointment.assessment.claimant">
+					${appointment.assessment.claimant.firstName} ${appointment.assessment.claimant.lastName}<br>
 				</template>
 				${appointment.assessment.assessmentType.name}<br>
 				<template if.bind="appointment.isCompletion">

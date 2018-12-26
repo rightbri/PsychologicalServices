@@ -3,17 +3,19 @@ import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
 import {AgeService} from 'common/ageService';
 import {EventHelper} from 'services/eventHelper';
+import {Notifier} from 'services/notifier';
 
-@inject(Element, DataRepository, Config, AgeService, EventHelper)
+@inject(Element, DataRepository, Config, AgeService, EventHelper, Notifier)
 export class EditClaimantCustomElement {
 	@bindable({ defaultBindingMode: bindingMode.twoWay }) model;
 	
-	constructor(element, dataRepository, config, ageService, eventHelper) {
+	constructor(element, dataRepository, config, ageService, eventHelper, notifier) {
 		this.element = element;
 		this.dataRepository = dataRepository;
 		this.config = config;
 		this.ageService = ageService;
 		this.eventHelper = eventHelper;
+		this.notifier = notifier;
 
 		this.validationErrors = null;
 	}
@@ -53,6 +55,8 @@ export class EditClaimantCustomElement {
 					? data.validationResult.validationErrors
 					: null;
 				
+				this.error = data.isError ? data.errorDetails : null;
+
 				if (data.isSaved) {
 					this.model.claimant = data.item;
 					
@@ -67,6 +71,31 @@ export class EditClaimantCustomElement {
 		this.eventHelper.fireEvent(this.element, 'canceled', { 'claimant': this.backup });
 
 		this.age = null;
+	}
+
+	newClaim() {
+		let claim = { isAdd: true };
+		this.model.claimant.claims.push(claim);
+	}
+
+	removeClaim(claim) {
+		if (claim.isAdd) {
+			this.model.claimant.claims.splice(this.model.claimant.claims.indexOf(claim), 1);
+		}
+		else {
+			this.dataRepository.getClaimReferences(claim.claimId).then(data => {
+				if (data.length === 0) {
+					this.model.claimant.claims.splice(this.model.claimant.claims.indexOf(claim), 1);		
+				}
+				else {
+					let references = data.map(item => item.type + ' ' + item.id).join(', ');
+
+					let message = 'The following references to this claim must be removed before the claim can be deleted. ' + references;
+	
+					this.notifier.error(message);
+				}
+			});
+		}
 	}
 }
 

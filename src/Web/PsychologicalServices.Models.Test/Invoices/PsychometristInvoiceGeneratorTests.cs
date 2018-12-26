@@ -187,16 +187,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                         AssessmentTypeId = assessmentTypeId,
                         Description = assessmentTypeDescription,
                     },
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = claimantFirstName,
-                                LastName = claimantLastName,
-                            },
-                        }
+                        FirstName = claimantFirstName,
+                        LastName = claimantLastName,
                     },
                     ReferralSource = new Referrals.ReferralSource
                     {
@@ -395,16 +389,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                             AssessmentTypeId = assessmentTypeId,
                             Description = assessmentTypeDescription,
                         },
-                        Claims = new[]
+                        Claimant = new Claims.Claimant
                         {
-                            new Claims.Claim
-                            {
-                                Claimant = new Claims.Claimant
-                                {
-                                    FirstName = claimantFirstName,
-                                    LastName = claimantLastName,
-                                },
-                            }
+                            FirstName = claimantFirstName,
+                            LastName = claimantLastName,
                         },
                         ReferralSource = new Referrals.ReferralSource
                         {
@@ -445,16 +433,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                             AssessmentTypeId = assessmentTypeId,
                             Description = assessmentTypeDescription,
                         },
-                        Claims = new[]
+                        Claimant = new Claims.Claimant
                         {
-                            new Claims.Claim
-                            {
-                                Claimant = new Claims.Claimant
-                                {
-                                    FirstName = claimantFirstName,
-                                    LastName = claimantLastName,
-                                },
-                            }
+                            FirstName = claimantFirstName,
+                            LastName = claimantLastName,
                         },
                         ReferralSource = new Referrals.ReferralSource
                         {
@@ -495,16 +477,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                             AssessmentTypeId = assessmentTypeId,
                             Description = assessmentTypeDescription,
                         },
-                        Claims = new[]
+                        Claimant = new Claims.Claimant
                         {
-                            new Claims.Claim
-                            {
-                                Claimant = new Claims.Claimant
-                                {
-                                    FirstName = claimantFirstName,
-                                    LastName = claimantLastName,
-                                },
-                            }
+                            FirstName = claimantFirstName,
+                            LastName = claimantLastName,
                         },
                         ReferralSource = new Referrals.ReferralSource
                         {
@@ -793,16 +769,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                             AssessmentTypeId = assessmentTypeId,
                             Description = assessmentTypeDescription,
                         },
-                        Claims = new[]
+                        Claimant = new Claims.Claimant
                         {
-                            new Claims.Claim
-                            {
-                                Claimant = new Claims.Claimant
-                                {
-                                    FirstName = claimantFirstName,
-                                    LastName = claimantLastName,
-                                },
-                            }
+                            FirstName = claimantFirstName,
+                            LastName = claimantLastName,
                         },
                         ReferralSource = new Referrals.ReferralSource
                         {
@@ -843,16 +813,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                             AssessmentTypeId = assessmentTypeId,
                             Description = assessmentTypeDescription,
                         },
-                        Claims = new[]
+                        Claimant = new Claims.Claimant
                         {
-                            new Claims.Claim
-                            {
-                                Claimant = new Claims.Claimant
-                                {
-                                    FirstName = claimantFirstName,
-                                    LastName = claimantLastName,
-                                },
-                            }
+                            FirstName = claimantFirstName,
+                            LastName = claimantLastName,
                         },
                         ReferralSource = new Referrals.ReferralSource
                         {
@@ -893,16 +857,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                             AssessmentTypeId = assessmentTypeId,
                             Description = assessmentTypeDescription,
                         },
-                        Claims = new[]
+                        Claimant = new Claims.Claimant
                         {
-                            new Claims.Claim
-                            {
-                                Claimant = new Claims.Claimant
-                                {
-                                    FirstName = claimantFirstName,
-                                    LastName = claimantLastName,
-                                },
-                            }
+                            FirstName = claimantFirstName,
+                            LastName = claimantLastName,
                         },
                         ReferralSource = new Referrals.ReferralSource
                         {

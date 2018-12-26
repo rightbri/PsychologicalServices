@@ -37,18 +37,17 @@ BEGIN
 		INNER JOIN dbo.Claimants cl ON c.ClaimantId = cl.ClaimantId
 	) c ON arb.ArbitrationId = c.ArbitrationId
 	WHERE 
-	--NOT EXISTS (
-	--	SELECT
-	--	*
-	--	FROM dbo.InvoiceLineGroupArbitrations ilga
-	--	INNER JOIN dbo.InvoiceLineGroups ilg ON ilga.InvoiceLineGroupId = ilg.InvoiceLineGroupId
-	--	INNER JOIN dbo.Invoices i ON ilg.InvoiceId = i.InvoiceId
-	--	WHERE
-	--	ilga.ArbitrationId = arb.ArbitrationId
-	--	AND i.PayableToId = psychologists.UserId
-	--)
-	--AND 
-	(c.RowNum IS NULL OR c.RowNum = 1)
+	NOT EXISTS (
+		SELECT
+		*
+		FROM dbo.InvoiceLineGroupArbitrations ilga
+		INNER JOIN dbo.InvoiceLineGroups ilg ON ilga.InvoiceLineGroupId = ilg.InvoiceLineGroupId
+		INNER JOIN dbo.Invoices i ON ilg.InvoiceId = i.InvoiceId
+		WHERE
+		ilga.ArbitrationId = arb.ArbitrationId
+		AND i.PayableToId = psychologists.UserId
+	)
+	AND (c.RowNum IS NULL OR c.RowNum = 1)
 	AND psychologists.CompanyId = @localCompanyId
 
 END

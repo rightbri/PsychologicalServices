@@ -47,6 +47,8 @@ export class ViewAssessmentSummaryCustomElement {
 			this.colors.push(this.colors[this.colors.length - 1]);
 		}
 
+		this.claimant = appointment.assessment.claimant;
+		
 		this.claim = null;
 		
 		for (let claim of appointment.assessment.claims) {

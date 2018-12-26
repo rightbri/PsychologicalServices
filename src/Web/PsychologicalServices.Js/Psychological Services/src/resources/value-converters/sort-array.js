@@ -21,35 +21,34 @@ export class SortArrayValueConverter {
    *
    */
   toView(array, config) {
-    return array
-      .sort((val1, val2) => {
+		return (array || []).sort((val1, val2) => {
         var sortTotal = 0;
 		
-		if (!Array.isArray(config)) {
-			config = [config];
-		}
+				if (!Array.isArray(config)) {
+					config = [config];
+				}
 		
-		config.forEach((sortConfig, i, arr) => {
-			let a = val1, b = val2;
+				config.forEach((sortConfig, i, arr) => {
+					let a = val1, b = val2;
 
-			if (sortConfig.direction.toLowerCase() !== 'asc' && sortConfig.direction.toLowerCase() !== 'ascending') {
-			  a = val2;
-			  b = val1;
-			}
+					if (sortConfig.direction.toLowerCase() !== 'asc' && sortConfig.direction.toLowerCase() !== 'ascending') {
+						a = val2;
+						b = val1;
+					}
 
-			//resolve property reference
-			let aValue = resolvePath(a, sortConfig.property, null);
-			let bValue = resolvePath(b, sortConfig.property, null);
-			
-			//weight the sort configuration by order
-			let weight = Math.pow(10, arr.length - 1 - i);
-			
-			let sortValue = aValue > bValue ? 1 : aValue === bValue ? 0 : -1;
-			
-			sortTotal = sortTotal + (weight * sortValue);
-		});
-		
-		return sortTotal;
+					//resolve property reference
+					let aValue = resolvePath(a, sortConfig.property, null);
+					let bValue = resolvePath(b, sortConfig.property, null);
+					
+					//weight the sort configuration by order
+					let weight = Math.pow(10, arr.length - 1 - i);
+					
+					let sortValue = aValue > bValue ? 1 : aValue === bValue ? 0 : -1;
+					
+					sortTotal = sortTotal + (weight * sortValue);
+				});
+				
+				return sortTotal;
       });
   }
 }

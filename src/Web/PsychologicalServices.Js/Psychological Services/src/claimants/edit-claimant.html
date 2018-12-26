@@ -2,6 +2,7 @@
 	<require from="resources/value-converters/date-format"></require>
 	<require from="resources/value-converters/gender"></require>
 	<require from="resources/value-converters/age"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/validation-summary.html"></require>
 	<require from="common/date-mask"></require>
 	<require from="resources/elements/edit-panel"></require>
@@ -12,18 +13,24 @@
 		
 			<div class="uk-grid-medium uk-child-width-1-1" uk-grid>
 			
-				<div>
-					<validation-summary errors.bind="validationErrors" if.bind="validationErrors"></validation-summary>
+				<div if.bind="error">
+					<div class="uk-alert-danger" uk-alert>
+						${error}
+					</div>
+				</div>
+
+				<div if.bind="validationErrors">
+					<validation-summary errors.bind="validationErrors"></validation-summary>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="firstName">First Name</label>
 					<div class="uk-form-controls">
 						<input id="firstName" type="text" class="uk-input" value.bind="model.claimant.firstName" />
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="lastName">Last Name</label>
 					<div class="uk-form-controls">
 						<input id="lastName" type="text" class="uk-input" value.bind="model.claimant.lastName" />
@@ -44,7 +51,7 @@
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="gender">Gender</label>
 					<div class="uk-form-controls">
 						<select id="gender" class="uk-select" value.bind="model.claimant.gender">
@@ -56,12 +63,56 @@
 					</div>
 				</div>
 				
-				<div>
+				<div class="uk-width-1-2">
 					<label class="uk-form-label" for="active">Status</label>
 					<div class="uk-form-controls">
 						<label class="uk-form-label" for="active">
 							<input id="active" type="checkbox" class="uk-checkbox" checked.bind="model.claimant.isActive" />&nbsp;Is Active?
 						</label>
+					</div>
+				</div>
+
+				<div>
+					<label class="uk-form-label">Claims</label>
+					<div class="uk-form-controls">
+						<table class="uk-table uk-table-divider uk-table-small">
+							<thead>
+								<tr>
+									<th>
+										<button type="button" class="uk-button uk-button-link" click.delegate="newClaim()" title="Add claim" uk-tooltip>
+											<i class="fa fa-plus"></i>
+										</button>
+									</th>
+									<th>Date of Loss</th>
+									<th>Lawyer</th>
+									<th>Claim #</th>
+									<th>Insurance Company</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr repeat.for="claim of model.claimant.claims">
+									<td></td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-small" date-mask.bind="config.datemaskOptions" value.bind="claim.dateOfLoss | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+									</td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-medium" value.bind="claim.lawyer" />
+									</td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-small" pattern="[A-Za-z0-9-]+" value.bind="claim.claimNumber" />
+									</td>
+									<td>
+										<input type="text" class="uk-input uk-form-width-medium" value.bind="claim.insuranceCompany" />
+									</td>
+									<td>
+										<button type="button" class="uk-button uk-button-link" click.delegate="removeClaim(claim)" title="Remove claim" uk-tooltip>
+											<i class="fa fa-times"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

@@ -75,11 +75,8 @@ namespace PsychologicalServices.Models.Test.Invoices
             var invoiceDocument = GetInvoiceDocument();
             var invoice = GetInvoice(appointment, invoiceDocument);
 
-            foreach (var claim in appointment.Assessment.Claims)
-            {
-                claim.Claimant = null;
-            }
-
+            appointment.Assessment.Claimant = null;
+            
             var model = new PsychologistInvoiceSendModel(invoiceDocument, invoice);
 
             Assert.IsFalse(model.IsValid);
@@ -180,16 +177,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                         ReferralSourceId = referralSourceId,
                         InvoicesContactEmail = referralSourceInvoicesContactEmail,
                     },
-                    Claims = new[]
+                    Claimant = new Models.Claims.Claimant
                     {
-                        new Models.Claims.Claim
-                        {
-                            Claimant = new Models.Claims.Claimant
-                            {
-                                FirstName = claimantFirstName,
-                                LastName = claimantLastName,
-                            },
-                        },
+                        FirstName = claimantFirstName,
+                        LastName = claimantLastName,
                     },
                     Company = new Companies.Company
                     {

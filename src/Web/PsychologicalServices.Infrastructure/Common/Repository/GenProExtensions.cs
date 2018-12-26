@@ -222,8 +222,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ArbitrationId = arbitration.ArbitrationId,
                     Title = arbitration.Title,
                     Psychologist = arbitration.Psychologist.ToUser(),
-                    Claimant = arbitration.Claimant.ToArbitrationClaimant(),
-                    Claims = arbitration.ArbitrationClaims.Select(arbitrationClaim => arbitrationClaim.Claim.ToArbitrationClaim()),
+                    Claimant = arbitration.Claimant.ToClaimantWithClaims(),
+                    Claims = arbitration.ArbitrationClaims.Select(arbitrationClaim => arbitrationClaim.Claim.ToClaim()),
                     StartDate = arbitration.StartDate,
                     EndDate = arbitration.EndDate,
                     AvailableDate = arbitration.AvailableDate,
@@ -235,36 +235,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     BillToContact = arbitration.BillToContact.ToContact(),
                     Note = arbitration.Note.ToNote(),
                     ArbitrationStatus = arbitration.ArbitrationStatus.ToArbitrationStatus(),
-                }
-                : null;
-        }
-
-        public static Claimant ToArbitrationClaimant(this ClaimantEntity claimant)
-        {
-            return null != claimant
-                ? new Claimant
-                {
-                    ClaimantId = claimant.ClaimantId,
-                    FirstName = claimant.FirstName,
-                    LastName = claimant.LastName,
-                    DateOfBirth = claimant.DateOfBirth,
-                    Gender = claimant.Gender,
-                    IsActive = claimant.IsActive,
-                    Claims = claimant.Claims.Select(claim => claim.ToArbitrationClaim()),
-                }
-                : null;
-        }
-
-        public static Claim ToArbitrationClaim(this ClaimEntity claim)
-        {
-            return null != claim
-                ? new Claim
-                {
-                    ClaimId = claim.ClaimId,
-                    ClaimNumber = claim.ClaimNumber,
-                    DateOfLoss = claim.DateOfLoss,
-                    Lawyer = claim.Lawyer,
-                    InsuranceCompany = claim.InsuranceCompany,
                 }
                 : null;
         }
@@ -711,6 +681,22 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                 : null;
         }
 
+        public static Claimant ToClaimantWithClaims(this ClaimantEntity claimant)
+        {
+            return null != claimant
+                ? new Claimant
+                {
+                    ClaimantId = claimant.ClaimantId,
+                    FirstName = claimant.FirstName,
+                    LastName = claimant.LastName,
+                    DateOfBirth = claimant.DateOfBirth,
+                    Gender = claimant.Gender,
+                    IsActive = claimant.IsActive,
+                    Claims = claimant.Claims.Select(claim => claim.ToClaim()),
+                }
+                : null;
+        }
+
         public static Claim ToClaim(this ClaimEntity claim)
         {
             return null != claim
@@ -719,7 +705,6 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ClaimId = claim.ClaimId,
                     ClaimNumber = claim.ClaimNumber,
                     DateOfLoss = claim.DateOfLoss,
-                    Claimant = claim.Claimant.ToClaimant(),
                     Lawyer = claim.Lawyer,
                     InsuranceCompany = claim.InsuranceCompany,
                 }
@@ -838,8 +823,8 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     AssessmentId = appointment.Assessment.AssessmentId,
                     AssessmentType = appointment.Assessment.AssessmentType.Name,
                     ReferralSource = appointment.Assessment.ReferralSource.Name,
-                    Claimant = appointment.Assessment.AssessmentClaims.Any()
-                        ? appointment.Assessment.AssessmentClaims.Select(assessmentClaim => $"{assessmentClaim.Claim.Claimant.FirstName} {assessmentClaim.Claim.Claimant.LastName}").First()
+                    Claimant = appointment.Assessment.Claimant != null
+                        ? $"{appointment.Assessment.Claimant.FirstName} {appointment.Assessment.Claimant.LastName}"
                         : "",
                     AppointmentTime = appointment.AppointmentTime,
                 }
@@ -866,6 +851,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     DocListWriter = assessment.DocListWriter.ToUser(),
                     NotesWriter = assessment.NotesWriter.ToUser(),
                     Company = assessment.Company.ToCompany(),
+                    Claimant = assessment.Claimant.ToClaimantWithClaims(),
                     PsychologistFoundInFavorOfClaimant = assessment.PsychologistFoundInFavorOfClaimant,
                     NeurocognitiveCredibility = assessment.NeurocognitiveCredibility.ToCredibility(),
                     PsychologicalCredibility = assessment.PsychologicalCredibility.ToCredibility(),
@@ -913,6 +899,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     AssessmentNotes = assessment.AssessmentNotes.Select(assessmentNote => assessmentNote.ToAssessmentNote()),
                     Colors = assessment.AssessmentColors.Select(assessmentColor => assessmentColor.Color.ToColor()),
                     Summary = assessment.Summary.ToNote(),
+                    Claimant = assessment.Claimant.ToClaimant(),
                     //Appointments
                     //CreateUser
                     //UpdateUser
@@ -1009,6 +996,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     ReferralSource = assessment.ReferralSource.ToReferralSource(),
                     ReportStatus = assessment.ReportStatus.ToReportStatus(),
                     Company = assessment.Company.ToCompany(),
+                    Claimant = assessment.Claimant.ToClaimant(),
                     Claims = assessment.AssessmentClaims.Select(assessmentClaim => assessmentClaim.Claim.ToClaim()),
                     Reports = assessment.AssessmentReports.Select(assessmentReport => assessmentReport.ToReport()),
                     Appointments = assessment.Appointments.Select(appointment => appointment.ToAppointment()),

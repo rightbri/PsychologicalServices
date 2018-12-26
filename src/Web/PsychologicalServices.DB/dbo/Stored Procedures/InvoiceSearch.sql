@@ -47,6 +47,7 @@ BEGIN
 	SET @needsToBeSentToReferralSource_local = @NeedsToBeSentToReferralSource
 	
 	DECLARE @invoiceDateSentTrackingBeginDate DATETIME = '20171203'
+	DECLARE @invoiceStatusIdPaid INT = 3
 
 	SELECT
 	i.InvoiceId
@@ -120,6 +121,7 @@ BEGIN
 			 AND i.InvoiceTypeId = 1
 			 AND i.UpdateDate >= @invoiceDateSentTrackingBeginDate
 			 AND id.SentDate IS NULL
+			 AND i.InvoiceStatusId <> @invoiceStatusIdPaid
 			)
 		OR (@needsToBeSentToReferralSource_local = 0
 			AND (

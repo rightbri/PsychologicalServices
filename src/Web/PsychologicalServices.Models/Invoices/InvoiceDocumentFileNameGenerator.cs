@@ -27,9 +27,7 @@ namespace PsychologicalServices.Models.Invoices
                 {
                     var appointment = _appointmentRepository.GetAppointment(invoice.LineGroups.First(lineGroup => null != lineGroup.Appointment).Appointment.AppointmentId);
 
-                    var claimant = appointment.Assessment.Claims.Any()
-                        ? appointment.Assessment.Claims.First().Claimant
-                        : null;
+                    var claimant = appointment.Assessment.Claimant;
 
                     var assessmentType = appointment.Assessment.AssessmentType;
 

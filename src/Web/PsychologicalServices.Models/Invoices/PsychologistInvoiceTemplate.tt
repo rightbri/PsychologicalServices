@@ -211,22 +211,25 @@
 					var lineGroup = Model.LineGroups.ElementAt(i);
 					
 					var appointment = lineGroup.Appointment;
+					#>
 
+					<tr>
+						<td class="label">Client Name:</td>
+						<td colspan="3">
+							<#= appointment.Assessment.Claimant.FirstName #> <#= appointment.Assessment.Claimant.LastName #>
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Client File No.:</td>
+						<td colspan="3">
+							<#= appointment.Assessment.ReferralSourceFileNumber #>
+						</td>
+					</tr>
+
+					<#
 					foreach (var claim in appointment.Assessment.Claims)
 					{
 					#>
-						<tr>
-							<td class="label">Client Name:</td>
-							<td colspan="3">
-								<#= claim.Claimant.FirstName #> <#= claim.Claimant.LastName #>
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Client File No.:</td>
-							<td colspan="3">
-								<#= appointment.Assessment.ReferralSourceFileNumber #>
-							</td>
-						</tr>
 						<tr>
 							<td class="label">Date of Loss:</td>
 							<td colspan="3">

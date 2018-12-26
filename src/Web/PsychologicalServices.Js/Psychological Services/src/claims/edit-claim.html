@@ -11,16 +11,6 @@
 			
 			<div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
 
-				<div class="uk-width-1-1" if.bind="model.claimant">
-					<label class="uk-form-label">Claimant</label>
-					<div class="uk-form-controls">
-						<p>
-							${model.claimant.firstName} ${model.claimant.lastName}
-							<br>${model.claimant.dateOfBirth | age} - ${model.claimant.gender | gender}
-						</p>
-					</div>
-				</div>
-				
 				<div>
 					<label class="uk-form-label" for="dateOfLoss">Date of loss</label>
 					<div class="uk-form-controls">

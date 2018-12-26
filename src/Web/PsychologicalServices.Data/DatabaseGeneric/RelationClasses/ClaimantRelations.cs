@@ -30,6 +30,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.ArbitrationEntityUsingClaimantId);
+			toReturn.Add(this.AssessmentEntityUsingClaimantId);
 			toReturn.Add(this.ClaimEntityUsingClaimantId);
 			toReturn.Add(this.RawTestDataEntityUsingClaimantId);
 			return toReturn;
@@ -48,6 +49,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(ClaimantFields.ClaimantId, ArbitrationFields.ClaimantId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ClaimantEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ArbitrationEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ClaimantEntity and AssessmentEntity over the 1:n relation they have, using the relation between the fields:
+		/// Claimant.ClaimantId - Assessment.ClaimantId
+		/// </summary>
+		public virtual IEntityRelation AssessmentEntityUsingClaimantId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Assessments" , true);
+				relation.AddEntityFieldPair(ClaimantFields.ClaimantId, AssessmentFields.ClaimantId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ClaimantEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", false);
 				return relation;
 			}
 		}
@@ -98,6 +114,7 @@ namespace PsychologicalServices.Data.RelationClasses
 	internal static class StaticClaimantRelations
 	{
 		internal static readonly IEntityRelation ArbitrationEntityUsingClaimantIdStatic = new ClaimantRelations().ArbitrationEntityUsingClaimantId;
+		internal static readonly IEntityRelation AssessmentEntityUsingClaimantIdStatic = new ClaimantRelations().AssessmentEntityUsingClaimantId;
 		internal static readonly IEntityRelation ClaimEntityUsingClaimantIdStatic = new ClaimantRelations().ClaimEntityUsingClaimantId;
 		internal static readonly IEntityRelation RawTestDataEntityUsingClaimantIdStatic = new ClaimantRelations().RawTestDataEntityUsingClaimantId;
 

@@ -28,7 +28,6 @@ export class EditArbitration {
 
         this.saveDisabled = false;
 		this.validationErrors = null;
-
     }
     
     activate(params) {
@@ -53,12 +52,6 @@ export class EditArbitration {
 								this.updateBillToContacts();
 			
 								this.scroller.scrollTo(0);
-							/*
-							return this.loadClaimsForClaimant().then(data => {
-
-								
-							});
-							*/
                         });
                     });
                 }
@@ -145,16 +138,6 @@ export class EditArbitration {
     
     claimantSelected(e) {
 		this.arbitration.claimant = e.detail.claimant;
-
-		this.loadClaimsForClaimant().then(data => this.arbitration.claims = data);
-	}
-
-	loadClaimsForClaimant() {
-		return this.dataRepository.getClaimsForClaimant(this.arbitration.claimant.claimantId).then(data => {
-			this.arbitration.claimant.claims = data.slice(0);
-
-			return data;
-		});
 	}
 
 	plaintiffLawyerChanged() {
