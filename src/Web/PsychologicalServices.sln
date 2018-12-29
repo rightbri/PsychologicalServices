@@ -11,13 +11,17 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PsychologicalServices.DB", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Data", "PsychologicalServices.Data\PsychologicalServices.Data.csproj", "{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.DataDBSpecific", "PsychologicalServices.Data\PsychologicalServices.DataDBSpecific.csproj", "{5E18E5D8-E997-4B4B-96CD-825283E25994}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.DataDBSpecific", "PsychologicalServices.Data\PsychologicalServices.DataDBSpecific.csproj", "{6BB2BD23-FD3B-481E-A7CB-D49426C5576E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Api", "PsychologicalServices.Api\PsychologicalServices.Api.csproj", "{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Models.Test", "PsychologicalServices.Models.Test\PsychologicalServices.Models.Test.csproj", "{A334CFEB-DC6B-4C78-9D35-849FA8907849}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsychologicalServices.Infrastructure.Test", "PsychologicalServices.Infrastructure.Test\PsychologicalServices.Infrastructure.Test.csproj", "{00C7630A-C518-4B70-A8CB-AE74C8FECD64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{442B0912-B6DF-49DE-8341-73CEBABC27A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{938BC380-5B1D-4E9A-9A67-25A9B2812DA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +47,10 @@ Global
 		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E18E5D8-E997-4B4B-96CD-825283E25994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB2BD23-FD3B-481E-A7CB-D49426C5576E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB2BD23-FD3B-481E-A7CB-D49426C5576E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB2BD23-FD3B-481E-A7CB-D49426C5576E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB2BD23-FD3B-481E-A7CB-D49426C5576E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D42079EA-9A40-47A3-8C25-9CB7A309DA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,6 +66,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02CFBD10-6601-4B68-9580-434EEC1CC5A8} = {938BC380-5B1D-4E9A-9A67-25A9B2812DA0}
+		{FA7D08D0-6C5C-41C3-BADB-7865D6DA5C3B} = {938BC380-5B1D-4E9A-9A67-25A9B2812DA0}
+		{6BB2BD23-FD3B-481E-A7CB-D49426C5576E} = {938BC380-5B1D-4E9A-9A67-25A9B2812DA0}
+		{A334CFEB-DC6B-4C78-9D35-849FA8907849} = {442B0912-B6DF-49DE-8341-73CEBABC27A1}
+		{00C7630A-C518-4B70-A8CB-AE74C8FECD64} = {442B0912-B6DF-49DE-8341-73CEBABC27A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3AED34C-0D05-4639-A889-324817592258}
