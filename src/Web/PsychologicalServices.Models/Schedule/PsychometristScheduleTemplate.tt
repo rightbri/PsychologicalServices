@@ -82,11 +82,13 @@
 				</td>
 				<td style="<#= bodyCellStyles #>">
 					<p>
+						<# if (appointment.Assessment.Claimant != null) { #>
 						<#= appointment.Assessment.Claimant.FirstName #>
 						&nbsp;<#= appointment.Assessment.Claimant.LastName #>
 						&nbsp;&#45;
 						&nbsp;<#= appointment.Assessment.Claimant.Age #>
 						&nbsp;<#= appointment.Assessment.Claimant.Gender #>
+						<# } #>
 					</p>
 				</td>
 				<td style="<#= bodyCellStyles #>">

@@ -216,7 +216,9 @@
 					<tr>
 						<td class="label">Client Name:</td>
 						<td colspan="3">
+							<# if (appointment.Assessment.Claimant != null) { #>
 							<#= appointment.Assessment.Claimant.FirstName #> <#= appointment.Assessment.Claimant.LastName #>
+							<# } #>
 						</td>
 					</tr>
 					<tr>

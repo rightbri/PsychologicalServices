@@ -162,12 +162,14 @@
 					</td>
 					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Claimant -->
 						<ul style="<#= listStyles #>">
+						<# if (appointment.Assessment.Claimant != null) { #>
 							<li style="<#= listItemStyles #>">
 								<#= appointment.Assessment.Claimant.FirstName #> <#= appointment.Assessment.Claimant.LastName #>
 							</li>
 							<li style="<#= smallListItemStyles #>">
 								<#= appointment.Assessment.Claimant.Age #> <#= appointment.Assessment.Claimant.Gender #>
 							</li>
+						<# } #>
 						<# foreach (var claim in appointment.Assessment.Claims) { #>
 							<li style="<#= smallListItemStyles #>">
 								DOL: <#= string.Format("{0:dd/MM/yyyy}", claim.DateOfLoss) #>
