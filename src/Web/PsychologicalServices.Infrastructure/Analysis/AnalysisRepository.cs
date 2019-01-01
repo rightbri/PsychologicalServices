@@ -150,36 +150,122 @@ namespace PsychologicalServices.Infrastructure.Analysis
             }
         }
 
-        public IEnumerable<CredibilityData> GetCredibilityData(CredibilityDataSearchCriteria criteria)
+        public CredibilityData GetCredibilityData(CredibilityDataSearchCriteria criteria)
         {
+            var data = new CredibilityData();
+
             using (var adapter = AdapterFactory.CreateAdapter())
             {
-                var table = RetrievalProcedures.CredibilityData(criteria.CompanyId, (DataAccessAdapter)adapter);
+                using (var reader = adapter.FetchDataReader(
+                    RetrievalProcedures.GetCredibilityDataCallAsQuery(criteria.CompanyId),
+                    CommandBehavior.CloseConnection
+                ))
+                {
+                    var details = new List<CredibilityDetail>();
 
-                return table
-                    .AsEnumerable()
-                    .Select(row =>
-                        new CredibilityData
+                    while (reader.Read())
+                    {
+                        details.Add(
+                            new CredibilityDetail
+                            {
+                                AssessmentTypeId = Convert.ToInt32(reader["AssessmentTypeId"]),
+                                AssessmentTypeName = Convert.ToString(reader["AssessmentTypeName"]),
+                                CountNeurocognitiveCredibility = Convert.ToBoolean(reader["CountNeurocognitiveCredibility"]),
+                                CountPsychologicalCredibility = Convert.ToBoolean(reader["CountPsychologicalCredibility"]),
+                                DiagnosisFoundNo = Convert.ToBoolean(reader["DiagnosisFoundNo"]),
+                                DiagnosisFoundRuleOut = Convert.ToBoolean(reader["DiagnosisFoundRuleOut"]),
+                                DiagnosisFoundYes = Convert.ToBoolean(reader["DiagnosisFoundYes"]),
+                                NeurocognitiveCredibilityCredible = Convert.ToBoolean(reader["NeurocognitiveCredibilityCredible"]),
+                                NeurocognitiveCredibilityNotCredible = Convert.ToBoolean(reader["NeurocognitiveCredibilityNotCredible"]),
+                                NeurocognitiveCredibilityQuestionable = Convert.ToBoolean(reader["NeurocognitiveCredibilityQuestionable"]),
+                                PsychologicalCredibilityCredible = Convert.ToBoolean(reader["PsychologicalCredibilityCredible"]),
+                                PsychologicalCredibilityNotCredible = Convert.ToBoolean(reader["PsychologicalCredibilityNotCredible"]),
+                                PsychologicalCredibilityQuestionable = Convert.ToBoolean(reader["PsychologicalCredibilityQuestionable"]),
+                                PsychologistFoundInFavorOfClaimantNo = Convert.ToBoolean(reader["PsychologistFoundInFavorOfClaimantNo"]),
+                                PsychologistFoundInFavorOfClaimantUnknown = Convert.ToBoolean(reader["PsychologistFoundInFavorOfClaimantUnknown"]),
+                                PsychologistFoundInFavorOfClaimantYes = Convert.ToBoolean(reader["PsychologistFoundInFavorOfClaimantYes"]),
+                            });
+                    }
+
+                    data.CredibilityDetailData = details;
+
+                    if (reader.NextResult())
+                    {
+                        var credibilityByYearSummaries = new List<CredibilityByYearSummary>();
+
+                        while (reader.Read())
                         {
-                            AssessmentTypeId = Convert.ToInt32(row["AssessmentTypeId"]),
-                            AssessmentTypeName = Convert.ToString(row["AssessmentTypeName"]),
-                            CountNeurocognitiveCredibility = Convert.ToBoolean(row["CountNeurocognitiveCredibility"]),
-                            CountPsychologicalCredibility = Convert.ToBoolean(row["CountPsychologicalCredibility"]),
-                            DiagnosisFoundNo = Convert.ToBoolean(row["DiagnosisFoundNo"]),
-                            DiagnosisFoundRuleOut = Convert.ToBoolean(row["DiagnosisFoundRuleOut"]),
-                            DiagnosisFoundYes = Convert.ToBoolean(row["DiagnosisFoundYes"]),
-                            NeurocognitiveCredibilityCredible = Convert.ToBoolean(row["NeurocognitiveCredibilityCredible"]),
-                            NeurocognitiveCredibilityNotCredible = Convert.ToBoolean(row["NeurocognitiveCredibilityNotCredible"]),
-                            NeurocognitiveCredibilityQuestionable = Convert.ToBoolean(row["NeurocognitiveCredibilityQuestionable"]),
-                            PsychologicalCredibilityCredible = Convert.ToBoolean(row["PsychologicalCredibilityCredible"]),
-                            PsychologicalCredibilityNotCredible = Convert.ToBoolean(row["PsychologicalCredibilityNotCredible"]),
-                            PsychologicalCredibilityQuestionable = Convert.ToBoolean(row["PsychologicalCredibilityQuestionable"]),
-                            PsychologistFoundInFavorOfClaimantNo = Convert.ToBoolean(row["PsychologistFoundInFavorOfClaimantNo"]),
-                            PsychologistFoundInFavorOfClaimantUnknown = Convert.ToBoolean(row["PsychologistFoundInFavorOfClaimantUnknown"]),
-                            PsychologistFoundInFavorOfClaimantYes = Convert.ToBoolean(row["PsychologistFoundInFavorOfClaimantYes"]),
-                        })
-                    .ToList();
+                            credibilityByYearSummaries.Add(
+                                new CredibilityByYearSummary
+                                {
+                                    Type = Convert.ToString(reader["Type"]),
+                                    Year = Convert.ToInt32(reader["Year"]),
+                                    CredibilityTotal = Convert.ToDecimal(reader["CredibilityTotal"]),
+                                    Credible = Convert.ToDecimal(reader["Credible"]),
+                                    NotCredible = Convert.ToDecimal(reader["NotCredible"]),
+                                    Questionable = Convert.ToDecimal(reader["Questionable"]),
+                                    CredibleRate = Convert.ToDecimal(reader["CredibleRate"]),
+                                    NotCredibleRate = Convert.ToDecimal(reader["NotCredibleRate"]),
+                                    QuestionableRate = Convert.ToDecimal(reader["QuestionableRate"]),
+                                });
+                        }
+
+                        data.CredibilityByYearSummaryData = credibilityByYearSummaries;
+                    }
+
+                    if (reader.NextResult())
+                    {
+                        var notCredibleByYearSummaries = new List<NotCredibleByYearSummary>();
+
+                        while (reader.Read())
+                        {
+                            notCredibleByYearSummaries.Add(
+                                new NotCredibleByYearSummary
+                                {
+                                    Type = Convert.ToString(reader["Type"]),
+                                    Year = Convert.ToInt32(reader["Year"]),
+                                    Count = Convert.ToInt32(reader["Count"]),
+                                    WithReader = Convert.ToDecimal(reader["WithReader"]),
+                                    WithoutReader = Convert.ToDecimal(reader["WithoutReader"]),
+                                    WithTranslator = Convert.ToDecimal(reader["WithTranslator"]),
+                                    WithoutTranslator = Convert.ToDecimal(reader["WithoutTranslator"]),
+                                    WithReaderRate = Convert.ToDecimal(reader["WithReaderRate"]),
+                                    WithoutReaderRate = Convert.ToDecimal(reader["WithoutReaderRate"]),
+                                    WithTranslatorRate = Convert.ToDecimal(reader["WithTranslatorRate"]),
+                                    WithoutTranslatorRate = Convert.ToDecimal(reader["WithoutTranslatorRate"]),
+                                });
+                        }
+
+                        data.NotCredibleByYearSummaryData = notCredibleByYearSummaries;
+                    }
+
+                    if (reader.NextResult())
+                    {
+                        var credibilityByPsychometristSummaries = new List<CredibilityByPsychometristSummary>();
+
+                        while (reader.Read())
+                        {
+                            credibilityByPsychometristSummaries.Add(
+                                new CredibilityByPsychometristSummary
+                                {
+                                    Type = Convert.ToString(reader["Type"]),
+                                    Year = Convert.ToInt32(reader["Year"]),
+                                    Psychometrist = Convert.ToString(reader["Psychometrist"]),
+                                    Credible = Convert.ToDecimal(reader["Credible"]),
+                                    NotCredible = Convert.ToDecimal(reader["NotCredible"]),
+                                    Questionable = Convert.ToDecimal(reader["Questionable"]),
+                                    CredibleRate = Convert.ToDecimal(reader["CredibleRate"]),
+                                    NotCredibleRate = Convert.ToDecimal(reader["NotCredibleRate"]),
+                                    QuestionableRate = Convert.ToDecimal(reader["QuestionableRate"]),
+                                });
+                        }
+
+                        data.CredibilityByPsychometristSummaryData = credibilityByPsychometristSummaries;
+                    }
+                }
             }
+
+            return data;
         }
     }
 }

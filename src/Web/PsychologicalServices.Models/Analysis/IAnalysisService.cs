@@ -15,6 +15,6 @@ namespace PsychologicalServices.Models.Analysis
 
         IEnumerable<AssessmentTypeCount> GetAssessmentTypeCountsForYear(AssessmentTypeCountSearchCriteria criteria);
 
-        IEnumerable<CredibilityData> GetCredibilityData(CredibilityDataSearchCriteria criteria);
+        CredibilityData GetCredibilityData(CredibilityDataSearchCriteria criteria);
     }
 }

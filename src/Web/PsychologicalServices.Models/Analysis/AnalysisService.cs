@@ -70,7 +70,7 @@ namespace PsychologicalServices.Models.Analysis
             return counts;
         }
 
-        public IEnumerable<CredibilityData> GetCredibilityData(CredibilityDataSearchCriteria criteria)
+        public CredibilityData GetCredibilityData(CredibilityDataSearchCriteria criteria)
         {
             var data = _analysisRepository.GetCredibilityData(criteria);
 

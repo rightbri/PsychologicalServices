@@ -1,5 +1,4 @@
 ﻿using PsychologicalServices.Models.Analysis;
-using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -19,7 +18,7 @@ namespace PsychologicalServices.Api.Controllers
         
         [Route("search")]
         [HttpPost]
-        [ResponseType(typeof(IEnumerable<CredibilityData>))]
+        [ResponseType(typeof(CredibilityData))]
         public IHttpActionResult Search(CredibilityDataSearchCriteria criteria)
         {
             var data = _analysisService.GetCredibilityData(criteria);
