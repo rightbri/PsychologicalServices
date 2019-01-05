@@ -188,14 +188,14 @@
 				foreach (var lineGroup in Model.LineGroups)
 				{
 					var appointment = lineGroup.Appointment;
-					var firstClaim = appointment.Assessment.Claims.OrderByDescending(claim => claim.DateOfLoss.HasValue ? claim.DateOfLoss.Value : DateTime.MinValue).FirstOrDefault();
-
+					var claimant = appointment.Assessment.Claimant;
+					
 					foreach (var line in lineGroup.Lines)
 					{
 						subtotal += line.Amount;
 			#>
 			<tr>
-				<td><#= firstClaim != null ? string.Format("{0} {1}", firstClaim.Claimant.FirstName, firstClaim.Claimant.LastName) : "" #></td>
+				<td><#= claimant != null ? string.Format("{0} {1}", claimant.FirstName, claimant.LastName) : "" #></td>
 				<td><#= string.Format("{0:dddd, MMMM d, yyyy}", appointment.AppointmentTime) #></td>
 				<td><#= line.Description #></td>
 				<td><#= appointment.Location.Name #></td>

@@ -1,4 +1,5 @@
-import {inject} from 'aurelia-framework';
+import {computedFrom, inject} from 'aurelia-framework';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {Context} from 'common/context';
@@ -8,9 +9,10 @@ import {Scroller} from 'services/scroller';
 import {Notifier} from 'services/notifier';
 import moment from 'moment';
 
-@inject(DataRepository, Context, Config, DateService, Router, Notifier, Scroller)
+@inject(BindingSignaler, DataRepository, Context, Config, DateService, Router, Notifier, Scroller)
 export class EditUser {
-	constructor(dataRepository, context, config, dateService, router, notifier, scroller) {
+	constructor(bindingSignaler, dataRepository, context, config, dateService, router, notifier, scroller) {
+		this.bindingSignaler = bindingSignaler;
 		this.dataRepository = dataRepository;
 		this.context = context;
 		this.config = config;
@@ -21,7 +23,10 @@ export class EditUser {
 		
 		this.user = null;
 		this.unavailableDate = null;
-		
+		this.roles = [];
+		this.addresses = [];
+		this.cities = [];
+
 		this.datepickerOptions = {
 			dateFormat: "d-m-Y",
 			inline: true,
@@ -30,7 +35,10 @@ export class EditUser {
 		
 		this.roleMatcher = (a, b) => a !== null && b !== null && a.roleId === b.roleId;
 		this.addressMatcher = (a, b) => a !== null && b !== null && a.addressId === b.addressId;
-		
+		this.cityMatch = (a, b) => a && b && a.cityId === b.cityId;
+
+		this.selectedCity = null;
+
 		this.unavailabilityFocus = false;
 
 		this.saveDisabled = false;
@@ -72,22 +80,7 @@ export class EditUser {
 				'addressTypeIds': [this.config.addressDefaults.userAddressTypeId]
 			}).then(data => this.addresses = data),
 			this.dataRepository.getRoles().then(data => this.roles = data),
-			this.dataRepository.getCities().then(data => {
-				this.cities = data;
-				
-				this.user.travelFees = this.user.travelFees.concat(
-					getMissingTravelFees(data, this.user.travelFees)
-				).sort((a, b) => {
-					if (a.city.name < b.city.name) {
-						return -1;
-					}
-					else if (a.city.name > b.city.name) {
-						return 1;
-					}
-					
-					return 0;
-				});
-			})
+			this.dataRepository.getCities().then(data => this.cities = data)
 		]);
 	}
 	
@@ -158,12 +151,33 @@ export class EditUser {
 			this.user.unavailability.splice(index, 1);
 		}
 	}
-}
 
-function getMissingTravelFees(cities, travelFees) {
-	return cities.filter(city => 
-		!travelFees.some(travelFee => travelFee.city.cityId === city.cityId)
-	).map(function(city) { return { city: city, amount: 0 };});
+	addTravelFee(selectedCity) {
+		if (selectedCity) {
+			this.user.travelFees.push({ city: selectedCity, amount: 0 });
+
+			this.selectedCity = null;
+			
+			this.bindingSignaler.signal('travel-fee-city-list');
+		}
+	}
+
+	removeTravelFee(travelFee) {
+		let index = this.user.travelFees.indexOf(travelFee);
+
+		if (index > -1) {
+			this.user.travelFees.splice(index, 1);
+
+			this.bindingSignaler.signal('travel-fee-city-list');
+		}
+	}
+
+	@computedFrom('cities', 'user.travelFees')
+	get travelFeeCityList() {
+		let cities = this.cities.filter(c => !this.user.travelFees.some(tf => tf.city.cityId === c.cityId));
+
+		return cities;
+	}
 }
 
 function getUnavailability(date) {

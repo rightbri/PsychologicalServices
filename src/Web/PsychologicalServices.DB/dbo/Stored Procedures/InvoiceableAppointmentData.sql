@@ -37,22 +37,14 @@ BEGIN
 	,@psychometristInvoiceTypeId AS InvoiceTypeId
 	,t.[Name] AS AssessmentType
 	,rs.[Name] AS ReferralSource
-	,c.Claimant
+	,c.FirstName + ' ' + c.LastName AS Claimant
 	FROM dbo.Appointments app
 	INNER JOIN dbo.AppointmentStatuses apps ON app.AppointmentStatusId = apps.AppointmentStatusId
 	INNER JOIN dbo.Users psychometrists ON app.PsychometristId = psychometrists.UserId
 	INNER JOIN dbo.Assessments ass ON app.AssessmentId = ass.AssessmentId
 	INNER JOIN dbo.AssessmentTypes t ON ass.AssessmentTypeId = t.AssessmentTypeId
 	INNER JOIN dbo.ReferralSources rs ON ass.ReferralSourceId = rs.ReferralSourceId
-	LEFT JOIN (
-		SELECT
-		AssessmentId
-		,ROW_NUMBER() OVER (PARTITION BY ac.AssessmentId ORDER BY ac.ClaimId) AS RowNum
-		,cl.FirstName + ' ' + cl.LastName AS Claimant
-		FROM dbo.AssessmentClaims ac
-		INNER JOIN dbo.Claims c ON ac.ClaimId = c.ClaimId
-		INNER JOIN dbo.Claimants cl ON c.ClaimantId = cl.ClaimantId
-	) c ON ass.AssessmentId = c.AssessmentId
+	LEFT JOIN dbo.Claimants c ON ass.ClaimantId = c.ClaimantId
 	WHERE 
 	apps.CanInvoice = 1
 	AND t.PsychometristCanInvoice = 1
@@ -67,7 +59,6 @@ BEGIN
 		AND YEAR(InvoiceDate) = YEAR(app.AppointmentTime) 
 		AND MONTH(InvoiceDate) = MONTH(app.AppointmentTime)
 	)
-	AND (c.RowNum IS NULL OR c.RowNum = 1)
 	AND ass.CompanyId = @localCompanyId
 	AND app.AppointmentTime >= @localStartSearch
 	AND (@localInvoiceTypeId IS NULL OR @localInvoiceTypeId = @psychometristInvoiceTypeId)
@@ -89,7 +80,7 @@ BEGIN
 	,@psychologistInvoiceTypeId AS InvoiceTypeId
 	,t.[Name] AS AssessmentType
 	,rs.[Name] AS ReferralSource
-	,c.Claimant
+	,c.FirstName + ' ' + c.LastName AS Claimant
 	FROM dbo.Appointments app
 	INNER JOIN dbo.AppointmentStatuses apps ON app.AppointmentStatusId = apps.AppointmentStatusId
 	INNER JOIN dbo.Users psychologists ON app.PsychologistId = psychologists.UserId
@@ -97,15 +88,7 @@ BEGIN
 	INNER JOIN dbo.AssessmentTypes t ON ass.AssessmentTypeId = t.AssessmentTypeId
 	INNER JOIN dbo.ReferralSources rs ON ass.ReferralSourceId = rs.ReferralSourceId
 	INNER JOIN dbo.AssessmentTypeInvoiceAmounts atia ON t.AssessmentTypeId = atia.AssessmentTypeId AND rs.ReferralSourceId = atia.ReferralSourceId AND ass.CompanyId = atia.CompanyId
-	LEFT JOIN (
-		SELECT
-		AssessmentId
-		,ROW_NUMBER() OVER (PARTITION BY ac.AssessmentId ORDER BY ac.ClaimId) AS RowNum
-		,cl.FirstName + ' ' + cl.LastName AS Claimant
-		FROM dbo.AssessmentClaims ac
-		INNER JOIN dbo.Claims c ON ac.ClaimId = c.ClaimId
-		INNER JOIN dbo.Claimants cl ON c.ClaimantId = cl.ClaimantId
-	) c ON ass.AssessmentId = c.AssessmentId
+	LEFT JOIN dbo.Claimants c ON ass.ClaimantId = c.ClaimantId
 	WHERE 
 	apps.CanInvoice = 1
 	AND NOT EXISTS (
@@ -118,7 +101,6 @@ BEGIN
 		ilga.AppointmentId = app.AppointmentId
 		AND i.PayableToId = psychologists.UserId
 	)
-	AND (c.RowNum IS NULL OR c.RowNum = 1)
 	AND ass.CompanyId = @localCompanyId
 	AND app.AppointmentTime >= @localStartSearch
 	AND (@localInvoiceTypeId IS NULL OR @localInvoiceTypeId = @psychologistInvoiceTypeId)

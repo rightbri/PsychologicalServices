@@ -14,7 +14,6 @@
 	<require from="appointments/edit-appointment"></require>
 	<require from="claimants/search-claimant"></require>
 	<require from="claimants/edit-claimant"></require>
-	<require from="claims/edit-claim"></require>
 	<require from="reports/edit-report"></require>
 	<require from="medRehab/edit-med-rehab"></require>
 	<require from="assessments/edit-assessment-note"></require>
@@ -187,22 +186,26 @@
 			<div class="uk-width-1-3@s"></div>
 
 			<div class="uk-width-1-3@s">
-				<label class="uk-form-label">Claimant</label>
-				<div class="uk-form-controls">
-					<search-claimant claimant.bind="claimant" selected.delegate="claimantSelected($event)" if.bind="!claimantEditModel"></search-claimant>
-					<p if.bind="claimant && !claimantEditModel">
-						${claimant.firstName} ${claimant.lastName}
-						<br>${claimant.dateOfBirth | age} - ${claimant.gender | gender}
-						<button type="button" class="uk-button uk-button-link" click.delegate="editClaimant(claimant)" title="Edit Claimant" uk-tooltip>
-							<i class="fa fa-edit"></i>
-						</button>
+				<div>
+					<label class="uk-form-label">Claimant</label>
+					<search-claimant claimant.bind="assessment.claimant" selected.delegate="claimantSelected($event)" if.bind="!claimantEditModel"></search-claimant>
+				</div>
+				<div>
+					<p if.bind="assessment.claimant && !claimantEditModel">
+						${assessment.claimant.firstName} ${assessment.claimant.lastName}
+						<br>${assessment.claimant.dateOfBirth | age} - ${assessment.claimant.gender | gender}
 					</p>
-					<button type="button" class="uk-button uk-button-link" click.delegate="newClaimant()" title="Add Claimant" uk-tooltip>
-						<i class="fa fa-plus"></i>
-					</button>
-					
-					<div class="uk-background-muted" if.bind="claimantEditModel">
-						<edit-claimant model.bind="claimantEditModel" edited.delegate="claimantSelected($event)" canceled.delegate="claimantCanceled($event)"></edit-claimant>
+				</div>
+				<div class="uk-child-width-1-2@s" uk-grid>
+					<div>
+						<button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="editClaimant(assessment.claimant)" if.bind="assessment.claimant && !claimantEditModel">
+							Edit Claimant
+						</button>
+					</div>
+					<div>
+						<button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="newClaimant()">
+							Add Claimant
+						</button>
 					</div>
 				</div>
 			</div>
@@ -213,42 +216,32 @@
 					<table class="uk-table uk-table-divider uk-table-small">
 						<thead>
 							<tr>
-								<th>
-									<button type="button" class="uk-button uk-button-link" click.delegate="newClaim()" if.bind="claimant" title="Add claim" uk-tooltip>
-										<i class="fa fa-plus"></i>
-									</button>
-								</th>
+								<th></th>
 								<th>Date of Loss</th>
 								<th>Lawyer</th>
 								<th>Claim #</th>
 								<th>Insurance Company</th>
-								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="claim of assessment.claims | sortArray:{ property: 'dateOfLoss', direction: 'asc' }">
-								<td>
-									<button type="button" class="uk-button uk-button-default" click.delegate="editClaim(claim)">
-										Edit
-									</button>
-								</td>
-								<td>${claim.dateOfLoss | dateFormat:config.longDateFormat}</td>
-								<td class="uk-text-truncate">${claim.lawyer}</td>
-								<td>${claim.claimNumber}</td>
-								<td class="uk-text-truncate">${claim.insuranceCompany}</td>
-								<td>
-									<button type="button" class="uk-button uk-button-link" click.delegate="removeClaim(claim)" title="Remove claim" uk-tooltip>
-										<i class="fa fa-times"></i>
-									</button>
-								</td>
-							</tr>
+							<template if.bind="assessment.claimant">
+								<tr repeat.for="claim of assessment.claimant.claims | sortArray:{ property: 'dateOfLoss', direction: 'asc' }">
+									<td>
+										<input type="checkbox" class="uk-checkbox" model.bind="claim" checked.bind="assessment.claims" matcher.bind="claimMatcher" />
+									</td>
+									<td>${claim.dateOfLoss | dateFormat:config.longDateFormat}</td>
+									<td class="uk-text-truncate">${claim.lawyer}</td>
+									<td>${claim.claimNumber}</td>
+									<td class="uk-text-truncate">${claim.insuranceCompany}</td>
+								</tr>
+							</template>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			
-			<div class="uk-width-1-1 uk-background-muted" if.bind="claimEditModel">
-				<edit-claim model.bind="claimEditModel" edited.delegate="claimEdited($event)" canceled.delegate="claimCanceled($event)"></edit-claim>
+			<div class="uk-width-1-1 uk-background-muted" if.bind="claimantEditModel">
+				<edit-claimant model.bind="claimantEditModel" edited.delegate="claimantSelected($event)" canceled.delegate="claimantCanceled($event)"></edit-claimant>
 			</div>
 			
 			<div class="uk-width-1-3@s">

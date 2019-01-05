@@ -189,12 +189,12 @@ namespace PsychologicalServices.Data
 		PlaintiffLawyerId,
 		///<summary>BillToContactId. </summary>
 		BillToContactId,
-		///<summary>ClaimantId. </summary>
-		ClaimantId,
 		///<summary>PsychologistId. </summary>
 		PsychologistId,
 		///<summary>ArbitrationStatusId. </summary>
 		ArbitrationStatusId,
+		///<summary>ClaimantId. </summary>
+		ClaimantId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -273,6 +273,8 @@ namespace PsychologicalServices.Data
 		IsReassessment,
 		///<summary>PreviouslySeenDate. </summary>
 		PreviouslySeenDate,
+		///<summary>ClaimantId. </summary>
+		ClaimantId,
 		/// <summary></summary>
 		AmountOfFields
 	}

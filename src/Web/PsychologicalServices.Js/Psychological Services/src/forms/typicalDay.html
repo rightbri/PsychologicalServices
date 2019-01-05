@@ -5,9 +5,9 @@
     
     <div class="uk-container">
 
-        <h1>Typical Day</h1>
+        <h3>Typical Day</h3>
 
-        <h2>Current Status</h2>
+        <p>Current Status</p>
 
         <div class="uk-overflow-auto" if.bind="frequencies">
             <table class="uk-table uk-table-divider uk-table-small">
@@ -46,7 +46,11 @@
     
         <hr>
 
-        <fieldset class="uk-fieldset">
+        <button type="button" class="uk-button uk-button-default" click.delegate="addTask()" if.bind="!creatingTask">
+            New Task
+        </button>
+
+        <fieldset class="uk-fieldset" if.bind="creatingTask">
             <legend class="uk-legend">Create Task</legend>
 
             <form class="uk-form-stacked uk-grid-medium uk-margin" uk-grid>
@@ -75,8 +79,12 @@
                 </div>
 
                 <div class="uk-width-1-1">
-				    <button type="button" class="uk-button uk-button-default" click.delegate="addTask()">
+				    <button type="button" class="uk-button uk-button-default" click.delegate="saveTask()">
                         Create
+                    </button>
+
+                    <button type="button" class="uk-button uk-button-secondary" click.delegate="cancelTask()">
+                        Cancel
                     </button>
                 </div>
 
@@ -93,7 +101,7 @@
 
             </div>
 
-            <div class="uk-width-1-1" if.bind="issueDescriptions.length > 0">
+            <div class="uk-width-1-1" if.bind="issueDescriptions.length > 0" style="font-family: arial, sans-serif; font-size: 11pt;">
                 <p>
                     Results:
                 </p>

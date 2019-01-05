@@ -1,39 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Analysis
 {
     public class CredibilityData
     {
-        public int AssessmentTypeId { get; set; }
+        public IEnumerable<CredibilityDetail> CredibilityDetailData { get; set; }
 
-        public string AssessmentTypeName { get; set; }
+        public IEnumerable<CredibilityByYearSummary> CredibilityByYearSummaryData { get; set; }
 
-        public bool CountNeurocognitiveCredibility { get; set; }
+        public IEnumerable<NotCredibleByYearSummary> NotCredibleByYearSummaryData { get; set; }
 
-        public bool CountPsychologicalCredibility { get; set; }
-
-        public bool NeurocognitiveCredibilityCredible { get; set; }
-
-        public bool NeurocognitiveCredibilityNotCredible { get; set; }
-
-        public bool NeurocognitiveCredibilityQuestionable { get; set; }
-
-        public bool PsychologicalCredibilityCredible { get; set; }
-
-        public bool PsychologicalCredibilityNotCredible { get; set; }
-
-        public bool PsychologicalCredibilityQuestionable { get; set; }
-
-        public bool DiagnosisFoundYes { get; set; }
-
-        public bool DiagnosisFoundNo { get; set; }
-
-        public bool DiagnosisFoundRuleOut { get; set; }
-
-        public bool PsychologistFoundInFavorOfClaimantYes { get; set; }
-
-        public bool PsychologistFoundInFavorOfClaimantNo { get; set; }
-
-        public bool PsychologistFoundInFavorOfClaimantUnknown { get; set; }
+        public IEnumerable<CredibilityByPsychometristSummary> CredibilityByPsychometristSummaryData { get; set; }
     }
 }

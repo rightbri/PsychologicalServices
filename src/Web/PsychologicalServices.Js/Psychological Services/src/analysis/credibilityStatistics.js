@@ -28,7 +28,7 @@ export class CredibilityStatistics {
         }).then(data => {
             this.credibilityData = data;
 
-            this.credibilitiesByAssessmentType = this.credibilityData.reduce(function(accumulator, currentValue) {
+            this.credibilitiesByAssessmentType = this.credibilityData.credibilityDetailData.reduce(function(accumulator, currentValue) {
                 let assessmentType = accumulator.find(element =>
                     element.assessmentTypeId === currentValue.assessmentTypeId
                 );
@@ -117,8 +117,8 @@ export class CredibilityStatistics {
                 'issueInDisputeApprovedUnknown': 0
             };
             
-            for (let i = 0; i < this.credibilityData.length; i++) {
-                let item = this.credibilityData[i];
+            for (let i = 0; i < this.credibilityData.credibilityDetailData.length; i++) {
+                let item = this.credibilityData.credibilityDetailData[i];
 
                 this.credibilityTotal.neuroCredibilityTotal += item.countNeurocognitiveCredibility ? 1 : 0;
                 this.credibilityTotal.psychCredibilityTotal += item.countPsychologicalCredibility ? 1 : 0;

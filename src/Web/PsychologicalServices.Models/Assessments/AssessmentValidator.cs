@@ -24,7 +24,6 @@ namespace PsychologicalServices.Models.Assessments
         private readonly IUserRepository _userRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
         private readonly IDate _now = null;
-        private readonly IClaimValidator _claimValidator = null;
         private readonly IAppointmentValidator _appointmentValidator = null;
         private readonly IEmailAddressValidator _emailAddressValidator = null;
         private readonly IMedRehabValidator _medRehabValidator = null;
@@ -38,7 +37,6 @@ namespace PsychologicalServices.Models.Assessments
             IUserRepository userRepository,
             ICompanyRepository companyRepository,
             IDate now,
-            IClaimValidator claimValidator,
             IAppointmentValidator appointmentValidator,
             IEmailAddressValidator emailAddressValidator,
             IMedRehabValidator medRehabValidator,
@@ -52,7 +50,6 @@ namespace PsychologicalServices.Models.Assessments
             _userRepository = userRepository;
             _companyRepository = companyRepository;
             _now = now;
-            _claimValidator = claimValidator;
             _appointmentValidator = appointmentValidator;
             _emailAddressValidator = emailAddressValidator;
             _medRehabValidator = medRehabValidator;
@@ -277,16 +274,6 @@ namespace PsychologicalServices.Models.Assessments
                 }
             }
 
-            if (null != item.Claims)
-            {
-                foreach (var claim in item.Claims)
-                {
-                    result.ValidationErrors.AddRange(
-                        _claimValidator.Validate(claim).ValidationErrors
-                    );
-                }
-            }
-            
             if (null != item.Appointments)
             {
                 foreach (var appointment in item.Appointments)

@@ -198,14 +198,14 @@ namespace PsychologicalServices.Data.EntityClasses
 				case ArbitrationFieldIndex.BillToContactId:
 					DesetupSyncBillToContact(true, false);
 					break;
-				case ArbitrationFieldIndex.ClaimantId:
-					DesetupSyncClaimant(true, false);
-					break;
 				case ArbitrationFieldIndex.PsychologistId:
 					DesetupSyncPsychologist(true, false);
 					break;
 				case ArbitrationFieldIndex.ArbitrationStatusId:
 					DesetupSyncArbitrationStatus(true, false);
+					break;
+				case ArbitrationFieldIndex.ClaimantId:
+					DesetupSyncClaimant(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -700,11 +700,11 @@ namespace PsychologicalServices.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("BillToContactId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("ClaimantId", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PsychologistId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ArbitrationStatusId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("ClaimantId", fieldHashtable);
 		}
 		#endregion
 
@@ -1179,16 +1179,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)ArbitrationFieldIndex.BillToContactId, value); }
 		}
 
-		/// <summary> The ClaimantId property of the Entity Arbitration<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "Arbitrations"."ClaimantId"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 ClaimantId
-		{
-			get { return (System.Int32)GetValue((int)ArbitrationFieldIndex.ClaimantId, true); }
-			set	{ SetValue((int)ArbitrationFieldIndex.ClaimantId, value); }
-		}
-
 		/// <summary> The PsychologistId property of the Entity Arbitration<br/><br/></summary>
 		/// <remarks>Mapped on  table field: "Arbitrations"."PsychologistId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
@@ -1207,6 +1197,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.Int32>)GetValue((int)ArbitrationFieldIndex.ArbitrationStatusId, false); }
 			set	{ SetValue((int)ArbitrationFieldIndex.ArbitrationStatusId, value); }
+		}
+
+		/// <summary> The ClaimantId property of the Entity Arbitration<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Arbitrations"."ClaimantId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Int32 ClaimantId
+		{
+			get { return (System.Int32)GetValue((int)ArbitrationFieldIndex.ClaimantId, true); }
+			set	{ SetValue((int)ArbitrationFieldIndex.ClaimantId, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationClaimEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

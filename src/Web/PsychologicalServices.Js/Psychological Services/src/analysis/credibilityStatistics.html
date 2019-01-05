@@ -10,85 +10,215 @@
 
 <div class="uk-overflow-auto" if.bind="credibilityData">
 
-    <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-        <thead>
-            <tr>
-                <th># Neuro</th>
-                <th>% Neuro Credible</th>
-                <th>% Neuro Not Credible</th>
-                <th>% Neuro Questionable</th>
-                <th># Psych</th>
-                <th>% Psych Credible</th>
-                <th>% Psych Not Credible</th>
-                <th>% Psych Questionable</th>
-                <th>% Diagnosis Found Yes</th>
-                <th>% Diagnosis Found No</th>
-                <th>% Diagnosis Found Rule Out</th>
-                <th>% Issue In Dispute Approved Yes</th>
-                <th>% Issue In Dispute Approved No</th>
-                <th>% Issue In Dispute Approved Unknown</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>${credibilityTotal.neuroCredibilityTotal | numeric:'0,0'}</td>
-                <td>${credibilityTotal.percentNeuroCredible | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentNeuroNotCredible | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentNeuroQuestionable | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.psychCredibilityTotal | numeric:'0,0'}</td>
-                <td>${credibilityTotal.percentPsychCredible | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentPsychNotCredible | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentPsychQuestionable | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentDiagnosisFoundYes | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentDiagnosisFoundNo | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentDiagnosisFoundRuleOut | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentIssueInDisputeApprovedYes | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentIssueInDisputeApprovedNo | numeric:'0.00%'}</td>
-                <td>${credibilityTotal.percentIssueInDisputeApprovedUnknown | numeric:'0.00%'}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
-        <thead>
-            <tr>
-                <th>Assessment Type</th>
-                <th># Neuro</th>
-                <th>% Neuro Credible</th>
-                <th>% Neuro Not Credible</th>
-                <th>% Neuro Questionable</th>
-                <th># Psych</th>
-                <th>% Psych Credible</th>
-                <th>% Psych Not Credible</th>
-                <th>% Psych Questionable</th>
-                <th>% Diagnosis Found Yes</th>
-                <th>% Diagnosis Found No</th>
-                <th>% Diagnosis Found Rule Out</th>
-                <th>% Issue In Dispute Approved Yes</th>
-                <th>% Issue In Dispute Approved No</th>
-                <th>% Issue In Dispute Approved Unknown</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr repeat.for="item of credibilitiesByAssessmentType | sortArray:[{ property: 'assessmentType', direction: 'asc' }]">
-                <td>${item.assessmentType}</td>
-                <td>${item.neuroCredibilityTotal | numeric:'0,0'}</td>
-                <td>${item.percentNeuroCredible | numeric:'0.00%'}</td>
-                <td>${item.percentNeuroNotCredible | numeric:'0.00%'}</td>
-                <td>${item.percentNeuroQuestionable | numeric:'0.00%'}</td>
-                <td>${item.psychCredibilityTotal | numeric:'0,0'}</td>
-                <td>${item.percentPsychCredible | numeric:'0.00%'}</td>
-                <td>${item.percentPsychNotCredible | numeric:'0.00%'}</td>
-                <td>${item.percentPsychQuestionable | numeric:'0.00%'}</td>
-                <td>${item.percentDiagnosisFoundYes | numeric:'0.00%'}</td>
-                <td>${item.percentDiagnosisFoundNo | numeric:'0.00%'}</td>
-                <td>${item.percentDiagnosisFoundRuleOut | numeric:'0.00%'}</td>
-                <td>${item.percentIssueInDisputeApprovedYes | numeric:'0.00%'}</td>
-                <td>${item.percentIssueInDisputeApprovedNo | numeric:'0.00%'}</td>
-                <td>${item.percentIssueInDisputeApprovedUnknown | numeric:'0.00%'}</td>
-            </tr>
-        </tbody>
-    </table>
+    <ul uk-tab="swiping: false">
+        <li>
+            <a href="#" click.delegate="showTab(0)">Summary By Year</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(1)">Not Credible Summary By Year</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(2)">Summary By Psychometrist By Year</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(3)">Overall Summary</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(4)">Detail by Assessment Type</a>
+        </li>
+    </ul>
+
+    <ul class="uk-switcher">
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 0">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Year</th>
+                            <th>Total</th>
+                            <th>Credible</th>
+                            <th>Not Credible</th>
+                            <th>Questionable</th>
+                            <th>Credible %</th>
+                            <th>Not Credible %</th>
+                            <th>Questionable %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of credibilityData.credibilityByYearSummaryData">
+                            <td>${item.type}</td>
+                            <td>${item.year}</td>
+                            <td>${item.credibilityTotal | numeric:'0,0'}</td>
+                            <td>${item.credible | numeric:'0,0'}</td>
+                            <td>${item.notCredible | numeric:'0,0'}</td>
+                            <td>${item.questionable | numeric:'0,0'}</td>
+                            <td>${item.credibleRate | numeric:'0.00%'}</td>
+                            <td>${item.notCredibleRate | numeric:'0.00%'}</td>
+                            <td>${item.questionableRate | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 1">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Year</th>
+                            <th>Total</th>
+                            <th>With Reader</th>
+                            <th>Without Reader</th>
+                            <th>With Translator</th>
+                            <th>Without Translator</th>
+                            <th>With Reader %</th>
+                            <th>Without Reader %</th>
+                            <th>With Translator %</th>
+                            <th>Without Translator %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of credibilityData.notCredibleByYearSummaryData">
+                            <td>${item.type}</td>
+                            <td>${item.year}</td>
+                            <td>${item.count | numeric:'0,0'}</td>
+                            <td>${item.withReader | numeric:'0,0'}</td>
+                            <td>${item.withoutReader | numeric:'0,0'}</td>
+                            <td>${item.withTranslator | numeric:'0,0'}</td>
+                            <td>${item.withoutTranslator | numeric:'0,0'}</td>
+                            <td>${item.withReaderRate | numeric:'0.00%'}</td>
+                            <td>${item.withoutReaderRate | numeric:'0.00%'}</td>
+                            <td>${item.withTranslatorRate | numeric:'0.00%'}</td>
+                            <td>${item.withoutTranslatorRate | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 2">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Year</th>
+                            <th>Psychometrist</th>
+                            <th>Total</th>
+                            <th>Credible</th>
+                            <th>Not Credible</th>
+                            <th>Questionable</th>
+                            <th>Credible %</th>
+                            <th>Not Credible %</th>
+                            <th>Questionable %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of credibilityData.credibilityByPsychometristSummaryData">
+                            <td>${item.type}</td>
+                            <td>${item.year}</td>
+                            <td>${item.psychometrist}</td>
+                            <td>${item.credibilityTotal | numeric:'0,0'}</td>
+                            <td>${item.credible | numeric:'0,0'}</td>
+                            <td>${item.notCredible | numeric:'0,0'}</td>
+                            <td>${item.questionable | numeric:'0,0'}</td>
+                            <td>${item.credibleRate | numeric:'0.00%'}</td>
+                            <td>${item.notCredibleRate | numeric:'0.00%'}</td>
+                            <td>${item.questionableRate | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 3">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th># Neuro</th>
+                            <th>% Neuro Credible</th>
+                            <th>% Neuro Not Credible</th>
+                            <th>% Neuro Questionable</th>
+                            <th># Psych</th>
+                            <th>% Psych Credible</th>
+                            <th>% Psych Not Credible</th>
+                            <th>% Psych Questionable</th>
+                            <th>% Diagnosis Found Yes</th>
+                            <th>% Diagnosis Found No</th>
+                            <th>% Diagnosis Found Rule Out</th>
+                            <th>% Issue In Dispute Approved Yes</th>
+                            <th>% Issue In Dispute Approved No</th>
+                            <th>% Issue In Dispute Approved Unknown</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${credibilityTotal.neuroCredibilityTotal | numeric:'0,0'}</td>
+                            <td>${credibilityTotal.percentNeuroCredible | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentNeuroNotCredible | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentNeuroQuestionable | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.psychCredibilityTotal | numeric:'0,0'}</td>
+                            <td>${credibilityTotal.percentPsychCredible | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentPsychNotCredible | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentPsychQuestionable | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentDiagnosisFoundYes | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentDiagnosisFoundNo | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentDiagnosisFoundRuleOut | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentIssueInDisputeApprovedYes | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentIssueInDisputeApprovedNo | numeric:'0.00%'}</td>
+                            <td>${credibilityTotal.percentIssueInDisputeApprovedUnknown | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 4">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Assessment Type</th>
+                            <th># Neuro</th>
+                            <th>% Neuro Credible</th>
+                            <th>% Neuro Not Credible</th>
+                            <th>% Neuro Questionable</th>
+                            <th># Psych</th>
+                            <th>% Psych Credible</th>
+                            <th>% Psych Not Credible</th>
+                            <th>% Psych Questionable</th>
+                            <th>% Diagnosis Found Yes</th>
+                            <th>% Diagnosis Found No</th>
+                            <th>% Diagnosis Found Rule Out</th>
+                            <th>% Issue In Dispute Approved Yes</th>
+                            <th>% Issue In Dispute Approved No</th>
+                            <th>% Issue In Dispute Approved Unknown</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of credibilitiesByAssessmentType | sortArray:[{ property: 'assessmentType', direction: 'asc' }]">
+                            <td>${item.assessmentType}</td>
+                            <td>${item.neuroCredibilityTotal | numeric:'0,0'}</td>
+                            <td>${item.percentNeuroCredible | numeric:'0.00%'}</td>
+                            <td>${item.percentNeuroNotCredible | numeric:'0.00%'}</td>
+                            <td>${item.percentNeuroQuestionable | numeric:'0.00%'}</td>
+                            <td>${item.psychCredibilityTotal | numeric:'0,0'}</td>
+                            <td>${item.percentPsychCredible | numeric:'0.00%'}</td>
+                            <td>${item.percentPsychNotCredible | numeric:'0.00%'}</td>
+                            <td>${item.percentPsychQuestionable | numeric:'0.00%'}</td>
+                            <td>${item.percentDiagnosisFoundYes | numeric:'0.00%'}</td>
+                            <td>${item.percentDiagnosisFoundNo | numeric:'0.00%'}</td>
+                            <td>${item.percentDiagnosisFoundRuleOut | numeric:'0.00%'}</td>
+                            <td>${item.percentIssueInDisputeApprovedYes | numeric:'0.00%'}</td>
+                            <td>${item.percentIssueInDisputeApprovedNo | numeric:'0.00%'}</td>
+                            <td>${item.percentIssueInDisputeApprovedUnknown | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
 
 </div>
 

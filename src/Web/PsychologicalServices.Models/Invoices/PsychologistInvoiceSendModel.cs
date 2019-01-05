@@ -32,6 +32,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public string CourtesyCopyEmail { get; private set; }
 
+        public string ReplyToEmail { get; private set; }
+
         public string EmailBody { get; private set; }
 
         public string EmailSubject { get; private set; }
@@ -77,20 +79,16 @@ namespace PsychologicalServices.Models.Invoices
                 return;
             }
 
-            Func<Claims.Claim, bool> claimWithClaimantPredicate = (claim) => null != claim.Claimant &&
-                    !string.IsNullOrWhiteSpace(claim.Claimant.FirstName) &&
-                    !string.IsNullOrWhiteSpace(claim.Claimant.LastName);
-
             var hasClaimant = hasAssessment &&
-                null != assessment.Claims &&
-                assessment.Claims.Any(claimWithClaimantPredicate);
+                null != assessment.Claimant;
+
             if (!hasClaimant)
             {
                 _errors.Add("The related assessment has no claimant");
                 return;
             }
 
-            var claimant = assessment.Claims.First(claimWithClaimantPredicate).Claimant;
+            var claimant = assessment.Claimant;
 
             var hasCompanyEmail = !string.IsNullOrWhiteSpace(assessment.Company.Email);
             if (!hasCompanyEmail)
@@ -110,6 +108,7 @@ namespace PsychologicalServices.Models.Invoices
             SenderEmail = assessment.Company.Email;
             RecipientEmail = assessment.ReferralSource.InvoicesContactEmail;
             CourtesyCopyEmail = appointment.Psychologist.Email;
+            ReplyToEmail = assessment.Company.ReplyToEmail;
             EmailSubject = $"Invoice {invoice.Identifier}";
             EmailBody = $"Please see the attached invoice regarding the services for {claimant.FirstName} {claimant.LastName}.";
         }

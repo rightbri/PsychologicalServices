@@ -38,6 +38,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<AssessmentNoteEntity> _assessmentNotes;
 		private EntityCollection<AssessmentReportEntity> _assessmentReports;
 		private AssessmentTypeEntity _assessmentType;
+		private ClaimantEntity _claimant;
 		private CompanyEntity _company;
 		private CredibilityEntity _neurocognitiveCredibility;
 		private CredibilityEntity _psychologicalCredibility;
@@ -64,6 +65,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			/// <summary>Member name AssessmentType</summary>
 			public static readonly string AssessmentType = "AssessmentType";
+			/// <summary>Member name Claimant</summary>
+			public static readonly string Claimant = "Claimant";
 			/// <summary>Member name Company</summary>
 			public static readonly string Company = "Company";
 			/// <summary>Member name NeurocognitiveCredibility</summary>
@@ -173,6 +176,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				if(_assessmentType!=null)
 				{
 					_assessmentType.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
+				_claimant = (ClaimantEntity)info.GetValue("_claimant", typeof(ClaimantEntity));
+				if(_claimant!=null)
+				{
+					_claimant.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 				_company = (CompanyEntity)info.GetValue("_company", typeof(CompanyEntity));
 				if(_company!=null)
@@ -286,6 +294,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case AssessmentFieldIndex.DiagnosisFoundReponseId:
 					DesetupSyncDiagnosisFoundResponse(true, false);
 					break;
+				case AssessmentFieldIndex.ClaimantId:
+					DesetupSyncClaimant(true, false);
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -302,6 +313,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				case "AssessmentType":
 					this.AssessmentType = (AssessmentTypeEntity)entity;
+					break;
+				case "Claimant":
+					this.Claimant = (ClaimantEntity)entity;
 					break;
 				case "Company":
 					this.Company = (CompanyEntity)entity;
@@ -387,6 +401,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				case "AssessmentType":
 					toReturn.Add(Relations.AssessmentTypeEntityUsingAssessmentTypeId);
+					break;
+				case "Claimant":
+					toReturn.Add(Relations.ClaimantEntityUsingClaimantId);
 					break;
 				case "Company":
 					toReturn.Add(Relations.CompanyEntityUsingCompanyId);
@@ -493,6 +510,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentType":
 					SetupSyncAssessmentType(relatedEntity);
 					break;
+				case "Claimant":
+					SetupSyncClaimant(relatedEntity);
+					break;
 				case "Company":
 					SetupSyncCompany(relatedEntity);
 					break;
@@ -568,6 +588,9 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				case "AssessmentType":
 					DesetupSyncAssessmentType(false, true);
+					break;
+				case "Claimant":
+					DesetupSyncClaimant(false, true);
 					break;
 				case "Company":
 					DesetupSyncCompany(false, true);
@@ -651,6 +674,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(_assessmentType!=null)
 			{
 				toReturn.Add(_assessmentType);
+			}
+			if(_claimant!=null)
+			{
+				toReturn.Add(_claimant);
 			}
 			if(_company!=null)
 			{
@@ -736,6 +763,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_assessmentNotes", ((_assessmentNotes!=null) && (_assessmentNotes.Count>0) && !this.MarkedForDeletion)?_assessmentNotes:null);
 				info.AddValue("_assessmentReports", ((_assessmentReports!=null) && (_assessmentReports.Count>0) && !this.MarkedForDeletion)?_assessmentReports:null);
 				info.AddValue("_assessmentType", (!this.MarkedForDeletion?_assessmentType:null));
+				info.AddValue("_claimant", (!this.MarkedForDeletion?_claimant:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
 				info.AddValue("_neurocognitiveCredibility", (!this.MarkedForDeletion?_neurocognitiveCredibility:null));
 				info.AddValue("_psychologicalCredibility", (!this.MarkedForDeletion?_psychologicalCredibility:null));
@@ -841,6 +869,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTypeFields.AssessmentTypeId, null, ComparisonOperator.Equal, this.AssessmentTypeId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Claimant' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoClaimant()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ClaimantFields.ClaimantId, null, ComparisonOperator.Equal, this.ClaimantId));
 			return bucket;
 		}
 
@@ -1028,6 +1065,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("AssessmentType", _assessmentType);
+			toReturn.Add("Claimant", _claimant);
 			toReturn.Add("Company", _company);
 			toReturn.Add("NeurocognitiveCredibility", _neurocognitiveCredibility);
 			toReturn.Add("PsychologicalCredibility", _psychologicalCredibility);
@@ -1117,6 +1155,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("IsReassessment", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PreviouslySeenDate", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("ClaimantId", fieldHashtable);
 		}
 		#endregion
 
@@ -1139,6 +1179,33 @@ namespace PsychologicalServices.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnAssessmentTypePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _claimant</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncClaimant(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, resetFKFields, ref _claimant, new PropertyChangedEventHandler(OnClaimantPropertyChanged), "Claimant", "Assessments", PsychologicalServices.Data.RelationClasses.StaticAssessmentRelations.ClaimantEntityUsingClaimantIdStatic, true, new int[] { (int)AssessmentFieldIndex.ClaimantId });
+		}
+
+		/// <summary> setups the sync logic for member _claimant</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncClaimant(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _claimant, new PropertyChangedEventHandler( OnClaimantPropertyChanged ), "Claimant", "Assessments", PsychologicalServices.Data.RelationClasses.StaticAssessmentRelations.ClaimantEntityUsingClaimantIdStatic, true, new string[] {  }, new int[] { (int)AssessmentFieldIndex.ClaimantId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClaimantPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1565,6 +1632,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeEntityFactory))),	(IEntityRelation)GetRelationsForField("AssessmentType")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeEntity, 0, null, null, null, null, "AssessmentType", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Claimant' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathClaimant
+		{
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(ClaimantEntityFactory))),	(IEntityRelation)GetRelationsForField("Claimant")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.ClaimantEntity, 0, null, null, null, null, "Claimant", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Company' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathCompany
@@ -1913,6 +1987,16 @@ namespace PsychologicalServices.Data.EntityClasses
 			set	{ SetValue((int)AssessmentFieldIndex.PreviouslySeenDate, value); }
 		}
 
+		/// <summary> The ClaimantId property of the Entity Assessment<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Assessments"."ClaimantId"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual Nullable<System.Int32> ClaimantId
+		{
+			get { return (Nullable<System.Int32>)GetValue((int)AssessmentFieldIndex.ClaimantId, false); }
+			set	{ SetValue((int)AssessmentFieldIndex.ClaimantId, value); }
+		}
+
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
 		[TypeContainedAttribute(typeof(AppointmentEntity))]
 		public virtual EntityCollection<AppointmentEntity> Appointments
@@ -1983,6 +2067,24 @@ namespace PsychologicalServices.Data.EntityClasses
 				else
 				{
 					SetSingleRelatedEntityNavigator(value, "Assessments", "AssessmentType", _assessmentType, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'ClaimantEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
+		[Browsable(true)]
+		public virtual ClaimantEntity Claimant
+		{
+			get	{ return _claimant; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncClaimant(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "Assessments", "Claimant", _claimant, true); 
 				}
 			}
 		}

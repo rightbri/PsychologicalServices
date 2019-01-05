@@ -10,34 +10,34 @@
 	<fieldset class="uk-fieldset">
 		<legend class="uk-legend">${editType} User</legend>
 		
-		<form class="uk-form-stacked uk-grid-medium" uk-grid>
+		<form class="uk-form-stacked uk-grid-medium uk-child-width-1-2@s" uk-grid>
 		
 			<div class="uk-width-1-1" if.bind="validationErrors">
 				<validation-summary errors.bind="validationErrors"></validation-summary>
 			</div>
 
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label" for="firstName">First Name</label>
 				<div class="uk-form-controls">
 					<input id="firstName" type="text" class="uk-input" value.bind="user.firstName" />
 				</div>
 			</div>
 		
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label" for="lastName">Last Name</label>
 				<div class="uk-form-controls">
 					<input id="lastName" type="text" class="uk-input" value.bind="user.lastName" />
 				</div>
 			</div>
 			
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label" for="email">Email</label>
 				<div class="uk-form-controls">
 					<input id="email" type="text" class="uk-input" value.bind="user.email" />
 				</div>
 			</div>
 			
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label" for="address">Address</label>
 				<div class="uk-form-controls">
 					<select id="address" class="uk-select" value.bind="user.address" matcher.bind="addressMatcher">
@@ -49,7 +49,7 @@
 				</div>
 			</div>
 			
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label">Roles</label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label" repeat.for="role of roles">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label">Status</label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label">
@@ -67,15 +67,15 @@
 				</div>
 			</div>
 
-			<div class="uk-width-1-2@s" if.bind="!user.isActive"></div>
-			<div class="uk-width-1-2@s" if.bind="!user.isActive">
+			<div if.bind="!user.isActive"></div>
+			<div if.bind="!user.isActive">
 				<label class="uk-form-label" for="dateInactivated">Date Inactivated</label>
 				<div class="uk-form-controls">
 					<input id="dateInactivated" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="user.dateInactivated | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
 				</div>
 			</div>
 			
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label">Select unavailability dates</label>
 				<div class="uk-form-controls" uk-grid>
 					<div class="uk-width-expand">
@@ -87,7 +87,7 @@
 				</div>
 			</div>
 			
-			<div class="uk-width-1-2@s">
+			<div>
 				<label class="uk-form-label">Selected unavailability dates</label>
 				<div class="uk-form-controls">
 					<ul class="uk-list">
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			
-			<div class="uk-width-1-1">
+			<div>
 				<label class="uk-form-label">Travel Fees</label>
 				<div class="uk-form-controls">
 					<table class="uk-table uk-table-divider uk-table-small">
@@ -107,6 +107,7 @@
 							<tr>
 								<th>City</th>
 								<th>Amount</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -115,9 +116,31 @@
 								<td>
 									<input type="number" pattern="\d+" class="uk-input uk-form-width-small" value.bind="travelFee.amount | money:'0'" />
 								</td>
+								<td>
+									<button type="button" class="uk-button uk-button-danger uk-button-small" click.delegate="removeTravelFee(travelFee)">
+										&times;
+									</button>
+								</td>
 							</tr>
 						</tbody>
 					</table>
+				</div>
+			</div>
+
+			<div>
+				<label for="city" class="uk-form-label">Add Travel Fee for City</label>
+				<div class="uk-form-controls" uk-grid>
+					<div class="uk-width-expand">
+						<select id="city" class="uk-select" value.bind="selectedCity" matcher.bind="cityMatcher">
+							<option></option>
+							<option repeat.for="city of travelFeeCityList & signal:'travel-fee-city-list'" model.bind="city">${city.name}</option>
+						</select>
+					</div>
+					<div class="uk-width-auto">
+						<button type="button" class="uk-button uk-button-primary" click.delegate="addTravelFee(selectedCity)">
+							Add
+						</button>
+					</div>
 				</div>
 			</div>
 			

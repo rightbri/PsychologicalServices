@@ -211,16 +211,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -374,16 +368,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -542,16 +530,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -705,16 +687,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -868,16 +844,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -1031,16 +1001,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -1194,16 +1158,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -1365,16 +1323,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -1536,16 +1488,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -1703,16 +1649,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -1866,16 +1806,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -2035,16 +1969,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -2200,16 +2128,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
                 Assessment = new Assessments.Assessment
                 {
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = "First",
-                                LastName = "Last",
-                            }
-                        }
+                        FirstName = "First",
+                        LastName = "Last",
                     },
                     AssessmentType = new Assessments.AssessmentType
                     {
@@ -2389,16 +2311,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                     {
                         CompanyId = companyId,
                     },
-                    Claims = new[]
+                    Claimant = new Claims.Claimant
                     {
-                        new Claims.Claim
-                        {
-                            Claimant = new Claims.Claimant
-                            {
-                                FirstName = claimantFirstName,
-                                LastName = claimantLastName,
-                            },
-                        }
+                        FirstName = claimantFirstName,
+                        LastName = claimantLastName,
                     },
                 },
                 Psychologist = new Users.User { UserId = psychologistId },

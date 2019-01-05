@@ -352,49 +352,49 @@ namespace PsychologicalServices.Models.Schedule
             
             #line default
             #line hidden
-            this.Write("\">\r\n\t\t\t\t\t");
+            this.Write("\">\r\n\t\t\t\t\t<p>\r\n\t\t\t\t\t\t");
             
-            #line 84 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
- foreach (var claim in appointment.Assessment.Claims) { 
+            #line 85 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+ if (appointment.Assessment.Claimant != null) { 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t<p>\r\n\t\t\t\t\t\t");
+            this.Write("\t\t\t\t\t\t");
             
             #line 86 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.FirstName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.FirstName));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t&nbsp;");
             
             #line 87 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.LastName.FirstOrDefault()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.LastName));
             
             #line default
             #line hidden
-            this.Write(".\r\n\t\t\t\t\t\t&nbsp;&#45;\r\n\t\t\t\t\t\t&nbsp;");
+            this.Write("\r\n\t\t\t\t\t\t&nbsp;&#45;\r\n\t\t\t\t\t\t&nbsp;");
             
             #line 89 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.Age));
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.Age));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t&nbsp;");
             
             #line 90 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(claim.Claimant.Gender));
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.Gender));
             
             #line default
             #line hidden
-            this.Write("\r\n\t\t\t\t\t\t</p>\r\n\t\t\t\t\t");
+            this.Write("\r\n\t\t\t\t\t\t");
             
-            #line 92 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
+            #line 91 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t</td>\r\n\t\t\t\t<td style=\"");
+            this.Write("\t\t\t\t\t</p>\r\n\t\t\t\t</td>\r\n\t\t\t\t<td style=\"");
             
             #line 94 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychometristScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));

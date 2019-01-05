@@ -18,6 +18,7 @@ export class TypicalDay {
         this.taskDescription = "";
 
         this.pronoun = "His";
+        this.creatingTask = false;
 
 		this.issueMatcher = (a, b) => a && b && a.abbreviation === b.abbreviation;
     }
@@ -90,17 +91,36 @@ export class TypicalDay {
     }
 
     addTask() {
-        this.tasks.push({
-            "frequency": this.taskFrequency,
-            "name": this.taskName,
-            "description": this.taskDescription,
-            issues: [],
-            isCustom: true,
-        });
+        this.creatingTask = true;
+    }
 
+    cancelTask() {
+        this.resetTask();
+    }
+
+    resetTask() {
         this.taskFrequency = "";
         this.taskName = "";
         this.taskDescription = "";
+        this.creatingTask = false;
+    }
+
+    isValidTask() {
+        return this.taskFrequency && this.taskName && this.taskDescription;
+    }
+
+    saveTask() {
+        if (this.isValidTask()) {
+            this.tasks.push({
+                "frequency": this.taskFrequency,
+                "name": this.taskName,
+                "description": this.taskDescription,
+                issues: [],
+                isCustom: true,
+            });
+    
+            this.resetTask();
+        }
     }
 
     removeTask(task) {

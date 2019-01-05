@@ -8,9 +8,7 @@ namespace PsychologicalServices.Models.Claims
     {
         Claimant GetClaimant(int id);
 
-        IEnumerable<Claim> GetAssessmentClaims(int assessmentId);
-
-        IEnumerable<Claim> GetClaimsForClaimant(int claimantId);
+        IEnumerable<ClaimReference> GetClaimReferences(int claimId);
 
         IEnumerable<Claimant> SearchClaimants(string name);
 
@@ -21,8 +19,6 @@ namespace PsychologicalServices.Models.Claims
         IEnumerable<IssueInDispute> GetIssuesInDispute(bool? isActive = true);
 
         IEnumerable<Gender> GetGenders();
-
-        SaveResult<Claim> SaveClaim(Claim claim);
 
         SaveResult<Claimant> SaveClaimant(Claimant claimant);
 

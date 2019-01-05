@@ -376,11 +376,6 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.BillToContactId);}
 		}
-		/// <summary>Creates a new ArbitrationEntity.ClaimantId field instance</summary>
-		public static EntityField2 ClaimantId
-		{
-			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ClaimantId);}
-		}
 		/// <summary>Creates a new ArbitrationEntity.PsychologistId field instance</summary>
 		public static EntityField2 PsychologistId
 		{
@@ -390,6 +385,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 ArbitrationStatusId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ArbitrationStatusId);}
+		}
+		/// <summary>Creates a new ArbitrationEntity.ClaimantId field instance</summary>
+		public static EntityField2 ClaimantId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationFieldIndex.ClaimantId);}
 		}
 	}
 
@@ -555,6 +555,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 PreviouslySeenDate
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.PreviouslySeenDate);}
+		}
+		/// <summary>Creates a new AssessmentEntity.ClaimantId field instance</summary>
+		public static EntityField2 ClaimantId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentFieldIndex.ClaimantId);}
 		}
 	}
 
