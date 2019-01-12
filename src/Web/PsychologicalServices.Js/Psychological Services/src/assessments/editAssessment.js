@@ -522,6 +522,9 @@ export class EditAssessment {
 		let psychologicalCredibilityAssessmentTypes = ['P', 'PVOC', 'NP', 'NC/P'];
 
 		this.showPsychologicalCredibility = psychologicalCredibilityAssessmentTypes.some(type => type === assessmentType);
+
+		let addendumAssessmentType = 'Addendum';
+		this.showIssueInDisputeApproved = assessmentType !== addendumAssessmentType;
 	}
 
 	setDiagnosisFoundVisibility(assessmentType) {
