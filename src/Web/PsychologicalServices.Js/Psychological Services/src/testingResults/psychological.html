@@ -207,4 +207,68 @@
                 
     </div>
 
+
+
+
+    <div class="uk-container">
+
+        <hr>
+        <h4>Cognitive Assessment</h4>
+
+        <form class="uk-form-stacked">
+
+            <div class="uk-margin uk-overflow-auto">
+
+                <table class="uk-table uk-table-divider uk-table-small">
+                    <thead>
+                        <tr>
+                            <th class="uk-table-middle">
+                                <label class="uk-form-label" for="effort">Effort Level</label>
+                                <select id="effort" class="uk-select uk-form-small uk-form-width-small" value.bind="cognitiveAssessment.effortLevel">
+                                    <option></option>
+                                    <option repeat.for="level of cognitiveAssessmentEffortLevels" model.bind="level">${level.description}</option>
+                                </select>
+                            </th>
+                            <template repeat.for="rating of cognitiveAssessmentTestResultRatings">
+                                <th style="writing-mode: vertical-rl;">
+                                    ${rating.description}
+                                </th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="test of cognitiveAssessment.tests">
+                            <td class="uk-text-nowrap uk-table-shrink">${test.category}</td>
+                            <template repeat.for="rating of cognitiveAssessmentTestResultRatings">
+                                <td>
+                                    <input type="radio" name="${test.category} rating" class="uk-radio" checked.bind="$parent.test.rating" model.bind="rating" change.delegate="cognitiveAssessmentTestResultRatingChange()" title="${rating.description}" uk-tooltip />
+                                </td>
+                            </template>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="uk-container">
+        <h5>Cognitive Assessment Summary</h5>
+
+        <p>
+            In summary, against an overlay of ${cognitiveAssessment.effortLevel.description} effort, 
+            <template repeat.for="grouping of cognitiveAssessmentTestResultGroupings | sortArray:{property: 'sort', direction: 'asc'}">
+                <span if.bind="$index === 0">&nbsp;${results.gender.title} {name}&nbsp;</span>
+                <span if.bind="$index > 0">&nbsp;${results.pronoun.subject | proper}&nbsp;</span>
+                performed in the ${grouping.group} range on measures of ${grouping.tests | arrayToString:getCognitiveAssessmentTestCategory}.
+            </template>
+
+        </p>
+
+    </div>
+
+
+
 </template>

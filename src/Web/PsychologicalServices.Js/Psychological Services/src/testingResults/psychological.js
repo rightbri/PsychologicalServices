@@ -68,6 +68,14 @@ export class Psychological {
         this.dysfunctionRatings = [];
         this.concussionDisabilityRatings = [];
         this.concussionSymptoms = [];
+
+        this.cognitiveAssessment = {
+            effortLevel: null,
+            tests: []
+        };
+        this.cognitiveAssessmentEffortLevels = [];
+        this.cognitiveAssessmentTestResultRatings = [];
+        this.cognitiveAssessmentTestCategories = [];
     }
 
     genderChanged(gender) {
@@ -129,14 +137,26 @@ export class Psychological {
                     this.getNeurocognitiveTests().then(data => this.neurocognitiveTests = data),
                     this.getConcussionDisabilityRatings().then(data => this.concussionDisabilityRatings = data),
                     this.getConcussionSymptoms().then(data => this.concussionSymptoms = data)
+
+                    ,
+                    this.getCognitiveAssessmentEffortLevels().then(data => this.cognitiveAssessmentEffortLevels = data),
+                    this.getCognitiveAssessmentTestResultRatings().then(data => this.cognitiveAssessmentTestResultRatings = data),
+                    this.getCognitiveAssessmentTestCategories().then(data => {
+                        this.cognitiveAssessmentTestCategories = data;
+
+                        this.cognitiveAssessment.tests =
+                            data.map(function(category) {
+                                return { "category": category.description, "rating": null }
+                            });
+                    })
                 ]);
             });
     }
 
     getGenders() {
         var data = [
-            { "abbreviation": "M", "description": "Male" },
-            { "abbreviation": "F", "description": "Female" }
+            { "abbreviation": "M", "description": "Male", "title": "Mr." },
+            { "abbreviation": "F", "description": "Female", "title": "Ms." }
         ];
 
         return getPromise(data);
@@ -268,6 +288,129 @@ export class Psychological {
             { "id": 14, "description": "light sensitivity", "order": 14 },
             { "id": 15, "description": "double vision", "order": 15 },
             { "id": 16, "description": "restlessness", "order": 16 }
+        ];
+
+        return getPromise(data);
+    }
+
+    cognitiveAssessmentTestResultRatingChange() {
+        this.cognitiveAssessmentTestResultGroupings = this.getCognitiveAssessmentTestResultGroupings();
+        this.signaler.signal('cognitive-assessment-test-result-rating-updated');
+    }
+
+    getCognitiveAssessmentTestResultGroupings() {
+        
+        let testsWithRatings = this.cognitiveAssessment.tests.filter(t => t.rating);
+        
+        let ratings = this.cognitiveAssessmentTestResultRatings.filter(rating =>
+            testsWithRatings.some(tr => tr.rating.description === rating.description)
+        );
+        
+        let groupings = ratings.reduce((accumulator, current) => {
+
+            let grouping = accumulator.find(item => item.group === current.group);
+
+            if (grouping) {
+                let rating = grouping.ratings.find(item => item.description === current.description);
+
+                if (!rating) {
+                    grouping.ratings.push(current.description);
+                }
+            }
+            else {
+                accumulator.push({ "group": current.group, ratings: [current.description], sort: current.sort });
+            }
+
+            return accumulator;
+        }, []);
+
+        for (let i = 0; i < groupings.length; i++) {
+            let grouping = groupings[i];
+
+            grouping.tests = testsWithRatings.filter(item =>
+                grouping.ratings.some(rating => rating === item.rating.description)
+            );
+        }
+
+        let rangeGroups = groupings;
+
+        return rangeGroups;
+    }
+
+    getCognitiveAssessmentTestCategory(test) {
+        return test.category;
+    }
+
+    getCognitiveAssessmentTestResultRatings() {
+        var data = [
+            { "description": "Lower Extreme", "group": "impaired", "sort": 4 },
+            { "description": "Borderline", "group": "borderline", "sort": 3 },
+            { "description": "Below Average", "group": "normal", "sort": 2 },
+            { "description": "Average", "group": "normal", "sort": 2 },
+            { "description": "Above Average", "group": "normal", "sort": 2 },
+            { "description": "Superior", "group": "superior", "sort": 1 }
+        ];
+
+        return getPromise(data);
+    }
+
+    getCognitiveAssessmentTestCategories() {
+        var data = [
+            { "description": "Verbal Comprehension" },
+            { "description": "Perceptual Reasoning" },
+            { "description": "Full Scale Intelligence" },
+            { "description": "Premorbid Functioning" },
+            { "description": "First Trial Verbal Recall" },
+            { "description": "Final Trial Verbal Recall" },
+            { "description": "Short-Term Free Verbal Recall" },
+            { "description": "Short-Term Cued Verbal Recall" },
+            { "description": "Long-Term Free Verbal Recall" },
+            { "description": "Long-Term Cued Verbal Recall" },
+            { "description": "Forced Recognition of Verbal List Material" },
+            { "description": "Visual Immediate Recall" },
+            { "description": "Visual Delayed Recall" },
+            { "description": "Visual Recognition" },
+            { "description": "Graphomotor Speed" },
+            { "description": "Processing Speed" },
+            { "description": "Working Memory" },
+            { "description": "Mental Flexibility/Attention Alternation" },
+            { "description": "Sustained Attention" },
+            { "description": "Selective Attention" },
+            { "description": "Categories Completed - WCST" },
+            { "description": "Trials to Complete First Category" },
+            { "description": "Total Errors - WCST" },
+            { "description": "Perseverative Errors - WCST" },
+            { "description": "Nonperseverative Errors - WCST" },
+            { "description": "Failure to Maintain Set" },
+            { "description": "Design Fluency" },
+            { "description": "Response Inhibition" },
+            { "description": "Visuoconstructive Abilities" },
+            { "description": "Spatial Orientation" },
+            { "description": "Visual Copy" },
+            { "description": "Visual Puzzles" },
+            { "description": "General Vocabulary" },
+            { "description": "General Information" },
+            { "description": "Verbal Analytic Reasoning" },
+            { "description": "Nonverbal Analytic Reasoning" },
+            { "description": "Dominant Hand Speed" },
+            { "description": "Non-Dominant Hand Speed" },
+            { "description": "Confrontation Naming" },
+            { "description": "Single Word Reading" },
+            { "description": "Sentence and Reading Comprehension" },
+            { "description": "Math" },
+            { "description": "Spelling" }
+        ];
+
+        return getPromise(data);
+    }
+
+    getCognitiveAssessmentEffortLevels() {
+        var data = [
+            { "description": "reliable" },
+            { "description": "adequate" },
+            { "description": "questionable" },
+            { "description": "less than ideal" },
+            { "description": "invalid" }
         ];
 
         return getPromise(data);
