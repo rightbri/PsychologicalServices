@@ -141,8 +141,8 @@
 					</td>
 					<td>${appointment.assessment.referralSource.name}</td>
 					<td>
-						<ul class="uk-list" repeat.for="claim of appointment.assessment.claims">
-							<li title="Claimant" if.bind="claim.claimant">${claim.claimant.firstName} ${claim.claimant.lastName.charAt(0)}. - ${claim.claimant.age} ${claim.claimant.gender}</li>
+						<ul class="uk-list">
+							<li title="Claimant" if.bind="appointment.assessment.claimant">${appointment.assessment.claimant.firstName} ${appointment.assessment.claimant.lastName.charAt(0)}. - ${appointment.assessment.claimant.age} ${appointment.assessment.claimant.gender}</li>
 						</ul>
 					</td>
 					<td>
