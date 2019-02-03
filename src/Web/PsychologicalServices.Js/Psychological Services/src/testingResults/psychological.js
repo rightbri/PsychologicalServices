@@ -11,6 +11,7 @@ export class Psychological {
         this.context = context;
 
         this.results = {
+            claimant: null,
             gender: null,
             pronoun: null,
             isCredible: false,
@@ -76,6 +77,16 @@ export class Psychological {
         this.cognitiveAssessmentEffortLevels = [];
         this.cognitiveAssessmentTestResultRatings = [];
         this.cognitiveAssessmentTestCategories = [];
+    }
+
+    claimantSelected(e) {
+        let gender = e.detail.claimant.gender;
+
+        this.results.gender = this.genders.find(g => {
+            return g.abbreviation === gender;
+        });
+
+        this.genderChanged(this.results.gender);
     }
 
     genderChanged(gender) {

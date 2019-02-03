@@ -4,17 +4,23 @@
     <require from="resources/value-converters/sort-array"></require>
     <require from="resources/value-converters/array-to-string"></require>
     <require from="resources/value-converters/filter"></require>
+	<require from="claimants/search-claimant"></require>
     
     <div class="uk-container">
 
         <form class="uk-form-stacked">
 
             <div class="uk-margin">
-                <label class="uk-form-label">Gender</label>
-                <select class="uk-select uk-form-small uk-form-width-small" value.bind="results.gender" change.delegate="genderChanged(results.gender)">
-                    <option></option>
-                    <option repeat.for="gender of genders" model.bind="gender">${gender.description}</option>
-                </select>
+                <label class="uk-form-label">Claimant</label>
+                <div class="uk-form-controls">
+                    <search-claimant claimant.bind="results.claimant" selected.delegate="claimantSelected($event)"></search-claimant>
+                </div>
+            </div>
+            
+            <div class="uk-margin" if.bind="results.claimant">
+                <p>
+                    ${results.claimant.firstName} ${results.claimant.lastName}
+                </p>
             </div>
 
             <div class="uk-margin">
@@ -260,9 +266,8 @@
         <p>
             In summary, against an overlay of ${cognitiveAssessment.effortLevel.description} effort, 
             <template repeat.for="grouping of cognitiveAssessmentTestResultGroupings | sortArray:{property: 'sort', direction: 'asc'}">
-                <span if.bind="$index === 0">&nbsp;${results.gender.title} {name}&nbsp;</span>
-                <span if.bind="$index > 0">&nbsp;${results.pronoun.subject | proper}&nbsp;</span>
-                performed in the ${grouping.group} range on measures of ${grouping.tests | arrayToString:getCognitiveAssessmentTestCategory}.
+                <span if.bind="$index === 0">&nbsp;${results.gender.title} ${results.claimant.lastName}</span>
+                <span if.bind="$index > 0">${results.pronoun.subject | proper}</span> performed in the ${grouping.group} range on measures of ${grouping.tests | arrayToString:getCognitiveAssessmentTestCategory}.
             </template>
 
         </p>
