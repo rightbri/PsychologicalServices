@@ -7,6 +7,12 @@ export class FilterValueConverter {
 	}
 
 	toView(array, property, exp) {
+
+		if (typeof(property) === "function") {
+			return array.filter(item => property(item));
+		}
+
+		
 		let expression = this.parser.parse(property);
 		return array.filter((item) => expression.evaluate({bindingContext:item}) === exp);
 	}

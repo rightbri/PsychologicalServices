@@ -79,6 +79,10 @@ export class Psychological {
         this.cognitiveAssessmentTestCategories = [];
     }
 
+    isRated(test) {
+        return test.rating;
+    }
+
     claimantSelected(e) {
         let gender = e.detail.claimant.gender;
 

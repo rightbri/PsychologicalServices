@@ -263,6 +263,32 @@
     <div class="uk-container">
         <h5>Cognitive Assessment Summary</h5>
 
+
+        <table class="uk-table uk-table-small uk-table-middle uk-table-divider" style="font-family: arial; font-size: 11pt; font-weight: normal; border-width: 1px;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <template repeat.for="rating of cognitiveAssessmentTestResultRatings">
+                        <th style="border-style: solid; writing-mode: vertical-rl;">
+                            ${rating.description}
+                        </th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="test of cognitiveAssessment.tests | filter:isRated & signal:'cognitive-assessment-test-result-rating-updated'">
+                    <td style="border-style: solid;" class="uk-text-nowrap">${test.category}</td>
+                    <template repeat.for="rating of cognitiveAssessmentTestResultRatings">
+                        <td style="border-style: solid;" class="uk-text-nowrap">
+                            <template if.bind="$parent.test.rating.description === rating.description">&times;</template>
+                        </td>
+                    </template>
+                </tr>
+            </tbody>
+        </table>
+
+
+
         <p>
             In summary, against an overlay of ${cognitiveAssessment.effortLevel.description} effort, 
             <template repeat.for="grouping of cognitiveAssessmentTestResultGroupings | sortArray:{property: 'sort', direction: 'asc'}">
