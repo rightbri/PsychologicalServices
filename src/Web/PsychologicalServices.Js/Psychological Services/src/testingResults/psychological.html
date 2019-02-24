@@ -10,20 +10,20 @@
 
         <form class="uk-form-stacked">
 
-            <div class="uk-margin">
+            <div class="uk-margin-small uk-width-small">
                 <label class="uk-form-label">Claimant</label>
                 <div class="uk-form-controls">
                     <search-claimant claimant.bind="results.claimant" selected.delegate="claimantSelected($event)"></search-claimant>
                 </div>
             </div>
             
-            <div class="uk-margin" if.bind="results.claimant">
+            <div class="uk-margin-small" if.bind="results.claimant">
                 <p>
                     ${results.claimant.firstName} ${results.claimant.lastName}
                 </p>
             </div>
 
-            <div class="uk-margin">
+            <div class="uk-margin-small">
                 <label class="uk-form-label">
                     <input class="uk-checkbox" type="checkbox" checked.bind="results.isCredible" />&nbsp;Is Credible?
                 </label>
@@ -32,22 +32,281 @@
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Psychological Tests</legend>
 
-                <div class="uk-margin">
-                    <div class="uk-form-label">Tests</div>
+                <div class="uk-margin-small">
+                    <label class="uk-form-label" for="overallCredibility">Overall Credibility</label>
+                    <select id="overallCredibility" class="uk-select uk-form-small uk-form-width-small" value.bind="results.overallCredibility">
+                        <option></option>
+                        <option repeat.for="credibility of credibilities" model.bind="credibility">${credibility.description}</option>
+                    </select>
+                </div>
+                
+                <div class="uk-margin-small">
+                    <div class="uk-form-label">Tests (select all that apply)</div>
                     <div class="uk-form-controls">
                         <label class="uk-form-label" repeat.for="test of psychologicalTests">
-                            <input type="checkbox" class="uk-checkbox" model.bind="test" checked.bind="results.psychologicalTests" />&nbsp;${test.name}
+                            <input type="checkbox" class="uk-checkbox" model.bind="test" checked.bind="results.psychologicalTests" change.delegate="updatePerformedPsychologicalTests()" />&nbsp;${test.name}
                         </label>
                     </div>
                 </div>
     
-                <div class="uk-section uk-section-small">
-                    <h3>Pain & Somatic Issues</h3>
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.accidentFearQuestionnaire">
+                    <h5 class="uk-heading-line"><span>Accident Fear Questionnaire</span></h5>
 
-                    <div class="uk-section uk-section-small uk-child-width-1-2" uk-grid>
-                        <h4 class="uk-width-1-1">Visual Analogue Pain Scales</h4>
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="accidentFearQuestionnaireAggregateResult">Aggregate Result</label>
+                        <select id="accidentFearQuestionnaireAggregateResult" class="uk-select uk-form-small uk-form-width-small" value.bind="results.accidentFearQuestionnaire.aggregateResult">
+                            <option></option>
+                            <option repeat.for="rating of accidentFearQuestionnaireRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.beckAnxietyInventory">
+                    <h5 class="uk-heading-line"><span>Beck Anxiety Inventory (BAI)</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="beckAnxietyInventoryAggregateResult">Aggregate Result</label>
+                        <select id="beckAnxietyInventoryAggregateResult" class="uk-select uk-form-small uk-form-width-small" value.bind="results.beckAnxietyInventory.aggregateResult">
+                            <option></option>
+                            <option repeat.for="rating of becksRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.beckDepressionInventory">
+                    <h5 class="uk-heading-line"><span>Beck Depression Inventory - 2nd Edition (BDI-II)</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="beckDepressionInventoryAggregateResult">Aggregate Result</label>
+                        <select id="beckDepressionInventoryAggregateResult" class="uk-select uk-form-small uk-form-width-small" value.bind="results.beckDepressionInventory.aggregateResult">
+                            <option></option>
+                            <option repeat.for="rating of becksRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.beckScaleOfSuicidalIdeation">
+                    <h5 class="uk-heading-line"><span>Beck Scale of Suicidal Ideation (BSSI)</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="beckScaleOfSuicidalIdeationAggregateResult">Any thoughts of self harm?</label>
+                        <select id="beckScaleOfSuicidalIdeationAggregateResult" class="uk-select uk-form-small uk-form-width-small" value.bind="results.beckScaleOfSuicidalIdeation.thoughtsOfSelfHarm">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.hamiltonRatingScaleForAnxiety">
+                    <h5 class="uk-heading-line"><span>Hamilton Rating Scale for Anxiety</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="hamiltonRatingScaleForAnxietyAggregateResult">Aggregate Result</label>
+                        <select id="hamiltonRatingScaleForAnxietyAggregateResult" class="uk-select uk-form-small uk-form-width-small" value.bind="results.hamiltonRatingScaleForAnxiety.aggregateResult">
+                            <option></option>
+                            <option repeat.for="rating of hamiltonAnxietyRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.hamiltonRatingScaleForDepression">
+                    <h5 class="uk-heading-line"><span>Hamilton Rating Scale for Depression</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="hamiltonRatingScaleForDepressionAggregateResult">Aggregate Result</label>
+                        <select id="hamiltonRatingScaleForDepressionAggregateResult" class="uk-select uk-form-small uk-form-width-small" value.bind="results.hamiltonRatingScaleForDepression.aggregateResult">
+                            <option></option>
+                            <option repeat.for="rating of hamiltonDepressionRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.illnessBehaviourQuestionnaire">
+                    <h5 class="uk-heading-line"><span>Illness Behavior Questionnaire</span></h5>
+
+                    <div class="uk-margin-small">
+                        ???
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.minnesotaMultiphasicPersonalityInventory">
+                    <h5 class="uk-heading-line"><span>Minnesota Multiphasic Personality Inventory (MMPI)</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryCredibilityIssues">Credibility issues?</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryCredibilityIssues" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryExaggeration">Exaggeration?</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryExaggeration" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.exaggertaion">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryPositiveImpressionManagement">Positive impression management?</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryPositiveImpressionManagement" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.positiveImpressionManagement">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryNegativeImpressionManagement">Negative impression management?</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryNegativeImpressionManagement" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.negativeImpressionManagement">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryAggregateResultForPain">Aggregate Result for Pain</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryAggregateResultForPain" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.aggregateResultForPain">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryAggregateResultForAnxiety">Aggregate Result for Anxiety</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryAggregateResultForAnxiety" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.aggregateResultForAnxiety">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryAggregateResultForDepression">Aggregate Result for Depression</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryAggregateResultForDepression" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.aggregateResultForDepression">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.painDisabilityIndex">
+                    <h5 class="uk-heading-line"><span>Pain Disability Index</span></h5>
         
-                        <div class="uk-margin">
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="comparedToChronicRating">Self Perceived Disability</label>
+                        <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.disabilityIndex.perceivedDisability">
+                            <option></option>
+                            <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+    
+                    <div class="uk-margin-small">
+                        <div class="uk-form-label">Areas of Dysfunction</div>
+                        <div class="uk-form-controls uk-child-width-1-2" uk-grid>
+                            <div repeat.for="dysfunctionRating of results.painIssues.disabilityIndex.dysfunctionRatings">
+                                <label class="uk-form-label" for="dysfunction-${$index}">${dysfunctionRating.area.description}</label>
+                                <select id="dysfunction-${$index}" class="uk-select uk-form-small uk-form-width-small" value.bind="dysfunctionRating.rating">
+                                    <option></option>
+                                    <option repeat.for="rating of dysfunctionRatings" model.bind="rating">${rating.description}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.painPatientProfile">
+                    <h5 class="uk-heading-line"><span>Pain Patient Profile (P3)</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="painPatientProfileCredibilityIssues">Credibility issues?</label>
+                        <select id="painPatientProfileCredibilityIssues" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painPatientProfile.credibilityIssues">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.personalityAssessmentInventory">
+                    <h5 class="uk-heading-line"><span>Personality Assessment Inventory (PAI)</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="personalityAssessmentInventoryCredibilityIssues">Credibility issues?</label>
+                        <select id="personalityAssessmentInventoryCredibilityIssues" class="uk-select uk-form-small uk-form-width-small" value.bind="results.personalityAssessmentInventory.credibilityIssues">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="personalityAssessmentInventoryAggregateResultForPain">Aggregate Result for Pain</label>
+                        <select id="personalityAssessmentInventoryAggregateResultForPain" class="uk-select uk-form-small uk-form-width-small" value.bind="results.personalityAssessmentInventory.aggregateResultForPain">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="personalityAssessmentInventoryAggregateResultForAnxiety">Aggregate Result for Anxiety</label>
+                        <select id="personalityAssessmentInventoryAggregateResultForAnxiety" class="uk-select uk-form-small uk-form-width-small" value.bind="results.personalityAssessmentInventory.aggregateResultForAnxiety">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="personalityAssessmentInventoryAggregateResultForDepression">Aggregate Result for Depression</label>
+                        <select id="personalityAssessmentInventoryAggregateResultForDepression" class="uk-select uk-form-small uk-form-width-small" value.bind="results.personalityAssessmentInventory.aggregateResultForDepression">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.traumaSymptomInventory">
+                    <h5 class="uk-heading-line"><span>Trauma Symptom Inventory - 2-A (TSI-2-A)</span></h5>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="traumaSymptomInventoryCredibilityIssues">Credibility issues?</label>
+                        <select id="traumaSymptomInventoryCredibilityIssues" class="uk-select uk-form-small uk-form-width-small" value.bind="results.traumaSymptomInventory.credibilityIssues">
+                            <option></option>
+                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="traumaSymptomInventoryAggregateResultForPain">Aggregate Result for Pain</label>
+                        <select id="traumaSymptomInventoryAggregateResultForPain" class="uk-select uk-form-small uk-form-width-small" value.bind="results.traumaSymptomInventory.aggregateResultForPain">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="traumaSymptomInventoryAggregateResultForAnxiety">Aggregate Result for Anxiety</label>
+                        <select id="traumaSymptomInventoryAggregateResultForAnxiety" class="uk-select uk-form-small uk-form-width-small" value.bind="results.traumaSymptomInventory.aggregateResultForAnxiety">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="traumaSymptomInventoryAggregateResultForDepression">Aggregate Result for Depression</label>
+                        <select id="traumaSymptomInventoryAggregateResultForDepression" class="uk-select uk-form-small uk-form-width-small" value.bind="results.traumaSymptomInventory.aggregateResultForDepression">
+                            <option></option>
+                            <option repeat.for="rating of aggregateResultRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+                    
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.visualAnaloguePainScale">
+                    <h5 class="uk-heading-line"><span>Visual Analogue Pain Scales</span></h5>
+    
+                    <div class="uk-child-width-1-2" uk-grid>
+                        <div class="uk-margin-small">
                             <label class="uk-form-label" for="currentPainRating">Current Pain Rating</label>
                             <select id="currentPainRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.currentRating">
                                 <option></option>
@@ -55,7 +314,7 @@
                             </select>
                         </div>
             
-                        <div class="uk-margin">
+                        <div class="uk-margin-small">
                             <label class="uk-form-label" for="currentPainNumber">Current Pain Number</label>
                             <select id="currentPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.currentNumber">
                                 <option></option>
@@ -63,7 +322,7 @@
                             </select>
                         </div>
             
-                        <div class="uk-margin">
+                        <div class="uk-margin-small">
                             <label class="uk-form-label" for="badDayPainNumber">Bad Day Pain Number</label>
                             <select id="badDayPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.badDayNumber">
                                 <option></option>
@@ -71,7 +330,7 @@
                             </select>
                         </div>
             
-                        <div class="uk-margin">
+                        <div class="uk-margin-small">
                             <label class="uk-form-label" for="goodDayPainNumber">Good Day Pain Number</label>
                             <select id="goodDayPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.goodDayNumber">
                                 <option></option>
@@ -79,59 +338,33 @@
                             </select>
                         </div>
             
-                        <div class="uk-margin">
+                        <div class="uk-margin-small">
                             <label class="uk-form-label" for="comparedToChronicRating">Compared to Chronic Rating</label>
                             <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.comparedToChronicRating">
                                 <option></option>
                                 <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
                             </select>
                         </div>
-        
                     </div>
-                    
-                    <div class="uk-section uk-section-small">
-                        <h4>Pain Disability Index</h4>
-            
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="comparedToChronicRating">Self Perceived Disability</label>
-                            <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.disabilityIndex.perceivedDisability">
-                                <option></option>
-                                <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
-                            </select>
-                        </div>
-        
-                        <div class="uk-margin">
-                            <div class="uk-form-label">Areas of Dysfunction</div>
-                            <div class="uk-form-controls uk-child-width-1-2" uk-grid>
-                                <div repeat.for="dysfunctionRating of results.painIssues.disabilityIndex.dysfunctionRatings">
-                                    <label class="uk-form-label" for="dysfunction-${$index}">${dysfunctionRating.area.description}</label>
-                                    <select id="dysfunction-${$index}" class="uk-select uk-form-small uk-form-width-small" value.bind="dysfunctionRating.rating">
-                                        <option></option>
-                                        <option repeat.for="rating of dysfunctionRatings" model.bind="rating">${rating.description}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-        
-                    </div>
+
                 </div>
-                
+
             </fieldset>
             
 
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Neurocognitive Tests</legend>
 
-                <div class="uk-section uk-section-small">
-                    <h4>Rivermead Post-Concussion Symptoms Questionnaire</h4>
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>Rivermead Post-Concussion Symptoms Questionnaire</span></h5>
 
-                    <div class="uk-margin">
+                    <div class="uk-margin-small">
                         <label class="uk-form-label">
                             <input type="checkbox" class="uk-checkbox" checked.bind="results.includeRivermead" />&nbsp;Include Rivermead section
                         </label>
                     </div>
 
-                    <div class="uk-margin" if.bind="results.includeRivermead">
+                    <div class="uk-margin-small" if.bind="results.includeRivermead">
                         <label class="uk-form-label" for="concussionPerceivedDisability">Perceived Disability</label>
                         <select id="concussionPerceivedDisability" class="uk-select uk-form-small uk-form-width-small" value.bind="results.concussionSymptoms.perceivedDisability">
                             <option></option>
@@ -139,7 +372,7 @@
                         </select>
                     </div>
 
-                    <div class="uk-margin" if.bind="results.includeRivermead">
+                    <div class="uk-margin-small" if.bind="results.includeRivermead">
                         <div class="uk-form-label">Current Symptoms</div>
                         <div class="uk-form-controls">
                             <label class="uk-form-label" repeat.for="symptom of concussionSymptoms">
@@ -148,7 +381,7 @@
                         </div>
                     </div>
 
-                    <div class="uk-margin" if.bind="results.includeRivermead">
+                    <div class="uk-margin-small" if.bind="results.includeRivermead">
                         <div class="uk-form-label">
                             Additional Symptoms
                             <button type="button" class="uk-button uk-button-link" click.delegate="addAdditionalConcussionSymptom(symptom)" title="Add symptom" uk-tooltip>
@@ -177,6 +410,40 @@
 
     <div class="uk-container" style="font-family: arial, sans-serif; font-size: 11pt;">
 
+        <h4 class="uk-heading-line"><span>Report</span></h4>
+
+        <h5 style="text-decoration: underline;">Psychological Tests</h5>
+
+        <ul>
+            <li repeat.for="test of results.psychologicalTests">
+                ${test.name}
+            </li>
+        </ul>
+
+        <h3 style="text-align: center;">Test Validity</h3>
+
+        <p>
+            ${results.gender.title} ${results.claimant.lastName}'s profile on the various indices suggested that the obtained MMPI-2-RF profile was invalid.  
+            The obtained profiles on the validity scales of the MMPI-2-RF indicated that ${results.gender.title} ${results.claimant.lastName} understood and attended to the items of the test, was not distracted or confused while completing the form, and responded to the items in a consistent manner throughout the test.  
+            There were no trends towards positive impression management or defensiveness noted.  
+            However, the MMPI-2-RF indicated concerns with respect to exaggeration, particularly with respect to his cognitive and somatic complaints, with respect to general psychopathology, especially when compared with other litigation samples.  
+            As such, the MMPI-2-RF was invalid.  
+            Atypical responding significantly affected the TSI-2-A.  
+            ${results.gender.title} ${results.claimant.lastName} was also administered the Structured Inventory of Malingered Symptomatology (SIMS).  
+            ${results.gender.title} ${results.claimant.lastName}’s scores on the Neurological Impairment, Low Intelligence, Psychosis, Amnestic Disorders, and Affective Factors subscales and Total Score were invalid.  
+            Additionally, the M-FAST was invalid as well.  
+            In contrast, the P-3 was valid.
+
+            Consequently, it was felt that ${results.gender.title} ${results.claimant.lastName}’s test data must be regarded as unreliable as a source of confirmatory information with respect to his current psychological state, as his response set prevents a psychological diagnosis from being substantiated, noting invalid findings across multiple validity measures.  
+
+            As such, one is unable to rely on any scores falling in the impaired range, and is unable to rule out the impact of poor engagement, symptom exaggeration/amplification, feigning, or dissimulation. 
+
+        </p>
+
+    </div>
+
+    <div class="uk-container" style="font-family: arial, sans-serif; font-size: 11pt;">
+
         <p>
             In this present evaluation, the results for pain severity, as measured by Visual Analogue Pain Scales
             <span if.bind="!results.isCredible"> (which does not have any validity measures)</span>, 
@@ -197,7 +464,7 @@
         </p>
         
 
-        <h5 if.bind="results.includeRivermead" style="text-decoration: underline;">Concussion Symptoms:</h5>
+        <h5 if.bind="results.includeRivermead" class="uk-heading-line"><span>Concussion Symptoms</span></h5>
         <p if.bind="results.includeRivermead">
             On the Rivermead Post-Concussion Symptoms Questionnaire the current aggregate result 
             (based on the self-report alone) is currently in 
@@ -213,13 +480,8 @@
                 
     </div>
 
-
-
-
     <div class="uk-container">
-
-        <hr>
-        <h4>Cognitive Assessment</h4>
+        <h5 class="uk-heading-line"><span>Cognitive Assessment</span></h5>
 
         <form class="uk-form-stacked">
 
@@ -261,7 +523,7 @@
     </div>
 
     <div class="uk-container">
-        <h5>Cognitive Assessment Summary</h5>
+        <h5 class="uk-heading-line"><span>Cognitive Assessment Summary</span></h5>
 
 
         <table class="uk-table uk-table-small uk-table-middle uk-table-divider" style="font-family: arial; font-size: 11pt; font-weight: normal; border-width: 1px;">
@@ -299,7 +561,5 @@
         </p>
 
     </div>
-
-
 
 </template>
