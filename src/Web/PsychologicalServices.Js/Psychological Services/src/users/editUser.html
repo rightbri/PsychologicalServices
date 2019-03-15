@@ -88,14 +88,13 @@
 			</div>
 			
 			<div>
-				<label class="uk-form-label">Selected unavailability dates</label>
+				<label class="uk-form-label">Selected unavailability dates (double-click to remove)</label>
 				<div class="uk-form-controls">
-					<ul class="uk-list">
-						<li repeat.for="unavailability of user.unavailability | sortArray:{property:'startDate',direction:'desc'}">
+					<select size="10" multiple="multiple" class="uk-select">
+						<option repeat.for="unavailability of user.unavailability | sortArray:{property:'startDate',direction:'desc'}" dblclick.delegate="removeUnavailability(unavailability)">
 							${unavailability.startDate | dateFormat:config.longDateFormat}
-							<button type="button" class="uk-button uk-button-danger uk-button-small" click.delegate="removeUnavailability(unavailability)">&times;</button>
-						</li>
-					</ul>
+						</option>
+					</select>
 				</div>
 			</div>
 			
