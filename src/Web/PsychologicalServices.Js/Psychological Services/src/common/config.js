@@ -115,7 +115,8 @@ export class Config {
 			'Psychologist': 1,
 			'Psychometrist': 2,
 			'WriteDocList': 3,
-			'WriteNotes': 4
+			'WriteNotes': 4,
+			'ReceiveSchedule': 6
 		};
 		
 		this.authTokenKey = 'authToken';
