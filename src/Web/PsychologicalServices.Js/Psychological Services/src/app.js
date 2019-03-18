@@ -88,7 +88,8 @@ export class App {
 			{ route: 'documents/add', name: 'addDocument', moduleId: 'documents/editDocument', title: 'Add Document', nav: false },
 			{ route: 'users/spinner', name: 'userSpinner', moduleId: 'users/userSpinner', title: 'Edit User Spinner', nav: true },
 			{ route: 'forms/typicalday', name: 'typicalDay', moduleId: 'forms/typicalDay', title: 'Typical Day', nav: true },
-			{ route: 'testingresults/psychological', name: 'psychologicalTestResults', moduleId: 'testingResults/psychological', title: 'Psychological testing results', nav: true }
+			{ route: 'testingresults/psychological', name: 'psychologicalTestResults', moduleId: 'testingResults/psychological', title: 'Psychological testing results', nav: true },
+			{ route: 'testingresults/notes', name: 'notes', moduleId: 'testingResults/notes', title: 'Notes', nav: true }
 			//{ route: '', name: '', moduleId: '', title: '', nav: false },
 		]);
 		

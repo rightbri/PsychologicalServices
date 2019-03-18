@@ -1,0 +1,794 @@
+<template>
+    <require from="resources/value-converters/lower"></require>
+    <require from="resources/value-converters/proper"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="resources/value-converters/array-to-string"></require>
+    <require from="resources/value-converters/filter"></require>
+	<require from="claimants/search-claimant"></require>
+
+    <style>
+        .underline { border-bottom: 1px solid #e5e5e5; }
+    </style>
+
+    <div class="uk-container">
+
+        <form class="uk-form-stacked">
+
+            <div class="uk-margin-remove">
+                <h3 class="uk-heading-divider">Claimant</h3>
+            </div>
+
+            <div class="uk-margin-remove uk-width-small">
+                <div class="uk-form-controls">
+                    <search-claimant claimant.bind="claimant" selected.delegate="claimantSelected($event)"></search-claimant>
+                </div>
+            </div>
+            
+            <div class="uk-margin-remove" if.bind="claimant">
+                <p class="uk-heading-divider">
+                    ${claimant.firstName} ${claimant.lastName}
+                </p>
+            </div>
+
+            <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <legend class="uk-legend">Questions</legend>
+
+                <div class="uk-margin-remove">
+                    <h3 class="uk-heading-divider">Present Neuropsychological Status</h3>
+                </div>
+
+                <div class="uk-margin-remove">
+                    Are you having problems with any of the following?
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Concentration
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="problemConcentration" class="uk-radio" checked.bind="responses.problems.concentration" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Memory
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="problemMemory" class="uk-radio" checked.bind="responses.problems.memory" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5" if.bind="responses.problems.memory.value">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Short Term Memory
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.problems.memory.value">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="problemShortTermMemory" class="uk-radio" checked.bind="responses.problems.shortTermMemory" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.problems.memory.value">
+
+                <div class="uk-margin-remove">
+                    <h3 class="uk-heading-divider">Memory</h3>
+                </div>
+
+                <div class="uk-margin-remove">
+                    <h4>Episodic</h4>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do reminders, hints, or repetition help?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryEpisodic" class="uk-radio" checked.bind="responses.memory.episodic.remindersHintsOrRepetition" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <h4>Visual</h4>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you forget the whereabouts of objects around your home FREQUENTLY?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryVisualWhereabouts" class="uk-radio" checked.bind="responses.memory.visual.whereabouts" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <h4>Working</h4>
+                </div>
+        
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you walk into a room and forget why or lose track of what you wanted to say FREQUENTLY?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryWorkingWalkIntoRoomAndForgetWhyOrLoseTrackOfWhatYouWantedToSay" class="uk-radio" checked.bind="responses.memory.working.walkIntoRoomAndForgetWhyOrLoseTrackOfWhatYouWantedToSay" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <h4>Aids to Memory</h4>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you use aids to help you remember?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryAidsUse" class="uk-radio" checked.bind="responses.memory.aids.useAids" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5" if.bind="responses.memory.aids.useAids.value">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Notes
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.memory.aids.useAids.value">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryAidsUseNotes" class="uk-radio" checked.bind="responses.memory.aids.useNotes" model.bind="response" change.delegate="memoryAidsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.memory.aids.useAids.value">
+
+                <div class="uk-margin-remove uk-width-4-5" if.bind="responses.memory.aids.useAids.value">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Reminders
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.memory.aids.useAids.value">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryAidsUseReminders" class="uk-radio" checked.bind="responses.memory.aids.useReminders" model.bind="response" change.delegate="memoryAidsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.memory.aids.useAids.value">
+
+                <div class="uk-margin-remove uk-width-4-5" if.bind="responses.memory.aids.useAids.value">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Phone
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.memory.aids.useAids.value">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryAidsUsePhone" class="uk-radio" checked.bind="responses.memory.aids.usePhone" model.bind="response" change.delegate="memoryAidsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.memory.aids.useAids.value">
+
+                <div class="uk-margin-remove uk-width-4-5" if.bind="responses.memory.aids.useAids.value">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Family
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.memory.aids.useAids.value">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryAidsFamilyHelps" class="uk-radio" checked.bind="responses.memory.aids.familyHelps" model.bind="response" change.delegate="memoryAidsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.memory.aids.useAids.value">
+                
+                <div class="uk-margin-remove">
+                    <h4>Prospective</h4>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Can you remember to remember?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryProspectiveRemember" class="uk-radio" checked.bind="responses.memory.prospective.rememberToRemember" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove">
+                    <h4>Source/Contextual</h4>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Can you recall where you saw someone or something or who told you something?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryContextualWhereOrWho" class="uk-radio" checked.bind="responses.memory.contextual.whereOrWho" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove">
+                    <h4>Remote</h4>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Is it more of an effort trying to recall memories from the distant past?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryRemoteDistantMemories" class="uk-radio" checked.bind="responses.memory.remote.distantMemories" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove">
+                    <h4>Autobiographical</h4>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Can you recall your home address, date of birth, phone number, parent’s/children’s names?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryAutobiographicalPersonalInfo" class="uk-radio" checked.bind="responses.memory.autobiographical.personalInfo" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove">
+                    <h4>Procedural/Implicit</h4>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you have difficulties remembering how to brush your teeth, drive, or walk?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryProceduralHowTo" class="uk-radio" checked.bind="responses.memory.procedural.howTo" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove">
+                    <h4>Medication</h4>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Have you made any medication errors?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryMedicationErrors" class="uk-radio" checked.bind="responses.memory.medication.errors" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you use a Dosette?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memoryMedicationUseDosette" class="uk-radio" checked.bind="responses.memory.medication.useDosette" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove">
+                    <h4>Safety</h4>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you have any safety issues being left home alone?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="memorySafetyIssuesBeingLeftHome" class="uk-radio" checked.bind="responses.memory.safety.issuesBeingLeftHome" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-3-5" if.bind="responses.memory.safety.issuesBeingLeftHome.value">
+                    Reported issue
+                </div>
+
+                <div class="uk-margin-remove uk-width-2-5" if.bind="responses.memory.safety.issuesBeingLeftHome.value">
+                    <input type="text" name="memorySafetyReportedIssue" class="uk-text" value.bind="responses.memory.safety.reportedIssue" />
+                </div>
+
+                <hr if.bind="responses.memory.safety.issuesBeingLeftHome.value">
+
+                <div class="uk-margin-remove">
+                    <h3 class="uk-heading-divider">Language</h3>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Easily lost in conversations?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="languageLostInConversations" class="uk-radio" checked.bind="responses.language.lostInConversations" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Tip of the Tongue issues?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="languageTipOfTongueIssues" class="uk-radio" checked.bind="responses.language.tipOfTongueIssues" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Repeating yourself?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="languageRepeatingYourself" class="uk-radio" checked.bind="responses.language.repeatingYourself" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Asking others to repeat what they have said?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="languageAskingOthersToRepeat" class="uk-radio" checked.bind="responses.language.askingOthersToRepeat" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Filtering?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="languageFiltering" class="uk-radio" checked.bind="responses.language.filtering" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Word substitution?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="languageWordSubstitution" class="uk-radio" checked.bind="responses.language.wordSubstitution" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <h3 class="uk-heading-divider">Attention</h3>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Has your ability to focus been affected?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="attentionAbilityToFocus" class="uk-radio" checked.bind="responses.attention.abilityToFocus" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Has your ability to sustain attention been affected?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="attentionAbilityToSustainAttention" class="uk-radio" checked.bind="responses.attention.abilityToSustainAttention" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Are you more distractible?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="attentionAreMoreDistractible" class="uk-radio" checked.bind="responses.attention.areMoreDistractible" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you lose track when reading?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="attentionLoseTrackWhenReading" class="uk-radio" checked.bind="responses.attention.loseTrackWhenReading" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you lose track when watching television?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="attentionLoseTrackWhenWatchingTv" class="uk-radio" checked.bind="responses.attention.loseTrackWhenWatchingTv" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Has your ability to use devices with screens been affected?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="attentionAbilityToUseDevicesWithScreens" class="uk-radio" checked.bind="responses.attention.abilityToUseDevicesWithScreens" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <h3 class="uk-heading-divider">Executive</h3>
+                </div>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Has your ability to do any of the following DECREASED or been affected by the subject accident?
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Multi-tasking
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executiveMultiTasking" class="uk-radio" checked.bind="responses.executive.multiTasking" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Initiative / Spontaneity / Amotivation / Apathy
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executiveInitiativeSpontaneityAmotivationApathy" class="uk-radio" checked.bind="responses.executive.initiativeSpontaneityAmotivationApathy" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Organization
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executiveOrganization" class="uk-radio" checked.bind="responses.executive.organization" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Planning
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executivePlanning" class="uk-radio" checked.bind="responses.executive.planning" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Judgment (has anyone questions your decision making)
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executiveJudgement" class="uk-radio" checked.bind="responses.executive.judgement" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Decision Making
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executiveDecisionMaking" class="uk-radio" checked.bind="responses.executive.decisionMaking" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Problem Solving
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executiveProblemSolving" class="uk-radio" checked.bind="responses.executive.problemSolving" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Inappropriate Social Behavior
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="executiveInappropriateSocialBehavior" class="uk-radio" checked.bind="responses.executive.inappropriateSocialBehavior" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <h3 class="uk-heading-divider">Visual Spatial</h3>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Balance Issues
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialBalanceIssues" class="uk-radio" checked.bind="responses.visualSpatial.balanceIssues" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Seizures/Fainting
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialSeizuresOrFainting" class="uk-radio" checked.bind="responses.visualSpatial.seizuresOrFainting" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Light/Noise sensitivity
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialLightOrNoiseSensitivity" class="uk-radio" checked.bind="responses.visualSpatial.lightOrNoiseSensitivity" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Dizziness issues
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialDizzinessIssues" class="uk-radio" checked.bind="responses.visualSpatial.dizzinessIssues" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Tinnitus
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialTinnitus" class="uk-radio" checked.bind="responses.visualSpatial.tinnitus" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Blurry/Double vision
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialBlurryOrDoubleVision" class="uk-radio" checked.bind="responses.visualSpatial.blurryOrDoubleVision" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Change in smell or taste
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialChangeInSmellOrTaste" class="uk-radio" checked.bind="responses.visualSpatial.changeInSmellOrTaste" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Tremors
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialTremors" class="uk-radio" checked.bind="responses.visualSpatial.tremors" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Altered Sensation
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialAlteredSensation" class="uk-radio" checked.bind="responses.visualSpatial.alteredSensation" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Motor speed / manual dexterity
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialMotorSpeedOrManualDexterityIssues" class="uk-radio" checked.bind="responses.visualSpatial.motorSpeedOrManualDexterityIssues" change.delegate="visualSpatialIssueChanged()" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <h3 class="uk-heading-divider">Atypical Symptomology</h3>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Itchy fingernails
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="atypicalSymptomologyItchyFingernails" class="uk-radio" checked.bind="responses.atypical.itchyFingernails" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Black and white transient vision
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="atypicalSymptomologyBlackAndWhiteTransientVision" class="uk-radio" checked.bind="responses.atypical.blackAndWhiteTransientVision" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+            </fieldset>
+
+        </form>
+    
+    </div>
+
+    <div class="uk-container">
+
+        <h3>Cognitive Report</h3>
+
+        Regarding ${pronoun.possessiveAdjective} neurocognitive functioning, 
+        ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} 
+        is<template if.bind="!responses.problems.concentration.value">&nbsp;not</template>&nbsp;troubled by concentration issues, 
+        and furthermore indicated that ${pronoun.subject} <template if.bind="responses.problems.memory.value">&nbsp;has</template><template else>&nbsp;does not have</template>&nbsp;memory problems. 
+        ${pronoun.subject | proper} <template if.bind="responses.problems.shortTermMemory.value">&nbsp;identified</template>
+        <template else>&nbsp;denied having any</template>&nbsp;concerns with ${pronoun.possessiveAdjective} short-term memory.
+
+        When asked about ${pronoun.possessiveAdjective} episodic memory, ${pronoun.subject} 
+        advised that hints, reminders and repetition <template if.bind="responses.memory.episodic.remindersHintsOrRepetition.value">&nbsp;do</template><template else>&nbsp;do not</template>&nbsp;help ${pronoun.object}. 
+        
+        ${gender.title} ${claimant.lastName} noted that ${pronoun.subject} 
+        <template if.bind="responses.memory.visual.whereabouts.value">&nbsp;has</template><template else>&nbsp;does not have any</template> 
+        &nbsp;problems with ${pronoun.possessiveAdjective} working and visual memory as ${pronoun.subject} 
+        <template if.bind="responses.memory.visual.whereabouts.value">&nbsp;frequently forgets</template><template else>&nbsp;does not frequently forget</template> 
+        &nbsp;the whereabouts of objects around ${pronoun.possessiveAdjective} home. 
+        
+        ${pronoun.subject | proper} expressed that ${pronoun.subject} <template if.bind="responses.memory.working.walkIntoRoomAndForgetWhyOrLoseTrackOfWhatYouWantedToSay.value">&nbsp;does</template><template else>&nbsp;does not</template> 
+        &nbsp;frequently walk into a room and forget why or lose track of what ${pronoun.subject} wanted to say. 
+        ${pronoun.subject | proper} stated that ${pronoun.subject} 
+        <template if.bind="responses.memory.aids.useAids.value">&nbsp;uses</template><template else>&nbsp;does not use</template> 
+        &nbsp;aids to ${pronoun.possessiveAdjective} memory<template if.bind="!responses.memory.aids.useAids.value">.</template><template else>&nbsp;which include ${selectedMemoryAids | arrayToString:formatMemoryAidName & signal:'memory-aids-changed'}.</template> 
+        
+        &nbsp;${pronoun.subject | proper} <template if.bind="responses.memory.remote.distantMemories.value">&nbsp;acknowledged</template><template else>&nbsp;denied having any</template> 
+        &nbsp;issues with ${pronoun.possessiveAdjective} remote memory, 
+        <template if.bind="responses.memory.remote.distantMemories.value">&nbsp;adding that ${pronoun.subject} can still remember events from the distant past, </template>
+        and further <template if.bind="responses.memory.autobiographical.personalInfo.value">&nbsp;expressed</template><template else>&nbsp;denied issues with</template> 
+        &nbsp;${pronoun.possessiveAdjective} ability to recall autobiographical information. 
+        
+        Upon inquiry ${pronoun.subject} <template if.bind="responses.memory.medication.errors.value">&nbsp;reported that ${pronount.subject} has made medication errors</template><template else>&nbsp;denied having made any medication errors due to ${pronoun.possessiveAdjective} memory</template>, 
+        <template if.bind="responses.memory.medication.useDosette.value">&nbsp;adding that ${pronoun.subject} uses a dosette</template> 
+        &nbsp;and shared that ${pronoun.subject} <template if.bind="responses.memory.safety.issuesBeingLeftHome.value">&nbsp;${responses.memory.safety.reportedIssue}</template><template else>&nbsp;does not have any safety issues being left home alone</template>.
+        
+
+        In the matter of linguistic functioning, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} (is |is not) easily lost during conversations, that ${pronount.subject} (has | does not have any) tip of the tongue problems, adding that ${pronount.subject} [does | does not substitute words).  ${pronount.subject} also shared that ${pronount.subject} (has |does not have) a harder time filtering. ${pronount.subject} went on to report that ${pronount.subject} (repeats | does not repeat) himself, and (asks | will not ask) others to repeat what they have said. ${gender.title} ${claimant.lastName} related that ${pronount.subject} (has |does not have) a harder time focusing and sustaining attention, adding that ${pronount.subject} (is | is not) more distractible than ${pronount.subject} was previously. (He indicated that ${pronount.subject} a harder time watching something without losing track | ${pronount.subject} indicated that ${pronount.subject} does not lose track while watching something). ${gender.title} ${claimant.lastName} expressed that ${pronount.subject} (has | has not) reduced${pronoun.possessiveAdjective}use of electronic devices/screens. 
+        
+        ${gender.title} ${claimant.lastName} noted that${pronoun.possessiveAdjective}executive functioning (has | has not) been adversely affected. ${pronount.subject} advised that ${pronoun.possessiveAdjective}ability to multi-task, plan, organize, make decisions and problem solve have all been impacted. 
+        
+        When asked about ${pronoun.possessiveAdjective} balance ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} had issues with 
+        ${selectedVisualSpatialIssues | arrayToString:formatVisualSpatialIssue & signal:'visual-spatial-issue-changed'}
+        
+        including itchy fingernails | black and white transient (which (is an atypical symptom | which are are)  atypical symptoms). 
+        
+        Upon inquiry, ${pronount.subject} denied having any atypical symptomatology (If NO) or experiencing … (LIST ALL NO)
+        
+    </div>
+
+</template>
