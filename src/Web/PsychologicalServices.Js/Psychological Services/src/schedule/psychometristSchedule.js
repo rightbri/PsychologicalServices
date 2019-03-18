@@ -36,7 +36,10 @@ export class PsychometristSchedule {
 	
 			return Promise.all([
 				this.search(),
-				this.dataRepository.searchUsers({}).then(data => this.users = data)
+				this.dataRepository.searchUsers({
+					'isActive': true,
+					'rightId': this.config.rights.ReceiveSchedule
+				}).then(data => this.users = data)
 			]);
 		});
 	}

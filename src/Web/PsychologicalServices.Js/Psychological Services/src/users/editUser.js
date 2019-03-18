@@ -146,9 +146,11 @@ export class EditUser {
 	}
 
 	removeUnavailability(unavailability) {
-		let index = this.user.unavailability.indexOf(unavailability);
-		if (index > -1) {
-			this.user.unavailability.splice(index, 1);
+		if (confirm('Remove Unavailability\nAre you sure?')) {
+			let index = this.user.unavailability.indexOf(unavailability);
+			if (index > -1) {
+				this.user.unavailability.splice(index, 1);
+			}
 		}
 	}
 
@@ -163,12 +165,14 @@ export class EditUser {
 	}
 
 	removeTravelFee(travelFee) {
-		let index = this.user.travelFees.indexOf(travelFee);
-
-		if (index > -1) {
-			this.user.travelFees.splice(index, 1);
-
-			this.bindingSignaler.signal('travel-fee-city-list');
+		if (confirm('Remove travel fee\nAre you sure?')) {
+			let index = this.user.travelFees.indexOf(travelFee);
+	
+			if (index > -1) {
+				this.user.travelFees.splice(index, 1);
+	
+				this.bindingSignaler.signal('travel-fee-city-list');
+			}
 		}
 	}
 

@@ -125,7 +125,7 @@
 					<ul class="uk-list">
 						<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
 						<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
-						<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6] | sortArray:{ property: 'name', direction: 'asc' }">
+						<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6,13] | sortArray:{ property: 'name', direction: 'asc' }">
 							<li if.bind="attribute.value !== false">
 								${attribute | attributeValue}
 							</li>
@@ -298,7 +298,7 @@
 			</td>
 			<td class="uk-width-small">
 				<ul class="uk-list smaller-children">
-					<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5,9] | sortArray:{ property: 'name', direction: 'asc' }">
+					<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[4,5,9,13] | sortArray:{ property: 'name', direction: 'asc' }">
 						<li if.bind="attribute.value !== false">
 							${attribute | attributeValue}
 						</li>

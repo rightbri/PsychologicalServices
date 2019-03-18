@@ -75,6 +75,7 @@ export class Config {
 		
 		this.assessmentDefaults = {
 			'attributeTypeIds': [2,4,5,6,11],
+			'reportStatusAttributeTypeIds': [9,13],
 			'medicalFileAttributeTypeIds': [9],
 			'resultsAttributeTypeIds': [7,8],
 			'postAssessmentAttributeTypeIds': [12]
@@ -114,7 +115,8 @@ export class Config {
 			'Psychologist': 1,
 			'Psychometrist': 2,
 			'WriteDocList': 3,
-			'WriteNotes': 4
+			'WriteNotes': 4,
+			'ReceiveSchedule': 6
 		};
 		
 		this.authTokenKey = 'authToken';
