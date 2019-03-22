@@ -96,22 +96,25 @@ export class Notes {
             },
             "executive": {
                 "multiTasking": null,
-                "initiativeSpontaneityAmotivationApathy": null,
                 "organization": null,
                 "planning": null,
-                "judgement": null,
                 "decisionMaking": null,
                 "problemSolving": null,
-                "inappropriateSocialBehavior": null
+                "inappropriateSocialBehavior": null,
+                "inappropriateSocialBehaviorText": null
             },
             "visualSpatial": {
                 "balanceIssues": null,
-                "seizuresOrFainting": null,
-                "lightOrNoiseSensitivity": null,
+                "seizures": null,
+                "fainting": null,
+                "lightSensitivity": null,
+                "noiseSensitivity": null,
                 "dizzinessIssues": null,
                 "tinnitus": null,
-                "blurryOrDoubleVision": null,
-                "changeInSmellOrTaste": null,
+                "blurryVision": null,
+                "doubleVision": null,
+                "changeInSmell": null,
+                "changeInTaste": null,
                 "tremors": null,
                 "alteredSensation": null,
                 "motorSpeedOrManualDexterityIssues": null
@@ -161,7 +164,8 @@ export class Notes {
     getYesNo() {
         var data = [
             { "description": "Yes", "value": true },
-            { "description": "No", "value": false }
+            { "description": "No", "value": false },
+            { "description": "Skip", "value": null }
         ];
 
         return getPromise(data);
@@ -186,45 +190,199 @@ export class Notes {
         ].filter(item => item.response !== null && item.response.value);
     }
 
-    formatMemoryAidName(item) {
-        return item.name;
-    }
-
     memoryAidsChanged() {
         this.signaler.signal('memory-aids-changed');
     }
 
-    @computedFrom('responses.visualSpatial', 'pronoun')
-    get selectedVisualSpatialIssues() {
-        try {
-            let x = [
-                { "name": "balance", "response": this.responses.visualSpatial.balanceIssues },
-                { "name": "seizures or fainting", "response": this.responses.visualSpatial.seizuresOrFainting },
-                { "name": "light or noise sensitivity", "response": this.responses.visualSpatial.lightOrNoiseSensitivity },
-                { "name": "dizziness", "response": this.responses.visualSpatial.dizzinessIssues },
-                { "name": "tinnitus", "response": this.responses.visualSpatial.tinnitus },
-                { "name": "blurry or double vision", "response": this.responses.visualSpatial.blurryOrDoubleVision },
-                { "name": "change in smell or taste", "response": this.responses.visualSpatial.changeInSmellOrTaste },
-                { "name": "tremors", "response": this.responses.visualSpatial.tremors },
-                { "name": "altered sensation", "response": this.responses.visualSpatial.alteredSensation },
-                { "name": "motor speed or manual dexterity", "response": this.responses.visualSpatial.motorSpeedOrManualDexterityIssues }
-            ].filter(item => item.response !== null && item.response.value);
-    
-            return x;
-        }
-        catch (err) {
-            console.log(err);
-        }
-        
-        return [];
+    @computedFrom(
+        'responses.visualSpatial.balanceIssues',
+        'responses.visualSpatial.seizures',
+        'responses.visualSpatial.fainting',
+        'responses.visualSpatial.lightSensitivity',
+        'responses.visualSpatial.noiseSensitivity',
+        'responses.visualSpatial.dizzinessIssues',
+        'responses.visualSpatial.tinnitus',
+        'responses.visualSpatial.blurryVision',
+        'responses.visualSpatial.doubleVision',
+        'responses.visualSpatial.changeInSmell',
+        'responses.visualSpatial.changeInTaste',
+        'responses.visualSpatial.tremors',
+        'responses.visualSpatial.alteredSensation',
+        'responses.visualSpatial.motorSpeedOrManualDexterityIssues'
+    )
+    get anySelectedVisualSpatialIssues() {
+        return this.selectedVisualSpatialIssues.some(item => item);
     }
 
-    formatVisualSpatialIssue(item) {
-        return item.name;
+    @computedFrom(
+        'responses.visualSpatial.balanceIssues',
+        'responses.visualSpatial.seizures',
+        'responses.visualSpatial.fainting',
+        'responses.visualSpatial.lightSensitivity',
+        'responses.visualSpatial.noiseSensitivity',
+        'responses.visualSpatial.dizzinessIssues',
+        'responses.visualSpatial.tinnitus',
+        'responses.visualSpatial.blurryVision',
+        'responses.visualSpatial.doubleVision',
+        'responses.visualSpatial.changeInSmell',
+        'responses.visualSpatial.changeInTaste',
+        'responses.visualSpatial.tremors',
+        'responses.visualSpatial.alteredSensation',
+        'responses.visualSpatial.motorSpeedOrManualDexterityIssues'
+    )
+    get anyUnselectedVisualSpatialIssues() {
+        return this.unselectedVisualSpatialIssues.some(item => item);
+    }
+
+    @computedFrom(
+        'responses.visualSpatial.balanceIssues',
+        'responses.visualSpatial.seizures',
+        'responses.visualSpatial.fainting',
+        'responses.visualSpatial.lightSensitivity',
+        'responses.visualSpatial.noiseSensitivity',
+        'responses.visualSpatial.dizzinessIssues',
+        'responses.visualSpatial.tinnitus',
+        'responses.visualSpatial.blurryVision',
+        'responses.visualSpatial.doubleVision',
+        'responses.visualSpatial.changeInSmell',
+        'responses.visualSpatial.changeInTaste',
+        'responses.visualSpatial.tremors',
+        'responses.visualSpatial.alteredSensation',
+        'responses.visualSpatial.motorSpeedOrManualDexterityIssues'
+    )
+    get selectedVisualSpatialIssues() {
+        return this.getVisualSpatialIssues().filter(item => item.response !== null && item.response.value);
+    }
+
+    @computedFrom(
+        'responses.visualSpatial.balanceIssues',
+        'responses.visualSpatial.seizures',
+        'responses.visualSpatial.fainting',
+        'responses.visualSpatial.lightSensitivity',
+        'responses.visualSpatial.noiseSensitivity',
+        'responses.visualSpatial.dizzinessIssues',
+        'responses.visualSpatial.tinnitus',
+        'responses.visualSpatial.blurryVision',
+        'responses.visualSpatial.doubleVision',
+        'responses.visualSpatial.changeInSmell',
+        'responses.visualSpatial.changeInTaste',
+        'responses.visualSpatial.tremors',
+        'responses.visualSpatial.alteredSensation',
+        'responses.visualSpatial.motorSpeedOrManualDexterityIssues'
+    )
+    get unselectedVisualSpatialIssues() {
+        return this.getVisualSpatialIssues().filter(item => item.response !== null && item.response.value === false);
+    }
+
+    getVisualSpatialIssues() {
+        return [
+            { "name": "balance", "response": this.responses.visualSpatial.balanceIssues },
+            { "name": "seizures", "response": this.responses.visualSpatial.seizures },
+            { "name": "fainting", "response": this.responses.visualSpatial.fainting },
+            { "name": "light sensitivity", "response": this.responses.visualSpatial.lightSensitivity },
+            { "name": "noise sensitivity", "response": this.responses.visualSpatial.noiseSensitivity },
+            { "name": "dizziness", "response": this.responses.visualSpatial.dizzinessIssues },
+            { "name": "tinnitus", "response": this.responses.visualSpatial.tinnitus },
+            { "name": "blurry vision", "response": this.responses.visualSpatial.blurryVision },
+            { "name": "double vision", "response": this.responses.visualSpatial.doubleVision },
+            { "name": "change in smell", "response": this.responses.visualSpatial.changeInSmell },
+            { "name": "change in taste", "response": this.responses.visualSpatial.changeInTaste },
+            { "name": "tremors", "response": this.responses.visualSpatial.tremors },
+            { "name": "altered sensation", "response": this.responses.visualSpatial.alteredSensation },
+            { "name": "motor speed or manual dexterity", "response": this.responses.visualSpatial.motorSpeedOrManualDexterityIssues }
+        ];
     }
 
     visualSpatialIssueChanged() {
         this.signaler.signal('visual-spatial-issue-changed');
+    }
+
+    @computedFrom(
+        'responses.executive.multiTasking',
+        'responses.executive.organization',
+        'responses.executive.planning',
+        'responses.executive.decisionMaking',
+        'responses.executive.problemSolving',
+        'responses.executive.inappropriateSocialBehavior',
+        'responses.executive.inappropriateSocialBehaviorText'
+    )
+    get anySelectedExecutiveFunctionIssues() {
+        return this.selectedExecutiveFunctionIssues.some(item => item);
+    }
+
+    @computedFrom(
+        'responses.executive.multiTasking',
+        'responses.executive.organization',
+        'responses.executive.planning',
+        'responses.executive.decisionMaking',
+        'responses.executive.problemSolving',
+        'responses.executive.inappropriateSocialBehavior',
+        'responses.executive.inappropriateSocialBehaviorText'
+    )
+    get multipleSelectedExecutiveFunctionIssues() {
+        return this.selectedExecutiveFunctionIssues.length > 1;
+    }
+
+    @computedFrom(
+        'responses.executive.multiTasking',
+        'responses.executive.organization',
+        'responses.executive.planning',
+        'responses.executive.decisionMaking',
+        'responses.executive.problemSolving',
+        'responses.executive.inappropriateSocialBehavior',
+        'responses.executive.inappropriateSocialBehaviorText'
+    )
+    get anyUnselectedExecutiveFunctionIssues() {
+        return this.unselectedExecutiveFunctionIssues.some(item => item);
+    }
+
+    @computedFrom(
+        'responses.executive.multiTasking',
+        'responses.executive.organization',
+        'responses.executive.planning',
+        'responses.executive.decisionMaking',
+        'responses.executive.problemSolving',
+        'responses.executive.inappropriateSocialBehavior',
+        'responses.executive.inappropriateSocialBehaviorText'
+    )
+    get selectedExecutiveFunctionIssues() {
+        return this.getExecutiveFunctionIssues().filter(item => item.response !== null && item.response.value);
+    }
+
+    @computedFrom(
+        'responses.executive.multiTasking',
+        'responses.executive.organization',
+        'responses.executive.planning',
+        'responses.executive.decisionMaking',
+        'responses.executive.problemSolving',
+        'responses.executive.inappropriateSocialBehavior',
+        'responses.executive.inappropriateSocialBehaviorText'
+    )
+    get unselectedExecutiveFunctionIssues() {
+        return this.getExecutiveFunctionIssues().filter(item => item.response !== null && item.response.value === false);
+    }
+
+    getExecutiveFunctionIssues() {
+        return [
+            { "name": "multi-task", "description": "multi-tasking", "response": this.responses.executive.multiTasking },
+            { "name": "organize", "description": "organization", "response": this.responses.executive.organization },
+            { "name": "plan", "description": "planning", "response": this.responses.executive.planning },
+            { "name": "make decisions", "description": "decision making", "response": this.responses.executive.decisionMaking },
+            { "name": "problem solve", "description": "problem solving", "response": this.responses.executive.problemSolving },
+            { "name": this.responses.executive.inappropriateSocialBehaviorText || "", "description": "inappropriate social behavior", "response": this.responses.executive.inappropriateSocialBehavior }
+        ];
+    }
+
+    getItemName(item) {
+        return item.name;
+    }
+
+    getItemDescription(item) {
+        return item.description;
+    }
+
+    executiveFunctionIssueChanged() {
+        this.signaler.signal('executive-function-issue-changed');
     }
 }
 

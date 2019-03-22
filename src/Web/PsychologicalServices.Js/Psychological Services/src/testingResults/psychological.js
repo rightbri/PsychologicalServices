@@ -39,10 +39,13 @@ export class Psychological {
                 //may be like the rivermead
             },
             minnesotaMultiphasicPersonalityInventory: {
+                reactions: [],
                 credibilityIssues: null,
-                exaggertaion: null,
-                positiveImpressionManagement: null,
-                negativeImpressionManagement: null,
+                credibility: null,
+                exaggeration: null,
+                trends: [],
+                exaggerationConcerns: [],
+                
                 aggregateResultForPain: null,
                 aggregateResultForAnxiety: null,
                 aggregateResultForDepression: null
@@ -76,7 +79,6 @@ export class Psychological {
                 aggregateResultForDepression: null
             },
             neurocognitiveTests: [],
-            includeRivermead: false,
             concussionSymptoms: {
                 perceivedDisability: null,
                 currentSymptoms: [],
@@ -99,7 +101,7 @@ export class Psychological {
                 "possessiveAdjective": "her",
                 "possessivePronoun": "hers"
             }
-        ]
+        ];
 
         this.painScaleMin = 1;
         this.painScaleMax = 10;
@@ -125,6 +127,10 @@ export class Psychological {
         this.cognitiveAssessmentEffortLevels = [];
         this.cognitiveAssessmentTestResultRatings = [];
         this.cognitiveAssessmentTestCategories = [];
+
+        this.minnesotaMultiphasicInventoryReactions = [];
+        this.minnesotaMultiphasicInventoryTrends = [];
+        this.minnesotaMultiphasicInventoryExaggerationConcerns = [];
 
         this.becksRatings = [];
         this.hamiltonDepressionRatings = [];
@@ -208,7 +214,11 @@ export class Psychological {
                             });
                     }),
                     this.getDysfunctionRatings().then(data => this.dysfunctionRatings = data),
-                    this.getNeurocognitiveTests().then(data => this.neurocognitiveTests = data),
+                    this.getNeurocognitiveTests().then(data => {
+                        this.neurocognitiveTests = data;
+                        
+                        this.updatePerformedNeurocognitiveTests();
+                    }),
                     this.getConcussionDisabilityRatings().then(data => this.concussionDisabilityRatings = data),
                     this.getConcussionSymptoms().then(data => this.concussionSymptoms = data),
                     this.getCognitiveAssessmentEffortLevels().then(data => this.cognitiveAssessmentEffortLevels = data),
@@ -221,6 +231,11 @@ export class Psychological {
                                 return { "category": category.description, "rating": null }
                             });
                     }),
+
+                    this.getMinnesotaMultiphasicPersonalityInventoryReactions().then(data => this.minnesotaMultiphasicInventoryReactions = data),
+                    this.getMinnesotaMultiphasicPersonalityInventoryTrends().then(data => this.minnesotaMultiphasicInventoryTrends = data),
+                    this.getMinnesotaMultiphasicPersonalityInventoryExaggerationConcerns().then(data => this.minnesotaMultiphasicInventoryExaggerationConcerns = data),
+
                     this.getBecksRatings().then(data => this.becksRatings = data),
                     this.getHamiltonDepressionRatings().then(data => this.hamiltonDepressionRatings = data),
                     this.getHamiltonAnxietyRatings().then(data => this.hamiltonAnxietyRatings = data),
@@ -309,10 +324,60 @@ export class Psychological {
 
     getNeurocognitiveTests() {
         var data = [
-            { "id": 1, "name": "Rivermead Post-Concussion Symptoms Questionnaire" }
+            { "id": 1, "name": "Boston Naming Test" },
+            { "id": 2, "name": "California Verbal Learning Test – 3rd Edition" },
+            { "id": 3, "name": "Controlled Oral Word Association Test" },
+            { "id": 4, "name": "Finger Tapping Test" },
+            { "id": 5, "name": "Judgment of Line Orientation Test" },
+            { "id": 6, "name": "Rey Complex Figure Test" },
+            { "id": 7, "name": "Rivermead Post-Concussion Symptoms Questionnaire" },
+            { "id": 8, "name": "Ruff 2 & 7 Selective Attention Test" },
+            { "id": 9, "name": "Ruff Figural Fluency Test" },
+            { "id": 10, "name": "Short Category Test" },
+            { "id": 11, "name": "Stroop Color Word Test" },
+            { "id": 12, "name": "Test of Memory Malingering (TOMM)" },
+            { "id": 13, "name": "Trail Making Tests – Parts A and B" },
+            { "id": 14, "name": "Wechsler Abbreviated Scale of Intelligence – 2" },
+            { "id": 15, "name": "Wechsler Adult Intelligence Scales – 4th Edition (Processing Speed Index and Working Memory Index)" },
+            { "id": 16, "name": "Wechsler Memory Scale – 4th Edition (Logical Memory)" },
+            { "id": 17, "name": "Wide Range Achievement Test – 4th Edition" }
         ];
 
         return getPromise(data);
+    }
+
+    getPerformedNeurocognitiveTests() {
+        var self = this;
+
+        var data = {
+            "bostonNamingTest": isPerformed(1),
+            "californiaVerbalLearningTest": isPerformed(2),
+            "controlledOralWordAssociationTest": isPerformed(3),
+            "fingerTappingTest": isPerformed(4),
+            "judgementOfLineOrientationTest": isPerformed(5),
+            "reyComplexFigureTest": isPerformed(6),
+            "rivermeadPostConcussionSymptomsQuestionnaire": isPerformed(7),
+            "ruffSelectiveAttentionTest": isPerformed(8),
+            "ruffFiguralFluencyTest": isPerformed(9),
+            "shortCategoryTest": isPerformed(10),
+            "stroopColorWordTest": isPerformed(11),
+            "testOfMemoryMalingering": isPerformed(12),
+            "trailMakingTests": isPerformed(13),
+            "wechslerAbbreviatedScaleOfIntelligence": isPerformed(14),
+            "wechslerAdultIntelligenceScales": isPerformed(15),
+            "wechslerMemoryScale": isPerformed(16),
+            "wideRangeAchievementTest": isPerformed(17)
+        };
+
+        function isPerformed(testId) {
+            return self.results.neurocognitiveTests.some(t => t.id == testId);
+        }
+
+        return data;
+    }
+
+    updatePerformedNeurocognitiveTests() {
+        this.results.performedNeurocognitiveTests = this.getPerformedNeurocognitiveTests();
     }
 
     getAggregateResultRatings() {
@@ -577,6 +642,41 @@ export class Psychological {
         ];
 
         return getPromise(data);
+    }
+
+    getMinnesotaMultiphasicPersonalityInventoryReactions() {
+        var data = [
+            { "option": "Understood?", "output": { true: "understood the items of the test", false: "did not understand the items of the test" } },
+            { "option": "Was attentive?", "output": { true: "attended to the items of the test", false: "did not attend to the items of the test" } },
+            { "option": "Was distracted or confused?", "output": { true: "was distracted or confused while completing the form", false: "was not distracted or confused while completing the form" } },
+            { "option": "Responded in a consistent manner?", "output": { true: "responded to the items in a consistent manner throughout the test", false: "did not respond to the items in a consistent manner throughout the test" } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getMinnesotaMultiphasicPersonalityInventoryTrends() {
+        var data = [
+            { "description": "Defensiveness" },
+            { "description": "Positive Impression Management" },
+            { "description": "Negative Impression Management" }
+        ];
+
+        return getPromise(data);
+    }
+
+    getMinnesotaMultiphasicPersonalityInventoryExaggerationConcerns() {
+        var data = [
+            { "description": "Cognitive complaints" },
+            { "description": "Somatic complaints" },
+            { "description": "General Psychopathology" }
+        ];
+
+        return getPromise(data);
+    }
+
+    getMinnesotaMultiphasicPersonalityInventoryReactionOutput(item) {
+        return item.output[true];
     }
     
     getAccidentFearQuestionnaireRatings() {

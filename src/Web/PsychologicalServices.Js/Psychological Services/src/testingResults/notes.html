@@ -6,10 +6,6 @@
     <require from="resources/value-converters/filter"></require>
 	<require from="claimants/search-claimant"></require>
 
-    <style>
-        .underline { border-bottom: 1px solid #e5e5e5; }
-    </style>
-
     <div class="uk-container">
 
         <form class="uk-form-stacked">
@@ -493,19 +489,7 @@
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="executiveMultiTasking" class="uk-radio" checked.bind="responses.executive.multiTasking" model.bind="response" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-    
-                <div class="uk-margin-remove uk-width-4-5">
-                    Initiative / Spontaneity / Amotivation / Apathy
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-5">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="executiveInitiativeSpontaneityAmotivationApathy" class="uk-radio" checked.bind="responses.executive.initiativeSpontaneityAmotivationApathy" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="executiveMultiTasking" class="uk-radio" checked.bind="responses.executive.multiTasking" model.bind="response" change.delegate="executiveFunctionIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -517,7 +501,7 @@
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="executiveOrganization" class="uk-radio" checked.bind="responses.executive.organization" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="executiveOrganization" class="uk-radio" checked.bind="responses.executive.organization" model.bind="response" change.delegate="executiveFunctionIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -529,19 +513,7 @@
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="executivePlanning" class="uk-radio" checked.bind="responses.executive.planning" model.bind="response" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-    
-                <div class="uk-margin-remove uk-width-4-5">
-                    Judgment (has anyone questions your decision making)
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-5">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="executiveJudgement" class="uk-radio" checked.bind="responses.executive.judgement" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="executivePlanning" class="uk-radio" checked.bind="responses.executive.planning" model.bind="response" change.delegate="executiveFunctionIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -553,7 +525,7 @@
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="executiveDecisionMaking" class="uk-radio" checked.bind="responses.executive.decisionMaking" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="executiveDecisionMaking" class="uk-radio" checked.bind="responses.executive.decisionMaking" model.bind="response" change.delegate="executiveFunctionIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -565,7 +537,7 @@
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="executiveProblemSolving" class="uk-radio" checked.bind="responses.executive.problemSolving" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="executiveProblemSolving" class="uk-radio" checked.bind="responses.executive.problemSolving" model.bind="response" change.delegate="executiveFunctionIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -577,11 +549,21 @@
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="executiveInappropriateSocialBehavior" class="uk-radio" checked.bind="responses.executive.inappropriateSocialBehavior" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="executiveInappropriateSocialBehavior" class="uk-radio" checked.bind="responses.executive.inappropriateSocialBehavior" model.bind="response" change.delegate="executiveFunctionIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5" if.bind="responses.executive.inappropriateSocialBehavior.value">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Please specify
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.executive.inappropriateSocialBehavior.value">
+                    <input type="text" name="executiveInappropriateSocialBehaviorSpecific" class="uk-text" value.bind="responses.executive.inappropriateSocialBehaviorText" input.delegate="executiveFunctionIssueChanged() & debounce:500" />
+                </div>
+
+                <hr if.bind="responses.executive.inappropriateSocialBehavior.value">
 
                 <div class="uk-margin-remove">
                     <h3 class="uk-heading-divider">Visual Spatial</h3>
@@ -600,24 +582,48 @@
                 <hr>
     
                 <div class="uk-margin-remove uk-width-4-5">
-                    Seizures/Fainting
+                    Seizures
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="visualSpatialSeizuresOrFainting" class="uk-radio" checked.bind="responses.visualSpatial.seizuresOrFainting" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="visualSpatialSeizures" class="uk-radio" checked.bind="responses.visualSpatial.seizures" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
     
                 <div class="uk-margin-remove uk-width-4-5">
-                    Light/Noise sensitivity
+                    Fainting
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="visualSpatialLightOrNoiseSensitivity" class="uk-radio" checked.bind="responses.visualSpatial.lightOrNoiseSensitivity" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="visualSpatialFainting" class="uk-radio" checked.bind="responses.visualSpatial.fainting" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Light sensitivity
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialLightSensitivity" class="uk-radio" checked.bind="responses.visualSpatial.lightSensitivity" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Noise sensitivity
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialNoiseSensitivity" class="uk-radio" checked.bind="responses.visualSpatial.noiseSensitivity" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -648,24 +654,48 @@
                 <hr>
     
                 <div class="uk-margin-remove uk-width-4-5">
-                    Blurry/Double vision
+                    Blurry vision
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="visualSpatialBlurryOrDoubleVision" class="uk-radio" checked.bind="responses.visualSpatial.blurryOrDoubleVision" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="visualSpatialBlurryVision" class="uk-radio" checked.bind="responses.visualSpatial.blurryVision" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
     
                 <div class="uk-margin-remove uk-width-4-5">
-                    Change in smell or taste
+                    Double vision
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="visualSpatialChangeInSmellOrTaste" class="uk-radio" checked.bind="responses.visualSpatial.changeInSmellOrTaste" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="visualSpatialDoubleVision" class="uk-radio" checked.bind="responses.visualSpatial.doubleVision" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Change in smell
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialChangeInSmell" class="uk-radio" checked.bind="responses.visualSpatial.changeInSmell" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    Change in taste
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="visualSpatialChangeInTaste" class="uk-radio" checked.bind="responses.visualSpatial.changeInTaste" model.bind="response" change.delegate="visualSpatialIssueChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -765,7 +795,7 @@
         &nbsp;frequently walk into a room and forget why or lose track of what ${pronoun.subject} wanted to say. 
         ${pronoun.subject | proper} stated that ${pronoun.subject} 
         <template if.bind="responses.memory.aids.useAids.value">&nbsp;uses</template><template else>&nbsp;does not use</template> 
-        &nbsp;aids to ${pronoun.possessiveAdjective} memory<template if.bind="!responses.memory.aids.useAids.value">.</template><template else>&nbsp;which include ${selectedMemoryAids | arrayToString:formatMemoryAidName & signal:'memory-aids-changed'}.</template> 
+        &nbsp;aids to ${pronoun.possessiveAdjective} memory<template if.bind="!responses.memory.aids.useAids.value">.</template><template else>&nbsp;which include ${selectedMemoryAids | arrayToString:getItemName & signal:'memory-aids-changed'}.</template> 
         
         &nbsp;${pronoun.subject | proper} <template if.bind="responses.memory.remote.distantMemories.value">&nbsp;acknowledged</template><template else>&nbsp;denied having any</template> 
         &nbsp;issues with ${pronoun.possessiveAdjective} remote memory, 
@@ -780,11 +810,25 @@
 
         In the matter of linguistic functioning, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} (is |is not) easily lost during conversations, that ${pronount.subject} (has | does not have any) tip of the tongue problems, adding that ${pronount.subject} [does | does not substitute words).  ${pronount.subject} also shared that ${pronount.subject} (has |does not have) a harder time filtering. ${pronount.subject} went on to report that ${pronount.subject} (repeats | does not repeat) himself, and (asks | will not ask) others to repeat what they have said. ${gender.title} ${claimant.lastName} related that ${pronount.subject} (has |does not have) a harder time focusing and sustaining attention, adding that ${pronount.subject} (is | is not) more distractible than ${pronount.subject} was previously. (He indicated that ${pronount.subject} a harder time watching something without losing track | ${pronount.subject} indicated that ${pronount.subject} does not lose track while watching something). ${gender.title} ${claimant.lastName} expressed that ${pronount.subject} (has | has not) reduced${pronoun.possessiveAdjective}use of electronic devices/screens. 
         
-        ${gender.title} ${claimant.lastName} noted that${pronoun.possessiveAdjective}executive functioning (has | has not) been adversely affected. ${pronount.subject} advised that ${pronoun.possessiveAdjective}ability to multi-task, plan, organize, make decisions and problem solve have all been impacted. 
+        ${gender.title} ${claimant.lastName} noted that ${pronoun.possessiveAdjective} executive functioning 
+        <template if.bind="anySelectedExecutiveFunctionIssues">&nbsp;has</template><template else>&nbsp;has not</template>&nbsp;been adversely affected. 
+        &nbsp;
+        <template if.bind="anySelectedExecutiveFunctionIssues">
+            ${pronoun.subject | proper} advised that ${pronoun.possessiveAdjective} ability to 
+            ${selectedExecutiveFunctionIssues | arrayToString:getItemName & signal:'executive-function-issue-changed'}
+            <template if.bind="multipleSelectedExecutiveFunctionIssues">&nbsp;have</template><template else>&nbsp;has</template>&nbsp;been impacted.
+        </template>
+        &nbsp;
+        <template if.bind="anyUnselectedExecutiveFunctionIssues">
+            ${pronoun.subject | proper} specifically denied experiencing issues with 
+            ${unselectedExecutiveFunctionIssues | arrayToString:getItemDescription & signal:'executive-function-issue-changed'}.
+        </template>
+        &nbsp;
+
+        When asked about ${pronoun.possessiveAdjective} visual-spatial issues, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} had issues with 
+        ${selectedVisualSpatialIssues | arrayToString:getItemName & signal:'visual-spatial-issue-changed'}. 
         
-        When asked about ${pronoun.possessiveAdjective} balance ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} had issues with 
-        ${selectedVisualSpatialIssues | arrayToString:formatVisualSpatialIssue & signal:'visual-spatial-issue-changed'}
-        
+
         including itchy fingernails | black and white transient (which (is an atypical symptom | which are are)  atypical symptoms). 
         
         Upon inquiry, ${pronount.subject} denied having any atypical symptomatology (If NO) or experiencing … (LIST ALL NO)

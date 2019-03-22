@@ -22,7 +22,7 @@
                     ${results.claimant.firstName} ${results.claimant.lastName}
                 </p>
             </div>
-
+<!--
             <div class="uk-margin-small">
                 <label class="uk-form-label">
                     <input class="uk-checkbox" type="checkbox" checked.bind="results.isCredible" />&nbsp;Is Credible?
@@ -133,6 +133,26 @@
                     <h5 class="uk-heading-line"><span>Minnesota Multiphasic Personality Inventory (MMPI)</span></h5>
 
                     <div class="uk-margin-small">
+                        <label class="uk-form-label">Reactions</label>
+                        <div class="uk-form-controls">
+                            <label class="uk-form-label" repeat.for="reaction of minnesotaMultiphasicInventoryReactions">
+                                <input type="checkbox" class="uk-checkbox" model.bind="reaction" checked.bind="results.minnesotaMultiphasicPersonalityInventory.reactions" />&nbsp;${reaction.option}
+                            </label>
+                        </div>
+
+                        <template repeat.for="reaction of minnesotaMultiphasicInventoryReactions">
+
+                            <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryCredibilityIssues">Credibility issues?</label>
+                            <select id="minnesotaMultiphasicPersonalityInventoryCredibilityIssues" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
+                                <option></option>
+                                <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                            </select>
+
+                        </template>
+
+                    </div>
+
+                    <div class="uk-margin-small">
                         <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryCredibilityIssues">Credibility issues?</label>
                         <select id="minnesotaMultiphasicPersonalityInventoryCredibilityIssues" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
                             <option></option>
@@ -140,27 +160,37 @@
                         </select>
                     </div>
 
-                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
+                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues.value">
+                        <label class="uk-form-label">Trends</label>
+                        <div class="uk-form-controls">
+                            <label class="uk-form-label" repeat.for="trend of minnesotaMultiphasicInventoryTrends">
+                                <input type="checkbox" class="uk-checkbox" model.bind="trend" checked.bind="results.minnesotaMultiphasicPersonalityInventory.trends" />&nbsp;${trend.description}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues.value">
                         <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryExaggeration">Exaggeration?</label>
-                        <select id="minnesotaMultiphasicPersonalityInventoryExaggeration" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.exaggertaion">
+                        <select id="minnesotaMultiphasicPersonalityInventoryExaggeration" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.exaggeration">
                             <option></option>
                             <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
                         </select>
                     </div>
-
-                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
-                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryPositiveImpressionManagement">Positive impression management?</label>
-                        <select id="minnesotaMultiphasicPersonalityInventoryPositiveImpressionManagement" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.positiveImpressionManagement">
-                            <option></option>
-                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
-                        </select>
+                    
+                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.exaggeration.value">
+                        <label class="uk-form-label">Exaggeration Concerns</label>
+                        <div class="uk-form-controls">
+                            <label class="uk-form-label" repeat.for="concern of minnesotaMultiphasicInventoryExaggerationConcerns">
+                                <input type="checkbox" class="uk-checkbox" model.bind="concern" checked.bind="results.minnesotaMultiphasicPersonalityInventory.exaggerationConcerns" />&nbsp;${concern.description}
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="uk-margin-small" if.bind="results.minnesotaMultiphasicPersonalityInventory.credibilityIssues">
-                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryNegativeImpressionManagement">Negative impression management?</label>
-                        <select id="minnesotaMultiphasicPersonalityInventoryNegativeImpressionManagement" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.negativeImpressionManagement">
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="minnesotaMultiphasicPersonalityInventoryCredibility">Credibility</label>
+                        <select id="minnesotaMultiphasicPersonalityInventoryCredibility" class="uk-select uk-form-small uk-form-width-small" value.bind="results.minnesotaMultiphasicPersonalityInventory.credibility">
                             <option></option>
-                            <option repeat.for="value of yesNo" model.bind="value">${value.description}</option>
+                            <option repeat.for="credibility of credibilities" model.bind="credibility">${credibility.description}</option>
                         </select>
                     </div>
 
@@ -355,16 +385,19 @@
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Neurocognitive Tests</legend>
 
-                <div class="uk-section uk-section-xsmall">
+                <div class="uk-margin-small">
+                    <div class="uk-form-label">Tests (select all that apply)</div>
+                    <div class="uk-form-controls">
+                        <label class="uk-form-label" repeat.for="test of neurocognitiveTests">
+                            <input type="checkbox" class="uk-checkbox" model.bind="test" checked.bind="results.neurocognitiveTests" change.delegate="updatePerformedNeurocognitiveTests()" />&nbsp;${test.name}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="uk-section uk-section-xsmall" if.bind="results.performedNeurocognitiveTests.rivermeadPostConcussionSymptomsQuestionnaire">
                     <h5 class="uk-heading-line"><span>Rivermead Post-Concussion Symptoms Questionnaire</span></h5>
 
                     <div class="uk-margin-small">
-                        <label class="uk-form-label">
-                            <input type="checkbox" class="uk-checkbox" checked.bind="results.includeRivermead" />&nbsp;Include Rivermead section
-                        </label>
-                    </div>
-
-                    <div class="uk-margin-small" if.bind="results.includeRivermead">
                         <label class="uk-form-label" for="concussionPerceivedDisability">Perceived Disability</label>
                         <select id="concussionPerceivedDisability" class="uk-select uk-form-small uk-form-width-small" value.bind="results.concussionSymptoms.perceivedDisability">
                             <option></option>
@@ -372,7 +405,7 @@
                         </select>
                     </div>
 
-                    <div class="uk-margin-small" if.bind="results.includeRivermead">
+                    <div class="uk-margin-small">
                         <div class="uk-form-label">Current Symptoms</div>
                         <div class="uk-form-controls">
                             <label class="uk-form-label" repeat.for="symptom of concussionSymptoms">
@@ -381,7 +414,7 @@
                         </div>
                     </div>
 
-                    <div class="uk-margin-small" if.bind="results.includeRivermead">
+                    <div class="uk-margin-small">
                         <div class="uk-form-label">
                             Additional Symptoms
                             <button type="button" class="uk-button uk-button-link" click.delegate="addAdditionalConcussionSymptom(symptom)" title="Add symptom" uk-tooltip>
@@ -403,11 +436,11 @@
                 </div>
                 
             </fieldset>
-
+        -->
         </form>
 
     </div>
-
+<!--
     <div class="uk-container" style="font-family: arial, sans-serif; font-size: 11pt;">
 
         <h4 class="uk-heading-line"><span>Report</span></h4>
@@ -422,12 +455,19 @@
 
         <h3 style="text-align: center;">Test Validity</h3>
 
-        <p>
-            ${results.gender.title} ${results.claimant.lastName}'s profile on the various indices suggested that the obtained MMPI-2-RF profile was invalid.  
-            The obtained profiles on the validity scales of the MMPI-2-RF indicated that ${results.gender.title} ${results.claimant.lastName} understood and attended to the items of the test, was not distracted or confused while completing the form, and responded to the items in a consistent manner throughout the test.  
+        <p if.bind="results.performedPsychologicalTests.minnesotaMultiphasicPersonalityInventory">
+            ${results.gender.title} ${results.claimant.lastName}'s profile on the various indices suggested that the obtained MMPI-2-RF profile was ${results.minnesotaMultiphasicPersonalityInventory.credibility.description}.  
+            The obtained profiles on the validity scales of the MMPI-2-RF indicated that ${results.gender.title} ${results.claimant.lastName} 
+            ${results.minnesotaMultiphasicPersonalityInventory.reactions | arrayToString:getMinnesotaMultiphasicPersonalityInventoryReactionOutput}
+            understood and attended to the items of the test, was not distracted or confused while completing the form, and responded to the items in a consistent manner throughout the test.  
+            
             There were no trends towards positive impression management or defensiveness noted.  
             However, the MMPI-2-RF indicated concerns with respect to exaggeration, particularly with respect to his cognitive and somatic complaints, with respect to general psychopathology, especially when compared with other litigation samples.  
-            As such, the MMPI-2-RF was invalid.  
+            As such, the MMPI-2-RF was invalid. 
+        </p>
+
+        <p>
+             
             Atypical responding significantly affected the TSI-2-A.  
             ${results.gender.title} ${results.claimant.lastName} was also administered the Structured Inventory of Malingered Symptomatology (SIMS).  
             ${results.gender.title} ${results.claimant.lastName}’s scores on the Neurological Impairment, Low Intelligence, Psychosis, Amnestic Disorders, and Affective Factors subscales and Total Score were invalid.  
@@ -464,8 +504,8 @@
         </p>
         
 
-        <h5 if.bind="results.includeRivermead" class="uk-heading-line"><span>Concussion Symptoms</span></h5>
-        <p if.bind="results.includeRivermead">
+        <h5 if.bind="results.performedNeurocognitiveTests.rivermeadPostConcussionSymptomsQuestionnaire" class="uk-heading-line"><span>Concussion Symptoms</span></h5>
+        <p if.bind="results.performedNeurocognitiveTests.rivermeadPostConcussionSymptomsQuestionnaire">
             On the Rivermead Post-Concussion Symptoms Questionnaire the current aggregate result 
             (based on the self-report alone) is currently in 
             ${results.concussionSymptoms.perceivedDisability.templatePrefix} ${results.concussionSymptoms.perceivedDisability.description} 
@@ -477,9 +517,9 @@
                 He? additionally reporting experiencing ${results.concussionSymptoms.additionalSymptoms | arrayToString & signal:'concussion-additional-symptoms-updated'}.
             </span>
         </p>
-                
+               
     </div>
-
+--> 
     <div class="uk-container">
         <h5 class="uk-heading-line"><span>Cognitive Assessment</span></h5>
 
