@@ -213,8 +213,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 
 		/// <summary>Calls stored procedure 'CredibilityData'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
-		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable CredibilityData(System.Int32 companyId)
+		/// <returns>Filled DataSet with resultset(s) of stored procedure</returns>
+		public static DataSet CredibilityData(System.Int32 companyId)
 		{
 			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
 			{
@@ -225,12 +225,12 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Calls stored procedure 'CredibilityData'.<br/><br/></summary>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <param name="companyId">Input parameter. </param>
-		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable CredibilityData(System.Int32 companyId, IDataAccessCore dataAccessProvider)
+		/// <returns>Filled DataSet with resultset(s) of stored procedure</returns>
+		public static DataSet CredibilityData(System.Int32 companyId, IDataAccessCore dataAccessProvider)
 		{
 			using(StoredProcedureCall call = CreateCredibilityDataCall(dataAccessProvider, companyId))
 			{
-				DataTable toReturn = call.FillDataTable();
+				DataSet toReturn = call.FillDataSet();
 				return toReturn;
 			}
 		}
@@ -487,6 +487,54 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 ).ToRetrievalQuery();
 		}
 
+		/// <summary>Calls stored procedure 'NonABCompletionData'.<br/><br/></summary>
+		/// <param name="companyId">Input parameter. </param>
+		/// <param name="months">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable NonAbcompletionData(System.Int32 companyId, System.Int32 months)
+		{
+			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
+			{
+				return NonAbcompletionData(companyId, months, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Calls stored procedure 'NonABCompletionData'.<br/><br/></summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter. </param>
+		/// <param name="months">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable NonAbcompletionData(System.Int32 companyId, System.Int32 months, IDataAccessCore dataAccessProvider)
+		{
+			using(StoredProcedureCall call = CreateNonAbcompletionDataCall(dataAccessProvider, companyId, months))
+			{
+				DataTable toReturn = call.FillDataTable();
+				return toReturn;
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'NonABCompletionData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetNonAbcompletionDataCallAsQuery(System.Int32 companyId, System.Int32 months)
+		{
+			using(var dataAccessProvider = new DataAccessAdapter())
+			{
+				return GetNonAbcompletionDataCallAsQuery(companyId, months, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'NonABCompletionData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetNonAbcompletionDataCallAsQuery(System.Int32 companyId, System.Int32 months, IDataAccessCore dataAccessProvider)
+		{
+			return CreateNonAbcompletionDataCall(dataAccessProvider, companyId, months).ToRetrievalQuery();
+		}
+
 		/// <summary>Calls stored procedure 'OutstandingReports'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="daysOutstanding">Input parameter. </param>
@@ -661,6 +709,18 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 							.AddParameter("@NeedsRefresh", "Bit", 0, ParameterDirection.Input, true, 0, 0, needsRefresh)
 							.AddParameter("@NeedsToBeSentToReferralSource", "Bit", 0, ParameterDirection.Input, true, 0, 0, needsToBeSentToReferralSource) 
 ;
+		}
+
+		/// <summary>Creates the call object for the call 'NonAbcompletionData' to stored procedure 'NonABCompletionData'.</summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter</param>
+		/// <param name="months">Input parameter</param>
+		/// <returns>Ready to use StoredProcedureCall object</returns>
+		private static StoredProcedureCall CreateNonAbcompletionDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, System.Int32 months)
+		{
+			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[NonABCompletionData]", "NonAbcompletionData")
+							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
+							.AddParameter("@months", "Int", 0, ParameterDirection.Input, true, 10, 0, months);
 		}
 
 		/// <summary>Creates the call object for the call 'OutstandingReports' to stored procedure 'OutstandingReports'.</summary>

@@ -34,28 +34,16 @@ BEGIN
 	,CASE WHEN ass.PsychologistFoundInFavorOfClaimant = 1 THEN 1 ELSE 0 END AS PsychologistFoundInFavorOfClaimantYes
 	,CASE WHEN ass.PsychologistFoundInFavorOfClaimant = 0 THEN 1 ELSE 0 END AS PsychologistFoundInFavorOfClaimantNo
 	,CASE WHEN ass.PsychologistFoundInFavorOfClaimant IS NULL THEN 1 ELSE 0 END AS PsychologistFoundInFavorOfClaimantUnknown
-
-	--,ass.NeurocognitiveCredibilityId
-	--,ass.PsychologicalCredibilityId
-	--,ass.DiagnosisFoundReponseId
-	--,ass.PsychologistFoundInFavorOfClaimant
 	FROM dbo.Assessments ass
 	INNER JOIN dbo.AssessmentTypes asst ON ass.AssessmentTypeId = asst.AssessmentTypeId
-	INNER JOIN dbo.AssessmentAttributes assAttr ON ass.AssessmentId = assAttr.AssessmentId
-	INNER JOIN dbo.Attributes attr ON assAttr.AttributeId = attr.AttributeId
 	WHERE
 	ass.CompanyId = @companyId_local 
-	AND attr.[Name] = 'Final copy received'
-	AND assAttr.[Value] = 1
 	AND 
 	(
 		(asst.[Name] IN ('NC','NC/P','NP') AND ass.NeurocognitiveCredibilityId IS NOT NULL)
 		OR (asst.[Name] IN ('P', 'PVOC', 'NP', 'NC/P') AND ass.PsychologicalCredibilityId IS NOT NULL)
 	)
-	--AND DiagnosisFoundReponseId IS NOT NULL
-
-
-
+	
 
 	DECLARE @data TABLE (
 		[Year] INT,

@@ -9,6 +9,8 @@ namespace PsychologicalServices.Models.RawTestData
 
         public int? ClaimantId { get; set; }
 
+        public string RecipientName { get; set; }
+
         public IEnumerable<int> RawTestDataStatusIds { get; set; }
     }
 }

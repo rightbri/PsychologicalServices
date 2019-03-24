@@ -76,6 +76,11 @@ namespace PsychologicalServices.Infrastructure.RawTestData
                     rawTestDatas = rawTestDatas.Where(rawTestData => rawTestData.ClaimantId == criteria.ClaimantId);
                 }
 
+                if (!string.IsNullOrWhiteSpace(criteria.RecipientName))
+                {
+                    rawTestDatas = rawTestDatas.Where(rawTestData => rawTestData.RecipientName.Contains(criteria.RecipientName));
+                }
+
                 if (null != criteria.RawTestDataStatusIds && criteria.RawTestDataStatusIds.Any())
                 {
                     rawTestDatas = rawTestDatas.Where(rawTestData =>
@@ -194,6 +199,15 @@ namespace PsychologicalServices.Infrastructure.RawTestData
                 else
                 {
                     entity.SetNewFieldValue((int)RawTestDataFieldIndex.DataSentDate, null);
+                }
+
+                if (!string.IsNullOrWhiteSpace(rawTestData.RecipientName))
+                {
+                    entity.RecipientName = rawTestData.RecipientName;
+                }
+                else
+                {
+                    entity.SetNewFieldValue((int)RawTestDataFieldIndex.RecipientName, null);
                 }
 
                 if (null != rawTestData.Note)

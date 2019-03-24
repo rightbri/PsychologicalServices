@@ -754,7 +754,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits RawTestDataEntity's mappings</summary>
 		private void InitRawTestDataEntityMappings()
 		{
-			this.AddElementMapping("RawTestDataEntity", @"PsychologicalServices", @"dbo", "RawTestDatas", 10, 0);
+			this.AddElementMapping("RawTestDataEntity", @"PsychologicalServices", @"dbo", "RawTestDatas", 11, 0);
 			this.AddElementFieldMapping("RawTestDataEntity", "RawTestDataId", "RawTestDataId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("RawTestDataEntity", "ClaimantId", "ClaimantId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 			this.AddElementFieldMapping("RawTestDataEntity", "BillToReferralSourceId", "BillToReferralSourceId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
@@ -765,6 +765,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("RawTestDataEntity", "NoteId", "NoteId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 7);
 			this.AddElementFieldMapping("RawTestDataEntity", "CompanyId", "CompanyId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
 			this.AddElementFieldMapping("RawTestDataEntity", "PsychologistId", "PsychologistId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 9);
+			this.AddElementFieldMapping("RawTestDataEntity", "RecipientName", "RecipientName", true, "VarChar", 100, 0, 0, false, "", null, typeof(System.String), 10);
 		}
 
 		/// <summary>Inits RawTestDataStatusEntity's mappings</summary>

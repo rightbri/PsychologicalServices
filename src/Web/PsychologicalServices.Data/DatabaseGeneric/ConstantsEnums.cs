@@ -957,6 +957,8 @@ namespace PsychologicalServices.Data
 		CompanyId,
 		///<summary>PsychologistId. </summary>
 		PsychologistId,
+		///<summary>RecipientName. </summary>
+		RecipientName,
 		/// <summary></summary>
 		AmountOfFields
 	}

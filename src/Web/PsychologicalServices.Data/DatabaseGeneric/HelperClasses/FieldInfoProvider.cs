@@ -714,6 +714,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("RawTestDataEntity", "NoteId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)RawTestDataFieldIndex.NoteId, 0, 0, 10);
 			this.AddElementFieldInfo("RawTestDataEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)RawTestDataFieldIndex.CompanyId, 0, 0, 10);
 			this.AddElementFieldInfo("RawTestDataEntity", "PsychologistId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)RawTestDataFieldIndex.PsychologistId, 0, 0, 10);
+			this.AddElementFieldInfo("RawTestDataEntity", "RecipientName", typeof(System.String), false, false, false, true,  (int)RawTestDataFieldIndex.RecipientName, 100, 0, 0);
 		}
 		/// <summary>Inits RawTestDataStatusEntity's FieldInfo objects</summary>
 		private void InitRawTestDataStatusEntityInfos()

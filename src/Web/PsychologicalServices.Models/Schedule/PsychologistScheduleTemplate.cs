@@ -361,629 +361,629 @@ namespace PsychologicalServices.Models.Schedule
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
             #line 94 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- if (appointment.Assessment.IsReassessment) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t<li style=\"");
-            
-            #line 95 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
-            
-            #line default
-            #line hidden
-            this.Write(" color: orange;\">\r\n\t\t\t\t\t\t\t\tRe-assessment\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t");
-            
-            #line 98 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- if (appointment.Assessment.PreviouslySeenDate.HasValue) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t\t<li style=\"");
-            
-            #line 99 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">\r\n\t\t\t\t\t\t\t\t\tPreviously Seen: ");
-            
-            #line 100 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:dd/MM/yyyy}", appointment.Assessment.PreviouslySeenDate)));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t");
-            
-            #line 102 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t");
-            
-            #line 103 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
-            
-            #line 106 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
-            
-            #line default
-            #line hidden
-            
-            #line 106 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\"><!-- Type -->\r\n\t\t\t\t\t\t<ul style=\"");
-            
-            #line 107 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">\r\n\t\t\t\t\t\t\t<li style=\"");
-            
-            #line 108 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(listItemStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
-            
-            #line 109 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.AssessmentType.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
-            
-            #line 111 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- if (appointment.IsCompletion) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t<li style=\"");
-            
-            #line 112 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">Completion</li>\r\n\t\t\t\t\t\t\t");
-            
-            #line 113 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t");
-            
-            #line 114 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 2, 6 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId)).OrderBy(attributeValue => attributeValue.Attribute.Name)) { 
+ foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 13 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId)).OrderBy(attributeValue => attributeValue.Attribute.Name)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t\t");
             
-            #line 115 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 95 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (null == attributeValue.Value || attributeValue.Value.Value) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t\t<li style=\"");
             
-            #line 116 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 96 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t\t");
             
-            #line 117 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 97 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attributeValue.Attribute.Name));
             
             #line default
             #line hidden
             
-            #line 117 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 97 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (null == attributeValue.Value) { 
             
             #line default
             #line hidden
             
-            #line 117 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 97 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(": ?"));
             
             #line default
             #line hidden
             
-            #line 117 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 97 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t");
             
-            #line 119 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 99 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t");
+            
+            #line 100 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t");
+            
+            #line 101 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (appointment.Assessment.IsReassessment) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t<li style=\"");
+            
+            #line 102 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write(" color: orange;\">\r\n\t\t\t\t\t\t\t\tRe-assessment\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t");
+            
+            #line 105 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (appointment.Assessment.PreviouslySeenDate.HasValue) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t\t<li style=\"");
+            
+            #line 106 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t\t\tPreviously Seen: ");
+            
+            #line 107 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:dd/MM/yyyy}", appointment.Assessment.PreviouslySeenDate)));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t");
+            
+            #line 109 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t");
+            
+            #line 110 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
+            
+            #line 113 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
+            
+            #line default
+            #line hidden
+            
+            #line 113 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\"><!-- Type -->\r\n\t\t\t\t\t\t<ul style=\"");
+            
+            #line 114 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t<li style=\"");
+            
+            #line 115 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(listItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
+            
+            #line 116 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.AssessmentType.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
+            
+            #line 118 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (appointment.IsCompletion) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t<li style=\"");
+            
+            #line 119 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">Completion</li>\r\n\t\t\t\t\t\t\t");
             
             #line 120 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
+            this.Write("\t\t\t\t\t\t\t");
+            
+            #line 121 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 2, 6 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId)).OrderBy(attributeValue => attributeValue.Attribute.Name)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t\t");
+            
+            #line 122 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (null == attributeValue.Value || attributeValue.Value.Value) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t\t<li style=\"");
             
             #line 123 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t\t\t");
+            
+            #line 124 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(attributeValue.Attribute.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 124 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (null == attributeValue.Value) { 
+            
+            #line default
+            #line hidden
+            
+            #line 124 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(": ?"));
+            
+            #line default
+            #line hidden
+            
+            #line 124 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t");
+            
+            #line 126 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t");
+            
+            #line 127 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
+            
+            #line 130 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
             
             #line default
             #line hidden
             
-            #line 123 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 130 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
             
             #line default
             #line hidden
             this.Write("\"><!-- Source -->\r\n\t\t\t\t\t\t<ul style=\"");
             
-            #line 124 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 131 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t<li style=\"");
             
-            #line 125 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 132 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 126 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 133 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.ReferralSource.Name));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
-            #line 128 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 135 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (null != appointment.Assessment.ReportStatus) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li style=\"");
             
-            #line 129 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 136 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 130 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 137 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.ReportStatus.Name));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
-            #line 132 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 139 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t");
             
-            #line 133 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 140 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (null != appointment.Assessment.MedicalFileReceivedDate) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li style=\"");
             
-            #line 134 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 141 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\tReceived:&nbsp;");
             
-            #line 135 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 142 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:dd/MM/yyyy}", appointment.Assessment.MedicalFileReceivedDate)));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
-            #line 137 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 144 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t");
             
-            #line 138 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 145 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (!string.IsNullOrEmpty(appointment.Assessment.ReferralSourceFileNumber)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li style=\"");
             
-            #line 139 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 146 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\tFile No:&nbsp;");
             
-            #line 140 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 147 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.ReferralSourceFileNumber));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
-            #line 142 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 149 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
             
-            #line 145 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 152 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
             
             #line default
             #line hidden
             
-            #line 145 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 152 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
             
             #line default
             #line hidden
             this.Write("\"><!-- Location -->\r\n\t\t\t\t\t\t<ul style=\"");
             
-            #line 146 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 153 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t<li style=\"");
             
-            #line 147 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 154 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(addressItemStyle));
             
             #line default
             #line hidden
             
-            #line 147 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 154 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listItemStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
-            
-            #line 148 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t<li style=\"");
-            
-            #line 150 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(addressItemStyle));
-            
-            #line default
-            #line hidden
-            
-            #line 150 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
-            
-            #line 151 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Street));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
-            
-            #line 153 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- if (!string.IsNullOrWhiteSpace(appointment.Location.Suite)) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t<li style=\"");
-            
-            #line 154 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(addressItemStyle));
-            
-            #line default
-            #line hidden
-            
-            #line 154 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
             #line 155 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t<li style=\"");
+            
+            #line 157 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(addressItemStyle));
+            
+            #line default
+            #line hidden
+            
+            #line 157 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
+            
+            #line 158 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Street));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
+            
+            #line 160 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(appointment.Location.Suite)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t<li style=\"");
+            
+            #line 161 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(addressItemStyle));
+            
+            #line default
+            #line hidden
+            
+            #line 161 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
+            
+            #line 162 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Suite));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
-            #line 157 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 164 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li style=\"");
             
-            #line 158 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 165 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(addressItemStyle));
             
             #line default
             #line hidden
             
-            #line 158 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 165 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 159 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 166 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.City.Name));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 159 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 166 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.City.Province));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 159 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 166 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.PostalCode));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
             
-            #line 163 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 170 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
             
             #line default
             #line hidden
             
-            #line 163 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 170 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
             
             #line default
             #line hidden
             this.Write("\"><!-- Claimant -->\r\n\t\t\t\t\t\t<ul style=\"");
             
-            #line 164 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 171 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t");
             
-            #line 165 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 172 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (appointment.Assessment.Claimant != null) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li style=\"");
             
-            #line 166 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 173 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 167 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 174 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.FirstName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 167 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 174 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.LastName));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t<li style=\"");
             
-            #line 169 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 176 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 170 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 177 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.Age));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 170 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 177 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Assessment.Claimant.Gender));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t");
             
-            #line 172 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 179 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t");
             
-            #line 173 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 180 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  foreach (var claim in appointment.Assessment.Claims) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li style=\"");
             
-            #line 174 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 181 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\tDOL: ");
             
-            #line 175 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 182 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:dd/MM/yyyy}", claim.DateOfLoss)));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t<li style=\"");
             
-            #line 177 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 184 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\tClaim No: ");
             
-            #line 178 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 185 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(claim.ClaimNumber));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t");
             
-            #line 180 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 187 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
             
-            #line 183 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 190 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
             
             #line default
             #line hidden
             
-            #line 183 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 190 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
             
             #line default
             #line hidden
             this.Write("\"><!-- Psychometrist -->\r\n\t\t\t\t\t\t<ul style=\"");
             
-            #line 184 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 191 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t<li style=\"");
             
-            #line 185 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 192 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 186 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 193 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Psychometrist.FirstName));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t");
             
-            #line 188 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 1 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t");
-            
-            #line 189 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- if (null == attributeValue.Value || attributeValue.Value.Value) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t<li style=\"");
-            
-            #line 190 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
-            
-            #line 191 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(attributeValue.Attribute.Name));
-            
-            #line default
-            #line hidden
-            
-            #line 191 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- if (null == attributeValue.Value) { 
-            
-            #line default
-            #line hidden
-            
-            #line 191 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(": ?"));
-            
-            #line default
-            #line hidden
-            
-            #line 191 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
-            
-            #line 193 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t");
-            
-            #line 194 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t\t\t");
-            
             #line 195 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 5 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
+ foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 1 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
             
             #line default
             #line hidden
@@ -1040,90 +1040,90 @@ namespace PsychologicalServices.Models.Schedule
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
+            this.Write("\t\t\t\t\t\t");
             
-            #line 204 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
-            
-            #line default
-            #line hidden
-            
-            #line 204 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\"><!-- Info -->\r\n\t\t\t\t\t\t<ul style=\"");
-            
-            #line 205 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
-            
-            #line default
-            #line hidden
-            this.Write("\">\r\n\t\t\t\t\t\t");
-            
-            #line 206 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 3 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
+            #line 202 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 5 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t");
             
-            #line 207 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 203 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (null == attributeValue.Value || attributeValue.Value.Value) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t<li style=\"");
             
-            #line 208 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 204 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 209 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 205 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(attributeValue.Attribute.Name));
             
             #line default
             #line hidden
             
-            #line 209 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 205 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (null == attributeValue.Value) { 
             
             #line default
             #line hidden
             
-            #line 209 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 205 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(": ?"));
             
             #line default
             #line hidden
             
-            #line 209 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 205 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
-            #line 211 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 207 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t");
+            
+            #line 208 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td style=\"");
+            
+            #line 211 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellStyles));
+            
+            #line default
+            #line hidden
+            
+            #line 211 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(bodyCellBorderStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\"><!-- Info -->\r\n\t\t\t\t\t\t<ul style=\"");
             
             #line 212 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- } 
+            this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t");
+            this.Write("\">\r\n\t\t\t\t\t\t");
             
             #line 213 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 4 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
+ foreach (var attributeValue in appointment.Attributes.Where(attributeValue => new[] { 3 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
             
             #line default
             #line hidden
@@ -1180,37 +1180,97 @@ namespace PsychologicalServices.Models.Schedule
             
             #line default
             #line hidden
-            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t\t");
+            this.Write("\t\t\t\t\t\t");
+            
+            #line 220 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 4 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId))) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t");
+            
+            #line 221 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (null == attributeValue.Value || attributeValue.Value.Value) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t<li style=\"");
+            
+            #line 222 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
             #line 223 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(attributeValue.Attribute.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 223 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ if (null == attributeValue.Value) { 
+            
+            #line default
+            #line hidden
+            
+            #line 223 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(": ?"));
+            
+            #line default
+            #line hidden
+            
+            #line 223 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
+            
+            #line 225 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t");
+            
+            #line 226 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</tr>\r\n\t\t\t\t\t");
+            
+            #line 230 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  if (hasNotes) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\t<tr class=\"notes\">\r\n\t\t\t\t\t\t\t<td style=\"");
             
-            #line 225 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 232 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(noteCellStyles));
             
             #line default
             #line hidden
             this.Write("\">&nbsp;</td>\r\n\t\t\t\t\t\t\t<td colspan=\"6\" style=\"");
             
-            #line 226 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 233 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(noteCellStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t<ul style=\"");
             
-            #line 227 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 234 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(listStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t");
             
-            #line 228 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 235 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  foreach (var note in appointment.Assessment.AssessmentNotes) {
 									if (note.ShowOnCalendar) {
 								
@@ -1219,21 +1279,21 @@ namespace PsychologicalServices.Models.Schedule
             #line hidden
             this.Write("\t\t\t\t\t\t\t\t\t<li style=\"");
             
-            #line 231 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 238 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(smallListItemStyles));
             
             #line default
             #line hidden
             this.Write("\">\r\n\t\t\t\t\t\t\t\t\t\t");
             
-            #line 232 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 239 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(note.Note.NoteText));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t\t");
             
-            #line 234 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 241 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
 	}
 								} 
             
@@ -1241,28 +1301,28 @@ namespace PsychologicalServices.Models.Schedule
             #line hidden
             this.Write("\t\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t");
             
-            #line 239 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 246 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t");
             
-            #line 240 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 247 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("<!-- appointment -->\r\n\t\t\t");
             
-            #line 241 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 248 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("<!-- day -->\r\n\t\t\t</tbody>\r\n\t\t</table>\r\n\r\n\t");
             
-            #line 245 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
+            #line 252 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
  } 
             
             #line default
