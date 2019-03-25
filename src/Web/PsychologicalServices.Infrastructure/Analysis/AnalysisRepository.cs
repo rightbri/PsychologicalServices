@@ -267,5 +267,29 @@ namespace PsychologicalServices.Infrastructure.Analysis
 
             return data;
         }
+
+        public IEnumerable<NonAbCompletionData> GetNonAbCompletionData(NonAbCompletionDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.NonAbcompletionData(criteria.CompanyId, criteria.Months, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new NonAbCompletionData
+                        {
+                            AssessmentId = Convert.ToInt32(row["AssessmentId"]),
+                            ReferralType = Convert.ToString(row["ReferralType"]),
+                            AppointmentTime = DateTimeOffset.Parse(Convert.ToString(row["AppointmentTime"])),
+                            AppointmentYear = Convert.ToInt32(row["AppointmentYear"]),
+                            AppointmentMonth = Convert.ToInt32(row["AppointmentMonth"]),
+                            AppointmentStatus = Convert.ToString(row["AppointmentStatus"]),
+                            ClaimantFirstName = Convert.ToString(row["FirstName"]),
+                            ClaimantLastName = Convert.ToString(row["LastName"])
+                        })
+                    .ToList();
+            }
+        }
     }
 }

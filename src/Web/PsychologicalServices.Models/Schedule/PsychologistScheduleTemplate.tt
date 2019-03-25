@@ -91,6 +91,13 @@
 							<li style="<#= smallListItemStyles #>">
 								<#= appointment.AppointmentStatus.Name #>
 							</li>
+							<# foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 13 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId)).OrderBy(attributeValue => attributeValue.Attribute.Name)) { #>
+								<# if (null == attributeValue.Value || attributeValue.Value.Value) { #>
+								<li style="<#= smallListItemStyles #>">
+									<#= attributeValue.Attribute.Name #><# if (null == attributeValue.Value) { #><#= ": ?" #><# } #>
+								</li>
+								<# } #>
+							<# } #>
 							<# if (appointment.Assessment.IsReassessment) { #>
 							<li style="<#= smallListItemStyles #> color: orange;">
 								Re-assessment

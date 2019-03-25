@@ -585,6 +585,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("CompanyId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PsychologistId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("RecipientName", fieldHashtable);
 		}
 		#endregion
 
@@ -952,6 +954,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.Int32>)GetValue((int)RawTestDataFieldIndex.PsychologistId, false); }
 			set	{ SetValue((int)RawTestDataFieldIndex.PsychologistId, value); }
+		}
+
+		/// <summary> The RecipientName property of the Entity RawTestData<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "RawTestDatas"."RecipientName"<br/>
+		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 100<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String RecipientName
+		{
+			get { return (System.String)GetValue((int)RawTestDataFieldIndex.RecipientName, true); }
+			set	{ SetValue((int)RawTestDataFieldIndex.RecipientName, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineGroupRawTestDataEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

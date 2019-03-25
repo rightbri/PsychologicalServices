@@ -1816,6 +1816,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.PsychologistId);}
 		}
+		/// <summary>Creates a new RawTestDataEntity.RecipientName field instance</summary>
+		public static EntityField2 RecipientName
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(RawTestDataFieldIndex.RecipientName);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity RawTestDataStatusEntity</summary>

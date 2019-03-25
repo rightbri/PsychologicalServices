@@ -76,5 +76,12 @@ namespace PsychologicalServices.Models.Analysis
 
             return data;
         }
+
+        public IEnumerable<NonAbCompletionData> GetNonAbCompletionData(NonAbCompletionDataSearchCriteria criteria)
+        {
+            var data = _analysisRepository.GetNonAbCompletionData(criteria);
+
+            return data;
+        }
     }
 }

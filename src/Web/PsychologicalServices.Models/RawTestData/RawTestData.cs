@@ -29,6 +29,8 @@ namespace PsychologicalServices.Models.RawTestData
 
         public DateTimeOffset? DataSentDate { get; set; }
 
+        public string RecipientName { get; set; }
+
         public bool IsNew()
         {
             return RawTestDataId == 0;

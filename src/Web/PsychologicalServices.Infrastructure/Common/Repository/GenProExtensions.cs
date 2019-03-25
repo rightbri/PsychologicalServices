@@ -43,6 +43,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     RequestReceivedDate = rawTestData.RequestReceivedDate,
                     SignedAuthorizationReceivedDate = rawTestData.SignedAuthorizationReceivedDate,
                     DataSentDate = rawTestData.DataSentDate,
+                    RecipientName = rawTestData.RecipientName,
                     Company = rawTestData.Company.ToCompany(),
                     Psychologist = rawTestData.Psychologist.ToUser(),
                     Note = rawTestData.Note.ToNote()

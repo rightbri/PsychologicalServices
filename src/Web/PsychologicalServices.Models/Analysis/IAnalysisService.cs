@@ -16,5 +16,7 @@ namespace PsychologicalServices.Models.Analysis
         IEnumerable<AssessmentTypeCount> GetAssessmentTypeCountsForYear(AssessmentTypeCountSearchCriteria criteria);
 
         CredibilityData GetCredibilityData(CredibilityDataSearchCriteria criteria);
+
+        IEnumerable<NonAbCompletionData> GetNonAbCompletionData(NonAbCompletionDataSearchCriteria criteria);
     }
 }

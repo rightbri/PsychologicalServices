@@ -9,6 +9,7 @@
     [NoteId]                          INT                NULL,
     [CompanyId]                       INT                NOT NULL,
     [PsychologistId]                  INT                NULL,
+    [RecipientName]                   VARCHAR (100)      NULL,
     CONSTRAINT [PK_RawTestDatas] PRIMARY KEY CLUSTERED ([RawTestDataId] ASC),
     CONSTRAINT [FK_RawTestDatas_Claimants] FOREIGN KEY ([ClaimantId]) REFERENCES [dbo].[Claimants] ([ClaimantId]),
     CONSTRAINT [FK_RawTestDatas_Companies] FOREIGN KEY ([CompanyId]) REFERENCES [dbo].[Companies] ([CompanyId]),
@@ -17,4 +18,6 @@
     CONSTRAINT [FK_RawTestDatas_ReferralSources] FOREIGN KEY ([BillToReferralSourceId]) REFERENCES [dbo].[ReferralSources] ([ReferralSourceId]),
     CONSTRAINT [FK_RawTestDatas_Users] FOREIGN KEY ([PsychologistId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 

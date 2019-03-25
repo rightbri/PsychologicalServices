@@ -660,6 +660,7 @@
           <Field Name="PsychologistId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="9" />
           <Field Name="RawTestDataId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
           <Field Name="RawTestDataStatusId" Type="int" IsOptional="true" Precision="10" FieldIndex="6" />
+          <Field Name="RecipientName" Type="string" IsOptional="true" MaxLength="100" FieldIndex="10" />
           <Field Name="RequestReceivedDate" Type="datetimeoffset" IsOptional="true" FieldIndex="3" />
           <Field Name="SignedAuthorizationReceivedDate" Type="datetimeoffset" IsOptional="true" FieldIndex="4" />
         </Fields>
@@ -1646,6 +1647,12 @@
         <Parameter Name="PayableToId" Type="int" IsOptional="true" FieldIndex="7" />
       </Parameters>
     </SPCallDefinition>
+    <SPCallDefinition Name="NonAbcompletionData" ObjectID="ffd9dc9f-5537-4136-9bd8-d57fe3eac9b5">
+      <Parameters>
+        <Parameter Name="CompanyId" Type="int" Precision="10" />
+        <Parameter Name="Months" Type="int" IsOptional="true" Precision="10" />
+      </Parameters>
+    </SPCallDefinition>
     <SPCallDefinition Name="OutstandingReports" ObjectID="95e8f588-44cc-4b2a-8d59-66a28d295466">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" FieldIndex="0" />
@@ -1670,7 +1677,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-11-25T21:58:57.7881817Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-03-24T22:22:16.1245743Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2259,6 +2266,7 @@
                     <Field Name="NoteId" Ordinal="8" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="CompanyId" Ordinal="9" DbType="8" Precision="10" />
                     <Field Name="PsychologistId" Ordinal="10" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="RecipientName" Ordinal="11" IsOptional="true" DbType="24" Length="100" />
                   </Fields>
                 </Table>
                 <Table Name="RawTestDataStatuses">
@@ -2487,7 +2495,7 @@
                     </Resultset>
                   </Resultsets>
                 </StoredProcedure>
-                <StoredProcedure Name="CredibilityData" NumberOfResultsets="1">
+                <StoredProcedure Name="CredibilityData" NumberOfResultsets="4">
                   <Parameters>
                     <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
                   </Parameters>
@@ -2510,6 +2518,47 @@
                         <Field Name="PsychologistFoundInFavorOfClaimantYes" Ordinal="14" DbType="8" Precision="10" />
                         <Field Name="PsychologistFoundInFavorOfClaimantNo" Ordinal="15" DbType="8" Precision="10" />
                         <Field Name="PsychologistFoundInFavorOfClaimantUnknown" Ordinal="16" DbType="8" Precision="10" />
+                      </Fields>
+                    </Resultset>
+                    <Resultset Name="Resultset2">
+                      <Fields>
+                        <Field Name="Type" Ordinal="1" DbType="24" Length="14" />
+                        <Field Name="Year" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="CredibilityTotal" Ordinal="3" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="Credible" Ordinal="4" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="NotCredible" Ordinal="5" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="Questionable" Ordinal="6" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="CredibleRate" Ordinal="7" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                        <Field Name="NotCredibleRate" Ordinal="8" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                        <Field Name="QuestionableRate" Ordinal="9" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                      </Fields>
+                    </Resultset>
+                    <Resultset Name="Resultset3">
+                      <Fields>
+                        <Field Name="Type" Ordinal="1" DbType="24" Length="14" />
+                        <Field Name="Year" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="Count" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="WithReader" Ordinal="4" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="WithoutReader" Ordinal="5" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="WithTranslator" Ordinal="6" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="WithoutTranslator" Ordinal="7" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="WithReaderRate" Ordinal="8" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                        <Field Name="WithoutReaderRate" Ordinal="9" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                        <Field Name="WithTranslatorRate" Ordinal="10" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                        <Field Name="WithoutTranslatorRate" Ordinal="11" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                      </Fields>
+                    </Resultset>
+                    <Resultset Name="Resultset4">
+                      <Fields>
+                        <Field Name="Type" Ordinal="1" DbType="24" Length="14" />
+                        <Field Name="Year" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="Psychometrist" Ordinal="3" IsOptional="true" DbType="24" Length="200" />
+                        <Field Name="Credible" Ordinal="4" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="NotCredible" Ordinal="5" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="Questionable" Ordinal="6" IsOptional="true" DbType="5" Precision="38" Scale="2" />
+                        <Field Name="CredibleRate" Ordinal="7" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                        <Field Name="NotCredibleRate" Ordinal="8" IsOptional="true" DbType="5" Precision="38" Scale="6" />
+                        <Field Name="QuestionableRate" Ordinal="9" IsOptional="true" DbType="5" Precision="38" Scale="6" />
                       </Fields>
                     </Resultset>
                   </Resultsets>
@@ -2599,6 +2648,26 @@
                     <Resultset Name="Resultset1">
                       <Fields>
                         <Field Name="InvoiceId" Ordinal="1" DbType="8" Precision="10" />
+                      </Fields>
+                    </Resultset>
+                  </Resultsets>
+                </StoredProcedure>
+                <StoredProcedure Name="NonABCompletionData" NumberOfResultsets="1">
+                  <Parameters>
+                    <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                    <Parameter Name="@months" Direction="1" Ordinal="2" DbType="8" Precision="10" />
+                  </Parameters>
+                  <Resultsets>
+                    <Resultset Name="Resultset1">
+                      <Fields>
+                        <Field Name="AssessmentId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="ReferralType" Ordinal="2" DbType="12" Length="50" />
+                        <Field Name="AppointmentTime" Ordinal="3" DbType="30" />
+                        <Field Name="AppointmentYear" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="AppointmentMonth" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="AppointmentStatus" Ordinal="6" DbType="12" Length="50" />
+                        <Field Name="FirstName" Ordinal="7" DbType="12" Length="50" />
+                        <Field Name="LastName" Ordinal="8" DbType="12" Length="50" />
                       </Fields>
                     </Resultset>
                   </Resultsets>
@@ -3795,6 +3864,7 @@
             <FieldMapping FieldName="PsychologistId" TargetFieldName="PsychologistId" />
             <FieldMapping FieldName="RawTestDataId" TargetFieldName="RawTestDataId" SequenceToUse="SCOPE_IDENTITY()" />
             <FieldMapping FieldName="RawTestDataStatusId" TargetFieldName="RawTestDataStatusId" />
+            <FieldMapping FieldName="RecipientName" TargetFieldName="RecipientName" />
             <FieldMapping FieldName="RequestReceivedDate" TargetFieldName="RequestReceivedDate" />
             <FieldMapping FieldName="SignedAuthorizationReceivedDate" TargetFieldName="SignedAuthorizationReceivedDate" />
           </FieldMappings>
@@ -3990,6 +4060,12 @@
             <FieldMapping FieldName="NeedsRefresh" TargetFieldName="@NeedsRefresh" />
             <FieldMapping FieldName="NeedsToBeSentToReferralSource" TargetFieldName="@NeedsToBeSentToReferralSource" />
             <FieldMapping FieldName="PayableToId" TargetFieldName="@PayableToId" />
+          </FieldMappings>
+        </SPCallMapping>
+        <SPCallMapping SPCallName=":NonAbcompletionData" TargetName="PsychologicalServices:dbo:NonABCompletionData">
+          <FieldMappings>
+            <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
+            <FieldMapping FieldName="Months" TargetFieldName="@months" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":OutstandingReports" TargetName="PsychologicalServices:dbo:OutstandingReports">
