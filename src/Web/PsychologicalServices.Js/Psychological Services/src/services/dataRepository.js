@@ -199,6 +199,10 @@ export class DataRepository {
 		return this.getManyBasic('diagnosisfoundresponse', true);
 	}
 
+	searchNonAbCompletionData(criteria) {
+		return this.searchBasic(criteria, 'nonabcompletiondata');
+	}
+
 	searchBookingData(criteria) {
 		return this.searchBasic(criteria, 'bookingdata');
 	}

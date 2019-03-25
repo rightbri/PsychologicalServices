@@ -70,6 +70,7 @@
     <Compile Include="Analysis\CancellationDataSearchCriteria.cs" />
     <Compile Include="Analysis\CredibilityByPsychometristSummary.cs" />
     <Compile Include="Analysis\CredibilityData.cs" />
+    <Compile Include="Analysis\NonAbCompletionDataSearchCriteria.cs" />
     <Compile Include="Analysis\CredibilityDetail.cs" />
     <Compile Include="Analysis\CredibilityDataSearchCriteria.cs" />
     <Compile Include="Analysis\IAnalysisRepository.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Analysis\CompletionDataSearchCriteria.cs" />
     <Compile Include="Analysis\AssessmentTypeCountDataSearchCriteria.cs" />
     <Compile Include="Analysis\CredibilityByYearSummary.cs" />
+    <Compile Include="Analysis\NonAbCompletionData.cs" />
     <Compile Include="Analysis\NotCredibleByYearSummary.cs" />
     <Compile Include="Arbitrations\ArbitrationStatus.cs" />
     <Compile Include="Assessments\AssessmentSearchResult.cs" />

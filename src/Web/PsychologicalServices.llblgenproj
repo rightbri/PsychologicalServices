@@ -1650,7 +1650,7 @@
     <SPCallDefinition Name="NonAbcompletionData" ObjectID="ffd9dc9f-5537-4136-9bd8-d57fe3eac9b5">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" Precision="10" />
-        <Parameter Name="Months" Type="int" Precision="10" />
+        <Parameter Name="Months" Type="int" IsOptional="true" Precision="10" />
       </Parameters>
     </SPCallDefinition>
     <SPCallDefinition Name="OutstandingReports" ObjectID="95e8f588-44cc-4b2a-8d59-66a28d295466">

@@ -1,0 +1,59 @@
+<template>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Non AB Completion Data</legend>
+
+        <form class="uk-form-stacked">
+            
+            <div class="uk-margin">
+                <label class="uk-form-label" for="months">Past X Months (not counting the current month) (YTD if blank)</label>
+                <div class="uk-form-controls">
+                    <input type="number" min="0" class="uk-input" value.bind="searchMonths" />
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div if.bind="nonAbCompletionData">
+    <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Referral Type</th>
+                <th>Appointment Status</th>
+                <th>Claimant</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="completion of nonAbCompletionData | sortArray:[{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                <td>${completion.appointmentYear}</td>
+                <td>${completion.appointmentMonth}</td>
+                <td>${completion.referralType}</td>
+                <td>${completion.appointmentStatus}</td>
+                <td>${completion.claimantFirstName} ${completion.claimantLastName}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</template>

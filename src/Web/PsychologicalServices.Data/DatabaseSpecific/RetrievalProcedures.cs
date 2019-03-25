@@ -491,7 +491,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="months">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable NonAbcompletionData(System.Int32 companyId, System.Int32 months)
+		public static DataTable NonAbcompletionData(System.Int32 companyId, Nullable<System.Int32> months)
 		{
 			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
 			{
@@ -504,7 +504,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="months">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable NonAbcompletionData(System.Int32 companyId, System.Int32 months, IDataAccessCore dataAccessProvider)
+		public static DataTable NonAbcompletionData(System.Int32 companyId, Nullable<System.Int32> months, IDataAccessCore dataAccessProvider)
 		{
 			using(StoredProcedureCall call = CreateNonAbcompletionDataCall(dataAccessProvider, companyId, months))
 			{
@@ -517,7 +517,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="companyId">Input parameter of stored procedure</param>
 		/// <param name="months">Input parameter of stored procedure</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetNonAbcompletionDataCallAsQuery(System.Int32 companyId, System.Int32 months)
+		public static IRetrievalQuery GetNonAbcompletionDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> months)
 		{
 			using(var dataAccessProvider = new DataAccessAdapter())
 			{
@@ -530,7 +530,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="months">Input parameter of stored procedure</param>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetNonAbcompletionDataCallAsQuery(System.Int32 companyId, System.Int32 months, IDataAccessCore dataAccessProvider)
+		public static IRetrievalQuery GetNonAbcompletionDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> months, IDataAccessCore dataAccessProvider)
 		{
 			return CreateNonAbcompletionDataCall(dataAccessProvider, companyId, months).ToRetrievalQuery();
 		}
@@ -716,7 +716,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="companyId">Input parameter</param>
 		/// <param name="months">Input parameter</param>
 		/// <returns>Ready to use StoredProcedureCall object</returns>
-		private static StoredProcedureCall CreateNonAbcompletionDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, System.Int32 months)
+		private static StoredProcedureCall CreateNonAbcompletionDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.Int32> months)
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[NonABCompletionData]", "NonAbcompletionData")
 							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
