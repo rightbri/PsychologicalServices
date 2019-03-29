@@ -16,6 +16,7 @@ BEGIN
 
 	SELECT 
 	ass.AssessmentId
+	,asst.[Name] AS AssessmentType
 	,rt.[Name] AS ReferralType
 	,app.AppointmentTime
 	,DATEPART(YEAR, app.AppointmentTime) AS AppointmentYear
@@ -24,6 +25,7 @@ BEGIN
 	,cl.FirstName
 	,cl.LastName
 	FROM dbo.Assessments ass
+	INNER JOIN dbo.AssessmentTypes asst ON ass.AssessmentTypeId = asst.AssessmentTypeId
 	INNER JOIN dbo.ReferralTypes rt ON ass.ReferralTypeId = rt.ReferralTypeId
 	INNER JOIN dbo.Appointments app ON ass.AssessmentId = app.AssessmentId 
 	INNER JOIN dbo.AppointmentStatuses apps ON app.AppointmentStatusId = apps.AppointmentStatusId

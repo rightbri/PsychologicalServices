@@ -280,6 +280,7 @@ namespace PsychologicalServices.Infrastructure.Analysis
                         new NonAbCompletionData
                         {
                             AssessmentId = Convert.ToInt32(row["AssessmentId"]),
+                            AssessmentType = Convert.ToString(row["AssessmentType"]),
                             ReferralType = Convert.ToString(row["ReferralType"]),
                             AppointmentTime = DateTimeOffset.Parse(Convert.ToString(row["AppointmentTime"])),
                             AppointmentYear = Convert.ToInt32(row["AppointmentYear"]),

@@ -39,6 +39,7 @@
             <tr>
                 <th>Year</th>
                 <th>Month</th>
+                <th>Assessment Type</th>
                 <th>Referral Type</th>
                 <th>Appointment Status</th>
                 <th>Claimant</th>
@@ -48,6 +49,7 @@
             <tr repeat.for="completion of nonAbCompletionData | sortArray:[{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
                 <td>${completion.appointmentYear}</td>
                 <td>${completion.appointmentMonth}</td>
+                <td>${completion.assessmentType}</td>
                 <td>${completion.referralType}</td>
                 <td>${completion.appointmentStatus}</td>
                 <td>${completion.claimantFirstName} ${completion.claimantLastName}</td>
