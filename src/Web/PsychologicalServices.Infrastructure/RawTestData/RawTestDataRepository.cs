@@ -83,9 +83,8 @@ namespace PsychologicalServices.Infrastructure.RawTestData
 
                 if (null != criteria.RawTestDataStatusIds && criteria.RawTestDataStatusIds.Any())
                 {
-                    rawTestDatas = rawTestDatas.Where(rawTestData =>
-                        rawTestData.RawTestDataStatusId == null ||
-                        criteria.RawTestDataStatusIds.Contains(rawTestData.RawTestDataStatusId.Value)
+                    rawTestDatas = rawTestDatas
+                        .Where(rawTestData => criteria.RawTestDataStatusIds.Contains(rawTestData.RawTestDataStatusId.Value)
                     );
                 }
 

@@ -33,7 +33,7 @@
                     <label class="uk-form-label">Statuses</label>
                     <div class="uk-form-controls">
                         <label class="uk-form-label" repeat.for="status of rawTestDataStatuses">
-                            <input class="uk-checkbox" type="checkbox" model.bind="status.rawTestDataStatusId" checked.bind="searchStatusIds">&nbsp;${status.name}
+                            <input class="uk-checkbox" type="checkbox" value.bind="status.rawTestDataStatusId" checked.bind="searchStatusIds">&nbsp;${status.name}
                         </label>
                     </div>
                 </div>

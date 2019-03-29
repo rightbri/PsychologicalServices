@@ -10,6 +10,8 @@ export class RawTestData {
         this.context = context;
 
         this.rawTestDataStatuses = [];
+
+        this.searchStatusIds = [];
     }
 
     activate() {
