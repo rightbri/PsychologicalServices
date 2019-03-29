@@ -6,6 +6,8 @@ namespace PsychologicalServices.Models.Analysis
     {
         public int AssessmentId { get; set; }
 
+        public string AssessmentType { get; set; }
+
 	    public string ReferralType { get; set; }
 
 	    public DateTimeOffset AppointmentTime { get; set; }
