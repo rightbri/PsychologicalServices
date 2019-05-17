@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PsychologicalServices.Models.Schedule
 {
@@ -9,5 +10,7 @@ namespace PsychologicalServices.Models.Schedule
         public DateTimeOffset ToDate { get; set; }
 
         public int PsychologistId { get; set; }
+
+        public IEnumerable<int> AppointmentStatusIds { get; set; }
     }
 }

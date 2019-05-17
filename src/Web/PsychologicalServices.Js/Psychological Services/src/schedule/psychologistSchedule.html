@@ -1,5 +1,6 @@
 <template>
 	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
 	<require from="common/date-mask"></require>
 	
 <div class="uk-container">
@@ -20,6 +21,15 @@
 				<label for="toDate" class="uk-form-label">To</label>
 				<div class="uk-form-controls">
 					<input id="toDate" type="text" class="uk-input uk-form-width-medium" value.bind="toDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" date-mask.bind="config.datemaskOptions" />
+				</div>
+			</div>
+
+			<div class="uk-width-1-2@s">
+				<label class="uk-form-label">Appointment Statuses</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="appointmentStatus of appointmentStatuses | sortArray:{ property: 'sort', direction: 'asc' }">
+						<input class="uk-checkbox" type="checkbox" model.bind="appointmentStatus.appointmentStatusId" checked.bind="searchAppointmentStatuses">&nbsp;${appointmentStatus.name}
+					</label>
 				</div>
 			</div>
 

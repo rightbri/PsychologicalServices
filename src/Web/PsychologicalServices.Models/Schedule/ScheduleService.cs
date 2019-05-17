@@ -160,16 +160,7 @@ namespace PsychologicalServices.Models.Schedule
                 PsychologistId = parameters.PsychologistId,
                 AppointmentTimeStart = result.FromDate,
                 AppointmentTimeEnd = result.ToDate,
-                AppointmentStatusIds = new[]
-                {
-                    AppointmentStatus.Complete,
-                    AppointmentStatus.Confirmed,
-                    AppointmentStatus.Incomplete,
-                    AppointmentStatus.LateCancellation,
-                    AppointmentStatus.NoShow,
-                    AppointmentStatus.OnHold,
-                    AppointmentStatus.Showed,
-                },
+                AppointmentStatusIds = parameters.AppointmentStatusIds,
             };
 
             var arbitrationSearchCriteria = new ArbitrationSearchCriteria

@@ -15,10 +15,12 @@ export class PsychologistSchedule {
 		this.notifier = notifier;
 		
 		this.psychologists = [];
+		this.appointmentStatuses = [];
 		
 		this.searchFromDate = new Date();
 		this.searchToDate = this.dateService.addDays(this.searchFromDate, 7);
-		
+		this.searchAppointmentStatuses = [];
+
 		this.fromDate = this.searchFromDate;
 		this.toDate = this.searchToDate;
 	}
@@ -28,9 +30,8 @@ export class PsychologistSchedule {
 			this.user = user;
 			
 			return Promise.all([
-				this.dataRepository.getPsychologists(this.user.company.companyId).then(psychologists => {
-					this.psychologists = psychologists;
-				})
+				this.dataRepository.getPsychologists(this.user.company.companyId).then(data => this.psychologists = data),
+				this.dataRepository.getAppointmentStatuses().then(data => this.appointmentStatuses = data)
 			]);
 		});
 	}
@@ -47,6 +48,7 @@ export class PsychologistSchedule {
 			'psychologistId': this.psychologists[0].userId,
 			'fromDate': this.fromDate,
 			'toDate': this.toDate,
+			'appointmentStatusIds': this.searchAppointmentStatuses,
 			'defaultFilename': filename
 		})
 		.then(() => this.notifier.info('Schedule downloaded'))
