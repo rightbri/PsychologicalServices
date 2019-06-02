@@ -1645,6 +1645,7 @@
         <Parameter Name="NeedsRefresh" Type="bool" IsOptional="true" FieldIndex="9" />
         <Parameter Name="NeedsToBeSentToReferralSource" Type="bool" IsOptional="true" FieldIndex="10" />
         <Parameter Name="PayableToId" Type="int" IsOptional="true" FieldIndex="7" />
+        <Parameter Name="ReferralSourceId" Type="int" IsOptional="true" Precision="10" FieldIndex="11" />
       </Parameters>
     </SPCallDefinition>
     <SPCallDefinition Name="NonAbcompletionData" ObjectID="ffd9dc9f-5537-4136-9bd8-d57fe3eac9b5">
@@ -1677,7 +1678,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-03-24T22:22:16.1245743Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-06-02T14:24:15.5922383Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2641,8 +2642,9 @@
                     <Parameter Name="@InvoiceTypeId" Direction="1" Ordinal="7" DbType="8" Precision="10" />
                     <Parameter Name="@PayableToId" Direction="1" Ordinal="8" DbType="8" Precision="10" />
                     <Parameter Name="@ClaimantId" Direction="1" Ordinal="9" DbType="8" Precision="10" />
-                    <Parameter Name="@NeedsRefresh" Direction="1" Ordinal="10" DbType="2" />
-                    <Parameter Name="@NeedsToBeSentToReferralSource" Direction="1" Ordinal="11" DbType="2" />
+                    <Parameter Name="@ReferralSourceId" Direction="1" Ordinal="10" DbType="8" Precision="10" />
+                    <Parameter Name="@NeedsRefresh" Direction="1" Ordinal="11" DbType="2" />
+                    <Parameter Name="@NeedsToBeSentToReferralSource" Direction="1" Ordinal="12" DbType="2" />
                   </Parameters>
                   <Resultsets>
                     <Resultset Name="Resultset1">
@@ -2661,13 +2663,14 @@
                     <Resultset Name="Resultset1">
                       <Fields>
                         <Field Name="AssessmentId" Ordinal="1" DbType="8" Precision="10" />
-                        <Field Name="ReferralType" Ordinal="2" DbType="12" Length="50" />
-                        <Field Name="AppointmentTime" Ordinal="3" DbType="30" />
-                        <Field Name="AppointmentYear" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="AppointmentMonth" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="AppointmentStatus" Ordinal="6" DbType="12" Length="50" />
-                        <Field Name="FirstName" Ordinal="7" DbType="12" Length="50" />
-                        <Field Name="LastName" Ordinal="8" DbType="12" Length="50" />
+                        <Field Name="AssessmentType" Ordinal="2" DbType="12" Length="50" />
+                        <Field Name="ReferralType" Ordinal="3" DbType="12" Length="50" />
+                        <Field Name="AppointmentTime" Ordinal="4" DbType="30" />
+                        <Field Name="AppointmentYear" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="AppointmentMonth" Ordinal="6" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="AppointmentStatus" Ordinal="7" DbType="12" Length="50" />
+                        <Field Name="FirstName" Ordinal="8" DbType="12" Length="50" />
+                        <Field Name="LastName" Ordinal="9" DbType="12" Length="50" />
                       </Fields>
                     </Resultset>
                   </Resultsets>
@@ -4060,6 +4063,7 @@
             <FieldMapping FieldName="NeedsRefresh" TargetFieldName="@NeedsRefresh" />
             <FieldMapping FieldName="NeedsToBeSentToReferralSource" TargetFieldName="@NeedsToBeSentToReferralSource" />
             <FieldMapping FieldName="PayableToId" TargetFieldName="@PayableToId" />
+            <FieldMapping FieldName="ReferralSourceId" TargetFieldName="@ReferralSourceId" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":NonAbcompletionData" TargetName="PsychologicalServices:dbo:NonABCompletionData">

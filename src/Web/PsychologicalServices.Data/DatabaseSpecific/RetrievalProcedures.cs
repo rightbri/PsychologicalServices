@@ -405,16 +405,17 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceTypeId">Input parameter. </param>
 		/// <param name="payableToId">Input parameter. </param>
 		/// <param name="claimantId">Input parameter. </param>
+		/// <param name="referralSourceId">Input parameter. </param>
 		/// <param name="needsRefresh">Input parameter. </param>
 		/// <param name="needsToBeSentToReferralSource">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, Nullable<System.Boolean> needsToBeSentToReferralSource 
-)
+		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Int32> referralSourceId, Nullable<System.Boolean> needsRefresh,  
+Nullable<System.Boolean> needsToBeSentToReferralSource)
 		{
 			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
 			{
-				return InvoiceSearch(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, needsRefresh, needsToBeSentToReferralSource 
-, dataAccessProvider);
+				return InvoiceSearch(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, referralSourceId, needsRefresh,  
+needsToBeSentToReferralSource, dataAccessProvider);
 			}
 		}
 
@@ -429,14 +430,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceTypeId">Input parameter. </param>
 		/// <param name="payableToId">Input parameter. </param>
 		/// <param name="claimantId">Input parameter. </param>
+		/// <param name="referralSourceId">Input parameter. </param>
 		/// <param name="needsRefresh">Input parameter. </param>
 		/// <param name="needsToBeSentToReferralSource">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, Nullable<System.Boolean> needsToBeSentToReferralSource 
-, IDataAccessCore dataAccessProvider)
+		public static DataTable InvoiceSearch(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Int32> referralSourceId, Nullable<System.Boolean> needsRefresh,  
+Nullable<System.Boolean> needsToBeSentToReferralSource, IDataAccessCore dataAccessProvider)
 		{
-			using(StoredProcedureCall call = CreateInvoiceSearchCall(dataAccessProvider, companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, needsRefresh, needsToBeSentToReferralSource 
-))
+			using(StoredProcedureCall call = CreateInvoiceSearchCall(dataAccessProvider, companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, referralSourceId, needsRefresh,  
+needsToBeSentToReferralSource))
 			{
 				DataTable toReturn = call.FillDataTable();
 				return toReturn;
@@ -453,16 +455,17 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
 		/// <param name="payableToId">Input parameter of stored procedure</param>
 		/// <param name="claimantId">Input parameter of stored procedure</param>
+		/// <param name="referralSourceId">Input parameter of stored procedure</param>
 		/// <param name="needsRefresh">Input parameter of stored procedure</param>
 		/// <param name="needsToBeSentToReferralSource">Input parameter of stored procedure</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetInvoiceSearchCallAsQuery(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, Nullable<System.Boolean> needsToBeSentToReferralSource 
-)
+		public static IRetrievalQuery GetInvoiceSearchCallAsQuery(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Int32> referralSourceId, Nullable<System.Boolean> needsRefresh,  
+Nullable<System.Boolean> needsToBeSentToReferralSource)
 		{
 			using(var dataAccessProvider = new DataAccessAdapter())
 			{
-				return GetInvoiceSearchCallAsQuery(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, needsRefresh, needsToBeSentToReferralSource 
-, dataAccessProvider);
+				return GetInvoiceSearchCallAsQuery(companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, referralSourceId, needsRefresh,  
+needsToBeSentToReferralSource, dataAccessProvider);
 			}
 		}
 
@@ -476,15 +479,16 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
 		/// <param name="payableToId">Input parameter of stored procedure</param>
 		/// <param name="claimantId">Input parameter of stored procedure</param>
+		/// <param name="referralSourceId">Input parameter of stored procedure</param>
 		/// <param name="needsRefresh">Input parameter of stored procedure</param>
 		/// <param name="needsToBeSentToReferralSource">Input parameter of stored procedure</param>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetInvoiceSearchCallAsQuery(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, Nullable<System.Boolean> needsToBeSentToReferralSource 
-, IDataAccessCore dataAccessProvider)
+		public static IRetrievalQuery GetInvoiceSearchCallAsQuery(System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Int32> referralSourceId, Nullable<System.Boolean> needsRefresh,  
+Nullable<System.Boolean> needsToBeSentToReferralSource, IDataAccessCore dataAccessProvider)
 		{
-			return CreateInvoiceSearchCall(dataAccessProvider, companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, needsRefresh, needsToBeSentToReferralSource 
-).ToRetrievalQuery();
+			return CreateInvoiceSearchCall(dataAccessProvider, companyId, appointmentId, identifier, invoiceDate, invoiceMonth, invoiceStatusId, invoiceTypeId, payableToId, claimantId, referralSourceId, needsRefresh,  
+needsToBeSentToReferralSource).ToRetrievalQuery();
 		}
 
 		/// <summary>Calls stored procedure 'NonABCompletionData'.<br/><br/></summary>
@@ -690,11 +694,12 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="invoiceTypeId">Input parameter</param>
 		/// <param name="payableToId">Input parameter</param>
 		/// <param name="claimantId">Input parameter</param>
+		/// <param name="referralSourceId">Input parameter</param>
 		/// <param name="needsRefresh">Input parameter</param>
 		/// <param name="needsToBeSentToReferralSource">Input parameter</param>
 		/// <returns>Ready to use StoredProcedureCall object</returns>
-		private static StoredProcedureCall CreateInvoiceSearchCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Boolean> needsRefresh, Nullable<System.Boolean> needsToBeSentToReferralSource 
-)
+		private static StoredProcedureCall CreateInvoiceSearchCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.Int32> appointmentId, System.String identifier, Nullable<System.DateTimeOffset> invoiceDate, Nullable<System.DateTimeOffset> invoiceMonth, Nullable<System.Int32> invoiceStatusId, Nullable<System.Int32> invoiceTypeId, Nullable<System.Int32> payableToId, Nullable<System.Int32> claimantId, Nullable<System.Int32> referralSourceId, Nullable<System.Boolean> needsRefresh,  
+Nullable<System.Boolean> needsToBeSentToReferralSource)
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[InvoiceSearch]", "InvoiceSearch")
 							.AddParameter("@CompanyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
@@ -706,9 +711,10 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 							.AddParameter("@InvoiceTypeId", "Int", 0, ParameterDirection.Input, true, 10, 0, invoiceTypeId)
 							.AddParameter("@PayableToId", "Int", 0, ParameterDirection.Input, true, 10, 0, payableToId)
 							.AddParameter("@ClaimantId", "Int", 0, ParameterDirection.Input, true, 10, 0, claimantId)
-							.AddParameter("@NeedsRefresh", "Bit", 0, ParameterDirection.Input, true, 0, 0, needsRefresh)
-							.AddParameter("@NeedsToBeSentToReferralSource", "Bit", 0, ParameterDirection.Input, true, 0, 0, needsToBeSentToReferralSource) 
-;
+							.AddParameter("@ReferralSourceId", "Int", 0, ParameterDirection.Input, true, 10, 0, referralSourceId)
+							.AddParameter("@NeedsRefresh", "Bit", 0, ParameterDirection.Input, true, 0, 0, needsRefresh) 
+
+							.AddParameter("@NeedsToBeSentToReferralSource", "Bit", 0, ParameterDirection.Input, true, 0, 0, needsToBeSentToReferralSource);
 		}
 
 		/// <summary>Creates the call object for the call 'NonAbcompletionData' to stored procedure 'NonABCompletionData'.</summary>

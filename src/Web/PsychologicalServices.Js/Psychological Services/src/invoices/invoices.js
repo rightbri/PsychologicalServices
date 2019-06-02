@@ -13,6 +13,7 @@ export class Invoices {
 		this.invoiceStatusMatcher = (a, b) => a && b && a.invoiceStatusId === b.invoiceStatusId;
 		this.invoiceTypeMatcher = (a, b) => a && b && a.invoiceTypeId === b.invoiceTypeId;
 		this.payableToMatcher = (a, b) => a && b && a.payableToId === b.payableToId;
+		this.referralSourceMatcher = (a, b) => a && b && a.referralSourceId === b.referralSourceId;
 	}
 	
 	activate() {
@@ -25,7 +26,8 @@ export class Invoices {
 					this.dataRepository.getInvoiceTypes().then(data => this.invoiceTypes = data),
 					this.dataRepository.searchUsers({
 						companyId: user.company.companyId
-					}).then(data => this.payableTos = data)
+					}).then(data => this.payableTos = data),
+					this.dataRepository.getReferralSources({}).then(data => this.referralSources = data)
 				]);
 		
 			});
@@ -39,6 +41,7 @@ export class Invoices {
 			'invoiceTypeId': this.searchType ? this.searchType.invoiceTypeId : null,
 			'payableToId': this.searchPayableTo ? this.searchPayableTo.userId : null,
 			'claimantId': this.searchClaimant ? this.searchClaimant.claimantId : null,
+			'referralSourceId': this.searchReferralSource ? this.searchReferralSource.referralSourceId : null,
 			'needsRefresh': this.searchNeedsRefresh ? true : null,
 			'needsToBeSentToReferralSource': this.searchNeedsToBeSentToReferralSource ? true : null,
 			'companyId': this.user.company.companyId

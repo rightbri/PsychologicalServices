@@ -25,5 +25,7 @@ namespace PsychologicalServices.Models.Invoices
         public bool? NeedsToBeSentToReferralSource { get; set; }
 
         public int CompanyId { get; set; }
+
+        public int? ReferralSourceId { get; set; }
     }
 }

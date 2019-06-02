@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Data;
+﻿
+using PsychologicalServices.Data;
 using PsychologicalServices.Data.DatabaseSpecific;
 using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
@@ -480,6 +481,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     criteria.InvoiceTypeId,
                     criteria.PayableToId,
                     criteria.ClaimantId,
+                    criteria.ReferralSourceId,
                     criteria.NeedsRefresh,
                     criteria.NeedsToBeSentToReferralSource,
                     (DataAccessAdapter)adapter

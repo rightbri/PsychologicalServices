@@ -77,6 +77,18 @@
 					${searchClaimant.firstName} ${searchClaimant.lastName}
 				</p>
 			</div>
+			
+			<div class="uk-margin">
+				<label class="uk-form-label" for="searchReferralSource">Referral Source</label>
+				<div class="uk-form-controls">
+					<select id="searchReferralSource" class="uk-select" value.bind="searchReferralSource" matcher.bind="referralSourceMatcher">
+						<option></option>
+						<option repeat.for="referralSource of referralSources | sortArray:{ 'property': 'name', 'direction': 'asc' }" model.bind="referralSource">
+							${referralSource.name}
+						</option>
+					</select>
+				</div>
+			</div>
 
 			<div class="uk-margin">
 				<div class="uk-form-controls">
