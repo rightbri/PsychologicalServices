@@ -125,6 +125,11 @@
 								</li>
 								<# } #>
 							<# } #>
+							<# if (appointment.Assessment.ReferralType.ReferralTypeId != PsychologicalServices.Models.Referrals.ReferralType.AB) { #>
+							<li style="<#= smallListItemStyles #> color: purple;">
+								<#= appointment.Assessment.ReferralType.Name #>
+							</li>
+							<# } #>
 						</ul>
 					</td>
 					<td style="<#= bodyCellStyles #><#= bodyCellBorderStyles #>"><!-- Source -->

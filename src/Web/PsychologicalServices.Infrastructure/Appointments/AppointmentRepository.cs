@@ -79,6 +79,7 @@ namespace PsychologicalServices.Infrastructure.Appointments
                                             .Prefetch<ReportTypeEntity>(assessmentTypeReportType => assessmentTypeReportType.ReportType)
                                         )
                                 )
+                            .Prefetch<ReferralTypeEntity>(assessment => assessment.ReferralType)
                             .Prefetch<ReferralSourceEntity>(assessment => assessment.ReferralSource)
                                 .SubPath(referralSourcePath => referralSourcePath
                                     .Prefetch<ReferralSourceTypeEntity>(referralSource => referralSource.ReferralSourceType)

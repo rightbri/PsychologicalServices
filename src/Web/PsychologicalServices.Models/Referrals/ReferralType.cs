@@ -6,6 +6,8 @@ namespace PsychologicalServices.Models.Referrals
 {
     public class ReferralType
     {
+        public const int AB = 1;
+
         public int ReferralTypeId { get; set; }
 
         public string Name { get; set; }
