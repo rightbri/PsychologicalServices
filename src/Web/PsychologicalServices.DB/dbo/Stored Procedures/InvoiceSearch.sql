@@ -1,4 +1,5 @@
-﻿-- =============================================
+﻿
+-- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
@@ -14,6 +15,7 @@ CREATE PROCEDURE [dbo].[InvoiceSearch]
 	,@InvoiceTypeId INT = NULL
 	,@PayableToId INT = NULL
 	,@ClaimantId INT = NULL
+	,@ReferralSourceId INT = NULL
 	,@NeedsRefresh BIT = NULL
 	,@NeedsToBeSentToReferralSource BIT = NULL
 AS
@@ -31,6 +33,7 @@ BEGIN
 			@invoiceTypeId_local INT,
 			@payableToId_local INT,
 			@claimantId_local INT,
+			@referralSourceId_local INT,
 			@needsRefresh_local BIT,
 			@needsToBeSentToReferralSource_local BIT
 
@@ -43,23 +46,21 @@ BEGIN
 	SET @invoiceTypeId_local = @InvoiceTypeId
 	SET @payableToId_local = @PayableToId
 	SET @claimantId_local = @ClaimantId
+	SET @referralSourceId_local = @ReferralSourceId
 	SET @needsRefresh_local = @NeedsRefresh
 	SET @needsToBeSentToReferralSource_local = @NeedsToBeSentToReferralSource
 	
 	DECLARE @invoiceDateSentTrackingBeginDate DATETIME = '20171203'
 	DECLARE @invoiceStatusIdPaid INT = 3
 
-	SELECT
-	i.InvoiceId
-	FROM dbo.Invoices i
-	INNER JOIN dbo.Users u ON i.PayableToId = u.UserId
-	LEFT JOIN dbo.InvoiceLineGroups ilg ON i.InvoiceId = ilg.InvoiceId
-	LEFT JOIN dbo.InvoiceLineGroupAppointments ilga ON ilg.InvoiceLineGroupId = ilga.InvoiceLineGroupId
-	LEFT JOIN dbo.Appointments app ON ilga.AppointmentId = app.AppointmentId
-	LEFT JOIN dbo.Assessments ass ON app.AssessmentId = ass.AssessmentId
-	LEFT JOIN dbo.AssessmentClaims ac ON ass.AssessmentId = ac.AssessmentId
-	LEFT JOIN dbo.Claims cl ON ac.ClaimId = cl.ClaimId
-	LEFT JOIN (
+	CREATE TABLE #InvoiceDocumentLastSentDate (
+		[InvoiceId] INT NOT NULL,
+		[InvoiceDocumentId] INT NOT NULL,
+		[SentDate] DATETIMEOFFSET NULL,
+		PRIMARY KEY CLUSTERED ([InvoiceId],[InvoiceDocumentId])
+	)
+
+	INSERT INTO #InvoiceDocumentLastSentDate ([InvoiceId],[InvoiceDocumentId],[SentDate]) 
 		SELECT
 		 InvoiceId
 		,InvoiceDocumentId
@@ -75,7 +76,17 @@ BEGIN
 		) x
 		WHERE 
 		x.RowNum = 1
-	) id ON i.InvoiceId = id.InvoiceId
+
+
+	SELECT
+	i.InvoiceId
+	FROM dbo.Invoices i
+	INNER JOIN dbo.Users u ON i.PayableToId = u.UserId
+	LEFT JOIN dbo.InvoiceLineGroups ilg ON i.InvoiceId = ilg.InvoiceId
+	LEFT JOIN dbo.InvoiceLineGroupAppointments ilga ON ilg.InvoiceLineGroupId = ilga.InvoiceLineGroupId
+	LEFT JOIN dbo.Appointments app ON ilga.AppointmentId = app.AppointmentId
+	LEFT JOIN dbo.Assessments ass ON app.AssessmentId = ass.AssessmentId
+	LEFT JOIN #InvoiceDocumentLastSentDate id ON i.InvoiceId = id.InvoiceId
 	WHERE
 	u.CompanyId = @companyId_local
 	AND (@appointmentId_local IS NULL OR ilga.AppointmentId = @appointmentId_local)
@@ -85,7 +96,8 @@ BEGIN
 	AND (@invoiceStatusId_local IS NULL OR i.InvoiceStatusId = @invoiceStatusId_local)
 	AND (@invoiceTypeId_local IS NULL OR i.InvoiceTypeId = @invoiceTypeId_local)
 	AND (@payableToId_local IS NULL OR i.PayableToId = @payableToId_local)
-	AND (@claimantId_local IS NULL OR cl.ClaimantId = @claimantId_local)
+	AND (@claimantId_local IS NULL OR ass.ClaimantId = @claimantId_local)
+	AND (@referralSourceId_local IS NULL OR ass.ReferralSourceId = @referralSourceId_local)
 	AND (@needsRefresh_local IS NULL OR 
 		(@needsRefresh_local = 1 AND EXISTS (
 			SELECT

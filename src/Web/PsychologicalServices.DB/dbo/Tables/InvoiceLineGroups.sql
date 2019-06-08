@@ -9,3 +9,10 @@
 
 
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_InvoiceLineGroups_InvoiceId]
+    ON [dbo].[InvoiceLineGroups]([InvoiceId] ASC);
+

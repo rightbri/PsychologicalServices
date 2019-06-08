@@ -10,7 +10,8 @@ BEGIN
 	SET NOCOUNT ON;
 
 	
-	DECLARE @appointmentStatusComplete INT = 7,
+	DECLARE @appointmentStatusIncomplete INT = 6,
+			@appointmentStatusComplete INT = 7,
 			@localCompanyId INT = @companyId,
 			@localMonths INT = @months
 
@@ -43,7 +44,7 @@ BEGIN
 		OR app.AppointmentTime >= DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0)
 	)
 	AND rt.[Name] <> 'AB'
-	AND app.AppointmentStatusId = @appointmentStatusComplete
+	AND app.AppointmentStatusId IN(@appointmentStatusIncomplete, @appointmentStatusComplete)
 
 	ORDER BY
 	AppointmentYear
