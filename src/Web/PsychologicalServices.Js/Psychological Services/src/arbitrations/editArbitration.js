@@ -17,10 +17,10 @@ export class EditArbitration {
 		this.notifier = notifier;
 		this.scroller = scroller;
 		
-		this.userMatcher = (a, b) => a !== null && b !== null && a.userId === b.userId;
-		this.contactMatcher = (a, b) => a !== null && b !== null && a.contactId === b.contactId;
-		this.claimMatcher = (a, b) => a !== null && b !== null && a.claimId === b.claimId;
-		this.arbitrationStatusMatcher = (a, b) => a !== null && b != null && a.arbitrationStatusId === b.arbitrationStatusId;
+		this.userMatcher = (a, b) => a && b && a.userId === b.userId;
+		this.contactMatcher = (a, b) => a && b && a.contactId === b.contactId;
+		this.claimMatcher = (a, b) => a && b && a.claimId === b.claimId;
+		this.arbitrationStatusMatcher = (a, b) => a && b && a.arbitrationStatusId === b.arbitrationStatusId;
 
 		this.searchClaimant = null;
         this.searchCompanyId = null;
@@ -59,7 +59,8 @@ export class EditArbitration {
                     //new arbitration
                     this.arbitration = {
                         isAdd: true,
-                        note: { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user }
+						note: { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user },
+						claims: []
                     };
 
                     return this.getData().then(() => {

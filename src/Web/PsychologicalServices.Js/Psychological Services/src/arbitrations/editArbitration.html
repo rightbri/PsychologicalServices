@@ -62,15 +62,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr repeat.for="claim of arbitration.claimant.claims">
-                                    <td>
-                                        <input type="checkbox" class="uk-checkbox" model.bind="claim" checked.bind="arbitration.claims" matcher.bind="claimMatcher" />
-                                    </td>
-                                    <td>${claim.dateOfLoss | dateFormat:config.shortDateFormat}</td>
-                                    <td>${claim.claimNumber}</td>
-                                    <td>${claim.lawyer}</td>
-                                    <td>${claim.insuranceCompany}</td>
-                                </tr>
+                                <template if.bind="arbitration.claimant">
+								    <tr repeat.for="claim of arbitration.claimant.claims | sortArray:{ property: 'dateOfLoss', direction: 'asc' }">
+                                        <td>
+                                            <input type="checkbox" class="uk-checkbox" model.bind="claim" checked.bind="arbitration.claims" matcher.bind="claimMatcher" />
+                                        </td>
+                                        <td>${claim.dateOfLoss | dateFormat:config.shortDateFormat}</td>
+                                        <td>${claim.claimNumber}</td>
+                                        <td>${claim.lawyer}</td>
+                                        <td>${claim.insuranceCompany}</td>
+                                    </tr>
+                                </template>
                             </tbody>
                         </table>
                     </div>
