@@ -4,35 +4,78 @@
 
     <div uk-grid>
 
-      <div class="uk-width-1-2@s uk-width-1-3@m">
-          <img class="uk-align-center uk-align-left@s" src="src/content/images/markwatson.jpg" width="250px" height="350px" alt="Photo of Dr. Mark Watson">
+      <div class="uk-width-1-1">
+        <h3>About Dr. Mark Watson</h3>    
       </div>
+      <div class="uk-width-3-4@s uk-text-justify uk-margin-remove-top">
 
-      <div class="uk-width-1-2@s uk-width-1-3@m">
-        <h3 class="uk-margin-remove-bottom">Dr. Mark Watson</h3>
-        <p class="uk-margin-remove-top">
-            is a Clinical Psychologist and Clinical Neuropsychologist, specializing in providing expert psychological and neuropsychological opinions with respect to psychology, neuropsychology and psycho-vocational pursuits. 
-        </p>
+          <p>
+          Dr. Watson is a Clinical Psychologist and Clinical Neuropsychologist receiving his Ph.D from York University in 2008. 
+          He has completed numerous clinical internships in Psychology and Clinical Neuropsychology at Trillium Health Care Centre, Chedoke McMaster Hospital, Hamilton Psychiatric Hospital, the Centre for Addiction and Mental Health and York University.  
+          He has also presented numerous published papers on topics including applying psychology to criminal proceedings, understanding and treating violence, and other forensic psychological and neuropsychological issues.  
+          He is licensed to practice both Clinical Psychology and Clinical Neuropsychology within the provinces of Ontario and Alberta.
+          </p>
+
+          <p>
+          Dr. Watson is an active member of CSME (Canadian Society of Medical Examiners), MLST (Medical Legal Society of Toronto), OPA (Ontario Psychological Association), CPA (Canadian Psychological Association), and has completed continuing education with respect to the AMA Guidelines and impairment ratings, expert testimony, as well as advanced studies in clinical neuropsychology.
+          </p>
+          
+          <p>
+          Dr. Watson specializes in providing expert psychological and neuropsychological opinions with respect to psychology and neuropsychology. 
+          He is committed to providing comprehensive, objective reports utilizing evidenced-based assessment protocols and practices. 
+          Dr. Watson has been practicing independent evaluations since 2005, with thousands of assessments completed. 
+          He has been an autonomous assessor since 2010.
+          </p>
+
+          <p>
+          Dr. Watson welcomes any referrals for Neuropsychological or Psychological Assessments. 
+          He is available for lunch and learn opportunities to instruct and educate regarding concussions (and expected recovery times) and why multiple validity measures are important to be included in every assessment. 
+
+          He is also available to talk at length about cooking, travel, jazz and wine. 
+          Please reach out with any questions you may have. 
+          </p>
+
+          <p>
+            <strong>
+              <u>
+              What is a Neuropsychologist?
+              </u>
+            </strong>
+          </p>
+
+          <p>
+          In the book “Testimony That Sticks” Dr. Karen Postal asked what a neuropsychologist is.  
+          </p>
+
+          <div class="uk-margin-left">
+              <p>
+              Dr. Robert Heilbronner, Ph.D. ABPP-CN, was quoted as saying: 
+              </p>
+              <blockquote class="uk-text-small uk-margin-left">
+                <p>
+                “A neuropsychologist is an expert in the effects or real or suspected brain dysfunction and its impact on thinking skills, emotions, or behavior.”
+                </p>
+              </blockquote>
+              
+              <p>
+              Dr. Kristie Nies, PhD, ABPP-CN was quoted providing the following answer: 
+              </p>
+              <blockquote class="uk-text-small uk-margin-left">
+                <p>
+                “A: I evaluate how someone’s brain is working, or not working. 
+                </p>
+                <p>
+                Q: How do you do that? 
+                </p>
+                <p>
+                A: A variety of tests have been developed that are known to measure certain areas of the brain. We know how people without neurological injuries and diseases perform on these tests. So when I see a patient, I give them these tests, and compare them to people of their same age and education to make it fair, and it tells me if there is an impairment and to what degree they are impaired. Then, within the context of the onset and the course of symptoms, I determine if it all hangs together.”
+                </p>
+              </blockquote>
+          </div>
+
       </div>
-
-      <div class="uk-width-1-1@s uk-width-1-3@m">
-        <h3 class="uk-text-center uk-margin-remove-bottom">
-          Events
-          <i class="fa fa-calendar fa-lg"></i>
-        </h3>
-
-        <div class="event uk-padding-small" repeat.for="event of events">
-            <a href.bind="event.url" target="_blank" if.bind="event.url">${event.description}</a>
-            <span class="uk-text-bold" if.bind="!event.url">${event.description}</span>
-            <template if.bind="event.location">
-                <br>${event.location}
-            </template>
-            <template if.bind="event.time">
-                <br>${event.time}
-            </template>
-        </div>
-        <p class="events-message" if.bind="!events.length">${noEventsMessage}</p>
-
+      <div class="uk-width-1-4@s uk-margin-remove-top uk-visible@s">
+          <img src="src/content/images/markwatson.jpg" width="250px" height="350px" alt="Photo of Dr. Mark Watson" />
       </div>
 
     </div>
