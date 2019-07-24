@@ -546,10 +546,10 @@
                     </thead>
                     <tbody>
                         <tr repeat.for="test of cognitiveAssessment.tests">
-                            <td class="uk-text-nowrap uk-table-shrink">${test.category}</td>
+                            <td class="uk-text-nowrap uk-table-shrink uk-padding-remove">${test.category}</td>
                             <template repeat.for="rating of cognitiveAssessmentTestResultRatings">
-                                <td>
-                                    <input type="radio" name="${test.category} rating" class="uk-radio" checked.bind="$parent.test.rating" model.bind="rating" change.delegate="cognitiveAssessmentTestResultRatingChange()" title="${rating.description}" uk-tooltip />
+                                <td class="uk-padding-remove">
+                                    <input type="radio" name="${test.category} rating" class="uk-radio" checked.bind="$parent.test.rating" model.bind="rating" change.delegate="cognitiveAssessmentTestResultRatingChange()" />
                                 </td>
                             </template>
                         </tr>
@@ -571,7 +571,7 @@
                 <tr>
                     <th></th>
                     <template repeat.for="rating of cognitiveAssessmentTestResultRatings">
-                        <th style="border-style: solid; writing-mode: vertical-rl;">
+                        <th style="border-style: solid; border-width: 1px; writing-mode: vertical-rl;">
                             ${rating.description}
                         </th>
                     </template>
@@ -579,9 +579,9 @@
             </thead>
             <tbody>
                 <tr repeat.for="test of cognitiveAssessment.tests | filter:isRated & signal:'cognitive-assessment-test-result-rating-updated'">
-                    <td style="border-style: solid;" class="uk-text-nowrap">${test.category}</td>
+                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">${test.category}</td>
                     <template repeat.for="rating of cognitiveAssessmentTestResultRatings">
-                        <td style="border-style: solid;" class="uk-text-nowrap">
+                        <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
                             <template if.bind="$parent.test.rating.description === rating.description">&times;</template>
                         </td>
                     </template>
