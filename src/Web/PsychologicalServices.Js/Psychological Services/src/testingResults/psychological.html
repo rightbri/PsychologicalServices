@@ -590,12 +590,18 @@
         </table>
 
 
-
         <p>
-            In summary, against an overlay of ${cognitiveAssessment.effortLevel.description} effort, 
+            In summary, against an overlay of ${cognitiveAssessment.effortLevel.description} effort, here are ${results.gender.title} ${results.claimant.lastName}'s results:
+            <br>
             <template repeat.for="grouping of cognitiveAssessmentTestResultGroupings | sortArray:{property: 'sort', direction: 'asc'}">
-                <span if.bind="$index === 0">&nbsp;${results.gender.title} ${results.claimant.lastName}</span>
-                <span if.bind="$index > 0">${results.pronoun.subject | proper}</span> performed in the ${grouping.group} range on measures of ${grouping.tests | arrayToString:getCognitiveAssessmentTestCategory}.
+                
+                ${results.pronoun.subject | proper} performed ${grouping.opening} on questionnaires that measured ${results.pronoun.possessiveAdjective}: 
+                
+                <ul>
+                    <template repeat.for="test of grouping.tests">
+                        <li>${test.category}</li>
+                    <template>
+                </ul>
             </template>
 
         </p>

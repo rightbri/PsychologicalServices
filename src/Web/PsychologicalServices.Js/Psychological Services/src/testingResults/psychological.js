@@ -510,7 +510,7 @@ export class Psychological {
                 }
             }
             else {
-                accumulator.push({ "group": current.group, ratings: [current.description], sort: current.sort });
+                accumulator.push({ "group": current.group, "opening": current.opening, ratings: [current.description], sort: current.sort });
             }
 
             return accumulator;
@@ -535,12 +535,9 @@ export class Psychological {
 
     getCognitiveAssessmentTestResultRatings() {
         var data = [
-            { "description": "Lower Extreme", "group": "impaired", "sort": 4 },
-            { "description": "Borderline", "group": "borderline", "sort": 3 },
-            { "description": "Below Average", "group": "normal", "sort": 2 },
-            { "description": "Average", "group": "normal", "sort": 2 },
-            { "description": "Above Average", "group": "normal", "sort": 2 },
-            { "description": "Superior", "group": "superior", "sort": 1 }
+            { "description": "Impaired", "group": "impaired", "opening": "in the impaired range", "sort": 3 },
+            { "description": "Borderline", "group": "borderline", "opening": "in the borderline range", "sort": 2 },
+            { "description": "Normal", "group": "normal", "opening": "within normal limits", "sort": 1 }
         ];
 
         return getPromise(data);
@@ -548,49 +545,39 @@ export class Psychological {
 
     getCognitiveAssessmentTestCategories() {
         var data = [
-            { "description": "Verbal Comprehension" },
-            { "description": "Perceptual Reasoning" },
-            { "description": "Full Scale Intelligence" },
-            { "description": "Premorbid Functioning" },
-            { "description": "First Trial Verbal Recall" },
-            { "description": "Final Trial Verbal Recall" },
-            { "description": "Short-Term Free Verbal Recall" },
-            { "description": "Short-Term Cued Verbal Recall" },
-            { "description": "Long-Term Free Verbal Recall" },
-            { "description": "Long-Term Cued Verbal Recall" },
-            { "description": "Forced Recognition of Verbal List Material" },
-            { "description": "Visual Immediate Recall" },
-            { "description": "Visual Delayed Recall" },
-            { "description": "Visual Recognition" },
-            { "description": "Graphomotor Speed" },
-            { "description": "Processing Speed" },
-            { "description": "Working Memory" },
-            { "description": "Mental Flexibility/Attention Alternation" },
-            { "description": "Sustained Attention" },
-            { "description": "Selective Attention" },
-            { "description": "Categories Completed - WCST" },
-            { "description": "Trials to Complete First Category" },
-            { "description": "Total Errors - WCST" },
-            { "description": "Perseverative Errors - WCST" },
-            { "description": "Nonperseverative Errors - WCST" },
-            { "description": "Failure to Maintain Set" },
-            { "description": "Design Fluency" },
-            { "description": "Response Inhibition" },
-            { "description": "Visuoconstructive Abilities" },
-            { "description": "Spatial Orientation" },
-            { "description": "Visual Copy" },
-            { "description": "Visual Puzzles" },
-            { "description": "General Vocabulary" },
-            { "description": "General Information" },
-            { "description": "Verbal Analytic Reasoning" },
-            { "description": "Nonverbal Analytic Reasoning" },
-            { "description": "Dominant Hand Speed" },
-            { "description": "Non-Dominant Hand Speed" },
-            { "description": "Confrontation Naming" },
-            { "description": "Single Word Reading" },
-            { "description": "Sentence and Reading Comprehension" },
-            { "description": "Math" },
-            { "description": "Spelling" }
+            { "description": "overall verbal skills" },
+            { "description": "overall visual skills" },
+            { "description": "general intelligence" },
+            { "description": "pre-accident intelligence (estimate)" },
+            { "description": "immediate recall of Lists (with and without hints)" },
+            { "description": "delayed recall of lists (with and without hints)" },
+            { "description": "verbal recognition of the lists" },
+            { "description": "visual short-term memory" },
+            { "description": "visual long-term memory" },
+            { "description": "visual recognition" },
+            { "description": "working memory" },
+            { "description": "processing speed" },
+            { "description": "hand-eye co-ordination" },
+            { "description": "ability to sustain attention" },
+            { "description": "ability to select specific targets out of larger groups" },
+            { "description": "ability to divide her attention between tasks" },
+            { "description": "problem-solving" },
+            { "description": "ability to benefit from feedback" },
+            { "description": "ability to stay on task" },
+            { "description": "verbal and visual problem solving" },
+            { "description": "ability to generate words for specific categories" },
+            { "description": "ability to generate designs" },
+            { "description": "response inhibition" },
+            { "description": "visuoconstructive abilities" },
+            { "description": "ability to copy pictures" },
+            { "description": "ability to judge line directions" },
+            { "description": "hand speed" },
+            { "description": "ability to name objects" },
+            { "description": "general vocabulary" },
+            { "description": "general knowledge" },
+            { "description": "reading ability" },
+            { "description": "mathematical ability" },
+            { "description": "spelling" }
         ];
 
         return getPromise(data);
