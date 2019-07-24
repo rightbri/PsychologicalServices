@@ -27,7 +27,7 @@
                                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     <template repeat.for="issue of issues">
                                         <label>
-                                            <input type="checkbox" class="uk-checkbox" model.bind="issue" checked.bind="task.issues" matcher.bind="issueMatcher" change.delegate="recalculate()" title.bind="$parent.task.description" uk-tooltip />&nbsp;${issue.abbreviation}
+                                            <input type="checkbox" class="uk-checkbox" model.bind="issue" checked.bind="task.issues" matcher.bind="issueMatcher" change.delegate="recalculate()" />&nbsp;${issue.abbreviation}
                                         </label>
                                     </template>
                                 </div>
