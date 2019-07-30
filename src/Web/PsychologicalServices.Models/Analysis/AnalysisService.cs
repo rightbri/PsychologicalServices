@@ -83,5 +83,12 @@ namespace PsychologicalServices.Models.Analysis
 
             return data;
         }
+
+        public IEnumerable<ResearchConsentObtainedClaimantData> GetResearchConsentObtainedClaimantData(ResearchConsentObtainedClaimantDataSearchCriteria criteria)
+        {
+            var data = _analysisRepository.GetResearchConsentObtainedClaimantData(criteria);
+
+            return data;
+        }
     }
 }

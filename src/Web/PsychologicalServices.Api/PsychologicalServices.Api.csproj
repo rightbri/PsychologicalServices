@@ -256,6 +256,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ResearchConsentObtainedClaimantDataController.cs" />
     <Compile Include="Controllers\NonAbCompletionDataController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />
     <Compile Include="Controllers\InvoiceableRawTestDataDataController.cs" />

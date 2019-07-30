@@ -1661,6 +1661,11 @@
         <Parameter Name="SearchStart" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
       </Parameters>
     </SPCallDefinition>
+    <SPCallDefinition Name="ResearchConsentObtainedClaimantData" ObjectID="615ae04e-c38f-44b2-82d1-6483a3ac3d9c">
+      <Parameters>
+        <Parameter Name="CompanyId" Type="int" Precision="10" />
+      </Parameters>
+    </SPCallDefinition>
   </SPCallDefinitions>
   <TargetDatabases>
     <TargetDatabase Type="2D18D138-1DD2-467E-86CC-4838250611AE" SyncSource="2">
@@ -1678,7 +1683,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-06-02T14:24:15.5922383Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-07-30T00:02:00.9419742Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2688,6 +2693,24 @@
                         <Field Name="AppointmentTime" Ordinal="2" DbType="30" />
                         <Field Name="Claimant" Ordinal="3" DbType="12" Length="101" />
                         <Field Name="ReferralSource" Ordinal="4" DbType="12" Length="100" />
+                      </Fields>
+                    </Resultset>
+                  </Resultsets>
+                </StoredProcedure>
+                <StoredProcedure Name="ResearchConsentObtainedClaimantData" NumberOfResultsets="1">
+                  <Parameters>
+                    <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                  </Parameters>
+                  <Resultsets>
+                    <Resultset Name="Resultset1">
+                      <Fields>
+                        <Field Name="ClaimantId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="FirstName" Ordinal="2" DbType="12" Length="50" />
+                        <Field Name="LastName" Ordinal="3" DbType="12" Length="50" />
+                        <Field Name="Gender" Ordinal="4" DbType="10" Length="1" />
+                        <Field Name="DateOfBirth" Ordinal="5" DbType="30" />
+                        <Field Name="ReferralSource" Ordinal="6" DbType="12" Length="100" />
+                        <Field Name="AppointmentTime" Ordinal="7" DbType="30" />
                       </Fields>
                     </Resultset>
                   </Resultsets>
@@ -4077,6 +4100,11 @@
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
             <FieldMapping FieldName="DaysOutstanding" TargetFieldName="@daysOutstanding" />
             <FieldMapping FieldName="SearchStart" TargetFieldName="@searchStart" />
+          </FieldMappings>
+        </SPCallMapping>
+        <SPCallMapping SPCallName=":ResearchConsentObtainedClaimantData" TargetName="PsychologicalServices:dbo:ResearchConsentObtainedClaimantData">
+          <FieldMappings>
+            <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
           </FieldMappings>
         </SPCallMapping>
       </SPCallMappings>

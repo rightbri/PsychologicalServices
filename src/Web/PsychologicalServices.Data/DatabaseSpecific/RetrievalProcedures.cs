@@ -591,6 +591,50 @@ needsToBeSentToReferralSource).ToRetrievalQuery();
 			return CreateOutstandingReportsCall(dataAccessProvider, companyId, daysOutstanding, searchStart).ToRetrievalQuery();
 		}
 
+		/// <summary>Calls stored procedure 'ResearchConsentObtainedClaimantData'.<br/><br/></summary>
+		/// <param name="companyId">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable ResearchConsentObtainedClaimantData(System.Int32 companyId)
+		{
+			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
+			{
+				return ResearchConsentObtainedClaimantData(companyId, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Calls stored procedure 'ResearchConsentObtainedClaimantData'.<br/><br/></summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable ResearchConsentObtainedClaimantData(System.Int32 companyId, IDataAccessCore dataAccessProvider)
+		{
+			using(StoredProcedureCall call = CreateResearchConsentObtainedClaimantDataCall(dataAccessProvider, companyId))
+			{
+				DataTable toReturn = call.FillDataTable();
+				return toReturn;
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'ResearchConsentObtainedClaimantData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetResearchConsentObtainedClaimantDataCallAsQuery(System.Int32 companyId)
+		{
+			using(var dataAccessProvider = new DataAccessAdapter())
+			{
+				return GetResearchConsentObtainedClaimantDataCallAsQuery(companyId, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'ResearchConsentObtainedClaimantData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetResearchConsentObtainedClaimantDataCallAsQuery(System.Int32 companyId, IDataAccessCore dataAccessProvider)
+		{
+			return CreateResearchConsentObtainedClaimantDataCall(dataAccessProvider, companyId).ToRetrievalQuery();
+		}
+
 		/// <summary>Creates the call object for the call 'ArbitrationsData' to stored procedure 'ArbitrationsData'.</summary>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <param name="companyId">Input parameter</param>
@@ -741,6 +785,16 @@ Nullable<System.Boolean> needsToBeSentToReferralSource)
 							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
 							.AddParameter("@daysOutstanding", "Int", 0, ParameterDirection.Input, true, 10, 0, daysOutstanding)
 							.AddParameter("@searchStart", "DateTimeOffset", 0, ParameterDirection.Input, true, 0, 0, searchStart);
+		}
+
+		/// <summary>Creates the call object for the call 'ResearchConsentObtainedClaimantData' to stored procedure 'ResearchConsentObtainedClaimantData'.</summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter</param>
+		/// <returns>Ready to use StoredProcedureCall object</returns>
+		private static StoredProcedureCall CreateResearchConsentObtainedClaimantDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId)
+		{
+			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[ResearchConsentObtainedClaimantData]", "ResearchConsentObtainedClaimantData")
+							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId);
 		}
 
 

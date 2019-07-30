@@ -227,6 +227,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'credibilitydata');
 	}
 
+	searchResearchConsentObtainedClaimantData(criteria) {
+		return this.searchBasic(criteria, 'researchconsentobtainedclaimantdata');
+	}
+
 	getDocument(id) {
 		return this.getSingleBasic(id, 'document');
 	}

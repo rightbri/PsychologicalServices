@@ -292,5 +292,28 @@ namespace PsychologicalServices.Infrastructure.Analysis
                     .ToList();
             }
         }
+
+        public IEnumerable<ResearchConsentObtainedClaimantData> GetResearchConsentObtainedClaimantData(ResearchConsentObtainedClaimantDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.ResearchConsentObtainedClaimantData(criteria.CompanyId, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new ResearchConsentObtainedClaimantData
+                        {
+                            ClaimantId = Convert.ToInt32(row["ClaimantId"]),
+                            FirstName = Convert.ToString(row["FirstName"]),
+                            LastName = Convert.ToString(row["LastName"]),
+                            Gender = Convert.ToString(row["Gender"]),
+                            DateOfBirth = DateTimeOffset.Parse(Convert.ToString(row["DateOfBirth"])),
+                            ReferralSource = Convert.ToString(row["ReferralSource"]),
+                            AppointmentTime = DateTimeOffset.Parse(Convert.ToString(row["AppointmentTime"])),
+                        })
+                    .ToList();
+            }
+        }
     }
 }

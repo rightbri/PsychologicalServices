@@ -18,5 +18,7 @@ namespace PsychologicalServices.Models.Analysis
         CredibilityData GetCredibilityData(CredibilityDataSearchCriteria criteria);
 
         IEnumerable<NonAbCompletionData> GetNonAbCompletionData(NonAbCompletionDataSearchCriteria criteria);
+
+        IEnumerable<ResearchConsentObtainedClaimantData> GetResearchConsentObtainedClaimantData(ResearchConsentObtainedClaimantDataSearchCriteria criteria);
     }
 }

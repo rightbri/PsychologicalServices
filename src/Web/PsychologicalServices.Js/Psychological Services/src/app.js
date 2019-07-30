@@ -73,6 +73,7 @@ export class App {
 			{ route: 'analysis/assessment-type-counts', name: 'assessmentTypeCounts', moduleId: 'analysis/assessmentTypeCounts', title: 'Assessment Type Counts', nav: true },
 			{ route: 'analysis/credibility-statistics', name: 'credibilityStatistics', moduleId: 'analysis/credibilityStatistics', title: 'Credibility Statistics', nav: true },
 			{ route: 'analysis/non-ab-completions', name: 'nonAbCompletionData', moduleId: 'analysis/nonAbCompletionData', title: 'Non AB Completions', nav: true },
+			{ route: 'analysis/research-consent-obtained-claimants', name: 'researchConsentObtainedClaimants', moduleId: 'analysis/researchConsentObtainedClaimants', title: 'Research Consent Obtained Claimants', nav: true },
 			{ route: 'outstanding/reports', name: 'outstandingReports', moduleId: 'outstanding/outstandingReports', title: 'Outstanding Reports', nav: true },
 			{ route: 'events', name: 'events', moduleId: 'events/events', title: 'Events', nav: true },
 			{ route: 'events/:id', name: 'editEvent', moduleId: 'events/editEvent', title: 'Edit Event', nav: false },

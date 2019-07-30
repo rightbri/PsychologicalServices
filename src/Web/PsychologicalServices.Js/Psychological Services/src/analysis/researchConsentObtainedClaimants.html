@@ -1,0 +1,39 @@
+<template>
+    <require from="resources/value-converters/sort-array"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/gender"></require>
+    <require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+
+<fieldset class="uk-fieldset">
+    <legend class="uk-legend">Research Consent Obtained Claimants</legend>
+</fieldset>
+
+<div if.bind="researchConsentObtainedClaimantData">
+    <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+        <thead>
+            <tr>
+                <th>Referral Source</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="claimantData of researchConsentObtainedClaimantData | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'appointmentTime', direction: 'asc' }]">
+                <td>${claimantData.referralSource}</td>
+                <td>${claimantData.appointmentTime | dateFormat:config.longDateFormat}</td>
+                <td>${claimantData.appointmentTime | dateFormat:config.shortTimeFormat}</td>
+                <td>${claimantData.firstName}</td>
+                <td>${claimantData.lastName}</td>
+                <td>${claimantData.gender | gender}</td>
+                <td>${claimantData.dateOfBirth | dateFormat:config.longDateFormat}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</template>
