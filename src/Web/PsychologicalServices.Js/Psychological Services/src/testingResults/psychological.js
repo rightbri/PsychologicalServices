@@ -549,18 +549,24 @@ export class Psychological {
             { "description": "overall visual skills" },
             { "description": "general intelligence" },
             { "description": "pre-accident intelligence (estimate)" },
-            { "description": "immediate recall of Lists (with and without hints)" },
+            { "description": "general cognitive functioning" },
+            { "description": "immediate memory" },
+            { "description": "delayed memory" },
+            { "description": "immediate recall of lists (with and without hints)" },
             { "description": "delayed recall of lists (with and without hints)" },
             { "description": "verbal recognition of the lists" },
+            { "description": "short-term recall of verbal prose (content)" },
+            { "description": "delayed recall of verbal prose (content)" },
             { "description": "visual short-term memory" },
             { "description": "visual long-term memory" },
             { "description": "visual recognition" },
+            { "description": "attention" },
             { "description": "working memory" },
             { "description": "processing speed" },
             { "description": "hand-eye co-ordination" },
             { "description": "ability to sustain attention" },
             { "description": "ability to select specific targets out of larger groups" },
-            { "description": "ability to divide her attention between tasks" },
+            { "description": "ability to divide attention between tasks" },
             { "description": "problem-solving" },
             { "description": "ability to benefit from feedback" },
             { "description": "ability to stay on task" },
@@ -572,6 +578,7 @@ export class Psychological {
             { "description": "ability to copy pictures" },
             { "description": "ability to judge line directions" },
             { "description": "hand speed" },
+            { "description": "language" },
             { "description": "ability to name objects" },
             { "description": "general vocabulary" },
             { "description": "general knowledge" },
@@ -676,6 +683,11 @@ export class Psychological {
         ];
 
         return getPromise(data);
+    }
+
+    clearTestRating(test) {
+        test.rating = null;
+        this.cognitiveAssessmentTestResultRatingChange();
     }
 }
 

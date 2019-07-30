@@ -10,7 +10,7 @@
 
         <form class="uk-form-stacked">
 
-            <div class="uk-margin-small uk-width-small">
+            <div class="uk-margin-small uk-width-auto">
                 <label class="uk-form-label">Claimant</label>
                 <div class="uk-form-controls">
                     <search-claimant claimant.bind="results.claimant" selected.delegate="claimantSelected($event)"></search-claimant>
@@ -542,6 +542,7 @@
                                     ${rating.description}
                                 </th>
                             </template>
+                            <th style="writing-mode: vertical-rl;"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -552,6 +553,11 @@
                                     <input type="radio" name="${test.category} rating" class="uk-radio" checked.bind="$parent.test.rating" model.bind="rating" change.delegate="cognitiveAssessmentTestResultRatingChange()" />
                                 </td>
                             </template>
+                            <td class="uk-padding-remove">
+                                <span click.delegate="clearTestRating(test)" show.bind="test.rating !== null" style="color: red; cursor: pointer;">
+                                    <i class="fa fa-close"></i>
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
