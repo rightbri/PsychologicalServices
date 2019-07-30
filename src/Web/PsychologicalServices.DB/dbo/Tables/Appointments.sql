@@ -6,9 +6,9 @@
     [PsychologistId]           INT                NOT NULL,
     [AppointmentStatusId]      INT                NOT NULL,
     [AssessmentId]             INT                NOT NULL,
-    [CreateDate]               DATETIMEOFFSET (7) CONSTRAINT [DF_Appointments_CreateDate] DEFAULT (getdate()) NOT NULL,
+    [CreateDate]               DATETIMEOFFSET (7) CONSTRAINT [DF_Appointments_CreateDate] DEFAULT (sysutcdatetime()) NOT NULL,
     [CreateUserId]             INT                NOT NULL,
-    [UpdateDate]               DATETIMEOFFSET (7) CONSTRAINT [DF_Appointments_UpdateDate] DEFAULT (getdate()) NOT NULL,
+    [UpdateDate]               DATETIMEOFFSET (7) CONSTRAINT [DF_Appointments_UpdateDate] DEFAULT (sysutcdatetime()) NOT NULL,
     [UpdateUserId]             INT                NOT NULL,
     [RoomRentalBillableAmount] INT                NULL,
     [PsychologistInvoiceLock]  BIT                CONSTRAINT [DF_Appointments_PsychologistInvoiceLock] DEFAULT ((0)) NOT NULL,
@@ -21,6 +21,8 @@
     CONSTRAINT [FK_Appointments_Users] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Appointments_Users1] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

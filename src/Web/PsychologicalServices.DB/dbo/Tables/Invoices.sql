@@ -3,7 +3,7 @@
     [Identifier]      NVARCHAR (20)      NOT NULL,
     [InvoiceDate]     DATETIMEOFFSET (7) NOT NULL,
     [InvoiceStatusId] INT                NOT NULL,
-    [UpdateDate]      DATETIMEOFFSET (7) CONSTRAINT [DF_Invoices_UpdateDate] DEFAULT (getutcdate()) NOT NULL,
+    [UpdateDate]      DATETIMEOFFSET (7) CONSTRAINT [DF_Invoices_UpdateDate] DEFAULT (sysutcdatetime()) NOT NULL,
     [TaxRate]         DECIMAL (18, 4)    NOT NULL,
     [Total]           INT                NOT NULL,
     [InvoiceTypeId]   INT                NOT NULL,
@@ -13,6 +13,8 @@
     CONSTRAINT [FK_Invoices_InvoiceTypes] FOREIGN KEY ([InvoiceTypeId]) REFERENCES [dbo].[InvoiceTypes] ([InvoiceTypeId]),
     CONSTRAINT [FK_Invoices_Users] FOREIGN KEY ([PayableToId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

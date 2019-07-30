@@ -12,9 +12,9 @@
     [MedicalFileReceivedDate]            DATETIMEOFFSET (7) NULL,
     [IsLargeFile]                        BIT                CONSTRAINT [DF_Assessments_IsLargeFile] DEFAULT ((0)) NOT NULL,
     [ReferralSourceFileNumber]           NVARCHAR (50)      NULL,
-    [CreateDate]                         DATETIMEOFFSET (7) CONSTRAINT [DF_Assessments_CreateDate] DEFAULT (getdate()) NOT NULL,
+    [CreateDate]                         DATETIMEOFFSET (7) CONSTRAINT [DF_Assessments_CreateDate] DEFAULT (sysutcdatetime()) NOT NULL,
     [CreateUserId]                       INT                NOT NULL,
-    [UpdateDate]                         DATETIMEOFFSET (7) CONSTRAINT [DF_Assessments_UpdateDate] DEFAULT (getdate()) NOT NULL,
+    [UpdateDate]                         DATETIMEOFFSET (7) CONSTRAINT [DF_Assessments_UpdateDate] DEFAULT (sysutcdatetime()) NOT NULL,
     [UpdateUserId]                       INT                NOT NULL,
     [SummaryNoteId]                      INT                NULL,
     [PsychologistFoundInFavorOfClaimant] BIT                NULL,
@@ -40,6 +40,8 @@
     CONSTRAINT [FK_Assessments_Users] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Assessments_Users1] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

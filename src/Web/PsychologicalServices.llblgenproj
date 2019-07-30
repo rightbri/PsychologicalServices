@@ -1725,9 +1725,9 @@
                     <Field Name="PsychologistId" Ordinal="5" DbType="8" Precision="10" />
                     <Field Name="AppointmentStatusId" Ordinal="6" DbType="8" Precision="10" />
                     <Field Name="AssessmentId" Ordinal="7" DbType="8" Precision="10" />
-                    <Field Name="CreateDate" Ordinal="8" HasDefaultValue="true" DefaultValue="getdate()" DbType="30" />
+                    <Field Name="CreateDate" Ordinal="8" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="CreateUserId" Ordinal="9" DbType="8" Precision="10" />
-                    <Field Name="UpdateDate" Ordinal="10" HasDefaultValue="true" DefaultValue="getdate()" DbType="30" />
+                    <Field Name="UpdateDate" Ordinal="10" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="UpdateUserId" Ordinal="11" DbType="8" Precision="10" />
                     <Field Name="RoomRentalBillableAmount" Ordinal="12" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="PsychologistInvoiceLock" Ordinal="13" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
@@ -1881,9 +1881,9 @@
                     <Field Name="MedicalFileReceivedDate" Ordinal="11" IsOptional="true" DbType="30" />
                     <Field Name="IsLargeFile" Ordinal="12" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                     <Field Name="ReferralSourceFileNumber" Ordinal="13" IsOptional="true" DbType="12" Length="50" />
-                    <Field Name="CreateDate" Ordinal="14" HasDefaultValue="true" DefaultValue="getdate()" DbType="30" />
+                    <Field Name="CreateDate" Ordinal="14" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="CreateUserId" Ordinal="15" DbType="8" Precision="10" />
-                    <Field Name="UpdateDate" Ordinal="16" HasDefaultValue="true" DefaultValue="getdate()" DbType="30" />
+                    <Field Name="UpdateDate" Ordinal="16" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="UpdateUserId" Ordinal="17" DbType="8" Precision="10" />
                     <Field Name="SummaryNoteId" Ordinal="18" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="PsychologistFoundInFavorOfClaimant" Ordinal="19" IsOptional="true" DbType="2" />
@@ -2112,7 +2112,7 @@
                     <Field Name="InvoiceDocumentId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="InvoiceId" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="Document" Ordinal="3" DbType="23" Length="2147483647" />
-                    <Field Name="CreateDate" Ordinal="4" HasDefaultValue="true" DefaultValue="getutcdate()" DbType="30" />
+                    <Field Name="CreateDate" Ordinal="4" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="FileName" Ordinal="5" DbType="24" Length="150" />
                   </Fields>
                 </Table>
@@ -2122,7 +2122,7 @@
                     <Field Name="InvoiceDocumentSendLogId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="InvoiceDocumentId" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="Recipients" Ordinal="3" DbType="12" Length="4000" />
-                    <Field Name="SentDate" Ordinal="4" HasDefaultValue="true" DefaultValue="sysdatetimeoffset()" DbType="30" />
+                    <Field Name="SentDate" Ordinal="4" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                   </Fields>
                 </Table>
                 <Table Name="InvoiceLineGroupAppointments">
@@ -2173,7 +2173,7 @@
                     <Field Name="Identifier" Ordinal="2" DbType="12" Length="20" />
                     <Field Name="InvoiceDate" Ordinal="3" DbType="30" />
                     <Field Name="InvoiceStatusId" Ordinal="4" DbType="8" Precision="10" />
-                    <Field Name="UpdateDate" Ordinal="5" HasDefaultValue="true" DefaultValue="getutcdate()" DbType="30" />
+                    <Field Name="UpdateDate" Ordinal="5" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="TaxRate" Ordinal="6" DbType="5" Precision="18" Scale="4" />
                     <Field Name="Total" Ordinal="7" DbType="8" Precision="10" />
                     <Field Name="InvoiceTypeId" Ordinal="8" DbType="8" Precision="10" />
@@ -2186,7 +2186,7 @@
                     <Field Name="InvoiceStatusChangeId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="InvoiceId" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="InvoiceStatusId" Ordinal="3" DbType="8" Precision="10" />
-                    <Field Name="UpdateDate" Ordinal="4" HasDefaultValue="true" DefaultValue="getutcdate()" DbType="30" />
+                    <Field Name="UpdateDate" Ordinal="4" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                   </Fields>
                 </Table>
                 <Table Name="InvoiceStatuses">
@@ -2239,9 +2239,9 @@
                     <Field Name="NoteId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="Note" Ordinal="2" DbType="12" Length="2147483647" />
                     <Field Name="UpdateUserId" Ordinal="3" DbType="8" Precision="10" />
-                    <Field Name="UpdateDate" Ordinal="4" HasDefaultValue="true" DefaultValue="getdate()" DbType="30" />
+                    <Field Name="UpdateDate" Ordinal="4" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="CreateUserId" Ordinal="5" DbType="8" Precision="10" />
-                    <Field Name="CreateDate" Ordinal="6" HasDefaultValue="true" DefaultValue="getdate()" DbType="30" />
+                    <Field Name="CreateDate" Ordinal="6" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                   </Fields>
                 </Table>
                 <Table Name="PsychometristInvoiceAmounts">
