@@ -361,7 +361,7 @@ namespace PsychologicalServices.Models.Schedule
             this.Write("\r\n\t\t\t\t\t\t\t</li>\r\n\t\t\t\t\t\t\t");
             
             #line 94 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Schedule\PsychologistScheduleTemplate.tt"
- foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 13 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId)).OrderBy(attributeValue => attributeValue.Attribute.Name)) { 
+ foreach (var attributeValue in appointment.Assessment.Attributes.Where(attributeValue => new[] { 13, 14 }.Contains(attributeValue.Attribute.AttributeType.AttributeTypeId)).OrderBy(attributeValue => attributeValue.Attribute.Name)) { 
             
             #line default
             #line hidden

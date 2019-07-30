@@ -125,7 +125,7 @@
 					<ul class="uk-list">
 						<li title="Assessment Type" class="smaller-siblings">${appointment.assessment.assessmentType.name}</li>
 						<li title="Completion" if.bind="appointment.isCompletion">Completion</li>
-						<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6,13] | sortArray:{ property: 'name', direction: 'asc' }">
+						<template repeat.for="attribute of appointment.assessment.attributes | attributeTypes:[2,6,13,14] | sortArray:{ property: 'name', direction: 'asc' }">
 							<li if.bind="attribute.value !== false">
 								${attribute | attributeValue}
 							</li>

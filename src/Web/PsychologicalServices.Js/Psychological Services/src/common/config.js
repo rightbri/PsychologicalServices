@@ -75,7 +75,7 @@ export class Config {
 		
 		this.assessmentDefaults = {
 			'attributeTypeIds': [2,4,5,6,11],
-			'reportStatusAttributeTypeIds': [9,13],
+			'reportStatusAttributeTypeIds': [9,13,14],
 			'medicalFileAttributeTypeIds': [9],
 			'resultsAttributeTypeIds': [7,8],
 			'postAssessmentAttributeTypeIds': [12]
