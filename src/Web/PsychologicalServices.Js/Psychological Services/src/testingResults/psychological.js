@@ -571,6 +571,7 @@ export class Psychological {
             { "description": "ability to benefit from feedback" },
             { "description": "ability to stay on task" },
             { "description": "verbal and visual problem solving" },
+            { "description": "ability to generate words for specific letters" },
             { "description": "ability to generate words for specific categories" },
             { "description": "ability to generate designs" },
             { "description": "response inhibition" },
