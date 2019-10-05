@@ -7,7 +7,7 @@ export class App {
   constructor(dataRepository) {
 	this.dataRepository = dataRepository;
 
-	this.title = "Watson Psychological Services";
+	this.title = "Mark S. Watson Psychology Professional Corporation";
 	this.year = new Date().getFullYear();
   }
 
