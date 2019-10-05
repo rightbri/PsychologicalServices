@@ -598,16 +598,18 @@
 
         <p style="font-family: arial; font-size: 11pt; font-weight: normal;">
             In summary, against an overlay of ${cognitiveAssessment.effortLevel.description} effort, here are ${results.gender.title} ${results.claimant.lastName}'s results:
-            <br>
+            <br><br>
             <template repeat.for="grouping of cognitiveAssessmentTestResultGroupings | sortArray:{property: 'sort', direction: 'asc'}">
-                <span style="font-family: arial; font-size: 11pt; font-weight: normal;">
-                    ${results.pronoun.subject | proper} performed ${grouping.opening} on questionnaires that measured ${results.pronoun.possessiveAdjective}: 
-                </span>
-                <ul style="font-family: arial; font-size: 11pt; font-weight: normal;">
-                    <template repeat.for="test of grouping.tests">
-                        <li>${test.category}</li>
-                    <template>
-                </ul>
+                <div class="uk-margin-left">    
+                    <span style="font-family: arial; font-size: 11pt; font-weight: normal;">
+                        ${results.pronoun.subject | proper} performed ${grouping.opening} on tests and questionnaires that measured ${results.pronoun.possessiveAdjective}: 
+                    </span>
+                    <ul style="font-family: arial; font-size: 11pt; font-weight: normal;" class="uk-margin-remove-top">
+                        <template repeat.for="test of grouping.tests">
+                            <li>${test.category}</li>
+                        <template>
+                    </ul>
+                </div>
             </template>
 
         </p>

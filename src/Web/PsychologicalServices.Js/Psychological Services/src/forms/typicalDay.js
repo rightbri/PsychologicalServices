@@ -150,7 +150,7 @@ export class TypicalDay {
             { "frequency": "Daily", "name": "Watch television/movies", "description": "Watching television/movies ", issues: [], "isCustom": false },
             { "frequency": "Daily", "name": "Use internet/send and get emails/text messages", "description": "Use Internet/Send and get Emails/Text Messages", issues: [], "isCustom": false },
             { "frequency": "Daily", "name": "Use computer/tablets", "description": "Use the computer/tablets (devices with screens)", issues: [], "isCustom": false },
-            { "frequency": "Weekly", "name": "Be involved in any social activities/games", "description": "Social activities/games", issues: [], "isCustom": false },
+            { "frequency": "Weekly", "name": "Be involved in social activities/games", "description": "Social activities/games", issues: [], "isCustom": false },
             { "frequency": "Weekly", "name": "Volunteer", "description": "Volunteering", issues: [], "isCustom": false },
             { "frequency": "Weekly", "name": "Be involved in religious activities", "description": "Religious Activities ", issues: [], "isCustom": false },
             { "frequency": "Monthly/Yearly", "name": "Travel/go on vacation", "description": "Travel/vacation", issues: [], "isCustom": false },
