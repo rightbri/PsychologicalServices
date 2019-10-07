@@ -333,6 +333,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ShowOnCalendar", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("ShowOnSchedule", fieldHashtable);
 		}
 		#endregion
 
@@ -436,6 +438,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)ArbitrationStatusFieldIndex.ShowOnCalendar, true); }
 			set	{ SetValue((int)ArbitrationStatusFieldIndex.ShowOnCalendar, value); }
+		}
+
+		/// <summary> The ShowOnSchedule property of the Entity ArbitrationStatus<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "ArbitrationStatuses"."ShowOnSchedule"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean ShowOnSchedule
+		{
+			get { return (System.Boolean)GetValue((int)ArbitrationStatusFieldIndex.ShowOnSchedule, true); }
+			set	{ SetValue((int)ArbitrationStatusFieldIndex.ShowOnSchedule, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

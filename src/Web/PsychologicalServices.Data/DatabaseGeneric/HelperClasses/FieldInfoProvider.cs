@@ -253,6 +253,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("ArbitrationStatusEntity", "Name", typeof(System.String), false, false, false, false,  (int)ArbitrationStatusFieldIndex.Name, 50, 0, 0);
 			this.AddElementFieldInfo("ArbitrationStatusEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ArbitrationStatusFieldIndex.IsActive, 0, 0, 0);
 			this.AddElementFieldInfo("ArbitrationStatusEntity", "ShowOnCalendar", typeof(System.Boolean), false, false, false, false,  (int)ArbitrationStatusFieldIndex.ShowOnCalendar, 0, 0, 0);
+			this.AddElementFieldInfo("ArbitrationStatusEntity", "ShowOnSchedule", typeof(System.Boolean), false, false, false, false,  (int)ArbitrationStatusFieldIndex.ShowOnSchedule, 0, 0, 0);
 		}
 		/// <summary>Inits AssessmentEntity's FieldInfo objects</summary>
 		private void InitAssessmentEntityInfos()
