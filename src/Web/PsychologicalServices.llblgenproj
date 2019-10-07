@@ -247,6 +247,7 @@
           <Field Name="IsActive" Type="bool" FieldIndex="2" />
           <Field Name="Name" Type="string" MaxLength="50" FieldIndex="1" />
           <Field Name="ShowOnCalendar" Type="bool" FieldIndex="3" />
+          <Field Name="ShowOnSchedule" Type="bool" FieldIndex="4" />
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Assessment" ObjectID="c1c06618-c608-4052-b870-2575388d78c6">
@@ -1685,7 +1686,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-06T17:10:33.1444952Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-07T14:17:13.7326251Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1813,6 +1814,7 @@
                     <Field Name="Name" Ordinal="2" DbType="12" Length="50" />
                     <Field Name="IsActive" Ordinal="3" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
                     <Field Name="ShowOnCalendar" Ordinal="4" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
+                    <Field Name="ShowOnSchedule" Ordinal="5" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                   </Fields>
                 </Table>
                 <Table Name="AssessmentAttributes">
@@ -3481,6 +3483,7 @@
             <FieldMapping FieldName="IsActive" TargetFieldName="IsActive" />
             <FieldMapping FieldName="Name" TargetFieldName="Name" />
             <FieldMapping FieldName="ShowOnCalendar" TargetFieldName="ShowOnCalendar" />
+            <FieldMapping FieldName="ShowOnSchedule" TargetFieldName="ShowOnSchedule" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Assessment" TargetName="PsychologicalServices:dbo:Assessments">

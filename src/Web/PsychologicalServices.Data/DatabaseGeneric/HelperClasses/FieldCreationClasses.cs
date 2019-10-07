@@ -431,6 +431,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationStatusFieldIndex.ShowOnCalendar);}
 		}
+		/// <summary>Creates a new ArbitrationStatusEntity.ShowOnSchedule field instance</summary>
+		public static EntityField2 ShowOnSchedule
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ArbitrationStatusFieldIndex.ShowOnSchedule);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity AssessmentEntity</summary>

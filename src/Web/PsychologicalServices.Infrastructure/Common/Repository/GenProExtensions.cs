@@ -211,6 +211,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Name = arbitrationStatus.Name,
                     IsActive = arbitrationStatus.IsActive,
                     ShowOnCalendar = arbitrationStatus.ShowOnCalendar,
+                    ShowOnSchedule = arbitrationStatus.ShowOnSchedule,
                 }
                 : null;
         }

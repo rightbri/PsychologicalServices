@@ -219,6 +219,8 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>ShowOnCalendar. </summary>
 		ShowOnCalendar,
+		///<summary>ShowOnSchedule. </summary>
+		ShowOnSchedule,
 		/// <summary></summary>
 		AmountOfFields
 	}

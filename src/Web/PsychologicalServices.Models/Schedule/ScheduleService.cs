@@ -163,11 +163,15 @@ namespace PsychologicalServices.Models.Schedule
                 AppointmentStatusIds = parameters.AppointmentStatusIds,
             };
 
+            var arbitrationStatuses = _arbitrationRepository.GetArbitrationStatuses();
+            var arbitrationStatusIds = arbitrationStatuses.Where(s => s.ShowOnSchedule).Select(s => s.ArbitrationStatusId);
+
             var arbitrationSearchCriteria = new ArbitrationSearchCriteria
             {
                 CompanyId = result.Psychologist.Company.CompanyId,
                 StartDate = result.FromDate,
                 EndDate = result.ToDate,
+                ArbitrationStatusIds = arbitrationStatusIds,
             };
 
             var calendarNoteSearchCriteria = new CalendarNoteSearchCriteria
