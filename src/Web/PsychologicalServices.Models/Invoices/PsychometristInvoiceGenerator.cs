@@ -27,14 +27,18 @@ namespace PsychologicalServices.Models.Invoices
             _dateService = dateService;
         }
 
-        public Invoice CreateInvoice(User psychometrist, DateTimeOffset invoiceDate)
+        public Invoice CreateInvoice(
+            User psychometrist,
+            DateTimeOffset invoicePeriodBegin,
+            DateTimeOffset invoicePeriodEnd
+        )
         {
             var invoiceSearchCriteria = new InvoiceSearchCriteria
             {
                 CompanyId = psychometrist.Company.CompanyId,
                 PayableToId = psychometrist.UserId,
                 InvoiceTypeId = InvoiceType.Psychometrist,
-                InvoiceDate = invoiceDate,
+                InvoiceDate = invoicePeriodEnd,
             };
 
             if (_invoiceRepository.GetInvoices(invoiceSearchCriteria).Any())
@@ -47,7 +51,12 @@ namespace PsychologicalServices.Models.Invoices
                 InvoiceTypeId = InvoiceType.Psychometrist,
             };
 
-            var lineGroups = GetInvoiceableAppointments(psychometrist.UserId, invoiceDate, psychometrist.Company.Timezone)
+            var lineGroups = GetInvoiceableAppointments(
+                    psychometrist.UserId,
+                    invoicePeriodBegin,
+                    invoicePeriodEnd,
+                    psychometrist.Company.Timezone
+                )
                 .OrderBy(appointment => appointment.AppointmentTime)
                 .Select((appointment, index) =>
                 {
@@ -63,7 +72,9 @@ namespace PsychologicalServices.Models.Invoices
             var invoice = new Invoice
             {
                 Identifier = string.Format("{0}-{1:00#}", psychometrist.UserId, _invoiceRepository.GetInvoiceCount(psychometrist.UserId) + 1),
-                InvoiceDate = invoiceDate,
+                InvoiceDate = invoicePeriodEnd,
+                InvoicePeriodBegin = invoicePeriodBegin,
+                InvoicePeriodEnd = invoicePeriodEnd,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = invoiceType,
                 PayableTo = psychometrist,
@@ -86,7 +97,7 @@ namespace PsychologicalServices.Models.Invoices
 
             var psychometrist = _userRepository.GetUserById(invoice.PayableTo.UserId);
 
-            var lineGroups = GetInvoiceableAppointments(psychometrist.UserId, invoice.InvoiceDate, psychometrist.Company.Timezone)
+            var lineGroups = GetInvoiceableAppointments(psychometrist.UserId, invoice.InvoicePeriodBegin, invoice.InvoicePeriodEnd, psychometrist.Company.Timezone)
                 .OrderBy(appointment => appointment.AppointmentTime)
                 .Select((appointment, index) =>
                 {
@@ -187,13 +198,18 @@ namespace PsychologicalServices.Models.Invoices
                 : 0;
         }
 
-        private IEnumerable<Appointment> GetInvoiceableAppointments(int psychometristId, DateTimeOffset invoiceDate, string timezone)
+        private IEnumerable<Appointment> GetInvoiceableAppointments(
+            int psychometristId,
+            DateTimeOffset invoicePeriodBegin,
+            DateTimeOffset invoicePeriodEnd,
+            string timezone
+        )
         {
             var criteria = new AppointmentSearchCriteria
             {
                 PsychometristId = psychometristId,
-                AppointmentTimeStart = invoiceDate.StartOfMonth(timezone),
-                AppointmentTimeEnd = invoiceDate.EndOfMonth(timezone),
+                AppointmentTimeStart = invoicePeriodEnd.InTimezone(timezone),
+                AppointmentTimeEnd = invoicePeriodEnd.InTimezone(timezone),
             };
 
             var appointments = _appointmentRepository.GetAppointmentsForPsychometristInvoice(criteria)

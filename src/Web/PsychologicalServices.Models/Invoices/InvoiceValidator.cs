@@ -49,6 +49,13 @@ namespace PsychologicalServices.Models.Invoices
                 );
             }
 
+            if (item.InvoicePeriodEnd < item.InvoicePeriodBegin)
+            {
+                result.ValidationErrors.Add(
+                    new ValidationError { PropertyName = "InvoicePeriodEnd", Message = "Invoice period end must be after invoice period begin" }
+                );
+            }
+
             if (item.InvoiceType.InvoiceTypeId == InvoiceType.Psychologist && item.InvoiceStatus.InvoiceStatusId == InvoiceStatus.Submitted)
             {
                 var lineGroup = item.LineGroups.Where(lg => null != lg.Appointment).FirstOrDefault();

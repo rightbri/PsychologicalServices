@@ -565,6 +565,8 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("InvoiceEntity", "Total", typeof(System.Int32), false, false, false, false,  (int)InvoiceFieldIndex.Total, 0, 0, 10);
 			this.AddElementFieldInfo("InvoiceEntity", "InvoiceTypeId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.InvoiceTypeId, 0, 0, 10);
 			this.AddElementFieldInfo("InvoiceEntity", "PayableToId", typeof(System.Int32), false, true, false, false,  (int)InvoiceFieldIndex.PayableToId, 0, 0, 10);
+			this.AddElementFieldInfo("InvoiceEntity", "InvoicePeriodBegin", typeof(System.DateTimeOffset), false, false, false, false,  (int)InvoiceFieldIndex.InvoicePeriodBegin, 0, 0, 0);
+			this.AddElementFieldInfo("InvoiceEntity", "InvoicePeriodEnd", typeof(System.DateTimeOffset), false, false, false, false,  (int)InvoiceFieldIndex.InvoicePeriodEnd, 0, 0, 0);
 		}
 		/// <summary>Inits InvoiceDocumentEntity's FieldInfo objects</summary>
 		private void InitInvoiceDocumentEntityInfos()

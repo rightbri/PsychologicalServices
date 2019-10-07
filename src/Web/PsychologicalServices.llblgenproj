@@ -523,6 +523,8 @@
           <Field Name="Identifier" Type="string" MaxLength="20" FieldIndex="1" />
           <Field Name="InvoiceDate" Type="datetimeoffset" FieldIndex="2" />
           <Field Name="InvoiceId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="InvoicePeriodBegin" Type="datetimeoffset" FieldIndex="9" />
+          <Field Name="InvoicePeriodEnd" Type="datetimeoffset" FieldIndex="10" />
           <Field Name="InvoiceStatusId" Type="int" IsAutoCreated="true" FieldIndex="3" />
           <Field Name="InvoiceTypeId" Type="int" IsAutoCreated="true" FieldIndex="7" />
           <Field Name="PayableToId" Type="int" IsAutoCreated="true" FieldIndex="8" />
@@ -1683,7 +1685,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-07-30T00:02:00.9419742Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-06T17:10:33.1444952Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2183,6 +2185,8 @@
                     <Field Name="Total" Ordinal="7" DbType="8" Precision="10" />
                     <Field Name="InvoiceTypeId" Ordinal="8" DbType="8" Precision="10" />
                     <Field Name="PayableToId" Ordinal="9" DbType="8" Precision="10" />
+                    <Field Name="InvoicePeriodBegin" Ordinal="10" DbType="30" />
+                    <Field Name="InvoicePeriodEnd" Ordinal="11" DbType="30" />
                   </Fields>
                 </Table>
                 <Table Name="InvoiceStatusChanges">
@@ -3753,6 +3757,8 @@
             <FieldMapping FieldName="Identifier" TargetFieldName="Identifier" />
             <FieldMapping FieldName="InvoiceDate" TargetFieldName="InvoiceDate" />
             <FieldMapping FieldName="InvoiceId" TargetFieldName="InvoiceId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="InvoicePeriodBegin" TargetFieldName="InvoicePeriodBegin" />
+            <FieldMapping FieldName="InvoicePeriodEnd" TargetFieldName="InvoicePeriodEnd" />
             <FieldMapping FieldName="InvoiceStatusId" TargetFieldName="InvoiceStatusId" />
             <FieldMapping FieldName="InvoiceTypeId" TargetFieldName="InvoiceTypeId" />
             <FieldMapping FieldName="PayableToId" TargetFieldName="PayableToId" />

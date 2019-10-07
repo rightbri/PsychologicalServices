@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using PsychologicalServices.Models.Arbitrations;
-using PsychologicalServices.Models.Users;
 using PsychologicalServices.Models.Common.Utility;
 
 namespace PsychologicalServices.Models.Invoices
@@ -45,11 +44,14 @@ namespace PsychologicalServices.Models.Invoices
             };
 
             var invoiceDate = _dateService.UtcNow;
+            var invoicePeriodDate = arbitration.AvailableDate ?? invoiceDate;
 
             var invoice = new Invoice
             {
                 Identifier = $"{invoiceDate:yy-MM-}{_invoiceRepository.IncrementCompanyInvoiceCounter(arbitration.Psychologist.Company.CompanyId):00#}",
                 InvoiceDate = invoiceDate,
+                InvoicePeriodBegin = invoicePeriodDate,
+                InvoicePeriodEnd = invoicePeriodDate,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = new InvoiceType
                 {

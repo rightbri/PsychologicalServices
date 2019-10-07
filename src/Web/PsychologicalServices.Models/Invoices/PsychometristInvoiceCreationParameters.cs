@@ -8,8 +8,8 @@ namespace PsychologicalServices.Models.Invoices
 
         public int PsychometristId { get; set; }
 
-        public int Year { get; set; }
+        public DateTimeOffset InvoicePeriodBegin { get; set; }
 
-        public int Month { get; set; }
+        public DateTimeOffset InvoicePeriodEnd { get; set; }
     }
 }

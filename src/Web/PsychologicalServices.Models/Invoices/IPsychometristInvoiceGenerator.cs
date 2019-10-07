@@ -6,7 +6,11 @@ namespace PsychologicalServices.Models.Invoices
 {
     public interface IPsychometristInvoiceGenerator
     {
-        Invoice CreateInvoice(User psychometrist, DateTimeOffset invoiceDate);
+        Invoice CreateInvoice(
+            User psychometrist,
+            DateTimeOffset invoicePeriodBegin,
+            DateTimeOffset invoicePeriodEnd
+        );
 
         IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice);
 

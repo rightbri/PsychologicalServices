@@ -1391,6 +1391,16 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.PayableToId);}
 		}
+		/// <summary>Creates a new InvoiceEntity.InvoicePeriodBegin field instance</summary>
+		public static EntityField2 InvoicePeriodBegin
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.InvoicePeriodBegin);}
+		}
+		/// <summary>Creates a new InvoiceEntity.InvoicePeriodEnd field instance</summary>
+		public static EntityField2 InvoicePeriodEnd
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceFieldIndex.InvoicePeriodEnd);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity InvoiceDocumentEntity</summary>

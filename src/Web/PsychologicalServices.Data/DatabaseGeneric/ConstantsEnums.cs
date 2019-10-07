@@ -723,6 +723,10 @@ namespace PsychologicalServices.Data
 		InvoiceTypeId,
 		///<summary>PayableToId. </summary>
 		PayableToId,
+		///<summary>InvoicePeriodBegin. </summary>
+		InvoicePeriodBegin,
+		///<summary>InvoicePeriodEnd. </summary>
+		InvoicePeriodEnd,
 		/// <summary></summary>
 		AmountOfFields
 	}

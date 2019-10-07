@@ -533,6 +533,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("InvoiceTypeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PayableToId", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("InvoicePeriodBegin", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("InvoicePeriodEnd", fieldHashtable);
 		}
 		#endregion
 
@@ -802,6 +806,26 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)InvoiceFieldIndex.PayableToId, true); }
 			set	{ SetValue((int)InvoiceFieldIndex.PayableToId, value); }
+		}
+
+		/// <summary> The InvoicePeriodBegin property of the Entity Invoice<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Invoices"."InvoicePeriodBegin"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.DateTimeOffset InvoicePeriodBegin
+		{
+			get { return (System.DateTimeOffset)GetValue((int)InvoiceFieldIndex.InvoicePeriodBegin, true); }
+			set	{ SetValue((int)InvoiceFieldIndex.InvoicePeriodBegin, value); }
+		}
+
+		/// <summary> The InvoicePeriodEnd property of the Entity Invoice<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Invoices"."InvoicePeriodEnd"<br/>
+		/// Table field type characteristics (type, precision, scale, length): DateTimeOffset, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.DateTimeOffset InvoicePeriodEnd
+		{
+			get { return (System.DateTimeOffset)GetValue((int)InvoiceFieldIndex.InvoicePeriodEnd, true); }
+			set	{ SetValue((int)InvoiceFieldIndex.InvoicePeriodEnd, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceDocumentEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

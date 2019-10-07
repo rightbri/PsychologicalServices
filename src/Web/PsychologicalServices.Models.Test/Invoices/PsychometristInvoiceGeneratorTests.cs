@@ -68,7 +68,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                     {
                         CompanyId = companyId,
                     },
-                }, invoiceDate);
+                }, invoiceDate.AddDays(-13), invoiceDate);
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                 },
             };
 
-            var invoice = psychometristInvoiceGenerator.CreateInvoice(psychometrist, invoiceDate);
+            var invoice = psychometristInvoiceGenerator.CreateInvoice(psychometrist, invoiceDate.AddDays(-13), invoiceDate);
 
             Assert.AreEqual(0, invoice.Total);
 
@@ -132,6 +132,60 @@ namespace PsychologicalServices.Models.Test.Invoices
             Assert.AreEqual(invoiceStatusId, invoice.InvoiceStatus.InvoiceStatusId);
 
             Assert.AreEqual(InvoiceType.Psychometrist, invoice.InvoiceType.InvoiceTypeId);
+        }
+
+        [TestMethod]
+        public void CreateInvoiceSetsInvoiceDateToInvoicePeriodEnd()
+        {
+            var userId = 1;
+            var invoicePeriodBegin = new DateTimeOffset(2017, 08, 25, 0, 0, 0, TimeSpan.Zero);
+            var invoicePeriodEnd = invoicePeriodBegin.TwoSundaysAfter();
+            var taxRate = 0.15m;
+            var invoiceStatusId = 1;
+
+            var psychometristInvoiceGenerator = GetService(
+                (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
+                {
+                    invoiceRepositoryMock
+                        .Setup(invoiceRepository => invoiceRepository.GetInvoices(It.IsAny<InvoiceSearchCriteria>()))
+                        .Returns(() => Enumerable.Empty<Invoice>());
+
+                    invoiceRepositoryMock
+                        .Setup(invoiceRepository => invoiceRepository.GetInvoiceCount(It.Is<int>(i => i == userId)))
+                        .Returns(() => 0);
+
+                    invoiceRepositoryMock
+                        .Setup(invoiceRepository => invoiceRepository.GetInitialInvoiceStatus())
+                        .Returns(() => new InvoiceStatus
+                        {
+                            InvoiceStatusId = invoiceStatusId,
+                        });
+
+                    invoiceRepositoryMock
+                        .Setup(invoiceRepository => invoiceRepository.GetTaxRate())
+                        .Returns(() => taxRate);
+
+                    appointmentRepositoryMock
+                        .Setup(appointmentRepository => appointmentRepository.GetAppointments(It.IsAny<Appointments.AppointmentSearchCriteria>()))
+                        .Returns(() => Enumerable.Empty<Appointments.Appointment>());
+
+                    dateServiceMock
+                        .Setup(dateService => dateService.UtcNow)
+                        .Returns(() => DateTimeOffset.UtcNow);
+                });
+
+            var psychometrist = new Users.User
+            {
+                UserId = userId,
+                Company = new Companies.Company
+                {
+                    Timezone = "Eastern Standard Time",
+                },
+            };
+
+            var invoice = psychometristInvoiceGenerator.CreateInvoice(psychometrist, invoicePeriodBegin, invoicePeriodEnd);
+
+            Assert.AreEqual(invoicePeriodEnd, invoice.InvoiceDate);
         }
 
         [TestMethod]

@@ -43,11 +43,14 @@ namespace PsychologicalServices.Models.Invoices
             };
 
             var invoiceDate = _dateService.UtcNow;
+            var invoicePeriodDate = rawTestData.DataSentDate?? invoiceDate;
 
             var invoice = new Invoice
             {
                 Identifier = $"{invoiceDate:yy-MM-}{_invoiceRepository.IncrementCompanyInvoiceCounter(rawTestData.Company.CompanyId):00#}",
                 InvoiceDate = invoiceDate,
+                InvoicePeriodBegin = invoicePeriodDate,
+                InvoicePeriodEnd = invoicePeriodDate,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = new InvoiceType
                 {

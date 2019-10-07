@@ -8,8 +8,6 @@ using PsychologicalServices.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PsychologicalServices.Models.Invoices
 {
@@ -74,9 +72,7 @@ namespace PsychologicalServices.Models.Invoices
 
             var company = _companyRepository.GetCompany(parameters.CompanyId);
 
-            var invoiceDate = new DateTimeOffset(parameters.Year, parameters.Month, 1, 0, 0, 0, _timezoneService.GetTimeZoneInfo(company.Timezone).BaseUtcOffset).EndOfMonth(company.Timezone);
-
-            var invoice = _psychometristInvoiceGenerator.CreateInvoice(user, invoiceDate);
+            var invoice = _psychometristInvoiceGenerator.CreateInvoice(user, parameters.InvoicePeriodBegin, parameters.InvoicePeriodEnd);
 
             var invoiceId = _invoiceRepository.SaveInvoice(invoice);
 

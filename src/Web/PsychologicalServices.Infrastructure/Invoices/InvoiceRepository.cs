@@ -1,5 +1,4 @@
-﻿
-using PsychologicalServices.Data;
+﻿using PsychologicalServices.Data;
 using PsychologicalServices.Data.DatabaseSpecific;
 using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
@@ -596,6 +595,8 @@ namespace PsychologicalServices.Infrastructure.Invoices
                 
                 invoiceEntity.Identifier = invoice.Identifier;
                 invoiceEntity.InvoiceDate = invoice.InvoiceDate;
+                invoiceEntity.InvoicePeriodBegin = invoice.InvoicePeriodBegin;
+                invoiceEntity.InvoicePeriodEnd = invoice.InvoicePeriodEnd;
                 invoiceEntity.InvoiceStatusId = invoice.InvoiceStatus.InvoiceStatusId;
                 invoiceEntity.InvoiceTypeId = invoice.InvoiceType.InvoiceTypeId;
                 invoiceEntity.PayableToId = invoice.PayableTo.UserId;

@@ -271,4 +271,38 @@ namespace PsychologicalServices.Models.Test.Common.Utility
             Assert.AreEqual(expected, actual);
         }
     }
+
+    [TestClass]
+    public class When_Date_Is_After_Sunday
+    {
+        [TestMethod]
+        public void TwoSundaysAfter_Returns_Correct_Date()
+        {
+            //a monday
+            var d = new DateTimeOffset(2019, 10, 7, 0, 0, 0, TimeSpan.Zero);
+
+            var twoSundaysLater = d.TwoSundaysAfter();
+
+            Assert.AreEqual(DayOfWeek.Sunday, twoSundaysLater.DayOfWeek);
+
+            Assert.AreEqual(d.Offset, twoSundaysLater.Offset);
+        }
+    }
+
+    [TestClass]
+    public class When_Date_Is_Sunday
+    {
+        [TestMethod]
+        public void TwoSundaysAfter_Returns_Correct_Date()
+        {
+            //a sunday
+            var d = new DateTimeOffset(2019, 10, 6, 0, 0, 0, TimeSpan.Zero);
+
+            var twoSundaysLater = d.TwoSundaysAfter();
+
+            Assert.AreEqual(DayOfWeek.Sunday, twoSundaysLater.DayOfWeek);
+
+            Assert.AreEqual(d.Offset, twoSundaysLater.Offset);
+        }
+    }
 }

@@ -54,6 +54,8 @@ namespace PsychologicalServices.Models.Invoices
             var invoice = new Invoice
             {
                 InvoiceDate = _date.UtcNow,
+                InvoicePeriodBegin = appointment.AppointmentTime,
+                InvoicePeriodEnd = appointment.AppointmentTime,
                 InvoiceStatus = _invoiceRepository.GetInitialInvoiceStatus(),
                 InvoiceType = new InvoiceType
                     {

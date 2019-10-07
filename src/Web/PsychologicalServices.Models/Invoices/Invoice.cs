@@ -13,6 +13,10 @@ namespace PsychologicalServices.Models.Invoices
 
         public DateTimeOffset InvoiceDate { get; set; }
 
+        public DateTimeOffset InvoicePeriodBegin { get; set; }
+
+        public DateTimeOffset InvoicePeriodEnd { get; set; }
+
         public InvoiceStatus InvoiceStatus { get; set; }
 
         public InvoiceType InvoiceType { get; set; }

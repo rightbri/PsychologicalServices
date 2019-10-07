@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace PsychologicalServices.Models.Common.Utility
 {
@@ -33,6 +34,27 @@ namespace PsychologicalServices.Models.Common.Utility
                     .AddMonths(1)
                     .AddSeconds(-1),
                 timezoneId);
+        }
+
+        public static DateTimeOffset TwoSundaysAfter(this DateTimeOffset date)
+        {
+            var secondSundayAfterDate = Enumerable.Range(1, 14)
+                .Select(days => new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset).AddDays(days))
+                .Where(d => d.DayOfWeek == DayOfWeek.Sunday)
+                .Skip(1)
+                .First()
+                .AddDays(1)
+                .AddSeconds(-1);
+
+            return secondSundayAfterDate;
+        }
+
+        public static DateTimeOffset InTimezone(this DateTimeOffset date, string timezoneId)
+        {
+            return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
+                date,
+                timezoneId
+            );
         }
         
         public static DateTimeOffset StartOfDay(this DateTimeOffset date, string timezoneId)

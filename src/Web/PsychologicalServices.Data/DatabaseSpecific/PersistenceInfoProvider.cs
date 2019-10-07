@@ -590,7 +590,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits InvoiceEntity's mappings</summary>
 		private void InitInvoiceEntityMappings()
 		{
-			this.AddElementMapping("InvoiceEntity", @"PsychologicalServices", @"dbo", "Invoices", 9, 0);
+			this.AddElementMapping("InvoiceEntity", @"PsychologicalServices", @"dbo", "Invoices", 11, 0);
 			this.AddElementFieldMapping("InvoiceEntity", "InvoiceId", "InvoiceId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("InvoiceEntity", "Identifier", "Identifier", false, "NVarChar", 20, 0, 0, false, "", null, typeof(System.String), 1);
 			this.AddElementFieldMapping("InvoiceEntity", "InvoiceDate", "InvoiceDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2);
@@ -600,6 +600,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("InvoiceEntity", "Total", "Total", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 6);
 			this.AddElementFieldMapping("InvoiceEntity", "InvoiceTypeId", "InvoiceTypeId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 7);
 			this.AddElementFieldMapping("InvoiceEntity", "PayableToId", "PayableToId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
+			this.AddElementFieldMapping("InvoiceEntity", "InvoicePeriodBegin", "InvoicePeriodBegin", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 9);
+			this.AddElementFieldMapping("InvoiceEntity", "InvoicePeriodEnd", "InvoicePeriodEnd", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 10);
 		}
 
 		/// <summary>Inits InvoiceDocumentEntity's mappings</summary>
