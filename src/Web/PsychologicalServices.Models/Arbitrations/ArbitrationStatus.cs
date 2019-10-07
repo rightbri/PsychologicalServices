@@ -11,5 +11,7 @@ namespace PsychologicalServices.Models.Arbitrations
         public bool IsActive { get; set; }
 
         public bool ShowOnCalendar { get; set; }
+
+        public bool ShowOnSchedule { get; set; }
     }
 }
