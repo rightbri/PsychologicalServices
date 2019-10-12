@@ -39,6 +39,8 @@ namespace PsychologicalServices.Models.Invoices
 
         int SaveInvoiceConfiguration(InvoiceConfiguration invoiceConfiguration);
 
+        decimal GetPsychometristInvoiceTaxRate(int companyId);
+
         decimal GetTaxRate();
 
         int LogInvoiceDocumentSent(int invoiceDocumentId, string recipients);

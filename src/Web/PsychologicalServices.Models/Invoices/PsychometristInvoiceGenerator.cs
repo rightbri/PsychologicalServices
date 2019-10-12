@@ -33,9 +33,11 @@ namespace PsychologicalServices.Models.Invoices
             DateTimeOffset invoicePeriodEnd
         )
         {
+            var companyId = psychometrist.Company.CompanyId;
+
             var invoiceSearchCriteria = new InvoiceSearchCriteria
             {
-                CompanyId = psychometrist.Company.CompanyId,
+                CompanyId = companyId,
                 PayableToId = psychometrist.UserId,
                 InvoiceTypeId = InvoiceType.Psychometrist,
                 InvoiceDate = invoicePeriodEnd,
@@ -79,7 +81,7 @@ namespace PsychologicalServices.Models.Invoices
                 InvoiceType = invoiceType,
                 PayableTo = psychometrist,
                 LineGroups = lineGroups,
-                TaxRate = _invoiceRepository.GetTaxRate(),
+                TaxRate = _invoiceRepository.GetPsychometristInvoiceTaxRate(companyId),
                 UpdateDate = _dateService.UtcNow,
             };
 

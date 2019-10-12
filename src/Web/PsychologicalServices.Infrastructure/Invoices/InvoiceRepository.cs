@@ -1248,6 +1248,16 @@ namespace PsychologicalServices.Infrastructure.Invoices
             }
         }
 
+        public decimal GetPsychometristInvoiceTaxRate(int companyId)
+        {
+            var company = _companyRepository.GetCompany(companyId);
+
+            var psychometristConversionToEmployeesDate = new DateTimeOffset(2019, 10, 1, 0, 0, 0, TimeSpan.Zero).InTimezone(company.Timezone);
+            var psychometristsAreEmployees = _date.UtcNow >= psychometristConversionToEmployeesDate;
+
+            return psychometristsAreEmployees ? 0.0m : GetTaxRate();
+        }
+
         public decimal GetTaxRate()
         {
             return 0.13m;   //TODO: retrieve from DB
