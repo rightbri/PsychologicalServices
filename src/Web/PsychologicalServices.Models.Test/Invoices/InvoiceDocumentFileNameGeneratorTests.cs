@@ -85,6 +85,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoice = new Invoice
             {
+                Identifier = "XYZ-123",
                 InvoiceDate = date,
                 InvoiceType = new InvoiceType
                 {
@@ -101,7 +102,7 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Returns(psychometrist);
                 });
 
-            var expected = "Jun 2018 Zelda INVOICE";
+            var expected = $"{date:MMM dd yyyy} {psychometrist.FirstName} INVOICE {invoice.Identifier}";
 
             var actual = invoiceDocumentFileNameGenerator.GetFileName(invoice);
 

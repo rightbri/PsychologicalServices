@@ -82,12 +82,12 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'invoiceablerawtestdata');
 	}
 
-	createPsychometristInvoice(companyId, psychometristId, year, month) {
+	createPsychometristInvoice(companyId, psychometristId, invoicePeriodBegin, invoicePeriodEnd) {
 		return this.postBasic('psychometristinvoice/create', {
 			'companyId': companyId,
 			'psychometristId': psychometristId,
-			'year': year,
-			'month': month
+			'invoicePeriodBegin': invoicePeriodBegin,
+			'invoicePeriodEnd': invoicePeriodEnd
 		});
 	}
 

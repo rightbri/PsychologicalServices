@@ -1328,7 +1328,7 @@ namespace PsychologicalServices.Infrastructure.Invoices
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
-                var table = RetrievalProcedures.InvoiceableAppointmentData(criteria.CompanyId, criteria.InvoiceTypeId, criteria.StartSearch, (DataAccessAdapter)adapter);
+                var table = RetrievalProcedures.InvoiceableAppointmentData(criteria.CompanyId, criteria.InvoiceTypeId, criteria.StartDateSearch, criteria.EndDateSearch, (DataAccessAdapter)adapter);
 
                 return table
                     .AsEnumerable()

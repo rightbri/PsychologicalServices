@@ -374,6 +374,15 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     {
                         appointments = appointments.Where(appointment => appointment.PsychometristId == criteria.PsychometristId.Value);
                     }
+
+                    if (criteria.ExcludePsychometristInvoicedAppointments)
+                    {
+                        appointments = appointments.Where(appointment =>
+                            !appointment.InvoiceLineGroupAppointments.Any(ilga =>
+                                ilga.InvoiceLineGroup.Invoice.PayableToId == criteria.PsychometristId
+                            )
+                        );
+                    }
                 }
 
                 return Execute<AppointmentEntity>(

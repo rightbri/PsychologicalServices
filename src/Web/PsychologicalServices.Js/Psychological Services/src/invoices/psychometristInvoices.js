@@ -17,13 +17,13 @@ export class PsychometristInvoices {
 		return this.context.getUser().then(user => this.user = user);
 	}
 	
-	createInvoice(psychometristMonth) {
-		this.dataRepository.createPsychometristInvoice(this.user.company.companyId, psychometristMonth.payableToId, psychometristMonth.year, psychometristMonth.month)
+	createInvoice(psychometristPeriod) {
+		this.dataRepository.createPsychometristInvoice(this.user.company.companyId, psychometristPeriod.payableToId, psychometristPeriod.startDate, psychometristPeriod.endDate)
 			.then(data => {
 				let invoice = data;
 
-				psychometristMonth.invoiceId = invoice.invoiceId;
-				psychometristMonth.canCreateInvoice = false;
+				psychometristPeriod.invoiceId = invoice.invoiceId;
+				psychometristPeriod.canCreateInvoice = false;
 			});
 	}
 	
@@ -31,33 +31,33 @@ export class PsychometristInvoices {
 		return this.dataRepository.searchInvoiceableAppointmentData({
 				'companyId': this.user.company.companyId,
 				'invoiceTypeId': this.invoiceTypeId,
-				'startSearch': this.startSearch
+				'startDateSearch': this.startDateSearch,
+				'endDateSearch': this.endDateSearch
 			}).then(data => {
 
 				this.invoiceableAppointmentData = data;
 
-				this.invoiceablePsychometristMonths = this.invoiceableAppointmentData.reduce(function(accumulator, currentValue) {
-					let psychometristMonth = accumulator.find(element =>
-						element.payableToId === currentValue.payableToId &&
-						element.year === currentValue.year &&
-						element.month === currentValue.month
+				this.invoiceablePsychometristPeriods = this.invoiceableAppointmentData.reduce(function(accumulator, currentValue) {
+					let psychometristPeriod = accumulator.find(element =>
+						element.payableToId === currentValue.payableToId
 					);
 					
-					if (psychometristMonth === undefined) {
-						psychometristMonth = {
+					if (psychometristPeriod === undefined) {
+						psychometristPeriod = {
 							'payableTo': currentValue.payableTo,
 							'payableToId': currentValue.payableToId,
 							'year': currentValue.year,
 							'month': currentValue.month,
-							'monthName': this.config.months[currentValue.month],
+							'startDate': this.startDateSearch,
+							'endDate': this.endDateSearch,
 							'appointmentCount': 0,
 							'canCreateInvoice': true
 						};
 	
-						accumulator.push(psychometristMonth);
+						accumulator.push(psychometristPeriod);
 					}
 	
-					psychometristMonth.appointmentCount += 1;
+					psychometristPeriod.appointmentCount += 1;
 	
 					return accumulator;
 				}.bind(this), []);
@@ -65,7 +65,11 @@ export class PsychometristInvoices {
 			});
 	}
 	
-	dateChanged(e) {
-		this.startSearch = e.detail.dates[0];
+	startDateChanged(e) {
+		this.startDateSearch = e.detail.dates[0];
+	}
+
+	endDateChanged(e) {
+		this.endDateSearch = e.detail.dates[0];
 	}
 }

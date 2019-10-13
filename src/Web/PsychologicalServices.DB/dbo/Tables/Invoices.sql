@@ -8,13 +8,15 @@
     [Total]              INT                NOT NULL,
     [InvoiceTypeId]      INT                NOT NULL,
     [PayableToId]        INT                NOT NULL,
-    [InvoicePeriodBegin] DATETIMEOFFSET (7) NULL,
-    [InvoicePeriodEnd]   DATETIMEOFFSET (7) NULL,
+    [InvoicePeriodBegin] DATETIMEOFFSET (7) NOT NULL,
+    [InvoicePeriodEnd]   DATETIMEOFFSET (7) NOT NULL,
     CONSTRAINT [PK_Invoices] PRIMARY KEY CLUSTERED ([InvoiceId] ASC),
     CONSTRAINT [FK_Invoices_InvoiceStatuses] FOREIGN KEY ([InvoiceStatusId]) REFERENCES [dbo].[InvoiceStatuses] ([InvoiceStatusId]),
     CONSTRAINT [FK_Invoices_InvoiceTypes] FOREIGN KEY ([InvoiceTypeId]) REFERENCES [dbo].[InvoiceTypes] ([InvoiceTypeId]),
     CONSTRAINT [FK_Invoices_Users] FOREIGN KEY ([PayableToId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

@@ -21,6 +21,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public DateTimeOffset? AppointmentTimeEnd { get; set; }
 
+        public bool ExcludePsychometristInvoicedAppointments { get; set; }
+
         public int? CompanyId { get; set; }
     }
 }

@@ -53,118 +53,44 @@ namespace PsychologicalServices.Models.Invoices
                     "\r\n\t\t.summary-row.subtotal .invoice-amount {\r\n\t\t\tborder-style: solid solid none s" +
                     "olid;\r\n\t\t}\r\n\r\n\t\t.summary-row.total .description {\r\n\t\t\tfont-weight: bold;\r\n\t\t}\r\n\r" +
                     "\n\t\t.summary-row.total .invoice-amount {\r\n\t\t\tborder-width: 3px;\r\n\t\t\tborder-style:" +
-                    " solid;\r\n\t\t}\r\n\t\t\r\n\t</style>\r\n</head>\r\n<body>\r\n\t");
+                    " solid;\r\n\t\t}\r\n\t\t\r\n\t\t.no-tax .summary-row.subtotal .invoice-amount {\r\n\t\t\tborder-s" +
+                    "tyle: solid;\r\n\t\t}\r\n\r\n\t\t.no-tax .summary-row.tax,\r\n\t\t.no-tax .summary-row.total {" +
+                    "\r\n\t\t\tdisplay: none;\r\n\t\t}\r\n\t\t\r\n\t</style>\r\n</head>\r\n<body>\r\n\t");
             
-            #line 118 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 127 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
 
 		var psychometrist = Model.PayableTo;
 		var company = Model.LineGroups.First(lineGroup => null != lineGroup).Appointment.Assessment.Company;
+		var hasTax = Model.TaxRate > 0.0m;
 	
             
             #line default
             #line hidden
             this.Write("\r\n\t<header>\r\n\t\t<h1 class=\"title\">\r\n\t\t\t");
             
-            #line 125 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 135 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0} {1}", psychometrist.FirstName, psychometrist.LastName)));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t</h1>\r\n\t\t<p>\r\n\t\t\t");
             
-            #line 128 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 138 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  if (null != psychometrist.Address) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t");
             
-            #line 129 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 139 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  if (!string.IsNullOrWhiteSpace(psychometrist.Address.Street)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t");
             
-            #line 130 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.Street));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t");
-            
-            #line 131 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t");
-            
-            #line 132 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.Street));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t");
-            
-            #line 133 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
- if (!string.IsNullOrWhiteSpace(psychometrist.Address.Suite)) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t<br>");
-            
-            #line 134 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.Suite));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t");
-            
-            #line 135 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t");
-            
-            #line 136 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
- if (null != psychometrist.Address.City) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t<br>");
-            
-            #line 137 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.City.Name));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 137 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.City.Province));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\t\t\t\t");
-            
-            #line 138 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t");
-            
-            #line 139 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
- if (!string.IsNullOrWhiteSpace(psychometrist.Address.PostalCode)) { 
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t\t<br>");
-            
             #line 140 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.PostalCode));
+            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.Street));
             
             #line default
             #line hidden
@@ -175,158 +101,251 @@ namespace PsychologicalServices.Models.Invoices
             
             #line default
             #line hidden
-            this.Write("\t\t\t");
+            this.Write("\t\t\t\t");
             
             #line 142 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.Street));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t");
+            
+            #line 143 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(psychometrist.Address.Suite)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t<br>");
+            
+            #line 144 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.Suite));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t");
+            
+            #line 145 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t");
+            
+            #line 146 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+ if (null != psychometrist.Address.City) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t<br>");
+            
+            #line 147 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.City.Name));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 147 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.City.Province));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t");
+            
+            #line 148 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t");
+            
+            #line 149 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+ if (!string.IsNullOrWhiteSpace(psychometrist.Address.PostalCode)) { 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t\t<br>");
+            
+            #line 150 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Address.PostalCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\t\t\t\t");
+            
+            #line 151 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t");
+            
+            #line 152 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t<a href=\"mailto:");
             
-            #line 143 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 153 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Email));
             
             #line default
             #line hidden
             this.Write("\">");
             
-            #line 143 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 153 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(psychometrist.Email));
             
             #line default
             #line hidden
             this.Write("</a>\r\n\t\t</p>\r\n\t</header>\r\n\r\n\t<p class=\"invoice-data\">\r\n\t\tInvoice Number:&nbsp;");
             
-            #line 148 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 158 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.Identifier));
             
             #line default
             #line hidden
             this.Write("\r\n\t</p>\r\n\t<p class=\"invoice-data\">\r\n\t\tDate of Invoice:&nbsp;");
             
-            #line 151 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 161 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:MMMM d, yyyy}", Model.InvoiceDate)));
             
             #line default
             #line hidden
             this.Write("\r\n\t</p>\r\n\t\r\n\t<p class=\"bill-to\">\r\n\t\tBill To:\r\n\t\t<br>");
             
-            #line 156 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 166 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Name));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t");
             
-            #line 157 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 167 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  if (null != company.Address) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t");
             
-            #line 158 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 168 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  if (!string.IsNullOrWhiteSpace(company.Address.Street)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t<br>");
             
-            #line 159 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 169 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Street));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t");
             
-            #line 160 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 170 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t");
             
-            #line 161 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 171 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t<br>");
             
-            #line 162 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 172 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.Suite));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t");
             
-            #line 163 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 173 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t");
             
-            #line 164 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 174 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  if (null != company.Address.City) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t<br>");
             
-            #line 165 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 175 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Name));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 165 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 175 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.City.Province));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t");
             
-            #line 166 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 176 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t\t");
             
-            #line 167 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 177 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  if (!string.IsNullOrWhiteSpace(company.Address.PostalCode)) { 
             
             #line default
             #line hidden
             this.Write("\t\t\t<br>");
             
-            #line 168 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 178 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(company.Address.PostalCode));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t");
             
-            #line 169 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 179 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\t\t");
             
-            #line 170 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 180 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\t</p>\r\n\r\n\t<table>\r\n\t\t<thead>\r\n\t\t\t<tr>\r\n\t\t\t\t<th>Patient Name</th>\r\n\t\t\t\t<th>Assessm" +
-                    "ent Date</th>\r\n\t\t\t\t<th>Description</th>\r\n\t\t\t\t<th>Assessment Centre</th>\r\n\t\t\t\t<th" +
-                    ">Amount</th>\r\n\t\t\t</tr>\r\n\t\t</thead>\r\n\t\t<tbody>\r\n\t\t\t");
+            this.Write("\t</p>\r\n\r\n\t");
             
-            #line 184 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 183 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+
+		var tableClass = hasTax ? "" : "no-tax";
+	
+            
+            #line default
+            #line hidden
+            this.Write("\t<table class=\"");
+            
+            #line 186 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(tableClass));
+            
+            #line default
+            #line hidden
+            this.Write("\">\r\n\t\t<thead>\r\n\t\t\t<tr>\r\n\t\t\t\t<th>Patient Name</th>\r\n\t\t\t\t<th>Assessment Date</th>\r\n" +
+                    "\t\t\t\t<th>Description</th>\r\n\t\t\t\t<th>Assessment Centre</th>\r\n\t\t\t\t<th>Amount</th>\r\n\t" +
+                    "\t\t</tr>\r\n\t\t</thead>\r\n\t\t<tbody>\r\n\t\t\t");
+            
+            #line 197 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
 
 				var subtotal = 0.0m;
 				var divisor = 100.0m;
@@ -345,42 +364,42 @@ namespace PsychologicalServices.Models.Invoices
             #line hidden
             this.Write("\t\t\t<tr>\r\n\t\t\t\t<td>");
             
-            #line 198 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 211 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(claimant != null ? string.Format("{0} {1}", claimant.FirstName, claimant.LastName) : ""));
             
             #line default
             #line hidden
             this.Write("</td>\r\n\t\t\t\t<td>");
             
-            #line 199 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 212 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:dddd, MMMM d, yyyy}", appointment.AppointmentTime)));
             
             #line default
             #line hidden
             this.Write("</td>\r\n\t\t\t\t<td>");
             
-            #line 200 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 213 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(line.Description));
             
             #line default
             #line hidden
             this.Write("</td>\r\n\t\t\t\t<td>");
             
-            #line 201 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 214 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(appointment.Location.Name));
             
             #line default
             #line hidden
             this.Write("</td>\r\n\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t");
             
-            #line 203 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 216 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", line.Amount / divisor)));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t\t");
             
-            #line 206 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 219 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
 
 					}
 				}
@@ -388,10 +407,10 @@ namespace PsychologicalServices.Models.Invoices
             
             #line default
             #line hidden
-            this.Write("\t\t\t<tr class=\"summary-row subtotal\">\r\n\t\t\t\t<td class=\"description\" colspan=\"4\">Sub" +
-                    "total</td>\r\n\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t");
+            this.Write("\r\n\t\t\t<tr class=\"summary-row subtotal\">\r\n\t\t\t\t<td class=\"description\" colspan=\"4\">S" +
+                    "ubtotal</td>\r\n\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t");
             
-            #line 213 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 227 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", subtotal / divisor)));
             
             #line default
@@ -399,7 +418,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t\t<tr class=\"summary-row tax\">\r\n\t\t\t\t<td class=\"descriptio" +
                     "n\" colspan=\"4\">HST</td>\r\n\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t");
             
-            #line 219 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 233 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", subtotal * Model.TaxRate / divisor)));
             
             #line default
@@ -407,7 +426,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t\t<tr class=\"summary-row total\">\r\n\t\t\t\t<td class=\"descript" +
                     "ion\" colspan=\"4\">Total</td>\r\n\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t");
             
-            #line 225 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
+            #line 239 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\PsychometristInvoiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Format("{0:$#,##0.00}", Model.Total / divisor)));
             
             #line default

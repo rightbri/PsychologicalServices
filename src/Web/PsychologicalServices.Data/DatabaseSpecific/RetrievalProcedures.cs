@@ -258,13 +258,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Calls stored procedure 'InvoiceableAppointmentData'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="invoiceTypeId">Input parameter. </param>
-		/// <param name="startSearch">Input parameter. </param>
+		/// <param name="startDateSearch">Input parameter. </param>
+		/// <param name="endDateSearch">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch)
+		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch)
 		{
 			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
 			{
-				return InvoiceableAppointmentData(companyId, invoiceTypeId, startSearch, dataAccessProvider);
+				return InvoiceableAppointmentData(companyId, invoiceTypeId, startDateSearch, endDateSearch, dataAccessProvider);
 			}
 		}
 
@@ -272,11 +273,12 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="invoiceTypeId">Input parameter. </param>
-		/// <param name="startSearch">Input parameter. </param>
+		/// <param name="startDateSearch">Input parameter. </param>
+		/// <param name="endDateSearch">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch, IDataAccessCore dataAccessProvider)
+		public static DataTable InvoiceableAppointmentData(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch, IDataAccessCore dataAccessProvider)
 		{
-			using(StoredProcedureCall call = CreateInvoiceableAppointmentDataCall(dataAccessProvider, companyId, invoiceTypeId, startSearch))
+			using(StoredProcedureCall call = CreateInvoiceableAppointmentDataCall(dataAccessProvider, companyId, invoiceTypeId, startDateSearch, endDateSearch))
 			{
 				DataTable toReturn = call.FillDataTable();
 				return toReturn;
@@ -286,25 +288,27 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'InvoiceableAppointmentData'.</summary>
 		/// <param name="companyId">Input parameter of stored procedure</param>
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
-		/// <param name="startSearch">Input parameter of stored procedure</param>
+		/// <param name="startDateSearch">Input parameter of stored procedure</param>
+		/// <param name="endDateSearch">Input parameter of stored procedure</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetInvoiceableAppointmentDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch)
+		public static IRetrievalQuery GetInvoiceableAppointmentDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch)
 		{
 			using(var dataAccessProvider = new DataAccessAdapter())
 			{
-				return GetInvoiceableAppointmentDataCallAsQuery(companyId, invoiceTypeId, startSearch, dataAccessProvider);
+				return GetInvoiceableAppointmentDataCallAsQuery(companyId, invoiceTypeId, startDateSearch, endDateSearch, dataAccessProvider);
 			}
 		}
 
 		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'InvoiceableAppointmentData'.</summary>
 		/// <param name="companyId">Input parameter of stored procedure</param>
 		/// <param name="invoiceTypeId">Input parameter of stored procedure</param>
-		/// <param name="startSearch">Input parameter of stored procedure</param>
+		/// <param name="startDateSearch">Input parameter of stored procedure</param>
+		/// <param name="endDateSearch">Input parameter of stored procedure</param>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetInvoiceableAppointmentDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch, IDataAccessCore dataAccessProvider)
+		public static IRetrievalQuery GetInvoiceableAppointmentDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch, IDataAccessCore dataAccessProvider)
 		{
-			return CreateInvoiceableAppointmentDataCall(dataAccessProvider, companyId, invoiceTypeId, startSearch).ToRetrievalQuery();
+			return CreateInvoiceableAppointmentDataCall(dataAccessProvider, companyId, invoiceTypeId, startDateSearch, endDateSearch).ToRetrievalQuery();
 		}
 
 		/// <summary>Calls stored procedure 'InvoiceableArbitrationData'.<br/><br/></summary>
@@ -697,14 +701,16 @@ needsToBeSentToReferralSource).ToRetrievalQuery();
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <param name="companyId">Input parameter</param>
 		/// <param name="invoiceTypeId">Input parameter</param>
-		/// <param name="startSearch">Input parameter</param>
+		/// <param name="startDateSearch">Input parameter</param>
+		/// <param name="endDateSearch">Input parameter</param>
 		/// <returns>Ready to use StoredProcedureCall object</returns>
-		private static StoredProcedureCall CreateInvoiceableAppointmentDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startSearch)
+		private static StoredProcedureCall CreateInvoiceableAppointmentDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.Int32> invoiceTypeId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch)
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[InvoiceableAppointmentData]", "InvoiceableAppointmentData")
 							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
 							.AddParameter("@invoiceTypeId", "Int", 0, ParameterDirection.Input, true, 10, 0, invoiceTypeId)
-							.AddParameter("@startSearch", "DateTimeOffset", 0, ParameterDirection.Input, true, 0, 0, startSearch);
+							.AddParameter("@startDateSearch", "DateTimeOffset", 0, ParameterDirection.Input, true, 0, 0, startDateSearch)
+							.AddParameter("@endDateSearch", "DateTimeOffset", 0, ParameterDirection.Input, true, 0, 0, endDateSearch);
 		}
 
 		/// <summary>Creates the call object for the call 'InvoiceableArbitrationData' to stored procedure 'InvoiceableArbitrationData'.</summary>

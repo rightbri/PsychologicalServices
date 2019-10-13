@@ -112,12 +112,22 @@
 			border-style: solid;
 		}
 		
+		.no-tax .summary-row.subtotal .invoice-amount {
+			border-style: solid;
+		}
+
+		.no-tax .summary-row.tax,
+		.no-tax .summary-row.total {
+			display: none;
+		}
+		
 	</style>
 </head>
 <body>
 	<#
 		var psychometrist = Model.PayableTo;
 		var company = Model.LineGroups.First(lineGroup => null != lineGroup).Appointment.Assessment.Company;
+		var hasTax = Model.TaxRate > 0.0m;
 	#>
 
 	<header>
@@ -170,7 +180,10 @@
 		<# } #>
 	</p>
 
-	<table>
+	<#
+		var tableClass = hasTax ? "" : "no-tax";
+	#>
+	<table class="<#= tableClass #>">
 		<thead>
 			<tr>
 				<th>Patient Name</th>
@@ -207,6 +220,7 @@
 					}
 				}
 			#>
+
 			<tr class="summary-row subtotal">
 				<td class="description" colspan="4">Subtotal</td>
 				<td class="invoice-amount">

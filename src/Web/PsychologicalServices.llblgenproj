@@ -1621,8 +1621,9 @@
     <SPCallDefinition Name="InvoiceableAppointmentData" ObjectID="d9990c91-aba3-4d48-ba7d-21ece7978661">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" FieldIndex="0" />
+        <Parameter Name="EndDateSearch" Type="datetimeoffset" IsOptional="true" FieldIndex="3" />
         <Parameter Name="InvoiceTypeId" Type="int" IsOptional="true" FieldIndex="1" />
-        <Parameter Name="StartSearch" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
+        <Parameter Name="StartDateSearch" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
       </Parameters>
     </SPCallDefinition>
     <SPCallDefinition Name="InvoiceableArbitrationData" ObjectID="10f5170a-b358-43f3-b0b6-a73c4fb869ae">
@@ -1686,7 +1687,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-07T14:17:13.7326251Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-12T22:39:59.8586256Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2584,7 +2585,8 @@
                   <Parameters>
                     <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
                     <Parameter Name="@invoiceTypeId" Direction="1" Ordinal="2" DbType="8" Precision="10" />
-                    <Parameter Name="@startSearch" Direction="1" Ordinal="3" DbType="30" />
+                    <Parameter Name="@startDateSearch" Direction="1" Ordinal="3" DbType="30" />
+                    <Parameter Name="@endDateSearch" Direction="1" Ordinal="4" DbType="30" />
                   </Parameters>
                   <Resultsets>
                     <Resultset Name="Resultset1">
@@ -4068,8 +4070,9 @@
         <SPCallMapping SPCallName=":InvoiceableAppointmentData" TargetName="PsychologicalServices:dbo:InvoiceableAppointmentData">
           <FieldMappings>
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
+            <FieldMapping FieldName="EndDateSearch" TargetFieldName="@endDateSearch" />
             <FieldMapping FieldName="InvoiceTypeId" TargetFieldName="@invoiceTypeId" />
-            <FieldMapping FieldName="StartSearch" TargetFieldName="@startSearch" />
+            <FieldMapping FieldName="StartDateSearch" TargetFieldName="@startDateSearch" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":InvoiceableArbitrationData" TargetName="PsychologicalServices:dbo:InvoiceableArbitrationData">

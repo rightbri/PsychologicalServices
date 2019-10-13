@@ -35,19 +35,20 @@ namespace PsychologicalServices.Models.Invoices
         {
             var companyId = psychometrist.Company.CompanyId;
 
-            var invoiceSearchCriteria = new InvoiceSearchCriteria
-            {
-                CompanyId = companyId,
-                PayableToId = psychometrist.UserId,
-                InvoiceTypeId = InvoiceType.Psychometrist,
-                InvoiceDate = invoicePeriodEnd,
-            };
+            var invoiceableAppointmentData = _invoiceRepository.GetInvoiceableAppointmentData(
+                new InvoiceableAppointmentDataSearchCriteria
+                {
+                    CompanyId = companyId,
+                    InvoiceTypeId = InvoiceType.Psychometrist,
+                    StartDateSearch = invoicePeriodBegin,
+                    EndDateSearch = invoicePeriodEnd
+                });
 
-            if (_invoiceRepository.GetInvoices(invoiceSearchCriteria).Any())
+            if (!invoiceableAppointmentData.Any(d => d.PayableToId == psychometrist.UserId))
             {
-                throw new InvalidOperationException("An invoice already exists for this psychometrist and invoice date.");
+                throw new InvalidOperationException("There are no invoiceable appointments for the specified psychometrist and date range.");
             }
-            
+
             var invoiceType = new InvoiceType
             {
                 InvoiceTypeId = InvoiceType.Psychometrist,
@@ -210,8 +211,9 @@ namespace PsychologicalServices.Models.Invoices
             var criteria = new AppointmentSearchCriteria
             {
                 PsychometristId = psychometristId,
-                AppointmentTimeStart = invoicePeriodEnd.InTimezone(timezone),
+                AppointmentTimeStart = invoicePeriodBegin.InTimezone(timezone),
                 AppointmentTimeEnd = invoicePeriodEnd.InTimezone(timezone),
+                ExcludePsychometristInvoicedAppointments = true,
             };
 
             var appointments = _appointmentRepository.GetAppointmentsForPsychometristInvoice(criteria)

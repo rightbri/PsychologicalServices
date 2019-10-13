@@ -39,45 +39,14 @@ namespace PsychologicalServices.Models.Test.Invoices
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void CreateInvoiceThrowsExceptionWhenInvoiceAlreadyExists()
-        {
-            var payableToUserId = 1;
-            var companyId = 2;
-            var invoiceDate = new DateTimeOffset(2017, 09, 30, 11, 59, 59, TimeSpan.FromHours(-4));
-
-            var psychometristInvoiceGenerator = GetService(
-                (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
-                {
-                    invoiceRepositoryMock
-                        .Setup(invoiceRepository =>
-                            invoiceRepository.GetInvoices(
-                                It.Is<InvoiceSearchCriteria>(c => c.InvoiceTypeId == InvoiceType.Psychometrist && c.PayableToId == payableToUserId && c.InvoiceDate == invoiceDate && c.CompanyId == companyId)
-                            )
-                        )
-                        .Returns(() => new[]
-                        {
-                            new Invoice(),
-                        });
-                });
-
-            psychometristInvoiceGenerator.CreateInvoice(
-                new Users.User
-                {
-                    UserId = payableToUserId,
-                    Company = new Companies.Company
-                    {
-                        CompanyId = companyId,
-                    },
-                }, invoiceDate.AddDays(-13), invoiceDate);
-        }
-
-        [TestMethod]
-        public void CreateInvoiceWithNoAppointmentsCreatesZeroTotalInvoice()
+        public void CreateInvoiceWithNoAppointmentsThrowsException()
         {
             var userId = 1;
             var invoiceDate = new DateTimeOffset(2017, 08, 25, 0, 0, 0, TimeSpan.Zero);
             var taxRate = 0.15m;
+            var psychometristInvoiceTaxRate = 0.0m;
             var invoiceStatusId = 1;
+            var companyId = 1;
 
             var psychometristInvoiceGenerator = GetService(
                 (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
@@ -100,6 +69,10 @@ namespace PsychologicalServices.Models.Test.Invoices
                     invoiceRepositoryMock
                         .Setup(invoiceRepository => invoiceRepository.GetTaxRate())
                         .Returns(() => taxRate);
+
+                    invoiceRepositoryMock
+                        .Setup(invoiceRepository => invoiceRepository.GetPsychometristInvoiceTaxRate(It.Is<int>(i => i == companyId)))
+                        .Returns(() => psychometristInvoiceTaxRate);
 
                     appointmentRepositoryMock
                         .Setup(appointmentRepository => appointmentRepository.GetAppointments(It.IsAny<Appointments.AppointmentSearchCriteria>()))
@@ -115,33 +88,108 @@ namespace PsychologicalServices.Models.Test.Invoices
                 UserId = userId,
                 Company = new Companies.Company
                 {
+                    CompanyId = companyId,
                     Timezone = "Eastern Standard Time",
                 },
             };
 
             var invoice = psychometristInvoiceGenerator.CreateInvoice(psychometrist, invoiceDate.AddDays(-13), invoiceDate);
 
-            Assert.AreEqual(0, invoice.Total);
-
-            Assert.AreEqual(userId, invoice.PayableTo.UserId);
-
-            Assert.AreEqual(invoiceDate, invoice.InvoiceDate);
-
-            Assert.AreEqual(taxRate, invoice.TaxRate);
-
-            Assert.AreEqual(invoiceStatusId, invoice.InvoiceStatus.InvoiceStatusId);
-
-            Assert.AreEqual(InvoiceType.Psychometrist, invoice.InvoiceType.InvoiceTypeId);
+            Assert.Fail();
         }
 
         [TestMethod]
         public void CreateInvoiceSetsInvoiceDateToInvoicePeriodEnd()
         {
             var userId = 1;
-            var invoicePeriodBegin = new DateTimeOffset(2017, 08, 25, 0, 0, 0, TimeSpan.Zero);
-            var invoicePeriodEnd = invoicePeriodBegin.TwoSundaysAfter();
+            var invoicePeriodBegin = new DateTimeOffset(2017, 10, 1, 0, 0, 0, TimeSpan.Zero);
+            var invoicePeriodEnd = new DateTimeOffset(2017, 10, 10, 0, 0, 0, TimeSpan.Zero);
             var taxRate = 0.15m;
             var invoiceStatusId = 1;
+
+            var payableToUserId = 1;
+            var companyId = 2;
+            var invoiceDate = new DateTimeOffset(2017, 09, 30, 11, 59, 59, TimeSpan.FromHours(-4));
+
+            var appointmentId = 1;
+            var appointmentTime = new DateTimeOffset(2017, 10, 8, 13, 0, 0, TimeSpan.Zero);
+            var appointmentStatusId = Appointments.AppointmentStatus.Complete;
+            var cityId = 2;
+            var assessmentTypeId = 3;
+            var assessmentTypeDescription = "Assessment Type";
+            var fileSize = 500;
+            var isLargeFile = false;
+            var referralSourceId = 4;
+            var psychologistId = 6;
+            var psychologist = new Users.User
+            {
+                UserId = psychologistId,
+                TravelFees = Enumerable.Empty<Users.UserTravelFee>(),
+            };
+            var siblingAppointments = Enumerable.Empty<Appointments.Appointment>();
+            var catastrophicFee = 35000;
+            var issuesInDispute = Enumerable.Empty<Models.Claims.IssueInDispute>();
+            var issueInDisputeInvoiceAmounts = new[]
+            {
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 1, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 2, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 3, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 4, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 5, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 6, }, InvoiceAmount = catastrophicFee },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 7, }, InvoiceAmount = 0 },
+                new IssueInDisputeInvoiceAmount { IssueInDispute = new Models.Claims.IssueInDispute { IssueInDisputeId = 8, }, InvoiceAmount = 0 },
+            };
+
+            var appointment = new Appointments.Appointment
+            {
+                AppointmentId = appointmentId,
+                AppointmentTime = appointmentTime,
+                AppointmentStatus = new Appointments.AppointmentStatus
+                {
+                    AppointmentStatusId = appointmentStatusId,
+                    CanInvoice = true,
+                },
+                Location = new Addresses.Address
+                {
+                    City = new Cities.City
+                    {
+                        CityId = cityId,
+                    },
+                },
+                Assessment = new Assessments.Assessment
+                {
+                    Claimant = new Claims.Claimant
+                    {
+                        FirstName = "First",
+                        LastName = "Last",
+                    },
+                    AssessmentType = new Assessments.AssessmentType
+                    {
+                        AssessmentTypeId = assessmentTypeId,
+                        Description = assessmentTypeDescription,
+                    },
+                    FileSize = fileSize,
+                    IsLargeFile = isLargeFile,
+                    ReferralSource = new Referrals.ReferralSource
+                    {
+                        ReferralSourceId = referralSourceId,
+                    },
+                    Reports = new[] {
+                        new Reports.Report
+                        {
+                            IsAdditional = false,
+                            IssuesInDispute = issuesInDispute,
+                        }
+                    },
+                    Company = new Companies.Company
+                    {
+                        CompanyId = companyId,
+                    },
+                },
+                Psychologist = new Users.User { UserId = psychologistId },
+                Psychometrist = new Users.User { UserId = payableToUserId },
+            };
 
             var psychometristInvoiceGenerator = GetService(
                 (invoiceRepositoryMock, appointmentRepositoryMock, userRepositoryMock, dateServiceMock) =>
@@ -165,9 +213,20 @@ namespace PsychologicalServices.Models.Test.Invoices
                         .Setup(invoiceRepository => invoiceRepository.GetTaxRate())
                         .Returns(() => taxRate);
 
+                    invoiceRepositoryMock
+                        .Setup(repo => repo.GetInvoiceableAppointmentData(It.IsAny<InvoiceableAppointmentDataSearchCriteria>()))
+                        .Returns(() => new[]
+                        {
+                            new InvoiceableAppointmentData
+                            {
+                                AppointmentId = appointment.AppointmentId,
+                                PayableToId = appointment.Psychometrist.UserId,
+                            }
+                        });
+
                     appointmentRepositoryMock
-                        .Setup(appointmentRepository => appointmentRepository.GetAppointments(It.IsAny<Appointments.AppointmentSearchCriteria>()))
-                        .Returns(() => Enumerable.Empty<Appointments.Appointment>());
+                        .Setup(repo => repo.GetAppointments(It.IsAny<Models.Appointments.AppointmentSearchCriteria>()))
+                        .Returns(() => new[] { appointment });
 
                     dateServiceMock
                         .Setup(dateService => dateService.UtcNow)
@@ -176,7 +235,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var psychometrist = new Users.User
             {
-                UserId = userId,
+                UserId = payableToUserId,
                 Company = new Companies.Company
                 {
                     Timezone = "Eastern Standard Time",

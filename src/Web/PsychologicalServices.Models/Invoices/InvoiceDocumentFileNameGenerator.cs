@@ -40,7 +40,7 @@ namespace PsychologicalServices.Models.Invoices
             {
                 var psychometrist = _userRepository.GetUserById(invoice.PayableTo.UserId);
 
-                return $"{invoice.InvoiceDate:MMM yyyy} {psychometrist.FirstName} INVOICE";
+                return $"{invoice.InvoiceDate:MMM dd yyyy} {psychometrist.FirstName} INVOICE {invoice.Identifier}";
             }
             else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Arbitration)
             {

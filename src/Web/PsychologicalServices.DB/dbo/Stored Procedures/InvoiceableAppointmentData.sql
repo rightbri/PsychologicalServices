@@ -6,23 +6,30 @@
 CREATE PROCEDURE [dbo].[InvoiceableAppointmentData]
 	@companyId INT,
 	@invoiceTypeId INT = NULL,
-	@startSearch DATETIMEOFFSET = NULL
+	@startDateSearch DATETIMEOFFSET = NULL,
+	@endDateSearch DATETIMEOFFSET = NULL
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF @startSearch IS NULL
+	IF @startDateSearch IS NULL
 		BEGIN
-			SET @startSearch = DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) - 1, 0)
+			SET @startDateSearch = DATEADD(WEEK, DATEDIFF(WEEK, 0, GETDATE()), 0)
+		END
+
+	IF @endDateSearch IS NULL
+		BEGIN
+			SET @endDateSearch = DATEADD(WEEK, DATEDIFF(WEEK, 0, GETDATE()) + 1, 0)
 		END
 
 	DECLARE @psychologistInvoiceTypeId INT = 1,
 			@psychometristInvoiceTypeId INT = 2,
 			@localCompanyId INT = @companyId,
 			@localInvoiceTypeId INT = @invoiceTypeId,
-			@localStartSearch DATETIMEOFFSET = @startSearch
+			@localStartDateSearch DATETIMEOFFSET = @startDateSearch,
+			@localEndDateSearch DATETIMEOFFSET = @endDateSearch
 
     --psychometrist months that need invoices
 	SELECT
@@ -52,15 +59,17 @@ BEGIN
 	AND NOT EXISTS (
 		SELECT
 		*
-		FROM dbo.Invoices
-		WHERE
+		FROM dbo.InvoiceLineGroupAppointments ilga
+		INNER JOIN dbo.InvoiceLineGroups ilg ON ilga.InvoiceLineGroupId = ilg.InvoiceLineGroupId
+		INNER JOIN dbo.Invoices i ON ilg.InvoiceId = i.InvoiceId
+		WHERE 
 		InvoiceTypeId = @psychometristInvoiceTypeId 
-		AND PayableToId = app.PsychometristId
-		AND YEAR(InvoiceDate) = YEAR(app.AppointmentTime) 
-		AND MONTH(InvoiceDate) = MONTH(app.AppointmentTime)
+		AND ilga.AppointmentId = app.AppointmentId
+		AND i.PayableToId = app.PsychometristId 
 	)
 	AND ass.CompanyId = @localCompanyId
-	AND app.AppointmentTime >= @localStartSearch
+	AND app.AppointmentTime >= @localStartDateSearch
+	AND app.AppointmentTime < @localEndDateSearch
 	AND (@localInvoiceTypeId IS NULL OR @localInvoiceTypeId = @psychometristInvoiceTypeId)
 
 
@@ -102,7 +111,8 @@ BEGIN
 		AND i.PayableToId = psychologists.UserId
 	)
 	AND ass.CompanyId = @localCompanyId
-	AND app.AppointmentTime >= @localStartSearch
+	AND app.AppointmentTime >= @localStartDateSearch
+	AND app.AppointmentTime < @localEndDateSearch
 	AND (@localInvoiceTypeId IS NULL OR @localInvoiceTypeId = @psychologistInvoiceTypeId)
 
 END

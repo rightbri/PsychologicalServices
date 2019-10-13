@@ -13,11 +13,23 @@
 			<legend class="uk-legend">Psychometrist Invoices</legend>
 			
 			<form class="uk-form-stacked">
-			
 				<div class="uk-margin">
-					<label class="uk-form-label" for="startSearch">Search for invoices to create based on appointments on or after: (Beginning of prior month if blank)</label>
+					<p>
+						Search for invoices to create based on appointments within the following range:
+					</p>
+				</div>
+
+				<div class="uk-margin">
+					<label class="uk-form-label" for="startDateSearch">Appointment start date</label>
 					<div class="uk-form-controls">
-						<input id="startSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="dateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
+						<input id="startDateSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="startDateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
+					</div>
+				</div>
+				
+				<div class="uk-margin">
+					<label class="uk-form-label" for="endDateSearch">Appointment end date</label>
+					<div class="uk-form-controls">
+						<input id="endDateSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="endDateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
 					</div>
 				</div>
 			
@@ -31,31 +43,27 @@
 
 	</div>
 
-	<div class="uk-overflow-auto" if.bind="invoiceablePsychometristMonths">
+	<div class="uk-overflow-auto" if.bind="invoiceablePsychometristPeriods">
 		<table class="uk-table uk-table-divider" fixed-header>
 			<thead>
 				<tr>
 					<th></th>
-					<th>Year</th>
-					<th>Month</th>
 					<th>Payable To</th>
 					<th># Appointments</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr repeat.for="psychometristMonth of invoiceablePsychometristMonths | sortArray:[{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' },{ property: 'payableTo', direction: 'asc' }]">
+				<tr repeat.for="psychometristPeriod of invoiceablePsychometristPeriods | sortArray:[{ property: 'payableTo', direction: 'asc' }]">
 					<td>
-						<button type="button" class="uk-button uk-button-primary" click.delegate="createInvoice(psychometristMonth)" if.bind="psychometristMonth.canCreateInvoice">
+						<button type="button" class="uk-button uk-button-primary" click.delegate="createInvoice(psychometristPeriod)" if.bind="psychometristPeriod.canCreateInvoice">
 							Create Invoice
 						</button>
-						<a route-href="route: editInvoice; params.bind: {'id': psychometristMonth.invoiceId }" class="uk-button uk-button-secondary" if.bind="psychometristMonth.invoiceId">
+						<a route-href="route: editInvoice; params.bind: {'id': psychometristPeriod.invoiceId }" class="uk-button uk-button-secondary" if.bind="psychometristPeriod.invoiceId">
 							Edit Invoice
 						</a>
 					</td>
-					<td>${psychometristMonth.year}</td>
-					<td>${psychometristMonth.monthName}</td>
-					<td>${psychometristMonth.payableTo}</td>
-					<td>${psychometristMonth.appointmentCount | numeric:'0,0'}</td>
+					<td>${psychometristPeriod.payableTo}</td>
+					<td>${psychometristPeriod.appointmentCount | numeric:'0,0'}</td>
 				</tr>
 			</tbody>
 		</table>
