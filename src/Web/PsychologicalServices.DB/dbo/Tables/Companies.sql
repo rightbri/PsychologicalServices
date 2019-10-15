@@ -18,6 +18,7 @@
     [ReplyToEmail]                  NVARCHAR (100) NULL,
     [NewAssessmentAssessmentTypeId] INT            NULL,
     [InvoiceCounter]                INT            CONSTRAINT [DF_Companies_InvoiceCounter] DEFAULT ((0)) NOT NULL,
+    [AccountingEmail]               NVARCHAR (100) NULL,
     CONSTRAINT [PK_Companies] PRIMARY KEY CLUSTERED ([CompanyId] ASC),
     CONSTRAINT [FK_Companies_Addresses] FOREIGN KEY ([AddressId]) REFERENCES [dbo].[Addresses] ([AddressId]),
     CONSTRAINT [FK_Companies_Addresses1] FOREIGN KEY ([NewAppointmentLocationId]) REFERENCES [dbo].[Addresses] ([AddressId]),
@@ -27,6 +28,8 @@
     CONSTRAINT [FK_Companies_Users] FOREIGN KEY ([NewAppointmentPsychologistId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Companies_Users1] FOREIGN KEY ([NewAppointmentPsychometristId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

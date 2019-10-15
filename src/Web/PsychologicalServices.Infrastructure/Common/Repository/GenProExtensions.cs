@@ -1073,6 +1073,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Fax = company.Fax,
                     Email = company.Email,
                     ReplyToEmail = company.ReplyToEmail,
+                    AccountingEmail = company.AccountingEmail,
                     TaxId = company.TaxId,
                     Timezone = company.Timezone,
                     NewAppointmentTime = TimeSpan.FromTicks(company.NewAppointmentTime),

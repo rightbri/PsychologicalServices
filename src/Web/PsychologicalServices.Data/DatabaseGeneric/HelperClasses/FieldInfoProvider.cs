@@ -469,6 +469,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("CompanyEntity", "ReplyToEmail", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.ReplyToEmail, 100, 0, 0);
 			this.AddElementFieldInfo("CompanyEntity", "NewAssessmentAssessmentTypeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CompanyFieldIndex.NewAssessmentAssessmentTypeId, 0, 0, 10);
 			this.AddElementFieldInfo("CompanyEntity", "InvoiceCounter", typeof(System.Int32), false, false, false, false,  (int)CompanyFieldIndex.InvoiceCounter, 0, 0, 10);
+			this.AddElementFieldInfo("CompanyEntity", "AccountingEmail", typeof(System.String), false, false, false, true,  (int)CompanyFieldIndex.AccountingEmail, 100, 0, 0);
 		}
 		/// <summary>Inits CompanyAttributeEntity's FieldInfo objects</summary>
 		private void InitCompanyAttributeEntityInfos()

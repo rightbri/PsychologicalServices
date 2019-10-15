@@ -102,6 +102,8 @@ namespace PsychologicalServices.Infrastructure.Companies
                 entity.Phone = company.Phone;
                 entity.Fax = company.Fax;
                 entity.Email = company.Email;
+                entity.ReplyToEmail = company.ReplyToEmail;
+                entity.AccountingEmail = company.AccountingEmail;
                 entity.TaxId = company.TaxId;
                 entity.Timezone = company.Timezone;
                 entity.NewAppointmentTime = company.NewAppointmentTime.Ticks;
@@ -118,6 +120,5 @@ namespace PsychologicalServices.Infrastructure.Companies
                 return entity.CompanyId;
             }
         }
-
     }
 }

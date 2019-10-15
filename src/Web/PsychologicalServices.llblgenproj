@@ -424,6 +424,7 @@
       </EntityDefinition>
       <EntityDefinition Name="Company" ObjectID="d5bbfaca-b742-4e15-b1a8-4cf7c45528f6">
         <Fields>
+          <Field Name="AccountingEmail" Type="string" IsOptional="true" MaxLength="100" FieldIndex="19" />
           <Field Name="AddressId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="3" />
           <Field Name="CompanyId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
           <Field Name="Email" Type="string" IsOptional="true" MaxLength="100" FieldIndex="6" />
@@ -1687,7 +1688,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-12T22:39:59.8586256Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-15T01:44:24.4620734Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2031,6 +2032,7 @@
                     <Field Name="ReplyToEmail" Ordinal="17" IsOptional="true" DbType="12" Length="100" />
                     <Field Name="NewAssessmentAssessmentTypeId" Ordinal="18" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="InvoiceCounter" Ordinal="19" HasDefaultValue="true" DefaultValue="(0)" DbType="8" Precision="10" />
+                    <Field Name="AccountingEmail" Ordinal="20" IsOptional="true" DbType="12" Length="100" />
                   </Fields>
                 </Table>
                 <Table Name="CompanyAttributes">
@@ -3662,6 +3664,7 @@
         </EntityMapping>
         <EntityMapping EntityName=":Company" TargetName="PsychologicalServices:dbo:Companies">
           <FieldMappings>
+            <FieldMapping FieldName="AccountingEmail" TargetFieldName="AccountingEmail" />
             <FieldMapping FieldName="AddressId" TargetFieldName="AddressId" />
             <FieldMapping FieldName="CompanyId" TargetFieldName="CompanyId" SequenceToUse="SCOPE_IDENTITY()" />
             <FieldMapping FieldName="Email" TargetFieldName="Email" />

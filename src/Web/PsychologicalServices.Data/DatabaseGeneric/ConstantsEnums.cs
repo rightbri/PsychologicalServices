@@ -571,6 +571,8 @@ namespace PsychologicalServices.Data
 		NewAssessmentAssessmentTypeId,
 		///<summary>InvoiceCounter. </summary>
 		InvoiceCounter,
+		///<summary>AccountingEmail. </summary>
+		AccountingEmail,
 		/// <summary></summary>
 		AmountOfFields
 	}

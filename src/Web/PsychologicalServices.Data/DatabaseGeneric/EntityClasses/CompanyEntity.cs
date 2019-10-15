@@ -939,6 +939,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("NewAssessmentAssessmentTypeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("InvoiceCounter", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("AccountingEmail", fieldHashtable);
 		}
 		#endregion
 
@@ -1493,6 +1495,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Int32)GetValue((int)CompanyFieldIndex.InvoiceCounter, true); }
 			set	{ SetValue((int)CompanyFieldIndex.InvoiceCounter, value); }
+		}
+
+		/// <summary> The AccountingEmail property of the Entity Company<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Companies"."AccountingEmail"<br/>
+		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 100<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String AccountingEmail
+		{
+			get { return (System.String)GetValue((int)CompanyFieldIndex.AccountingEmail, true); }
+			set	{ SetValue((int)CompanyFieldIndex.AccountingEmail, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentStatusInvoiceRateEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

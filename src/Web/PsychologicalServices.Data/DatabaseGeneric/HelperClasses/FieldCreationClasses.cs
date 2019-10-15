@@ -1111,6 +1111,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.InvoiceCounter);}
 		}
+		/// <summary>Creates a new CompanyEntity.AccountingEmail field instance</summary>
+		public static EntityField2 AccountingEmail
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.AccountingEmail);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CompanyAttributeEntity</summary>

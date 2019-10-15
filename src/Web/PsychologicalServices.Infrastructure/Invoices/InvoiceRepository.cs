@@ -116,6 +116,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     .Prefetch<InvoiceStatusEntity>(invoice => invoice.InvoiceStatus)
                     .Prefetch<InvoiceTypeEntity>(invoice => invoice.InvoiceType)
                     .Prefetch<UserEntity>(invoice => invoice.PayableTo)
+                        .SubPath(userPath => userPath
+                            .Prefetch<CompanyEntity>(user => user.Company)
+                        )
                     .Prefetch<InvoiceLineGroupEntity>(invoice => invoice.InvoiceLineGroups)
                         .SubPath(invoiceLineGroupPath => invoiceLineGroupPath
                             .Prefetch<InvoiceLineGroupAppointmentEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupAppointment)

@@ -150,34 +150,11 @@
 				<br><#= psychometrist.Address.PostalCode #>
 				<# } #>
 			<# } #>
-			<a href="mailto:<#= psychometrist.Email #>"><#= psychometrist.Email #></a>
 		</p>
 	</header>
 
 	<p class="invoice-data">
-		Invoice Number:&nbsp;<#= Model.Identifier #>
-	</p>
-	<p class="invoice-data">
-		Date of Invoice:&nbsp;<#= string.Format("{0:MMMM d, yyyy}", Model.InvoiceDate) #>
-	</p>
-	
-	<p class="bill-to">
-		Bill To:
-		<br><#= company.Name #>
-		<# if (null != company.Address) { #>
-			<# if (!string.IsNullOrWhiteSpace(company.Address.Street)) { #>
-			<br><#= company.Address.Street #>
-			<# } #>
-			<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
-			<br><#= company.Address.Suite #>
-			<# } #>
-			<# if (null != company.Address.City) { #>
-			<br><#= company.Address.City.Name #>, <#= company.Address.City.Province #>
-			<# } #>
-			<# if (!string.IsNullOrWhiteSpace(company.Address.PostalCode)) { #>
-			<br><#= company.Address.PostalCode #>
-			<# } #>
-		<# } #>
+		Date of timesheet:&nbsp;<#= string.Format("{0:MMMM d, yyyy}", Model.InvoiceDate) #>
 	</p>
 
 	<#

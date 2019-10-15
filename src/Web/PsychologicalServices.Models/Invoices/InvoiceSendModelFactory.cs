@@ -29,6 +29,9 @@ namespace PsychologicalServices.Models.Invoices
                 case InvoiceType.RawTestData:
                     model = new RawTestDataInvoiceSendModel(invoiceDocument, invoice);
                     break;
+                case InvoiceType.Psychometrist:
+                    model = new PsychometristInvoiceSendModel(invoiceDocument, invoice);
+                    break;
                 default:
                     break;
             }

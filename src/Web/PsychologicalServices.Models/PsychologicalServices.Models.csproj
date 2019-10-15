@@ -115,6 +115,7 @@
     <Compile Include="Invoices\InvoiceableRawTestDataSearchCriteria.cs" />
     <Compile Include="Invoices\InvoiceableRawTestDataData.cs" />
     <Compile Include="Invoices\InvoiceGenerator.cs" />
+    <Compile Include="Invoices\PsychologistInvoiceSendModel.cs" />
     <Compile Include="Invoices\RawTestDataInvoiceTemplate.cs">
       <DependentUpon>RawTestDataInvoiceTemplate.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -151,7 +152,7 @@
     <Compile Include="Invoices\PsychologistInvoiceGenerator.cs" />
     <Compile Include="Invoices\PsychologistInvoiceCreationParameters.cs" />
     <Compile Include="Invoices\ArbitrationInvoiceSendModel.cs" />
-    <Compile Include="Invoices\PsychologistInvoiceSendModel.cs" />
+    <Compile Include="Invoices\PsychometristInvoiceSendModel.cs" />
     <Compile Include="Invoices\InvoiceSendParameters.cs" />
     <Compile Include="Invoices\InvoiceSendResult.cs" />
     <Compile Include="Invoices\ReferralSourceInvoiceConfiguration.cs" />

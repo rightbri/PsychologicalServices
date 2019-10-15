@@ -474,7 +474,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits CompanyEntity's mappings</summary>
 		private void InitCompanyEntityMappings()
 		{
-			this.AddElementMapping("CompanyEntity", @"PsychologicalServices", @"dbo", "Companies", 19, 0);
+			this.AddElementMapping("CompanyEntity", @"PsychologicalServices", @"dbo", "Companies", 20, 0);
 			this.AddElementFieldMapping("CompanyEntity", "CompanyId", "CompanyId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("CompanyEntity", "Name", "Name", false, "NVarChar", 100, 0, 0, false, "", null, typeof(System.String), 1);
 			this.AddElementFieldMapping("CompanyEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
@@ -494,6 +494,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("CompanyEntity", "ReplyToEmail", "ReplyToEmail", true, "NVarChar", 100, 0, 0, false, "", null, typeof(System.String), 16);
 			this.AddElementFieldMapping("CompanyEntity", "NewAssessmentAssessmentTypeId", "NewAssessmentAssessmentTypeId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 17);
 			this.AddElementFieldMapping("CompanyEntity", "InvoiceCounter", "InvoiceCounter", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 18);
+			this.AddElementFieldMapping("CompanyEntity", "AccountingEmail", "AccountingEmail", true, "NVarChar", 100, 0, 0, false, "", null, typeof(System.String), 19);
 		}
 
 		/// <summary>Inits CompanyAttributeEntity's mappings</summary>

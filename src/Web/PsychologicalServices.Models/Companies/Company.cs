@@ -26,6 +26,8 @@ namespace PsychologicalServices.Models.Companies
 
         public string ReplyToEmail { get; set; }
 
+        public string AccountingEmail { get; set; }
+
         public string TaxId { get; set; }
 
         public string Timezone { get; set; }
