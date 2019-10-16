@@ -12,6 +12,7 @@
     [UpdateUserId]             INT                NOT NULL,
     [RoomRentalBillableAmount] INT                NULL,
     [PsychologistInvoiceLock]  BIT                CONSTRAINT [DF_Appointments_PsychologistInvoiceLock] DEFAULT ((0)) NOT NULL,
+    [CancellationDate]         DATETIMEOFFSET (7) NULL,
     CONSTRAINT [PK_Appointments] PRIMARY KEY CLUSTERED ([AppointmentId] ASC),
     CONSTRAINT [FK_Appointments_Addresses] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[Addresses] ([AddressId]),
     CONSTRAINT [FK_Appointments_AppointmentStatuses] FOREIGN KEY ([AppointmentStatusId]) REFERENCES [dbo].[AppointmentStatuses] ([AppointmentStatusId]),
@@ -21,6 +22,8 @@
     CONSTRAINT [FK_Appointments_Users] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Appointments_Users1] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 

@@ -954,6 +954,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateDate = appointment.UpdateDate,
                     UpdateUser = appointment.UpdateUser.ToUser(),
                     RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
+                    CancellationDate = appointment.CancellationDate,
                     IsCompletion = appointment.IsCompletion(),
                     PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                 }
@@ -978,6 +979,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateDate = appointment.UpdateDate,
                     UpdateUser = appointment.UpdateUser.ToUser(),
                     RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
+                    CancellationDate = appointment.CancellationDate,
                     IsCompletion = appointment.IsCompletion(),
                     PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                 }

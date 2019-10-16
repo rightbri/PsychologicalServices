@@ -81,6 +81,8 @@ namespace PsychologicalServices.Data
 		RoomRentalBillableAmount,
 		///<summary>PsychologistInvoiceLock. </summary>
 		PsychologistInvoiceLock,
+		///<summary>CancellationDate. </summary>
+		CancellationDate,
 		/// <summary></summary>
 		AmountOfFields
 	}

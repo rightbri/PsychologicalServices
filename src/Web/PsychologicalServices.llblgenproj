@@ -162,6 +162,7 @@
           <Field Name="AppointmentStatusId" Type="int" IsAutoCreated="true" FieldIndex="5" />
           <Field Name="AppointmentTime" Type="datetimeoffset" FieldIndex="2" />
           <Field Name="AssessmentId" Type="int" IsAutoCreated="true" FieldIndex="6" />
+          <Field Name="CancellationDate" Type="datetimeoffset" IsOptional="true" FieldIndex="13" />
           <Field Name="CreateDate" Type="datetimeoffset" FieldIndex="7" />
           <Field Name="CreateUserId" Type="int" IsAutoCreated="true" FieldIndex="8" />
           <Field Name="LocationId" Type="int" IsAutoCreated="true" FieldIndex="1" />
@@ -1688,7 +1689,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-15T01:44:24.4620734Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-16T00:48:54.620324Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1741,6 +1742,7 @@
                     <Field Name="UpdateUserId" Ordinal="11" DbType="8" Precision="10" />
                     <Field Name="RoomRentalBillableAmount" Ordinal="12" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="PsychologistInvoiceLock" Ordinal="13" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
+                    <Field Name="CancellationDate" Ordinal="14" IsOptional="true" DbType="30" />
                   </Fields>
                 </Table>
                 <Table Name="AppointmentSequences">
@@ -3402,6 +3404,7 @@
             <FieldMapping FieldName="AppointmentStatusId" TargetFieldName="AppointmentStatusId" />
             <FieldMapping FieldName="AppointmentTime" TargetFieldName="AppointmentTime" />
             <FieldMapping FieldName="AssessmentId" TargetFieldName="AssessmentId" />
+            <FieldMapping FieldName="CancellationDate" TargetFieldName="CancellationDate" />
             <FieldMapping FieldName="CreateDate" TargetFieldName="CreateDate" />
             <FieldMapping FieldName="CreateUserId" TargetFieldName="CreateUserId" />
             <FieldMapping FieldName="LocationId" TargetFieldName="LocationId" />

@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {bindable, bindingMode} from 'aurelia-framework';
+import {computedFrom} from 'aurelia-framework';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
 import {EventHelper} from 'services/eventHelper';
@@ -51,6 +52,18 @@ export class EditAppointment {
 		let availableUsers = this.psychometrists.filter(psychometrist => this.userAvailability.isAvailable(psychometrist, date));
 
 		return availableUsers;
+	}
+
+	appointmentStatusChanged() {
+		if (!this.isCanceled) {
+			this.model.appointment.cancellationDate = null;
+		}
+	}
+
+	@computedFrom('model.appointment.appointmentStatus')
+	get isCanceled() {
+		return  this.model.appointment.appointmentStatus.appointmentStatusId === this.config.appointmentStatusIds.canceled ||
+			this.model.appointment.appointmentStatus.appointmentStatusId === this.config.appointmentStatusIds.lateCancellation;
 	}
 
 	ok(e) {

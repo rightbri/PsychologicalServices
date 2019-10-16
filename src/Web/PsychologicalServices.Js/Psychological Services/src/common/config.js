@@ -72,6 +72,11 @@ export class Config {
 			'attributeTypeIds': [1,3],
 			'addressTypeIds': [3]
 		};
+
+		this.appointmentStatusIds = {
+			'canceled': 3,
+			'lateCancellation': 8
+		};
 		
 		this.assessmentDefaults = {
 			'attributeTypeIds': [2,4,5,6,11],

@@ -38,6 +38,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public bool PsychologistInvoiceLock { get; set; }
 
+        public DateTimeOffset? CancellationDate { get; set; }
+
         public bool IsNew()
         {
             return AppointmentId == 0;

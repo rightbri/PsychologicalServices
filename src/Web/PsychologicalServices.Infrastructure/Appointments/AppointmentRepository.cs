@@ -483,6 +483,15 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     appointmentEntity.RoomRentalBillableAmount = appointment.RoomRentalBillableAmount;
                 }
 
+                if (null == appointment.CancellationDate)
+                {
+                    appointmentEntity.SetNewFieldValue((int)AppointmentFieldIndex.CancellationDate, null);
+                }
+                else
+                {
+                    appointmentEntity.CancellationDate = appointment.CancellationDate;
+                }
+
                 if (!isNew)
                 {
                     var attributesToRemove = appointmentEntity.AppointmentAttributes

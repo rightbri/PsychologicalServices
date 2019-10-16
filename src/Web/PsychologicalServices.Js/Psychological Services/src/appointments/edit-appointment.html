@@ -28,7 +28,7 @@
 				<div>
 					<label class="uk-form-label" for="status">Status</label>
 					<div class="uk-form-controls">
-						<select id="status" class="uk-select" value.bind="model.appointment.appointmentStatus" matcher.bind="appointmentStatusMatcher">
+						<select id="status" class="uk-select" value.bind="model.appointment.appointmentStatus" matcher.bind="appointmentStatusMatcher" change.delegate="appointmentStatusChanged()">
 							<option></option>
 							<option repeat.for="appointmentStatus of appointmentStatuses" model.bind="appointmentStatus">
 								${appointmentStatus.name}
@@ -47,6 +47,16 @@
 							</option>
 						</select>
 					</div>
+				</div>
+
+				<div if.bind="isCanceled">
+					<label class="uk-form-label" for="cancellationDate">Cancellation Date</label>
+					<div class="uk-form-controls">
+						<input id="cancellationDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="model.appointment.cancellationDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+					</div>
+				</div>
+
+				<div if.bind="isCanceled">
 				</div>
 				
 				<div>
