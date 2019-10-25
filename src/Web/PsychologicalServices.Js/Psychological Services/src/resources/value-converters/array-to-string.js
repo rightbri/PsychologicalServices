@@ -1,8 +1,9 @@
 
 export class ArrayToStringValueConverter {
-	toView(array, format, delimiter = ", ", lastAnd = true) {
-		let value = array
+	toView(array, format, delimiter = ", ", lastAnd = true, removeEmptyElements = true) {
+        let value = array
         .map(item => isFunction(format) ? format(item) : item)
+        .filter(item => !removeEmptyElements || (item && item.length > 0))
         .reduce((accumulator, currentValue, index, array) => {
             let isFirst = index === 0;
             let isLast = index === array.length - 1;
