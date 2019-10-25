@@ -15,130 +15,153 @@ export class Notes {
         this.gender = null;
         
         this.responses = {
-            "problems": {
-                "concentration": null,
-                "memory": null,
-                "shortTermMemory": null
-            },
-            "memory": {
-                "visual": {
-                    "forgetWhereaboutsFrequently": null,
-                    "forgetWhereaboutsOfObjects": null,
-                    "forgetWhereaboutsOf": []
-                },
-                "working": {
-                    "walkIntoRoomAndForgetWhyFrequently": null,
-                    "loseTrackOfWhatYouWantedToSayFrequently": null
-                },
-                "aids": {
-                    "useAids": null,
-                    "aidsUsed": []
-                },
-                "autobiographical": {
-                    "personalInfo": null
-                },
-                "medication": {
-                    "errors": null,
-                    "usesDosette": null,
-                    "usesBlisterPacks": null
+            "psychological": {
+                "status": {
+                    "sadness": null,        //is sad
+                    "depression": null,     //is depressed
+                    "irritable": null,      //? is irritable
+                    "frustrated": null,     //feels frustrated
+                    "overwhelmed": null,    //feels overwhelmed
+                    "withdrawn": null,      //feels withdrawn
+                    "labile": null,         //has a rapidly changing mood
+                    "anhedonia": null,      //experiences an inability to feel pleasure
+                    "hopelessness": null,   //experiences feelings of 
+                    "helplessness": null,   //experiences feelings of 
+                    "worthlessness": null,  //experiences feelings of 
+                    "guilt": null,          //feels guilty
+                    "apathy": null,         //struggles with lack of interest 
+                    "amotivation": null,    //struggles with lack of motivation
+                    "dependency": null,     //feels dependent
+                    "burden": null          //is a burden on others
                 }
             },
-            "language": {
-                "lostInConversations": { "response": null, "value": function(pronoun) { return `easily getting lost in conversations`; } },
-                "tipOfTongueIssues": { "response": null, "value": function(pronoun) { return `having tip of the tongue issues`; } },
-                "repeatingYourself": { "response": null, "value": function(pronoun) { return `times where ${pronoun.subject} repeats ${pronoun.object}self`; } },
-                "askingOthersToRepeat": { "response": null, "value": function(pronoun) { return `times when ${pronoun.subject} asks others to repeat what they have said`; } },
-                "filtering": { "response": null, "value": function(pronoun) { return `problems with filtering`; } },
-                "wordSubstitution": { "response": null, "value": function(pronoun) { return `times where ${pronoun.subject} tends to substitute words`; } }
-            },
-            "attention": {
-                "abilityToFocus": null,
-                "abilityToSustainAttention": null,
-                "areMoreDistractible": null,
-                "loseTrackWhenReading": null,
-                "needToReRead": null,
-                "readingIssues": [],
-                "loseTrackWhenWatchingTv": null
-            },
-            "executive": {
-                "issues": {
-                    "multiTasking": {
-                        "response": null,
-                        "value": function(context) {
-                            let x = `multi-task ${(
-                                    context.responses.executive.issues.harderToMultiTask.response && 
-                                    context.responses.executive.issues.harderToMultiTask.response.value
-                                )
-                                ? `(which ${context.pronoun.subject} now finds harder)` 
-                                : ``}`;
-                            
-                            return x;
-                        }
+            "neuropsychological": {
+                "problems": {
+                    "concentration": null,
+                    "memory": null,
+                    "shortTermMemory": null
+                },
+                "memory": {
+                    "visual": {
+                        "forgetWhereaboutsFrequently": null,
+                        "forgetWhereaboutsOfObjects": null,
+                        "forgetWhereaboutsOf": []
                     },
-                    "harderToMultiTask": { "response": null, "value": function(context) { return ``; } },
-                    "organization": { "response": null, "value": function(context) { return `organize`; } },
-                    "planning": { "response": null, "value": function(context) { return `plan`; } },
-                    "decisionMaking": { "response": null, "value": function(context) { return `make decisions`; } },
-                    "problemSolving": { "response": null, "value": function(context) { return `problem solve`; } }
+                    "working": {
+                        "walkIntoRoomAndForgetWhyFrequently": null,
+                        "loseTrackOfWhatYouWantedToSayFrequently": null
+                    },
+                    "aids": {
+                        "useAids": null,
+                        "aidsUsed": []
+                    },
+                    "autobiographical": {
+                        "personalInfo": null
+                    },
+                    "medication": {
+                        "errors": null,
+                        "usesDosette": null,
+                        "usesBlisterPacks": null
+                    }
                 },
-                "inappropriateSocialBehavior": null,
-                "inappropriateSocialBehaviorYellingSwearing": { "response": null, "value": "yelling or swearing in public" },
-                "inappropriateSocialBehaviorViolence": { "response": null, "value": "violence" },
-                "inappropriateSocialBehaviorSexual": { "response": null, "value": "sexually inappropriate behaviour" }
-            },
-            "visualSpatial": {
-                "balanceIssues": { "response": null, "value": function(pronoun) { return `balance issues`; } },
-                "seizures": { "response": null, "value": function(pronoun) { return `seizures`; } },
-                "weaknessInHands": { "response": null, "value": function(pronoun) { return `weakness in ${pronoun.possessiveAdjective} hands`; } },
-                "fainting": { "response": null, "value": function(pronoun) { return `fainting`; } },
-                "dizzinessIssues": { "response": null, "value": function(pronoun) { return `dizziness`; } },
-                "lightSensitivity": { "response": null, "value": function(pronoun) { return `sensitivity to light`; } },
-                "tinnitus": { "response": null, "value": function(pronoun) { return `tinnitus`; } },
-                "noiseSensitivity": { "response": null, "value": function(pronoun) { return `sensitivity to noise`; } },
-                "changeInTaste": { "response": null, "value": function(pronoun) { return `change in ${pronoun.possessiveAdjective} sense of taste`; } },
-                "blurryVision": { "response": null, "value": function(pronoun) { return `blurry vision`; } },
-                "changeInSmell": { "response": null, "value": function(pronoun) { return `change in ${pronoun.possessiveAdjective} sense of smell`; } },
-                "doubleVision": { "response": null, "value": function(pronoun) { return `double vision`; } }
-            },
-            "atypical": {
-                "itchyFingernails": { "response": null, "value": function(pronoun) { return `itchy fingernails (atypical symptomology)`; } },
-                "blackAndWhiteTransientVision": { "response": null, "value": function(pronoun) { return `black and white transient vision (atypical symptomology)`; } }
-            },
-            "physical": {
-                "weight": {
-                    "appetiteAffected": null,
-                    "changed": null,
-                    "changeType": null,
-                    "changeAmount": null
+                "language": {
+                    "lostInConversations": { "response": null, "value": function(pronoun) { return `easily getting lost in conversations`; } },
+                    "tipOfTongueIssues": { "response": null, "value": function(pronoun) { return `having tip of the tongue issues`; } },
+                    "repeatingYourself": { "response": null, "value": function(pronoun) { return `times where ${pronoun.subject} repeats ${pronoun.object}self`; } },
+                    "askingOthersToRepeat": { "response": null, "value": function(pronoun) { return `times when ${pronoun.subject} asks others to repeat what they have said`; } },
+                    "filtering": { "response": null, "value": function(pronoun) { return `problems with filtering`; } },
+                    "wordSubstitution": { "response": null, "value": function(pronoun) { return `times where ${pronoun.subject} tends to substitute words`; } }
                 },
-                "energy": {
-                    "lessEnergy": null,
-                    "libidoAffected": null
+                "attention": {
+                    "abilityToFocus": null,
+                    "abilityToSustainAttention": null,
+                    "areMoreDistractible": null,
+                    "loseTrackWhenReading": null,
+                    "needToReRead": null,
+                    "readingIssues": [],
+                    "loseTrackWhenWatchingTv": null
                 },
-                "sleep": {
-                    "sleepAffected": null,
-                    "problemsSleepingPriorToAccident": null,
-                    "hoursOfSleepBeforeAccident": null,
-                    "hoursOfSleepCurrent": null,
-                    "brokenSleep": null,
-                    "fatiguedWhenWaking": null,
-                    "takeNaps": null
+                "executive": {
+                    "issues": {
+                        "multiTasking": {
+                            "response": null,
+                            "value": function(context) {
+                                let x = `multi-task ${(
+                                        context.responses.neuropsychological.executive.issues.harderToMultiTask.response && 
+                                        context.responses.neuropsychological.executive.issues.harderToMultiTask.response.value
+                                    )
+                                    ? `(which ${context.pronoun.subject} now finds harder)` 
+                                    : ``}`;
+                                
+                                return x;
+                            }
+                        },
+                        "harderToMultiTask": { "response": null, "value": function(context) { return ``; } },
+                        "organization": { "response": null, "value": function(context) { return `organize`; } },
+                        "planning": { "response": null, "value": function(context) { return `plan`; } },
+                        "decisionMaking": { "response": null, "value": function(context) { return `make decisions`; } },
+                        "problemSolving": { "response": null, "value": function(context) { return `problem solve`; } }
+                    },
+                    "inappropriateSocialBehavior": null,
+                    "inappropriateSocialBehaviorYellingSwearing": { "response": null, "value": "yelling or swearing in public" },
+                    "inappropriateSocialBehaviorViolence": { "response": null, "value": "violence" },
+                    "inappropriateSocialBehaviorSexual": { "response": null, "value": "sexually inappropriate behaviour" }
                 },
-                "headaches": {
-                    "experienceHeadachesCurrent": null,
-                    "experienceHeadachesPriorToAccident": null,
-                    "changesInHeadachesSinceAccident": null,
-                    "experienceMigrainesCurrent": null,
-                    "experienceMigrainesPriorToAccident": null,
-                    "changesInMigrainesSinceAccident": null
+                "visualSpatial": {
+                    "balanceIssues": { "response": null, "value": function(pronoun) { return `balance issues`; } },
+                    "seizures": { "response": null, "value": function(pronoun) { return `seizures`; } },
+                    "weaknessInHands": { "response": null, "value": function(pronoun) { return `weakness in ${pronoun.possessiveAdjective} hands`; } },
+                    "fainting": { "response": null, "value": function(pronoun) { return `fainting`; } },
+                    "dizzinessIssues": { "response": null, "value": function(pronoun) { return `dizziness`; } },
+                    "lightSensitivity": { "response": null, "value": function(pronoun) { return `sensitivity to light`; } },
+                    "tinnitus": { "response": null, "value": function(pronoun) { return `tinnitus`; } },
+                    "noiseSensitivity": { "response": null, "value": function(pronoun) { return `sensitivity to noise`; } },
+                    "changeInTaste": { "response": null, "value": function(pronoun) { return `change in ${pronoun.possessiveAdjective} sense of taste`; } },
+                    "blurryVision": { "response": null, "value": function(pronoun) { return `blurry vision`; } },
+                    "changeInSmell": { "response": null, "value": function(pronoun) { return `change in ${pronoun.possessiveAdjective} sense of smell`; } },
+                    "doubleVision": { "response": null, "value": function(pronoun) { return `double vision`; } }
                 },
-                "pain": {
-                    "currentPainArea": null,
-                    "experiencePainPriorToAccident": null
+                "atypical": {
+                    "itchyFingernails": { "response": null, "value": function(pronoun) { return `itchy fingernails (atypical symptomology)`; } },
+                    "blackAndWhiteTransientVision": { "response": null, "value": function(pronoun) { return `black and white transient vision (atypical symptomology)`; } }
                 },
-                "changes": {
-                    "changeInCognition": null,
-                    "changeInMood": null
+                "physical": {
+                    "weight": {
+                        "appetiteAffected": null,
+                        "changed": null,
+                        "changeType": null,
+                        "changeAmount": null
+                    },
+                    "energy": {
+                        "lessEnergy": null,
+                        "libidoAffected": null
+                    },
+                    "sleep": {
+                        "sleepAffected": null,
+                        "problemsSleepingPriorToAccident": null,
+                        "hoursOfSleepBeforeAccident": null,
+                        "hoursOfSleepCurrent": null,
+                        "brokenSleep": null,
+                        "fatiguedWhenWaking": null,
+                        "takeNaps": null
+                    },
+                    "headaches": {
+                        "experienceHeadachesCurrent": null,
+                        "experienceHeadachesPriorToAccident": null,
+                        "changesInHeadachesSinceAccident": null,
+                        "experienceMigrainesCurrent": null,
+                        "experienceMigrainesPriorToAccident": null,
+                        "changesInMigrainesSinceAccident": null
+                    },
+                    "pain": {
+                        "currentlyExperiencePain": null,
+                        "currentPainArea": "",
+                        "experiencePainPriorToAccident": null
+                    },
+                    "changes": {
+                        "changeInCognition": null,
+                        "changeInMood": null
+                    }
                 }
             }
         };
@@ -225,8 +248,8 @@ export class Notes {
     getYesNo() {
         var data = [
             { "description": "Yes", "value": true },
-            { "description": "No", "value": false }/*,
-            { "description": "Skip", "value": null }*/
+            { "description": "No", "value": false },
+            { "description": "Skip", "value": null }
         ];
 
         return getPromise(data);
@@ -299,7 +322,8 @@ export class Notes {
             { "description": "Same", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} cognition is the same`; } },
             { "description": "Better", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} cognitive state is better`; } },
             { "description": "Resolved", "value": function(pronoun) { return `${pronoun.subject} feels that any cognitive issues have resolved`; } },
-            { "description": "Plateaued", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} cognitive recovery has reached a plateau`; } }
+            { "description": "Plateaued", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} cognitive recovery has reached a plateau`; } },
+            { "description": "Skip", "value": null }
         ];
 
         return getPromise(data);
@@ -312,7 +336,8 @@ export class Notes {
             { "description": "Same", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} mood is the same`; } },
             { "description": "Better", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} mood is better`; } },
             { "description": "Resolved", "value": function(pronoun) { return `${pronoun.subject} feels that any mood issues have resolved`; } },
-            { "description": "Plateaued", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} emotional recovery has reached a plateau`; } }
+            { "description": "Plateaued", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} emotional recovery has reached a plateau`; } },
+            { "description": "Skip", "value": null }
         ];
 
         return getPromise(data);
@@ -351,12 +376,12 @@ export class Notes {
     }
 
     @computedFrom(
-        'responses.language.lostInConversations.response',
-        'responses.language.tipOfTongueIssues.response',
-        'responses.language.repeatingYourself.response',
-        'responses.language.askingOthersToRepeat.response',
-        'responses.language.filtering.response',
-        'responses.language.wordSubstitution.response'
+        'responses.neuropsychological.language.lostInConversations.response',
+        'responses.neuropsychological.language.tipOfTongueIssues.response',
+        'responses.neuropsychological.language.repeatingYourself.response',
+        'responses.neuropsychological.language.askingOthersToRepeat.response',
+        'responses.neuropsychological.language.filtering.response',
+        'responses.neuropsychological.language.wordSubstitution.response'
     )
     get selectedLanguageIssues() {
         let data = this.getLanguageIssues().filter(item => item.response != null && item.response.value);
@@ -365,12 +390,12 @@ export class Notes {
     }
 
     @computedFrom(
-        'responses.language.lostInConversations.response',
-        'responses.language.tipOfTongueIssues.response',
-        'responses.language.repeatingYourself.response',
-        'responses.language.askingOthersToRepeat.response',
-        'responses.language.filtering.response',
-        'responses.language.wordSubstitution.response'
+        'responses.neuropsychological.language.lostInConversations.response',
+        'responses.neuropsychological.language.tipOfTongueIssues.response',
+        'responses.neuropsychological.language.repeatingYourself.response',
+        'responses.neuropsychological.language.askingOthersToRepeat.response',
+        'responses.neuropsychological.language.filtering.response',
+        'responses.neuropsychological.language.wordSubstitution.response'
     )
     get anySelectedLanguageIssues() {
         let any = this.selectedLanguageIssues.some(item => item);
@@ -379,12 +404,12 @@ export class Notes {
     }
 
     @computedFrom(
-        'responses.language.lostInConversations.response',
-        'responses.language.tipOfTongueIssues.response',
-        'responses.language.repeatingYourself.response',
-        'responses.language.askingOthersToRepeat.response',
-        'responses.language.filtering.response',
-        'responses.language.wordSubstitution.response'
+        'responses.neuropsychological.language.lostInConversations.response',
+        'responses.neuropsychological.language.tipOfTongueIssues.response',
+        'responses.neuropsychological.language.repeatingYourself.response',
+        'responses.neuropsychological.language.askingOthersToRepeat.response',
+        'responses.neuropsychological.language.filtering.response',
+        'responses.neuropsychological.language.wordSubstitution.response'
     )
     get unselectedLanguageIssues() {
         let data = this.getLanguageIssues().filter(item => item.response != null && item.response.value === false);
@@ -394,24 +419,24 @@ export class Notes {
 
     getLanguageIssues() {
         let data = [
-            this.responses.language.lostInConversations,
-            this.responses.language.tipOfTongueIssues,
-            this.responses.language.repeatingYourself,
-            this.responses.language.askingOthersToRepeat,
-            this.responses.language.filtering,
-            this.responses.language.wordSubstitution
+            this.responses.neuropsychological.language.lostInConversations,
+            this.responses.neuropsychological.language.tipOfTongueIssues,
+            this.responses.neuropsychological.language.repeatingYourself,
+            this.responses.neuropsychological.language.askingOthersToRepeat,
+            this.responses.neuropsychological.language.filtering,
+            this.responses.neuropsychological.language.wordSubstitution
         ];
 
         return data;
     }
 
     @computedFrom(
-        'responses.language.lostInConversations.response',
-        'responses.language.tipOfTongueIssues.response',
-        'responses.language.repeatingYourself.response',
-        'responses.language.askingOthersToRepeat.response',
-        'responses.language.filtering.response',
-        'responses.language.wordSubstitution.response'
+        'responses.neuropsychological.language.lostInConversations.response',
+        'responses.neuropsychological.language.tipOfTongueIssues.response',
+        'responses.neuropsychological.language.repeatingYourself.response',
+        'responses.neuropsychological.language.askingOthersToRepeat.response',
+        'responses.neuropsychological.language.filtering.response',
+        'responses.neuropsychological.language.wordSubstitution.response'
     )
     get anyUnselectedLanguageIssues() {
         let any = this.unselectedLanguageIssues.some(item => item);
@@ -420,72 +445,72 @@ export class Notes {
     }
 
     @computedFrom(
-        'responses.visualSpatial.balanceIssues.response',
-        'responses.visualSpatial.seizures.response',
-        'responses.visualSpatial.weaknessInHands.response',
-        'responses.visualSpatial.fainting.response',
-        'responses.visualSpatial.dizzinessIssues.response',
-        'responses.visualSpatial.lightSensitivity.response',
-        'responses.visualSpatial.tinnitus.response',
-        'responses.visualSpatial.noiseSensitivity.response',
-        'responses.visualSpatial.changeInTaste.response',
-        'responses.visualSpatial.blurryVision.response',
-        'responses.visualSpatial.changeInSmell.response',
-        'responses.visualSpatial.doubleVision.response'
+        'responses.neuropsychological.visualSpatial.balanceIssues.response',
+        'responses.neuropsychological.visualSpatial.seizures.response',
+        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
+        'responses.neuropsychological.visualSpatial.fainting.response',
+        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
+        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
+        'responses.neuropsychological.visualSpatial.tinnitus.response',
+        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
+        'responses.neuropsychological.visualSpatial.changeInTaste.response',
+        'responses.neuropsychological.visualSpatial.blurryVision.response',
+        'responses.neuropsychological.visualSpatial.changeInSmell.response',
+        'responses.neuropsychological.visualSpatial.doubleVision.response'
     )
     get anySelectedVisualSpatialIssues() {
         return this.selectedVisualSpatialIssues.some(item => item);
     }
 
     @computedFrom(
-        'responses.visualSpatial.balanceIssues.response',
-        'responses.visualSpatial.seizures.response',
-        'responses.visualSpatial.weaknessInHands.response',
-        'responses.visualSpatial.fainting.response',
-        'responses.visualSpatial.dizzinessIssues.response',
-        'responses.visualSpatial.lightSensitivity.response',
-        'responses.visualSpatial.tinnitus.response',
-        'responses.visualSpatial.noiseSensitivity.response',
-        'responses.visualSpatial.changeInTaste.response',
-        'responses.visualSpatial.blurryVision.response',
-        'responses.visualSpatial.changeInSmell.response',
-        'responses.visualSpatial.doubleVision.response'
+        'responses.neuropsychological.visualSpatial.balanceIssues.response',
+        'responses.neuropsychological.visualSpatial.seizures.response',
+        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
+        'responses.neuropsychological.visualSpatial.fainting.response',
+        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
+        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
+        'responses.neuropsychological.visualSpatial.tinnitus.response',
+        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
+        'responses.neuropsychological.visualSpatial.changeInTaste.response',
+        'responses.neuropsychological.visualSpatial.blurryVision.response',
+        'responses.neuropsychological.visualSpatial.changeInSmell.response',
+        'responses.neuropsychological.visualSpatial.doubleVision.response'
     )
     get anyUnselectedVisualSpatialIssues() {
         return this.unselectedVisualSpatialIssues.some(item => item);
     }
 
     @computedFrom(
-        'responses.visualSpatial.balanceIssues.response',
-        'responses.visualSpatial.seizures.response',
-        'responses.visualSpatial.weaknessInHands.response',
-        'responses.visualSpatial.fainting.response',
-        'responses.visualSpatial.dizzinessIssues.response',
-        'responses.visualSpatial.lightSensitivity.response',
-        'responses.visualSpatial.tinnitus.response',
-        'responses.visualSpatial.noiseSensitivity.response',
-        'responses.visualSpatial.changeInTaste.response',
-        'responses.visualSpatial.blurryVision.response',
-        'responses.visualSpatial.changeInSmell.response',
-        'responses.visualSpatial.doubleVision.response'
+        'responses.neuropsychological.visualSpatial.balanceIssues.response',
+        'responses.neuropsychological.visualSpatial.seizures.response',
+        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
+        'responses.neuropsychological.visualSpatial.fainting.response',
+        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
+        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
+        'responses.neuropsychological.visualSpatial.tinnitus.response',
+        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
+        'responses.neuropsychological.visualSpatial.changeInTaste.response',
+        'responses.neuropsychological.visualSpatial.blurryVision.response',
+        'responses.neuropsychological.visualSpatial.changeInSmell.response',
+        'responses.neuropsychological.visualSpatial.doubleVision.response'
     )
     get selectedVisualSpatialIssues() {
         return this.getVisualSpatialIssues().filter(item => item.response !== null && item.response.value);
     }
 
     @computedFrom(
-        'responses.visualSpatial.balanceIssues.response',
-        'responses.visualSpatial.seizures.response',
-        'responses.visualSpatial.weaknessInHands.response',
-        'responses.visualSpatial.fainting.response',
-        'responses.visualSpatial.dizzinessIssues.response',
-        'responses.visualSpatial.lightSensitivity.response',
-        'responses.visualSpatial.tinnitus.response',
-        'responses.visualSpatial.noiseSensitivity.response',
-        'responses.visualSpatial.changeInTaste.response',
-        'responses.visualSpatial.blurryVision.response',
-        'responses.visualSpatial.changeInSmell.response',
-        'responses.visualSpatial.doubleVision.response'
+        'responses.neuropsychological.visualSpatial.balanceIssues.response',
+        'responses.neuropsychological.visualSpatial.seizures.response',
+        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
+        'responses.neuropsychological.visualSpatial.fainting.response',
+        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
+        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
+        'responses.neuropsychological.visualSpatial.tinnitus.response',
+        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
+        'responses.neuropsychological.visualSpatial.changeInTaste.response',
+        'responses.neuropsychological.visualSpatial.blurryVision.response',
+        'responses.neuropsychological.visualSpatial.changeInSmell.response',
+        'responses.neuropsychological.visualSpatial.doubleVision.response'
     )
     get unselectedVisualSpatialIssues() {
         return this.getVisualSpatialIssues().filter(item => item.response !== null && item.response.value === false);
@@ -493,36 +518,36 @@ export class Notes {
 
     getVisualSpatialIssues() {
         let data = [
-            this.responses.visualSpatial.balanceIssues,
-            this.responses.visualSpatial.seizures,
-            this.responses.visualSpatial.weaknessInHands,
-            this.responses.visualSpatial.fainting,
-            this.responses.visualSpatial.dizzinessIssues,
-            this.responses.visualSpatial.lightSensitivity,
-            this.responses.visualSpatial.tinnitus,
-            this.responses.visualSpatial.noiseSensitivity,
-            this.responses.visualSpatial.changeInTaste,
-            this.responses.visualSpatial.blurryVision,
-            this.responses.visualSpatial.changeInSmell,
-            this.responses.visualSpatial.doubleVision,
-            this.responses.atypical.itchyFingernails,
-            this.responses.atypical.blackAndWhiteTransientVision
+            this.responses.neuropsychological.visualSpatial.balanceIssues,
+            this.responses.neuropsychological.visualSpatial.seizures,
+            this.responses.neuropsychological.visualSpatial.weaknessInHands,
+            this.responses.neuropsychological.visualSpatial.fainting,
+            this.responses.neuropsychological.visualSpatial.dizzinessIssues,
+            this.responses.neuropsychological.visualSpatial.lightSensitivity,
+            this.responses.neuropsychological.visualSpatial.tinnitus,
+            this.responses.neuropsychological.visualSpatial.noiseSensitivity,
+            this.responses.neuropsychological.visualSpatial.changeInTaste,
+            this.responses.neuropsychological.visualSpatial.blurryVision,
+            this.responses.neuropsychological.visualSpatial.changeInSmell,
+            this.responses.neuropsychological.visualSpatial.doubleVision,
+            this.responses.neuropsychological.atypical.itchyFingernails,
+            this.responses.neuropsychological.atypical.blackAndWhiteTransientVision
         ];
 
         return data;
     }
     
     @computedFrom(
-        'responses.atypical.itchyFingernails.response',
-        'responses.atypical.blackAndWhiteTransientVision.response'
+        'responses.neuropsychological.atypical.itchyFingernails.response',
+        'responses.neuropsychological.atypical.blackAndWhiteTransientVision.response'
     )
     get selectedAtypicalSymptomology() {
         return this.getAtypicalSymptomology().filter(item => item.response !== null && item.response.value);
     }
 
     @computedFrom(
-        'responses.atypical.itchyFingernails.response',
-        'responses.atypical.blackAndWhiteTransientVision.response'
+        'responses.neuropsychological.atypical.itchyFingernails.response',
+        'responses.neuropsychological.atypical.blackAndWhiteTransientVision.response'
     )
     get anySelectedAtypicalSymptomology() {
         return this.selectedAtypicalSymptomology.some(item => item);
@@ -530,44 +555,44 @@ export class Notes {
 
     getAtypicalSymptomology() {
         let data = [
-            this.responses.atypical.itchyFingernails,
-            this.responses.atypical.blackAndWhiteTransientVision
+            this.responses.neuropsychological.atypical.itchyFingernails,
+            this.responses.neuropsychological.atypical.blackAndWhiteTransientVision
         ];
 
         return data;
     }
 
     @computedFrom(
-        'responses.executive.issues.multiTasking.response',
-        'responses.executive.issues.harderToMultiTask.response',
-        'responses.executive.issues.organization.response',
-        'responses.executive.issues.planning.response',
-        'responses.executive.issues.decisionMaking.response',
-        'responses.executive.issues.problemSolving.response'
+        'responses.neuropsychological.executive.issues.multiTasking.response',
+        'responses.neuropsychological.executive.issues.harderToMultiTask.response',
+        'responses.neuropsychological.executive.issues.organization.response',
+        'responses.neuropsychological.executive.issues.planning.response',
+        'responses.neuropsychological.executive.issues.decisionMaking.response',
+        'responses.neuropsychological.executive.issues.problemSolving.response'
     )
     get anySelectedExecutiveFunctionIssues() {
         return this.selectedExecutiveFunctionIssues.some(item => item);
     }
 
     @computedFrom(
-        'responses.executive.issues.multiTasking.response',
-        'responses.executive.issues.harderToMultiTask.response',
-        'responses.executive.issues.organization.response',
-        'responses.executive.issues.planning.response',
-        'responses.executive.issues.decisionMaking.response',
-        'responses.executive.issues.problemSolving.response'
+        'responses.neuropsychological.executive.issues.multiTasking.response',
+        'responses.neuropsychological.executive.issues.harderToMultiTask.response',
+        'responses.neuropsychological.executive.issues.organization.response',
+        'responses.neuropsychological.executive.issues.planning.response',
+        'responses.neuropsychological.executive.issues.decisionMaking.response',
+        'responses.neuropsychological.executive.issues.problemSolving.response'
     )
     get anyUnselectedExecutiveFunctionIssues() {
         return this.unselectedExecutiveFunctionIssues.some(item => item);
     }
 
     @computedFrom(
-        'responses.executive.issues.multiTasking.response',
-        'responses.executive.issues.harderToMultiTask.response',
-        'responses.executive.issues.organization.response',
-        'responses.executive.issues.planning.response',
-        'responses.executive.issues.decisionMaking.response',
-        'responses.executive.issues.problemSolving.response'
+        'responses.neuropsychological.executive.issues.multiTasking.response',
+        'responses.neuropsychological.executive.issues.harderToMultiTask.response',
+        'responses.neuropsychological.executive.issues.organization.response',
+        'responses.neuropsychological.executive.issues.planning.response',
+        'responses.neuropsychological.executive.issues.decisionMaking.response',
+        'responses.neuropsychological.executive.issues.problemSolving.response'
     )
     get selectedExecutiveFunctionIssues() {
         let data = this.getExecutiveFunctionIssues().filter(item => item.response !== null && item.response.value);
@@ -576,11 +601,11 @@ export class Notes {
     }
 
     @computedFrom(
-        'responses.executive.issues.multiTasking.response',
-        'responses.executive.issues.organization.response',
-        'responses.executive.issues.planning.response',
-        'responses.executive.issues.decisionMaking.response',
-        'responses.executive.issues.problemSolving.response'
+        'responses.neuropsychological.executive.issues.multiTasking.response',
+        'responses.neuropsychological.executive.issues.organization.response',
+        'responses.neuropsychological.executive.issues.planning.response',
+        'responses.neuropsychological.executive.issues.decisionMaking.response',
+        'responses.neuropsychological.executive.issues.problemSolving.response'
     )
     get unselectedExecutiveFunctionIssues() {
         let data = this.getExecutiveFunctionIssues().filter(item => item.response !== null && item.response.value === false);
@@ -590,21 +615,21 @@ export class Notes {
 
     getExecutiveFunctionIssues() {
         let data = [
-            this.responses.executive.issues.multiTasking,
-            this.responses.executive.issues.harderToMultiTask,
-            this.responses.executive.issues.planning,
-            this.responses.executive.issues.organization,
-            this.responses.executive.issues.decisionMaking,
-            this.responses.executive.issues.problemSolving
+            this.responses.neuropsychological.executive.issues.multiTasking,
+            this.responses.neuropsychological.executive.issues.harderToMultiTask,
+            this.responses.neuropsychological.executive.issues.planning,
+            this.responses.neuropsychological.executive.issues.organization,
+            this.responses.neuropsychological.executive.issues.decisionMaking,
+            this.responses.neuropsychological.executive.issues.problemSolving
         ];
 
         return data;
     }
 
     @computedFrom(
-        'responses.executive.inappropriateSocialBehaviorYellingSwearing.response',
-        'responses.executive.inappropriateSocialBehaviorViolence.response',
-        'responses.executive.inappropriateSocialBehaviorSexual.response'
+        'responses.neuropsychological.executive.inappropriateSocialBehaviorYellingSwearing.response',
+        'responses.neuropsychological.executive.inappropriateSocialBehaviorViolence.response',
+        'responses.neuropsychological.executive.inappropriateSocialBehaviorSexual.response'
     )
     get selectedInappropriateSocialBehavior() {
         let data = this.getInappropriateSocialBehaviors().filter(item => item.response !== null && item.response.value);
@@ -614,9 +639,9 @@ export class Notes {
 
     getInappropriateSocialBehaviors() {
         let data = [
-            this.responses.executive.inappropriateSocialBehaviorYellingSwearing,
-            this.responses.executive.inappropriateSocialBehaviorViolence,
-            this.responses.executive.inappropriateSocialBehaviorSexual
+            this.responses.neuropsychological.executive.inappropriateSocialBehaviorYellingSwearing,
+            this.responses.neuropsychological.executive.inappropriateSocialBehaviorViolence,
+            this.responses.neuropsychological.executive.inappropriateSocialBehaviorSexual
         ];
 
         return data;
