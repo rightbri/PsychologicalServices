@@ -458,7 +458,7 @@
         <p if.bind="results.performedPsychologicalTests.minnesotaMultiphasicPersonalityInventory">
             ${results.gender.title} ${results.claimant.lastName}'s profile on the various indices suggested that the obtained MMPI-2-RF profile was ${results.minnesotaMultiphasicPersonalityInventory.credibility.description}.  
             The obtained profiles on the validity scales of the MMPI-2-RF indicated that ${results.gender.title} ${results.claimant.lastName} 
-            ${results.minnesotaMultiphasicPersonalityInventory.reactions | arrayToString:getMinnesotaMultiphasicPersonalityInventoryReactionOutput}
+            ${results.minnesotaMultiphasicPersonalityInventory.reactions | arrayToString:{"format":getMinnesotaMultiphasicPersonalityInventoryReactionOutput}}
             understood and attended to the items of the test, was not distracted or confused while completing the form, and responded to the items in a consistent manner throughout the test.  
             
             There were no trends towards positive impression management or defensiveness noted.  
@@ -512,7 +512,7 @@
             for level of self-perceived disability associated with post-concussive symptomatology with respect to individuals 
             diagnosed with this syndrome.  
             In particular, current issues and troubles include 
-            ${results.concussionSymptoms.currentSymptoms | sortArray:{property: 'order', direction: 'asc'} | arrayToString:getConcussionSymptomText & signal:'concussion-symptoms-updated'}.
+            ${results.concussionSymptoms.currentSymptoms | sortArray:{property: 'order', direction: 'asc'} | arrayToString:{"format":getConcussionSymptomText} & signal:'concussion-symptoms-updated'}.
             <span if.bind="results.concussionSymptoms.additionalSymptoms.length">
                 He? additionally reporting experiencing ${results.concussionSymptoms.additionalSymptoms | arrayToString & signal:'concussion-additional-symptoms-updated'}.
             </span>

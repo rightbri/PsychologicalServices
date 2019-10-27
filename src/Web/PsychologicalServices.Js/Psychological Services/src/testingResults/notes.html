@@ -24,6 +24,493 @@
             </div>
 
             <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <legend class="uk-legend">Present Psychological Status</legend>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Do you <u>currently</u> experience any of the following?
+                </div>
+
+                <template repeat.for="i of responses.psychological.emotional.length">
+                    <div class="uk-margin-remove uk-width-1-5" if.bind="$even"></div>
+                    
+                    <div class="uk-margin-remove uk-width-1-5">
+                        ${$parent.responses.psychological.emotional[i].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-5">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="psychologicalEmotionalIssue-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.psychological.emotional[i].response" model.bind="response" change.delegate="emotionalIssueChanged()" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+
+                    <hr if.bind="$odd">
+                    
+                </template>
+                
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Past thoughts of self-harm?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalSelfHarmPastThoughts" class="uk-radio" checked.bind="responses.psychological.selfHarm.pastThoughts.response" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Current thoughts of self-harm?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalSelfHarmCurrentThoughts" class="uk-radio" checked.bind="responses.psychological.selfHarm.currentThoughts.response" model.bind="response"/>&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.selfHarm.currentThoughts.response.value"></div>
+
+                <div class="uk-margin-remove uk-width-3-5" if.bind="responses.psychological.selfHarm.currentThoughts.response.value">
+                    Do you have a plan to act on these thoughts?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.selfHarm.currentThoughts.response.value">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalSelfHarmPlanToAct" class="uk-radio" checked.bind="responses.psychological.selfHarm.planToAct.response" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.psychological.selfHarm.currentThoughts.response.value">
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.selfHarm.currentThoughts.response.value"></div>
+
+                <div class="uk-margin-remove uk-width-3-5" if.bind="responses.psychological.selfHarm.currentThoughts.response.value">
+                    Have you told your doctor?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.selfHarm.currentThoughts.response.value">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalSelfHarmToldDoctor" class="uk-radio" checked.bind="responses.psychological.selfHarm.toldDoctor.response" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.psychological.selfHarm.currentThoughts.response.value">
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Have you ever hurt yourself on purpose?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalSelfHarmHurtSelfOnPurpose" class="uk-radio" checked.bind="responses.psychological.selfHarm.hurtSelfOnPurpose.response" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Have you ever attempted to end your life?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalSelfHarmAttemptedToEndLife" class="uk-radio" checked.bind="responses.psychological.selfHarm.attemptedToEndLife.response" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Are you currently interested in psychological treatment?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalSelfInterestedInTreatment" class="uk-radio" checked.bind="responses.psychological.selfHarm.interestedInTreatment.response" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Are you:
+                </div>
+
+                <template repeat.for="i of responses.psychological.depressionSymptoms.length">
+                    <div class="uk-margin-remove uk-width-1-5" if.bind="$even"></div>
+                    
+                    <div class="uk-margin-remove uk-width-1-5">
+                        ${$parent.responses.psychological.depressionSymptoms[i].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-5">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="depressionSymptoms-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.psychological.depressionSymptoms[i].response" model.bind="response" change.delegate="depressionSymptomChanged()" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+
+                    <hr if.bind="$odd">
+                </template>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Do you currently experience?:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5"></div>
+                    
+                <div class="uk-margin-remove uk-width-1-5">
+                    Anxiety
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="neurosisSymptomAnxiety" class="uk-radio" checked.bind="responses.psychological.neurosisSymptoms.anxiety" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-5"></div>
+                    
+                <div class="uk-margin-remove uk-width-1-5">
+                    Stress
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="neurosisSymptomStress" class="uk-radio" checked.bind="responses.psychological.neurosisSymptoms.stress" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-5"></div>
+                    
+                <div class="uk-margin-remove uk-width-1-5">
+                    Unable to relax
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="neurosisSymptomInabilityToRelax" class="uk-radio" checked.bind="responses.psychological.neurosisSymptoms.inabilityToRelax" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-5"></div>
+                    
+                <div class="uk-margin-remove uk-width-1-5">
+                    Fear of worst
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="neurosisSymptomFearOfWorst" class="uk-radio" checked.bind="responses.psychological.neurosisSymptoms.fearOfWorst" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Do you worry about your?:
+                </div>
+    
+                <template repeat.for="i of responses.psychological.worry.length">
+                    <div class="uk-margin-remove uk-width-1-5"></div>
+                    
+                    <div class="uk-margin-remove uk-width-1-5">
+                        ${$parent.responses.psychological.worry[i].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-3-5">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="worry-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.psychological.worry[i].response" model.bind="response" change.delegate="worryChanged()" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+
+                    <hr>
+                </template>
+
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Amount of debt
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.amountOfDebt">
+                    <input type="text" name="amountOfDebt" class="uk-input" value.bind="responses.psychological.amountOfDebt" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you currently experience panic attacks?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="panicAttacksCurrent" class="uk-radio" checked.bind="responses.psychological.panicAttacksCurrent" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Did you experience panic attacks before the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="panicAttacksPrior" class="uk-radio" checked.bind="responses.psychological.panicAttacksPrior" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you currently have a heightened startle response?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="heightenedStartleResponse" class="uk-radio" checked.bind="responses.psychological.heightenedStartleResponse" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    After the accident did you experience flashbacks?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="flashbacksAfter" class="uk-radio" checked.bind="responses.psychological.flashbacksAfter" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you currently experience flashbacks?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="flashbacksCurrent" class="uk-radio" checked.bind="responses.psychological.flashbacksCurrent" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    After the accident did you experience nightmares?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="nightmaresAfter" class="uk-radio" checked.bind="responses.psychological.nightmaresAfter" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you currently experience nightmares?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="nightmaresCurrent" class="uk-radio" checked.bind="responses.psychological.nightmaresCurrent" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you currently have any delusional ideation?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="delusionalIdeation" class="uk-radio" checked.bind="responses.psychological.delusionalIdeation" model.bind="response" change.delegate="hallucinationsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you currently experience hallucinations?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="hallucinations" class="uk-radio" checked.bind="responses.psychological.hallucinations" model.bind="response" change.delegate="hallucinationsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-marin-remove uk-width-1-5" if.bind="responses.psychological.hallucinations.isYes"></div>
+
+                <div class="uk-margin-remove uk-width-3-5" if.bind="responses.psychological.hallucinations.isYes">
+                    Are the hallucinations auditory?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.hallucinations.isYes">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="hallucinationsAuditory" class="uk-radio" checked.bind="responses.psychological.hallucinationsAuditory" model.bind="response" change.delegate="hallucinationsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.psychological.hallucinations.isYes">
+
+                <div class="uk-marin-remove uk-width-1-5" if.bind="responses.psychological.hallucinations.isYes"></div>
+
+                <div class="uk-margin-remove uk-width-3-5" if.bind="responses.psychological.hallucinations.isYes">
+                    Are the hallucinations visual in nature?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.hallucinations.isYes">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="hallucinationsVisual" class="uk-radio" checked.bind="responses.psychological.hallucinationsVisual" model.bind="response" change.delegate="hallucinationsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.psychological.hallucinations.isYes">
+
+                <div class="uk-marin-remove uk-width-1-5" if.bind="responses.psychological.hallucinations.isYes"></div>
+
+                <div class="uk-margin-remove uk-width-3-5" if.bind="responses.psychological.hallucinations.isYes">
+                    Do the hallucinations tell/command you to do something?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.hallucinations.isYes">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="hallucinationsCommand" class="uk-radio" checked.bind="responses.psychological.hallucinationsCommand" model.bind="response" change.delegate="hallucinationsChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.psychological.hallucinations.isYes">
+
+            </fieldset>
+
+            <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <legend class="uk-legend">Traveling</legend>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Has your ability to travel been affected by the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="abilityToTravel" class="uk-radio" checked.bind="responses.psychological.travel.abilityToTravel" model.bind="response" change.delegate="travelChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.travel.abilityToTravel.isYes"></div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.travel.abilityToTravel.isYes">
+                    Is this due to?
+                </div>
+    
+                <div class="uk-margin-remove uk-width-3-5 uk-grid-small uk-child-width-auto uk-grid" if.bind="responses.psychological.travel.abilityToTravel.isYes">
+                    <label repeat.for="response of travelIssues">
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.psychological.travel.travelIssues" model.bind="response" change.delegate="travelChanged()"> ${response.description}
+                    </label>
+                </div>
+
+                <hr if.bind="responses.psychological.travel.abilityToTravel.isYes">
+                
+                <div class="uk-margin-remove uk-width-2-5">
+                    Would you describe yourself as a?
+                </div>
+    
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label>
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.psychological.travel.nervousDriver" value.bind="true" change.delegate="travelChanged()"> Nervous Driver
+                    </label>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-2-5">
+                    <label>
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.psychological.travel.anxiousDriver" value.bind="true" change.delegate="travelChanged()"> Anxious Driver
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-2-5"></div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label>
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.psychological.travel.nervousPassenger" value.bind="true" change.delegate="travelChanged()"> Nervous Passenger
+                    </label>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-2-5">
+                    <label>
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.psychological.travel.anxiousPassenger" value.bind="true" change.delegate="travelChanged()"> Anxious Passenger
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-4-5">
+                    Do you use a phantom brake when traveling as a passenger?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="usePhantomBrake" class="uk-radio" checked.bind="responses.psychological.travel.usePhantomBrake" model.bind="response" change.delegate="travelChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-4-5">
+                    Are you more vigilant when you are traveling?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="vigilantWhenTravelling" class="uk-radio" checked.bind="responses.psychological.travel.vigilantWhenTravelling" model.bind="response" change.delegate="travelChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-4-5">
+                    If possible, do you tend to avoid the scene of the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="avoidSceneOfAccident" class="uk-radio" checked.bind="responses.psychological.travel.avoidSceneOfAccident" model.bind="response" change.delegate="travelChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-3-5">
+                    Do you prefer to be a:
+                </div>
+
+                <div class="uk-margin-remove uk-width-2-5">
+                    <label repeat.for="response of travelPreferences">
+                        <input type="radio" name="travelPreference" class="uk-radio" checked.bind="responses.psychological.travel.travelPreference" model.bind="response" change.delegate="travelChanged()" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+            </fieldset>
+
+            <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
                 <legend class="uk-legend">Present Neuropsychological Status</legend>
 
                 <div class="uk-margin-remove uk-width-1-1">
@@ -968,6 +1455,437 @@
 
     <div class="uk-container">
 
+        <p class="uk-text-lead">Psychological Report</p>
+
+        <template if.bind="anyEmotionalIssues & signal:'emotional-issues-changed'">
+            <template if.bind="anyYesEmotionalIssues & signal:'emotional-issues-changed'">
+                <br>
+                When asked about ${pronoun.possessiveAdjective} emotional functioning, ${gender.title} ${claimant.lastName} stated that currently ${pronoun.subject} is experiencing: 
+                ${yesEmotionalIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'emotional-issues-changed'}.    
+            </template>
+            <template if.bind="anyNoEmotionalIssues & signal:'emotional-issues-changed'">
+                <br>
+                ${pronoun.subject | proper} specifically denied experiencing any of the following: 
+                ${noEmotionalIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'emotional-issues-changed'}.    
+            </template>
+            <template if.bind="anyDontKnowEmotionalIssues & signal:'emotional-issues-changed'">
+                <br>
+                ${pronoun.subject | proper} shared that ${pronoun.subject} does not know if ${pronoun.subject} has issues with:
+                ${dontKnowEmotionalIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'emotional-issues-changed'}.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.selfHarm.pastThoughts.response.value !== null">
+            <br>
+            When asked about any thoughts of self-harm, ${gender.title} ${claimant.lastName} 
+            <template if.bind="responses.psychological.selfHarm.pastThoughts.response.isYes">
+                &nbsp;acknowledged that ${pronoun.subject} had thoughts in the past.
+            </template>
+            <template if.bind="responses.psychological.selfHarm.pastThoughts.response.isNo">
+                &nbsp;denied having any thoughts of self-harm in the past.
+            </template>
+            <template if.bind="responses.psychological.selfHarm.pastThoughts.response.isDontKnow">
+                &nbsp;reported that ${pronoun.subject} does not know if ${pronoun.subject} had any thoughts in the past.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.selfHarm.currentThoughts.response.value !== null">
+            <br>
+            <template if.bind="responses.psychological.selfHarm.currentThoughts.response.isYes">
+                ${pronoun.subject | proper} related that ${pronoun.subject} experiences current thoughts of self-harm.
+
+                <br if.bind="responses.psychological.selfHarm.planToAct.response.value !== null">
+                <template if.bind="responses.psychological.selfHarm.planToAct.response.isYes">
+                    ${pronoun.subject | proper} added that ${pronoun.subject} has a plan to act on these thoughts.
+                </template>
+                <template if.bind="responses.psychological.selfHarm.planToAct.response.isNo">
+                    ${pronoun.subject | proper} added that ${pronoun.subject} does not have a plan to act on these thoughts.
+                </template>
+                <template if.bind="responses.psychological.selfHarm.planToAct.response.isDontKnow">
+                    ${pronoun.subject | proper} added that ${pronoun.subject} does not know if ${pronoun.subject} would act on these thoughts. 
+                </template>
+
+                <br if.bind="responses.psychological.selfHarm.toldDoctor.response.value !== null">
+                <template if.bind="responses.psychological.selfHarm.toldDoctor.response.isYes">
+                    ${pronoun.subject | proper} noted that ${pronoun.subject} has told ${pronoun.possessiveAdjective} doctor about these thoughts.
+                </template>
+                <template if.bind="responses.psychological.selfHarm.toldDoctor.response.isNo">
+                    ${pronoun.subject | proper} noted that ${pronoun.subject} has not told ${pronoun.possessiveAdjective} doctor these thoughts.
+                </template>
+                <template if.bind="responses.psychological.selfHarm.toldDoctor.response.isDontKnow">
+                    ${pronoun.subject | proper} noted that ${pronoun.subject} does not know if ${pronoun.subject} has told ${pronoun.possessiveAdjective} doctor about these thoughts. 
+                </template>
+            </template>
+            <template if.bind="responses.psychological.selfHarm.currentThoughts.response.isNo">
+                ${pronoun.subject | proper} confirmed that ${pronoun.subject} does not have any thoughts of self-harm at the present time.
+            </template>
+            <template if.bind="responses.psychological.selfHarm.currentThoughts.response.isDontKnow">
+                ${pronoun.subject | proper} related that ${pronoun.subject} does not know if ${pronoun.subject} has any current thoughts of self-harm.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.selfHarm.hurtSelfOnPurpose.response.value !== null">
+            <br>
+            ${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} 
+            <template if.bind="responses.psychological.selfHarm.hurtSelfOnPurpose.response.isYes">
+                &nbsp;has hurt ${pronoun.object}self on purpose.
+            </template>
+            <template if.bind="responses.psychological.selfHarm.hurtSelfOnPurpose.response.isNo">
+                &nbsp;has never hurt ${pronoun.object}self on purpose.
+            </template>
+            <template if.bind="responses.psychological.selfHarm.hurtSelfOnPurpose.response.isDontKnow">
+                &nbsp;does not know if ${pronoun.subject} has ever hurt ${pronoun.object}self on purpose.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.selfHarm.attemptedToEndLife.response.value !== null">
+            <br>
+            ${gender.title} ${claimant.lastName} added that ${pronoun.subject} 
+            <template if.bind="responses.psychological.selfHarm.attemptedToEndLife.response.isYes">
+                &nbsp;has attempted to end ${pronoun.possessiveAdjective} own life.
+            </template>
+            <template if.bind="responses.psychological.selfHarm.attemptedToEndLife.response.isNo">
+                &nbsp;has never attempted to end ${pronoun.possessiveAdjective} own life.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.selfHarm.currentThoughts.response.isYes">
+            <br>
+            The assessor would stress that if ${pronoun.possessiveAdjective} thoughts of self-harm continue or worsen that 
+            ${pronoun.subject} should call 911 or attend ${pronoun.possessiveAdjective} local emergency department immediately.
+        </template>
+
+        <template if.bind="!responses.psychological.selfHarm.currentThoughts.response.isYes && responses.psychological.selfHarm.pastThoughts.response.isYes">
+            <br>
+            The assessor would stress that if ${pronoun.possessiveAdjective} thoughts of self-harm return that 
+            ${pronoun.subject} should call 911 or attend ${pronoun.possessiveAdjective} local emergency department immediately.
+        </template>
+
+        <template if.bind="responses.psychological.selfHarm.interestedInTreatment.response.value !== null">
+            <br>
+            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} 
+            <template if.bind="responses.psychological.selfHarm.interestedInTreatment.response.isYes">
+                &nbsp;is interested in psychological treatment. 
+            </template>
+            <template if.bind="responses.psychological.selfHarm.interestedInTreatment.response.isNo">
+                &nbsp;is not interested in psychological treatment.
+            </template>
+            <template if.bind="responses.psychological.selfHarm.interestedInTreatment.response.isDontKnow">
+                &nbsp;does not know if ${pronoun.subject} is interested in psychological treatment.
+            </template>
+        </template>
+
+        <template if.bind="anyDepressionSymptoms & signal:'depression-symptom-changed'">
+            <template if.bind="anyYesDepressionSymptoms & signal:'depression-symptom-changed'">
+                <br>
+                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} is: 
+                ${yesDepressionSymptoms | arrayToString:{"format":getItemValueForCurrentContext} & signal:'depression-symptom-changed'}.        
+            </template>
+            <template if.bind="anyNoDepressionSymptoms & signal:'depression-symptom-changed'">
+                <br>
+                <template if.bind="!anyYesDepressionSymptoms">
+                    ${gender.title} ${claimant.lastName} reported 
+                </template>
+                <template else>
+                    ${pronoun.subject | proper} stated 
+                </template>
+                &nbsp;that ${pronoun.subject} is not: 
+                ${noDepressionSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'depression-symptom-changed'}.        
+            </template>
+            <template if.bind="anyDontKnowDepressionSymptoms & signal:'depression-symptom-changed'">
+                <br>
+                <template if.bind="!(anyYesDepressionSymptoms || anyNoDepressionSymptoms)">
+                    ${gender.title} ${claimant.lastName} reported 
+                </template>
+                <template else>
+                    ${pronoun.subject | proper} indicated 
+                </template>
+                &nbsp;that ${pronoun.subject} does not know if ${pronoun.subject} is: 
+                ${dontKnowDepressionSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'depression-symptom-changed'}.        
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.neurosisSymptoms.anxiety.value !== null || responses.psychological.neurosisSymptoms.stress.value !== null">
+            <br>
+            <template if.bind="responses.psychological.neurosisSymptoms.anxiety.isYes">
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isYes">
+                    ${pronoun.subject | proper} went on to describe being anxious and stressed.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isNo">
+                    ${pronoun.subject | proper} described ${pronoun.object}self as anxious but denied feeling stressed at the present time.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isSkip || responses.psychological.neurosisSymptoms.stress === null">
+                    ${pronoun.subject | proper} went on to describe being anxious.
+                </template>
+            </template>
+            <template if.bind="responses.psychological.neurosisSymptoms.anxiety.isNo">
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isYes">
+                    ${pronoun.subject | proper} described ${pronoun.object}self as being stressed, but denied experiencing anxiety at the present time.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isNo">
+                    ${pronoun.subject | proper} reported that at the present time ${pronoun.subject} is not anxious or stressed.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isSkip || responses.psychological.neurosisSymptoms.stress === null">
+                    ${pronoun.subject | proper} denied being anxious.
+                </template>
+            </template>
+            <template if.bind="responses.psychological.neurosisSymptoms.anxiety.isSkip || responses.psychological.neurosisSymptoms.anxiety === null">
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isYes">
+                    ${pronoun.subject | proper} went on to describe being stressed.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.stress.isNo">
+                    ${pronoun.subject | proper} denied being stressed.
+                </template>
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.neurosisSymptoms.inabilityToRelax.value !== null || responses.psychological.neurosisSymptoms.fearOfWorst.value !== null">
+            <br>
+            <template if.bind="responses.psychological.neurosisSymptoms.inabilityToRelax.isYes">
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isYes">
+                    ${gender.title} ${claimant.lastName} went on to indicate that ${pronoun.subject} is unable to relax and has a fear of the worst happening.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isNo">
+                    ${gender.title} ${claimant.lastName} went on to indicate that ${pronoun.subject} is unable to relax but does not have a fear of the worst happening.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isSkip || responses.psychological.neurosisSymptoms.fearOfWorst === null">
+                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} is unable to relax.
+                </template>
+            </template>
+            <template if.bind="responses.psychological.neurosisSymptoms.inabilityToRelax.isNo">
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isYes">
+                    ${gender.title} ${claimant.lastName} went on to indicate that ${pronoun.subject} is able to relax but has a fear of the worst happening.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isNo">
+                    ${gender.title} ${claimant.lastName} went on to indicate that ${pronoun.subject} is able to relax and does not have a fear of the worst happening.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isSkip || responses.psychological.neurosisSymptoms.fearOfWorst === null">
+                    ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not have any issues being unable to relax.
+                </template>
+            </template>
+            <template if.bind="responses.psychological.neurosisSymptoms.inabilityToRelax.isSkip || responses.psychological.neurosisSymptoms.inabilityToRelax === null">
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isYes">
+                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has a fear of the worst happening.
+                </template>
+                <template if.bind="responses.psychological.neurosisSymptoms.fearOfWorst.isNo">
+                    ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not have a fear of the worst happening.
+                </template>
+            </template>
+        </template>
+
+        <template if.bind="anyWorries & signal:'worry-changed'">
+            <br>
+            <template if.bind="(anyYesWorries && anyNoWorries) & signal:'worry-changed'">
+                Upon inquiry ${pronoun.subject} reported that at the present time ${pronoun.subject} worries about ${pronoun.possessiveAdjective}
+                ${yesWorries | arrayToString:{"format":getItemValueForCurrentContext} & signal:'worry-changed'} 
+                but denied worrying about ${pronoun.possessiveAdjective} 
+                ${noWorries | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'worry-changed'}.
+            </template>            
+            <template if.bind="(anyYesWorries && !anyNoWorries) & signal:'worry-changed'">
+                ${pronoun.subject | proper} also noted that ${pronoun.subject} worries about ${pronoun.possessiveAdjective} 
+                ${yesWorries | arrayToString:{"format":getItemValueForCurrentContext} & signal:'worry-changed'}.
+            </template>
+            <template if.bind="(!anyYesWorries && anyNoWorries) & signal:'worry-changed'">
+                ${pronoun.subject | proper} denied worrying about ${pronoun.possessiveAdjective} 
+                ${noWorries | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'worry-changed'}.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.amountOfDebt">
+            <br>
+            ${pronoun.subject | proper} disclosed that ${pronoun.subject} has a current debt of ${responses.psychological.amountOfDebt}.
+        </template>
+
+        <template if.bind="responses.psychological.panicAttacksCurrent.value">
+            <br>
+            ${gender.title} ${claimant.lastName} reported that since the accident ${pronoun.subject} has 
+            <template if.bind="responses.psychological.panicAttacksCurrent.isNo">
+                &nbsp;not
+            </template>
+            experienced panic attacks.
+        </template>
+
+        <template if.bind="responses.psychological.panicAttacksPrior.value">
+            <br>
+            ${pronoun.subject | proper} 
+            <template if.bind="responses.psychological.panicAttacksPrior.isYes">
+                &nbsp;acknowledged a 
+            </template>
+            <template else>
+                &nbsp;denied having any 
+            </template>
+            pre-accident history of panic attacks.
+        </template>
+        
+        <template if.bind="responses.psychological.heightenedStartleResponseCurrent.value">
+            <br>
+            ${pronoun.subject | proper} further expressed that ${pronoun.subject} 
+            <template if.bind="responses.psychological.heightenedStartleResponseCurrent.isYes">
+                &nbsp;now has
+            </template>
+            <template else>
+                &nbsp;does not have
+            </template>
+            a heightened startle response.
+        </template>
+        
+        <template if.bind="responses.psychological.flashbacksAfter.value">
+            <br>
+            ${gender.title} ${claimant.lastName} 
+            <template if.bind="responses.psychological.flashbacksAfter.isYes">
+                &nbsp;went on to share that after the accident ${pronoun.subject} experienced flashbacks.
+            </template>
+            <template else>
+                &nbsp;indicated that after the accident ${pronoun.subject} did not experience any flashbacks.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.flashbacksCurrent.value">
+            <br>
+            <template if.bind="responses.psychological.flashbacksCurrent.isYes">
+                ${pronoun.subject | proper} then noted that ${pronoun.subject} continues to experience flashbacks.
+            </template>
+            <template else>
+                ${pronoun.subject | proper} noted that ${pronoun.subject} does not experience flashbacks at the present time.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.nightmaresAfter.value">
+            <br>
+            <template if.bind="responses.psychological.nightmaresAfter.isYes">
+                When asked about any nightmares, ${gender.title} ${claimant.lastName} indicated that after the accident ${pronoun.subject} experienced the same.
+            </template>
+            <template else>
+                ${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} did not have any nightmares after the accident. 
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.nightmaresCurrent.value">
+            <br>
+            <template if.bind="responses.psychological.nightmaresCurrent.isYes">
+                ${pronoun.subject | proper} then added that ${pronoun.subject} still experiences nightmares. 
+            </template>
+            <template else>
+                ${pronoun.subject | proper} denied experiencing nightmares at the present time.
+            </template>
+        </template>
+
+        <template if.bind="(responses.psychological.delusionalIdeation.value !== null || responses.psychological.hallucinations.value !== null) & signal:'hallucinations-changed'">
+            <template if.bind="responses.psychological.delusionalIdeation.isYes & signal:'hallucinations-changed'">
+                <br>
+                Upon inquiry, ${pronoun.subject} reported having delusional ideation.
+            </template>
+            <template if.bind="responses.psychological.delusionalIdeation.isNo && (responses.psychological.hallucinations.value === null)  & signal:'hallucinations-changed'">
+                <br>
+                Upon inquiry, ${pronoun.subject} denied having any delusional ideation.
+            </template>
+            <template if.bind="responses.psychological.hallucinations.isYes & signal:'hallucinations-changed'">
+                <template if.bind="responses.psychological.delusionalIdeation.isNo & signal:'hallucinations-changed'">
+                    <br>
+                    Upon inquiry, ${pronoun.subject} denied having any delusional ideation.
+                </template>
+                <br>
+                ${pronoun.subject | proper} stated that ${pronoun.subject} experiences 
+                <template if.bind="anyHallucinationCharacteristics">
+                    &nbsp;${hallucinationCharacteristics | arrayToString:{"format":getItemValueForCurrentContext} & signal:'hallucinations-changed'} 
+                </template>
+                &nbsp;hallucinations.
+            </template>
+            <template if.bind="responses.psychological.hallucinations.isNo && !responses.psychological.delusionalIdeation.isNo & signal:'hallucinations-changed'">
+                <br>
+                ${pronoun.subject | proper} stated that ${pronoun.subject} does not experience hallucinations.
+            </template>
+            <template if.bind="responses.psychological.delusionalIdeation.isNo && responses.psychological.hallucinations.isNo & signal:'hallucinations-changed'">
+                <br>
+                Upon inquiry, ${pronoun.subject} denied having any delusions or hallucinations.
+            </template>
+        </template>
+
+
+        <template if.bind="responses.psychological.travel.abilityToTravel.value !== null">
+            <br>
+            In terms of vehicular travel, ${gender.title} ${claimant.lastName} stated that since the accident ${pronoun.possessiveAdjective} ability to travel has 
+            <template if.bind="responses.psychological.travel.abilityToTravel.isYes">
+                &nbsp;been affected
+                <template if.bind="anyYesTravelIssues">
+                    &nbsp;by ${pronoun.possessiveAdjective} 
+                    ${yesTravelIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'travel-changed'}
+                </template>
+                .
+            </template>
+            <template else>
+                &nbsp;not been affected.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.travel.nervousDriver || responses.psychological.travel.anxiousDriver">
+            <br>
+            ${pronoun.subject | proper} described ${pronoun.object}self as 
+            <template if.bind="responses.psychological.travel.nervousDriver && responses.psychological.travel.anxiousDriver">
+                &nbsp;being both a nervous and anxious
+            </template>
+            <template if.bind="responses.psychological.travel.nervousDriver && !responses.psychological.travel.anxiousDriver">
+                &nbsp;a nervous
+            </template>
+            <template if.bind="!responses.psychological.travel.nervousDriver && responses.psychological.travel.anxiousDriver">
+                &nbsp;an anxious
+            </template>
+            &nbsp;driver.
+        </template>
+
+        <template if.bind="responses.psychological.travel.nervousPassenger || responses.psychological.travel.anxiousPassenger">
+            <br>
+            ${pronoun.subject | proper} also stated that ${pronoun.subject} feels 
+            <template if.bind="responses.psychological.travel.nervousPassenger && responses.psychological.travel.anxiousPassenger">
+                &nbsp;both nervous and anxious
+            </template>
+            <template if.bind="responses.psychological.travel.nervousPassenger && !responses.psychological.travel.anxiousPassenger">
+                &nbsp;nervous
+            </template>
+            <template if.bind="!responses.psychological.travel.nervousPassenger && responses.psychological.travel.anxiousPassenger">
+                &nbsp;anxious
+            </template>
+            &nbsp;when ${pronoun.subject} is traveling as a passenger.
+        </template>
+
+        <template if.bind="responses.psychological.travel.usePhantomBrake.value !== null">
+            <br>
+            When asked, ${gender.title} ${claimant.lastName} indicated that when traveling as a passenger, ${pronoun.subject} 
+            <template if.bind="responses.psychological.travel.usePhantomBrake.isYes">
+                &nbsp;will use
+            </template>
+            <template else>
+                &nbsp;does not use
+            </template>
+            &nbsp;use a phantom brake.
+        </template>
+
+        <template if.bind="responses.psychological.travel.vigilantWhenTravelling.value !== null">
+            <br>
+            ${pronoun.subject | proper} expressed that ${pronoun.subject} is 
+            <template if.bind="responses.psychological.travel.vigilantWhenTravelling.isNo">
+                &nbsp;not any
+            </template>
+            &nbsp;more vigilant when traveling.
+        </template>
+
+        <template if.bind="responses.psychological.travel.avoidSceneOfAccident.value !== null">
+            <br>
+            ${pronoun.subject | proper} also shared that 
+            <template if.bind="responses.psychological.travel.avoidSceneOfAccident.isYes">
+                &nbsp;if at all possible possible, ${pronoun.subject} will tend to avoid the scene of the accident.
+            </template>
+            <template else>
+                &nbsp;${pronoun.subject} does not tend to avoid the scene of the accident.
+            </template>
+        </template>
+
+        <template if.bind="responses.psychological.travel.travelPreference.value !== null">
+            <br>
+            Upon inquiry, ${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} prefers to travel as a ${responses.psychological.travel.travelPreference.value}.
+        </template>
+
+
         <p class="uk-text-lead">Cognitive Report</p>
 
         <template if.bind="responses.neuropsychological.problems.concentration.value !== null">
@@ -1002,7 +1920,7 @@
         <template if.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value !== null">
             <br>
             <template if.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value">
-                &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} will frequently forget the whereabouts of objects around ${pronoun.possessiveAdjective} home (including ${pronoun.possessiveAdjective}: ${responses.neuropsychological.memory.visual.forgetWhereaboutsOf | arrayToString:getItemValue & signal:'memory-visual-whereabouts-objects-changed'}).
+                &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} will frequently forget the whereabouts of objects around ${pronoun.possessiveAdjective} home (including ${pronoun.possessiveAdjective}: ${responses.neuropsychological.memory.visual.forgetWhereaboutsOf | arrayToString:{"format":getItemValue} & signal:'memory-visual-whereabouts-objects-changed'}).
             </template>
             <template else>
                 &nbsp;When asked, ${pronoun.subject} shared that ${pronoun.subject} will not frequently forget the whereabouts of objects around ${pronoun.possessiveAdjective} home. 
@@ -1032,7 +1950,7 @@
         <template if.bind="responses.neuropsychological.memory.aids.useAids.value !== null">
             <br>
             <template if.bind="responses.neuropsychological.memory.aids.useAids.value">
-                Upon inquiry, ${gender.title} ${claimant.lastName} shared that currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${responses.neuropsychological.memory.aids.aidsUsed | arrayToString:getItemValue & signal:'memory-aids-used-changed'}.
+                Upon inquiry, ${gender.title} ${claimant.lastName} shared that currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${responses.neuropsychological.memory.aids.aidsUsed | arrayToString:{"format":getItemValue} & signal:'memory-aids-used-changed'}.
             </template>
             <template else>
                 Upon inquiry, ${gender.title} ${claimant.lastName} denied using any memory aids at the current time.
@@ -1075,14 +1993,14 @@
             When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
             <template if.bind="anySelectedLanguageIssues">
                 &nbsp;reported that at the present time ${pronoun.subject} experiences: 
-                &nbsp;${selectedLanguageIssues | arrayToString:getItemValueForCurrentPronoun:"; ":false & signal:'language-issues-changed'}.
+                &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentPronoun,"delmiter":"; ","lastConnector":false} & signal:'language-issues-changed'}.
             </template>
             <template if.bind="anyUnselectedLanguageIssues">
                 <template if.bind="anySelectedLanguageIssues">
                     &nbsp;${pronoun.subject | proper} 
                 </template>
                 &nbsp;specifically denied any of the following: 
-                &nbsp;${unselectedLanguageIssues | arrayToString:getItemValueForCurrentPronoun:"; ":false & signal:'language-issues-changed'}.
+                &nbsp;${unselectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentPronoun,"delimiter":"; ","lastConnector":false} & signal:'language-issues-changed'}.
             </template>
         </template>
         
@@ -1134,7 +2052,7 @@
             <template if.bind="responses.neuropsychological.attention.needToReRead.value">
                 ${pronoun.subject | proper} went on to express that ${pronoun.subject} may need to go back and re-read, 
                 noting that currently ${pronoun.possessiveAdjective} ability to read is affected by ${pronoun.possessiveAdjective}: 
-                ${responses.neuropsychological.attention.readingIssues | arrayToString:getItemValue & signal:'reading-issues-changed'}. 
+                ${responses.neuropsychological.attention.readingIssues | arrayToString:{"format":getItemValue} & signal:'reading-issues-changed'}. 
             </template>
             <template else>
                 ${pronoun.subject | proper} denied needing to go back and re-read.
@@ -1158,16 +2076,16 @@
             ${gender.title} ${claimant.lastName} noted that ${pronoun.possessiveAdjective} executive functioning has 
             <template if.bind="anySelectedExecutiveFunctionIssues">
                 &nbsp;been adversely affected, including ${pronoun.possessiveAdjective} ability to: 
-                ${selectedExecutiveFunctionIssues | arrayToString:getItemValueForCurrentContext & signal:'executive-function-issue-changed'}.
+                ${selectedExecutiveFunctionIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'executive-function-issue-changed'}.
     
                 <template if.bind="anyUnselectedExecutiveFunctionIssues">
                     &nbsp;${pronoun.subject | proper} denied having any issues with ${pronoun.possessiveAdjective} ability to: 
-                    ${unselectedExecutiveFunctionIssues | arrayToString:getItemValueForCurrentContext & signal:'executive-function-issue-changed'}.
+                    ${unselectedExecutiveFunctionIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'executive-function-issue-changed'}.
                 </template>
             </template>
             <template else>
                 &nbsp;not been adversely affected, and specifically denied having any issues with ${pronoun.possessiveAdjective} ability to: 
-                ${unselectedExecutiveFunctionIssues | arrayToString:getItemValueForCurrentContext & signal:'executive-function-issue-changed'}.
+                ${unselectedExecutiveFunctionIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'executive-function-issue-changed'}.
             </template>
         </template>
         
@@ -1176,7 +2094,7 @@
             ${gender.title} ${claimant.lastName} 
             <template if.bind="responses.neuropsychological.executive.inappropriateSocialBehavior.value">
                 &nbsp;acknowledged having inappropriate social behaviour 
-                (including ${selectedInappropriateSocialBehavior | arrayToString:getItemValue & signal:'inappropriate-social-behavior-changed'}).
+                (including ${selectedInappropriateSocialBehavior | arrayToString:{"format":getItemValue} & signal:'inappropriate-social-behavior-changed'}).
             </template>
             <template else>
                 &nbsp;denied having any inappropriate social behaviour (including including yelling or swearing in public, violence, or sexually inappropriate behaviour). 
@@ -1188,19 +2106,19 @@
             <br>
             <template if.bind="anySelectedVisualSpatialIssues">
                 When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has experienced:
-                ${selectedVisualSpatialIssues | arrayToString:getItemValueForCurrentPronoun & signal:'visual-spatial-issue-changed'}. 
+                ${selectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}. 
                 <template if.bind="anyUnselectedVisualSpatialIssues">
                     &nbsp;Upon inquiry, ${pronoun.subject} denied 
                     <template if.bind="!anySelectedAtypicalSymptomology">
                         having any atypical symptomatology or
                     </template>
                     experiencing any 
-                    ${unselectedVisualSpatialIssues | arrayToString:getItemValueForCurrentPronoun & signal:'visual-spatial-issue-changed'}.
+                    ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}.
                 </template>
             </template>
             <template else>
                 When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} denied having any atypical symptomatology or experiencing any 
-                ${unselectedVisualSpatialIssues | arrayToString:getItemValueForCurrentPronoun & signal:'visual-spatial-issue-changed'}.
+                ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}.
             </template>
         </template>
         

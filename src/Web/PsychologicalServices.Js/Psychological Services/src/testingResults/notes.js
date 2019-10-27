@@ -16,23 +16,48 @@ export class Notes {
         
         this.responses = {
             "psychological": {
-                "status": {
-                    "sadness": null,        //is sad
-                    "depression": null,     //is depressed
-                    "irritable": null,      //? is irritable
-                    "frustrated": null,     //feels frustrated
-                    "overwhelmed": null,    //feels overwhelmed
-                    "withdrawn": null,      //feels withdrawn
-                    "labile": null,         //has a rapidly changing mood
-                    "anhedonia": null,      //experiences an inability to feel pleasure
-                    "hopelessness": null,   //experiences feelings of 
-                    "helplessness": null,   //experiences feelings of 
-                    "worthlessness": null,  //experiences feelings of 
-                    "guilt": null,          //feels guilty
-                    "apathy": null,         //struggles with lack of interest 
-                    "amotivation": null,    //struggles with lack of motivation
-                    "dependency": null,     //feels dependent
-                    "burden": null          //is a burden on others
+                "emotional": [],
+                "selfHarm": {
+                    "pastThoughts": { "response": null },
+                    "currentThoughts": { "response": null },
+                    "planToAct": { "response": null },
+                    "toldDoctor": { "response": null },
+                    "hurtSelfOnPurpose": { "response": null },
+                    "attemptedToEndLife": { "response": null },
+                    "interestedInTreatment": { "response": null }
+                },
+                "depressionSymptoms": [],
+                "neurosisSymptoms": {
+                    "anxiety": null,
+                    "stress": null,
+                    "inabilityToRelax": null,
+                    "fearOfWorst": null
+                },
+                "worry": [],
+                "amountOfDebt": null,
+                "panicAttacksCurrent": null,
+                "panicAttacksPrior": null,
+                "heightenedStartleResponse": null,
+                "flashbacksAfter": null,
+                "flashbacksCurrent": null,
+                "nightmaresAfter": null,
+                "nightmaresCurrent": null,
+                "delusionalIdeation": null,
+                "hallucinations": null,
+                "hallucinationsAuditory": null,
+                "hallucinationsVisual": null,
+                "hallucinationsCommand": null,
+                "travel": {
+                    "abilityToTravel": null,
+                    "travelIssues": [],
+                    "nervousDriver": null,
+                    "anxiousDriver": null,
+                    "nervousPassenger": null,
+                    "anxiousPassenger": null,
+                    "usePhantomBrake": null,
+                    "vigilantWhenTravelling": null,
+                    "avoidSceneOfAccident": null,
+                    "travelPreference": null
                 }
             },
             "neuropsychological": {
@@ -168,6 +193,7 @@ export class Notes {
 
         this.pronouns = [];
         this.yesNo = [];
+        this.yesNoDontKnow = [];
         this.genders = [];
         this.whereaboutsObjects = [];
         this.memoryAids = [];
@@ -175,6 +201,8 @@ export class Notes {
         this.weightChangeTypes = [];
         this.cognitiveChangeTypes = [];
         this.moodChangeTypes = [];
+        this.travelIssues = [];
+        this.travelPreferences = [];
 
         this.getItemValueForCurrentContext = function(item) {
             return this.getItemValueForContext(item, this);
@@ -197,13 +225,19 @@ export class Notes {
                 return Promise.all([
                     this.getPronouns().then(data => this.pronouns = data),
                     this.getYesNo().then(data => this.yesNo = data),
+                    this.getYesNoDontKnow().then(data => this.yesNoDontKnow = data),
                     this.getGenders().then(data => this.genders = data),
                     this.getWhereaboutsObjects().then(data => this.whereaboutsObjects = data),
                     this.getMemoryAids().then(data => this.memoryAids = data),
                     this.getReadingIssues().then(data => this.readingIssues = data),
                     this.getWeightChangeTypes().then(data => this.weightChangeTypes = data),
                     this.getCognitiveChangeTypes().then(data => this.cognitiveChangeTypes = data),
-                    this.getMoodChangeTypes().then(data => this.moodChangeTypes = data)
+                    this.getMoodChangeTypes().then(data => this.moodChangeTypes = data),
+                    this.getEmotionalIssues().then(data => this.responses.psychological.emotional = data),
+                    this.getDepressionSymptoms().then(data => this.responses.psychological.depressionSymptoms = data),
+                    this.getWorries().then(data => this.responses.psychological.worry = data),
+                    this.getTravelIssues().then(data => this.travelIssues = data),
+                    this.getTravelPreferences().then(data => this.travelPreferences = data)
                 ]);
             });
     }
@@ -219,13 +253,13 @@ export class Notes {
     }
 
     genderChanged(gender) {
-        var pronoun = this.pronouns.filter(p => p.gender === gender.abbreviation);
+        let pronoun = this.pronouns.filter(p => p.gender === gender.abbreviation);
 
         this.pronoun = pronoun.length > 0 ? pronoun[0] : null;
     }
     
     getPronouns() {
-        var data = [
+        let data = [
             {
                 "gender": "M",
                 "subject": "he",
@@ -246,17 +280,28 @@ export class Notes {
     }
 
     getYesNo() {
-        var data = [
-            { "description": "Yes", "value": true },
-            { "description": "No", "value": false },
-            { "description": "Skip", "value": null }
+        let data = [
+            { "description": "Yes", "value": true, "isYes": true },
+            { "description": "No", "value": false, "isNo": true },
+            { "description": "Skip", "value": null, "isSkip": true }
+        ];
+
+        return getPromise(data);
+    }
+
+    getYesNoDontKnow() {
+        let data = [
+            { "description": "Yes", "value": true, "isYes": true },
+            { "description": "No", "value": false, "isNo": true },
+            { "description": "DK", "value": undefined, "isDontKnow": true },
+            { "description": "Skip", "value": null, "isSkip": true }
         ];
 
         return getPromise(data);
     }
 
     getGenders() {
-        var data = [
+        let data = [
             { "abbreviation": "M", "description": "Male", "title": "Mr." },
             { "abbreviation": "F", "description": "Female", "title": "Ms." }
         ];
@@ -265,7 +310,7 @@ export class Notes {
     }
 
     getWhereaboutsObjects() {
-        var data = [
+        let data = [
             { "description": "Bank card", "value": "bank card" },
             { "description": "Eye Glasses", "value": "eye glasses" },
             { "description": "iPad/tablet", "value": "iPad/tablet" },
@@ -280,7 +325,7 @@ export class Notes {
     }
 
     getMemoryAids() {
-        var data = [
+        let data = [
             { "description": "Alarms", "value": "alarms" },
             { "description": "Calendar", "value": "calendar" },
             { "description": "Family List", "value": "family list" },
@@ -295,7 +340,7 @@ export class Notes {
     }
 
     getReadingIssues() {
-        var data = [
+        let data = [
             { "description": "Headaches", "value": "headaches" },
             { "description": "Vision Issues", "value": "visual issues" },
             { "description": "Focus", "value": "ability to focus" }
@@ -305,7 +350,7 @@ export class Notes {
     }
 
     getWeightChangeTypes() {
-        var data = [
+        let data = [
             { "description": "Don't know", "value": function(pronoun) { return `${pronoun.subject} does not know how much ${pronoun.possessiveAdjective} weight has changed`; } },
             { "description": "Increased", "value": function(pronoun) { return `${pronoun.possessiveAdjective} weight has changed, noting an increase of `; }, "isIncreaseOrDecrease": true },
             { "description": "Decreased", "value": function(pronoun) { return `${pronoun.possessiveAdjective} weight has changed, noting a decrease of `; }, "isIncreaseOrDecrease": true },
@@ -316,7 +361,7 @@ export class Notes {
     }
 
     getCognitiveChangeTypes() {
-        var data = [
+        let data = [
             { "description": "Worse", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} cognition is worse`; } },
             { "description": "Little improvement", "value": function(pronoun) { return `overall ${pronoun.subject} has seen little improvement`; } },
             { "description": "Same", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} cognition is the same`; } },
@@ -330,7 +375,7 @@ export class Notes {
     }
 
     getMoodChangeTypes() {
-        var data = [
+        let data = [
             { "description": "Worse", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} mood is worse`; } },
             { "description": "Little improvement", "value": function(pronoun) { return `overall ${pronoun.subject} has seen little improvement`; } },
             { "description": "Same", "value": function(pronoun) { return `${pronoun.subject} feels that ${pronoun.possessiveAdjective} mood is the same`; } },
@@ -340,6 +385,71 @@ export class Notes {
             { "description": "Skip", "value": null }
         ];
 
+        return getPromise(data);
+    }
+
+    getEmotionalIssues() {
+        let data = [
+            { "description": "Sadness", "response": null, "value": function(context) { return `sadness`; } },
+            { "description": "Overwhelmed", "response": null, "value": function(context) { return `feeling of being overwhelmed`; } },
+            { "description": "Hopelessness","response": null, "value": function(context) { return `hopelessness`; } },
+            { "description": "Depression", "response": null, "value": function(context) { return `depression`; } },
+            { "description": "Helplessness", "response": null, "value": function(context) { return `helplessness`; } },
+            { "description": "Labile", "response": null, "value": function(context) { return `a rapidly changing mood`; } },
+            { "description": "Worthlessness", "response": null, "value": function(context) { return `worthlessness`; } },
+            { "description": "Frustrated", "response": null, "value": function(context) { return `frustration`; } },
+            { "description": "Guilt", "response": null, "value": function(context) { return `guilt`; } },
+            { "description": "Withdrawn", "response": null, "value": function(context) { return `social withdrawal`; } },
+            { "description": "Dependency", "response": null, "value": function(context) { return `feeling of dependence on others`; } },
+            { "description": "Irritable", "response": null, "value": function(context) { return `irritability`; } },
+            { "description": "Anhedonia", "response": null, "value": function(context) { return `an inability to feel pleasure`; } },
+            { "description": "Burden", "response": null, "value": function(context) { return `issues with feeling like a burden on others`; } },
+            { "description": "Apathy", "response": null, "value": function(context) { return `lack of interest`; } },
+            { "description": "Amotivation", "response": null, "value": function(context) { return `lack of motivation`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getDepressionSymptoms() {
+        let data = [
+            { "description": "More irritable?", "response": null, "value": function(context) { return `more irritable`; } },
+            { "description": "Easily upset?", "response": null, "value": function(context) { return `less tolerant`; } },
+            { "description": "Less tolerant?", "response": null, "value": function(context) { return `easily upset`; } },
+            { "description": "Less patient?", "response": null, "value": function(context) { return `less patient`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getWorries() {
+        let data = [
+            { "description": "Future", "response": null, "value": function(context) { return `future`; } },
+            { "description": "Recovery", "response": null, "value": function(context) { return `recovery`; } },
+            { "description": "Finances", "response": null, "value": function(context) { return `finances`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getTravelIssues() {
+        let data = [
+            { "description": "Physical", "response": null, "value": function(context) { return `physical issues`; } },
+            { "description": "Mental", "response": null, "value": function(context) { return `mental health issues`; } },
+            { "description": "Cognitive", "response": null, "value": function(context) { return `cognitive state`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getTravelPreferences() {
+        let data = [
+            { "description": "Driver", "value": "driver" },
+            { "description": "Passenger", "value": "passenger" },
+            { "description": "Pedestrian", "value": "pedestrian" },
+            { "description": "Skip", "value": null }
+        ];
+        
         return getPromise(data);
     }
 
@@ -373,6 +483,241 @@ export class Notes {
 
     weightChangeAmountChanged() {
         this.signaler.signal('weight-change-amount-changed');
+    }
+
+    emotionalIssueChanged() {
+        this.signaler.signal('emotional-issues-changed');
+    }
+
+    depressionSymptomChanged() {
+        this.signaler.signal('depression-symptom-changed');
+    }
+
+    worryChanged() {
+        this.signaler.signal('worry-changed');
+    }
+
+    hallucinationsChanged() {
+        this.signaler.signal('hallucinations-changed');
+    }
+
+    travelChanged() {
+        this.signaler.signal('travel-changed');
+    }
+
+    @computedFrom(
+        'responses.psychological.emotional'
+    )
+    get yesEmotionalIssues() {
+        let data = this.responses.psychological.emotional.filter(item => item.response != null && item.response.isYes);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.emotional'
+    )
+    get noEmotionalIssues() {
+        let data = this.responses.psychological.emotional.filter(item => item.response != null && item.response.isNo);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.emotional'
+    )
+    get dontKnowEmotionalIssues() {
+        let data = this.responses.psychological.emotional.filter(item => item.response != null && item.response.isDontKnow);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.emotional'
+    )
+    get anyYesEmotionalIssues() {
+        let any = this.yesEmotionalIssues.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.emotional'
+    )
+    get anyNoEmotionalIssues() {
+        let any = this.noEmotionalIssues.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.emotional'
+    )
+    get anyDontKnowEmotionalIssues() {
+        let any = this.dontKnowEmotionalIssues.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.emotional'
+    )
+    get anyEmotionalIssues() {
+        let any = this.responses.psychological.emotional.filter(item => item.response != null && item.response.value !== null).some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.depressionSymptoms'
+    )
+    get yesDepressionSymptoms() {
+        let data = this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.isYes);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.depressionSymptoms'
+    )
+    get noDepressionSymptoms() {
+        let data = this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.isNo);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.depressionSymptoms'
+    )
+    get dontKnowDepressionSymptoms() {
+        let data = this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.isDontKnow);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.depressionSymptoms'
+    )
+    get anyDepressionSymptoms() {
+        let any = this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.value != null).some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.depressionSymptoms'
+    )
+    get anyYesDepressionSymptoms() {
+        let any = this.yesDepressionSymptoms.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.depressionSymptoms'
+    )
+    get anyNoDepressionSymptoms() {
+        let any = this.noDepressionSymptoms.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.depressionSymptoms'
+    )
+    get anyDontKnowDepressionSymptoms() {
+        let any = this.dontKnowDepressionSymptoms.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.worry'
+    )
+    get yesWorries() {
+        let data = this.responses.psychological.worry.filter(item => item.response != null && item.response.isYes);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.worry'
+    )
+    get noWorries() {
+        let data = this.responses.psychological.worry.filter(item => item.response != null && item.response.isNo);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.worry'
+    )
+    get anyWorries() {
+        let any = this.responses.psychological.worry.filter(item => item.response != null && item.response.value != null).some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.worry'
+    )
+    get anyYesWorries() {
+        let any = this.yesWorries.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.worry'
+    )
+    get anyNoWorries() {
+        let any = this.noWorries.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.hallucinationsAuditory',
+        'responses.psychological.hallucinationsVisual',
+        'responses.psychological.hallucinationsCommand'
+    )
+    get hallucinationCharacteristics() {
+        let data = [
+            { "response": this.responses.psychological.hallucinationsAuditory, "value": function(context) { return `auditory`; } },
+            { "response": this.responses.psychological.hallucinationsVisual, "value": function(context) { return `visual`; } },
+            { "response": this.responses.psychological.hallucinationsCommand, "value": function(context) { return `command`; } }
+        ].filter(item => item.response !== null && item.response.isYes);
+
+        return data;
+    }
+    
+    @computedFrom(
+        'responses.psychological.hallucinationsAuditory',
+        'responses.psychological.hallucinationsVisual',
+        'responses.psychological.hallucinationsCommand'
+    )
+    get anyHallucinationCharacteristics() {
+        let any = this.hallucinationCharacteristics.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.travel.travelIssues'
+    )
+    get yesTravelIssues() {
+        let data = this.responses.psychological.travel.travelIssues.filter(item => item.response !== null && item.response.isYes);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.psychological.travel.travelIssues'
+    )
+    get anyYesTravelIssues() {
+        let any = this.yesTravelIssues.some(item => item);
+
+        return any;
     }
 
     @computedFrom(
