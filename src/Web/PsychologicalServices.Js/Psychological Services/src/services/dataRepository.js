@@ -11,6 +11,8 @@ export class DataRepository {
 		this.authContext = authContext;
 		this.notifier = notifier;
 		this.cache = {};
+		this.retryCount = 0;
+		this.maxRetries = 1;
 		
 		var self = this;
 		
@@ -39,9 +41,12 @@ export class DataRepository {
 						if (!response.ok) {
 							self.notifier.error(response.status + ' - ' + response.statusText);
 							
-							if (response.status === 401) {
+							if (response.status === 401 && self.retryCount++ < self.maxRetries) {
 								return self.authContext.refresh().then(() => self.retry(self.lastRequest));
 							}
+						}
+						else {
+							self.retryCount = 0;
 						}
 						
 						return response;
@@ -51,7 +56,7 @@ export class DataRepository {
 	}
 	
 	retry(request) {
-		console.log('retrying request: ' + request.url);
+		console.log(`retrying request (${this.retryCount}): ${request.url}`);
 		var promise = new Promise((resolve, reject) =>
 			this.httpFetch.fetch(request).then(response => resolve(response))
 		);

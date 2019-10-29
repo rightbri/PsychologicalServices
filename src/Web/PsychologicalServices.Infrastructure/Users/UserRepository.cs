@@ -42,9 +42,10 @@ namespace PsychologicalServices.Infrastructure.Users
             UserLitePath =
                 (uPath => uPath
                     .Prefetch<UserRoleEntity>(user => user.UserRoles)
+                        .FilterOn(userRole => userRole.Role.IsActive)
                         .SubPath(userRolePath => userRolePath
                             .Prefetch<RoleEntity>(userRole => userRole.Role)
-                            .FilterOn(role => role.IsActive)
+                            //.FilterOn(role => role.IsActive)
                             .SubPath(rolePath => rolePath
                                 .Prefetch<RoleRightEntity>(role => role.RoleRights)
                                 .SubPath(roleRightPath => roleRightPath
@@ -61,9 +62,10 @@ namespace PsychologicalServices.Infrastructure.Users
             UserPath =
                 (uPath => uPath
                     .Prefetch<UserRoleEntity>(user => user.UserRoles)
+                        .FilterOn(userRole => userRole.Role.IsActive)
                         .SubPath(userRolePath => userRolePath
                             .Prefetch<RoleEntity>(userRole => userRole.Role)
-                            .FilterOn(role => role.IsActive)
+                            //.FilterOn(role => role.IsActive)
                             .SubPath(rolePath => rolePath
                                 .Prefetch<RoleRightEntity>(role => role.RoleRights)
                                 .SubPath(roleRightPath => roleRightPath

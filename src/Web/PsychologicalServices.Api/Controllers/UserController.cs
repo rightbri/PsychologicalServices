@@ -1,4 +1,6 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Users;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -88,6 +90,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(notesWriters);
         }
 
+        [RightAuthorize(StaticRights.EditUser)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<User>))]

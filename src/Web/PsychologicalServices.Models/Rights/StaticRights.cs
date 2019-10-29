@@ -8,7 +8,8 @@ namespace PsychologicalServices.Models.Rights
         Psychometrist,
         WriteDocList,
         WriteNotes,
-        Login
+        Login,
+        EditUser
     }
 }
 /*
