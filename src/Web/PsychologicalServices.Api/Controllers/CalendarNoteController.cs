@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using PsychologicalServices.Models.Rights;
 
 namespace PsychologicalServices.Api.Controllers
 {
@@ -23,6 +24,7 @@ namespace PsychologicalServices.Api.Controllers
             _calendarNoteService = calendarNoteService;
         }
 
+        [RightAuthorize(StaticRights.ViewCalendarNote)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(CalendarNote))]
@@ -33,6 +35,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(calendarNote);
         }
 
+        [RightAuthorize(StaticRights.SearchCalendarNote)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<CalendarNote>))]
@@ -43,6 +46,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(calendarNotes);
         }
 
+        [RightAuthorize(StaticRights.EditCalendarNote)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<CalendarNote>))]
@@ -53,6 +57,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(result);
         }
 
+        [RightAuthorize(StaticRights.DeleteCalendarNote)]
         [Route("{id}")]
         [HttpDelete]
         [ResponseType(typeof(DeleteResult))]

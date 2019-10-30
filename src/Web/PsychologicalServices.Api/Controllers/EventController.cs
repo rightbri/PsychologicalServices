@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Events;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -40,7 +42,8 @@ namespace PsychologicalServices.Api.Controllers
 
             return Ok(events);
         }
-        
+
+        [RightAuthorize(StaticRights.EditEvent)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Event>))]

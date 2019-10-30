@@ -9,17 +9,68 @@ namespace PsychologicalServices.Models.Rights
         WriteDocList,
         WriteNotes,
         Login,
-        EditUser
+        EditUser,
+        SearchAppointment,
+        EditAddress,
+        EditAppointment,
+        EditAppointmentStatus,
+        SearchArbitration,
+        EditArbitration,
+        ViewReport,
+        CreateArbitrationInvoice,
+        ViewAssessment,
+        SearchAssessment,
+        EditAssessment,
+        DeleteAssessment,
+        EditAssessmentType,
+        SearchAttribute,
+        EditAttribute,
+        ViewCalendarNote,
+        SearchCalendarNote,
+        EditCalendarNote,
+        DeleteCalendarNote,
+        EditCity,
+        ViewClaimant,
+        EditClaimant,
+        DeleteClaimant,
+        ViewClaim,
+        EditColor,
+        ViewCompany,
+        EditCompany,
+        SearchContact,
+        EditContact,
+        EditContactType,
+        ViewDocument,
+        SearchDocument,
+        EditDocument,
+        SearchEmployer,
+        EditEmployer,
+        EditEmployerType,
+        EditEvent,
+        ViewInvoiceConfiguration,
+        EditInvoiceConfiguration,
+        ViewInvoice,
+        EditInvoice,
+        SearchInvoice,
+        SendInvoiceDocument,
+        CreatePsychologistInvoice,
+        CreatePsychometristInvoice,
+        ViewRawTestData,
+        SearchRawTestData,
+        EditRawTestData,
+        CreateRawTestDataInvoice,
+        ViewReferralSource,
+        SearchReferralSource,
+        EditReferralSource,
+        EditReferralSourceType,
+        EditReferralType,
+        EditReportStatus,
+        EditReportType,
+        ViewPsychometristSchedule,
+        SendPsychometristSchedule,
+        ViewPsychologistSchedule,
+        ViewUser,
+        SearchUser,
+        SearchClaimant
     }
 }
-/*
-View Own Appointments
-View All Appointments
-Create Appointment
-Edit Appointment
-Delete Appointment
-Create Assessment
-Edit Assessment
-Delete Assessment
-
-*/

@@ -20,6 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _userService = userService;
         }
 
+        [RightAuthorize(StaticRights.ViewUser)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(User))]
@@ -30,6 +31,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(user);
         }
 
+        [RightAuthorize(StaticRights.ViewUser)]
         [Route("byUsername")]
         [HttpPost]
         [ResponseType(typeof(User))]
@@ -40,6 +42,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(user);
         }
 
+        [RightAuthorize(StaticRights.SearchUser)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<User>))]
@@ -50,6 +53,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(users);
         }
 
+        [RightAuthorize(StaticRights.ViewUser)]
         [Route("psychometrists/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]
@@ -60,6 +64,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(psychometrists);
         }
 
+        [RightAuthorize(StaticRights.ViewUser)]
         [Route("psychologists/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]
@@ -70,6 +75,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(psychologists);
         }
 
+        [RightAuthorize(StaticRights.ViewUser)]
         [Route("docListWriters/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]
@@ -80,6 +86,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(docListWriters);
         }
 
+        [RightAuthorize(StaticRights.ViewUser)]
         [Route("notesWriters/{companyId?}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<User>))]

@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Claims;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace PsychologicalServices.Api.Controllers
             _claimService = claimService;
         }
 
+        [RightAuthorize(StaticRights.ViewClaimant)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Claimant))]
@@ -32,6 +35,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(claimant);
         }
 
+        [RightAuthorize(StaticRights.SearchClaimant)]
         [Route("search/{name}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Claimant>))]
@@ -42,6 +46,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(claimants);
         }
 
+        [RightAuthorize(StaticRights.SearchClaimant)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Claimant>))]
@@ -52,6 +57,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(claimants);
         }
 
+        [RightAuthorize(StaticRights.EditClaimant)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Claimant>))]
@@ -62,6 +68,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(result);
         }
 
+        [RightAuthorize(StaticRights.DeleteClaimant)]
         [Route("{id}")]
         [HttpDelete]
         [ResponseType(typeof(DeleteResult))]

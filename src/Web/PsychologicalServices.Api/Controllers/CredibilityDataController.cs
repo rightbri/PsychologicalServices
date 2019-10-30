@@ -1,4 +1,6 @@
-﻿using PsychologicalServices.Models.Analysis;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Analysis;
+using PsychologicalServices.Models.Rights;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -15,7 +17,8 @@ namespace PsychologicalServices.Api.Controllers
         {
             _analysisService = analysisService;
         }
-        
+
+        [RightAuthorize(StaticRights.ViewReport)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(CredibilityData))]

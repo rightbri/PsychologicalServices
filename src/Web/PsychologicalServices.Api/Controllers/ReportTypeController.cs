@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Rights;
 
 namespace PsychologicalServices.Api.Controllers
 {
@@ -41,6 +43,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(reportTypes);
         }
 
+        [RightAuthorize(StaticRights.EditReportType)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<ReportType>))]

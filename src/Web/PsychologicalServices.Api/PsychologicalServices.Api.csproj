@@ -298,7 +298,6 @@
     <Compile Include="Controllers\CalendarNoteController.cs" />
     <Compile Include="Controllers\ClaimantController.cs" />
     <Compile Include="Controllers\CityController.cs" />
-    <Compile Include="Controllers\ContextController.cs" />
     <Compile Include="Controllers\GenderController.cs" />
     <Compile Include="Controllers\InvoiceTypeController.cs" />
     <Compile Include="Controllers\IssueInDisputeController.cs" />

@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Contacts;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -37,6 +39,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(contactTypes);
         }
 
+        [RightAuthorize(StaticRights.EditContactType)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<ContactType>))]

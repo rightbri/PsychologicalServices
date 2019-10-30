@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Addresses;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Addresses;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -28,6 +30,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(address);
         }
 
+        [RightAuthorize(StaticRights.SearchAppointment)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Address>))]
@@ -38,6 +41,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(addresses);
         }
 
+        [RightAuthorize(StaticRights.EditAddress)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Address>))]

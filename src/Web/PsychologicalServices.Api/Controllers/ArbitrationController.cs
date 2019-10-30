@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Arbitrations;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -18,6 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _arbitrationService = arbitrationService;
         }
 
+        [RightAuthorize(StaticRights.SearchArbitration)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Arbitration))]
@@ -28,6 +31,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(arbitration);
         }
 
+        [RightAuthorize(StaticRights.SearchArbitration)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Arbitration>))]
@@ -38,6 +42,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(arbitrations);
         }
 
+        [RightAuthorize(StaticRights.EditArbitration)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Arbitration>))]

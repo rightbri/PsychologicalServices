@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.RawTestData;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -18,6 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _rawTestDataService = rawTestDataService;
         }
 
+        [RightAuthorize(StaticRights.ViewRawTestData)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(RawTestData))]
@@ -28,6 +31,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(rawTestData);
         }
 
+        [RightAuthorize(StaticRights.SearchRawTestData)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<RawTestData>))]
@@ -38,6 +42,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(rawTestData);
         }
 
+        [RightAuthorize(StaticRights.EditRawTestData)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<RawTestData>))]

@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Invoices;
+using PsychologicalServices.Models.Rights;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -17,6 +19,7 @@ namespace PsychologicalServices.Api.Controllers
             _invoiceService = invoiceService;
         }
 
+        [RightAuthorize(StaticRights.ViewInvoiceConfiguration)]
         [Route("{companyId}")]
         [HttpGet]
         [ResponseType(typeof(InvoiceConfiguration))]
@@ -26,7 +29,8 @@ namespace PsychologicalServices.Api.Controllers
 
             return Ok(invoiceConfiguration);
         }
-        
+
+        [RightAuthorize(StaticRights.EditInvoiceConfiguration)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<InvoiceConfiguration>))]

@@ -4,6 +4,8 @@ using PsychologicalServices.Api.Infrastructure.Results;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
+using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Rights;
 
 namespace PsychologicalServices.Api.Controllers
 {
@@ -19,6 +21,7 @@ namespace PsychologicalServices.Api.Controllers
             _scheduleService = scheduleService;
         }
 
+        [RightAuthorize(StaticRights.ViewPsychometristSchedule)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<User>))]
@@ -29,6 +32,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(users);
         }
 
+        [RightAuthorize(StaticRights.SendPsychometristSchedule)]
         [Route("send")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<PsychometristScheduleSendResult>))]
@@ -39,6 +43,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(results);
         }
 
+        [RightAuthorize(StaticRights.ViewPsychologistSchedule)]
         [Route("psychologist")]
         [HttpPost]
         [ResponseType(typeof(BinaryFileResult))]

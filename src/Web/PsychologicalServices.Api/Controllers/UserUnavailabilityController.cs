@@ -1,4 +1,6 @@
-﻿using PsychologicalServices.Models.Users;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Rights;
+using PsychologicalServices.Models.Users;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -17,6 +19,7 @@ namespace PsychologicalServices.Api.Controllers
             _userService = userService;
         }
 
+        [RightAuthorize(StaticRights.SearchUser)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<User>))]

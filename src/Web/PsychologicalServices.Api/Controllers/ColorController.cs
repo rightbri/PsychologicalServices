@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Colors;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +43,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(colors);
         }
 
+        [RightAuthorize(StaticRights.EditColor)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Color>))]

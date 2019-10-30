@@ -1,6 +1,8 @@
-﻿using PsychologicalServices.Api.Models;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Api.Models;
 using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Documents;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -20,6 +22,7 @@ namespace PsychologicalServices.Api.Controllers
             _documentService = documentService;
         }
 
+        [RightAuthorize(StaticRights.ViewDocument)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(DocumentModel))]
@@ -30,6 +33,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(document);
         }
 
+        [RightAuthorize(StaticRights.SearchDocument)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<DocumentModel>))]
@@ -41,6 +45,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(documents);
         }
 
+        [RightAuthorize(StaticRights.EditDocument)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Document>))]

@@ -4,6 +4,8 @@ using System;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Collections.Generic;
+using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Rights;
 
 namespace PsychologicalServices.Api.Controllers
 {
@@ -19,6 +21,7 @@ namespace PsychologicalServices.Api.Controllers
             _invoiceService = invoiceService;
         }
 
+        [RightAuthorize(StaticRights.ViewInvoice)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(BinaryFileResult))]
@@ -29,6 +32,7 @@ namespace PsychologicalServices.Api.Controllers
             return new BinaryFileResult(invoiceDocument.Content, invoiceDocument.FileName);
         }
 
+        [RightAuthorize(StaticRights.ViewInvoice)]
         [Route("invoice/{id}")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<InvoiceDocument>))]
@@ -39,6 +43,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(invoiceDocuments);
         }
 
+        [RightAuthorize(StaticRights.SendInvoiceDocument)]
         [Route("send")]
         [HttpPost]
         [ResponseType(typeof(InvoiceSendResult))]

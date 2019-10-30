@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Employers;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -37,6 +39,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(employerTypes);
         }
 
+        [RightAuthorize(StaticRights.EditEmployerType)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<EmployerType>))]

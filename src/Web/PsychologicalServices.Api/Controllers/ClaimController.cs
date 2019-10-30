@@ -1,4 +1,6 @@
-﻿using PsychologicalServices.Models.Claims;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Claims;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -18,6 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _claimService = claimService;
         }
 
+        [RightAuthorize(StaticRights.ViewClaim)]
         [Route("{id}/references")]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ClaimReference>))]

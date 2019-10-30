@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Referrals;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace PsychologicalServices.Api.Controllers
             _referralService = referralService;
         }
 
+        [RightAuthorize(StaticRights.ViewReferralSource)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(ReferralSource))]
@@ -32,6 +35,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(referralSource);
         }
 
+        [RightAuthorize(StaticRights.SearchReferralSource)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<ReferralSource>))]
@@ -42,6 +46,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(referralSources);
         }
 
+        [RightAuthorize(StaticRights.EditReferralSource)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<ReferralSource>))]

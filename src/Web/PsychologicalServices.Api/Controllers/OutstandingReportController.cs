@@ -1,4 +1,6 @@
-﻿using PsychologicalServices.Models.Outstanding;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Outstanding;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -16,7 +18,8 @@ namespace PsychologicalServices.Api.Controllers
         {
             _outstandingService = outstandingService;
         }
-        
+
+        [RightAuthorize(StaticRights.ViewReport)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<OutstandingReport>))]

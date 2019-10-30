@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Employers;
+using PsychologicalServices.Models.Rights;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -18,6 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _employerService = employerService;
         }
 
+        [RightAuthorize(StaticRights.SearchEmployer)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Employer))]
@@ -28,6 +31,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(employer);
         }
 
+        [RightAuthorize(StaticRights.SearchEmployer)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Employer>))]
@@ -38,6 +42,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(employers);
         }
 
+        [RightAuthorize(StaticRights.EditEmployer)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Employer>))]

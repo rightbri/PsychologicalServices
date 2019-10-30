@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace PsychologicalServices.Api.Controllers
             _companyService = companyService;
         }
 
+        [RightAuthorize(StaticRights.ViewCompany)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Company))]
@@ -32,6 +35,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(company);
         }
 
+        [RightAuthorize(StaticRights.ViewCompany)]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Company>))]
         public IHttpActionResult Get()
@@ -41,6 +45,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(companies);
         }
 
+        [RightAuthorize(StaticRights.EditCompany)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Company>))]

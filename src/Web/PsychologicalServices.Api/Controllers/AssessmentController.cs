@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Assessments;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -19,6 +21,7 @@ namespace PsychologicalServices.Api.Controllers
             _assessmentService = assessmentService;
         }
 
+        [RightAuthorize(StaticRights.ViewAssessment)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Assessment))]
@@ -40,6 +43,7 @@ namespace PsychologicalServices.Api.Controllers
         }
 
 
+        [RightAuthorize(StaticRights.SearchAssessment)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<AssessmentSearchResult>))]
@@ -50,6 +54,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(assessments);
         }
 
+        [RightAuthorize(StaticRights.EditAssessment)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<Assessment>))]
@@ -60,6 +65,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(result);
         }
 
+        [RightAuthorize(StaticRights.DeleteAssessment)]
         [Route("{id}")]
         [HttpDelete]
         [ResponseType(typeof(DeleteResult))]

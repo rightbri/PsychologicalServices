@@ -1,5 +1,7 @@
-﻿using PsychologicalServices.Models.Attributes;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Attributes;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(attribute);
         }
 
+        [RightAuthorize(StaticRights.SearchAttribute)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<PsychologicalServices.Models.Attributes.Attribute>))]
@@ -42,6 +45,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(attributes);
         }
 
+        [RightAuthorize(StaticRights.EditAttribute)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<PsychologicalServices.Models.Attributes.Attribute>))]
