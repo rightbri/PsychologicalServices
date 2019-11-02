@@ -62,7 +62,7 @@ export class DataRepository {
 			{ 'url': 'http://www.lrpa.ca', 'text': 'London Regional Psychological Association' },
 			{ 'url': 'http://www.psychdirect.com', 'text': 'Mental Health Education' },
 			{ 'url': 'http://www.obia.on.ca', 'text': 'Ontario Brain Injury Association' },
-			{ 'url': 'http://www.psych.on.ca', 'text': 'Ontario Psychological Association' },
+			//{ 'url': 'http://www.psych.on.ca', 'text': 'Ontario Psychological Association' },
 			{ 'url': 'http://www.otla.com', 'text': 'Ontario Trial Lawyers Association' },
 			{ 'url': 'http://www.psychologytoday.com', 'text': 'Psychology Today' }
 		];
