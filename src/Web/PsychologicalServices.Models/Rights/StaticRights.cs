@@ -71,6 +71,7 @@ namespace PsychologicalServices.Models.Rights
         ViewPsychologistSchedule,
         ViewUser,
         SearchUser,
-        SearchClaimant
+        SearchClaimant,
+        SearchAddress
     }
 }

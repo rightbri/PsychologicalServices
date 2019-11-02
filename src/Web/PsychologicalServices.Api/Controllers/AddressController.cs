@@ -30,7 +30,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(address);
         }
 
-        [RightAuthorize(StaticRights.SearchAppointment)]
+        [RightAuthorize(StaticRights.SearchAddress)]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Address>))]
