@@ -1,11 +1,12 @@
 
 export class ArrayToStringValueConverter {
     toView(array, config) {
-        let format = config.format || (item => item);
-        let delimiter = config.delimiter || ", ";
-        let removeEmptyElements = config.removeEmptyElements || true;
-        let connector = config.connector || "and";
-        let lastConnector = config.lastConnector || true;
+        let c = config || {};
+        let format = c.format || (item => item);
+        let delimiter = c.delimiter || ", ";
+        let removeEmptyElements = c.removeEmptyElements || true;
+        let connector = c.connector || "and";
+        let lastConnector = c.lastConnector || true;
 
         let value = array
         .map(item => isFunction(format) ? format(item) : item)
