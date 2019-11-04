@@ -68,7 +68,6 @@ export class Notes {
                 },
                 "memory": {
                     "visual": {
-                        "forgetWhereaboutsFrequently": null,
                         "forgetWhereaboutsOfObjects": null,
                         "forgetWhereaboutsOf": []
                     },
@@ -78,7 +77,8 @@ export class Notes {
                     },
                     "aids": {
                         "useAids": null,
-                        "aidsUsed": []
+                        "aidsUsed": [],
+                        "familyUsed": null
                     },
                     "autobiographical": {
                         "personalInfo": null
@@ -187,6 +187,17 @@ export class Notes {
                         "changeInCognition": null,
                         "changeInMood": null
                     }
+                },
+                "currentState": {
+                    "spendTime": null,
+                    "selfCare": [],
+                    "preAccidentRecreationalActivities": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "leisureAbility": null,
+                    "leisureParticipationRate": null
                 }
             }
         };
@@ -203,6 +214,9 @@ export class Notes {
         this.moodChangeTypes = [];
         this.travelIssues = [];
         this.travelPreferences = [];
+        this.currentStateAbilities = [];
+        this.currentStateIssues = [];
+        this.leisureParticipationRates = [];
 
         this.getItemValueForCurrentContext = function(item) {
             return this.getItemValueForContext(item, this);
@@ -237,7 +251,11 @@ export class Notes {
                     this.getDepressionSymptoms().then(data => this.responses.psychological.depressionSymptoms = data),
                     this.getWorries().then(data => this.responses.psychological.worry = data),
                     this.getTravelIssues().then(data => this.travelIssues = data),
-                    this.getTravelPreferences().then(data => this.travelPreferences = data)
+                    this.getTravelPreferences().then(data => this.travelPreferences = data),
+                    this.getCurrentStateAbilities().then(data => this.currentStateAbilities = data),
+                    this.getCurrentStateIssues().then(data => this.currentStateIssues = data),
+                    this.getSelfCareTasks().then(data => this.responses.neuropsychological.currentState.selfCare = data),
+                    this.getLeisureParticipationRates().then(data => this.leisureParticipationRates = data)
                 ]);
             });
     }
@@ -328,7 +346,7 @@ export class Notes {
         let data = [
             { "description": "Alarms", "value": "alarms" },
             { "description": "Calendar", "value": "calendar" },
-            { "description": "Family List", "value": "family list" },
+            { "description": "List", "value": "lists" },
             { "description": "Notes", "value": "notes" },
             { "description": "Phone", "value": "phone" },
             { "description": "Reminders", "value": "reminders" },
@@ -434,9 +452,9 @@ export class Notes {
 
     getTravelIssues() {
         let data = [
-            { "description": "Physical", "response": null, "value": function(context) { return `physical issues`; } },
-            { "description": "Mental", "response": null, "value": function(context) { return `mental health issues`; } },
-            { "description": "Cognitive", "response": null, "value": function(context) { return `cognitive state`; } }
+            { "description": "Physical", "value": function(context) { return `physical issues`; } },
+            { "description": "Mental", "value": function(context) { return `mental health issues`; } },
+            { "description": "Cognitive", "value": function(context) { return `cognitive state`; } }
         ];
 
         return getPromise(data);
@@ -450,6 +468,49 @@ export class Notes {
             { "description": "Skip", "value": null }
         ];
         
+        return getPromise(data);
+    }
+
+    getSelfCareTasks() {
+        let data = [
+            { "description": "Personal care", "value": "", "ability": null, "issues": [] },
+            { "description": "Bathing", "value": "bathing", "ability": null, "issues": [] },
+            { "description": "Grooming", "value": "grooming", "ability": null, "issues": [] },
+            { "description": "Haircare", "value": "haircare", "ability": null, "issues": [] }
+        ];
+
+        return getPromise(data);
+    }
+
+    getCurrentStateAbilities() {
+        let data = [
+            { "description": "Unable", "value": "unable", "isUnable": true },
+            { "description": "Partial", "value": "partially able", "isPartiallyAble": true },
+            { "description": "Able", "value": "able", "isAble": true }
+        ];
+
+        return getPromise(data);
+    }
+
+    getCurrentStateIssues() {
+        let data = [
+            { "description": "Physical", "value": function(context) { return `physical issues`; } },
+            { "description": "Pain", "value": function(context) { return `pain`; } },
+            { "description": "Apathy", "value": function(context) { return `apathy`; } },
+            { "description": "Mental", "value": function(context) { return `mental health issues`; } },
+            { "description": "Cognitive", "value": function(context) { return `cognition`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getLeisureParticipationRates() {
+        let data = [
+            { "description": "a bit less (at least half as often)", "value": function(context) { return `participates a bit less than ${context.pronoun.subject} did before the accident`; } },
+            { "description": "much less (less than half as often)", "value": function(context) { return `participates much less than ${context.pronoun.subject} did before the accident`; } },
+            { "description": "unable (rarely, if ever)", "value": function(context) { return `is now unable to participate in those activities`; } }
+        ];
+
         return getPromise(data);
     }
 
@@ -503,6 +564,14 @@ export class Notes {
 
     travelChanged() {
         this.signaler.signal('travel-changed');
+    }
+
+    currentStateSelfCareChanged() {
+        this.signaler.signal('current-state-self-care-changed');
+    }
+
+    preAccidentRecreationalActivitiesChanged() {
+        this.signaler.signal('pre-accident-recreational-activities-changed');
     }
 
     @computedFrom(
@@ -705,17 +774,28 @@ export class Notes {
     @computedFrom(
         'responses.psychological.travel.travelIssues'
     )
-    get yesTravelIssues() {
-        let data = this.responses.psychological.travel.travelIssues.filter(item => item.response !== null && item.response.isYes);
+    get anyTravelIssues() {
+        let any = this.responses.psychological.travel.travelIssues.some(item => item);
 
-        return data;
+        return any;
     }
 
     @computedFrom(
-        'responses.psychological.travel.travelIssues'
+        'responses.neuropsychological.memory.visual.forgetWhereaboutsOf'
     )
-    get anyYesTravelIssues() {
-        let any = this.yesTravelIssues.some(item => item);
+    get anyForgottenWhereaboutsObjects() {
+        let any =
+            this.responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value &&
+            this.responses.neuropsychological.memory.visual.forgetWhereaboutsOf.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.neuropsychological.memory.aids.aidsUsed'
+    )
+    get anyNonFamilyMemoryAidsUsed() {
+        let any = this.responses.neuropsychological.memory.aids.aidsUsed.some(item => item);
 
         return any;
     }
@@ -992,6 +1072,39 @@ export class Notes {
         return data;
     }
 
+    @computedFrom(
+        'responses.neuropsychological.currentState.selfCare'
+    )
+    get personalCareTasks() {
+        let data = [
+            this.responses.neuropsychological.currentState.selfCare
+        ];
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.neuropsychological.currentState.selfCare'
+    )
+    get anyPersonalCareTasks() {
+        let any = this.personalCareTasks.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.neuropsychological.currentState.preAccidentRecreationalActivities'
+    )
+    get anyPreAccidentRecreationalActivities() {
+        let any = this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.some(item => item && item.length > 0);
+
+        return any;
+    }
+
+    addPreAccidentRecreationalActivity() {
+        this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.push("");
+    }
+
     getItemValueForContext(item, context) {
         return item.value(context);
     }
@@ -1002,14 +1115,6 @@ export class Notes {
 
     getItemValue(item) {
         return item.value;
-    }
-
-    getItemName(item) {
-        return item.name;
-    }
-
-    getItemDescription(item) {
-        return item.description;
     }
 }
 

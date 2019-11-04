@@ -241,8 +241,8 @@
                     Amount of debt
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.psychological.amountOfDebt">
-                    <input type="text" name="amountOfDebt" class="uk-input" value.bind="responses.psychological.amountOfDebt" />
+                <div class="uk-margin-remove uk-width-1-5">
+                    <input type="text" name="amountOfDebt" class="uk-input uk-form-small" value.bind="responses.psychological.amountOfDebt" />
                 </div>
 
                 <hr>
@@ -564,26 +564,18 @@
                 <div class="uk-margin-remove uk-width-4-5">
                     Do you forget the whereabouts of objects around your home <u>frequently</u>?
                 </div>
-
-                <div class="uk-margin-remove uk-width-1-5">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="memoryVisualForgetWhereaboutsFrequently" class="uk-radio" checked.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsFrequently" model.bind="response" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-4-5">
-                    Do you forget the whereabouts of any of the following?
-                </div>
                 
                 <div class="uk-margin-remove uk-width-1-5">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="memoryVisualForgetWhereaboutsOfObjects" class="uk-radio" checked.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="memoryVisualForgetWhereaboutsOfObjects" class="uk-radio" checked.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects" model.bind="response" change.delegate="memoryVisualWhereaboutsObjectsChanged()" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <div class="uk-margin-remove uk-margin-left uk-width-1-1 uk-grid-small uk-child-width-auto uk-grid">
+                <div class="uk-margin-remove uk-width-1-5">
+                    Including:
+                </div>
+
+                <div class="uk-margin-remove uk-margin-left uk-width-4-5 uk-grid-small uk-child-width-auto uk-grid">
                     <label repeat.for="object of whereaboutsObjects">
                         <input class="uk-checkbox" type="checkbox" checked.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsOf" model.bind="object" change.delegate="memoryVisualWhereaboutsObjectsChanged()" disabled.bind="!responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value"> ${object.description}
                     </label>
@@ -628,6 +620,11 @@
                 <div class="uk-margin-remove uk-margin-left uk-width-1-1 uk-grid-small uk-child-width-auto uk-grid">
                     <label repeat.for="aid of memoryAids">
                         <input class="uk-checkbox" type="checkbox" checked.bind="responses.neuropsychological.memory.aids.aidsUsed" model.bind="aid" change.delegate="memoryAidsUsedChanged()" disabled.bind="!responses.neuropsychological.memory.aids.useAids.value"> ${aid.description}
+                    </label>
+
+                    <!-- Use family -->
+                    <label>
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.neuropsychological.memory.aids.familyUsed" value.bind="true" change.delegate="memoryAidsUsedChanged()" disabled.bind="!responses.neuropsychological.memory.aids.useAids.value"> Family
                     </label>
                 </div>
 
@@ -1200,7 +1197,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5" if.bind="responses.neuropsychological.physical.weight.changeType.isIncreaseOrDecrease">
-                    <input type="text" name="weightChangeAmount" class="uk-input" value.bind="responses.neuropsychological.physical.weight.changeAmount" blur.delegate="weightChangeAmountChanged() & debounce:500" />
+                    <input type="text" name="weightChangeAmount" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.weight.changeAmount" blur.delegate="weightChangeAmountChanged()" />
                 </div>
 
                 <hr if.bind="responses.neuropsychological.physical.weight.changeType.isIncreaseOrDecrease">
@@ -1334,7 +1331,7 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-4-5">
-                    Has there been any changes in your headaches since the accident?
+                    Has there been any change in your headaches since the accident?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
@@ -1369,17 +1366,17 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-4-5">
-                    Has there been any changes in your migraines since the accident?
+                <div class="uk-margin-remove uk-width-4-5" if.bind="responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident.value">
+                    Has there been any change in your migraines since the accident?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident.value">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="changesInMigrainesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident" model.bind="response"  />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr>
+                <hr if.bind="responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident.value">
 
                 <div class="uk-margin-remove uk-width-4-5">
                     Do you currently experience pain?
@@ -1448,6 +1445,106 @@
                 </div>
                 
             </fieldset>
+
+
+            <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <legend class="uk-legend">Current State (as of the last two weeks)</legend>
+    
+                <div class="uk-margin-remove uk-width-4-5">
+                    How do you spend a typical day/week?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <input type="text" name="spendTime" class="uk-input uk-form-small" value.bind="responses.neuropsychological.currentState.spendTime" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-5">
+                    Do you currently have any issues with your ability to do:
+                </div>
+
+                <div class="uk-margin-remove uk-width-2-5">
+                    Affected by?
+                </div>
+
+                <template repeat.for="i of responses.neuropsychological.currentState.selfCare.length">
+
+                    <div class="uk-margin-remove uk-width-1-5">
+                        ${$parent.responses.neuropsychological.currentState.selfCare[i].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-2-5">
+                        <label repeat.for="response of currentStateAbilities">
+                            <input type="radio" name="currentStateSelfCareAbilities-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.neuropsychological.currentState.selfCare[i].ability" model.bind="response" change.delegate="currentStateSelfCareChanged()" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-2-5">
+                        <label repeat.for="response of currentStateIssues">
+                            <input type="checkbox" class="uk-checkbox" checked.bind="$parent.$parent.responses.neuropsychological.currentState.selfCare[i].issues" model.bind="response" change.delegate="currentStateSelfCareChanged()" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+
+
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    What social/recreational activities were you involved with before the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <button type="button" class="uk-button" click.delegate="addPreAccidentRecreationalActivity()">
+                        Add
+                    </button>
+                </div>
+
+                <template repeat.for="i of responses.neuropsychological.currentState.preAccidentRecreationalActivities.length">
+                    <div class="uk-margin-remove-vertical uk-margin-small-right uk-width-1-5">
+                        <label class="uk-form-label">
+                            ${$index + 1}.&nbsp;<input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.currentState.preAccidentRecreationalActivities[i]" input.delegate="preAccidentRecreationalActivitiesChanged() & debounce:500" />
+                        </label>
+                    </div>
+                </template>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-4-5">
+                    Has your ability to participate in your regular social and leisure activities outside the home been affected since the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="leisureAbility" class="uk-radio" checked.bind="responses.neuropsychological.currentState.leisureAbility" model.bind="response"  />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.neuropsychological.currentState.leisureAbility.value"></div>
+
+                <div class="uk-margin-remove uk-width-1-5" if.bind="responses.neuropsychological.currentState.leisureAbility.value">
+                    Do you participate:
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-5" if.bind="responses.neuropsychological.currentState.leisureAbility.value">
+                    <template repeat.for="response of leisureParticipationRates">
+                        <label>
+                            <input type="radio" name="leisureParticipationRate" class="uk-radio" checked.bind="responses.neuropsychological.currentState.leisureParticipationRate" model.bind="response"  />&nbsp;${response.description}&nbsp;
+                        </label>
+                        <br if.bind="!$last">
+                    </template>
+                </div>
+
+                <hr if.bind="responses.neuropsychological.currentState.leisureAbility.value">
+
+
+
+            </fieldset>
+
+
 
         </form>
     
@@ -1540,7 +1637,7 @@
 
         <template if.bind="responses.psychological.selfHarm.attemptedToEndLife.response.value !== null">
             <br>
-            ${gender.title} ${claimant.lastName} added that ${pronoun.subject} 
+            ${pronoun.subject | proper} added that ${pronoun.subject} 
             <template if.bind="responses.psychological.selfHarm.attemptedToEndLife.response.isYes">
                 &nbsp;has attempted to end ${pronoun.possessiveAdjective} own life.
             </template>
@@ -1702,7 +1799,7 @@
             <template if.bind="responses.psychological.panicAttacksCurrent.isNo">
                 &nbsp;not
             </template>
-            experienced panic attacks.
+            &nbsp;experienced panic attacks.
         </template>
 
         <template if.bind="responses.psychological.panicAttacksPrior.value">
@@ -1714,19 +1811,19 @@
             <template else>
                 &nbsp;denied having any 
             </template>
-            pre-accident history of panic attacks.
+            &nbsp;pre-accident history of panic attacks.
         </template>
         
-        <template if.bind="responses.psychological.heightenedStartleResponseCurrent.value">
+        <template if.bind="responses.psychological.heightenedStartleResponse.value">
             <br>
             ${pronoun.subject | proper} further expressed that ${pronoun.subject} 
-            <template if.bind="responses.psychological.heightenedStartleResponseCurrent.isYes">
+            <template if.bind="responses.psychological.heightenedStartleResponse.isYes">
                 &nbsp;now has
             </template>
             <template else>
                 &nbsp;does not have
             </template>
-            a heightened startle response.
+            &nbsp;a heightened startle response.
         </template>
         
         <template if.bind="responses.psychological.flashbacksAfter.value">
@@ -1807,9 +1904,9 @@
             In terms of vehicular travel, ${gender.title} ${claimant.lastName} stated that since the accident ${pronoun.possessiveAdjective} ability to travel has 
             <template if.bind="responses.psychological.travel.abilityToTravel.isYes">
                 &nbsp;been affected
-                <template if.bind="anyYesTravelIssues">
+                <template if.bind="anyTravelIssues & signal:'travel-changed'">
                     &nbsp;by ${pronoun.possessiveAdjective} 
-                    ${yesTravelIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'travel-changed'}
+                    ${responses.psychological.travel.travelIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'travel-changed'}
                 </template>
                 .
             </template>
@@ -1852,10 +1949,10 @@
             <br>
             When asked, ${gender.title} ${claimant.lastName} indicated that when traveling as a passenger, ${pronoun.subject} 
             <template if.bind="responses.psychological.travel.usePhantomBrake.isYes">
-                &nbsp;will use
+                &nbsp;will
             </template>
             <template else>
-                &nbsp;does not use
+                &nbsp;does not
             </template>
             &nbsp;use a phantom brake.
         </template>
@@ -1873,7 +1970,7 @@
             <br>
             ${pronoun.subject | proper} also shared that 
             <template if.bind="responses.psychological.travel.avoidSceneOfAccident.isYes">
-                &nbsp;if at all possible possible, ${pronoun.subject} will tend to avoid the scene of the accident.
+                &nbsp;if at all possible, ${pronoun.subject} will tend to avoid the scene of the accident.
             </template>
             <template else>
                 &nbsp;${pronoun.subject} does not tend to avoid the scene of the accident.
@@ -1892,7 +1989,7 @@
             Regarding ${pronoun.possessiveAdjective} neurocognitive functioning, 
             ${gender.title} ${claimant.lastName} stated that 
             <template if.bind="responses.neuropsychological.problems.concentration.value">&nbsp;${pronoun.subject} has</template>
-            <template else>&nbsp;at the current time ${pronoun.subject} does not have any </template>&nbsp;issues concentrating. 
+            <template else>&nbsp;at the current time ${pronoun.subject} does not have any</template>&nbsp;issues with concentration. 
         </template>
         
         <template if.bind="responses.neuropsychological.problems.memory.value !== null">
@@ -1909,22 +2006,17 @@
             </template>
         </template>
         
-        <template if.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsFrequently.value !== null">
-            <br>
-            &nbsp;${pronoun.subject | proper}
-            <template if.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsFrequently.value">&nbsp;noted that</template>
-            <template else>&nbsp;then denied</template>
-            &nbsp;${pronoun.subject} will frequently forget the whereabouts of objects around ${pronoun.possessiveAdjective} home.    
-        </template>
-        
         <template if.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value !== null">
             <br>
-            <template if.bind="responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value">
-                &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} will frequently forget the whereabouts of objects around ${pronoun.possessiveAdjective} home (including ${pronoun.possessiveAdjective}: ${responses.neuropsychological.memory.visual.forgetWhereaboutsOf | arrayToString:{"format":getItemValue} & signal:'memory-visual-whereabouts-objects-changed'}).
+            ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} will 
+            <template if.bind="!responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value">
+                &nbsp;not
             </template>
-            <template else>
-                &nbsp;When asked, ${pronoun.subject} shared that ${pronoun.subject} will not frequently forget the whereabouts of objects around ${pronoun.possessiveAdjective} home. 
+            &nbsp;frequently forget the whereabouts of objects around ${pronoun.possessiveAdjective} home
+            <template if.bind="anyForgottenWhereaboutsObjects & signal:'memory-visual-whereabouts-objects-changed'">
+                &nbsp;(including ${pronoun.possessiveAdjective}: ${responses.neuropsychological.memory.visual.forgetWhereaboutsOf | arrayToString:{"format":getItemValue} & signal:'memory-visual-whereabouts-objects-changed'})
             </template>
+            .
         </template>
         
         <template if.bind="responses.neuropsychological.memory.working.walkIntoRoomAndForgetWhyFrequently.value !== null">
@@ -1950,7 +2042,17 @@
         <template if.bind="responses.neuropsychological.memory.aids.useAids.value !== null">
             <br>
             <template if.bind="responses.neuropsychological.memory.aids.useAids.value">
-                Upon inquiry, ${gender.title} ${claimant.lastName} shared that currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${responses.neuropsychological.memory.aids.aidsUsed | arrayToString:{"format":getItemValue} & signal:'memory-aids-used-changed'}.
+                Upon inquiry, ${gender.title} ${claimant.lastName} shared that 
+                <template if.bind="anyNonFamilyMemoryAidsUsed & signal:'memory-aids-used-changed'">
+                    &nbsp;currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${responses.neuropsychological.memory.aids.aidsUsed | arrayToString:{"format":getItemValue} & signal:'memory-aids-used-changed'}
+                    <template if.bind="responses.neuropsychological.memory.aids.familyUsed">
+                        , adding that her family also helps her to remember things
+                    </template>
+                    .
+                </template>
+                <template if.bind="!anyNonFamilyMemoryAidsUsed && responses.neuropsychological.memory.aids.familyUsed & signal:'memory-aids-used-changed'">
+                    &nbsp;her family helps her to remember things.
+                </template>
             </template>
             <template else>
                 Upon inquiry, ${gender.title} ${claimant.lastName} denied using any memory aids at the current time.
@@ -1977,14 +2079,21 @@
             </template>
         </template>
         
-        <br if.bind="responses.neuropsychological.memory.medication.usesDosette.value !== null">
+        <br if.bind="responses.neuropsychological.memory.medication.usesDosette.value">
         <template if.bind="responses.neuropsychological.memory.medication.usesDosette.value">
             &nbsp;${pronoun.subject | proper} then added that ${pronoun.subject} uses a Dosette.
         </template>
 
         <br if.bind="responses.neuropsychological.memory.medication.usesBlisterPacks.value !== null">
         <template if.bind="responses.neuropsychological.memory.medication.usesBlisterPacks.value">
-            &nbsp;${pronoun.subject | proper} then added that ${pronoun.subject} uses blister packs.
+            &nbsp;${pronoun.subject | proper} 
+            <template if.bind="responses.neuropsychological.memory.medication.usesDosette.value">
+                &nbsp;additionally shared 
+            </template>
+            <template else>
+                &nbsp;then added 
+            </template>
+            &nbsp;that ${pronoun.subject} uses blister packs.
         </template>
 
         <!-- Language -->
@@ -2112,8 +2221,8 @@
                     <template if.bind="!anySelectedAtypicalSymptomology">
                         having any atypical symptomatology or
                     </template>
-                    experiencing any 
-                    ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}.
+                    &nbsp;experiencing any 
+                    &nbsp;${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}.
                 </template>
             </template>
             <template else>
@@ -2165,7 +2274,7 @@
             <template if.bind="!responses.neuropsychological.physical.energy.libidoAffected.value">
                 &nbsp;not
             </template>
-            been adversely affected.
+            &nbsp;been adversely affected.
         </template>
         
         <template if.bind="responses.neuropsychological.physical.sleep.sleepAffected.value !== null">
@@ -2174,7 +2283,7 @@
             <template if.bind="!responses.neuropsychological.physical.sleep.sleepAffected.value">
                 &nbsp;not
             </template>
-            been affected.
+            &nbsp;been affected.
         </template>
         
         <template if.bind="responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident.value !== null">
@@ -2186,7 +2295,7 @@
             <template else>
                 &nbsp;did not have any
             </template>
-            issues sleeping.
+            &nbsp;issues sleeping.
         </template>
         
         <template if.bind="responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident.value !== null">
@@ -2245,7 +2354,7 @@
             <template if.bind="responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident.value">
                 &nbsp;${pronoun.subject | proper} advised that prior to the accident ${pronoun.subject} experienced headaches
                 <template if.bind="responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident.value">
-                    , and noticed that since the accident ${pronoun.subject} has noticed a change in ${pronoun.possessiveAdjective} headaches
+                    , and noted that since the accident ${pronoun.subject} has noticed a change in ${pronoun.possessiveAdjective} headaches
                 </template>
                 <template else>
                     , but denied any changes in ${pronoun.possessiveAdjective} headaches since the subject accident
@@ -2272,13 +2381,16 @@
             <br>
             <template if.bind="responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident.value">
                 &nbsp;${pronoun.subject | proper} acknowledged pre-accident history of migraines
-                <template if.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident.value">
-                    , adding that ${pronoun.possessiveAdjective} migraines have 
+                <template if.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident.value !== null">
+                    <template if.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident.value">
+                        , adding that ${pronoun.possessiveAdjective} migraines have 
+                    </template>
+                    <template else>
+                        , but indicated that ${pronoun.possessiveAdjective} migraines have not 
+                    </template>
+                    &nbsp;worsened since the subject accident
                 </template>
-                <template else>
-                    , but indicated that ${pronoun.possessiveAdjective} migraines have not 
-                </template>
-                &nbsp;worsened since the subject accident.
+                .
             </template>
             <template else>
                 &nbsp;${pronoun.subject | proper} denied having any pre-accident history of migraines.
@@ -2288,7 +2400,7 @@
         <template if.bind="responses.neuropsychological.physical.pain.currentlyExperiencePain.value != null">
             <br>
             <template if.bind="responses.neuropsychological.physical.pain.currentlyExperiencePain.value && responses.neuropsychological.physical.pain.currentPainArea.value !== null">
-                &nbsp;When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences pain in the following areas: 
+                &nbsp;When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences pain in the following area(s): 
                 ${responses.neuropsychological.physical.pain.currentPainArea}
             </template>
             <template else>
@@ -2318,6 +2430,38 @@
             ${responses.neuropsychological.physical.changes.changeInMood.value(pronoun)}.
         </template>
         
+
+        <template if.bind="responses.neuropsychological.currentState.spendTime">
+            <br>
+            ${gender.title} ${claimant.lastName} shared that he spends time during the week doing the following: ${responses.neuropsychological.currentState.spendTime}.
+        </template>
+<!--
+        <template repeat.for="task of personalCareTasks">
+            <br>
+            When asked specifically about ${pronoun.possessiveAdjective} ability to attend to certain activities, ${gender.title} ${claimant.lastName} noted that currently ${pronoun.subject} is unable to attend to ${pronoun.possessiveAdjective} self-care tasks 
+            <template if.bind="anyUnablePersonalCareTasks & signal:'current-state-self-care-changed'">
+
+                (including ${unablePersonalCareTasks | arrayToString:{"format":getItemValue} & signal:'current-state-self-care-changed'})
+            </template>
+
+            (including bathing, grooming and haircare); however, noted that his ability to do said tasks are affected by his: 
+
+        </template>
+-->
+
+        <template if.bind="anyPreAccidentRecreationalActivities & signal:'pre-accident-recreational-activities-changed'">
+            <br>
+            In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} enjoyed ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString & signal:'pre-accident-recreational-activities-changed'}. 
+        </template>
+
+        <template if.bind="responses.neuropsychological.currentState.leisureAbility.value">
+            <br>
+            ${pronoun.subject | proper} then advised that ${pronoun.possessiveAdjective} ability to participate in ${pronoun.possessiveAdjective} regular social and leisure activities has been affected
+            <template if.bind="responses.neuropsychological.currentState.leisureParticipationRate">
+                , adding that ${pronoun.subject} ${getItemValueForCurrentContext(responses.neuropsychological.currentState.leisureParticipationRate)}
+            </template>
+            .
+        </template>
 
     </div>
 
