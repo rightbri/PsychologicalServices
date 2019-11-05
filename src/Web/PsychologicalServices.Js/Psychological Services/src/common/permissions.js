@@ -67,5 +67,14 @@ export const Permissions = {
     "ViewUser":"ViewUser",
     "SearchUser":"SearchUser",
     "SearchClaimant":"SearchClaimant",
-    "SearchAddress":"SearchAddress"
+    "SearchAddress":"SearchAddress",
+    "ViewAddress":"ViewAddress",
+    "ViewAppointment":"ViewAppointment",
+    "ViewArbitration":"ViewArbitration",
+    "ViewContact":"ViewContact",
+    "ViewEmployer":"ViewEmployer",
+    "ViewEvent":"ViewEvent",
+    "SearchEvent":"SearchEvent",
+    "ViewRight":"ViewRight",
+    "ViewRole":"ViewRole"
 }

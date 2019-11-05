@@ -1,4 +1,5 @@
-﻿using PsychologicalServices.Models.Rights;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -18,6 +19,7 @@ namespace PsychologicalServices.Api.Controllers
             _rightService = rightService;
         }
 
+        [RightAuthorize(StaticRights.ViewRight)]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Right>))]
         public IHttpActionResult Get()

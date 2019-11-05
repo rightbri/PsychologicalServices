@@ -4,9 +4,6 @@ using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Rights;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -24,6 +21,7 @@ namespace PsychologicalServices.Api.Controllers
             _appointmentService = appointmentService;
         }
 
+        [RightAuthorize(StaticRights.ViewAppointment)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Appointment))]

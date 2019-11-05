@@ -21,6 +21,7 @@ namespace PsychologicalServices.Api.Controllers
             _eventService = eventService;
         }
 
+        [RightAuthorize(StaticRights.ViewEvent)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Event))]
@@ -31,8 +32,9 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(e);
         }
 
-        [AllowAnonymous]
-        [OverrideAuthorization]
+        [RightAuthorize(StaticRights.SearchEvent)]
+        //[AllowAnonymous]
+        //[OverrideAuthorization]
         [Route("search")]
         [HttpPost]
         [ResponseType(typeof(IEnumerable<Event>))]

@@ -1,4 +1,6 @@
-﻿using PsychologicalServices.Models.Roles;
+﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Rights;
+using PsychologicalServices.Models.Roles;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -18,6 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _roleService = roleService;
         }
 
+        [RightAuthorize(StaticRights.ViewRole)]
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Role>))]
         public IHttpActionResult Get()

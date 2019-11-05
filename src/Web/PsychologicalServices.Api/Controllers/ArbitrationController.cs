@@ -20,7 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _arbitrationService = arbitrationService;
         }
 
-        [RightAuthorize(StaticRights.SearchArbitration)]
+        [RightAuthorize(StaticRights.ViewArbitration)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Arbitration))]

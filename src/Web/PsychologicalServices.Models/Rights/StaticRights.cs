@@ -72,6 +72,15 @@ namespace PsychologicalServices.Models.Rights
         ViewUser,
         SearchUser,
         SearchClaimant,
-        SearchAddress
+        SearchAddress,
+        ViewAddress,
+        ViewAppointment,
+        ViewArbitration,
+        ViewContact,
+        ViewEmployer,
+        ViewEvent,
+        SearchEvent,
+        ViewRight,
+        ViewRole
     }
 }

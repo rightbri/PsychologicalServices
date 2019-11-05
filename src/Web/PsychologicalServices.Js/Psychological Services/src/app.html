@@ -178,7 +178,7 @@
 						<li if.bind="hasPermission(user, permissions.SearchEmployer)">
 							<a href="/employers" uk-toggle="target: #offCanvasNav">Employers</a>
 						</li>
-						<li>
+						<li if.bind="hasPermission(user, permissions.SearchEvent)">
 							<a href="/events" uk-toggle="target: #offCanvasNav">Events</a>
 						</li>
 						<li if.bind="hasPermission(user, permissions.SearchReferralSource)">

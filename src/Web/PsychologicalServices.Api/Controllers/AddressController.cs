@@ -20,6 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _addressService = addressService;
         }
 
+        [RightAuthorize(StaticRights.ViewAddress)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Address))]

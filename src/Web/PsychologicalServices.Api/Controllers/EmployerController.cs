@@ -20,7 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _employerService = employerService;
         }
 
-        [RightAuthorize(StaticRights.SearchEmployer)]
+        [RightAuthorize(StaticRights.ViewEmployer)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Employer))]

@@ -20,7 +20,7 @@ namespace PsychologicalServices.Api.Controllers
             _contactService = contactService;
         }
 
-        [RightAuthorize(StaticRights.SearchContact)]
+        [RightAuthorize(StaticRights.ViewContact)]
         [Route("{id}")]
         [HttpGet]
         [ResponseType(typeof(Contact))]
