@@ -14,11 +14,15 @@ export class Context {
 		this.user = null;
 		this.loggedIn = false;
 		this.session = {};
-		
+		this.callbacks = [];
+
 		this.subscriber = this.ea.subscribe('authStateChanged', response => {
 			this.username = response.user.email;
 			this.getUser().then(user => {
 				this.loggedIn = user && user.email;
+
+				notifyUserChange(this.user, this.callbacks);
+
 			}).catch(err => {
 				console.log(err);
 				this.logout();
@@ -32,10 +36,10 @@ export class Context {
 		this.loggedIn = false;
 		this.authContext.clear();
 	}
-	
-	getUser() {
+
+	getUser(refetch) {
 		var promise = new Promise((resolve, reject) => {
-			if (this.user) {
+			if (!refetch && this.user) {
 				resolve(this.user);
 			}
 			else {
@@ -45,6 +49,8 @@ export class Context {
 
 						this.dataRepository.getUserSpinner(this.user.userId).then(spinner => this.user.spinner = spinner);
 						
+						notifyUserChange(this.user, this.callbacks);
+
 						resolve(data);
 					})
 					.catch(err => {
@@ -62,5 +68,26 @@ export class Context {
 	logout() {
 		return this.authContext.logout()
 			.then(() => this.clear());
+	}
+
+	userChange(callback) {
+		if (!this.callbacks.includes(callback)) {
+			this.callbacks.push(callback);
+		}
+	}
+
+	hasPermission(permission) {
+		return this.user && this.user.roles.some(userRole =>
+			userRole.rights.some(roleRight => roleRight.name === permission)
+		);
+	}
+}
+
+function notifyUserChange(user, callbacks) {
+	for (let i = 0; i < callbacks.length; i++) {
+		let callback = callbacks[i];
+		if (callback && typeof(callback) === "function") {
+			callback(user);
+		}
 	}
 }

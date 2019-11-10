@@ -22,6 +22,8 @@ export class EditUser {
 		this.notifier = notifier;
 		
 		this.user = null;
+
+		this.editUser = null;
 		this.unavailableDate = null;
 		this.roles = [];
 		this.addresses = [];
@@ -50,17 +52,20 @@ export class EditUser {
 		
 		this.editType = id ? 'Edit' : 'Add';
 		
-		if (id) {
-			return this.dataRepository.getUser(id)
-				.then(user => {
-					this.user = user;
-					
-					return this.getData();
-				});
-		}
-		else {
-			return this.context.getUser().then(user => {
-				this.user = {
+		return this.context.getUser().then(user => {
+
+			this.user = user;
+
+			if (id) {
+				return this.dataRepository.getUser(id)
+					.then(data => {
+						this.editUser = data;
+						
+						return this.getData();
+					});
+			}
+			else {
+				this.editUser = {
 					userId: 0,
 					company: user.company,
 					isActive: true,
@@ -68,10 +73,10 @@ export class EditUser {
 					unavailability: [],
 					travelFees: []
 				};
-				
+
 				return this.getData();
-			});
-		}
+			}
+		});
 	}
 	
 	getData() {
@@ -87,9 +92,9 @@ export class EditUser {
 	save() {
 		this.saveDisabled = true;
 		
-		var isNew = this.user.userId === 0;
+		var isNew = this.editUser.userId === 0;
 
-		this.dataRepository.saveUser(this.user)
+		this.dataRepository.saveUser(this.editUser)
             .then(data => {
 
 				this.validationErrors = (data.validationResult && data.validationResult.validationErrors && data.validationResult.validationErrors.length > 0)
@@ -101,12 +106,23 @@ export class EditUser {
 				}
 				
                 if (data.isSaved) {
-                    this.user = data.item;
+                    this.editUser = data.item;
+
+					if (this.editUser.id === this.user.id) {
+						let self = this;
+						this.context.getUser(true).then(data => {
+							self.user = data;
+
+							if (!self.context.hasPermission('EditUser')) {
+								self.router.navigateToRoute('home');
+							}
+						});
+					}
 
 					if (isNew) {
 						this.router.navigateToRoute(
 							'editUser',
-							{ 'id': this.user.userId },
+							{ 'id': this.editUser.userId },
 							{ 'trigger': false, replace: true }
 						);
 						
@@ -132,12 +148,12 @@ export class EditUser {
 	}
 
 	addUnavailability() {
-		let index = this.user.unavailability.findIndex(unavailability => unavailability.startDate === this.unavailableDate);
+		let index = this.editUser.unavailability.findIndex(unavailability => unavailability.startDate === this.unavailableDate);
 
 		if (Date.parse(this.unavailableDate) && index === -1) {
 			let unavailability = getUnavailability(this.unavailableDate);
 
-			this.user.unavailability.push(unavailability);
+			this.editUser.unavailability.push(unavailability);
 
 			this.unavailableDate = null;
 
@@ -147,16 +163,16 @@ export class EditUser {
 
 	removeUnavailability(unavailability) {
 		if (confirm('Remove Unavailability\nAre you sure?')) {
-			let index = this.user.unavailability.indexOf(unavailability);
+			let index = this.editUser.unavailability.indexOf(unavailability);
 			if (index > -1) {
-				this.user.unavailability.splice(index, 1);
+				this.editUser.unavailability.splice(index, 1);
 			}
 		}
 	}
 
 	addTravelFee(selectedCity) {
 		if (selectedCity) {
-			this.user.travelFees.push({ city: selectedCity, amount: 0 });
+			this.editUser.travelFees.push({ city: selectedCity, amount: 0 });
 
 			this.selectedCity = null;
 			
@@ -166,10 +182,10 @@ export class EditUser {
 
 	removeTravelFee(travelFee) {
 		if (confirm('Remove travel fee\nAre you sure?')) {
-			let index = this.user.travelFees.indexOf(travelFee);
+			let index = this.editUser.travelFees.indexOf(travelFee);
 	
 			if (index > -1) {
-				this.user.travelFees.splice(index, 1);
+				this.editUser.travelFees.splice(index, 1);
 	
 				this.bindingSignaler.signal('travel-fee-city-list');
 			}
@@ -178,7 +194,7 @@ export class EditUser {
 
 	@computedFrom('cities', 'user.travelFees')
 	get travelFeeCityList() {
-		let cities = this.cities.filter(c => !this.user.travelFees.some(tf => tf.city.cityId === c.cityId));
+		let cities = this.cities.filter(c => !this.editUser.travelFees.some(tf => tf.city.cityId === c.cityId));
 
 		return cities;
 	}

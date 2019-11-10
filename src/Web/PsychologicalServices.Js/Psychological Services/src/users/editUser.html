@@ -19,28 +19,28 @@
 			<div>
 				<label class="uk-form-label" for="firstName">First Name</label>
 				<div class="uk-form-controls">
-					<input id="firstName" type="text" class="uk-input" value.bind="user.firstName" />
+					<input id="firstName" type="text" class="uk-input" value.bind="editUser.firstName" />
 				</div>
 			</div>
 		
 			<div>
 				<label class="uk-form-label" for="lastName">Last Name</label>
 				<div class="uk-form-controls">
-					<input id="lastName" type="text" class="uk-input" value.bind="user.lastName" />
+					<input id="lastName" type="text" class="uk-input" value.bind="editUser.lastName" />
 				</div>
 			</div>
 			
 			<div>
 				<label class="uk-form-label" for="email">Email</label>
 				<div class="uk-form-controls">
-					<input id="email" type="text" class="uk-input" value.bind="user.email" />
+					<input id="email" type="text" class="uk-input" value.bind="editUser.email" />
 				</div>
 			</div>
 			
 			<div>
 				<label class="uk-form-label" for="address">Address</label>
 				<div class="uk-form-controls">
-					<select id="address" class="uk-select" value.bind="user.address" matcher.bind="addressMatcher">
+					<select id="address" class="uk-select" value.bind="editUser.address" matcher.bind="addressMatcher">
 						<option></option>
 						<option repeat.for="address of addresses" model.bind="address">
 							${address.name} ${address.street} ${address.city.name}
@@ -53,7 +53,7 @@
 				<label class="uk-form-label">Roles</label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label" repeat.for="role of roles">
-						<input type="checkbox" class="uk-checkbox" model.bind="role" checked.bind="user.roles" matcher.bind="roleMatcher" />&nbsp;${role.name}
+						<input type="checkbox" class="uk-checkbox" model.bind="role" checked.bind="editUser.roles" matcher.bind="roleMatcher" />&nbsp;${role.name}
 					</label>
 				</div>
 			</div>
@@ -62,16 +62,16 @@
 				<label class="uk-form-label">Status</label>
 				<div class="uk-form-controls">
 					<label class="uk-form-label">
-						<input type="checkbox" class="uk-checkbox" checked.bind="user.isActive" />&nbsp;Is Active?
+						<input type="checkbox" class="uk-checkbox" checked.bind="editUser.isActive" />&nbsp;Is Active?
 					</label>
 				</div>
 			</div>
 
-			<div if.bind="!user.isActive"></div>
-			<div if.bind="!user.isActive">
+			<div if.bind="!editUser.isActive"></div>
+			<div if.bind="!editUser.isActive">
 				<label class="uk-form-label" for="dateInactivated">Date Inactivated</label>
 				<div class="uk-form-controls">
-					<input id="dateInactivated" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="user.dateInactivated | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+					<input id="dateInactivated" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="editUser.dateInactivated | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
 				</div>
 			</div>
 			
@@ -91,7 +91,7 @@
 				<label class="uk-form-label">Selected unavailability dates (double-click to remove)</label>
 				<div class="uk-form-controls">
 					<select size="10" multiple="multiple" class="uk-select">
-						<option repeat.for="unavailability of user.unavailability | sortArray:{property:'startDate',direction:'desc'}" dblclick.delegate="removeUnavailability(unavailability)">
+						<option repeat.for="unavailability of editUser.unavailability | sortArray:{property:'startDate',direction:'desc'}" dblclick.delegate="removeUnavailability(unavailability)">
 							${unavailability.startDate | dateFormat:config.longDateFormat}
 						</option>
 					</select>
@@ -127,7 +127,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr repeat.for="travelFee of user.travelFees">
+							<tr repeat.for="travelFee of editUser.travelFees">
 								<td>${travelFee.city.name}</td>
 								<td>
 									<input type="number" pattern="\d+" class="uk-input uk-form-width-small" value.bind="travelFee.amount | money:'0'" />

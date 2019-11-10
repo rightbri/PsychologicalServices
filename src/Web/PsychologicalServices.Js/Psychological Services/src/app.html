@@ -40,164 +40,19 @@
 				
 				<li class="uk-nav-divider"></li>
 				
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.ViewAssessment) || hasPermission(user, permissions.SearchAssessment)">
-					<a href="/calendar" uk-toggle="target: #offCanvasNav">Assessments</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li if.bind="hasPermission(user, permissions.ViewAssessment)">
-							<a href="/calendar" uk-toggle="target: #offCanvasNav">Calendar</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchAssessment)">
-							<a href="/assessments" uk-toggle="target: #offCanvasNav">Search</a>
-						</li>
-					</ul>
-				</li>
+				<template repeat.for="group of menuGroups">
+					<li class="uk-parent" if.bind="hasAnyItemPermission(user, group)">
+						<a href="#" uk-toggle="target: #offCanvasNav">${group.name}</a>
+						<ul class="uk-nav-sub uk-text-small">
+							<template repeat.for="item of group.items">
+								<li if.bind="hasItemPermission(user, item)">
+									<a href="${item.route}" uk-toggle="target: #offCanvasNav">${item.name}</a>
+								</li>
+							</template>
+						</ul>
+					</li>
+				</template>
 
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.ViewPsychologistSchedule) || hasPermission(user, permissions.CreatePsychologistInvoice)">
-					<a href="#">Psychologist</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li if.bind="hasPermission(user, permissions.ViewPsychologistSchedule)">
-							<a href="/schedule/psychologist" uk-toggle="target: #offCanvasNav">Psychologist Schedule</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.CreatePsychologistInvoice)">
-							<a href="/invoices/psychologist" uk-toggle="target: #offCanvasNav">Create Psychologist Invoices</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.ViewPsychometristSchedule) || hasPermission(user, permissions.CreatePsychometristInvoice)">
-					<a href="#">Psychometrist</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li if.bind="hasPermission(user, permissions.ViewPsychometristSchedule)">
-							<a href="/schedule/psychometrist" uk-toggle="target: #offCanvasNav">Psychometrist Schedule</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.CreatePsychometristInvoice)">
-							<a href="/invoices/psychometrist" uk-toggle="target: #offCanvasNav">Create Psychometrist Invoices</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="uk-parent">
-					<a href="#">Forms</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li>
-							<a href="/forms/typicalday" uk-toggle="target: #offCanvasNav">Typical Day</a>
-						</li>
-						<li>
-							<a href="/testingresults/psychological" uk-toggle="target: #offCanvasNav">Psychological testing results</a>
-						</li>
-						<li>
-							<a href="/testingresults/notes" uk-toggle="target: #offCanvasNav">Notes</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.EditArbitration) || hasPermission(user, permissions.CreateArbitrationInvoice)">
-					<a href="#">Arbitrations</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li if.bind="hasPermission(user, permissions.EditArbitration)">
-							<a href="/arbitrations" uk-toggle="target: #offCanvasNav">Add/Edit Arbitrations</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.CreateArbitrationInvoice)">
-							<a href="/invoices/arbitration" uk-toggle="target: #offCanvasNav">Create Arbitration Invoices</a>
-						</li>
-					</ul>
-				</li>
-				
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.EditRawTestData) || hasPermission(user, permissions.CreateRawTestDataInvoice)">
-					<a href="#">Raw Test Data</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li if.bind="hasPermission(user, permissions.EditRawTestData)">
-							<a href="/rawtestdata" uk-toggle="target: #offCanvasNav">Add/Edit Raw Test Data</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.CreateRawTestDataInvoice)">
-							<a href="/invoices/rawtestdata" uk-toggle="target: #offCanvasNav">Create Raw Test Data Invoices</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.SearchInvoice)">
-					<a href="/invoices" uk-toggle="target: #offCanvasNav">Invoices</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li>
-							<a href="/invoices" uk-toggle="target: #offCanvasNav">Search</a>
-						</li>
-					</ul>
-				</li>
-				
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.ViewReport)">
-					<a href="#">Analysis</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li>
-							<a href="/analysis/arbitration-statistics" uk-toggle="target: #offCanvasNav">Arbitration Statistics</a>
-						</li>
-						<li>
-							<a href="/analysis/assessment-type-counts" uk-toggle="target: #offCanvasNav">Assessment Type Counts</a>
-						</li>
-						<li>
-							<a href="/analysis/booking-statistics" uk-toggle="target: #offCanvasNav">Booking Statistics</a>
-						</li>
-						<li>
-							<a href="/analysis/cancellation-statistics" uk-toggle="target: #offCanvasNav">Cancellation Statistics</a>
-						</li>
-						<li>
-							<a href="/analysis/completion-statistics" uk-toggle="target: #offCanvasNav">Completion Statistics</a>
-						</li>
-						<li>
-							<a href="/analysis/credibility-statistics" uk-toggle="target: #offCanvasNav">Credibility Statistics</a>
-						</li>
-						<li>
-							<a href="/analysis/non-ab-completions" uk-toggle="target: #offCanvasNav">Non AB Completions</a>
-						</li>
-						<li>
-							<a href="/analysis/research-consent-obtained-claimants" uk-toggle="target: #offCanvasNav">Research Consent Obtained Claimants</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="uk-parent">
-					<a href="#">Maintenance</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li if.bind="hasPermission(user, permissions.SearchAddress)">
-							<a href="/addresses" uk-toggle="target: #offCanvasNav">Addresses</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchCalendarNote)">
-							<a href="/calendarNotes" uk-toggle="target: #offCanvasNav">Calendar Notes</a>
-						</li>
-						<li>
-							<a href="/cities" uk-toggle="target: #offCanvasNav">Cities</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchClaimant)">
-							<a href="/claimants" uk-toggle="target: #offCanvasNav">Claimants</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.ViewInvoiceConfiguration)">
-							<a href="/invoiceConfiguration" uk-toggle="target: #offCanvasNav">Configure Invoices</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchContact)">
-							<a href="/contacts" uk-toggle="target: #offCanvasNav">Contacts</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchEmployer)">
-							<a href="/employers" uk-toggle="target: #offCanvasNav">Employers</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchEvent)">
-							<a href="/events" uk-toggle="target: #offCanvasNav">Events</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchReferralSource)">
-							<a href="/referralSources" uk-toggle="target: #offCanvasNav">Referral Sources</a>
-						</li>
-						<li if.bind="hasPermission(user, permissions.SearchUser)">
-							<a href="/users" uk-toggle="target: #offCanvasNav">Users</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="uk-parent" if.bind="hasPermission(user, permissions.ViewReport)">
-					<a href="#">Outstanding</a>
-					<ul class="uk-nav-sub uk-text-small">
-						<li>
-							<a href="/outstanding/reports" uk-toggle="target: #offCanvasNav">Reports</a>
-						</li>
-					</ul>
-				</li>
 			</ul>
 		</div>
 	</div>
