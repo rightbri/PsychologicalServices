@@ -37,6 +37,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentMedRehabEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentNoteEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentReportEntityUsingAssessmentId);
+			toReturn.Add(this.AssessmentTestingResultEntityUsingAssessmentId);
 			toReturn.Add(this.AssessmentTypeEntityUsingAssessmentTypeId);
 			toReturn.Add(this.ClaimantEntityUsingClaimantId);
 			toReturn.Add(this.CompanyEntityUsingCompanyId);
@@ -172,6 +173,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(AssessmentFields.AssessmentId, AssessmentReportFields.AssessmentId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentReportEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AssessmentEntity and AssessmentTestingResultEntity over the 1:n relation they have, using the relation between the fields:
+		/// Assessment.AssessmentId - AssessmentTestingResult.AssessmentId
+		/// </summary>
+		public virtual IEntityRelation AssessmentTestingResultEntityUsingAssessmentId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "AssessmentTestingResults" , true);
+				relation.AddEntityFieldPair(AssessmentFields.AssessmentId, AssessmentTestingResultFields.AssessmentId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTestingResultEntity", false);
 				return relation;
 			}
 		}
@@ -395,6 +411,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AssessmentMedRehabEntityUsingAssessmentIdStatic = new AssessmentRelations().AssessmentMedRehabEntityUsingAssessmentId;
 		internal static readonly IEntityRelation AssessmentNoteEntityUsingAssessmentIdStatic = new AssessmentRelations().AssessmentNoteEntityUsingAssessmentId;
 		internal static readonly IEntityRelation AssessmentReportEntityUsingAssessmentIdStatic = new AssessmentRelations().AssessmentReportEntityUsingAssessmentId;
+		internal static readonly IEntityRelation AssessmentTestingResultEntityUsingAssessmentIdStatic = new AssessmentRelations().AssessmentTestingResultEntityUsingAssessmentId;
 		internal static readonly IEntityRelation AssessmentTypeEntityUsingAssessmentTypeIdStatic = new AssessmentRelations().AssessmentTypeEntityUsingAssessmentTypeId;
 		internal static readonly IEntityRelation ClaimantEntityUsingClaimantIdStatic = new AssessmentRelations().ClaimantEntityUsingClaimantId;
 		internal static readonly IEntityRelation CompanyEntityUsingCompanyIdStatic = new AssessmentRelations().CompanyEntityUsingCompanyId;

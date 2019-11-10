@@ -156,7 +156,16 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         .Prefetch<AttributeTypeEntity>(assessmentTypeAttributeType => assessmentTypeAttributeType.AttributeType)
                     )
             );
-        
+
+        private Func<IPathEdgeRootParser<AssessmentEntity>, IPathEdgeRootParser<AssessmentEntity>> GetAssessmentTestingResultsPath(string name)
+        {
+            return (assessmentPath => assessmentPath
+                .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
+                .Prefetch<AssessmentTestingResultEntity>(assessment => assessment.AssessmentTestingResults)
+                    .FilterOn(testingResults => testingResults.Name == name)
+            );
+        }
+
         #endregion
 
         public Assessment GetAssessment(int id)
@@ -210,6 +219,22 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     .Where(assessmentType => assessmentType.AssessmentTypeId == id)
                     .SingleOrDefault()
                     .ToAssessmentType();
+            }
+        }
+
+        public AssessmentTestingResults GetAssessmentTestingResults(int assessmentId, string name)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var testingResults = meta.Assessment
+                    .WithPath(GetAssessmentTestingResultsPath(name))
+                    .Where(assessment => assessment.AssessmentId == assessmentId)
+                    .SingleOrDefault()
+                    .ToAssessmentTestingResults(name);
+
+                return testingResults;
             }
         }
 
@@ -1009,6 +1034,42 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 uow.Commit(adapter);
 
                 return assessmentEntity.AssessmentId;
+            }
+        }
+
+        public bool SaveAssessmentTestingResults(AssessmentTestingResults testingResults)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var assessmentEntity = new AssessmentEntity
+                {
+                    AssessmentId = testingResults.Assessment.AssessmentId,
+                };
+
+                var prefetch = new PrefetchPath2(EntityType.AssessmentEntity);
+
+                prefetch.Add(AssessmentEntity.PrefetchPathAssessmentTestingResults);
+
+                var assessmentExists = adapter.FetchEntity(assessmentEntity, prefetch);
+
+                if (!assessmentExists)
+                {
+                    return false;
+                }
+
+                var entity = assessmentEntity.AssessmentTestingResults
+                    .SingleOrDefault(e => e.Name == testingResults.Name);
+
+                if (entity == null)
+                {
+                    return false;
+                }
+
+                entity.Responses = testingResults.Responses;
+
+                var saved = adapter.SaveEntity(entity, false);
+
+                return saved;
             }
         }
 

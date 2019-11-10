@@ -37,6 +37,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<AssessmentMedRehabEntity> _assessmentMedRehabs;
 		private EntityCollection<AssessmentNoteEntity> _assessmentNotes;
 		private EntityCollection<AssessmentReportEntity> _assessmentReports;
+		private EntityCollection<AssessmentTestingResultEntity> _assessmentTestingResults;
 		private AssessmentTypeEntity _assessmentType;
 		private ClaimantEntity _claimant;
 		private CompanyEntity _company;
@@ -107,6 +108,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AssessmentNotes = "AssessmentNotes";
 			/// <summary>Member name AssessmentReports</summary>
 			public static readonly string AssessmentReports = "AssessmentReports";
+			/// <summary>Member name AssessmentTestingResults</summary>
+			public static readonly string AssessmentTestingResults = "AssessmentTestingResults";
 		}
 		#endregion
 		
@@ -172,6 +175,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>)info.GetValue("_assessmentMedRehabs", typeof(EntityCollection<AssessmentMedRehabEntity>));
 				_assessmentNotes = (EntityCollection<AssessmentNoteEntity>)info.GetValue("_assessmentNotes", typeof(EntityCollection<AssessmentNoteEntity>));
 				_assessmentReports = (EntityCollection<AssessmentReportEntity>)info.GetValue("_assessmentReports", typeof(EntityCollection<AssessmentReportEntity>));
+				_assessmentTestingResults = (EntityCollection<AssessmentTestingResultEntity>)info.GetValue("_assessmentTestingResults", typeof(EntityCollection<AssessmentTestingResultEntity>));
 				_assessmentType = (AssessmentTypeEntity)info.GetValue("_assessmentType", typeof(AssessmentTypeEntity));
 				if(_assessmentType!=null)
 				{
@@ -377,6 +381,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReports":
 					this.AssessmentReports.Add((AssessmentReportEntity)entity);
 					break;
+				case "AssessmentTestingResults":
+					this.AssessmentTestingResults.Add((AssessmentTestingResultEntity)entity);
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -464,6 +471,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AssessmentReports":
 					toReturn.Add(Relations.AssessmentReportEntityUsingAssessmentId);
+					break;
+				case "AssessmentTestingResults":
+					toReturn.Add(Relations.AssessmentTestingResultEntityUsingAssessmentId);
 					break;
 				default:
 					break;				
@@ -573,6 +583,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentReports":
 					this.AssessmentReports.Add((AssessmentReportEntity)relatedEntity);
 					break;
+				case "AssessmentTestingResults":
+					this.AssessmentTestingResults.Add((AssessmentTestingResultEntity)relatedEntity);
+					break;
 				default:
 					break;
 			}
@@ -651,6 +664,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AssessmentReports":
 					this.PerformRelatedEntityRemoval(this.AssessmentReports, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "AssessmentTestingResults":
+					this.PerformRelatedEntityRemoval(this.AssessmentTestingResults, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				default:
 					break;
@@ -743,6 +759,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.AssessmentMedRehabs);
 			toReturn.Add(this.AssessmentNotes);
 			toReturn.Add(this.AssessmentReports);
+			toReturn.Add(this.AssessmentTestingResults);
 			return toReturn;
 		}
 
@@ -762,6 +779,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_assessmentMedRehabs", ((_assessmentMedRehabs!=null) && (_assessmentMedRehabs.Count>0) && !this.MarkedForDeletion)?_assessmentMedRehabs:null);
 				info.AddValue("_assessmentNotes", ((_assessmentNotes!=null) && (_assessmentNotes.Count>0) && !this.MarkedForDeletion)?_assessmentNotes:null);
 				info.AddValue("_assessmentReports", ((_assessmentReports!=null) && (_assessmentReports.Count>0) && !this.MarkedForDeletion)?_assessmentReports:null);
+				info.AddValue("_assessmentTestingResults", ((_assessmentTestingResults!=null) && (_assessmentTestingResults.Count>0) && !this.MarkedForDeletion)?_assessmentTestingResults:null);
 				info.AddValue("_assessmentType", (!this.MarkedForDeletion?_assessmentType:null));
 				info.AddValue("_claimant", (!this.MarkedForDeletion?_claimant:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
@@ -860,6 +878,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentReportFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'AssessmentTestingResult' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAssessmentTestingResults()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTestingResultFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
 			return bucket;
 		}
 
@@ -1009,6 +1036,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._assessmentMedRehabs);
 			collectionsQueue.Enqueue(this._assessmentNotes);
 			collectionsQueue.Enqueue(this._assessmentReports);
+			collectionsQueue.Enqueue(this._assessmentTestingResults);
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -1024,6 +1052,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessmentMedRehabs = (EntityCollection<AssessmentMedRehabEntity>) collectionsQueue.Dequeue();
 			this._assessmentNotes = (EntityCollection<AssessmentNoteEntity>) collectionsQueue.Dequeue();
 			this._assessmentReports = (EntityCollection<AssessmentReportEntity>) collectionsQueue.Dequeue();
+			this._assessmentTestingResults = (EntityCollection<AssessmentTestingResultEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -1040,6 +1069,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn |=(this._assessmentMedRehabs != null);
 			toReturn |=(this._assessmentNotes != null);
 			toReturn |=(this._assessmentReports != null);
+			toReturn |=(this._assessmentTestingResults != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -1057,6 +1087,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentMedRehabEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentMedRehabEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTestingResultEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTestingResultEntityFactory))) : null);
 		}
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -1086,6 +1117,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("AssessmentMedRehabs", _assessmentMedRehabs);
 			toReturn.Add("AssessmentNotes", _assessmentNotes);
 			toReturn.Add("AssessmentReports", _assessmentReports);
+			toReturn.Add("AssessmentTestingResults", _assessmentTestingResults);
 			return toReturn;
 		}
 
@@ -1625,6 +1657,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2( new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory))), (IEntityRelation)GetRelationsForField("AssessmentReports")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentReportEntity, 0, null, null, null, null, "AssessmentReports", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentTestingResult' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAssessmentTestingResults
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<AssessmentTestingResultEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTestingResultEntityFactory))), (IEntityRelation)GetRelationsForField("AssessmentTestingResults")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTestingResultEntity, 0, null, null, null, null, "AssessmentTestingResults", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentType' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathAssessmentType
@@ -2051,6 +2090,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<AssessmentReportEntity> AssessmentReports
 		{
 			get { return GetOrCreateEntityCollection<AssessmentReportEntity, AssessmentReportEntityFactory>("Assessment", true, false, ref _assessmentReports);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'AssessmentTestingResultEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(AssessmentTestingResultEntity))]
+		public virtual EntityCollection<AssessmentTestingResultEntity> AssessmentTestingResults
+		{
+			get { return GetOrCreateEntityCollection<AssessmentTestingResultEntity, AssessmentTestingResultEntityFactory>("Assessment", true, false, ref _assessmentTestingResults);	}
 		}
 
 		/// <summary> Gets / sets related entity of type 'AssessmentTypeEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>

@@ -156,5 +156,6 @@
     <Build Include="dbo\Stored Procedures\NonABCompletionData.sql" />
     <Build Include="dbo\Stored Procedures\ResearchConsentObtainedClaimantData.sql" />
     <Build Include="dbo\Stored Procedures\DeleteInvoice.sql" />
+    <Build Include="dbo\Tables\AssessmentTestingResults.sql" />
   </ItemGroup>
 </Project>

@@ -68,6 +68,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAssessmentNoteEntityInfos();
 			InitAssessmentReportEntityInfos();
 			InitAssessmentReportIssueInDisputeEntityInfos();
+			InitAssessmentTestingResultEntityInfos();
 			InitAssessmentTypeEntityInfos();
 			InitAssessmentTypeAttributeTypeEntityInfos();
 			InitAssessmentTypeInvoiceAmountEntityInfos();
@@ -342,6 +343,14 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddFieldIndexEnumForElementName(typeof(AssessmentReportIssueInDisputeFieldIndex), "AssessmentReportIssueInDisputeEntity");
 			this.AddElementFieldInfo("AssessmentReportIssueInDisputeEntity", "ReportId", typeof(System.Int32), true, true, false, false,  (int)AssessmentReportIssueInDisputeFieldIndex.ReportId, 0, 0, 10);
 			this.AddElementFieldInfo("AssessmentReportIssueInDisputeEntity", "IssueInDisputeId", typeof(System.Int32), true, true, false, false,  (int)AssessmentReportIssueInDisputeFieldIndex.IssueInDisputeId, 0, 0, 10);
+		}
+		/// <summary>Inits AssessmentTestingResultEntity's FieldInfo objects</summary>
+		private void InitAssessmentTestingResultEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(AssessmentTestingResultFieldIndex), "AssessmentTestingResultEntity");
+			this.AddElementFieldInfo("AssessmentTestingResultEntity", "AssessmentId", typeof(System.Int32), true, true, false, false,  (int)AssessmentTestingResultFieldIndex.AssessmentId, 0, 0, 10);
+			this.AddElementFieldInfo("AssessmentTestingResultEntity", "Name", typeof(System.String), true, false, false, false,  (int)AssessmentTestingResultFieldIndex.Name, 50, 0, 0);
+			this.AddElementFieldInfo("AssessmentTestingResultEntity", "Responses", typeof(System.String), false, false, false, true,  (int)AssessmentTestingResultFieldIndex.Responses, 2147483647, 0, 0);
 		}
 		/// <summary>Inits AssessmentTypeEntity's FieldInfo objects</summary>
 		private void InitAssessmentTypeEntityInfos()

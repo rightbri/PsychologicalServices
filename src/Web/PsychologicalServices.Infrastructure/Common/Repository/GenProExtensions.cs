@@ -31,6 +31,24 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static AssessmentTestingResults ToAssessmentTestingResults(this AssessmentEntity assessment, string name)
+        {
+            if (null == assessment)
+            {
+                return null;
+            }
+
+            var testingResults = assessment.AssessmentTestingResults
+                .SingleOrDefault(tr => tr.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            return new AssessmentTestingResults
+                {
+                    Assessment = assessment.ToAssessment(),
+                    Name = testingResults != null ? testingResults.Name : name,
+                    Responses = testingResults != null ? testingResults.Responses : null,
+                };
+        }
+
         public static Models.RawTestData.RawTestData ToRawTestData(this RawTestDataEntity rawTestData)
         {
             return null != rawTestData

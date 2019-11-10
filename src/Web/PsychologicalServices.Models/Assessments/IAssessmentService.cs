@@ -12,11 +12,15 @@ namespace PsychologicalServices.Models.Assessments
 
         AssessmentType GetAssessmentType(int id);
 
+        AssessmentTestingResults GetAssessmentTestingResults(int assessmentId, string name);
+
         IEnumerable<AssessmentSearchResult> SearchAssessments(AssessmentSearchCriteria criteria);
 
         IEnumerable<AssessmentType> GetAssessmentTypes(bool? isActive = true);
 
         SaveResult<Assessment> SaveAssessment(Assessment assessment);
+
+        SaveResult<AssessmentTestingResults> SaveAssessmentTestingResults(AssessmentTestingResults testingResults);
 
         SaveResult<AssessmentType> SaveAssessmentType(AssessmentType assessmentType);
 

@@ -330,6 +330,13 @@
           <Field Name="ReportId" Type="int" IsPrimaryKey="true" IsAutoCreated="true" FieldIndex="0" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="AssessmentTestingResult" ObjectID="51e5fc27-d019-4be7-9f02-6fe88bfecc8f">
+        <Fields>
+          <Field Name="AssessmentId" Type="int" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="Name" Type="string" MaxLength="50" IsPrimaryKey="true" FieldIndex="1" />
+          <Field Name="Responses" Type="string" IsOptional="true" MaxLength="2147483647" FieldIndex="2" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="AssessmentType" ObjectID="968f0a31-e622-4d68-9187-e8443e999bed">
         <Fields>
           <Field Name="AssessmentTypeId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
@@ -1061,6 +1068,11 @@
           <FieldFieldRelationship FkField="IssueInDisputeId" PkField="IssueInDisputeId" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="AssessmentTestingResult.Assessment-Assessment.AssessmentTestingResults" Start=":AssessmentTestingResult" End=":Assessment" StartNavigator="Assessment" EndNavigator="AssessmentTestingResults" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AssessmentId" PkField="AssessmentId" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="AssessmentTypeAttributeType.AssessmentType-AssessmentType.AssessmentTypeAttributeTypes" Start=":AssessmentTypeAttributeType" End=":AssessmentType" StartNavigator="AssessmentType" EndNavigator="AssessmentTypeAttributeTypes" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="AssessmentTypeId" PkField="AssessmentTypeId" />
@@ -1689,7 +1701,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-10-16T00:48:54.620324Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-11-10T18:45:37.4383551Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1906,6 +1918,14 @@
                     <Field Name="IsReassessment" Ordinal="23" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                     <Field Name="PreviouslySeenDate" Ordinal="24" IsOptional="true" DbType="30" />
                     <Field Name="ClaimantId" Ordinal="25" IsOptional="true" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="AssessmentTestingResults">
+                  <PkConstraintName Name="PK_AssessmentTestingResults" />
+                  <Fields>
+                    <Field Name="AssessmentId" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Name" Ordinal="2" IsPrimaryKey="true" DbType="24" Length="50" />
+                    <Field Name="Responses" Ordinal="3" IsOptional="true" DbType="12" Length="2147483647" />
                   </Fields>
                 </Table>
                 <Table Name="AssessmentTypeAttributeTypes">
@@ -2996,6 +3016,11 @@
                 <FieldPair PkField="dbo:Users:UserId" FkField="dbo:Assessments:UpdateUserId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AssessmentTestingResults:FK_AssessmentTestingResults_Assessments">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Assessments:AssessmentId" FkField="dbo:AssessmentTestingResults:AssessmentId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:AssessmentTypeAttributeTypes:FK_AssessmentTypeAttributeTypes_AssessmentTypes">
               <FieldPairs>
                 <FieldPair PkField="dbo:AssessmentTypes:AssessmentTypeId" FkField="dbo:AssessmentTypeAttributeTypes:AssessmentTypeId" />
@@ -3570,6 +3595,13 @@
           <FieldMappings>
             <FieldMapping FieldName="IssueInDisputeId" TargetFieldName="IssueInDisputeId" />
             <FieldMapping FieldName="ReportId" TargetFieldName="ReportId" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":AssessmentTestingResult" TargetName="PsychologicalServices:dbo:AssessmentTestingResults">
+          <FieldMappings>
+            <FieldMapping FieldName="AssessmentId" TargetFieldName="AssessmentId" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="Responses" TargetFieldName="Responses" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":AssessmentType" TargetName="PsychologicalServices:dbo:AssessmentTypes">

@@ -718,6 +718,26 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AssessmentTestingResultEntity</summary>
+	public partial class AssessmentTestingResultFields
+	{
+		/// <summary>Creates a new AssessmentTestingResultEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTestingResultFieldIndex.AssessmentId);}
+		}
+		/// <summary>Creates a new AssessmentTestingResultEntity.Name field instance</summary>
+		public static EntityField2 Name
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTestingResultFieldIndex.Name);}
+		}
+		/// <summary>Creates a new AssessmentTestingResultEntity.Responses field instance</summary>
+		public static EntityField2 Responses
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AssessmentTestingResultFieldIndex.Responses);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AssessmentTypeEntity</summary>
 	public partial class AssessmentTypeFields
 	{

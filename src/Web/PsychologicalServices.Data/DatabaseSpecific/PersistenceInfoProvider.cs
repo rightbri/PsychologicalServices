@@ -65,6 +65,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAssessmentNoteEntityMappings();
 			InitAssessmentReportEntityMappings();
 			InitAssessmentReportIssueInDisputeEntityMappings();
+			InitAssessmentTestingResultEntityMappings();
 			InitAssessmentTypeEntityMappings();
 			InitAssessmentTypeAttributeTypeEntityMappings();
 			InitAssessmentTypeInvoiceAmountEntityMappings();
@@ -355,6 +356,15 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementMapping("AssessmentReportIssueInDisputeEntity", @"PsychologicalServices", @"dbo", "AssessmentReportIssuesInDispute", 2, 0);
 			this.AddElementFieldMapping("AssessmentReportIssueInDisputeEntity", "ReportId", "ReportId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("AssessmentReportIssueInDisputeEntity", "IssueInDisputeId", "IssueInDisputeId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+		}
+
+		/// <summary>Inits AssessmentTestingResultEntity's mappings</summary>
+		private void InitAssessmentTestingResultEntityMappings()
+		{
+			this.AddElementMapping("AssessmentTestingResultEntity", @"PsychologicalServices", @"dbo", "AssessmentTestingResults", 3, 0);
+			this.AddElementFieldMapping("AssessmentTestingResultEntity", "AssessmentId", "AssessmentId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("AssessmentTestingResultEntity", "Name", "Name", false, "VarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
+			this.AddElementFieldMapping("AssessmentTestingResultEntity", "Responses", "Responses", true, "NVarChar", 2147483647, 0, 0, false, "", null, typeof(System.String), 2);
 		}
 
 		/// <summary>Inits AssessmentTypeEntity's mappings</summary>

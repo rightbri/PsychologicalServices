@@ -48,6 +48,13 @@ namespace PsychologicalServices.Models.Assessments
             return assessmentType;
         }
 
+        public AssessmentTestingResults GetAssessmentTestingResults(int assessmentId, string name)
+        {
+            var testingResults = _assessmentRepository.GetAssessmentTestingResults(assessmentId, name);
+
+            return testingResults;
+        }
+
         public IEnumerable<AssessmentSearchResult> SearchAssessments(AssessmentSearchCriteria criteria)
         {
             var assessments = _assessmentRepository.SearchAssessments(criteria);
@@ -83,6 +90,27 @@ namespace PsychologicalServices.Models.Assessments
             catch (Exception ex)
             {
                 _log.Error("SaveAssessment", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
+
+        public SaveResult<AssessmentTestingResults> SaveAssessmentTestingResults(AssessmentTestingResults testingResults)
+        {
+            var result = new SaveResult<AssessmentTestingResults>();
+
+            try
+            {
+                var isSaved = _assessmentRepository.SaveAssessmentTestingResults(testingResults);
+
+                result.Item = _assessmentRepository.GetAssessmentTestingResults(testingResults.Assessment.AssessmentId, testingResults.Name);
+                result.IsSaved = isSaved;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("SaveAssessmentTestingResults", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

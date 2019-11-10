@@ -219,6 +219,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<AssessmentReportIssueInDisputeEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the AssessmentTestingResult entity</summary>
+		public EntityQuery<AssessmentTestingResultEntity> AssessmentTestingResult
+		{
+			get { return Create<AssessmentTestingResultEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the AssessmentType entity</summary>
 		public EntityQuery<AssessmentTypeEntity> AssessmentType
 		{

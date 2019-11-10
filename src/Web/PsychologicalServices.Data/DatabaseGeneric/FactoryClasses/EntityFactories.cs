@@ -478,6 +478,27 @@ namespace PsychologicalServices.Data.FactoryClasses
 		#endregion
 	}
 
+	/// <summary>Factory to create new, empty AssessmentTestingResultEntity objects.</summary>
+	[Serializable]
+	public partial class AssessmentTestingResultEntityFactory : EntityFactoryBase2<AssessmentTestingResultEntity> {
+		/// <summary>CTor</summary>
+		public AssessmentTestingResultEntityFactory() : base("AssessmentTestingResultEntity", PsychologicalServices.Data.EntityType.AssessmentTestingResultEntity, false) { }
+		
+		/// <summary>Creates a new AssessmentTestingResultEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AssessmentTestingResultEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTestingResultUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
 	/// <summary>Factory to create new, empty AssessmentTypeEntity objects.</summary>
 	[Serializable]
 	public partial class AssessmentTypeEntityFactory : EntityFactoryBase2<AssessmentTypeEntity> {
@@ -1626,6 +1647,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentReportIssueInDisputeEntity:
 					factoryToUse = new AssessmentReportIssueInDisputeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AssessmentTestingResultEntity:
+					factoryToUse = new AssessmentTestingResultEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.AssessmentTypeEntity:
 					factoryToUse = new AssessmentTypeEntityFactory();
