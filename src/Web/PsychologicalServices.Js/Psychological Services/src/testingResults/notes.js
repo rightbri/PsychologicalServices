@@ -190,7 +190,25 @@ export class Notes {
                 },
                 "currentState": {
                     "spendTime": null,
-                    "selfCare": [],
+                    "personalCare": { "ability": null, "issues": [] },
+                    "bathing": { "ability": null, "issues": [] },
+                    "grooming": { "ability": null, "issues": [] },
+                    "haircare": { "ability": null, "issues": [] },
+                    "indoorChores": { "ability": null, "issues": [] },
+                    "outdoorChores": { "ability": null, "issues": [] },
+                    "caregiving": { "ability": null, "issues": [] },
+                    "banking": { "ability": null, "issues": [] },
+                    "alone": {
+                        "ability": null,
+                        "issues": [""],
+                        "inContactFrequently": null,
+                        "contactFrequency": null
+                    },
+                    "travel": {
+                        "before": null,
+                        "current": null,
+                        "taxi": null
+                    },
                     "preAccidentRecreationalActivities": [
                         "",
                         "",
@@ -217,6 +235,7 @@ export class Notes {
         this.currentStateAbilities = [];
         this.currentStateIssues = [];
         this.leisureParticipationRates = [];
+        this.travelAbilities = [];
 
         this.getItemValueForCurrentContext = function(item) {
             return this.getItemValueForContext(item, this);
@@ -255,7 +274,8 @@ export class Notes {
                     this.getCurrentStateAbilities().then(data => this.currentStateAbilities = data),
                     this.getCurrentStateIssues().then(data => this.currentStateIssues = data),
                     this.getSelfCareTasks().then(data => this.responses.neuropsychological.currentState.selfCare = data),
-                    this.getLeisureParticipationRates().then(data => this.leisureParticipationRates = data)
+                    this.getLeisureParticipationRates().then(data => this.leisureParticipationRates = data),
+                    this.getTravelAbilities().then(data => this.travelAbilities = data)
                 ]);
             });
     }
@@ -486,7 +506,19 @@ export class Notes {
         let data = [
             { "description": "Unable", "value": "unable", "isUnable": true },
             { "description": "Partial", "value": "partially able", "isPartiallyAble": true },
-            { "description": "Able", "value": "able", "isAble": true }
+            { "description": "Able", "value": "able", "isAble": true },
+            { "description": "Skip", "value": null }
+        ];
+
+        return getPromise(data);
+    }
+
+    getTravelAbilities() {
+        let data = [
+            { "description": "Unable", "value": "unable", "isUnable": true },
+            { "description": "Partial", "value": "only partially able", "isPartiallyAble": true },
+            { "description": "Able", "value": "able", "isAble": true },
+            { "description": "Skip", "value": null }
         ];
 
         return getPromise(data);
@@ -514,64 +546,8 @@ export class Notes {
         return getPromise(data);
     }
 
-    memoryVisualWhereaboutsObjectsChanged() {
-        this.signaler.signal('memory-visual-whereabouts-objects-changed');
-    }
-
-    memoryAidsUsedChanged() {
-        this.signaler.signal('memory-aids-used-changed');
-    }
-
-    languageIssuesChanged() {
-        this.signaler.signal('language-issues-changed');
-    }
-
-    readingIssuesChanged() {
-        this.signaler.signal('reading-issues-changed');
-    }
-
-    visualSpatialIssueChanged() {
-        this.signaler.signal('visual-spatial-issue-changed');
-    }
-
-    executiveFunctionIssueChanged() {
-        this.signaler.signal('executive-function-issue-changed');
-    }
-
-    inappropriateSocialBehaviorChanged() {
-        this.signaler.signal('inappropriate-social-behavior-changed');
-    }
-
-    weightChangeAmountChanged() {
-        this.signaler.signal('weight-change-amount-changed');
-    }
-
-    emotionalIssueChanged() {
-        this.signaler.signal('emotional-issues-changed');
-    }
-
-    depressionSymptomChanged() {
-        this.signaler.signal('depression-symptom-changed');
-    }
-
-    worryChanged() {
-        this.signaler.signal('worry-changed');
-    }
-
-    hallucinationsChanged() {
-        this.signaler.signal('hallucinations-changed');
-    }
-
-    travelChanged() {
-        this.signaler.signal('travel-changed');
-    }
-
-    currentStateSelfCareChanged() {
-        this.signaler.signal('current-state-self-care-changed');
-    }
-
-    preAccidentRecreationalActivitiesChanged() {
-        this.signaler.signal('pre-accident-recreational-activities-changed');
+    changed(signalName) {
+        this.signaler.signal(signalName);
     }
 
     @computedFrom(
@@ -1072,22 +1048,48 @@ export class Notes {
         return data;
     }
 
+    any(items) {
+        let any = items && items.some(item => item);
+
+        return any;
+    }
+
     @computedFrom(
-        'responses.neuropsychological.currentState.selfCare'
+        'responses.neuropsychological.currentState.alone.issues'
     )
-    get personalCareTasks() {
-        let data = [
-            this.responses.neuropsychological.currentState.selfCare
-        ];
+    get aloneIssues() {
+        let aloneAbilityProblem =
+            this.responses.neuropsychological.currentState.alone.ability &&
+            (this.responses.neuropsychological.currentState.alone.ability.isUnable ||
+            this.responses.neuropsychological.currentState.alone.ability.isPartiallyAble);
+
+        let data = this.responses.neuropsychological.currentState.alone.issues.filter(item => aloneAbilityProblem);
 
         return data;
     }
 
     @computedFrom(
-        'responses.neuropsychological.currentState.selfCare'
+        'responses.neuropsychological.currentState.alone.issues'
     )
-    get anyPersonalCareTasks() {
-        let any = this.personalCareTasks.some(item => item);
+    get anyAloneIssues() {
+        let any = this.aloneIssues.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.neuropsychological.currentState.travel.before',
+        'responses.neuropsychological.currentState.travel.current',
+        'responses.neuropsychological.currentState.travel.taxi'
+    )
+    get anyCurrentStateTravelAbility() {
+        let data = [
+            this.responses.neuropsychological.currentState.travel.before,
+            this.responses.neuropsychological.currentState.travel.current,
+            this.responses.neuropsychological.currentState.travel.taxi
+        ];
+
+        let any = data.some(item => item && item.value);
 
         return any;
     }
@@ -1099,6 +1101,10 @@ export class Notes {
         let any = this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.some(item => item && item.length > 0);
 
         return any;
+    }
+
+    addAloneIssue() {
+        this.responses.neuropsychological.currentState.alone.issues.push("");
     }
 
     addPreAccidentRecreationalActivity() {
