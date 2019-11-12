@@ -236,16 +236,21 @@
                     <hr>
                 </template>
 
-
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-5" if.bind="worriesAboutFinances & signal:'worry-changed'">
                     Amount of debt
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-5">
-                    <input type="text" name="amountOfDebt" class="uk-input uk-form-small" value.bind="responses.psychological.amountOfDebt" />
+                <div class="uk-margin-remove uk-width-1-5" if.bind="worriesAboutFinances & signal:'worry-changed'">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.psychological.dontKnowAmountOfDebt" value.bind="true" />&nbsp;Don't know&nbsp;
+                    </label>
                 </div>
 
-                <hr>
+                <div class="uk-margin-remove uk-width-1-5" if.bind="worriesAboutFinances & signal:'worry-changed'">
+                    <input type="text" name="amountOfDebt" class="uk-input uk-form-small" value.bind="responses.psychological.amountOfDebt" disabled.bind="responses.psychological.dontKnowAmountOfDebt" />
+                </div>
+
+                <hr if.bind="worriesAboutFinances & signal:'worry-changed'">
 
                 <div class="uk-margin-remove uk-width-4-5">
                     Do you currently experience panic attacks?
@@ -1250,22 +1255,34 @@
 
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-5">
                     How many hours of sleep were you obtaining before the accident?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
-                    <input type="number" min="0" max="24" name="hoursOfSleepBeforeAccident" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident" />
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.sleep.skipHoursOfSleepBeforeAccident" value.bind="true" />&nbsp;Skip&nbsp;
+                    </label>
+                </div>
+                
+                <div class="uk-margin-remove uk-width-1-5">
+                    <input type="number" min="0" max="24" name="hoursOfSleepBeforeAccident" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident" disabled.bind="responses.neuropsychological.physical.sleep.skipHoursOfSleepBeforeAccident" />
                 </div>
 
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-5">
                     How many hours of sleep are you currently obtaining?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
-                    <input type="number" min="0" max="24" name="hoursOfSleepCurrent" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.sleep.hoursOfSleepCurrent" />
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.sleep.skipHoursOfSleepCurrent" value.bind="true" />&nbsp;Skip&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-5">
+                    <input type="number" min="0" max="24" name="hoursOfSleepCurrent" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.sleep.hoursOfSleepCurrent" disabled.bind="responses.neuropsychological.physical.sleep.skipHoursOfSleepCurrent" />
                 </div>
 
                 <hr>
@@ -1922,7 +1939,7 @@
             </template>
             <template if.bind="anyNoDepressionSymptoms & signal:'depression-symptom-changed'">
                 <br>
-                <template if.bind="!anyYesDepressionSymptoms">
+                <template if.bind="!anyYesDepressionSymptoms & signal:'depression-symptom-changed'">
                     ${gender.title} ${claimant.lastName} reported 
                 </template>
                 <template else>
@@ -1933,7 +1950,7 @@
             </template>
             <template if.bind="anyDontKnowDepressionSymptoms & signal:'depression-symptom-changed'">
                 <br>
-                <template if.bind="!(anyYesDepressionSymptoms || anyNoDepressionSymptoms)">
+                <template if.bind="!(anyYesDepressionSymptoms || anyNoDepressionSymptoms) & signal:'depression-symptom-changed'">
                     ${gender.title} ${claimant.lastName} reported 
                 </template>
                 <template else>
@@ -2030,12 +2047,20 @@
             </template>
         </template>
 
-        <template if.bind="responses.psychological.amountOfDebt">
-            <br>
-            ${pronoun.subject | proper} disclosed that ${pronoun.subject} has a current debt of ${responses.psychological.amountOfDebt}.
+        <template if.bind="worriesAboutFinances & signal:'worry-changed'">
+            <template if.bind="responses.psychological.dontKnowAmountOfDebt">
+                <br>
+                ${pronoun.subject | proper} added that ${pronoun.subject} does not know the amount of debt ${pronoun.subject} currently has.
+            </template>
+            <template else>
+                <template if.bind="responses.psychological.amountOfDebt">
+                    <br>
+                    ${pronoun.subject | proper} added that ${pronoun.subject} has a current debt of ${responses.psychological.amountOfDebt}.
+                </template>
+            </template>
         </template>
 
-        <template if.bind="responses.psychological.panicAttacksCurrent.value">
+        <template if.bind="responses.psychological.panicAttacksCurrent.value !== null">
             <br>
             ${gender.title} ${claimant.lastName} reported that since the accident ${pronoun.subject} has 
             <template if.bind="responses.psychological.panicAttacksCurrent.isNo">
@@ -2044,7 +2069,7 @@
             &nbsp;experienced panic attacks.
         </template>
 
-        <template if.bind="responses.psychological.panicAttacksPrior.value">
+        <template if.bind="responses.psychological.panicAttacksPrior.value !== null">
             <br>
             ${pronoun.subject | proper} 
             <template if.bind="responses.psychological.panicAttacksPrior.isYes">
@@ -2056,7 +2081,7 @@
             &nbsp;pre-accident history of panic attacks.
         </template>
         
-        <template if.bind="responses.psychological.heightenedStartleResponse.value">
+        <template if.bind="responses.psychological.heightenedStartleResponse.value !== null">
             <br>
             ${pronoun.subject | proper} further expressed that ${pronoun.subject} 
             <template if.bind="responses.psychological.heightenedStartleResponse.isYes">
@@ -2068,7 +2093,7 @@
             &nbsp;a heightened startle response.
         </template>
         
-        <template if.bind="responses.psychological.flashbacksAfter.value">
+        <template if.bind="responses.psychological.flashbacksAfter.value !== null">
             <br>
             ${gender.title} ${claimant.lastName} 
             <template if.bind="responses.psychological.flashbacksAfter.isYes">
@@ -2079,7 +2104,7 @@
             </template>
         </template>
 
-        <template if.bind="responses.psychological.flashbacksCurrent.value">
+        <template if.bind="responses.psychological.flashbacksCurrent.value !== null">
             <br>
             <template if.bind="responses.psychological.flashbacksCurrent.isYes">
                 ${pronoun.subject | proper} then noted that ${pronoun.subject} continues to experience flashbacks.
@@ -2089,7 +2114,7 @@
             </template>
         </template>
 
-        <template if.bind="responses.psychological.nightmaresAfter.value">
+        <template if.bind="responses.psychological.nightmaresAfter.value !== null">
             <br>
             <template if.bind="responses.psychological.nightmaresAfter.isYes">
                 When asked about any nightmares, ${gender.title} ${claimant.lastName} indicated that after the accident ${pronoun.subject} experienced the same.
@@ -2099,7 +2124,7 @@
             </template>
         </template>
 
-        <template if.bind="responses.psychological.nightmaresCurrent.value">
+        <template if.bind="responses.psychological.nightmaresCurrent.value !== null">
             <br>
             <template if.bind="responses.psychological.nightmaresCurrent.isYes">
                 ${pronoun.subject | proper} then added that ${pronoun.subject} still experiences nightmares. 
@@ -2125,7 +2150,7 @@
                 </template>
                 <br>
                 ${pronoun.subject | proper} stated that ${pronoun.subject} experiences 
-                <template if.bind="anyHallucinationCharacteristics">
+                <template if.bind="anyHallucinationCharacteristics & signal:'hallucinations-changed'">
                     &nbsp;${hallucinationCharacteristics | arrayToString:{"format":getItemValueForCurrentContext} & signal:'hallucinations-changed'} 
                 </template>
                 &nbsp;hallucinations.
@@ -2339,15 +2364,15 @@
         </template>
 
         <!-- Language -->
-        <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues">
+        <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issues-changed'">
             <br>
             When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
-            <template if.bind="anySelectedLanguageIssues">
+            <template if.bind="anySelectedLanguageIssues & signal:'language-issues-changed'">
                 &nbsp;reported that at the present time ${pronoun.subject} experiences: 
-                &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentPronoun,"delmiter":"; ","lastConnector":false} & signal:'language-issues-changed'}.
+                &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentPronoun,"delimiter":"; ","lastConnector":false} & signal:'language-issues-changed'}.
             </template>
-            <template if.bind="anyUnselectedLanguageIssues">
-                <template if.bind="anySelectedLanguageIssues">
+            <template if.bind="anyUnselectedLanguageIssues & signal:'language-issues-changed'">
+                <template if.bind="anySelectedLanguageIssues & signal:'language-issues-changed'">
                     &nbsp;${pronoun.subject | proper} 
                 </template>
                 &nbsp;specifically denied any of the following: 
@@ -2401,9 +2426,12 @@
         <template if.bind="responses.neuropsychological.attention.needToReRead.value !== null">
             <br>
             <template if.bind="responses.neuropsychological.attention.needToReRead.value">
-                ${pronoun.subject | proper} went on to express that ${pronoun.subject} may need to go back and re-read, 
-                noting that currently ${pronoun.possessiveAdjective} ability to read is affected by ${pronoun.possessiveAdjective}: 
-                ${responses.neuropsychological.attention.readingIssues | arrayToString:{"format":getItemValue} & signal:'reading-issues-changed'}. 
+                ${pronoun.subject | proper} went on to express that ${pronoun.subject} may need to go back and re-read
+                <template if.bind="any(responses.neuropsychological.attention.readingIssues) & signal:'reading-issues-changed'">
+                    , noting that currently ${pronoun.possessiveAdjective} ability to read is affected by ${pronoun.possessiveAdjective}: 
+                    ${responses.neuropsychological.attention.readingIssues | arrayToString:{"format":getItemValue} & signal:'reading-issues-changed'}
+                </template>
+                .
             </template>
             <template else>
                 ${pronoun.subject | proper} denied needing to go back and re-read.
@@ -2422,14 +2450,14 @@
         </template>
         
         <!-- Executive -->
-        <template if.bind="anySelectedExecutiveFunctionIssues || anyUnselectedExecutiveFunctionIssues">
+        <template if.bind="anySelectedExecutiveFunctionIssues || anyUnselectedExecutiveFunctionIssues & signal:'executive-function-issue-changed'">
             <br>
             ${gender.title} ${claimant.lastName} noted that ${pronoun.possessiveAdjective} executive functioning has 
-            <template if.bind="anySelectedExecutiveFunctionIssues">
+            <template if.bind="anySelectedExecutiveFunctionIssues & signal:'executive-function-issue-changed'">
                 &nbsp;been adversely affected, including ${pronoun.possessiveAdjective} ability to: 
                 ${selectedExecutiveFunctionIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'executive-function-issue-changed'}.
     
-                <template if.bind="anyUnselectedExecutiveFunctionIssues">
+                <template if.bind="anyUnselectedExecutiveFunctionIssues & signal:'executive-function-issue-changed'">
                     &nbsp;${pronoun.subject | proper} denied having any issues with ${pronoun.possessiveAdjective} ability to: 
                     ${unselectedExecutiveFunctionIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'executive-function-issue-changed'}.
                 </template>
@@ -2453,23 +2481,23 @@
         </template>
         
         <!-- Visual Spatial -->
-        <template if.bind="anySelectedVisualSpatialIssues || anyUnselectedVisualSpatialIssues">
+        <template if.bind="anySelectedVisualSpatialIssues || anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
             <br>
-            <template if.bind="anySelectedVisualSpatialIssues">
+            <template if.bind="anySelectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
                 When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has experienced:
                 ${selectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}. 
-                <template if.bind="anyUnselectedVisualSpatialIssues">
+                <template if.bind="anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
                     &nbsp;Upon inquiry, ${pronoun.subject} denied 
-                    <template if.bind="!anySelectedAtypicalSymptomology">
-                        having any atypical symptomatology or
+                    <template if.bind="!anySelectedAtypicalSymptomology & signal:'visual-spatial-issue-changed'">
+                        &nbsp;having any atypical symptomatology or
                     </template>
                     &nbsp;experiencing any 
-                    &nbsp;${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}.
+                    ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun,"connector":"or"} & signal:'visual-spatial-issue-changed'}.
                 </template>
             </template>
             <template else>
                 When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} denied having any atypical symptomatology or experiencing any 
-                ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun} & signal:'visual-spatial-issue-changed'}.
+                ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentPronoun,"connector":"or"} & signal:'visual-spatial-issue-changed'}.
             </template>
         </template>
         
@@ -2540,11 +2568,23 @@
             &nbsp;issues sleeping.
         </template>
         
-        <template if.bind="responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident.value !== null">
-            <br>
-            ${pronoun.subject | proper} disclosed that prior to the accident 
-            ${pronoun.subject} was obtaining ${responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident} hours of sleep and 
-            advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.hoursOfSleepCurrent} hours of sleep.
+        <template if.bind="responses.neuropsychological.physical.sleep.skipHoursOfSleepBeforeAccident">
+            <template if.bind="!responses.neuropsychological.physical.sleep.skipHoursOfSleepCurrent">
+                <br>
+                ${pronoun.subject | proper} advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.hoursOfSleepCurrent} hours of sleep.
+            </template>
+        </template>
+        <template else>
+            <template if.bind="responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident.value !== null">
+                <br>
+                ${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining ${responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident} hours of sleep
+                <template if.bind="!responses.neuropsychological.physical.sleep.skipHoursOfSleepCurrent">
+                    <template if.bind="responses.neuropsychological.physical.sleep.hoursOfSleepCurrent.value !== null">
+                        &nbsp;and advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.hoursOfSleepCurrent} hours of sleep
+                    </template>
+                </template>
+                .
+            </template>
         </template>
         
         <template if.bind="responses.neuropsychological.physical.sleep.brokenSleep.value !== null">

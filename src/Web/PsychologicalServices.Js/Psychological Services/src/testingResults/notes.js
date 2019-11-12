@@ -34,6 +34,7 @@ export class Notes {
                     "fearOfWorst": null
                 },
                 "worry": [],
+                "dontKnowAmountOfDebt": false,
                 "amountOfDebt": null,
                 "panicAttacksCurrent": null,
                 "panicAttacksPrior": null,
@@ -164,7 +165,9 @@ export class Notes {
                     "sleep": {
                         "sleepAffected": null,
                         "problemsSleepingPriorToAccident": null,
+                        "skipHoursOfSleepBeforeAccident": false,
                         "hoursOfSleepBeforeAccident": null,
+                        "skipHoursOfSleepCurrent": false,
                         "hoursOfSleepCurrent": null,
                         "brokenSleep": null,
                         "fatiguedWhenWaking": null,
@@ -464,7 +467,7 @@ export class Notes {
         let data = [
             { "description": "Future", "response": null, "value": function(context) { return `future`; } },
             { "description": "Recovery", "response": null, "value": function(context) { return `recovery`; } },
-            { "description": "Finances", "response": null, "value": function(context) { return `finances`; } }
+            { "description": "Finances", "response": null, "value": function(context) { return `finances`; }, "isFinances": true }
         ];
 
         return getPromise(data);
@@ -719,6 +722,15 @@ export class Notes {
         let any = this.noWorries.some(item => item);
 
         return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.worry'
+    )
+    get worriesAboutFinances() {
+        let worry = this.yesWorries.some(item => item.isFinances);
+
+        return worry;
     }
 
     @computedFrom(
