@@ -15,6 +15,72 @@ export class Notes {
         this.gender = null;
         
         this.responses = {
+            "personalHistory": {
+                "locationOfBirth": null,
+                "timeOfArrivalInCanada": null,
+                "languages": [""],
+                "growingUp": {
+                    "abuse": {
+                        "physical": null,
+                        "sexual": null,
+                        "mental": null
+                    },
+                    "developmentalMilestoneIssues": null,
+                    "socioeconomicClass": null
+                },
+                "father": {
+                    "yearOfBirth": null,
+                    "isAlive": null,
+                    "causeOfDeath": null,
+                    "yearOfDeath": null,
+                    "educationLevel": null,
+                    "employmentAreas": null
+                },
+                "mother": {
+                    "yearOfBirth": null,
+                    "isAlive": null,
+                    "causeOfDeath": null,
+                    "yearOfDeath": null,
+                    "educationLevel": null,
+                    "employmentAreas": null
+                },
+                "didParentsSeparateOrDivorce": null,
+                "brothers": {
+                    "howMany": 0,
+                    "ages": []
+                },
+                "sisters": {
+                    "howMany": 0,
+                    "ages": []
+                },
+                "birthPosition": null,
+                "familyHistoryOfNeurologicalOrPsychiatricDisease": null,
+                "relationship": {
+                    "status": null,
+                    "marriageLength": { "value": null, "unit": null },
+                    "partnerAge": null,
+                    "partnerJobTitle": null,
+                    "isAbusive": null,
+                    "previousRelationshipAbusive": null,
+                    "hadPriorSeriousRelationship": null,
+                    "priorSeriousRelationshipLength": { "value": null, "unit": null },
+                    "priorSeriousRelationshipReasonEnded": null
+                },
+                "children": {
+                    "sons": {
+                        "howMany": 0,
+                        "ages": []
+                    },
+                    "daughters": {
+                        "howMany": 0,
+                        "ages": []
+                    },
+                    "howManyLiveWithYou": null
+                },
+                "isFamilySupportive": null,
+                "relationshipDisruptionDueToPsychProblems": null,
+                "extentOfDisruption": null
+            },
             "psychological": {
                 "emotional": [],
                 "selfHarm": {
@@ -227,6 +293,10 @@ export class Notes {
         this.yesNo = [];
         this.yesNoDontKnow = [];
         this.genders = [];
+        this.socioeconomicStatuses = [];
+        this.relationshipStatuses = [];
+        this.relationshipDisruptionFrequencies = [];
+        this.ageUnits = [];
         this.whereaboutsObjects = [];
         this.memoryAids = [];
         this.readingIssues = [];
@@ -263,6 +333,10 @@ export class Notes {
                     this.getYesNo().then(data => this.yesNo = data),
                     this.getYesNoDontKnow().then(data => this.yesNoDontKnow = data),
                     this.getGenders().then(data => this.genders = data),
+                    this.getSocioeconomicStatuses().then(data => this.socioeconomicStatuses = data),
+                    this.getRelationshipStatuses().then(data => this.relationshipStatuses = data),
+                    this.getRelationshipDisruptionFrequencies().then(data => this.relationshipDisruptionFrequencies = data),
+                    this.getAgeUnits().then(data => this.ageUnits = data),
                     this.getWhereaboutsObjects().then(data => this.whereaboutsObjects = data),
                     this.getMemoryAids().then(data => this.memoryAids = data),
                     this.getReadingIssues().then(data => this.readingIssues = data),
@@ -345,6 +419,51 @@ export class Notes {
         let data = [
             { "abbreviation": "M", "description": "Male", "title": "Mr." },
             { "abbreviation": "F", "description": "Female", "title": "Ms." }
+        ];
+
+        return getPromise(data);
+    }
+
+    getSocioeconomicStatuses() {
+        let data = [
+            { "description": "Poor", "value": function(context) { return `a household that ${context.pronoun.subject} would describe as being poor`; } },
+            { "description": "Lower Class", "value": function(context) { return `a lower-class socioeconomic household`; } },
+            { "description": "Middle Class", "value": function(context) { return `a middle-class socioeconomic household`; } },
+            { "description": "Upper Class", "value": function(context) { return `an upper-class socioeconomic household`; } },
+            { "description": "Rich", "value": function(context) { return `a household that ${context.pronoun.subject} would describe as being rich`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getRelationshipStatuses() {
+        let data = [
+            { "description": "Single", "value": function(context) { return `single`; } },
+            { "description": "Married", "value": function(context) { return `married`; }, "isMarried": true },
+            { "description": "Common Law", "value": function(context) { return `in a common law relationship`; }, "isCommonLaw": true },
+            { "description": "Separated", "value": function(context) { return `separated`; } },
+            { "description": "Divorced", "value": function(context) { return `divorced`; } },
+            { "description": "a Widow", "value": function(context) { return `a widow`; } },
+            { "description": "a Widower", "value": function(context) { return `a widower`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getRelationshipDisruptionFrequencies() {
+        let data = [
+            { "description": "Occasional (less than weekly)", "value": function(context) { return `occasionally`; } },
+            { "description": "Frequent (once a week or more but not tolerable)", "value": function(context) { return `frequently`; } },
+            { "description": "Constant(daily and intolerable)", "value": function(context) { return `constantly`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getAgeUnits() {
+        let data = [
+            { "description": "Years", "value": function(context) { return `years`; } },
+            { "description": "Months", "value": function(context) { return `months`; } }
         ];
 
         return getPromise(data);
@@ -551,6 +670,43 @@ export class Notes {
 
     changed(signalName) {
         this.signaler.signal(signalName);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.brothers.howMany',
+        'responses.personalHistory.sisters.howMany'
+    )
+    get siblingCount() {
+        return (
+            this.responses.personalHistory.brothers.howMany !== null
+                ? parseInt(this.responses.personalHistory.brothers.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.sisters.howMany !== null
+                ? parseInt(this.responses.personalHistory.sisters.howMany, 10)
+                : 0);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.children.sons.howMany',
+        'responses.personalHistory.children.daughters.howMany'
+    )
+    get childCount() {
+        return (
+            this.responses.personalHistory.children.sons.howMany !== null
+                ? parseInt(this.responses.personalHistory.children.sons.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.children.daughters.howMany !== null
+                ? parseInt(this.responses.personalHistory.children.daughters.howMany, 10)
+                : 0);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.relationship.status'
+    )
+    get isMarriedOrCommonLaw() {
+        let status = this.responses.personalHistory.relationship.status;
+
+        return status && (status.isMarried || status.isCommonLaw);
     }
 
     @computedFrom(
@@ -1115,6 +1271,42 @@ export class Notes {
         return any;
     }
 
+    addLanguage() {
+        this.responses.personalHistory.languages.push("");
+    }
+
+    siblingCountChanged(siblingCount, siblingAges) {
+        if (siblingCount > siblingAges.length) {
+            let toAdd = siblingCount - siblingAges.length;
+            for (let i = 0; i < toAdd; i++) {
+                siblingAges.push({ "value": null, "unit": null });
+            }
+
+            this.changed('sibling-count-changed');
+        }
+        else if (siblingCount < siblingAges.length) {
+            siblingAges.splice(siblingCount, siblingAges.length - siblingCount);
+
+            this.changed('sibling-count-changed');
+        }
+    }
+
+    childrenCountChanged(childCount, childAges) {
+        if (childCount > childAges.length) {
+            let toAdd = childCount - childAges.length;
+            for (let i = 0; i < toAdd; i++) {
+                childAges.push({ "value": null, "unit": null });
+            }
+
+            this.changed('child-count-changed');
+        }
+        else if (childCount < childAges.length) {
+            childAges.splice(childCount, childAges.length - childCount);
+
+            this.changed('child-count-changed');
+        }
+    }
+    
     addAloneIssue() {
         this.responses.neuropsychological.currentState.alone.issues.push("");
     }
@@ -1133,6 +1325,10 @@ export class Notes {
 
     getItemValue(item) {
         return item.value;
+    }
+
+    getItemDescription(item) {
+        return item.description;
     }
 }
 

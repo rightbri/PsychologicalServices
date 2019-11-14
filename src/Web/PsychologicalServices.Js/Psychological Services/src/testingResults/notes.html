@@ -24,6 +24,524 @@
             </div>
 
             <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <legend class="uk-legend">Personal History</legend>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Where were you born?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.locationOfBirth" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    If applicable, when did you come to Canada?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    What is your first language?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <button class="uk-button uk-button-default uk-button-small" type="button" click.delegate="addLanguage()">
+                        Add
+                    </button>
+                </div>
+
+                <div class="uk-margin-remove-vertical uk-margin-small-right uk-width-1-4" repeat.for="i of responses.personalHistory.languages.length">
+                    <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.personalHistory.languages[i]" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you the victim of any physical abuse when growing up?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="physicalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.physical" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you the victim of any sexual abuse when growing up?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="sexualAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.sexual" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you the victim of any mental abuse when growing up?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="mentalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.mental" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Are you aware of any issues hitting developmental milestones?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="developmentalMilestoneIssues" class="uk-radio" checked.bind="responses.personalHistory.growingUp.developmentalMilestoneIssues" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you raised in a ${socioeconomicStatuses | arrayToString:{"format":getItemDescription,"connector":"or"}} household?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of socioeconomicStatuses">
+                        <input type="radio" name="socioeconomicStatus" class="uk-radio" checked.bind="responses.personalHistory.growingUp.socioeconomicClass" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+            </fieldset>
+
+            <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <legend class="uk-legend">Information about your family</legend>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    About your father:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was your father’s year of birth?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfBirth" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Is your father alive?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="fatherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.father.isAlive" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.father.isAlive.isNo">
+                    If not, what was the cause of his death?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.father.isAlive.isNo">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.causeOfDeath" />
+                </div>
+
+                <hr if.bind="responses.personalHistory.father.isAlive.isNo">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.father.isAlive.isNo">
+                    What year did he die?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.father.isAlive.isNo">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfDeath" />
+                </div>
+
+                <hr if.bind="responses.personalHistory.father.isAlive.isNo">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was his education level?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.educationLevel" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What type of employment areas has he worked in?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.employmentAreas" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    About your mother:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was your mother's year of birth?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfBirth" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Is your mother alive?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="motherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.mother.isAlive" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.mother.isAlive.isNo">
+                    If not, what was the cause of her death?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.mother.isAlive.isNo">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath" />
+                </div>
+
+                <hr if.bind="responses.personalHistory.mother.isAlive.isNo">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.mother.isAlive.isNo">
+                    What year did she die?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.mother.isAlive.isNo">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath" />
+                </div>
+
+                <hr if.bind="responses.personalHistory.mother.isAlive.isNo">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was her education level?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.educationLevel" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What type of employment areas has she worked in?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.employmentAreas" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Did your parents separate or divorce?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="didParentsSeparateOrDivorce" class="uk-radio" checked.bind="responses.personalHistory.didParentsSeparateOrDivorce" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Siblings:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many brothers do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.brothers.howMany" input.delegate="siblingCountChanged(responses.personalHistory.brothers.howMany, responses.personalHistory.brothers.ages)" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.brothers.howMany">
+                    What are their ages?
+                </div>
+
+                <div class="uk-margin-remove-vertical uk-margin-small-right uk-width-1-4" repeat.for="i of responses.personalHistory.brothers.ages.length" if.bind="responses.personalHistory.brothers.howMany">
+                    <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.brothers.ages[i].value" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="brother-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.brothers.ages[i].unit" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.personalHistory.brothers.howMany">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many sisters do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.sisters.howMany" input.delegate="siblingCountChanged(responses.personalHistory.sisters.howMany, responses.personalHistory.sisters.ages)" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.sisters.howMany">
+                    What are their ages?
+                </div>
+
+                <div class="uk-margin-remove-vertical uk-margin-small-right uk-width-1-4" repeat.for="i of responses.personalHistory.sisters.ages.length" if.bind="responses.personalHistory.sisters.howMany">
+                    <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.sisters.ages[i].value" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="sisters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.sisters.ages[i].unit" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.personalHistory.sisters.howMany">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
+                    If you have siblings are you the
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
+                    <input type="number" min="1" max.bind="siblingCount + 1 & signal:'sibling-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.birthPosition" /> 
+                    &nbsp;of ${siblingCount + 1 & signal:'sibling-count-changed'}
+                </div>
+
+                <hr if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Is there any familial history of neurological or psychiatric disease?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="familyHistoryOfNeurologicalOrPsychiatricDisease" class="uk-radio" checked.bind="responses.personalHistory.familyHistoryOfNeurologicalOrPsychiatricDisease" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Are you currently:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of relationshipStatuses">
+                        <input type="radio" name="relationshipStatus" class="uk-radio" checked.bind="responses.personalHistory.relationship.status" model.bind="response" change.delegate="changed('relationship-status-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                    If married or common law, how long have you been in this relationship?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How old is your partner?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="1" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.partnerAge" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What is your partner’s job title?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Are you currently in an abusive relationship?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="relationshipIsAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.isAbusive" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.relationship.isAbusive.isNo">
+                    Have any of your previous relationships been abusive?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.relationship.isAbusive.isNo">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.personalHistory.relationship.isAbusive.isNo">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you previously been in a serious relationship?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="hadPriorSeriousRelationship" class="uk-radio" checked.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div if.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship.isYes">
+                    If you have previously been in a prior serious relationship;
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship.isYes">
+                    How long did that relationship last?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship.isYes">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.value" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.unit" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship.isYes">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship.isYes">
+                    What was the reason that relationship ended?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship.isYes">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded" />
+                </div>
+
+                <hr if.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship.isYes">
+                
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many sons do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.sons.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.sons.howMany">
+                    What are their ages?
+                </div>
+
+                <div class="uk-margin-remove-vertical uk-margin-small-right uk-width-1-4" repeat.for="i of responses.personalHistory.children.sons.ages.length" if.bind="responses.personalHistory.children.sons.howMany">
+                    <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.sons.ages[i].value" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="sons-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.sons.ages[i].unit" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.personalHistory.children.sons.howMany">
+                
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many daughters do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.daughters.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.daughters.howMany">
+                    What are their ages?
+                </div>
+
+                <div class="uk-margin-remove-vertical uk-margin-small-right uk-width-1-4" repeat.for="i of responses.personalHistory.children.daughters.ages.length" if.bind="responses.personalHistory.children.daughters.howMany">
+                    <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.daughters.ages[i].value" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="daughters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.daughters.ages[i].unit" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="responses.personalHistory.children.daughters.howMany">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
+                    How many of your children reside with you?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
+                    <input type="number" min="0" max.bind="childCount & signal:'child-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.howManyLiveWithYou" />
+                </div>
+
+                <hr if.bind="childCount > 0 & signal:'child-count-changed'">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Is your family supportive of you?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="isFamilySupportive" class="uk-radio" checked.bind="responses.personalHistory.isFamilySupportive" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you noticed any relationship disruption due to your psychological problems?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of relationshipDisruptionFrequencies">
+                        <input type="radio" name="extentOfDisruption" class="uk-radio" checked.bind="responses.personalHistory.extentOfDisruption" model.bind="response" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+            </fieldset>
+
+
+            <fieldset class="uk-fieldset uk-grid-collapse uk-child-width-1-1" uk-grid>
                 <legend class="uk-legend">Present Psychological Status</legend>
 
                 <div class="uk-margin-remove uk-width-1-1">
@@ -1660,7 +2178,7 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-5" if.bind="responses.neuropsychological.currentState.alone.ability.isUnable || responses.neuropsychological.currentState.alone.ability.isPartiallyAble">
-                    <button type="button" class="uk-button" click.delegate="addAloneIssue()">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addAloneIssue()">
                         Add
                     </button>
                 </div>
@@ -1759,7 +2277,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-5">
-                    <button type="button" class="uk-button" click.delegate="addPreAccidentRecreationalActivity()">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPreAccidentRecreationalActivity()">
                         Add
                     </button>
                 </div>
@@ -1795,7 +2313,7 @@
                 <div class="uk-margin-remove uk-width-3-5" if.bind="responses.neuropsychological.currentState.leisureAbility.value">
                     <template repeat.for="response of leisureParticipationRates">
                         <label>
-                            <input type="radio" name="leisureParticipationRate" class="uk-radio" checked.bind="responses.neuropsychological.currentState.leisureParticipationRate" model.bind="response" />&nbsp;${response.description}&nbsp;
+                            <input type="radio" name="leisureParticipationRate" class="uk-radio" checked.bind="responses.neuropsychological.currentState.leisureParticipationRate" model.bind="response" change.delegate="changed('leisure-participation-rate-changed')" />&nbsp;${response.description}&nbsp;
                         </label>
                         <br if.bind="!$last">
                     </template>
@@ -2998,7 +3516,7 @@
             <br>
             ${pronoun.subject | proper} then advised that ${pronoun.possessiveAdjective} ability to participate in ${pronoun.possessiveAdjective} regular social and leisure activities has been affected
             <template if.bind="responses.neuropsychological.currentState.leisureParticipationRate">
-                , adding that ${pronoun.subject} ${getItemValueForCurrentContext(responses.neuropsychological.currentState.leisureParticipationRate)}
+                , adding that ${pronoun.subject} ${getItemValueForCurrentContext(responses.neuropsychological.currentState.leisureParticipationRate) & signal:'leisure-participation-rate-changed'}
             </template>
             .
         </template>
