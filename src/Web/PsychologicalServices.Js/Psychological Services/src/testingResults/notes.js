@@ -15,6 +15,72 @@ export class Notes {
         this.gender = null;
         
         this.responses = {
+            "personalHistory": {
+                "locationOfBirth": null,
+                "timeOfArrivalInCanada": null,
+                "languages": [""],
+                "growingUp": {
+                    "abuse": {
+                        "physical": null,
+                        "sexual": null,
+                        "mental": null
+                    },
+                    "developmentalMilestoneIssues": null,
+                    "socioeconomicClass": null
+                },
+                "father": {
+                    "yearOfBirth": null,
+                    "isAlive": null,
+                    "causeOfDeath": null,
+                    "yearOfDeath": null,
+                    "educationLevel": null,
+                    "employmentAreas": null
+                },
+                "mother": {
+                    "yearOfBirth": null,
+                    "isAlive": null,
+                    "causeOfDeath": null,
+                    "yearOfDeath": null,
+                    "educationLevel": null,
+                    "employmentAreas": null
+                },
+                "didParentsSeparateOrDivorce": null,
+                "brothers": {
+                    "howMany": 0,
+                    "ages": []
+                },
+                "sisters": {
+                    "howMany": 0,
+                    "ages": []
+                },
+                "birthPosition": null,
+                "familyHistoryOfNeurologicalOrPsychiatricDisease": null,
+                "relationship": {
+                    "status": null,
+                    "marriageLength": { "value": null, "unit": null },
+                    "partnerAge": null,
+                    "partnerJobTitle": null,
+                    "isAbusive": null,
+                    "previousRelationshipAbusive": null,
+                    "hadPriorSeriousRelationship": null,
+                    "priorSeriousRelationshipLength": { "value": null, "unit": null },
+                    "priorSeriousRelationshipReasonEnded": null
+                },
+                "children": {
+                    "sons": {
+                        "howMany": 0,
+                        "ages": []
+                    },
+                    "daughters": {
+                        "howMany": 0,
+                        "ages": []
+                    },
+                    "howManyLiveWithYou": null
+                },
+                "isFamilySupportive": null,
+                "relationshipDisruptionDueToPsychProblems": null,
+                "extentOfDisruption": null
+            },
             "psychological": {
                 "emotional": [],
                 "selfHarm": {
@@ -34,6 +100,7 @@ export class Notes {
                     "fearOfWorst": null
                 },
                 "worry": [],
+                "dontKnowAmountOfDebt": false,
                 "amountOfDebt": null,
                 "panicAttacksCurrent": null,
                 "panicAttacksPrior": null,
@@ -164,7 +231,9 @@ export class Notes {
                     "sleep": {
                         "sleepAffected": null,
                         "problemsSleepingPriorToAccident": null,
+                        "skipHoursOfSleepBeforeAccident": false,
                         "hoursOfSleepBeforeAccident": null,
+                        "skipHoursOfSleepCurrent": false,
                         "hoursOfSleepCurrent": null,
                         "brokenSleep": null,
                         "fatiguedWhenWaking": null,
@@ -190,7 +259,25 @@ export class Notes {
                 },
                 "currentState": {
                     "spendTime": null,
-                    "selfCare": [],
+                    "personalCare": { "ability": null, "issues": [] },
+                    "bathing": { "ability": null, "issues": [] },
+                    "grooming": { "ability": null, "issues": [] },
+                    "haircare": { "ability": null, "issues": [] },
+                    "indoorChores": { "ability": null, "issues": [] },
+                    "outdoorChores": { "ability": null, "issues": [] },
+                    "caregiving": { "ability": null, "issues": [] },
+                    "banking": { "ability": null, "issues": [] },
+                    "alone": {
+                        "ability": null,
+                        "issues": [""],
+                        "inContactFrequently": null,
+                        "contactFrequency": null
+                    },
+                    "travel": {
+                        "before": null,
+                        "current": null,
+                        "taxi": null
+                    },
                     "preAccidentRecreationalActivities": [
                         "",
                         "",
@@ -206,6 +293,10 @@ export class Notes {
         this.yesNo = [];
         this.yesNoDontKnow = [];
         this.genders = [];
+        this.socioeconomicStatuses = [];
+        this.relationshipStatuses = [];
+        this.relationshipDisruptionFrequencies = [];
+        this.ageUnits = [];
         this.whereaboutsObjects = [];
         this.memoryAids = [];
         this.readingIssues = [];
@@ -217,6 +308,7 @@ export class Notes {
         this.currentStateAbilities = [];
         this.currentStateIssues = [];
         this.leisureParticipationRates = [];
+        this.travelAbilities = [];
 
         this.getItemValueForCurrentContext = function(item) {
             return this.getItemValueForContext(item, this);
@@ -241,6 +333,10 @@ export class Notes {
                     this.getYesNo().then(data => this.yesNo = data),
                     this.getYesNoDontKnow().then(data => this.yesNoDontKnow = data),
                     this.getGenders().then(data => this.genders = data),
+                    this.getSocioeconomicStatuses().then(data => this.socioeconomicStatuses = data),
+                    this.getRelationshipStatuses().then(data => this.relationshipStatuses = data),
+                    this.getRelationshipDisruptionFrequencies().then(data => this.relationshipDisruptionFrequencies = data),
+                    this.getAgeUnits().then(data => this.ageUnits = data),
                     this.getWhereaboutsObjects().then(data => this.whereaboutsObjects = data),
                     this.getMemoryAids().then(data => this.memoryAids = data),
                     this.getReadingIssues().then(data => this.readingIssues = data),
@@ -255,7 +351,8 @@ export class Notes {
                     this.getCurrentStateAbilities().then(data => this.currentStateAbilities = data),
                     this.getCurrentStateIssues().then(data => this.currentStateIssues = data),
                     this.getSelfCareTasks().then(data => this.responses.neuropsychological.currentState.selfCare = data),
-                    this.getLeisureParticipationRates().then(data => this.leisureParticipationRates = data)
+                    this.getLeisureParticipationRates().then(data => this.leisureParticipationRates = data),
+                    this.getTravelAbilities().then(data => this.travelAbilities = data)
                 ]);
             });
     }
@@ -322,6 +419,52 @@ export class Notes {
         let data = [
             { "abbreviation": "M", "description": "Male", "title": "Mr." },
             { "abbreviation": "F", "description": "Female", "title": "Ms." }
+        ];
+
+        return getPromise(data);
+    }
+
+    getSocioeconomicStatuses() {
+        let data = [
+            { "description": "Poor", "value": function(context) { return `a household that ${context.pronoun.subject} would describe as being poor`; } },
+            { "description": "Lower Class", "value": function(context) { return `a lower-class socioeconomic household`; } },
+            { "description": "Middle Class", "value": function(context) { return `a middle-class socioeconomic household`; } },
+            { "description": "Upper Class", "value": function(context) { return `an upper-class socioeconomic household`; } },
+            { "description": "Rich", "value": function(context) { return `a household that ${context.pronoun.subject} would describe as being rich`; } },
+            { "description": "Skip", "value": null }
+        ];
+
+        return getPromise(data);
+    }
+
+    getRelationshipStatuses() {
+        let data = [
+            { "description": "Single", "value": function(context) { return `single`; } },
+            { "description": "Married", "value": function(context) { return `married`; }, "isMarried": true },
+            { "description": "Common Law", "value": function(context) { return `in a common law relationship`; }, "isCommonLaw": true },
+            { "description": "Separated", "value": function(context) { return `separated`; } },
+            { "description": "Divorced", "value": function(context) { return `divorced`; } },
+            { "description": "a Widow", "value": function(context) { return `a widow`; } },
+            { "description": "a Widower", "value": function(context) { return `a widower`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getRelationshipDisruptionFrequencies() {
+        let data = [
+            { "description": "Occasional (less than weekly)", "value": function(context) { return `occasionally`; } },
+            { "description": "Frequent (once a week or more but not tolerable)", "value": function(context) { return `frequently`; } },
+            { "description": "Constant(daily and intolerable)", "value": function(context) { return `constantly`; } }
+        ];
+
+        return getPromise(data);
+    }
+
+    getAgeUnits() {
+        let data = [
+            { "description": "Years", "value": function(context) { return `years`; } },
+            { "description": "Months", "value": function(context) { return `months`; } }
         ];
 
         return getPromise(data);
@@ -444,7 +587,7 @@ export class Notes {
         let data = [
             { "description": "Future", "response": null, "value": function(context) { return `future`; } },
             { "description": "Recovery", "response": null, "value": function(context) { return `recovery`; } },
-            { "description": "Finances", "response": null, "value": function(context) { return `finances`; } }
+            { "description": "Finances", "response": null, "value": function(context) { return `finances`; }, "isFinances": true }
         ];
 
         return getPromise(data);
@@ -486,7 +629,19 @@ export class Notes {
         let data = [
             { "description": "Unable", "value": "unable", "isUnable": true },
             { "description": "Partial", "value": "partially able", "isPartiallyAble": true },
-            { "description": "Able", "value": "able", "isAble": true }
+            { "description": "Able", "value": "able", "isAble": true },
+            { "description": "Skip", "value": null }
+        ];
+
+        return getPromise(data);
+    }
+
+    getTravelAbilities() {
+        let data = [
+            { "description": "Unable", "value": "unable", "isUnable": true },
+            { "description": "Partial", "value": "only partially able", "isPartiallyAble": true },
+            { "description": "Able", "value": "able", "isAble": true },
+            { "description": "Skip", "value": null }
         ];
 
         return getPromise(data);
@@ -514,64 +669,99 @@ export class Notes {
         return getPromise(data);
     }
 
-    memoryVisualWhereaboutsObjectsChanged() {
-        this.signaler.signal('memory-visual-whereabouts-objects-changed');
+    changed(signalName) {
+        this.signaler.signal(signalName);
     }
 
-    memoryAidsUsedChanged() {
-        this.signaler.signal('memory-aids-used-changed');
+    @computedFrom(
+        'responses.personalHistory.languages'
+    )
+    get knownLanguages() {
+        let data = this.responses.personalHistory.languages.filter(item => item && item.length > 0);
+
+        return data;
     }
 
-    languageIssuesChanged() {
-        this.signaler.signal('language-issues-changed');
+    @computedFrom(
+        'responses.personalHistory.growingUp.abuse.physical',
+        'responses.personalHistory.growingUp.abuse.sexual',
+        'responses.personalHistory.growingUp.abuse.mental'
+    )
+    get yesAbuseTypes() {
+        let data = [
+            { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
+            { "response": this.responses.personalHistory.growingUp.abuse.sexual, "value": "sexual" },
+            { "response": this.responses.personalHistory.growingUp.abuse.mental, "value": "mental" }
+        ];
+
+        return data.filter(item => item && item.response && item.response.isYes);
     }
 
-    readingIssuesChanged() {
-        this.signaler.signal('reading-issues-changed');
+    @computedFrom(
+        'responses.personalHistory.growingUp.abuse.physical',
+        'responses.personalHistory.growingUp.abuse.sexual',
+        'responses.personalHistory.growingUp.abuse.mental'
+    )
+    get noAbuseTypes() {
+        let data = [
+            { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
+            { "response": this.responses.personalHistory.growingUp.abuse.sexual, "value": "sexual" },
+            { "response": this.responses.personalHistory.growingUp.abuse.mental, "value": "mental" }
+        ];
+
+        return data.filter(item => item && item.response && item.response.isNo);
     }
 
-    visualSpatialIssueChanged() {
-        this.signaler.signal('visual-spatial-issue-changed');
+    @computedFrom(
+        'responses.personalHistory.growingUp.abuse.physical',
+        'responses.personalHistory.growingUp.abuse.sexual',
+        'responses.personalHistory.growingUp.abuse.mental'
+    )
+    get noAbuseGrowingUp() {
+        let all = [
+            this.responses.personalHistory.growingUp.abuse.physical,
+            this.responses.personalHistory.growingUp.abuse.sexual,
+            this.responses.personalHistory.growingUp.abuse.mental
+        ].every(item => item && item.isNo);
+
+        return all;
     }
 
-    executiveFunctionIssueChanged() {
-        this.signaler.signal('executive-function-issue-changed');
+    @computedFrom(
+        'responses.personalHistory.brothers.howMany',
+        'responses.personalHistory.sisters.howMany'
+    )
+    get siblingCount() {
+        return (
+            this.responses.personalHistory.brothers.howMany !== null
+                ? parseInt(this.responses.personalHistory.brothers.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.sisters.howMany !== null
+                ? parseInt(this.responses.personalHistory.sisters.howMany, 10)
+                : 0);
     }
 
-    inappropriateSocialBehaviorChanged() {
-        this.signaler.signal('inappropriate-social-behavior-changed');
+    @computedFrom(
+        'responses.personalHistory.children.sons.howMany',
+        'responses.personalHistory.children.daughters.howMany'
+    )
+    get childCount() {
+        return (
+            this.responses.personalHistory.children.sons.howMany !== null
+                ? parseInt(this.responses.personalHistory.children.sons.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.children.daughters.howMany !== null
+                ? parseInt(this.responses.personalHistory.children.daughters.howMany, 10)
+                : 0);
     }
 
-    weightChangeAmountChanged() {
-        this.signaler.signal('weight-change-amount-changed');
-    }
+    @computedFrom(
+        'responses.personalHistory.relationship.status'
+    )
+    get isMarriedOrCommonLaw() {
+        let status = this.responses.personalHistory.relationship.status;
 
-    emotionalIssueChanged() {
-        this.signaler.signal('emotional-issues-changed');
-    }
-
-    depressionSymptomChanged() {
-        this.signaler.signal('depression-symptom-changed');
-    }
-
-    worryChanged() {
-        this.signaler.signal('worry-changed');
-    }
-
-    hallucinationsChanged() {
-        this.signaler.signal('hallucinations-changed');
-    }
-
-    travelChanged() {
-        this.signaler.signal('travel-changed');
-    }
-
-    currentStateSelfCareChanged() {
-        this.signaler.signal('current-state-self-care-changed');
-    }
-
-    preAccidentRecreationalActivitiesChanged() {
-        this.signaler.signal('pre-accident-recreational-activities-changed');
+        return status && (status.isMarried || status.isCommonLaw);
     }
 
     @computedFrom(
@@ -743,6 +933,15 @@ export class Notes {
         let any = this.noWorries.some(item => item);
 
         return any;
+    }
+
+    @computedFrom(
+        'responses.psychological.worry'
+    )
+    get worriesAboutFinances() {
+        let worry = this.yesWorries.some(item => item.isFinances);
+
+        return worry;
     }
 
     @computedFrom(
@@ -1072,22 +1271,48 @@ export class Notes {
         return data;
     }
 
+    any(items) {
+        let any = items && items.some(item => item);
+
+        return any;
+    }
+
     @computedFrom(
-        'responses.neuropsychological.currentState.selfCare'
+        'responses.neuropsychological.currentState.alone.issues'
     )
-    get personalCareTasks() {
-        let data = [
-            this.responses.neuropsychological.currentState.selfCare
-        ];
+    get aloneIssues() {
+        let aloneAbilityProblem =
+            this.responses.neuropsychological.currentState.alone.ability &&
+            (this.responses.neuropsychological.currentState.alone.ability.isUnable ||
+            this.responses.neuropsychological.currentState.alone.ability.isPartiallyAble);
+
+        let data = this.responses.neuropsychological.currentState.alone.issues.filter(item => aloneAbilityProblem);
 
         return data;
     }
 
     @computedFrom(
-        'responses.neuropsychological.currentState.selfCare'
+        'responses.neuropsychological.currentState.alone.issues'
     )
-    get anyPersonalCareTasks() {
-        let any = this.personalCareTasks.some(item => item);
+    get anyAloneIssues() {
+        let any = this.aloneIssues.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom(
+        'responses.neuropsychological.currentState.travel.before',
+        'responses.neuropsychological.currentState.travel.current',
+        'responses.neuropsychological.currentState.travel.taxi'
+    )
+    get anyCurrentStateTravelAbility() {
+        let data = [
+            this.responses.neuropsychological.currentState.travel.before,
+            this.responses.neuropsychological.currentState.travel.current,
+            this.responses.neuropsychological.currentState.travel.taxi
+        ];
+
+        let any = data.some(item => item && item.value);
 
         return any;
     }
@@ -1099,6 +1324,46 @@ export class Notes {
         let any = this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.some(item => item && item.length > 0);
 
         return any;
+    }
+
+    addLanguage() {
+        this.responses.personalHistory.languages.push("");
+    }
+
+    siblingCountChanged(siblingCount, siblingAges) {
+        if (siblingCount > siblingAges.length) {
+            let toAdd = siblingCount - siblingAges.length;
+            for (let i = 0; i < toAdd; i++) {
+                siblingAges.push({ "value": null, "unit": null });
+            }
+
+            this.changed('sibling-count-changed');
+        }
+        else if (siblingCount < siblingAges.length) {
+            siblingAges.splice(siblingCount, siblingAges.length - siblingCount);
+
+            this.changed('sibling-count-changed');
+        }
+    }
+
+    childrenCountChanged(childCount, childAges) {
+        if (childCount > childAges.length) {
+            let toAdd = childCount - childAges.length;
+            for (let i = 0; i < toAdd; i++) {
+                childAges.push({ "value": null, "unit": null });
+            }
+
+            this.changed('child-count-changed');
+        }
+        else if (childCount < childAges.length) {
+            childAges.splice(childCount, childAges.length - childCount);
+
+            this.changed('child-count-changed');
+        }
+    }
+    
+    addAloneIssue() {
+        this.responses.neuropsychological.currentState.alone.issues.push("");
     }
 
     addPreAccidentRecreationalActivity() {
@@ -1115,6 +1380,10 @@ export class Notes {
 
     getItemValue(item) {
         return item.value;
+    }
+
+    getItemDescription(item) {
+        return item.description;
     }
 }
 

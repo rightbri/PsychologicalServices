@@ -24,20 +24,22 @@ export class App {
 		
 		config.options.pushState = true;
 		config.options.root = '/';
-		config.fallbackRoute('');
+		config.fallbackRoute('home');
+		config.mapUnknownRoutes('');
 
-		var homeNavigationStrategy = (instruction) => {
-			if (this.user && this.permissions && userHasPermission(this.user, this.permissions.ViewAssessment)) {
-				instruction.config.redirect = `/calendar`;
+		let self = this;
+
+		var indexNavigationStrategy = (instruction) => {
+			if (self.user && self.permissions && userHasPermission(self.user, self.permissions.ViewAssessment)) {
+				let appTime = this.dateService.timezoneNow(this.config.timezone);
+
+				let route = getCalendarRoute(appTime);
+				
+				instruction.config.redirect = route;
 			}
-		};
-
-		var calendarNavigationStrategy = (instruction) => {
-			let appTime = this.dateService.timezoneNow(this.config.timezone);
-
-			let route = getCalendarRoute(appTime);
-			
-			instruction.config.redirect = route;
+			else {
+				instruction.config.moduleId = 'home/home';
+			}
 		};
 
 		config.addPipelineStep('authorize', AuthorizeStep);
@@ -45,8 +47,8 @@ export class App {
 		let p = this.permissions;
 
 		config.map([
-			{ route: ['', 'home'], name: 'home', moduleId: 'home/home', navigationStrategy: homeNavigationStrategy, nav: true },
-			{ route: 'calendar', navigationStrategy: calendarNavigationStrategy, nav: true, settings: { permissions: [p.ViewAssessment] }  },
+			{ route: [''], name: '/', navigationStrategy: indexNavigationStrategy, nav: true },
+			{ route: 'home', name: 'home', moduleId: 'home/home', nav: true },
 			{ route: 'calendar/:year/:month/:day?', moduleId: 'calendar/calendar', title: 'Calendar', nav: false, settings: { permissions: [p.ViewAssessment] } },
 			{ route: 'assessments', name: 'assessments', moduleId: 'assessments/assessments', title: 'Assessments', nav: true, settings: { permissions: [p.SearchAssessment] } },
 			{ route: 'assessments/:id', name: 'editAssessment', moduleId: 'assessments/editAssessment', title: 'Edit Assessment', nav: false, settings: { permissions: [p.EditAssessment] } },

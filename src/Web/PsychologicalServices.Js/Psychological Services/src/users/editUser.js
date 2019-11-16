@@ -114,7 +114,7 @@ export class EditUser {
 							self.user = data;
 
 							if (!self.context.hasPermission('EditUser')) {
-								self.router.navigateToRoute('home');
+								self.router.navigateToRoute('/');
 							}
 						});
 					}
