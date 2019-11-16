@@ -1,7 +1,10 @@
 <template>
+    <require from="resources/value-converters/age"></require>
+    <require from="resources/value-converters/gender"></require>
     <require from="resources/value-converters/lower"></require>
     <require from="resources/value-converters/proper"></require>
-    <require from="resources/value-converters/sort-array"></require>
+    <require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
     <require from="resources/value-converters/array-to-string"></require>
     <require from="resources/value-converters/filter"></require>
 	<require from="claimants/search-claimant"></require>
@@ -31,7 +34,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.locationOfBirth" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.locationOfBirth" input.delegate="changed('birth-location-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -41,7 +44,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" input.delegate="changed('arrival-time-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -57,7 +60,7 @@
                 </div>
 
                 <div class="uk-margin-remove-vertical uk-margin-small-right uk-width-1-4" repeat.for="i of responses.personalHistory.languages.length">
-                    <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.personalHistory.languages[i]" />
+                    <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.personalHistory.languages[i]" input.delegate="changed('languages-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -68,7 +71,7 @@
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="physicalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.physical" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="physicalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.physical" model.bind="response" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -80,7 +83,7 @@
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="sexualAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.sexual" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="sexualAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.sexual" model.bind="response" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -92,7 +95,7 @@
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="mentalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.mental" model.bind="response" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="mentalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.mental" model.bind="response" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -136,7 +139,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfBirth" />
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfBirth" input.delegate="changed('father-birth-year-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -158,7 +161,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.father.isAlive.isNo">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.causeOfDeath" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.causeOfDeath" input.delegate="changed('father-death-changed') & debounce:500" />
                 </div>
 
                 <hr if.bind="responses.personalHistory.father.isAlive.isNo">
@@ -168,7 +171,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.father.isAlive.isNo">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfDeath" />
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfDeath" input.delegate="changed('father-death-changed') & debounce:500" />
                 </div>
 
                 <hr if.bind="responses.personalHistory.father.isAlive.isNo">
@@ -178,7 +181,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.educationLevel" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.educationLevel" input.delegate="changed('father-education-or-employment-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -188,7 +191,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.employmentAreas" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.employmentAreas" input.delegate="changed('father-education-or-employment-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -202,7 +205,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfBirth" />
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfBirth" input.delegate="changed('mother-birth-year-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -224,7 +227,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.mother.isAlive.isNo">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
                 </div>
 
                 <hr if.bind="responses.personalHistory.mother.isAlive.isNo">
@@ -234,7 +237,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.mother.isAlive.isNo">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath" />
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
                 </div>
 
                 <hr if.bind="responses.personalHistory.mother.isAlive.isNo">
@@ -244,7 +247,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.educationLevel" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.educationLevel" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -254,7 +257,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.employmentAreas" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.employmentAreas" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -2328,6 +2331,154 @@
     </div>
 
     <div class="uk-container">
+
+        <p class="uk-text-lead">Interpersonal Situation</p>
+
+        <template if.bind="responses.personalHistory.locationOfBirth">
+            <br>
+            ${gender.title} ${claimant.lastName} was born on ${claimant.dateOfBirth | dateFormat:config.shortDateFormat} in ${responses.personalHistory.locationOfBirth & signal:'birth-location-changed'}. 
+        </template>
+        
+        <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
+            <br>
+            ${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada & signal:'arrival-time-changed'}.
+        </template>
+
+        <template if.bind="knownLanguages.length & signal:'languages-changed'">
+            ${pronoun.subject | proper} is a ${claimant.dateOfBirth | age} year old ${claimant.gender | gender} who identified 
+            <template if.bind="knownLanguages.length === 1 & signal:'languages-changed'">
+                &nbsp;${pronoun.subject} knows ${knownLanguages | arrayToString & signal:'languages-changed'}.
+            </template>
+            <template else>
+                &nbsp;${pronoun.possessiveAdjective} known languages as ${knownLanguages | arrayToString & signal:'languages-changed'}.
+            </template>    
+        </template>
+
+        <template if.bind="yesAbuseTypes.length || noAbuseTypes.length & signal:'growing-up-abuse-changed'">
+            <br>
+            <template if.bind="noAbuseGrowingUp & signal:'growing-up-abuse-changed'">
+                ${gender.title} ${claimant.lastName} denied history of any physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
+            </template>
+            <template else>
+                When asked about any abuse when ${pronoun.subject} was growing up, 
+                <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
+                    &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
+                </template>
+                <template if.bind="noAbuseTypes.length & signal:'growing-up-abuse-changed'">
+                    <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
+                        &nbsp;${pronoun.subject | proper}
+                    </template>
+                    <template else>
+                        &nbsp;${pronoun.subject} 
+                    </template>
+                    &nbsp;denied experiencing any ${noAbuseTypes | arrayToString:{"format":getItemValue,"connector":"or"} & signal:'growing-up-abuse-changed'} abuse.
+                </template>
+            </template>
+        </template>
+
+        <template if.bind="responses.personalHistory.growingUp.developmentalMilestoneIssues.isYes">
+            <br>
+            ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
+        </template>
+        <template if.bind="responses.personalHistory.growingUp.developmentalMilestoneIssues.isNo">
+            <br>
+            To the best of ${pronoun.possessiveAdjective} knowledge, ${gender.title} ${claimant.lastName} believes that ${pronoun.subject} hit all developmental milestones (i.e. walking/talking/toilet training) as expected.
+        </template>
+
+        <template if.bind="responses.personalHistory.growingUp.socioeconomicClass.value !== null">
+            <br>
+            ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} was raised in ${getItemValueForCurrentContext(responses.personalHistory.growingUp.socioeconomicClass)}.
+        </template>
+
+        <template if.bind="responses.personalHistory.father.yearOfBirth & signal:'father-birth-year-changed'">
+            <br>
+            ${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} father was born in ${responses.personalHistory.father.yearOfBirth & signal:'father-birth-year-changed'}.
+        </template>
+
+        <template if.bind="responses.personalHistory.father.isAlive.value !== null">
+            <br>
+            ${gender.title} ${claimant.lastName} went on to note that ${pronoun.possessiveAdjective} father is 
+            <template if.bind="responses.personalHistory.father.isAlive.isYes">
+                &nbsp;still alive                
+            </template>
+            <template if.bind="responses.personalHistory.father.isAlive.isNo">
+                &nbsp;no longer alive
+                <template if.bind="responses.personalHistory.father.yearOfDeath || responses.personalHistory.father.causeOfDeath & signal:'father-death-changed'">
+                    , adding that he died 
+                    <template if.bind="responses.personalHistory.father.yearOfDeath & signal:'father-death-changed'">
+                        &nbsp;in ${responses.personalHistory.father.yearOfDeath & signal:'father-death-changed'}
+                    </template>
+                    <template if.bind="responses.personalHistory.father.causeOfDeath & signal:'father-death-changed'">
+                        &nbsp;with ${responses.personalHistory.father.causeOfDeath & signal:'father-death-changed'}
+                    </template>
+                </template>
+            </template>
+            .
+        </template>
+        
+        <template if.bind="responses.personalHistory.father.educationLevel || responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'">
+            <br>
+            ${gender.title} ${claimant.lastName}’s father 
+            <template if.bind="responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'">
+                &nbsp;attended ${responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'} 
+            </template>
+            <template if.bind="responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'">
+                <template if.bind="responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'">
+                    &nbsp;and
+                </template>
+                &nbsp;had experience working as a ${responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'}
+            </template>
+            .
+        </template>
+        
+
+
+
+        <template if.bind="responses.personalHistory.mother.yearOfBirth & signal:'mother-birth-year-changed'">
+            <br>
+            ${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} mother was born in ${responses.personalHistory.mother.yearOfBirth & signal:'mother-birth-year-changed'}.
+        </template>
+
+        <template if.bind="responses.personalHistory.mother.isAlive.value !== null">
+            <br>
+            ${gender.title} ${claimant.lastName} went on to note that ${pronoun.possessiveAdjective} mother is 
+            <template if.bind="responses.personalHistory.mother.isAlive.isYes">
+                &nbsp;still alive                
+            </template>
+            <template if.bind="responses.personalHistory.mother.isAlive.isNo">
+                &nbsp;no longer alive
+                <template if.bind="responses.personalHistory.mother.yearOfDeath || responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'">
+                    , adding that she died 
+                    <template if.bind="responses.personalHistory.mother.yearOfDeath & signal:'mother-death-changed'">
+                        &nbsp;in ${responses.personalHistory.mother.yearOfDeath & signal:'mother-death-changed'}
+                    </template>
+                    <template if.bind="responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'">
+                        &nbsp;with ${responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'}
+                    </template>
+                </template>
+            </template>
+            .
+        </template>
+        
+        <template if.bind="responses.personalHistory.mother.educationLevel || responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'">
+            <br>
+            ${gender.title} ${claimant.lastName}’s mother 
+            <template if.bind="responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'">
+                &nbsp;attended ${responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'} 
+            </template>
+            <template if.bind="responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'">
+                <template if.bind="responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'">
+                    &nbsp;and
+                </template>
+                &nbsp;had experience working as a ${responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'}
+            </template>
+            .
+        </template>
+            
+
+
+
+        
 
         <p class="uk-text-lead">Psychological Report</p>
 

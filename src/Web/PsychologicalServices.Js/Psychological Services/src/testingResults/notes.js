@@ -430,7 +430,8 @@ export class Notes {
             { "description": "Lower Class", "value": function(context) { return `a lower-class socioeconomic household`; } },
             { "description": "Middle Class", "value": function(context) { return `a middle-class socioeconomic household`; } },
             { "description": "Upper Class", "value": function(context) { return `an upper-class socioeconomic household`; } },
-            { "description": "Rich", "value": function(context) { return `a household that ${context.pronoun.subject} would describe as being rich`; } }
+            { "description": "Rich", "value": function(context) { return `a household that ${context.pronoun.subject} would describe as being rich`; } },
+            { "description": "Skip", "value": null }
         ];
 
         return getPromise(data);
@@ -670,6 +671,60 @@ export class Notes {
 
     changed(signalName) {
         this.signaler.signal(signalName);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.languages'
+    )
+    get knownLanguages() {
+        let data = this.responses.personalHistory.languages.filter(item => item && item.length > 0);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.personalHistory.growingUp.abuse.physical',
+        'responses.personalHistory.growingUp.abuse.sexual',
+        'responses.personalHistory.growingUp.abuse.mental'
+    )
+    get yesAbuseTypes() {
+        let data = [
+            { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
+            { "response": this.responses.personalHistory.growingUp.abuse.sexual, "value": "sexual" },
+            { "response": this.responses.personalHistory.growingUp.abuse.mental, "value": "mental" }
+        ];
+
+        return data.filter(item => item && item.response && item.response.isYes);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.growingUp.abuse.physical',
+        'responses.personalHistory.growingUp.abuse.sexual',
+        'responses.personalHistory.growingUp.abuse.mental'
+    )
+    get noAbuseTypes() {
+        let data = [
+            { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
+            { "response": this.responses.personalHistory.growingUp.abuse.sexual, "value": "sexual" },
+            { "response": this.responses.personalHistory.growingUp.abuse.mental, "value": "mental" }
+        ];
+
+        return data.filter(item => item && item.response && item.response.isNo);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.growingUp.abuse.physical',
+        'responses.personalHistory.growingUp.abuse.sexual',
+        'responses.personalHistory.growingUp.abuse.mental'
+    )
+    get noAbuseGrowingUp() {
+        let all = [
+            this.responses.personalHistory.growingUp.abuse.physical,
+            this.responses.personalHistory.growingUp.abuse.sexual,
+            this.responses.personalHistory.growingUp.abuse.mental
+        ].every(item => item && item.isNo);
+
+        return all;
     }
 
     @computedFrom(
