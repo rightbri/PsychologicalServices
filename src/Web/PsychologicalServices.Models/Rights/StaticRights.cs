@@ -81,6 +81,8 @@ namespace PsychologicalServices.Models.Rights
         ViewEvent,
         SearchEvent,
         ViewRight,
-        ViewRole
+        ViewRole,
+        ViewAssessmentNote,
+        EditAssessmentNote
     }
 }

@@ -21,8 +21,8 @@ namespace PsychologicalServices.Api.Controllers
             _assessmentService = assessmentService;
         }
 
-        [RightAuthorize(StaticRights.ViewAssessment)]
-        [Route("{id}/{name}")]
+        [RightAuthorize(StaticRights.ViewAssessmentNote)]
+        //[Route("{assessmentId}/{name}")]
         [HttpGet]
         [ResponseType(typeof(Assessment))]
         public IHttpActionResult Get(int assessmentId, string name)
@@ -32,7 +32,7 @@ namespace PsychologicalServices.Api.Controllers
             return Ok(testingResults);
         }
 
-        [RightAuthorize(StaticRights.EditAssessment)]
+        [RightAuthorize(StaticRights.EditAssessmentNote)]
         [Route("save")]
         [HttpPut]
         [ResponseType(typeof(SaveResult<AssessmentTestingResults>))]
