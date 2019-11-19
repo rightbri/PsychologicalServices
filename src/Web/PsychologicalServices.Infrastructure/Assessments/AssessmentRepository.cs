@@ -1058,12 +1058,12 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 }
 
                 var entity = assessmentEntity.AssessmentTestingResults
-                    .SingleOrDefault(e => e.Name == testingResults.Name);
-
-                if (entity == null)
-                {
-                    return false;
-                }
+                    .SingleOrDefault(e => e.Name == testingResults.Name)
+                    ?? new AssessmentTestingResultEntity
+                    {
+                        AssessmentId = testingResults.Assessment.AssessmentId,
+                        Name = testingResults.Name
+                    };
 
                 entity.Responses = testingResults.Responses;
 

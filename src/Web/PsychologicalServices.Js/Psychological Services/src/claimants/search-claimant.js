@@ -45,7 +45,8 @@ export class SearchClaimantCustomElement {
 	
 	selectClaimant(claimant) {
 		this.claimant = claimant;
-		
+		this.claimantSearch = null;
+		this.claimantDob = null;
 		this.eventHelper.fireEvent(this.element, 'selected', { 'claimant': claimant });
 	}
 	
