@@ -16,7 +16,7 @@ export class Notes {
 
         this.searchCompanyId = null;
         this.claimant = null;
-        this.claimants = [];
+        this.claimants = null;
         this.pronoun = null;
         this.gender = null;
 
@@ -113,7 +113,7 @@ export class Notes {
         this.responses = null;
         
         if (resetClaimantData) {
-            this.claimants = [];
+            this.claimants = null;
             this.claimant = null;
         }
     }
