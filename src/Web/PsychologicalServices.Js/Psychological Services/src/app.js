@@ -47,7 +47,7 @@ export class App {
 		let p = this.permissions;
 
 		config.map([
-			{ route: [''], name: '/', navigationStrategy: indexNavigationStrategy, nav: true },
+			{ route: ['', 'calendar'], name: '/', navigationStrategy: indexNavigationStrategy, nav: true },
 			{ route: 'home', name: 'home', moduleId: 'home/home', nav: true },
 			{ route: 'calendar/:year/:month/:day?', moduleId: 'calendar/calendar', title: 'Calendar', nav: false, settings: { permissions: [p.ViewAssessment] } },
 			{ route: 'assessments', name: 'assessments', moduleId: 'assessments/assessments', title: 'Assessments', nav: true, settings: { permissions: [p.SearchAssessment] } },
