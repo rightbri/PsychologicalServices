@@ -22,7 +22,7 @@ namespace PsychologicalServices.Api.Controllers
         }
 
         [RightAuthorize(StaticRights.ViewAssessmentNote)]
-        //[Route("{assessmentId}/{name}")]
+        [Route("{assessmentId}/{name}")]
         [HttpGet]
         [ResponseType(typeof(Assessment))]
         public IHttpActionResult Get(int assessmentId, string name)

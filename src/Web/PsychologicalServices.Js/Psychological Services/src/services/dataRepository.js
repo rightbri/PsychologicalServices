@@ -193,7 +193,7 @@ export class DataRepository {
 	}
 
 	getAssessmentTestingResults(assessmentId, name) {
-		return this.getBasic(`assessmenttestingresults?assessmentId=${assessmentId}&name=${name}`);
+		return this.getBasic(`assessmenttestingresults/${assessmentId}/${name}`);
 	}
 
 	saveAssessmentTestingResults(testingResults) {
