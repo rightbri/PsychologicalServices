@@ -29,18 +29,23 @@ export class PsychologistInvoices {
 	
 	searchInvoices() {
 		return this.dataRepository.searchInvoiceableAppointmentData({
-				'companyId': this.user.company.companyId,
-				'invoiceTypeId': this.invoiceTypeId,
-				'startSearch': this.startSearch
-			}).then(data => {
-				this.invoiceableAppointments = data.map(a => {
-					a.canCreateInvoice = true;
-					return a;
-				});
+			'companyId': this.user.company.companyId,
+			'invoiceTypeId': this.invoiceTypeId,
+			'startDateSearch': this.startDateSearch,
+			'endDateSearch': this.endDateSearch
+		}).then(data => {
+			this.invoiceableAppointments = data.map(a => {
+				a.canCreateInvoice = true;
+				return a;
 			});
+		});
 	}
 	
-	dateChanged(e) {
-		this.startSearch = e.detail.dates[0];
+	startDateChanged(e) {
+		this.startDateSearch = e.detail.dates[0];
+	}
+
+	endDateChanged(e) {
+		this.endDateSearch = e.detail.dates[0];
 	}
 }

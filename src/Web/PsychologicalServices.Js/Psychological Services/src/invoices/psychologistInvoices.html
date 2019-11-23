@@ -15,9 +15,16 @@
 			<form class="uk-form-stacked">
 			
 				<div class="uk-margin">
-					<label class="uk-form-label" for="startSearch">Search for invoices to create based on appointments on or after: (Beginning of prior month if blank)</label>
+					<label class="uk-form-label" for="startDateSearch">Appointment start date</label>
 					<div class="uk-form-controls">
-						<input id="startSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="dateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
+						<input id="startDateSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="startDateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
+					</div>
+				</div>
+				
+				<div class="uk-margin">
+					<label class="uk-form-label" for="endDateSearch">Appointment end date</label>
+					<div class="uk-form-controls">
+						<input id="endDateSearch" type="text" class="uk-input" date-picker.bind="config.datepickerOptions" datechanged.delegate="endDateChanged($event)" value.bind="date | dateFormat:config.longDateFormat" />
 					</div>
 				</div>
 			
