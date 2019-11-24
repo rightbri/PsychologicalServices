@@ -27,14 +27,23 @@ export class Notes {
         
         this.pronouns = [];
         this.yesNo = [];
+        this.yesNoOld = [];
         this.yesNoDontKnow = [];
         this.genders = [];
         this.socioeconomicStatuses = [];
         this.relationshipStatuses = [];
         this.relationshipDisruptionFrequencies = [];
         this.ageUnits = [];
+        this.emotionalIssues = [];
+        this.depressionSymptoms = [];
+        this.worries = [];
         this.whereaboutsObjects = [];
         this.memoryAids = [];
+        this.visualSpatialIssues = [];
+        this.atypicalIssues = [];
+        this.languageIssues = [];
+        this.executiveIssues = [];
+        this.inappropriateSocialBehaviors = [];
         this.readingIssues = [];
         this.weightChangeTypes = [];
         this.cognitiveChangeTypes = [];
@@ -73,15 +82,32 @@ export class Notes {
 
                 return Promise.all([
                     this.getPronouns().then(data => this.pronouns = data),
-                    this.getYesNo().then(data => this.yesNo = data),
-                    this.getYesNoDontKnow().then(data => this.yesNoDontKnow = data),
+                    this.getYesNo().then(data => {
+                        this.yesNo = this.asArray(data);
+                        this.yesNoMap = data;
+                    }),
+                    this.getYesNoDontKnow().then(data => {
+                        this.yesNoDontKnow = this.asArray(data);
+                        this.yesNoDontKnowMap = data;
+                    }),
                     this.getGenders().then(data => this.genders = data),
                     this.getSocioeconomicStatuses().then(data => this.socioeconomicStatuses = data),
                     this.getRelationshipStatuses().then(data => this.relationshipStatuses = data),
                     this.getRelationshipDisruptionFrequencies().then(data => this.relationshipDisruptionFrequencies = data),
-                    this.getAgeUnits().then(data => this.ageUnits = data),
+                    this.getAgeUnits().then(data => {
+                        this.ageUnits = this.asArray(data);
+                        this.ageUnitsMap = data;
+                    }),
+                    this.getEmotionalIssues().then(data => this.emotionalIssues = data),
+                    this.getDepressionSymptoms().then(data => this.depressionSymptoms = data),
+                    this.getWorries().then(data => this.worries = data),
                     this.getWhereaboutsObjects().then(data => this.whereaboutsObjects = data),
                     this.getMemoryAids().then(data => this.memoryAids = data),
+                    this.getVisualSpatialIssues().then(data => this.visualSpatialIssues = data),
+                    this.getAtypicalIssues().then(data => this.atypicalIssues = data),
+                    this.getLanguageIssues().then(data => this.languageIssues = data),
+                    this.getExecutiveIssues().then(data => this.executiveIssues = data),
+                    this.getInappropriateSocialBehaviors().then(data => this.inappropriateSocialBehaviors = data),
                     this.getReadingIssues().then(data => this.readingIssues = data),
                     this.getWeightChangeTypes().then(data => this.weightChangeTypes = data),
                     this.getCognitiveChangeTypes().then(data => this.cognitiveChangeTypes = data),
@@ -131,7 +157,7 @@ export class Notes {
         return this.dataRepository.getAssessmentTestingResults(assessment.assessmentId, 'notes').then(data => {
             this.name = data.name;
             this.assessment = data.assessment;
-            this.responses = getResponses(data.responses)
+            this.responses = getResponses(data.responses);
         });
     }
 
@@ -188,23 +214,33 @@ export class Notes {
         return getPromise(data);
     }
 
+    asArray(map) {
+        let a = [];
+
+        for (let key in map) {
+            a.push(map[key]);
+        }
+
+        return a;
+    }
+
     getYesNo() {
-        let data = [
-            { "description": "Yes", "value": true, "isYes": true },
-            { "description": "No", "value": false, "isNo": true },
-            { "description": "Skip", "value": null, "isSkip": true }
-        ];
+        let data = {
+            "yes": { "description": "Yes", "value": "yes", "isYes": true },
+            "no": { "description": "No", "value": "no", "isNo": true },
+            "skip": { "description": "Skip", "value": "skip", "isSkip": true }
+        };
 
         return getPromise(data);
     }
 
     getYesNoDontKnow() {
-        let data = [
-            { "description": "Yes", "value": true, "isYes": true },
-            { "description": "No", "value": false, "isNo": true },
-            { "description": "DK", "value": undefined, "isDontKnow": true },
-            { "description": "Skip", "value": null, "isSkip": true }
-        ];
+        let data = {
+            "yes": { "description": "Yes", "value": "yes", "isYes": true },
+            "no": { "description": "No", "value": "no", "isNo": true },
+            "dontKnow": { "description": "DK", "value": "dontKnow", "isDontKnow": true },
+            "skip": { "description": "Skip", "value": "skip", "isSkip": true }
+        };
 
         return getPromise(data);
     }
@@ -218,12 +254,51 @@ export class Notes {
         return getPromise(data);
     }
 
+    isAnswered(value) {
+        try {
+            return value !== null && !this.yesNoDontKnowMap[value].isSkip;
+        }
+        catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
+    isYes(value) {
+        return value !== null && this.yesNoDontKnowMap[value].isYes;
+    }
+
+    isNo(value) {
+        return value !== null && this.yesNoDontKnowMap[value].isNo;
+    }
+
+    isDontKnow(value) {
+        return value !== null && this.yesNoDontKnowMap[value].isDontKnow;
+    }
+
+    isSkip(value) {
+        return value !== null && this.yesNoDontKnowMap[value].isSkip;
+    }
+
+    getMatch(values, value) {
+        if (!values || !value || !(values.length || values[value])) { return null; }
+
+        if (values.length) {
+            let val = values.filter(v => v.value === value);
+            return val.length > 0 ? val[0] : null;
+        }
+
+        if (values[value]) {
+            return values[value];
+        }
+    }
+
     getSocioeconomicStatuses() {
         let data = [
             { "description": "Poor", "value": "poor", "format": function(context) { return `a household that ${context.pronoun.subject} would describe as being poor`; } },
-            { "description": "Lower Class", "value": "lower class", "format": function(context) { return `a lower-class socioeconomic household`; } },
-            { "description": "Middle Class", "value": "middle class", "format": function(context) { return `a middle-class socioeconomic household`; } },
-            { "description": "Upper Class", "value": "upper class", "format": function(context) { return `an upper-class socioeconomic household`; } },
+            { "description": "Lower Class", "value": "lowerClass", "format": function(context) { return `a lower-class socioeconomic household`; } },
+            { "description": "Middle Class", "value": "middleClass", "format": function(context) { return `a middle-class socioeconomic household`; } },
+            { "description": "Upper Class", "value": "upperClass", "format": function(context) { return `an upper-class socioeconomic household`; } },
             { "description": "Rich", "value": "rich", "format": function(context) { return `a household that ${context.pronoun.subject} would describe as being rich`; } },
             { "description": "Skip", "value": null, "format": null }
         ];
@@ -256,10 +331,54 @@ export class Notes {
     }
 
     getAgeUnits() {
-        let data = [
-            { "description": "Years", "value": "years" },
-            { "description": "Months", "value": "months" }
-        ];
+        let data = {
+            "years": { "description": "Years", "value": "years" },
+            "months": { "description": "Months", "value": "months" }
+        };
+
+        return getPromise(data);
+    }
+
+    getEmotionalIssues() {
+        let data = {
+            "sadness": { "description": "Sadness", "format": function(context) { return `sadness`; } },
+            "overwhelmed": { "description": "Overwhelmed", "format": function(context) { return `feelings of being overwhelmed`; } },
+            "hopelessness": { "description": "Hopelessness", "format": function(context) { return `hopelessness`; } },
+            "depression": { "description": "Depression", "format": function(context) { return `depression`; } },
+            "helplessness": { "description": "Helplessness", "format": function(context) { return `helplessness`; } },
+            "labile": { "description": "Labile", "format": function(context) { return `lability`; } },
+            "worthlessness": { "description": "Worthlessness", "format": function(context) { return `worthlessness`; } },
+            "frustrated": { "description": "Frustrated", "format": function(context) { return `frustration`; } },
+            "guilt": { "description": "Guilt", "format": function(context) { return `guilt`; } },
+            "withdrawn": { "description": "Withdrawn", "format": function(context) { return `withdrawal`; } },
+            "dependency": { "description": "Dependency", "format": function(context) { return `dependency`; } },
+            "irritable": { "description": "Irritable", "format": function(context) { return `irritability`; } },
+            "anhedonia": { "description": "Anhedonia", "format": function(context) { return `anhedonia`; } },
+            "burden": { "description": "Burden", "format": function(context) { return `feelings of being a burden on others`; } },
+            "apathy": { "description": "Apathy", "format": function(context) { return `apathy`; } },
+            "amotivation": { "description": "Amotivation", "format": function(context) { return `lack of motivation`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getDepressionSymptoms() {
+        let data = {
+            "more irritable": { "description": "More irritable?", "format": function(context) { return `more irritable`; } },
+            "easily upset": { "description": "Easily upset?", "format": function(context) { return `less tolerant`; } },
+            "less tolerant": { "description": "Less tolerant?", "format": function(context) { return `easily upset`; } },
+            "less patient": { "description": "Less patient?", "format": function(context) { return `less patient`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getWorries() {
+        let data = {
+            "future": { "description": "Future", "format": function(context) { return `future`; } },
+            "recovery": { "description": "Recovery", "format": function(context) { return `recovery`; } },
+            "finances": { "description": "Finances", "format": function(context) { return `finances`; }, "isFinances": true }
+        };
 
         return getPromise(data);
     }
@@ -290,6 +409,73 @@ export class Notes {
             { "description": "Schedules", "value": "schedules" },
             { "description": "Whiteboard", "value": "whiteboard" }
         ];
+
+        return getPromise(data);
+    }
+
+    getVisualSpatialIssues() {
+        let data = {
+            "balanceIssues": { "description": "Balance Issues", "format": function(context) { return `balance issues`; } },
+            "seizures": { "description": "Seizures", "format": function(context) { return `seizures`; } },
+            "weaknessInHands": { "description": "Weakness in hands", "format": function(context) { return `weakness in ${context.pronoun.possessiveAdjective} hands`; } },
+            "fainting": { "description": "Fainting", "format": function(context) { return `fainting`; } },
+            "dizzinessIssues": { "description": "Dizziness issues", "format": function(context) { return `dizziness`; } },
+            "lightSensitivity": { "description": "Light Sensitivity", "format": function(context) { return `sensitivity to light`; } },
+            "tinnitus": { "description": "Tinnitus", "format": function(context) { return `tinnitus`; } },
+            "noiseSensitivity": { "description": "Noise sensitivity", "format": function(context) { return `sensitivity to noise`; } },
+            "changeInTaste": { "description": "Change in sense of taste", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of taste`; } },
+            "blurryVision": { "description": "Blurry vision", "format": function(context) { return `blurry vision`; } },
+            "changeInSmell": { "description": "Change in sense of smell", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of smell`; } },
+            "doubleVision": { "description": "Double vision", "format": function(context) { return `double vision`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getAtypicalIssues() {
+        let data = {
+            "itchyFingernails": { "description": "Itchy fingernails", "format": function(context) { return `itchy fingernails (atypical symptomology)`; } },
+            "blackAndWhiteTransientVision": { "description": "Black/white transient vision", "format": function(context) { return `black and white transient vision (atypical symptomology)`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getLanguageIssues() {
+        let data = {
+            "lostInConversations": { "description": "Easily lost in conversations?", "format": function(context) { return `feeling lost in conversations`; } },
+            "tipOfTongueIssues": { "description": "Tip of the Tongue issues?", "format": function(context) { return `having tip of tongue issues`; } },
+            "repeatingYourself": { "description": "Repeating yourself?", "format": function(context) { return `times where ${context.pronoun.subject} repeats ${context.pronoun.object}self`; } },
+            "askingOthersToRepeat": { "description": "Asking others to repeat?", "format": function(context) { return `times when ${context.pronoun.subject} asks others to repeat what they have said`; } },
+            "filtering": { "description": "Filtering?", "format": function(context) { return `problems with filtering`; } },
+            "wordSubstitution": { "description": "Word substitution?", "format": function(context) { return `times where ${context.pronoun.subject} tends to substitute words`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getExecutiveIssues() {
+        let data = {
+            "multiTasking": {
+                "description": "Multi-tasking",
+                "format": function(context) { return `multi-task${context.harderToMultiTask ? ` (which ${context.pronoun.subject} now finds harder)` : ``}`; }
+            },
+            "harderToMultiTask": { "description": "    Do you find it harder to multitask since the accident?", "format": function(context) { return ``; }, "isHarderToMultiTask": true, "noOutput": true },
+            "organization": { "description": "Organization", "format": function(context) { return `organize`; } },
+            "planning": { "description": "Planning", "format": function(context) { return `plan`; } },
+            "decisionMaking": { "description": "Decision Making", "format": function(context) { return `make decisions`; } },
+            "problemSolving": { "description": "Problem Solving", "format": function(context) { return `problem solve`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getInappropriateSocialBehaviors() {
+        let data = {
+            "inappropriateSocialBehaviorYellingSwearing": { "description": "Yelling/Swearing in public", "value": "yelling or swearing in public" },
+            "inappropriateSocialBehaviorViolence": { "description": "Violence", "value": "violence" },
+            "inappropriateSocialBehaviorSexual": { "description": "Sexually Inappropriate", "value": "sexually inappropriate behaviour" }
+        };
 
         return getPromise(data);
     }
@@ -438,13 +624,15 @@ export class Notes {
         'responses.personalHistory.growingUp.abuse.mental'
     )
     get yesAbuseTypes() {
+        if (!this.responses) { return []; }
+        
         let data = [
-            { "response": this.responses ? this.responses.personalHistory.growingUp.abuse.physical : null, "value": "physical" },
-            { "response": this.responses ? this.responses.personalHistory.growingUp.abuse.sexual : null, "value": "sexual" },
-            { "response": this.responses ? this.responses.personalHistory.growingUp.abuse.mental : null, "value": "mental" }
+            { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
+            { "response": this.responses.personalHistory.growingUp.abuse.sexual, "value": "sexual" },
+            { "response": this.responses.personalHistory.growingUp.abuse.mental, "value": "mental" }
         ];
 
-        return data.filter(item => item && item.response && item.response.isYes);
+        return data.filter(item => item && item.response === "yes");
     }
 
     @computedFrom(
@@ -453,13 +641,15 @@ export class Notes {
         'responses.personalHistory.growingUp.abuse.mental'
     )
     get noAbuseTypes() {
+        if (!this.responses) { return []; }
+        
         let data = [
-            { "response": this.responses ? this.responses.personalHistory.growingUp.abuse.physical : null, "value": "physical" },
-            { "response": this.responses ? this.responses.personalHistory.growingUp.abuse.sexual : null, "value": "sexual" },
-            { "response": this.responses ? this.responses.personalHistory.growingUp.abuse.mental : null, "value": "mental" }
+            { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
+            { "response": this.responses.personalHistory.growingUp.abuse.sexual, "value": "sexual" },
+            { "response": this.responses.personalHistory.growingUp.abuse.mental, "value": "mental" }
         ];
 
-        return data.filter(item => item && item.response && item.response.isNo);
+        return data.filter(item => item && item.response === "no");
     }
 
     @computedFrom(
@@ -468,13 +658,11 @@ export class Notes {
         'responses.personalHistory.growingUp.abuse.mental'
     )
     get noAbuseGrowingUp() {
-        let all = [
-            this.responses ? this.responses.personalHistory.growingUp.abuse.physical : null,
-            this.responses ? this.responses.personalHistory.growingUp.abuse.sexual : null,
-            this.responses ? this.responses.personalHistory.growingUp.abuse.mental : null
-        ].every(item => item && item.isNo);
+        if (!this.responses) { return false; }
 
-        return all;
+        return this.responses.personalHistory.growingUp.abuse.physical === "no" &&
+            this.responses.personalHistory.growingUp.abuse.sexual === "no" &&
+            this.responses.personalHistory.growingUp.abuse.mental === "no";
     }
 
     @computedFrom(
@@ -505,193 +693,141 @@ export class Notes {
                 : 0) : 0;
     }
 
-    @computedFrom(
-        'responses.personalHistory.relationship.status'
-    )
+    @computedFrom('responses.personalHistory.relationship.status')
     get isMarriedOrCommonLaw() {
         let status = this.responses ? this.responses.personalHistory.relationship.status : null;
 
         return status && (status.isMarried || status.isCommonLaw);
     }
 
-    @computedFrom(
-        'responses.psychological.emotional'
-    )
+    getEmotionalIssuesForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.psychological.emotional
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.emotionalIssues[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('responses.psychological.emotional')
     get yesEmotionalIssues() {
-        let data = this.responses ? this.responses.psychological.emotional.filter(item => item.response != null && item.response.isYes) : [];
-
-        return data;
+        return this.getEmotionalIssuesForResponses(item => this.isYes(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.emotional'
-    )
+    @computedFrom('responses.psychological.emotional')
     get noEmotionalIssues() {
-        let data = this.responses ? this.responses.psychological.emotional.filter(item => item.response != null && item.response.isNo) : [];
-
-        return data;
+        return this.getEmotionalIssuesForResponses(item => this.isNo(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.emotional'
-    )
+    @computedFrom('responses.psychological.emotional')
     get dontKnowEmotionalIssues() {
-        let data = this.responses ? this.responses.psychological.emotional.filter(item => item.response != null && item.response.isDontKnow) : [];
-
-        return data;
+        return this.getEmotionalIssuesForResponses(item => this.isDontKnow(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.emotional'
-    )
+    @computedFrom('responses.psychological.emotional')
     get anyYesEmotionalIssues() {
-        let any = this.yesEmotionalIssues.some(item => item);
-
-        return any;
+        return this.yesEmotionalIssues.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.emotional'
-    )
+    @computedFrom('responses.psychological.emotional')
     get anyNoEmotionalIssues() {
-        let any = this.noEmotionalIssues.some(item => item);
-
-        return any;
+        return this.noEmotionalIssues.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.emotional'
-    )
+    @computedFrom('responses.psychological.emotional')
     get anyDontKnowEmotionalIssues() {
-        let any = this.dontKnowEmotionalIssues.some(item => item);
-
-        return any;
+        return this.dontKnowEmotionalIssues.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.emotional'
-    )
+    @computedFrom('responses.psychological.emotional')
     get anyEmotionalIssues() {
-        let any = this.responses && this.responses.psychological.emotional.filter(item => item.response != null && item.response.value !== null).some(item => item);
-
-        return any;
+        return this.responses && this.responses.psychological.emotional.filter(item => this.isAnswered(item.response)).some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.depressionSymptoms'
-    )
+    getDepressionSymptomsForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.psychological.depressionSymptoms
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.depressionSymptoms[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('responses.psychological.depressionSymptoms')
     get yesDepressionSymptoms() {
-        let data = this.responses ? this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.isYes) : [];
-
-        return data;
+        return this.getDepressionSymptomsForResponses(item => this.isYes(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.depressionSymptoms'
-    )
+    @computedFrom('responses.psychological.depressionSymptoms')
     get noDepressionSymptoms() {
-        let data = this.responses ? this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.isNo) : [];
-
-        return data;
+        return this.getDepressionSymptomsForResponses(item => this.isNo(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.depressionSymptoms'
-    )
+    @computedFrom('responses.psychological.depressionSymptoms')
     get dontKnowDepressionSymptoms() {
-        let data = this.responses ? this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.isDontKnow) : [];
-
-        return data;
+        return this.getDepressionSymptomsForResponses(item => this.isDontKnow(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.depressionSymptoms'
-    )
+    @computedFrom('responses.psychological.depressionSymptoms')
     get anyDepressionSymptoms() {
-        let any = this.responses && this.responses.psychological.depressionSymptoms.filter(item => item.response != null && item.response.value != null).some(item => item);
-
-        return any;
+        return this.getDepressionSymptomsForResponses(item => this.isAnswered(item.response)).some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.depressionSymptoms'
-    )
+    @computedFrom('responses.psychological.depressionSymptoms')
     get anyYesDepressionSymptoms() {
-        let any = this.yesDepressionSymptoms.some(item => item);
-
-        return any;
+        return this.yesDepressionSymptoms.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.depressionSymptoms'
-    )
+    @computedFrom('responses.psychological.depressionSymptoms')
     get anyNoDepressionSymptoms() {
-        let any = this.noDepressionSymptoms.some(item => item);
-
-        return any;
+        return this.noDepressionSymptoms.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.depressionSymptoms'
-    )
+    @computedFrom('responses.psychological.depressionSymptoms')
     get anyDontKnowDepressionSymptoms() {
-        let any = this.dontKnowDepressionSymptoms.some(item => item);
-
-        return any;
+        return this.dontKnowDepressionSymptoms.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.worry'
-    )
+    getWorriesForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.psychological.worry
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.worries[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('responses.psychological.worry')
     get yesWorries() {
-        let data = this.responses ? this.responses.psychological.worry.filter(item => item.response != null && item.response.isYes) : [];
-
-        return data;
+        return this.getWorriesForResponses(item => this.isYes(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.worry'
-    )
+    @computedFrom('responses.psychological.worry')
     get noWorries() {
-        let data = this.responses ? this.responses.psychological.worry.filter(item => item.response != null && item.response.isNo) : [];
-
-        return data;
+        return this.getWorriesForResponses(item => this.isNo(item.response));
     }
 
-    @computedFrom(
-        'responses.psychological.worry'
-    )
+    @computedFrom('responses.psychological.worry')
     get anyWorries() {
-        let any = this.responses && this.responses.psychological.worry.filter(item => item.response != null && item.response.value != null).some(item => item);
-
-        return any;
+        return this.getWorriesForResponses(item => this.isAnswered(item.response)).some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.worry'
-    )
+    @computedFrom('responses.psychological.worry')
     get anyYesWorries() {
-        let any = this.yesWorries.some(item => item);
-
-        return any;
+        return this.yesWorries.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.worry'
-    )
+    @computedFrom('responses.psychological.worry')
     get anyNoWorries() {
-        let any = this.noWorries.some(item => item);
-
-        return any;
+        return this.noWorries.some(item => item);
     }
 
-    @computedFrom(
-        'responses.psychological.worry'
-    )
+    @computedFrom('responses.psychological.worry')
     get worriesAboutFinances() {
-        let worry = this.yesWorries.some(item => item.isFinances);
-
-        return worry;
+        return this.yesWorries.some(item => item.isFinances);
     }
 
     @computedFrom(
@@ -700,11 +836,13 @@ export class Notes {
         'responses.psychological.hallucinationsCommand'
     )
     get hallucinationCharacteristics() {
+        if (!this.responses) { return []; }
+
         let data = [
-            { "response": this.responses ? this.responses.psychological.hallucinationsAuditory : null, "value": function(context) { return `auditory`; } },
-            { "response": this.responses ? this.responses.psychological.hallucinationsVisual : null, "value": function(context) { return `visual`; } },
-            { "response": this.responses ? this.responses.psychological.hallucinationsCommand : null, "value": function(context) { return `command`; } }
-        ].filter(item => item.response !== null && item.response.isYes);
+            { "response": this.responses.psychological.hallucinationsAuditory, "value": function(context) { return `auditory`; } },
+            { "response": this.responses.psychological.hallucinationsVisual, "value": function(context) { return `visual`; } },
+            { "response": this.responses.psychological.hallucinationsCommand, "value": function(context) { return `command`; } }
+        ].filter(item => this.isYes(item.response));
 
         return data;
     }
@@ -720,337 +858,179 @@ export class Notes {
         return any;
     }
 
-    @computedFrom(
-        'responses.psychological.travel.travelIssues'
-    )
+    @computedFrom('responses.psychological.travel.travelIssues')
     get anyTravelIssues() {
         let any = this.responses && this.responses.psychological.travel.travelIssues.some(item => item);
 
         return any;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.memory.visual.forgetWhereaboutsOf'
-    )
+    @computedFrom('responses.neuropsychological.memory.visual.forgetWhereaboutsOf')
     get anyForgottenWhereaboutsObjects() {
         let any =
             this.responses &&
-            this.responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.value &&
+            this.isYes(this.responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects) &&
             this.responses.neuropsychological.memory.visual.forgetWhereaboutsOf.some(item => item);
 
         return any;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.memory.aids.aidsUsed'
-    )
+    @computedFrom('responses.neuropsychological.memory.aids.aidsUsed')
     get anyNonFamilyMemoryAidsUsed() {
         let any = this.responses && this.responses.neuropsychological.memory.aids.aidsUsed.some(item => item);
 
         return any;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.language.lostInConversations.response',
-        'responses.neuropsychological.language.tipOfTongueIssues.response',
-        'responses.neuropsychological.language.repeatingYourself.response',
-        'responses.neuropsychological.language.askingOthersToRepeat.response',
-        'responses.neuropsychological.language.filtering.response',
-        'responses.neuropsychological.language.wordSubstitution.response'
-    )
-    get selectedLanguageIssues() {
-        let data = this.getLanguageIssues().filter(item => item.response != null && item.response.value);
+    getLanguageIssuesForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.neuropsychological.language
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.languageIssues[item.value]);
 
         return data;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.language.lostInConversations.response',
-        'responses.neuropsychological.language.tipOfTongueIssues.response',
-        'responses.neuropsychological.language.repeatingYourself.response',
-        'responses.neuropsychological.language.askingOthersToRepeat.response',
-        'responses.neuropsychological.language.filtering.response',
-        'responses.neuropsychological.language.wordSubstitution.response'
-    )
+    @computedFrom('responses.neuropsychological.language')
+    get selectedLanguageIssues() {
+        let data = this.getLanguageIssuesForResponses(item => this.isYes(item.response));
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.language')
     get anySelectedLanguageIssues() {
         let any = this.selectedLanguageIssues.some(item => item);
 
         return any;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.language.lostInConversations.response',
-        'responses.neuropsychological.language.tipOfTongueIssues.response',
-        'responses.neuropsychological.language.repeatingYourself.response',
-        'responses.neuropsychological.language.askingOthersToRepeat.response',
-        'responses.neuropsychological.language.filtering.response',
-        'responses.neuropsychological.language.wordSubstitution.response'
-    )
+    @computedFrom('responses.neuropsychological.language')
     get unselectedLanguageIssues() {
-        let data = this.getLanguageIssues().filter(item => item.response != null && item.response.value === false);
+        let data = this.getLanguageIssuesForResponses(item => this.isNo(item.response));
 
         return data;
     }
 
-    getLanguageIssues() {
-        if (!this.responses) {
-            return [];
-        }
-
-        let data = [
-            this.responses.neuropsychological.language.lostInConversations,
-            this.responses.neuropsychological.language.tipOfTongueIssues,
-            this.responses.neuropsychological.language.repeatingYourself,
-            this.responses.neuropsychological.language.askingOthersToRepeat,
-            this.responses.neuropsychological.language.filtering,
-            this.responses.neuropsychological.language.wordSubstitution
-        ];
-
-        return data;
-    }
-
-    @computedFrom(
-        'responses.neuropsychological.language.lostInConversations.response',
-        'responses.neuropsychological.language.tipOfTongueIssues.response',
-        'responses.neuropsychological.language.repeatingYourself.response',
-        'responses.neuropsychological.language.askingOthersToRepeat.response',
-        'responses.neuropsychological.language.filtering.response',
-        'responses.neuropsychological.language.wordSubstitution.response'
-    )
+    @computedFrom('responses.neuropsychological.language')
     get anyUnselectedLanguageIssues() {
         let any = this.unselectedLanguageIssues.some(item => item);
 
         return any;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.visualSpatial.balanceIssues.response',
-        'responses.neuropsychological.visualSpatial.seizures.response',
-        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
-        'responses.neuropsychological.visualSpatial.fainting.response',
-        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
-        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
-        'responses.neuropsychological.visualSpatial.tinnitus.response',
-        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
-        'responses.neuropsychological.visualSpatial.changeInTaste.response',
-        'responses.neuropsychological.visualSpatial.blurryVision.response',
-        'responses.neuropsychological.visualSpatial.changeInSmell.response',
-        'responses.neuropsychological.visualSpatial.doubleVision.response'
-    )
+    getVisualSpatialIssuesForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.neuropsychological.visualSpatial
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.visualSpatialIssues[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.visualSpatial')
     get anySelectedVisualSpatialIssues() {
         return this.selectedVisualSpatialIssues.some(item => item);
     }
 
-    @computedFrom(
-        'responses.neuropsychological.visualSpatial.balanceIssues.response',
-        'responses.neuropsychological.visualSpatial.seizures.response',
-        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
-        'responses.neuropsychological.visualSpatial.fainting.response',
-        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
-        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
-        'responses.neuropsychological.visualSpatial.tinnitus.response',
-        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
-        'responses.neuropsychological.visualSpatial.changeInTaste.response',
-        'responses.neuropsychological.visualSpatial.blurryVision.response',
-        'responses.neuropsychological.visualSpatial.changeInSmell.response',
-        'responses.neuropsychological.visualSpatial.doubleVision.response'
-    )
+    @computedFrom('responses.neuropsychological.visualSpatial')
     get anyUnselectedVisualSpatialIssues() {
         return this.unselectedVisualSpatialIssues.some(item => item);
     }
 
-    @computedFrom(
-        'responses.neuropsychological.visualSpatial.balanceIssues.response',
-        'responses.neuropsychological.visualSpatial.seizures.response',
-        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
-        'responses.neuropsychological.visualSpatial.fainting.response',
-        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
-        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
-        'responses.neuropsychological.visualSpatial.tinnitus.response',
-        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
-        'responses.neuropsychological.visualSpatial.changeInTaste.response',
-        'responses.neuropsychological.visualSpatial.blurryVision.response',
-        'responses.neuropsychological.visualSpatial.changeInSmell.response',
-        'responses.neuropsychological.visualSpatial.doubleVision.response'
-    )
+    @computedFrom('responses.neuropsychological.visualSpatial')
     get selectedVisualSpatialIssues() {
-        return this.getVisualSpatialIssues().filter(item => item.response !== null && item.response.value);
+        return this.getVisualSpatialIssuesForResponses(item => this.isYes(item.response));
     }
 
-    @computedFrom(
-        'responses.neuropsychological.visualSpatial.balanceIssues.response',
-        'responses.neuropsychological.visualSpatial.seizures.response',
-        'responses.neuropsychological.visualSpatial.weaknessInHands.response',
-        'responses.neuropsychological.visualSpatial.fainting.response',
-        'responses.neuropsychological.visualSpatial.dizzinessIssues.response',
-        'responses.neuropsychological.visualSpatial.lightSensitivity.response',
-        'responses.neuropsychological.visualSpatial.tinnitus.response',
-        'responses.neuropsychological.visualSpatial.noiseSensitivity.response',
-        'responses.neuropsychological.visualSpatial.changeInTaste.response',
-        'responses.neuropsychological.visualSpatial.blurryVision.response',
-        'responses.neuropsychological.visualSpatial.changeInSmell.response',
-        'responses.neuropsychological.visualSpatial.doubleVision.response'
-    )
+    @computedFrom('responses.neuropsychological.visualSpatial')
     get unselectedVisualSpatialIssues() {
-        return this.getVisualSpatialIssues().filter(item => item.response !== null && item.response.value === false);
+        return this.getVisualSpatialIssuesForResponses(item => this.isNo(item.response));
     }
+    
+    getAtypicalIssuesForResponses(criteria) {
+        if (!this.responses) { return []; }
 
-    getVisualSpatialIssues() {
-        if (!this.responses) {
-            return [];
-        }
-
-        let data = [
-            this.responses.neuropsychological.visualSpatial.balanceIssues,
-            this.responses.neuropsychological.visualSpatial.seizures,
-            this.responses.neuropsychological.visualSpatial.weaknessInHands,
-            this.responses.neuropsychological.visualSpatial.fainting,
-            this.responses.neuropsychological.visualSpatial.dizzinessIssues,
-            this.responses.neuropsychological.visualSpatial.lightSensitivity,
-            this.responses.neuropsychological.visualSpatial.tinnitus,
-            this.responses.neuropsychological.visualSpatial.noiseSensitivity,
-            this.responses.neuropsychological.visualSpatial.changeInTaste,
-            this.responses.neuropsychological.visualSpatial.blurryVision,
-            this.responses.neuropsychological.visualSpatial.changeInSmell,
-            this.responses.neuropsychological.visualSpatial.doubleVision,
-            this.responses.neuropsychological.atypical.itchyFingernails,
-            this.responses.neuropsychological.atypical.blackAndWhiteTransientVision
-        ];
+        let data = this.responses.neuropsychological.atypical
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.atypicalIssues[item.value]);
 
         return data;
     }
-    
-    @computedFrom(
-        'responses.neuropsychological.atypical.itchyFingernails.response',
-        'responses.neuropsychological.atypical.blackAndWhiteTransientVision.response'
-    )
+
+    @computedFrom('responses.neuropsychological.atypical')
     get selectedAtypicalSymptomology() {
-        return this.getAtypicalSymptomology().filter(item => item.response !== null && item.response.value);
+        return this.getAtypicalIssuesForResponses(item => this.isYes(item.response));
     }
 
-    @computedFrom(
-        'responses.neuropsychological.atypical.itchyFingernails.response',
-        'responses.neuropsychological.atypical.blackAndWhiteTransientVision.response'
-    )
+    @computedFrom('responses.neuropsychological.atypical')
     get anySelectedAtypicalSymptomology() {
         return this.selectedAtypicalSymptomology.some(item => item);
     }
 
-    getAtypicalSymptomology() {
-        if (!this.responses) {
-            return [];
-        }
+    getExecutiveIssuesForResponses(criteria) {
+        if (!this.responses) { return []; }
 
-        let data = [
-            this.responses.neuropsychological.atypical.itchyFingernails,
-            this.responses.neuropsychological.atypical.blackAndWhiteTransientVision
-        ];
+        let data = this.responses.neuropsychological.executive.issues
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.executiveIssues[item.value]);
 
         return data;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.executive.issues.multiTasking.response',
-        'responses.neuropsychological.executive.issues.harderToMultiTask.response',
-        'responses.neuropsychological.executive.issues.organization.response',
-        'responses.neuropsychological.executive.issues.planning.response',
-        'responses.neuropsychological.executive.issues.decisionMaking.response',
-        'responses.neuropsychological.executive.issues.problemSolving.response'
-    )
+    @computedFrom('responses.neuropsychological.executive.issues')
+    get harderToMultiTask() {
+        return this.getExecutiveIssuesForResponses(item => this.isYes(item.response) && this.executiveIssues[item.value].isHarderToMultiTask).some(item => item);
+    }
+
+    @computedFrom('responses.neuropsychological.executive.issues')
     get anySelectedExecutiveFunctionIssues() {
-        return this.selectedExecutiveFunctionIssues.some(item => item);
+        return this.selectedExecutiveFunctionIssues.filter(item => !item.noOutput).some(item => item);
     }
 
-    @computedFrom(
-        'responses.neuropsychological.executive.issues.multiTasking.response',
-        'responses.neuropsychological.executive.issues.harderToMultiTask.response',
-        'responses.neuropsychological.executive.issues.organization.response',
-        'responses.neuropsychological.executive.issues.planning.response',
-        'responses.neuropsychological.executive.issues.decisionMaking.response',
-        'responses.neuropsychological.executive.issues.problemSolving.response'
-    )
+    @computedFrom('responses.neuropsychological.executive.issues')
     get anyUnselectedExecutiveFunctionIssues() {
-        return this.unselectedExecutiveFunctionIssues.some(item => item);
+        return this.unselectedExecutiveFunctionIssues.filter(item => !item.noOutput).some(item => item);
     }
 
-    @computedFrom(
-        'responses.neuropsychological.executive.issues.multiTasking.response',
-        'responses.neuropsychological.executive.issues.harderToMultiTask.response',
-        'responses.neuropsychological.executive.issues.organization.response',
-        'responses.neuropsychological.executive.issues.planning.response',
-        'responses.neuropsychological.executive.issues.decisionMaking.response',
-        'responses.neuropsychological.executive.issues.problemSolving.response'
-    )
+    @computedFrom('responses.neuropsychological.executive.issues')
     get selectedExecutiveFunctionIssues() {
-        let data = this.getExecutiveFunctionIssues().filter(item => item.response !== null && item.response.value);
+        let data = this.getExecutiveIssuesForResponses(item => this.isYes(item.response));
 
         return data;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.executive.issues.multiTasking.response',
-        'responses.neuropsychological.executive.issues.organization.response',
-        'responses.neuropsychological.executive.issues.planning.response',
-        'responses.neuropsychological.executive.issues.decisionMaking.response',
-        'responses.neuropsychological.executive.issues.problemSolving.response'
-    )
+    @computedFrom('responses.neuropsychological.executive.issues')
     get unselectedExecutiveFunctionIssues() {
-        let data = this.getExecutiveFunctionIssues().filter(item => item.response !== null && item.response.value === false);
+        let data = this.getExecutiveIssuesForResponses(item => this.isNo(item.response));
 
         return data;
     }
 
-    getExecutiveFunctionIssues() {
-        if (!this.responses) {
-            return [];
-        }
+    getInappropriateSocialBehaviorsForResponses(criteria) {
+        if (!this.responses) { return []; }
 
-        let data = [
-            this.responses.neuropsychological.executive.issues.multiTasking,
-            this.responses.neuropsychological.executive.issues.harderToMultiTask,
-            this.responses.neuropsychological.executive.issues.planning,
-            this.responses.neuropsychological.executive.issues.organization,
-            this.responses.neuropsychological.executive.issues.decisionMaking,
-            this.responses.neuropsychological.executive.issues.problemSolving
-        ];
+        let data = this.responses.neuropsychological.executive.inappropriateSocialBehaviors
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.inappropriateSocialBehaviors[item.value]);
 
         return data;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.executive.inappropriateSocialBehaviorYellingSwearing.response',
-        'responses.neuropsychological.executive.inappropriateSocialBehaviorViolence.response',
-        'responses.neuropsychological.executive.inappropriateSocialBehaviorSexual.response'
-    )
+    @computedFrom('responses.neuropsychological.executive.inappropriateSocialBehaviors')
     get selectedInappropriateSocialBehavior() {
-        let data = this.getInappropriateSocialBehaviors().filter(item => item.response !== null && item.response.value);
-
-        return data;
-    }
-
-    getInappropriateSocialBehaviors() {
-        if (!this.responses) {
-            return [];
-        }
-
-        let data = [
-            this.responses.neuropsychological.executive.inappropriateSocialBehaviorYellingSwearing,
-            this.responses.neuropsychological.executive.inappropriateSocialBehaviorViolence,
-            this.responses.neuropsychological.executive.inappropriateSocialBehaviorSexual
-        ];
+        let data = this.getInappropriateSocialBehaviorsForResponses(item => this.isYes(item.response));
 
         return data;
     }
 
     any(items) {
-        let any = items && items.some(item => item);
-
-        return any;
+        return items && items.some(item => item);
     }
 
-    @computedFrom(
-        'responses.neuropsychological.currentState.alone.issues'
-    )
+    @computedFrom('responses.neuropsychological.currentState.alone.issues')
     get aloneIssues() {
         let aloneAbilityProblem =
             this.responses &&
@@ -1063,13 +1043,9 @@ export class Notes {
         return data;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.currentState.alone.issues'
-    )
+    @computedFrom('responses.neuropsychological.currentState.alone.issues')
     get anyAloneIssues() {
-        let any = this.aloneIssues.some(item => item);
-
-        return any;
+        return this.any(this.aloneIssues);
     }
 
     @computedFrom(
@@ -1078,9 +1054,7 @@ export class Notes {
         'responses.neuropsychological.currentState.travel.taxi'
     )
     get anyCurrentStateTravelAbility() {
-        if (!this.responses) {
-            return [];
-        }
+        if (!this.responses) { return []; }
 
         let data = [
             this.responses.neuropsychological.currentState.travel.before,
@@ -1093,9 +1067,7 @@ export class Notes {
         return any;
     }
 
-    @computedFrom(
-        'responses.neuropsychological.currentState.preAccidentRecreationalActivities'
-    )
+    @computedFrom('responses.neuropsychological.currentState.preAccidentRecreationalActivities')
     get anyPreAccidentRecreationalActivities() {
         let any = this.responses && this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.some(item => item && item.length > 0);
 
@@ -1201,12 +1173,296 @@ function getResponsesString(responses) {
 }
 
 function getResponses(responsesData) {
-    return responsesData ? JSON.parse(responsesData, reviver) : getNewResponses();
+    let responses = responsesData ? JSON.parse(responsesData, reviver) : getNewResponses();
+
+    return upgrade(responses, getCurrentVersion());
+}
+
+function getCurrentVersion() {
+    return "4";
+}
+
+function upgrade(responses, toVersion) {
+    let current = parseInt(responses.version || "1", 10);
+    let target = parseInt(toVersion, 10);
+
+    let upgradedResponses = responses;
+
+    for (let i = current + 1; i <= target; i++) {
+        upgradedResponses = upgradeIfApplicable(upgradedResponses, i - 1, i);
+    }
+
+    return upgradedResponses;
+}
+
+function upgrade_1_to_2(responses) {
+
+    if (responses.neuropsychological.physical.sleep.skipHoursOfSleepBeforeAccident) {
+        responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident = responses.neuropsychological.physical.sleep.skipHoursOfSleepBeforeAccident;
+        delete responses.neuropsychological.physical.sleep.skipHoursOfSleepBeforeAccident;
+    }
+    
+    if (responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident) {
+        responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident = responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident;
+        delete responses.neuropsychological.physical.sleep.hoursOfSleepBeforeAccident;
+    }
+
+    if (responses.neuropsychological.physical.sleep.skipHoursOfSleepCurrent) {
+        responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent = responses.neuropsychological.physical.sleep.skipHoursOfSleepCurrent;
+        delete responses.neuropsychological.physical.sleep.skipHoursOfSleepCurrent;
+    }
+    
+    if (responses.neuropsychological.physical.sleep.hoursOfSleepCurrent) {
+        responses.neuropsychological.physical.sleep.amountOfSleepCurrent = responses.neuropsychological.physical.sleep.hoursOfSleepCurrent;
+        delete responses.neuropsychological.physical.sleep.hoursOfSleepCurrent;
+    }
+
+    responses.version = "2";
+
+    return responses;
+}
+
+function upgrade_2_to_3(responses) {
+    //fix emotional issues, depression symptoms, worries
+    for (let issue of responses.psychological.emotional) {
+        if (issue.description) {
+            delete issue.description;
+        }
+
+        if (issue.format) {
+            delete issue.format;
+        }
+    }
+
+    for (let symptom of responses.psychological.depressionSymptoms) {
+        if (symptom.description) {
+            delete symptom.description;
+        }
+
+        if (symptom.format) {
+            delete symptom.format;
+        }
+    }
+
+    for (let worry of responses.psychological.worry) {
+        if (worry.description) {
+            delete worry.description;
+        }
+
+        if (worry.format) {
+            delete worry.format;
+        }
+    }
+
+    //fix inappropriate social behavior
+    let inappropriateTarget = [];
+    if (responses.neuropsychological.executive.inappropriateSocialBehaviorYellingSwearing) {
+        inappropriateTarget.push({ "response": responses.neuropsychological.executive.inappropriateSocialBehaviorYellingSwearing.response, "value": "inappropriateSocialBehaviorYellingSwearing" });
+        delete responses.neuropsychological.executive.inappropriateSocialBehaviorYellingSwearing;
+    }
+    
+    if (responses.neuropsychological.executive.inappropriateSocialBehaviorViolence) {
+        inappropriateTarget.push({ "response": responses.neuropsychological.executive.inappropriateSocialBehaviorViolence.response, "value": "inappropriateSocialBehaviorViolence" });
+        delete responses.neuropsychological.executive.inappropriateSocialBehaviorViolence;
+    }
+    
+    if (responses.neuropsychological.executive.inappropriateSocialBehaviorSexual) {
+        inappropriateTarget.push({ "response": responses.neuropsychological.executive.inappropriateSocialBehaviorSexual.response, "value": "inappropriateSocialBehaviorSexual" });
+        delete responses.neuropsychological.executive.inappropriateSocialBehaviorSexual;
+    }
+    responses.neuropsychological.executive.inappropriateSocialBehaviors = inappropriateTarget;
+    
+    //fix visual spatial issues
+    if (!responses.neuropsychological.visualSpatial.length) {
+        let visualSpatialTarget = [];
+        for (let property in responses.neuropsychological.visualSpatial) {
+            visualSpatialTarget.push({ "response": responses.neuropsychological.visualSpatial[property].response, "value": property });
+        }
+        responses.neuropsychological.visualSpatial = visualSpatialTarget;    
+    }
+
+    //fix atypical issues
+    if (!responses.neuropsychological.atypical.length) {
+        let atypicalTarget = [];
+        for (let property in responses.neuropsychological.atypical) {
+            atypicalTarget.push({ "response": responses.neuropsychological.atypical[property].response, "value": property });
+        }
+        responses.neuropsychological.atypical = atypicalTarget;    
+    }
+
+    //fix language issues
+    if (!responses.neuropsychological.language.length) {
+        let languageIssuesTarget = [];
+        for (let property in responses.neuropsychological.language) {
+            languageIssuesTarget.push({ "response": responses.neuropsychological.language[property].response, "value": property });
+        }
+        responses.neuropsychological.language = languageIssuesTarget;
+    }
+
+    //fix executive issues
+    if (!responses.neuropsychological.executive.issues.length) {
+        let executiveIssuesTarget = [];
+        for (let property in responses.neuropsychological.executive.issues) {
+            executiveIssuesTarget.push({ "response": responses.neuropsychological.executive.issues[property].response, "value": property });
+        }
+        responses.neuropsychological.executive.issues = executiveIssuesTarget;
+    }
+
+    responses.version = "3";
+
+    return responses;
+}
+
+function getYesNoDontKnowConversion(response) {
+    if (response) {
+        if (response.isYes) {
+            return "yes";
+        }
+        else if (response.isNo) {
+            return "no";
+        }
+        else if (response.dontKnow) {
+            return "dontKnow";
+        }  
+        else if (response.isSkip) {
+            return "skip";
+        }  
+    }
+    
+    return null;
+}
+
+function upgrade_3_to_4(responses) {
+
+    //fix neurosisSymptoms
+    if (responses.psychological.neurosisSymptoms.anxiety && responses.psychological.neurosisSymptoms.anxiety.description) {
+        responses.psychological.neurosisSymptoms.anxiety = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.anxiety);
+    }
+
+    if (responses.psychological.neurosisSymptoms.stress && responses.psychological.neurosisSymptoms.stress.description) {
+        responses.psychological.neurosisSymptoms.stress = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.stress);
+    }
+
+    if (responses.psychological.neurosisSymptoms.inabilityToRelax && responses.psychological.neurosisSymptoms.inabilityToRelax.description) {
+        responses.psychological.neurosisSymptoms.inabilityToRelax = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.inabilityToRelax);
+    }
+
+    if (responses.psychological.neurosisSymptoms.fearOfWorst && responses.psychological.neurosisSymptoms.fearOfWorst.description) {
+        responses.psychological.neurosisSymptoms.fearOfWorst = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.fearOfWorst);
+    }
+
+    if (responses.personalHistory.growingUp.abuse.physical && responses.personalHistory.growingUp.abuse.physical.description) {responses.personalHistory.growingUp.abuse.physical = getYesNoDontKnowConversion(responses.personalHistory.growingUp.abuse.physical);}
+    if (responses.personalHistory.growingUp.abuse.sexual && responses.personalHistory.growingUp.abuse.sexual.description) {responses.personalHistory.growingUp.abuse.sexual = getYesNoDontKnowConversion(responses.personalHistory.growingUp.abuse.sexual);}
+    if (responses.personalHistory.growingUp.abuse.mental && responses.personalHistory.growingUp.abuse.mental.description) {responses.personalHistory.growingUp.abuse.mental = getYesNoDontKnowConversion(responses.personalHistory.growingUp.abuse.mental);}
+    if (responses.personalHistory.growingUp.developmentalMilestoneIssues && responses.personalHistory.growingUp.developmentalMilestoneIssues.description) {responses.personalHistory.growingUp.developmentalMilestoneIssues = getYesNoDontKnowConversion(responses.personalHistory.growingUp.developmentalMilestoneIssues);}
+    if (responses.personalHistory.father.isAlive && responses.personalHistory.father.isAlive.description) {responses.personalHistory.father.isAlive = getYesNoDontKnowConversion(responses.personalHistory.father.isAlive);}
+    if (responses.personalHistory.mother.isAlive && responses.personalHistory.mother.isAlive.description) {responses.personalHistory.mother.isAlive = getYesNoDontKnowConversion(responses.personalHistory.mother.isAlive);}
+    if (responses.personalHistory.didParentsSeparateOrDivorce && responses.personalHistory.didParentsSeparateOrDivorce.description) {responses.personalHistory.didParentsSeparateOrDivorce = getYesNoDontKnowConversion(responses.personalHistory.didParentsSeparateOrDivorce);}
+    if (responses.personalHistory.familyHistoryOfNeurologicalOrPsychiatricDisease && responses.personalHistory.familyHistoryOfNeurologicalOrPsychiatricDisease.description) {responses.personalHistory.familyHistoryOfNeurologicalOrPsychiatricDisease = getYesNoDontKnowConversion(responses.personalHistory.familyHistoryOfNeurologicalOrPsychiatricDisease);}
+    if (responses.personalHistory.relationship.isAbusive && responses.personalHistory.relationship.isAbusive.description) {responses.personalHistory.relationship.isAbusive = getYesNoDontKnowConversion(responses.personalHistory.relationship.isAbusive);}
+    if (responses.personalHistory.relationship.previousRelationshipAbusive && responses.personalHistory.relationship.previousRelationshipAbusive.description) {responses.personalHistory.relationship.previousRelationshipAbusive = getYesNoDontKnowConversion(responses.personalHistory.relationship.previousRelationshipAbusive);}
+    if (responses.personalHistory.relationship.hadPriorSeriousRelationship && responses.personalHistory.relationship.hadPriorSeriousRelationship.description) {responses.personalHistory.relationship.hadPriorSeriousRelationship = getYesNoDontKnowConversion(responses.personalHistory.relationship.hadPriorSeriousRelationship);}
+    if (responses.personalHistory.isFamilySupportive && responses.personalHistory.isFamilySupportive.description) {responses.personalHistory.isFamilySupportive = getYesNoDontKnowConversion(responses.personalHistory.isFamilySupportive);}
+    if (responses.psychological.selfHarm.pastThoughts.response && responses.psychological.selfHarm.pastThoughts.response.description) {responses.psychological.selfHarm.pastThoughts.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.pastThoughts.response);}
+    if (responses.psychological.selfHarm.currentThoughts.response && responses.psychological.selfHarm.currentThoughts.response.description) {responses.psychological.selfHarm.currentThoughts.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.currentThoughts.response);}
+    if (responses.psychological.selfHarm.planToAct.response && responses.psychological.selfHarm.planToAct.response.description) {responses.psychological.selfHarm.planToAct.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.planToAct.response);}
+    if (responses.psychological.selfHarm.toldDoctor.response && responses.psychological.selfHarm.toldDoctor.response.description) {responses.psychological.selfHarm.toldDoctor.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.toldDoctor.response);}
+    if (responses.psychological.selfHarm.hurtSelfOnPurpose.response && responses.psychological.selfHarm.hurtSelfOnPurpose.response.description) {responses.psychological.selfHarm.hurtSelfOnPurpose.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.hurtSelfOnPurpose.response);}
+    if (responses.psychological.selfHarm.attemptedToEndLife.response && responses.psychological.selfHarm.attemptedToEndLife.response.description) {responses.psychological.selfHarm.attemptedToEndLife.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.attemptedToEndLife.response);}
+    if (responses.psychological.selfHarm.interestedInTreatment.response && responses.psychological.selfHarm.interestedInTreatment.response.description) {responses.psychological.selfHarm.interestedInTreatment.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.interestedInTreatment.response);}
+    if (responses.psychological.neurosisSymptoms.anxiety && responses.psychological.neurosisSymptoms.anxiety.description) {responses.psychological.neurosisSymptoms.anxiety = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.anxiety);}
+    if (responses.psychological.neurosisSymptoms.stress && responses.psychological.neurosisSymptoms.stress.description) {responses.psychological.neurosisSymptoms.stress = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.stress);}
+    if (responses.psychological.neurosisSymptoms.inabilityToRelax && responses.psychological.neurosisSymptoms.inabilityToRelax.description) {responses.psychological.neurosisSymptoms.inabilityToRelax = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.inabilityToRelax);}
+    if (responses.psychological.neurosisSymptoms.fearOfWorst && responses.psychological.neurosisSymptoms.fearOfWorst.description) {responses.psychological.neurosisSymptoms.fearOfWorst = getYesNoDontKnowConversion(responses.psychological.neurosisSymptoms.fearOfWorst);}
+    if (responses.psychological.panicAttacksCurrent && responses.psychological.panicAttacksCurrent.description) {responses.psychological.panicAttacksCurrent = getYesNoDontKnowConversion(responses.psychological.panicAttacksCurrent);}
+    if (responses.psychological.panicAttacksPrior && responses.psychological.panicAttacksPrior.description) {responses.psychological.panicAttacksPrior = getYesNoDontKnowConversion(responses.psychological.panicAttacksPrior);}
+    if (responses.psychological.heightenedStartleResponse && responses.psychological.heightenedStartleResponse.description) {responses.psychological.heightenedStartleResponse = getYesNoDontKnowConversion(responses.psychological.heightenedStartleResponse);}
+    if (responses.psychological.flashbacksAfter && responses.psychological.flashbacksAfter.description) {responses.psychological.flashbacksAfter = getYesNoDontKnowConversion(responses.psychological.flashbacksAfter);}
+    if (responses.psychological.flashbacksCurrent && responses.psychological.flashbacksCurrent.description) {responses.psychological.flashbacksCurrent = getYesNoDontKnowConversion(responses.psychological.flashbacksCurrent);}
+    if (responses.psychological.nightmaresAfter && responses.psychological.nightmaresAfter.description) {responses.psychological.nightmaresAfter = getYesNoDontKnowConversion(responses.psychological.nightmaresAfter);}
+    if (responses.psychological.nightmaresCurrent && responses.psychological.nightmaresCurrent.description) {responses.psychological.nightmaresCurrent = getYesNoDontKnowConversion(responses.psychological.nightmaresCurrent);}
+    if (responses.psychological.delusionalIdeation && responses.psychological.delusionalIdeation.description) {responses.psychological.delusionalIdeation = getYesNoDontKnowConversion(responses.psychological.delusionalIdeation);}
+    if (responses.psychological.hallucinations && responses.psychological.hallucinations.description) {responses.psychological.hallucinations = getYesNoDontKnowConversion(responses.psychological.hallucinations);}
+    if (responses.psychological.hallucinationsAuditory && responses.psychological.hallucinationsAuditory.description) {responses.psychological.hallucinationsAuditory = getYesNoDontKnowConversion(responses.psychological.hallucinationsAuditory);}
+    if (responses.psychological.hallucinationsVisual && responses.psychological.hallucinationsVisual.description) {responses.psychological.hallucinationsVisual = getYesNoDontKnowConversion(responses.psychological.hallucinationsVisual);}
+    if (responses.psychological.hallucinationsCommand && responses.psychological.hallucinationsCommand.description) {responses.psychological.hallucinationsCommand = getYesNoDontKnowConversion(responses.psychological.hallucinationsCommand);}
+    if (responses.psychological.travel.abilityToTravel && responses.psychological.travel.abilityToTravel.description) {responses.psychological.travel.abilityToTravel = getYesNoDontKnowConversion(responses.psychological.travel.abilityToTravel);}
+    if (responses.psychological.travel.usePhantomBrake && responses.psychological.travel.usePhantomBrake.description) {responses.psychological.travel.usePhantomBrake = getYesNoDontKnowConversion(responses.psychological.travel.usePhantomBrake);}
+    if (responses.psychological.travel.vigilantWhenTravelling && responses.psychological.travel.vigilantWhenTravelling.description) {responses.psychological.travel.vigilantWhenTravelling = getYesNoDontKnowConversion(responses.psychological.travel.vigilantWhenTravelling);}
+    if (responses.psychological.travel.avoidSceneOfAccident && responses.psychological.travel.avoidSceneOfAccident.description) {responses.psychological.travel.avoidSceneOfAccident = getYesNoDontKnowConversion(responses.psychological.travel.avoidSceneOfAccident);}
+    if (responses.neuropsychological.problems.concentration && responses.neuropsychological.problems.concentration.description) {responses.neuropsychological.problems.concentration = getYesNoDontKnowConversion(responses.neuropsychological.problems.concentration);}
+    if (responses.neuropsychological.problems.memory && responses.neuropsychological.problems.memory.description) {responses.neuropsychological.problems.memory = getYesNoDontKnowConversion(responses.neuropsychological.problems.memory);}
+    if (responses.neuropsychological.problems.shortTermMemory && responses.neuropsychological.problems.shortTermMemory.description) {responses.neuropsychological.problems.shortTermMemory = getYesNoDontKnowConversion(responses.neuropsychological.problems.shortTermMemory);}
+    if (responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects && responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects.description) {responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects = getYesNoDontKnowConversion(responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects);}
+    if (responses.neuropsychological.memory.working.walkIntoRoomAndForgetWhyFrequently && responses.neuropsychological.memory.working.walkIntoRoomAndForgetWhyFrequently.description) {responses.neuropsychological.memory.working.walkIntoRoomAndForgetWhyFrequently = getYesNoDontKnowConversion(responses.neuropsychological.memory.working.walkIntoRoomAndForgetWhyFrequently);}
+    if (responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently && responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently.description) {responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently = getYesNoDontKnowConversion(responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently);}
+    if (responses.neuropsychological.memory.aids.useAids && responses.neuropsychological.memory.aids.useAids.description) {responses.neuropsychological.memory.aids.useAids = getYesNoDontKnowConversion(responses.neuropsychological.memory.aids.useAids);}
+    if (responses.neuropsychological.memory.autobiographical.personalInfo && responses.neuropsychological.memory.autobiographical.personalInfo.description) {responses.neuropsychological.memory.autobiographical.personalInfo = getYesNoDontKnowConversion(responses.neuropsychological.memory.autobiographical.personalInfo);}
+    if (responses.neuropsychological.memory.medication.errors && responses.neuropsychological.memory.medication.errors.description) {responses.neuropsychological.memory.medication.errors = getYesNoDontKnowConversion(responses.neuropsychological.memory.medication.errors);}
+    if (responses.neuropsychological.memory.medication.usesDosette && responses.neuropsychological.memory.medication.usesDosette.description) {responses.neuropsychological.memory.medication.usesDosette = getYesNoDontKnowConversion(responses.neuropsychological.memory.medication.usesDosette);}
+    if (responses.neuropsychological.memory.medication.usesBlisterPacks && responses.neuropsychological.memory.medication.usesBlisterPacks.description) {responses.neuropsychological.memory.medication.usesBlisterPacks = getYesNoDontKnowConversion(responses.neuropsychological.memory.medication.usesBlisterPacks);}
+    if (responses.neuropsychological.attention.abilityToFocus && responses.neuropsychological.attention.abilityToFocus.description) {responses.neuropsychological.attention.abilityToFocus = getYesNoDontKnowConversion(responses.neuropsychological.attention.abilityToFocus);}
+    if (responses.neuropsychological.attention.abilityToSustainAttention && responses.neuropsychological.attention.abilityToSustainAttention.description) {responses.neuropsychological.attention.abilityToSustainAttention = getYesNoDontKnowConversion(responses.neuropsychological.attention.abilityToSustainAttention);}
+    if (responses.neuropsychological.attention.areMoreDistractible && responses.neuropsychological.attention.areMoreDistractible.description) {responses.neuropsychological.attention.areMoreDistractible = getYesNoDontKnowConversion(responses.neuropsychological.attention.areMoreDistractible);}
+    if (responses.neuropsychological.attention.loseTrackWhenReading && responses.neuropsychological.attention.loseTrackWhenReading.description) {responses.neuropsychological.attention.loseTrackWhenReading = getYesNoDontKnowConversion(responses.neuropsychological.attention.loseTrackWhenReading);}
+    if (responses.neuropsychological.attention.needToReRead && responses.neuropsychological.attention.needToReRead.description) {responses.neuropsychological.attention.needToReRead = getYesNoDontKnowConversion(responses.neuropsychological.attention.needToReRead);}
+    if (responses.neuropsychological.attention.loseTrackWhenWatchingTv && responses.neuropsychological.attention.loseTrackWhenWatchingTv.description) {responses.neuropsychological.attention.loseTrackWhenWatchingTv = getYesNoDontKnowConversion(responses.neuropsychological.attention.loseTrackWhenWatchingTv);}
+    if (responses.neuropsychological.executive.inappropriateSocialBehavior && responses.neuropsychological.executive.inappropriateSocialBehavior.description) {responses.neuropsychological.executive.inappropriateSocialBehavior = getYesNoDontKnowConversion(responses.neuropsychological.executive.inappropriateSocialBehavior);}
+    if (responses.neuropsychological.physical.weight.appetiteAffected && responses.neuropsychological.physical.weight.appetiteAffected.description) {responses.neuropsychological.physical.weight.appetiteAffected = getYesNoDontKnowConversion(responses.neuropsychological.physical.weight.appetiteAffected);}
+    if (responses.neuropsychological.physical.weight.changed && responses.neuropsychological.physical.weight.changed.description) {responses.neuropsychological.physical.weight.changed = getYesNoDontKnowConversion(responses.neuropsychological.physical.weight.changed);}
+    if (responses.neuropsychological.physical.energy.lessEnergy && responses.neuropsychological.physical.energy.lessEnergy.description) {responses.neuropsychological.physical.energy.lessEnergy = getYesNoDontKnowConversion(responses.neuropsychological.physical.energy.lessEnergy);}
+    if (responses.neuropsychological.physical.energy.libidoAffected && responses.neuropsychological.physical.energy.libidoAffected.description) {responses.neuropsychological.physical.energy.libidoAffected = getYesNoDontKnowConversion(responses.neuropsychological.physical.energy.libidoAffected);}
+    if (responses.neuropsychological.physical.sleep.sleepAffected && responses.neuropsychological.physical.sleep.sleepAffected.description) {responses.neuropsychological.physical.sleep.sleepAffected = getYesNoDontKnowConversion(responses.neuropsychological.physical.sleep.sleepAffected);}
+    if (responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident && responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident.description) {responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident);}
+    if (responses.neuropsychological.physical.sleep.brokenSleep && responses.neuropsychological.physical.sleep.brokenSleep.description) {responses.neuropsychological.physical.sleep.brokenSleep = getYesNoDontKnowConversion(responses.neuropsychological.physical.sleep.brokenSleep);}
+    if (responses.neuropsychological.physical.sleep.fatiguedWhenWaking && responses.neuropsychological.physical.sleep.fatiguedWhenWaking.description) {responses.neuropsychological.physical.sleep.fatiguedWhenWaking = getYesNoDontKnowConversion(responses.neuropsychological.physical.sleep.fatiguedWhenWaking);}
+    if (responses.neuropsychological.physical.sleep.takeNaps && responses.neuropsychological.physical.sleep.takeNaps.description) {responses.neuropsychological.physical.sleep.takeNaps = getYesNoDontKnowConversion(responses.neuropsychological.physical.sleep.takeNaps);}
+    if (responses.neuropsychological.physical.headaches.experienceHeadachesCurrent && responses.neuropsychological.physical.headaches.experienceHeadachesCurrent.description) {responses.neuropsychological.physical.headaches.experienceHeadachesCurrent = getYesNoDontKnowConversion(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent);}
+    if (responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident && responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident.description) {responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident);}
+    if (responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident && responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident.description) {responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident);}
+    if (responses.neuropsychological.physical.headaches.experienceMigrainesCurrent && responses.neuropsychological.physical.headaches.experienceMigrainesCurrent.description) {responses.neuropsychological.physical.headaches.experienceMigrainesCurrent = getYesNoDontKnowConversion(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent);}
+    if (responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident && responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident.description) {responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident);}
+    if (responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident && responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident.description) {responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident);}
+    if (responses.neuropsychological.physical.pain.currentlyExperiencePain && responses.neuropsychological.physical.pain.currentlyExperiencePain.description) {responses.neuropsychological.physical.pain.currentlyExperiencePain = getYesNoDontKnowConversion(responses.neuropsychological.physical.pain.currentlyExperiencePain);}
+    if (responses.neuropsychological.physical.pain.experiencePainPriorToAccident && responses.neuropsychological.physical.pain.experiencePainPriorToAccident.description) {responses.neuropsychological.physical.pain.experiencePainPriorToAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.pain.experiencePainPriorToAccident);}
+    if (responses.neuropsychological.currentState.alone.inContactFrequently && responses.neuropsychological.currentState.alone.inContactFrequently.description) {responses.neuropsychological.currentState.alone.inContactFrequently = getYesNoDontKnowConversion(responses.neuropsychological.currentState.alone.inContactFrequently);}
+    if (responses.neuropsychological.currentState.leisureAbility && responses.neuropsychological.currentState.leisureAbility.description) {responses.neuropsychological.currentState.leisureAbility = getYesNoDontKnowConversion(responses.neuropsychological.currentState.leisureAbility);}
+
+    let yesNoResponses2 = [
+        responses.psychological.emotional,
+        responses.psychological.depressionSymptoms,
+        responses.psychological.worry,
+        responses.neuropsychological.language,
+        responses.neuropsychological.executive.issues,
+        responses.neuropsychological.executive.inappropriateSocialBehaviors,
+        responses.neuropsychological.visualSpatial,
+        responses.neuropsychological.atypical
+    ];
+
+    for (let i = 0; i < yesNoResponses2.length; i++) {
+        for (let j = 0; j < yesNoResponses2[i].length; j++) {
+            yesNoResponses2[i][j].response = getYesNoDontKnowConversion(yesNoResponses2[i][j].response);
+        }
+    }
+
+    responses.version = "4";
+
+    return responses;
+}
+
+function upgradeIfApplicable(responses, fromVersion, toVersion) {
+    let functionName = "upgrade_" + fromVersion + "_to_" + toVersion;
+
+    if (isFunction(eval(functionName))) {
+        return eval(functionName)(responses);
+    }
+
+    return responses;
 }
 
 function getNewResponses() {
     return {
-        "version": "1",
+        "version": getCurrentVersion(),
         "personalHistory": {
             "locationOfBirth": null,
             "timeOfArrivalInCanada": null,
@@ -1275,22 +1531,22 @@ function getNewResponses() {
         },
         "psychological": {
             "emotional": [
-                { "description": "Sadness", "response": null, "value": "sadness", "format": function(context) { return `sadness`; } },
-                { "description": "Overwhelmed", "response": null, "value": "overwhelmed", "format": function(context) { return `feeling of being overwhelmed`; } },
-                { "description": "Hopelessness","response": null, "value": "hopelessness", "format": function(context) { return `hopelessness`; } },
-                { "description": "Depression", "response": null, "value": "depression", "format": function(context) { return `depression`; } },
-                { "description": "Helplessness", "response": null, "value": "helplessness", "format": function(context) { return `helplessness`; } },
-                { "description": "Labile", "response": null, "value": "labile", "format": function(context) { return `a rapidly changing mood`; } },
-                { "description": "Worthlessness", "response": null, "value": "worthlessness", "format": function(context) { return `worthlessness`; } },
-                { "description": "Frustrated", "response": null, "value": "frustrated", "format": function(context) { return `frustration`; } },
-                { "description": "Guilt", "response": null, "value": "guilt", "format": function(context) { return `guilt`; } },
-                { "description": "Withdrawn", "response": null, "value": "withdrawn", "format": function(context) { return `social withdrawal`; } },
-                { "description": "Dependency", "response": null, "value": "dependency", "format": function(context) { return `feeling of dependence on others`; } },
-                { "description": "Irritable", "response": null, "value": "irritable", "format": function(context) { return `irritability`; } },
-                { "description": "Anhedonia", "response": null, "value": "anhedonia", "format": function(context) { return `an inability to feel pleasure`; } },
-                { "description": "Burden", "response": null, "value": "burden", "format": function(context) { return `issues with feeling like a burden on others`; } },
-                { "description": "Apathy", "response": null, "value": "apathy", "format": function(context) { return `lack of interest`; } },
-                { "description": "Amotivation", "response": null, "value": "amotivation", "format": function(context) { return `lack of motivation`; } }
+                { "response": null, "value": "sadness" },
+                { "response": null, "value": "overwhelmed" },
+                { "response": null, "value": "hopelessness" },
+                { "response": null, "value": "depression" },
+                { "response": null, "value": "helplessness" },
+                { "response": null, "value": "labile" },
+                { "response": null, "value": "worthlessness" },
+                { "response": null, "value": "frustrated" },
+                { "response": null, "value": "guilt" },
+                { "response": null, "value": "withdrawn" },
+                { "response": null, "value": "dependency" },
+                { "response": null, "value": "irritable" },
+                { "response": null, "value": "anhedonia" },
+                { "response": null, "value": "burden" },
+                { "response": null, "value": "apathy" },
+                { "response": null, "value": "amotivation" }
             ],
             "selfHarm": {
                 "pastThoughts": { "response": null },
@@ -1302,10 +1558,10 @@ function getNewResponses() {
                 "interestedInTreatment": { "response": null }
             },
             "depressionSymptoms": [
-                { "description": "More irritable?", "response": null, "value": "more irritable", "format": function(context) { return `more irritable`; } },
-                { "description": "Easily upset?", "response": null, "value": "easily upset", "format": function(context) { return `less tolerant`; } },
-                { "description": "Less tolerant?", "response": null, "value": "less tolerant", "format": function(context) { return `easily upset`; } },
-                { "description": "Less patient?", "response": null, "value": "less patient", "format": function(context) { return `less patient`; } }
+                { "response": null, "value": "more irritable" },
+                { "response": null, "value": "easily upset" },
+                { "response": null, "value": "less tolerant" },
+                { "response": null, "value": "less patient" }
             ],
             "neurosisSymptoms": {
                 "anxiety": null,
@@ -1314,9 +1570,9 @@ function getNewResponses() {
                 "fearOfWorst": null
             },
             "worry": [
-                { "description": "Future", "response": null, "value": "future", "format": function(context) { return `future`; } },
-                { "description": "Recovery", "response": null, "value": "recovery", "format": function(context) { return `recovery`; } },
-                { "description": "Finances", "response": null, "value": "finances", "format": function(context) { return `finances`; }, "isFinances": true }
+                { "response": null, "value": "future" },
+                { "response": null, "value": "recovery" },
+                { "response": null, "value": "finances" }
             ],
             "dontKnowAmountOfDebt": false,
             "amountOfDebt": null,
@@ -1374,14 +1630,14 @@ function getNewResponses() {
                     "usesBlisterPacks": null
                 }
             },
-            "language": {
-                "lostInConversations": { "response": null, "value": "lost in conversations", "format": function(pronoun) { return `easily getting lost in conversations`; } },
-                "tipOfTongueIssues": { "response": null, "value": "tip of tongue issues", "format": function(pronoun) { return `having tip of the tongue issues`; } },
-                "repeatingYourself": { "response": null, "value": "repeating yourself", "format": function(pronoun) { return `times where ${pronoun.subject} repeats ${pronoun.object}self`; } },
-                "askingOthersToRepeat": { "response": null, "value": "asking others to repeat", "format": function(pronoun) { return `times when ${pronoun.subject} asks others to repeat what they have said`; } },
-                "filtering": { "response": null, "value": "filtering", "format": function(pronoun) { return `problems with filtering`; } },
-                "wordSubstitution": { "response": null, "value": "word substitution", "format": function(pronoun) { return `times where ${pronoun.subject} tends to substitute words`; } }
-            },
+            "language": [
+                { "response": null, "value": "lostInConversations" },
+                { "response": null, "value": "tipOfTongueIssues" },
+                { "response": null, "value": "repeatingYourself" },
+                { "response": null, "value": "askingOthersToRepeat" },
+                { "response": null, "value": "filtering" },
+                { "response": null, "value": "wordSubstitution" }
+            ],
             "attention": {
                 "abilityToFocus": null,
                 "abilityToSustainAttention": null,
@@ -1392,50 +1648,39 @@ function getNewResponses() {
                 "loseTrackWhenWatchingTv": null
             },
             "executive": {
-                "issues": {
-                    "multiTasking": {
-                        "response": null,
-                        "value": "multi-tasking",
-                        "format": function(context) {
-                            let x = `multi-task ${(
-                                    context.responses.neuropsychological.executive.issues.harderToMultiTask.response && 
-                                    context.responses.neuropsychological.executive.issues.harderToMultiTask.response.value
-                                )
-                                ? `(which ${context.pronoun.subject} now finds harder)` 
-                                : ``}`;
-                            
-                            return x;
-                        }
-                    },
-                    "harderToMultiTask": { "response": null, "value": "harder to multi-task", "format": function(context) { return ``; } },
-                    "organization": { "response": null, "value": "organization", "format": function(context) { return `organize`; } },
-                    "planning": { "response": null, "value": "planning", "format": function(context) { return `plan`; } },
-                    "decisionMaking": { "response": null, "value": "decision making", "format": function(context) { return `make decisions`; } },
-                    "problemSolving": { "response": null, "value": "problem solving", "format": function(context) { return `problem solve`; } }
-                },
+                "issues": [
+                    { "response": null, "value": "multiTasking" },
+                    { "response": null, "value": "harderToMultiTask" },
+                    { "response": null, "value": "organization" },
+                    { "response": null, "value": "planning" },
+                    { "response": null, "value": "decisionMaking" },
+                    { "response": null, "value": "problemSolving" }
+                ],
                 "inappropriateSocialBehavior": null,
-                "inappropriateSocialBehaviorYellingSwearing": { "response": null, "value": "yelling or swearing in public" },
-                "inappropriateSocialBehaviorViolence": { "response": null, "value": "violence" },
-                "inappropriateSocialBehaviorSexual": { "response": null, "value": "sexually inappropriate behaviour" }
+                "inappropriateSocialBehaviors": [
+                    { "response": null, "value": "inappropriateSocialBehaviorYellingSwearing" },
+                    { "response": null, "value": "inappropriateSocialBehaviorViolence" },
+                    { "response": null, "value": "inappropriateSocialBehaviorSexual" }
+                ]
             },
-            "visualSpatial": {
-                "balanceIssues": { "response": null, "value": "balance issues", "format": function(context) { return `balance issues`; } },
-                "seizures": { "response": null, "value": "seizures", "format": function(context) { return `seizures`; } },
-                "weaknessInHands": { "response": null, "value": "weakness in hands", "format": function(context) { return `weakness in ${context.pronoun.possessiveAdjective} hands`; } },
-                "fainting": { "response": null, "value": "fainting", "format": function(context) { return `fainting`; } },
-                "dizzinessIssues": { "response": null, "value": "dizziness issues", "format": function(context) { return `dizziness`; } },
-                "lightSensitivity": { "response": null, "value": "light sensitivity", "format": function(context) { return `sensitivity to light`; } },
-                "tinnitus": { "response": null, "value": "tinnitus", "format": function(context) { return `tinnitus`; } },
-                "noiseSensitivity": { "response": null, "value": "noise sensitivity", "format": function(context) { return `sensitivity to noise`; } },
-                "changeInTaste": { "response": null, "value": "change in taste", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of taste`; } },
-                "blurryVision": { "response": null, "value": "blurry vision", "format": function(context) { return `blurry vision`; } },
-                "changeInSmell": { "response": null, "value": "change in smell", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of smell`; } },
-                "doubleVision": { "response": null, "value": "double vision", "format": function(context) { return `double vision`; } }
-            },
-            "atypical": {
-                "itchyFingernails": { "response": null, "value": "itchy fingernails", "format": function(context) { return `itchy fingernails (atypical symptomology)`; } },
-                "blackAndWhiteTransientVision": { "response": null, "value": "black and white transient vision", "format": function(context) { return `black and white transient vision (atypical symptomology)`; } }
-            },
+            "visualSpatial": [
+                { "response": null, "value": "balanceIssues" },
+                { "response": null, "value": "seizures" },
+                { "response": null, "value": "weaknessInHands" },
+                { "response": null, "value": "fainting" },
+                { "response": null, "value": "dizzinessIssues" },
+                { "response": null, "value": "lightSensitivity" },
+                { "response": null, "value": "tinnitus" },
+                { "response": null, "value": "noiseSensitivity" },
+                { "response": null, "value": "changeInTaste" },
+                { "response": null, "value": "blurryVision" },
+                { "response": null, "value": "changeInSmell" },
+                { "response": null, "value": "doubleVision" }
+            ],
+            "atypical": [
+                { "response": null, "value": "itchyFingernails" },
+                { "response": null, "value": "blackAndWhiteTransientVision" }
+            ],
             "physical": {
                 "weight": {
                     "appetiteAffected": null,
@@ -1450,10 +1695,10 @@ function getNewResponses() {
                 "sleep": {
                     "sleepAffected": null,
                     "problemsSleepingPriorToAccident": null,
-                    "skipHoursOfSleepBeforeAccident": false,
-                    "hoursOfSleepBeforeAccident": null,
-                    "skipHoursOfSleepCurrent": false,
-                    "hoursOfSleepCurrent": null,
+                    "skipAmountOfSleepBeforeAccident": false,
+                    "amountOfSleepBeforeAccident": null,
+                    "skipAmountOfSleepCurrent": false,
+                    "amountOfSleepCurrent": null,
                     "brokenSleep": null,
                     "fatiguedWhenWaking": null,
                     "takeNaps": null
