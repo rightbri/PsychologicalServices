@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private InvoiceEntity _invoice;
 		private InvoiceLineGroupAppointmentEntity _invoiceLineGroupAppointment;
 		private InvoiceLineGroupArbitrationEntity _invoiceLineGroupArbitration;
+		private InvoiceLineGroupConsultingAgreementEntity _invoiceLineGroupConsultingAgreement;
 		private InvoiceLineGroupRawTestDataEntity _invoiceLineGroupRawTestData;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -54,6 +55,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string InvoiceLineGroupAppointment = "InvoiceLineGroupAppointment";
 			/// <summary>Member name InvoiceLineGroupArbitration</summary>
 			public static readonly string InvoiceLineGroupArbitration = "InvoiceLineGroupArbitration";
+			/// <summary>Member name InvoiceLineGroupConsultingAgreement</summary>
+			public static readonly string InvoiceLineGroupConsultingAgreement = "InvoiceLineGroupConsultingAgreement";
 			/// <summary>Member name InvoiceLineGroupRawTestData</summary>
 			public static readonly string InvoiceLineGroupRawTestData = "InvoiceLineGroupRawTestData";
 		}
@@ -129,6 +132,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_invoiceLineGroupArbitration.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_invoiceLineGroupConsultingAgreement = (InvoiceLineGroupConsultingAgreementEntity)info.GetValue("_invoiceLineGroupConsultingAgreement", typeof(InvoiceLineGroupConsultingAgreementEntity));
+				if(_invoiceLineGroupConsultingAgreement!=null)
+				{
+					_invoiceLineGroupConsultingAgreement.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				_invoiceLineGroupRawTestData = (InvoiceLineGroupRawTestDataEntity)info.GetValue("_invoiceLineGroupRawTestData", typeof(InvoiceLineGroupRawTestDataEntity));
 				if(_invoiceLineGroupRawTestData!=null)
 				{
@@ -176,6 +184,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupArbitration":
 					this.InvoiceLineGroupArbitration = (InvoiceLineGroupArbitrationEntity)entity;
 					break;
+				case "InvoiceLineGroupConsultingAgreement":
+					this.InvoiceLineGroupConsultingAgreement = (InvoiceLineGroupConsultingAgreementEntity)entity;
+					break;
 				case "InvoiceLineGroupRawTestData":
 					this.InvoiceLineGroupRawTestData = (InvoiceLineGroupRawTestDataEntity)entity;
 					break;
@@ -212,6 +223,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "InvoiceLineGroupArbitration":
 					toReturn.Add(Relations.InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupId);
+					break;
+				case "InvoiceLineGroupConsultingAgreement":
+					toReturn.Add(Relations.InvoiceLineGroupConsultingAgreementEntityUsingInvoiceLineGroupId);
 					break;
 				case "InvoiceLineGroupRawTestData":
 					toReturn.Add(Relations.InvoiceLineGroupRawTestDataEntityUsingInvoiceLineGroupId);
@@ -256,6 +270,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupArbitration":
 					SetupSyncInvoiceLineGroupArbitration(relatedEntity);
 					break;
+				case "InvoiceLineGroupConsultingAgreement":
+					SetupSyncInvoiceLineGroupConsultingAgreement(relatedEntity);
+					break;
 				case "InvoiceLineGroupRawTestData":
 					SetupSyncInvoiceLineGroupRawTestData(relatedEntity);
 					break;
@@ -284,6 +301,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupArbitration":
 					DesetupSyncInvoiceLineGroupArbitration(false, true);
 					break;
+				case "InvoiceLineGroupConsultingAgreement":
+					DesetupSyncInvoiceLineGroupConsultingAgreement(false, true);
+					break;
 				case "InvoiceLineGroupRawTestData":
 					DesetupSyncInvoiceLineGroupRawTestData(false, true);
 					break;
@@ -307,6 +327,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				toReturn.Add(_invoiceLineGroupArbitration);
 			}
 
+			if(_invoiceLineGroupConsultingAgreement!=null)
+			{
+				toReturn.Add(_invoiceLineGroupConsultingAgreement);
+			}
+
 			if(_invoiceLineGroupRawTestData!=null)
 			{
 				toReturn.Add(_invoiceLineGroupRawTestData);
@@ -325,6 +350,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_invoice);
 			}
+
+
 
 
 
@@ -355,6 +382,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_invoice", (!this.MarkedForDeletion?_invoice:null));
 				info.AddValue("_invoiceLineGroupAppointment", (!this.MarkedForDeletion?_invoiceLineGroupAppointment:null));
 				info.AddValue("_invoiceLineGroupArbitration", (!this.MarkedForDeletion?_invoiceLineGroupArbitration:null));
+				info.AddValue("_invoiceLineGroupConsultingAgreement", (!this.MarkedForDeletion?_invoiceLineGroupConsultingAgreement:null));
 				info.AddValue("_invoiceLineGroupRawTestData", (!this.MarkedForDeletion?_invoiceLineGroupRawTestData:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -404,6 +432,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineGroupArbitrationFields.InvoiceLineGroupId, null, ComparisonOperator.Equal, this.InvoiceLineGroupId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'InvoiceLineGroupConsultingAgreement' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoInvoiceLineGroupConsultingAgreement()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(InvoiceLineGroupConsultingAgreementFields.InvoiceLineGroupId, null, ComparisonOperator.Equal, this.InvoiceLineGroupId));
 			return bucket;
 		}
 
@@ -467,6 +504,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("InvoiceLines", _invoiceLines);
 			toReturn.Add("InvoiceLineGroupAppointment", _invoiceLineGroupAppointment);
 			toReturn.Add("InvoiceLineGroupArbitration", _invoiceLineGroupArbitration);
+			toReturn.Add("InvoiceLineGroupConsultingAgreement", _invoiceLineGroupConsultingAgreement);
 			toReturn.Add("InvoiceLineGroupRawTestData", _invoiceLineGroupRawTestData);
 			return toReturn;
 		}
@@ -581,6 +619,33 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _invoiceLineGroupConsultingAgreement</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncInvoiceLineGroupConsultingAgreement(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, false, ref _invoiceLineGroupConsultingAgreement, new PropertyChangedEventHandler(OnInvoiceLineGroupConsultingAgreementPropertyChanged), "InvoiceLineGroupConsultingAgreement", "InvoiceLineGroup", PsychologicalServices.Data.RelationClasses.StaticInvoiceLineGroupRelations.InvoiceLineGroupConsultingAgreementEntityUsingInvoiceLineGroupIdStatic, false, new int[] { (int)InvoiceLineGroupFieldIndex.InvoiceLineGroupId });
+		}
+		
+		/// <summary> setups the sync logic for member _invoiceLineGroupConsultingAgreement</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncInvoiceLineGroupConsultingAgreement(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _invoiceLineGroupConsultingAgreement, new PropertyChangedEventHandler( OnInvoiceLineGroupConsultingAgreementPropertyChanged ), "InvoiceLineGroupConsultingAgreement", "InvoiceLineGroup", PsychologicalServices.Data.RelationClasses.StaticInvoiceLineGroupRelations.InvoiceLineGroupConsultingAgreementEntityUsingInvoiceLineGroupIdStatic, false, new string[] {  }, new int[] { (int)InvoiceLineGroupFieldIndex.InvoiceLineGroupId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnInvoiceLineGroupConsultingAgreementPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Removes the sync logic for member _invoiceLineGroupRawTestData</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -665,6 +730,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathInvoiceLineGroupArbitration
 		{
 			get { return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineGroupArbitrationEntityFactory))), (IEntityRelation)GetRelationsForField("InvoiceLineGroupArbitration")[0], (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupEntity, (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity, 0, null, null, null, null, "InvoiceLineGroupArbitration", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceLineGroupConsultingAgreement' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathInvoiceLineGroupConsultingAgreement
+		{
+			get { return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceLineGroupConsultingAgreementEntityFactory))), (IEntityRelation)GetRelationsForField("InvoiceLineGroupConsultingAgreement")[0], (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupEntity, (int)PsychologicalServices.Data.EntityType.InvoiceLineGroupConsultingAgreementEntity, 0, null, null, null, null, "InvoiceLineGroupConsultingAgreement", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'InvoiceLineGroupRawTestData' for this entity.</summary>
@@ -829,6 +901,42 @@ namespace PsychologicalServices.Data.EntityClasses
 						{
 							((IEntity2)value).SetRelatedEntity(this, "InvoiceLineGroup");
 							SetupSyncInvoiceLineGroupArbitration(value);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'InvoiceLineGroupConsultingAgreementEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned.<br/><br/>
+		/// </summary>
+		[Browsable(true)]
+		public virtual InvoiceLineGroupConsultingAgreementEntity InvoiceLineGroupConsultingAgreement
+		{
+			get { return _invoiceLineGroupConsultingAgreement; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncInvoiceLineGroupConsultingAgreement(value);
+					CallSetRelatedEntityDuringDeserialization(value, "InvoiceLineGroup");
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_invoiceLineGroupConsultingAgreement !=null);
+						DesetupSyncInvoiceLineGroupConsultingAgreement(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("InvoiceLineGroupConsultingAgreement");
+						}
+					}
+					else
+					{
+						if(_invoiceLineGroupConsultingAgreement!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "InvoiceLineGroup");
+							SetupSyncInvoiceLineGroupConsultingAgreement(value);
 						}
 					}
 				}

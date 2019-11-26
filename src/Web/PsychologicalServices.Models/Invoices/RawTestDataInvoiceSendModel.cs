@@ -52,8 +52,8 @@ namespace PsychologicalServices.Models.Invoices
                 throw new ArgumentNullException("invoice");
             }
 
-            var hasArbitrationInvoice = null != invoice.InvoiceType && invoice.InvoiceType.InvoiceTypeId == InvoiceType.RawTestData;
-            if (!hasArbitrationInvoice)
+            var hasRawTestDataInvoice = null != invoice.InvoiceType && invoice.InvoiceType.InvoiceTypeId == InvoiceType.RawTestData;
+            if (!hasRawTestDataInvoice)
             {
                 _errors.Add("The invoice is not a raw test data invoice");
                 return;

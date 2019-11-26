@@ -79,6 +79,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitColorEntityMappings();
 			InitCompanyEntityMappings();
 			InitCompanyAttributeEntityMappings();
+			InitConsultingAgreementEntityMappings();
 			InitContactEntityMappings();
 			InitContactTypeEntityMappings();
 			InitCredibilityEntityMappings();
@@ -94,6 +95,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitInvoiceLineGroupEntityMappings();
 			InitInvoiceLineGroupAppointmentEntityMappings();
 			InitInvoiceLineGroupArbitrationEntityMappings();
+			InitInvoiceLineGroupConsultingAgreementEntityMappings();
 			InitInvoiceLineGroupRawTestDataEntityMappings();
 			InitInvoiceStatusEntityMappings();
 			InitInvoiceStatusChangeEntityMappings();
@@ -516,6 +518,17 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("CompanyAttributeEntity", "AttributeId", "AttributeId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 		}
 
+		/// <summary>Inits ConsultingAgreementEntity's mappings</summary>
+		private void InitConsultingAgreementEntityMappings()
+		{
+			this.AddElementMapping("ConsultingAgreementEntity", @"PsychologicalServices", @"dbo", "ConsultingAgreements", 5, 0);
+			this.AddElementFieldMapping("ConsultingAgreementEntity", "ConsultingAgreementId", "ConsultingAgreementId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("ConsultingAgreementEntity", "CompanyId", "CompanyId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("ConsultingAgreementEntity", "PsychologistId", "PsychologistId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("ConsultingAgreementEntity", "BillToReferralSourceId", "BillToReferralSourceId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 3);
+			this.AddElementFieldMapping("ConsultingAgreementEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 4);
+		}
+
 		/// <summary>Inits ContactEntity's mappings</summary>
 		private void InitContactEntityMappings()
 		{
@@ -674,6 +687,14 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementMapping("InvoiceLineGroupArbitrationEntity", @"PsychologicalServices", @"dbo", "InvoiceLineGroupArbitrations", 2, 0);
 			this.AddElementFieldMapping("InvoiceLineGroupArbitrationEntity", "InvoiceLineGroupId", "InvoiceLineGroupId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("InvoiceLineGroupArbitrationEntity", "ArbitrationId", "ArbitrationId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+		}
+
+		/// <summary>Inits InvoiceLineGroupConsultingAgreementEntity's mappings</summary>
+		private void InitInvoiceLineGroupConsultingAgreementEntityMappings()
+		{
+			this.AddElementMapping("InvoiceLineGroupConsultingAgreementEntity", @"PsychologicalServices", @"dbo", "InvoiceLineGroupConsultingAgreements", 2, 0);
+			this.AddElementFieldMapping("InvoiceLineGroupConsultingAgreementEntity", "InvoiceLineGroupId", "InvoiceLineGroupId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("InvoiceLineGroupConsultingAgreementEntity", "ConsultingAgreementId", "ConsultingAgreementId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 		}
 
 		/// <summary>Inits InvoiceLineGroupRawTestDataEntity's mappings</summary>

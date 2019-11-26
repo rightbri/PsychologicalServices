@@ -32,6 +32,9 @@ namespace PsychologicalServices.Models.Invoices
                 case InvoiceType.Psychometrist:
                     model = new PsychometristInvoiceSendModel(invoiceDocument, invoice);
                     break;
+                case InvoiceType.Consulting:
+                    model = new ConsultingInvoiceSendModel(invoiceDocument, invoice);
+                    break;
                 default:
                     break;
             }

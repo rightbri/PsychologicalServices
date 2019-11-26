@@ -303,6 +303,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<CompanyAttributeEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the ConsultingAgreement entity</summary>
+		public EntityQuery<ConsultingAgreementEntity> ConsultingAgreement
+		{
+			get { return Create<ConsultingAgreementEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the Contact entity</summary>
 		public EntityQuery<ContactEntity> Contact
 		{
@@ -391,6 +397,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public EntityQuery<InvoiceLineGroupArbitrationEntity> InvoiceLineGroupArbitration
 		{
 			get { return Create<InvoiceLineGroupArbitrationEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the InvoiceLineGroupConsultingAgreement entity</summary>
+		public EntityQuery<InvoiceLineGroupConsultingAgreementEntity> InvoiceLineGroupConsultingAgreement
+		{
+			get { return Create<InvoiceLineGroupConsultingAgreementEntity>(); }
 		}
 
 		/// <summary>Creates and returns a new EntityQuery for the InvoiceLineGroupRawTestData entity</summary>

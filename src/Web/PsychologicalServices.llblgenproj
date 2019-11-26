@@ -460,6 +460,15 @@
           <Field Name="CompanyId" Type="int" IsPrimaryKey="true" IsAutoCreated="true" FieldIndex="0" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="ConsultingAgreement" ObjectID="f22c3778-0fa1-4631-be56-49e5a8702538">
+        <Fields>
+          <Field Name="BillToReferralSourceId" Type="int" FieldIndex="3" />
+          <Field Name="CompanyId" Type="int" FieldIndex="1" />
+          <Field Name="ConsultingAgreementId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="IsActive" Type="bool" FieldIndex="4" />
+          <Field Name="PsychologistId" Type="int" FieldIndex="2" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="Contact" ObjectID="3f32bfaa-ebf8-40b6-ade4-f357df5e1086">
         <Fields>
           <Field Name="AddressId" Type="int" IsOptional="true" IsAutoCreated="true" FieldIndex="5" />
@@ -587,6 +596,12 @@
       <EntityDefinition Name="InvoiceLineGroupArbitration" ObjectID="f9cfbae0-e388-42df-a734-8ba1f5d3a59a">
         <Fields>
           <Field Name="ArbitrationId" Type="int" FieldIndex="1" />
+          <Field Name="InvoiceLineGroupId" Type="int" IsPrimaryKey="true" FieldIndex="0" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="InvoiceLineGroupConsultingAgreement" ObjectID="7f7d2bbb-84a9-4a2e-b6ed-cb9262abdd3e">
+        <Fields>
+          <Field Name="ConsultingAgreementId" Type="int" Precision="10" FieldIndex="1" />
           <Field Name="InvoiceLineGroupId" Type="int" IsPrimaryKey="true" FieldIndex="0" />
         </Fields>
       </EntityDefinition>
@@ -1173,6 +1188,21 @@
           <FieldFieldRelationship FkField="CompanyId" PkField="CompanyId" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="ConsultingAgreement.BillToReferralSource-ReferralSource.ConsultingAgreements" Start=":ConsultingAgreement" End=":ReferralSource" StartNavigator="BillToReferralSource" EndNavigator="ConsultingAgreements" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="BillToReferralSourceId" PkField="ReferralSourceId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ConsultingAgreement.Company-Company.ConsultingAgreements" Start=":ConsultingAgreement" End=":Company" StartNavigator="Company" EndNavigator="ConsultingAgreements" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CompanyId" PkField="CompanyId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ConsultingAgreement.Psychologist-User.ConsultingAgreements" Start=":ConsultingAgreement" End=":User" StartNavigator="Psychologist" EndNavigator="ConsultingAgreements" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="PsychologistId" PkField="UserId" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="Contact.Address-Address.Contacts" Start=":Contact" End=":Address" StartNavigator="Address" EndNavigator="Contacts" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="AddressId" PkField="AddressId" />
@@ -1249,6 +1279,16 @@
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="InvoiceLineGroupArbitration.InvoiceLineGroup-InvoiceLineGroup.InvoiceLineGroupArbitration" Start=":InvoiceLineGroupArbitration" End=":InvoiceLineGroup" StartNavigator="InvoiceLineGroup" EndNavigator="InvoiceLineGroupArbitration" Type="1" StartIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="InvoiceLineGroupId" PkField="InvoiceLineGroupId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="InvoiceLineGroupConsultingAgreement.ConsultingAgreement-ConsultingAgreement.InvoiceLineGroupConsultingAgreements" Start=":InvoiceLineGroupConsultingAgreement" End=":ConsultingAgreement" StartNavigator="ConsultingAgreement" EndNavigator="InvoiceLineGroupConsultingAgreements" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ConsultingAgreementId" PkField="ConsultingAgreementId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="InvoiceLineGroupConsultingAgreement.InvoiceLineGroup-InvoiceLineGroup.InvoiceLineGroupConsultingAgreement" Start=":InvoiceLineGroupConsultingAgreement" End=":InvoiceLineGroup" StartNavigator="InvoiceLineGroup" EndNavigator="InvoiceLineGroupConsultingAgreement" Type="1" StartIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="InvoiceLineGroupId" PkField="InvoiceLineGroupId" />
         </FieldRelationships>
@@ -1645,6 +1685,13 @@
         <Parameter Name="CompanyId" Type="int" Precision="10" />
       </Parameters>
     </SPCallDefinition>
+    <SPCallDefinition Name="InvoiceableConsultingAgreementData" ObjectID="db4724ea-b3d5-42b1-8726-7bb2e33bfc73">
+      <Parameters>
+        <Parameter Name="CompanyId" Type="int" Precision="10" />
+        <Parameter Name="Month" Type="int" Precision="10" />
+        <Parameter Name="Year" Type="int" Precision="10" />
+      </Parameters>
+    </SPCallDefinition>
     <SPCallDefinition Name="InvoiceableRawTestDataData" ObjectID="a6defae3-c52a-415a-a6ac-7835ee012a3c">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" Precision="10" />
@@ -1701,7 +1748,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-11-10T18:45:37.4383551Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-11-26T01:37:50.6442515Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2064,6 +2111,16 @@
                     <Field Name="AttributeId" Ordinal="2" IsPrimaryKey="true" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
+                <Table Name="ConsultingAgreements">
+                  <PkConstraintName Name="PK_ConsultingAgreements" />
+                  <Fields>
+                    <Field Name="ConsultingAgreementId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="CompanyId" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="PsychologistId" Ordinal="3" DbType="8" Precision="10" />
+                    <Field Name="BillToReferralSourceId" Ordinal="4" DbType="8" Precision="10" />
+                    <Field Name="IsActive" Ordinal="5" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
+                  </Fields>
+                </Table>
                 <Table Name="Contacts">
                   <PkConstraintName Name="PK_Contacts" />
                   <Fields>
@@ -2171,6 +2228,13 @@
                   <Fields>
                     <Field Name="InvoiceLineGroupId" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="ArbitrationId" Ordinal="2" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="InvoiceLineGroupConsultingAgreements">
+                  <PkConstraintName Name="PK_InvoiceLineGroupConsultingAgreements" />
+                  <Fields>
+                    <Field Name="InvoiceLineGroupId" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="ConsultingAgreementId" Ordinal="2" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
                 <Table Name="InvoiceLineGroupRawTestData">
@@ -2650,6 +2714,28 @@
                     </Resultset>
                   </Resultsets>
                 </StoredProcedure>
+                <StoredProcedure Name="InvoiceableConsultingAgreementData" NumberOfResultsets="1">
+                  <Parameters>
+                    <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                    <Parameter Name="@year" Direction="1" Ordinal="2" DbType="8" Precision="10" />
+                    <Parameter Name="@month" Direction="1" Ordinal="3" DbType="8" Precision="10" />
+                  </Parameters>
+                  <Resultsets>
+                    <Resultset Name="Resultset1">
+                      <Fields>
+                        <Field Name="ConsultingAgreementId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="PayableTo" Ordinal="2" DbType="12" Length="201" />
+                        <Field Name="PayableToId" Ordinal="3" DbType="8" Precision="10" />
+                        <Field Name="InvoiceTypeId" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="ReferralSource" Ordinal="5" DbType="12" Length="100" />
+                        <Field Name="Year" Ordinal="6" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="Month" Ordinal="7" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="InvoiceId" Ordinal="8" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="CanCreateInvoice" Ordinal="9" IsOptional="true" DbType="2" />
+                      </Fields>
+                    </Resultset>
+                  </Resultsets>
+                </StoredProcedure>
                 <StoredProcedure Name="InvoiceableRawTestDataData" NumberOfResultsets="1">
                   <Parameters>
                     <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
@@ -3121,6 +3207,21 @@
                 <FieldPair PkField="dbo:Companies:CompanyId" FkField="dbo:CompanyAttributes:CompanyId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:ConsultingAgreements:FK_ConsultingAgreements_Companies">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Companies:CompanyId" FkField="dbo:ConsultingAgreements:CompanyId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:ConsultingAgreements:FK_ConsultingAgreements_ReferralSources">
+              <FieldPairs>
+                <FieldPair PkField="dbo:ReferralSources:ReferralSourceId" FkField="dbo:ConsultingAgreements:BillToReferralSourceId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:ConsultingAgreements:FK_ConsultingAgreements_Users">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:ConsultingAgreements:PsychologistId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:Contacts:FK_Contacts_Addresses">
               <FieldPairs>
                 <FieldPair PkField="dbo:Addresses:AddressId" FkField="dbo:Contacts:AddressId" />
@@ -3174,6 +3275,16 @@
             <ForeignKeyConstraint Name="dbo:InvoiceLineGroupArbitrations:FK_InvoiceLineGroupArbitrations_InvoiceLineGroups">
               <FieldPairs>
                 <FieldPair PkField="dbo:InvoiceLineGroups:InvoiceLineGroupId" FkField="dbo:InvoiceLineGroupArbitrations:InvoiceLineGroupId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:InvoiceLineGroupConsultingAgreements:FK_InvoiceLineGroupConsultingAgreements_ConsultingAgreements">
+              <FieldPairs>
+                <FieldPair PkField="dbo:ConsultingAgreements:ConsultingAgreementId" FkField="dbo:InvoiceLineGroupConsultingAgreements:ConsultingAgreementId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:InvoiceLineGroupConsultingAgreements:FK_InvoiceLineGroupConsultingAgreements_InvoiceLineGroups">
+              <FieldPairs>
+                <FieldPair PkField="dbo:InvoiceLineGroups:InvoiceLineGroupId" FkField="dbo:InvoiceLineGroupConsultingAgreements:InvoiceLineGroupId" />
               </FieldPairs>
             </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:InvoiceLineGroupRawTestData:FK_InvoiceLineGroupRawTestData_InvoiceLineGroups">
@@ -3727,6 +3838,15 @@
             <FieldMapping FieldName="CompanyId" TargetFieldName="CompanyId" />
           </FieldMappings>
         </EntityMapping>
+        <EntityMapping EntityName=":ConsultingAgreement" TargetName="PsychologicalServices:dbo:ConsultingAgreements">
+          <FieldMappings>
+            <FieldMapping FieldName="BillToReferralSourceId" TargetFieldName="BillToReferralSourceId" />
+            <FieldMapping FieldName="CompanyId" TargetFieldName="CompanyId" />
+            <FieldMapping FieldName="ConsultingAgreementId" TargetFieldName="ConsultingAgreementId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="IsActive" TargetFieldName="IsActive" />
+            <FieldMapping FieldName="PsychologistId" TargetFieldName="PsychologistId" />
+          </FieldMappings>
+        </EntityMapping>
         <EntityMapping EntityName=":Contact" TargetName="PsychologicalServices:dbo:Contacts">
           <FieldMappings>
             <FieldMapping FieldName="AddressId" TargetFieldName="AddressId" />
@@ -3854,6 +3974,12 @@
         <EntityMapping EntityName=":InvoiceLineGroupArbitration" TargetName="PsychologicalServices:dbo:InvoiceLineGroupArbitrations">
           <FieldMappings>
             <FieldMapping FieldName="ArbitrationId" TargetFieldName="ArbitrationId" />
+            <FieldMapping FieldName="InvoiceLineGroupId" TargetFieldName="InvoiceLineGroupId" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":InvoiceLineGroupConsultingAgreement" TargetName="PsychologicalServices:dbo:InvoiceLineGroupConsultingAgreements">
+          <FieldMappings>
+            <FieldMapping FieldName="ConsultingAgreementId" TargetFieldName="ConsultingAgreementId" />
             <FieldMapping FieldName="InvoiceLineGroupId" TargetFieldName="InvoiceLineGroupId" />
           </FieldMappings>
         </EntityMapping>
@@ -4116,6 +4242,13 @@
         <SPCallMapping SPCallName=":InvoiceableArbitrationData" TargetName="PsychologicalServices:dbo:InvoiceableArbitrationData">
           <FieldMappings>
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
+          </FieldMappings>
+        </SPCallMapping>
+        <SPCallMapping SPCallName=":InvoiceableConsultingAgreementData" TargetName="PsychologicalServices:dbo:InvoiceableConsultingAgreementData">
+          <FieldMappings>
+            <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
+            <FieldMapping FieldName="Month" TargetFieldName="@month" />
+            <FieldMapping FieldName="Year" TargetFieldName="@year" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":InvoiceableRawTestDataData" TargetName="PsychologicalServices:dbo:InvoiceableRawTestDataData">

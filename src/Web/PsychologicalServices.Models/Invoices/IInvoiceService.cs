@@ -15,6 +15,8 @@ namespace PsychologicalServices.Models.Invoices
 
         Invoice CreateRawTestDataInvoice(RawTestDataInvoiceCreationParameters parameters);
 
+        Invoice CreateConsultingInvoice(ConsultingInvoiceCreationParameters parameters);
+
         InvoiceDocument GetInvoiceDocument(int invoiceDocumentId);
 
         InvoiceSendResult SendInvoiceDocument(InvoiceSendParameters parameters);
@@ -36,6 +38,8 @@ namespace PsychologicalServices.Models.Invoices
         IEnumerable<InvoiceableArbitrationData> GetInvoiceableArbitrationData(InvoiceableArbitrationDataSearchCriteria criteria);
 
         IEnumerable<InvoiceableRawTestDataData> GetInvoiceableRawTestDataData(InvoiceableRawTestDataSearchCriteria criteria);
+
+        IEnumerable<InvoiceableConsultingAgreementData> GetInvoiceableConsultingAgreementData(InvoiceableConsultingAgreementSearchCriteria criteria);
 
         SaveResult<Invoice> SaveInvoice(Invoice invoice);
 

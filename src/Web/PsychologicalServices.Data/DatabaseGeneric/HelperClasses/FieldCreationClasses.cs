@@ -1158,6 +1158,36 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity ConsultingAgreementEntity</summary>
+	public partial class ConsultingAgreementFields
+	{
+		/// <summary>Creates a new ConsultingAgreementEntity.ConsultingAgreementId field instance</summary>
+		public static EntityField2 ConsultingAgreementId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ConsultingAgreementFieldIndex.ConsultingAgreementId);}
+		}
+		/// <summary>Creates a new ConsultingAgreementEntity.CompanyId field instance</summary>
+		public static EntityField2 CompanyId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ConsultingAgreementFieldIndex.CompanyId);}
+		}
+		/// <summary>Creates a new ConsultingAgreementEntity.PsychologistId field instance</summary>
+		public static EntityField2 PsychologistId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ConsultingAgreementFieldIndex.PsychologistId);}
+		}
+		/// <summary>Creates a new ConsultingAgreementEntity.BillToReferralSourceId field instance</summary>
+		public static EntityField2 BillToReferralSourceId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ConsultingAgreementFieldIndex.BillToReferralSourceId);}
+		}
+		/// <summary>Creates a new ConsultingAgreementEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ConsultingAgreementFieldIndex.IsActive);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity ContactEntity</summary>
 	public partial class ContactFields
 	{
@@ -1580,6 +1610,21 @@ namespace PsychologicalServices.Data.HelperClasses
 		public static EntityField2 ArbitrationId
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupArbitrationFieldIndex.ArbitrationId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity InvoiceLineGroupConsultingAgreementEntity</summary>
+	public partial class InvoiceLineGroupConsultingAgreementFields
+	{
+		/// <summary>Creates a new InvoiceLineGroupConsultingAgreementEntity.InvoiceLineGroupId field instance</summary>
+		public static EntityField2 InvoiceLineGroupId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupConsultingAgreementFieldIndex.InvoiceLineGroupId);}
+		}
+		/// <summary>Creates a new InvoiceLineGroupConsultingAgreementEntity.ConsultingAgreementId field instance</summary>
+		public static EntityField2 ConsultingAgreementId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(InvoiceLineGroupConsultingAgreementFieldIndex.ConsultingAgreementId);}
 		}
 	}
 

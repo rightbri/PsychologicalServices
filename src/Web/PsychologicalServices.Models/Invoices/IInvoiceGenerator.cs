@@ -13,6 +13,8 @@ namespace PsychologicalServices.Models.Invoices
 
         Invoice CreateRawTestDataInvoice(RawTestDataInvoiceCreationParameters parameters);
 
+        Invoice CreateConsultingInvoice(ConsultingInvoiceCreationParameters parameters);
+
         IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice);
 
         int GetInvoiceTotal(Invoice invoice);

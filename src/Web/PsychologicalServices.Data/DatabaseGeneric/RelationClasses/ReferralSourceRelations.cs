@@ -32,6 +32,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AppointmentStatusInvoiceRateEntityUsingReferralSourceId);
 			toReturn.Add(this.AssessmentEntityUsingReferralSourceId);
 			toReturn.Add(this.AssessmentTypeInvoiceAmountEntityUsingReferralSourceId);
+			toReturn.Add(this.ConsultingAgreementEntityUsingBillToReferralSourceId);
 			toReturn.Add(this.RawTestDataEntityUsingBillToReferralSourceId);
 			toReturn.Add(this.ReferralSourceInvoiceConfigurationEntityUsingReferralSourceId);
 			toReturn.Add(this.AddressEntityUsingAddressId);
@@ -82,6 +83,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(ReferralSourceFields.ReferralSourceId, AssessmentTypeInvoiceAmountFields.ReferralSourceId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReferralSourceEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AssessmentTypeInvoiceAmountEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ReferralSourceEntity and ConsultingAgreementEntity over the 1:n relation they have, using the relation between the fields:
+		/// ReferralSource.ReferralSourceId - ConsultingAgreement.BillToReferralSourceId
+		/// </summary>
+		public virtual IEntityRelation ConsultingAgreementEntityUsingBillToReferralSourceId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ConsultingAgreements" , true);
+				relation.AddEntityFieldPair(ReferralSourceFields.ReferralSourceId, ConsultingAgreementFields.BillToReferralSourceId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ReferralSourceEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ConsultingAgreementEntity", false);
 				return relation;
 			}
 		}
@@ -162,6 +178,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AppointmentStatusInvoiceRateEntityUsingReferralSourceIdStatic = new ReferralSourceRelations().AppointmentStatusInvoiceRateEntityUsingReferralSourceId;
 		internal static readonly IEntityRelation AssessmentEntityUsingReferralSourceIdStatic = new ReferralSourceRelations().AssessmentEntityUsingReferralSourceId;
 		internal static readonly IEntityRelation AssessmentTypeInvoiceAmountEntityUsingReferralSourceIdStatic = new ReferralSourceRelations().AssessmentTypeInvoiceAmountEntityUsingReferralSourceId;
+		internal static readonly IEntityRelation ConsultingAgreementEntityUsingBillToReferralSourceIdStatic = new ReferralSourceRelations().ConsultingAgreementEntityUsingBillToReferralSourceId;
 		internal static readonly IEntityRelation RawTestDataEntityUsingBillToReferralSourceIdStatic = new ReferralSourceRelations().RawTestDataEntityUsingBillToReferralSourceId;
 		internal static readonly IEntityRelation ReferralSourceInvoiceConfigurationEntityUsingReferralSourceIdStatic = new ReferralSourceRelations().ReferralSourceInvoiceConfigurationEntityUsingReferralSourceId;
 		internal static readonly IEntityRelation AddressEntityUsingAddressIdStatic = new ReferralSourceRelations().AddressEntityUsingAddressId;

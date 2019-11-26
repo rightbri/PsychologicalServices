@@ -3,6 +3,7 @@ using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Common;
+using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Referrals;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace PsychologicalServices.Models.Invoices
 {
     public class InvoiceService : IInvoiceService
     {
+        private readonly IDate _date = null;
         private readonly IAppointmentRepository _appointmentRepository = null;
         private readonly IAssessmentRepository _assessmentRepository = null;
         private readonly IClaimRepository _claimRepository = null;
@@ -25,6 +27,7 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IInvoiceGenerator _invoiceGenerator = null;
 
         public InvoiceService(
+            IDate date,
             IAppointmentRepository appointmentRepository,
             IAssessmentRepository assessmentRepository,
             IClaimRepository claimRepository,
@@ -38,6 +41,7 @@ namespace PsychologicalServices.Models.Invoices
             IInvoiceGenerator invoiceGenerator
         )
         {
+            _date = date;
             _appointmentRepository = appointmentRepository;
             _assessmentRepository = assessmentRepository;
             _claimRepository = claimRepository;
@@ -82,6 +86,13 @@ namespace PsychologicalServices.Models.Invoices
         public Invoice CreateRawTestDataInvoice(RawTestDataInvoiceCreationParameters parameters)
         {
             var invoice = _invoiceGenerator.CreateRawTestDataInvoice(parameters);
+
+            return invoice;
+        }
+
+        public Invoice CreateConsultingInvoice(ConsultingInvoiceCreationParameters parameters)
+        {
+            var invoice = _invoiceGenerator.CreateConsultingInvoice(parameters);
 
             return invoice;
         }
@@ -156,6 +167,24 @@ namespace PsychologicalServices.Models.Invoices
             var data = _invoiceRepository.GetInvoiceableRawTestData(criteria);
 
             return data;
+        }
+
+        public IEnumerable<InvoiceableConsultingAgreementData> GetInvoiceableConsultingAgreementData(InvoiceableConsultingAgreementSearchCriteria criteria)
+        {
+            var now = _date.UtcNow;
+
+            if (
+                criteria.Month < 1 ||
+                criteria.Month > 12 ||
+                criteria.Year < now.Year - 1 ||
+                criteria.Year > now.Year ||
+                (criteria.Year == now.Year && criteria.Month > now.Month)
+            )
+            {
+                return Enumerable.Empty<InvoiceableConsultingAgreementData>();
+            }
+
+            return _invoiceRepository.GetInvoiceableConsultingAgreementData(criteria);
         }
 
         public SaveResult<Invoice> SaveInvoice(Invoice invoice)

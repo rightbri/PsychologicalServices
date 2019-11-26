@@ -40,6 +40,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentEntityUsingUpdateUserId);
 			toReturn.Add(this.CompanyEntityUsingNewAppointmentPsychologistId);
 			toReturn.Add(this.CompanyEntityUsingNewAppointmentPsychometristId);
+			toReturn.Add(this.ConsultingAgreementEntityUsingPsychologistId);
 			toReturn.Add(this.InvoiceEntityUsingPayableToId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
@@ -217,6 +218,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(UserFields.UserId, CompanyFields.NewAppointmentPsychometristId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and ConsultingAgreementEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - ConsultingAgreement.PsychologistId
+		/// </summary>
+		public virtual IEntityRelation ConsultingAgreementEntityUsingPsychologistId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ConsultingAgreements" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, ConsultingAgreementFields.PsychologistId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ConsultingAgreementEntity", false);
 				return relation;
 			}
 		}
@@ -409,6 +425,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AssessmentEntityUsingUpdateUserIdStatic = new UserRelations().AssessmentEntityUsingUpdateUserId;
 		internal static readonly IEntityRelation CompanyEntityUsingNewAppointmentPsychologistIdStatic = new UserRelations().CompanyEntityUsingNewAppointmentPsychologistId;
 		internal static readonly IEntityRelation CompanyEntityUsingNewAppointmentPsychometristIdStatic = new UserRelations().CompanyEntityUsingNewAppointmentPsychometristId;
+		internal static readonly IEntityRelation ConsultingAgreementEntityUsingPsychologistIdStatic = new UserRelations().ConsultingAgreementEntityUsingPsychologistId;
 		internal static readonly IEntityRelation InvoiceEntityUsingPayableToIdStatic = new UserRelations().InvoiceEntityUsingPayableToId;
 		internal static readonly IEntityRelation NoteEntityUsingCreateUserIdStatic = new UserRelations().NoteEntityUsingCreateUserId;
 		internal static readonly IEntityRelation NoteEntityUsingUpdateUserIdStatic = new UserRelations().NoteEntityUsingUpdateUserId;

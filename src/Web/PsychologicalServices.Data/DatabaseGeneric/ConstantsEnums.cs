@@ -600,6 +600,22 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ConsultingAgreement.</summary>
+	public enum ConsultingAgreementFieldIndex
+	{
+		///<summary>ConsultingAgreementId. </summary>
+		ConsultingAgreementId,
+		///<summary>CompanyId. </summary>
+		CompanyId,
+		///<summary>PsychologistId. </summary>
+		PsychologistId,
+		///<summary>BillToReferralSourceId. </summary>
+		BillToReferralSourceId,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Contact.</summary>
 	public enum ContactFieldIndex
 	{
@@ -827,6 +843,16 @@ namespace PsychologicalServices.Data
 		InvoiceLineGroupId,
 		///<summary>ArbitrationId. </summary>
 		ArbitrationId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: InvoiceLineGroupConsultingAgreement.</summary>
+	public enum InvoiceLineGroupConsultingAgreementFieldIndex
+	{
+		///<summary>InvoiceLineGroupId. </summary>
+		InvoiceLineGroupId,
+		///<summary>ConsultingAgreementId. </summary>
+		ConsultingAgreementId,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1272,6 +1298,8 @@ namespace PsychologicalServices.Data
 		CompanyEntity,
 		///<summary>CompanyAttribute</summary>
 		CompanyAttributeEntity,
+		///<summary>ConsultingAgreement</summary>
+		ConsultingAgreementEntity,
 		///<summary>Contact</summary>
 		ContactEntity,
 		///<summary>ContactType</summary>
@@ -1302,6 +1330,8 @@ namespace PsychologicalServices.Data
 		InvoiceLineGroupAppointmentEntity,
 		///<summary>InvoiceLineGroupArbitration</summary>
 		InvoiceLineGroupArbitrationEntity,
+		///<summary>InvoiceLineGroupConsultingAgreement</summary>
+		InvoiceLineGroupConsultingAgreementEntity,
 		///<summary>InvoiceLineGroupRawTestData</summary>
 		InvoiceLineGroupRawTestDataEntity,
 		///<summary>InvoiceStatus</summary>

@@ -32,6 +32,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.InvoiceLineEntityUsingInvoiceLineGroupId);
 			toReturn.Add(this.InvoiceLineGroupAppointmentEntityUsingInvoiceLineGroupId);
 			toReturn.Add(this.InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupId);
+			toReturn.Add(this.InvoiceLineGroupConsultingAgreementEntityUsingInvoiceLineGroupId);
 			toReturn.Add(this.InvoiceLineGroupRawTestDataEntityUsingInvoiceLineGroupId);
 			toReturn.Add(this.InvoiceEntityUsingInvoiceId);
 			return toReturn;
@@ -92,6 +93,25 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between InvoiceLineGroupEntity and InvoiceLineGroupConsultingAgreementEntity over the 1:1 relation they have, using the relation between the fields:
+		/// InvoiceLineGroup.InvoiceLineGroupId - InvoiceLineGroupConsultingAgreement.InvoiceLineGroupId
+		/// </summary>
+		public virtual IEntityRelation InvoiceLineGroupConsultingAgreementEntityUsingInvoiceLineGroupId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "InvoiceLineGroupConsultingAgreement", true);
+
+				relation.AddEntityFieldPair(InvoiceLineGroupFields.InvoiceLineGroupId, InvoiceLineGroupConsultingAgreementFields.InvoiceLineGroupId);
+
+
+
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("InvoiceLineGroupConsultingAgreementEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between InvoiceLineGroupEntity and InvoiceLineGroupRawTestDataEntity over the 1:1 relation they have, using the relation between the fields:
 		/// InvoiceLineGroup.InvoiceLineGroupId - InvoiceLineGroupRawTestData.InvoiceLineGroupId
 		/// </summary>
@@ -142,6 +162,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation InvoiceLineEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineEntityUsingInvoiceLineGroupId;
 		internal static readonly IEntityRelation InvoiceLineGroupAppointmentEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineGroupAppointmentEntityUsingInvoiceLineGroupId;
 		internal static readonly IEntityRelation InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineGroupArbitrationEntityUsingInvoiceLineGroupId;
+		internal static readonly IEntityRelation InvoiceLineGroupConsultingAgreementEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineGroupConsultingAgreementEntityUsingInvoiceLineGroupId;
 		internal static readonly IEntityRelation InvoiceLineGroupRawTestDataEntityUsingInvoiceLineGroupIdStatic = new InvoiceLineGroupRelations().InvoiceLineGroupRawTestDataEntityUsingInvoiceLineGroupId;
 		internal static readonly IEntityRelation InvoiceEntityUsingInvoiceIdStatic = new InvoiceLineGroupRelations().InvoiceEntityUsingInvoiceId;
 

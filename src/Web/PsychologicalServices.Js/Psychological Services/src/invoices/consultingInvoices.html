@@ -1,0 +1,73 @@
+<template>
+	<require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+	
+	<div class="uk-container">
+	
+		<fieldset class="uk-fieldset">
+			<legend class="uk-legend">Consulting Invoices</legend>
+			
+			<form class="uk-form-stacked">
+			
+				<div class="uk-margin">
+					<label for="searchYear" class="uk-form-label">Year</label>
+					<select id="searchYear" class="uk-select" value.bind="searchYear" change.delegate="searchYearChanged()">
+						<option repeat.for="year of years" model.bind="year">
+							${year}
+						</option>
+					</select>
+				</div>
+
+				<div class="uk-margin">
+					<label for="searchMonth" class="uk-form-label">Month</label>
+					<select id="searchMonth" class="uk-select" value.bind="searchMonth">
+						<option repeat.for="month of filteredMonths" model.bind="month.value">
+							${month.name}
+						</option>
+					</select>
+				</div>
+
+				<div class="uk-margin">
+					<button class="uk-button uk-button-primary" click.delegate="searchInvoices()">Search</button>
+				</div>
+				
+			</form>
+			
+		</fieldset>
+
+	</div>
+
+	<div class="uk-overflow-auto" if.bind="consultingAgreements.length">
+		<table class="uk-table uk-table-divider" fixed-header>
+			<thead>
+				<tr>
+					<th></th>
+					<th>For</th>
+					<th>Year</th>
+					<th>Month</th>
+					<th>Payable To</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr repeat.for="consultingAgreement of consultingAgreements | sortArray:[{ property: 'year', direction: 'desc' },{ property: 'month', direction: 'desc' },{ property: 'referralSource', direction: 'asc' }]">
+					<td>
+						<button type="button" class="uk-button uk-button-primary" click.delegate="createInvoice(consultingAgreement)" if.bind="consultingAgreement.canCreateInvoice">
+							Create Invoice
+						</button>
+						<a route-href="route: editInvoice; params.bind: {'id': consultingAgreement.invoiceId }" class="uk-button uk-button-secondary" if.bind="consultingAgreement.invoiceId">
+							Edit Invoice
+						</a>
+					</td>
+					<td>${consultingAgreement.referralSource}</td>
+					<td>${consultingAgreement.year}</td>
+					<td>${consultingAgreement.month}</td>
+					<td>${consultingAgreement.payableTo}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</template>

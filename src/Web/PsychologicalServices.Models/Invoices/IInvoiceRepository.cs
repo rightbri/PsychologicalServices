@@ -51,6 +51,8 @@ namespace PsychologicalServices.Models.Invoices
 
         IEnumerable<InvoiceableRawTestDataData> GetInvoiceableRawTestData(InvoiceableRawTestDataSearchCriteria criteria);
 
+        IEnumerable<InvoiceableConsultingAgreementData> GetInvoiceableConsultingAgreementData(InvoiceableConsultingAgreementSearchCriteria criteria);
+
         PsychometristInvoiceAmount GetPsychometristInvoiceAmount(int assessmentTypeId, int appointmentStatusId, int appointmentSequenceId, int companyId);
     }
 }

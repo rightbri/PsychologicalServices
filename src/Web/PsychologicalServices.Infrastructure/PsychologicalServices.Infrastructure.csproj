@@ -96,6 +96,7 @@
     <Compile Include="Common\Utility\TempDirectoryFactory.cs" />
     <Compile Include="Common\Utility\TempPath.cs" />
     <Compile Include="Companies\CompanyRepository.cs" />
+    <Compile Include="Consulting\ConsultingRepository.cs" />
     <Compile Include="Contacts\ContactRepository.cs" />
     <Compile Include="Credibilities\CredibilityRepository.cs" />
     <Compile Include="DiagnosisFoundResponses\DiagnosisFoundResponseRepository.cs" />

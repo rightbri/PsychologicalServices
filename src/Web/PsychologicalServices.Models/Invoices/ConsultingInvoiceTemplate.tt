@@ -1,0 +1,319 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ parameter type="PsychologicalServices.Models.Invoices.Invoice" name="Model" #>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<!--
+	<link href="https://fonts.googleapis.com/css?family=Martel" rel="stylesheet">
+	-->
+    <style>
+		body {
+			font-family: 'Martel', serif;
+			
+			font-size: 12pt;
+		}
+		
+		table {
+			font-family:"Times New Roman",serif;
+			border-collapse: collapse;
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+		}
+		
+		td {
+			border-width: 1px 3px;
+			border-style: solid;
+			border-color: #000;
+			padding: 1px 5px;
+			vertical-align: top;
+		}
+
+		.label {
+			font-weight: bold;
+			font-style: italic;
+			width: 25%;
+		}
+		
+		.title {
+			font-size: 24pt;
+			text-decoration: underline;
+			line-height: 0.8;
+		}
+		.subtitle {
+			font-size: 16pt;
+			text-align: right;
+			line-height: 0.8;
+		}
+		.referral-source-address {
+			font-size: 12pt;
+			line-height: 1.25;
+			margin-left: 10%;
+		}
+		.message {
+			text-align: center;
+			line-height: 1;
+		}
+		
+		footer {
+			text-align: center;
+		}
+		
+		.invoice-title {
+			font-size: 16pt;
+			text-transform: uppercase;
+			font-weight: bold;
+			text-align: center;
+		}
+		
+		.invoice-data {
+			font-size: 12pt;
+			font-weight: bold;
+			line-height: 1;
+			margin-left: 55%;
+		}
+		
+		.invoice-amount {
+			text-align: right;
+			padding-right: 5px;
+			width: 5%;
+		}
+		
+		.spacer {
+			background-color: #f5f5f5;
+			border-width: 3px;
+		}
+		
+		.separator-top {
+			border-top-width: 3px;
+		}
+		.total td {
+			border-width: 3px;
+		}
+		
+		tr:first-child td,
+		tr:last-child td {
+			border-width: 3px;
+		}
+
+		.claims {
+			margin-left: 0;
+		}
+
+		.claims th {
+			text-align: left;
+			font-weight: normal;
+		}
+		
+		.claims td,
+		.claims tr:first-child td,
+		.claims tr:last-child td {
+			border-width: 0;
+		}
+		
+		/* Sticky footer styles
+		-------------------------------------------------- */
+		html {
+		  position: relative;
+		  min-height: 100%;
+		}
+		body {
+		  /* Margin bottom by footer height */
+		  margin-bottom: 75px;
+		}
+
+		footer {
+		  position: absolute;
+		  bottom: 0;
+		  width: 100%;
+		  /* Set the fixed height of the footer here */
+		  height: 75px;
+		  border-width: 1px 0 0 0;
+		  border-style: solid;
+		  border-color: #666;
+		  color: #666;
+		}
+
+		.footer > div > div {
+			padding-top: 20px;   
+		}
+		
+	</style>
+</head>
+<body>
+	<#
+		var consultingAgreement = Model.LineGroups.First(lineGroup => null != lineGroup.ConsultingAgreement).ConsultingAgreement;
+		var company = Model.PayableTo.Company;
+	#>
+	<header>
+		<h1 class="title">
+			<#= company.Name #>
+		</h1>
+	</header>
+
+	<p class="bill-to-address">
+		<# var billToReferralSource = consultingAgreement.BillToReferralSource; #>
+		<#= billToReferralSource.Name #>
+		<# if (null != billToReferralSource.Address) { #>
+			<br /><#= billToReferralSource.Address.Street #>
+			<# if (!string.IsNullOrWhiteSpace(billToReferralSource.Address.Suite)) { #>
+			<br /><#= billToReferralSource.Address.Suite #>
+			<# } #>
+			<br /><#= billToReferralSource.Address.City.Name #>, <#= billToReferralSource.Address.City.Province #>, <#= billToReferralSource.Address.PostalCode #>
+		<# } #>
+		<br />&nbsp;
+	</p>
+
+	<p class="invoice-data">
+		Invoice Number:&nbsp;<#= Model.Identifier #>
+	</p>
+	<p class="invoice-data">
+		Date of Invoice:&nbsp;<#= $"{Model.InvoiceDate:MMMM d, yyyy}" #>
+	</p>
+	
+	<section>
+	
+		<p class="invoice-title">Invoice For Services</p>
+		
+		<table>
+			<tbody>
+				<tr>
+					<td class="label">Bill to:</td>
+					<td colspan="3">
+						<#= billToReferralSource.Name #>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="spacer">&nbsp;</td>
+				</tr>
+				<tr>
+					<td class="label">
+						Please Remit<br />Payment to:
+					</td>
+					<td colspan="1">
+						<#= company.Name #>
+						<br /><#= company.Address.Street #>
+						<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
+						<br /><#= company.Address.Suite #>
+						<# } #>
+						<br /><#= company.Address.City.Name #>, <#= company.Address.City.Province #>, <#= company.Address.PostalCode #>
+						<br />&nbsp;
+					</td>
+					<td colspan="2">
+						Office No.: <#= company.Phone #>
+						<br />Email: <a href="mailto:<#= company.Email #>">
+							<#= company.Email #>
+						</a>
+						<br />&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="spacer">&nbsp;</td>
+				</tr>
+
+				<tr>
+					<td class="label"></td>
+					<td colspan="3">
+						Consulting Services
+					</td>
+				</tr>
+
+				<#
+				for (var i = 0; i < Model.LineGroups.Count(); i++)
+				{
+					var lineGroup = Model.LineGroups.ElementAt(i);
+					
+					for (var j = 0; j < lineGroup.Lines.Count(); j++)
+					{
+						var line = lineGroup.Lines.ElementAt(j);
+					#>
+						<tr>
+							<td class="label">&nbsp;</td>
+							<td colspan="2">
+								<#= line.Description #>
+							</td>
+							<td class="invoice-amount">
+								<#= $"{(line.Amount / 100):$#,##0.00}" #>
+							</td>
+						</tr>
+					<#
+					}
+				}
+				#>
+				
+				<#
+					var subtotal = Model.Subtotal;
+				#>
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan="2">Subtotal</td>
+					<td class="invoice-amount separator-top">
+						<#= $"{(subtotal / 100.0m):$#,##0.00}" #>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan="2">+H.S.T.</td>
+					<td class="invoice-amount">
+						<#= string.Format("{0:$#,##0.00}", ((subtotal * Model.TaxRate) / 100.0m)) #>
+					</td>
+				</tr>
+				<tr class="invoice-amount total">
+					<td class="label" colspan="3">Total Invoice Amount:</td>
+					<td>
+						<#= string.Format("{0:$#,##0.00}", Model.Total / 100.0m) #>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="4">&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	
+	<section>
+		<p class="message">
+			Thank you for your business.
+			<br />Payment upon receipt would be appreciated.
+		</p>
+	</section>
+
+	<br />
+	
+	<section>
+		<p class="message">
+			H.S.T. Number <#= company.TaxId #>
+		</p>
+	</section>
+	
+	<br />
+	
+	<footer>
+		<div>
+			<div>
+				<p>
+					<#= company.Address.Street #>
+					<# if (!string.IsNullOrWhiteSpace(company.Address.Suite)) { #>
+						~ <#= company.Address.Suite #>
+					<# } #>
+						~ <#= company.Address.City.Name #>
+						~ <#= company.Address.City.Province #>
+						~ <#= company.Address.PostalCode #>
+					<br />Phone:&nbsp;<#= company.Phone #>
+				</p>
+			</div>
+		</div>
+	</footer>
+	
+</body>
+</html>

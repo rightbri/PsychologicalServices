@@ -1,6 +1,6 @@
 ﻿using PsychologicalServices.Models.Appointments;
 using PsychologicalServices.Models.Arbitrations;
-using PsychologicalServices.Models.RawTestData;
+using PsychologicalServices.Models.Consulting;
 using System;
 using System.Collections.Generic;
 
@@ -21,5 +21,7 @@ namespace PsychologicalServices.Models.Invoices
         public Arbitration Arbitration { get; set; }
 
         public RawTestData.RawTestData RawTestData { get; set; }
+
+        public ConsultingAgreement ConsultingAgreement { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace PsychologicalServices.Models.Invoices
         public const int Psychometrist = 2;
         public const int Arbitration = 3;
         public const int RawTestData = 4;
+        public const int Consulting = 5;
 
         public int InvoiceTypeId { get; set; }
 

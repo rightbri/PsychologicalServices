@@ -87,6 +87,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'invoiceablerawtestdata');
 	}
 
+	searchInvoiceableConsultingAgreementData(criteria) {
+		return this.searchBasic(criteria, 'invoiceableconsultingagreementdata');
+	}
+
 	createPsychometristInvoice(companyId, psychometristId, invoicePeriodBegin, invoicePeriodEnd) {
 		return this.postBasic('psychometristinvoice/create', {
 			'companyId': companyId,
@@ -111,6 +115,14 @@ export class DataRepository {
 	createRawTestDataInvoice(rawTestDataId) {
 		return this.postBasic('rawtestdatainvoice/create', {
 			'rawTestDataId': rawTestDataId
+		});
+	}
+
+	createConsultingInvoice(consultingAgreementId, year, month) {
+		return this.postBasic('consultingagreementinvoice/create', {
+			'consultingAgreementId': consultingAgreementId,
+			'year': year,
+			'month': month
 		});
 	}
 	
@@ -210,6 +222,10 @@ export class DataRepository {
 
 	getDiagnosisFoundResponses() {
 		return this.getManyBasic('diagnosisfoundresponse', true);
+	}
+
+	getConsultingagreements(criteria) {
+		return this.searchBasic(criteria, 'consultingagreement');
 	}
 
 	searchNonAbCompletionData(criteria) {

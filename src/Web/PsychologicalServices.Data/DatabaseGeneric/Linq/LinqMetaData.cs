@@ -160,6 +160,9 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.CompanyAttributeEntity:
 					toReturn = this.CompanyAttribute;
 					break;
+				case PsychologicalServices.Data.EntityType.ConsultingAgreementEntity:
+					toReturn = this.ConsultingAgreement;
+					break;
 				case PsychologicalServices.Data.EntityType.ContactEntity:
 					toReturn = this.Contact;
 					break;
@@ -204,6 +207,9 @@ namespace PsychologicalServices.Data.Linq
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity:
 					toReturn = this.InvoiceLineGroupArbitration;
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupConsultingAgreementEntity:
+					toReturn = this.InvoiceLineGroupConsultingAgreement;
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupRawTestDataEntity:
 					toReturn = this.InvoiceLineGroupRawTestData;
@@ -497,6 +503,12 @@ namespace PsychologicalServices.Data.Linq
 			get { return new DataSource2<CompanyAttributeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
+		/// <summary>returns the datasource to use in a Linq query when targeting ConsultingAgreementEntity instances in the database.</summary>
+		public DataSource2<ConsultingAgreementEntity> ConsultingAgreement
+		{
+			get { return new DataSource2<ConsultingAgreementEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
 		/// <summary>returns the datasource to use in a Linq query when targeting ContactEntity instances in the database.</summary>
 		public DataSource2<ContactEntity> Contact
 		{
@@ -585,6 +597,12 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<InvoiceLineGroupArbitrationEntity> InvoiceLineGroupArbitration
 		{
 			get { return new DataSource2<InvoiceLineGroupArbitrationEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineGroupConsultingAgreementEntity instances in the database.</summary>
+		public DataSource2<InvoiceLineGroupConsultingAgreementEntity> InvoiceLineGroupConsultingAgreement
+		{
+			get { return new DataSource2<InvoiceLineGroupConsultingAgreementEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceLineGroupRawTestDataEntity instances in the database.</summary>

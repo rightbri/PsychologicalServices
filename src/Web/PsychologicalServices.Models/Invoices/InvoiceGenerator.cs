@@ -3,6 +3,7 @@ using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Assessments;
 using PsychologicalServices.Models.Common.Utility;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Consulting;
 using PsychologicalServices.Models.RawTestData;
 using PsychologicalServices.Models.Users;
 using System;
@@ -17,10 +18,12 @@ namespace PsychologicalServices.Models.Invoices
         private readonly IAssessmentRepository _assessmentRepository = null;
         private readonly IArbitrationRepository _arbitrationRepository = null;
         private readonly IRawTestDataRepository _rawTestDataRepository = null;
+        private readonly IConsultingRepository _consultingRepository = null;
         private readonly IPsychologistInvoiceGenerator _psychologistInvoiceGenerator = null;
         private readonly IPsychometristInvoiceGenerator _psychometristInvoiceGenerator = null;
         private readonly IArbitrationInvoiceGenerator _arbitrationInvoiceGenerator = null;
         private readonly IRawTestDataInvoiceGenerator _rawTestDataInvoiceGenerator = null;
+        private readonly IConsultingInvoiceGenerator _consultingInvoiceGenerator = null;
         private readonly IUserService _userService = null;
         private readonly IInvoiceRepository _invoiceRepository = null;
         private readonly ICompanyRepository _companyRepository = null;
@@ -31,10 +34,12 @@ namespace PsychologicalServices.Models.Invoices
             IAssessmentRepository assessmentRepository,
             IArbitrationRepository arbitrationRepository,
             IRawTestDataRepository rawTestDataRepository,
+            IConsultingRepository consultingRepository,
             IPsychologistInvoiceGenerator psychologistInvoiceGenerator,
             IPsychometristInvoiceGenerator psychometristInvoiceGenerator,
             IArbitrationInvoiceGenerator arbitrationInvoiceGenerator,
             IRawTestDataInvoiceGenerator rawTestDataInvoiceGenerator,
+            IConsultingInvoiceGenerator consultingInvoiceGenerator,
             IUserService userService,
             IInvoiceRepository invoiceRepository,
             ICompanyRepository companyRepository,
@@ -45,10 +50,12 @@ namespace PsychologicalServices.Models.Invoices
             _assessmentRepository = assessmentRepository;
             _arbitrationRepository = arbitrationRepository;
             _rawTestDataRepository = rawTestDataRepository;
+            _consultingRepository = consultingRepository;
             _psychologistInvoiceGenerator = psychologistInvoiceGenerator;
             _psychometristInvoiceGenerator = psychometristInvoiceGenerator;
             _arbitrationInvoiceGenerator = arbitrationInvoiceGenerator;
             _rawTestDataInvoiceGenerator = rawTestDataInvoiceGenerator;
+            _consultingInvoiceGenerator = consultingInvoiceGenerator;
             _userService = userService;
             _invoiceRepository = invoiceRepository;
             _companyRepository = companyRepository;
@@ -111,6 +118,22 @@ namespace PsychologicalServices.Models.Invoices
             return _invoiceRepository.GetInvoice(invoiceId);
         }
 
+        public Invoice CreateConsultingInvoice(ConsultingInvoiceCreationParameters parameters)
+        {
+            var consultingAgreement = _consultingRepository.GetConsultingAgreement(parameters.ConsultingAgreementId);
+
+            if (null == consultingAgreement)
+            {
+                throw new ArgumentOutOfRangeException($"parameters.{nameof(parameters.ConsultingAgreementId)}", $"Cannot find consulting agreement with id {parameters.ConsultingAgreementId}");
+            }
+
+            var invoice = _consultingInvoiceGenerator.CreateInvoice(consultingAgreement, parameters.Year, parameters.Month);
+
+            var invoiceId = _invoiceRepository.SaveInvoice(invoice);
+
+            return _invoiceRepository.GetInvoice(invoiceId);
+        }
+
         public IEnumerable<InvoiceLineGroup> GetInvoiceLineGroups(Invoice invoice)
         {
             IEnumerable<InvoiceLineGroup> invoiceLineGroups = null;
@@ -130,6 +153,10 @@ namespace PsychologicalServices.Models.Invoices
             else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.RawTestData)
             {
                 invoiceLineGroups = _rawTestDataInvoiceGenerator.GetInvoiceLineGroups(invoice);
+            }
+            else if (invoice.InvoiceType.InvoiceTypeId == InvoiceType.Consulting)
+            {
+                invoiceLineGroups = _consultingInvoiceGenerator.GetInvoiceLineGroups(invoice);
             }
             else
             {
@@ -156,6 +183,9 @@ namespace PsychologicalServices.Models.Invoices
                     break;
                 case InvoiceType.RawTestData:
                     total = _rawTestDataInvoiceGenerator.GetInvoiceTotal(invoice);
+                    break;
+                case InvoiceType.Consulting:
+                    total = _consultingInvoiceGenerator.GetInvoiceTotal(invoice);
                     break;
                 default:
                     break;

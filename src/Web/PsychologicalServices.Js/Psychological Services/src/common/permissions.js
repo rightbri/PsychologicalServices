@@ -76,5 +76,8 @@ export const Permissions = {
     "ViewEvent":"ViewEvent",
     "SearchEvent":"SearchEvent",
     "ViewRight":"ViewRight",
-    "ViewRole":"ViewRole"
+    "ViewRole":"ViewRole",
+    "ViewAssessmentNote":"ViewAssessmentNote",
+    "EditAssessmentNote":"EditAssessmentNote",
+    "CreateConsultingInvoice":"CreateConsultingInvoice"
 }

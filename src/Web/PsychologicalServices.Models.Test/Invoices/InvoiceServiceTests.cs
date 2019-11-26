@@ -20,6 +20,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
         private InvoiceService GetService(
             Action<
+                Mock<IDate>,
                 Mock<Appointments.IAppointmentRepository>,
                 Mock<Assessments.IAssessmentRepository>,
                 Mock<Claims.IClaimRepository>,
@@ -34,6 +35,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             > setupMocks = null
         )
         {
+            var dateMock = new Mock<IDate>();
             var appointmentRepositoryMock = new Mock<Appointments.IAppointmentRepository>();
             var assessmentRepositoryMock = new Mock<Assessments.IAssessmentRepository>();
             var claimRepositoryMock = new Mock<Claims.IClaimRepository>();
@@ -47,6 +49,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             var invoiceGeneratorMock = new Mock<IInvoiceGenerator>();
 
             setupMocks?.Invoke(
+                dateMock,
                 appointmentRepositoryMock,
                 assessmentRepositoryMock,
                 claimRepositoryMock,
@@ -61,6 +64,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             );
 
             var invoiceService = new InvoiceService(
+                dateMock.Object,
                 appointmentRepositoryMock.Object,
                 assessmentRepositoryMock.Object,
                 claimRepositoryMock.Object,
@@ -114,6 +118,7 @@ namespace PsychologicalServices.Models.Test.Invoices
             
             var invoiceService = GetService(
                 (
+                    dateMock,
                     appointmentRepositoryMock,
                     assessmentRepositoryMock,
                     claimRepositoryMock,
@@ -153,6 +158,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoiceService = GetService(
                 (
+                    dateMock,
                     appointmentRepositoryMock,
                     assessmentRepositoryMock,
                     claimRepositoryMock,
@@ -194,6 +200,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoiceService = GetService(
                 (
+                    dateMock,
                     appointmentRepositoryMock,
                     assessmentRepositoryMock,
                     claimRepositoryMock,
@@ -241,6 +248,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoiceService = GetService(
                 (
+                    dateMock,
                     appointmentRepositoryMock,
                     assessmentRepositoryMock,
                     claimRepositoryMock,
@@ -297,6 +305,7 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             var invoiceService = GetService(
                 (
+                    dateMock,
                     appointmentRepositoryMock,
                     assessmentRepositoryMock,
                     claimRepositoryMock,

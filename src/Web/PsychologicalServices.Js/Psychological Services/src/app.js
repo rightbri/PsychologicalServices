@@ -59,6 +59,7 @@ export class App {
 			{ route: 'invoices/psychologist', name: 'psychologistInvoices', moduleId: 'invoices/psychologistInvoices', title: 'Create Psychologist Invoices', nav: false, settings: { permissions: [p.CreatePsychologistInvoice] } },
 			{ route: 'invoices/arbitration', name: 'arbitrationInvoices', moduleId: 'invoices/arbitrationInvoices', title: 'Create Arbitration Invoices', nav: true, settings: { permissions: [p.CreateArbitrationInvoice] } },
 			{ route: 'invoices/rawtestdata', name: 'rawTestDataInvoices', moduleId: 'invoices/rawTestDataInvoices', title: 'Create Raw Test Data Invoices', nav: true, settings: { permissions: [p.CreateRawTestDataInvoice] } },
+			{ route: 'invoices/consulting', name: 'consultingInvoices', moduleId: 'invoices/consultingInvoices', title: 'Create Consulting Invoices', nav: true, settings: { permissions: [p.CreateConsultingInvoice] } },
 			{ route: 'addresses', name: 'addresses', moduleId: 'addresses/addresses', title: 'Addresses', nav: true, settings: { permissions: [p.SearchAddress] } },
 			{ route: 'addresses/:id', name: 'editAddress', moduleId: 'addresses/editAddress', title: 'Edit Address', nav: false, settings: { permissions: [p.EditAddress] } },
 			{ route: 'addresses/add', name: 'addAddress', moduleId: 'addresses/editAddress', title: 'Add Address', nav: false, settings: { permissions: [p.EditAddress] } },
@@ -180,6 +181,12 @@ export class App {
 				"items": [
 					{ "name": "Add/Edit Raw Test Data", "route": "/rawtestdata", "permissions": [p.EditRawTestData] },
 					{ "name": "Create Raw Test Data Invoices", "route": "/invoices/rawtestdata", "permissions": [p.CreateRawTestDataInvoice] }
+				]
+			},
+			{
+				"name": "Consulting",
+				"items": [
+					{ "name": "Create Consulting Invoices", "route": "/invoices/consulting", "permissions": [p.CreateConsultingInvoice] }
 				]
 			},
 			{

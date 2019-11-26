@@ -355,6 +355,58 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			return CreateInvoiceableArbitrationDataCall(dataAccessProvider, companyId).ToRetrievalQuery();
 		}
 
+		/// <summary>Calls stored procedure 'InvoiceableConsultingAgreementData'.<br/><br/></summary>
+		/// <param name="companyId">Input parameter. </param>
+		/// <param name="year">Input parameter. </param>
+		/// <param name="month">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableConsultingAgreementData(System.Int32 companyId, System.Int32 year, System.Int32 month)
+		{
+			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
+			{
+				return InvoiceableConsultingAgreementData(companyId, year, month, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Calls stored procedure 'InvoiceableConsultingAgreementData'.<br/><br/></summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter. </param>
+		/// <param name="year">Input parameter. </param>
+		/// <param name="month">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable InvoiceableConsultingAgreementData(System.Int32 companyId, System.Int32 year, System.Int32 month, IDataAccessCore dataAccessProvider)
+		{
+			using(StoredProcedureCall call = CreateInvoiceableConsultingAgreementDataCall(dataAccessProvider, companyId, year, month))
+			{
+				DataTable toReturn = call.FillDataTable();
+				return toReturn;
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'InvoiceableConsultingAgreementData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="year">Input parameter of stored procedure</param>
+		/// <param name="month">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetInvoiceableConsultingAgreementDataCallAsQuery(System.Int32 companyId, System.Int32 year, System.Int32 month)
+		{
+			using(var dataAccessProvider = new DataAccessAdapter())
+			{
+				return GetInvoiceableConsultingAgreementDataCallAsQuery(companyId, year, month, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'InvoiceableConsultingAgreementData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="year">Input parameter of stored procedure</param>
+		/// <param name="month">Input parameter of stored procedure</param>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetInvoiceableConsultingAgreementDataCallAsQuery(System.Int32 companyId, System.Int32 year, System.Int32 month, IDataAccessCore dataAccessProvider)
+		{
+			return CreateInvoiceableConsultingAgreementDataCall(dataAccessProvider, companyId, year, month).ToRetrievalQuery();
+		}
+
 		/// <summary>Calls stored procedure 'InvoiceableRawTestDataData'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
@@ -721,6 +773,20 @@ needsToBeSentToReferralSource).ToRetrievalQuery();
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[InvoiceableArbitrationData]", "InvoiceableArbitrationData")
 							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId);
+		}
+
+		/// <summary>Creates the call object for the call 'InvoiceableConsultingAgreementData' to stored procedure 'InvoiceableConsultingAgreementData'.</summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter</param>
+		/// <param name="year">Input parameter</param>
+		/// <param name="month">Input parameter</param>
+		/// <returns>Ready to use StoredProcedureCall object</returns>
+		private static StoredProcedureCall CreateInvoiceableConsultingAgreementDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, System.Int32 year, System.Int32 month)
+		{
+			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[InvoiceableConsultingAgreementData]", "InvoiceableConsultingAgreementData")
+							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
+							.AddParameter("@year", "Int", 0, ParameterDirection.Input, true, 10, 0, year)
+							.AddParameter("@month", "Int", 0, ParameterDirection.Input, true, 10, 0, month);
 		}
 
 		/// <summary>Creates the call object for the call 'InvoiceableRawTestDataData' to stored procedure 'InvoiceableRawTestDataData'.</summary>

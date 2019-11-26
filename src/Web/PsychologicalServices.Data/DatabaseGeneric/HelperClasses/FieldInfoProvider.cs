@@ -82,6 +82,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitColorEntityInfos();
 			InitCompanyEntityInfos();
 			InitCompanyAttributeEntityInfos();
+			InitConsultingAgreementEntityInfos();
 			InitContactEntityInfos();
 			InitContactTypeEntityInfos();
 			InitCredibilityEntityInfos();
@@ -97,6 +98,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitInvoiceLineGroupEntityInfos();
 			InitInvoiceLineGroupAppointmentEntityInfos();
 			InitInvoiceLineGroupArbitrationEntityInfos();
+			InitInvoiceLineGroupConsultingAgreementEntityInfos();
 			InitInvoiceLineGroupRawTestDataEntityInfos();
 			InitInvoiceStatusEntityInfos();
 			InitInvoiceStatusChangeEntityInfos();
@@ -488,6 +490,16 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("CompanyAttributeEntity", "CompanyId", typeof(System.Int32), true, true, false, false,  (int)CompanyAttributeFieldIndex.CompanyId, 0, 0, 10);
 			this.AddElementFieldInfo("CompanyAttributeEntity", "AttributeId", typeof(System.Int32), true, true, false, false,  (int)CompanyAttributeFieldIndex.AttributeId, 0, 0, 10);
 		}
+		/// <summary>Inits ConsultingAgreementEntity's FieldInfo objects</summary>
+		private void InitConsultingAgreementEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(ConsultingAgreementFieldIndex), "ConsultingAgreementEntity");
+			this.AddElementFieldInfo("ConsultingAgreementEntity", "ConsultingAgreementId", typeof(System.Int32), true, false, true, false,  (int)ConsultingAgreementFieldIndex.ConsultingAgreementId, 0, 0, 10);
+			this.AddElementFieldInfo("ConsultingAgreementEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)ConsultingAgreementFieldIndex.CompanyId, 0, 0, 10);
+			this.AddElementFieldInfo("ConsultingAgreementEntity", "PsychologistId", typeof(System.Int32), false, true, false, false,  (int)ConsultingAgreementFieldIndex.PsychologistId, 0, 0, 10);
+			this.AddElementFieldInfo("ConsultingAgreementEntity", "BillToReferralSourceId", typeof(System.Int32), false, true, false, false,  (int)ConsultingAgreementFieldIndex.BillToReferralSourceId, 0, 0, 10);
+			this.AddElementFieldInfo("ConsultingAgreementEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ConsultingAgreementFieldIndex.IsActive, 0, 0, 0);
+		}
 		/// <summary>Inits ContactEntity's FieldInfo objects</summary>
 		private void InitContactEntityInfos()
 		{
@@ -632,6 +644,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddFieldIndexEnumForElementName(typeof(InvoiceLineGroupArbitrationFieldIndex), "InvoiceLineGroupArbitrationEntity");
 			this.AddElementFieldInfo("InvoiceLineGroupArbitrationEntity", "InvoiceLineGroupId", typeof(System.Int32), true, true, false, false,  (int)InvoiceLineGroupArbitrationFieldIndex.InvoiceLineGroupId, 0, 0, 10);
 			this.AddElementFieldInfo("InvoiceLineGroupArbitrationEntity", "ArbitrationId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineGroupArbitrationFieldIndex.ArbitrationId, 0, 0, 10);
+		}
+		/// <summary>Inits InvoiceLineGroupConsultingAgreementEntity's FieldInfo objects</summary>
+		private void InitInvoiceLineGroupConsultingAgreementEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(InvoiceLineGroupConsultingAgreementFieldIndex), "InvoiceLineGroupConsultingAgreementEntity");
+			this.AddElementFieldInfo("InvoiceLineGroupConsultingAgreementEntity", "InvoiceLineGroupId", typeof(System.Int32), true, true, false, false,  (int)InvoiceLineGroupConsultingAgreementFieldIndex.InvoiceLineGroupId, 0, 0, 10);
+			this.AddElementFieldInfo("InvoiceLineGroupConsultingAgreementEntity", "ConsultingAgreementId", typeof(System.Int32), false, true, false, false,  (int)InvoiceLineGroupConsultingAgreementFieldIndex.ConsultingAgreementId, 0, 0, 10);
 		}
 		/// <summary>Inits InvoiceLineGroupRawTestDataEntity's FieldInfo objects</summary>
 		private void InitInvoiceLineGroupRawTestDataEntityInfos()

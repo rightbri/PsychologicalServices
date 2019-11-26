@@ -491,7 +491,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AssessmentTestingResultEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAssessmentTestingResultUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -751,6 +750,26 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntity2 Create(IEntityFields2 fields) {
 			IEntity2 toReturn = new CompanyAttributeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCompanyAttributeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty ConsultingAgreementEntity objects.</summary>
+	[Serializable]
+	public partial class ConsultingAgreementEntityFactory : EntityFactoryBase2<ConsultingAgreementEntity> {
+		/// <summary>CTor</summary>
+		public ConsultingAgreementEntityFactory() : base("ConsultingAgreementEntity", PsychologicalServices.Data.EntityType.ConsultingAgreementEntity, false) { }
+		
+		/// <summary>Creates a new ConsultingAgreementEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new ConsultingAgreementEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewConsultingAgreementUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1051,6 +1070,26 @@ namespace PsychologicalServices.Data.FactoryClasses
 		public override IEntity2 Create(IEntityFields2 fields) {
 			IEntity2 toReturn = new InvoiceLineGroupArbitrationEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceLineGroupArbitrationUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty InvoiceLineGroupConsultingAgreementEntity objects.</summary>
+	[Serializable]
+	public partial class InvoiceLineGroupConsultingAgreementEntityFactory : EntityFactoryBase2<InvoiceLineGroupConsultingAgreementEntity> {
+		/// <summary>CTor</summary>
+		public InvoiceLineGroupConsultingAgreementEntityFactory() : base("InvoiceLineGroupConsultingAgreementEntity", PsychologicalServices.Data.EntityType.InvoiceLineGroupConsultingAgreementEntity, false) { }
+		
+		/// <summary>Creates a new InvoiceLineGroupConsultingAgreementEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new InvoiceLineGroupConsultingAgreementEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewInvoiceLineGroupConsultingAgreementUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1690,6 +1729,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 				case PsychologicalServices.Data.EntityType.CompanyAttributeEntity:
 					factoryToUse = new CompanyAttributeEntityFactory();
 					break;
+				case PsychologicalServices.Data.EntityType.ConsultingAgreementEntity:
+					factoryToUse = new ConsultingAgreementEntityFactory();
+					break;
 				case PsychologicalServices.Data.EntityType.ContactEntity:
 					factoryToUse = new ContactEntityFactory();
 					break;
@@ -1734,6 +1776,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupArbitrationEntity:
 					factoryToUse = new InvoiceLineGroupArbitrationEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.InvoiceLineGroupConsultingAgreementEntity:
+					factoryToUse = new InvoiceLineGroupConsultingAgreementEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceLineGroupRawTestDataEntity:
 					factoryToUse = new InvoiceLineGroupRawTestDataEntityFactory();

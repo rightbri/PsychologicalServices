@@ -32,6 +32,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<AppointmentStatusInvoiceRateEntity> _appointmentStatusInvoiceRates;
 		private EntityCollection<AssessmentEntity> _assessments;
 		private EntityCollection<AssessmentTypeInvoiceAmountEntity> _assessmentTypeInvoiceAmounts;
+		private EntityCollection<ConsultingAgreementEntity> _consultingAgreements;
 		private EntityCollection<RawTestDataEntity> _rawTestDatas;
 		private EntityCollection<ReferralSourceInvoiceConfigurationEntity> _referralSourceInvoiceConfiguration;
 		private AddressEntity _address;
@@ -58,6 +59,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Assessments = "Assessments";
 			/// <summary>Member name AssessmentTypeInvoiceAmounts</summary>
 			public static readonly string AssessmentTypeInvoiceAmounts = "AssessmentTypeInvoiceAmounts";
+			/// <summary>Member name ConsultingAgreements</summary>
+			public static readonly string ConsultingAgreements = "ConsultingAgreements";
 			/// <summary>Member name RawTestDatas</summary>
 			public static readonly string RawTestDatas = "RawTestDatas";
 			/// <summary>Member name ReferralSourceInvoiceConfiguration</summary>
@@ -122,6 +125,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_appointmentStatusInvoiceRates = (EntityCollection<AppointmentStatusInvoiceRateEntity>)info.GetValue("_appointmentStatusInvoiceRates", typeof(EntityCollection<AppointmentStatusInvoiceRateEntity>));
 				_assessments = (EntityCollection<AssessmentEntity>)info.GetValue("_assessments", typeof(EntityCollection<AssessmentEntity>));
 				_assessmentTypeInvoiceAmounts = (EntityCollection<AssessmentTypeInvoiceAmountEntity>)info.GetValue("_assessmentTypeInvoiceAmounts", typeof(EntityCollection<AssessmentTypeInvoiceAmountEntity>));
+				_consultingAgreements = (EntityCollection<ConsultingAgreementEntity>)info.GetValue("_consultingAgreements", typeof(EntityCollection<ConsultingAgreementEntity>));
 				_rawTestDatas = (EntityCollection<RawTestDataEntity>)info.GetValue("_rawTestDatas", typeof(EntityCollection<RawTestDataEntity>));
 				_referralSourceInvoiceConfiguration = (EntityCollection<ReferralSourceInvoiceConfigurationEntity>)info.GetValue("_referralSourceInvoiceConfiguration", typeof(EntityCollection<ReferralSourceInvoiceConfigurationEntity>));
 				_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
@@ -182,6 +186,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTypeInvoiceAmounts":
 					this.AssessmentTypeInvoiceAmounts.Add((AssessmentTypeInvoiceAmountEntity)entity);
 					break;
+				case "ConsultingAgreements":
+					this.ConsultingAgreements.Add((ConsultingAgreementEntity)entity);
+					break;
 				case "RawTestDatas":
 					this.RawTestDatas.Add((RawTestDataEntity)entity);
 					break;
@@ -224,6 +231,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AssessmentTypeInvoiceAmounts":
 					toReturn.Add(Relations.AssessmentTypeInvoiceAmountEntityUsingReferralSourceId);
+					break;
+				case "ConsultingAgreements":
+					toReturn.Add(Relations.ConsultingAgreementEntityUsingBillToReferralSourceId);
 					break;
 				case "RawTestDatas":
 					toReturn.Add(Relations.RawTestDataEntityUsingBillToReferralSourceId);
@@ -274,6 +284,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTypeInvoiceAmounts":
 					this.AssessmentTypeInvoiceAmounts.Add((AssessmentTypeInvoiceAmountEntity)relatedEntity);
 					break;
+				case "ConsultingAgreements":
+					this.ConsultingAgreements.Add((ConsultingAgreementEntity)relatedEntity);
+					break;
 				case "RawTestDatas":
 					this.RawTestDatas.Add((RawTestDataEntity)relatedEntity);
 					break;
@@ -307,6 +320,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AssessmentTypeInvoiceAmounts":
 					this.PerformRelatedEntityRemoval(this.AssessmentTypeInvoiceAmounts, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "ConsultingAgreements":
+					this.PerformRelatedEntityRemoval(this.ConsultingAgreements, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "RawTestDatas":
 					this.PerformRelatedEntityRemoval(this.RawTestDatas, relatedEntity, signalRelatedEntityManyToOne);
@@ -352,6 +368,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.AppointmentStatusInvoiceRates);
 			toReturn.Add(this.Assessments);
 			toReturn.Add(this.AssessmentTypeInvoiceAmounts);
+			toReturn.Add(this.ConsultingAgreements);
 			toReturn.Add(this.RawTestDatas);
 			toReturn.Add(this.ReferralSourceInvoiceConfiguration);
 			return toReturn;
@@ -368,6 +385,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_appointmentStatusInvoiceRates", ((_appointmentStatusInvoiceRates!=null) && (_appointmentStatusInvoiceRates.Count>0) && !this.MarkedForDeletion)?_appointmentStatusInvoiceRates:null);
 				info.AddValue("_assessments", ((_assessments!=null) && (_assessments.Count>0) && !this.MarkedForDeletion)?_assessments:null);
 				info.AddValue("_assessmentTypeInvoiceAmounts", ((_assessmentTypeInvoiceAmounts!=null) && (_assessmentTypeInvoiceAmounts.Count>0) && !this.MarkedForDeletion)?_assessmentTypeInvoiceAmounts:null);
+				info.AddValue("_consultingAgreements", ((_consultingAgreements!=null) && (_consultingAgreements.Count>0) && !this.MarkedForDeletion)?_consultingAgreements:null);
 				info.AddValue("_rawTestDatas", ((_rawTestDatas!=null) && (_rawTestDatas.Count>0) && !this.MarkedForDeletion)?_rawTestDatas:null);
 				info.AddValue("_referralSourceInvoiceConfiguration", ((_referralSourceInvoiceConfiguration!=null) && (_referralSourceInvoiceConfiguration.Count>0) && !this.MarkedForDeletion)?_referralSourceInvoiceConfiguration:null);
 				info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
@@ -411,6 +429,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTypeInvoiceAmountFields.ReferralSourceId, null, ComparisonOperator.Equal, this.ReferralSourceId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'ConsultingAgreement' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoConsultingAgreements()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(ConsultingAgreementFields.BillToReferralSourceId, null, ComparisonOperator.Equal, this.ReferralSourceId));
 			return bucket;
 		}
 
@@ -465,6 +492,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._appointmentStatusInvoiceRates);
 			collectionsQueue.Enqueue(this._assessments);
 			collectionsQueue.Enqueue(this._assessmentTypeInvoiceAmounts);
+			collectionsQueue.Enqueue(this._consultingAgreements);
 			collectionsQueue.Enqueue(this._rawTestDatas);
 			collectionsQueue.Enqueue(this._referralSourceInvoiceConfiguration);
 		}
@@ -477,6 +505,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._appointmentStatusInvoiceRates = (EntityCollection<AppointmentStatusInvoiceRateEntity>) collectionsQueue.Dequeue();
 			this._assessments = (EntityCollection<AssessmentEntity>) collectionsQueue.Dequeue();
 			this._assessmentTypeInvoiceAmounts = (EntityCollection<AssessmentTypeInvoiceAmountEntity>) collectionsQueue.Dequeue();
+			this._consultingAgreements = (EntityCollection<ConsultingAgreementEntity>) collectionsQueue.Dequeue();
 			this._rawTestDatas = (EntityCollection<RawTestDataEntity>) collectionsQueue.Dequeue();
 			this._referralSourceInvoiceConfiguration = (EntityCollection<ReferralSourceInvoiceConfigurationEntity>) collectionsQueue.Dequeue();
 
@@ -490,6 +519,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn |=(this._appointmentStatusInvoiceRates != null);
 			toReturn |=(this._assessments != null);
 			toReturn |=(this._assessmentTypeInvoiceAmounts != null);
+			toReturn |=(this._consultingAgreements != null);
 			toReturn |=(this._rawTestDatas != null);
 			toReturn |=(this._referralSourceInvoiceConfiguration != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
@@ -504,6 +534,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentStatusInvoiceRateEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentStatusInvoiceRateEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTypeInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeInvoiceAmountEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ConsultingAgreementEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ConsultingAgreementEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<RawTestDataEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RawTestDataEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ReferralSourceInvoiceConfigurationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ReferralSourceInvoiceConfigurationEntityFactory))) : null);
 		}
@@ -518,6 +549,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("AppointmentStatusInvoiceRates", _appointmentStatusInvoiceRates);
 			toReturn.Add("Assessments", _assessments);
 			toReturn.Add("AssessmentTypeInvoiceAmounts", _assessmentTypeInvoiceAmounts);
+			toReturn.Add("ConsultingAgreements", _consultingAgreements);
 			toReturn.Add("RawTestDatas", _rawTestDatas);
 			toReturn.Add("ReferralSourceInvoiceConfiguration", _referralSourceInvoiceConfiguration);
 			return toReturn;
@@ -662,6 +694,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2( new EntityCollection<AssessmentTypeInvoiceAmountEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTypeInvoiceAmountEntityFactory))), (IEntityRelation)GetRelationsForField("AssessmentTypeInvoiceAmounts")[0], (int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTypeInvoiceAmountEntity, 0, null, null, null, null, "AssessmentTypeInvoiceAmounts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'ConsultingAgreement' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathConsultingAgreements
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<ConsultingAgreementEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ConsultingAgreementEntityFactory))), (IEntityRelation)GetRelationsForField("ConsultingAgreements")[0], (int)PsychologicalServices.Data.EntityType.ReferralSourceEntity, (int)PsychologicalServices.Data.EntityType.ConsultingAgreementEntity, 0, null, null, null, null, "ConsultingAgreements", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'RawTestData' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathRawTestDatas
@@ -793,6 +832,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<AssessmentTypeInvoiceAmountEntity> AssessmentTypeInvoiceAmounts
 		{
 			get { return GetOrCreateEntityCollection<AssessmentTypeInvoiceAmountEntity, AssessmentTypeInvoiceAmountEntityFactory>("ReferralSource", true, false, ref _assessmentTypeInvoiceAmounts);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'ConsultingAgreementEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(ConsultingAgreementEntity))]
+		public virtual EntityCollection<ConsultingAgreementEntity> ConsultingAgreements
+		{
+			get { return GetOrCreateEntityCollection<ConsultingAgreementEntity, ConsultingAgreementEntityFactory>("BillToReferralSource", true, false, ref _consultingAgreements);	}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'RawTestDataEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

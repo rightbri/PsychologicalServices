@@ -89,6 +89,11 @@
     <Compile Include="CalendarNotes\CalendarNoteExtensions.cs" />
     <Compile Include="Claims\ClaimantSearchParameters.cs" />
     <Compile Include="Claims\ClaimReference.cs" />
+    <Compile Include="Consulting\ConsultingAgreement.cs" />
+    <Compile Include="Consulting\ConsultingService.cs" />
+    <Compile Include="Consulting\IConsultingRepository.cs" />
+    <Compile Include="Consulting\ConsultingAgreementSearchCriteria.cs" />
+    <Compile Include="Consulting\IConsultingService.cs" />
     <Compile Include="Credibilities\Credibility.cs" />
     <Compile Include="Credibilities\CredibilityService.cs" />
     <Compile Include="Credibilities\ICredibilityRepository.cs" />
@@ -112,11 +117,22 @@
     <Compile Include="Events\IEventService.cs" />
     <Compile Include="Events\IEventValidator.cs" />
     <Compile Include="Invoices\AppointmentStatusInvoiceRate.cs" />
+    <Compile Include="Invoices\ConsultingInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceGenerator.cs" />
+    <Compile Include="Invoices\InvoiceableConsultingAgreementSearchCriteria.cs" />
+    <Compile Include="Invoices\InvoiceableConsultingAgreementData.cs" />
     <Compile Include="Invoices\InvoiceableRawTestDataSearchCriteria.cs" />
     <Compile Include="Invoices\InvoiceableRawTestDataData.cs" />
     <Compile Include="Invoices\InvoiceGenerator.cs" />
+    <Compile Include="Invoices\IConsultingInvoiceGenerator.cs" />
     <Compile Include="Invoices\PsychologistInvoiceSendModel.cs" />
+    <Compile Include="Invoices\ConsultingInvoiceSendModel.cs" />
+    <Compile Include="Invoices\ConsultingInvoiceTemplate.cs">
+      <DependentUpon>ConsultingInvoiceTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Invoices\ConsultingInvoiceCreationParameters.cs" />
     <Compile Include="Invoices\RawTestDataInvoiceTemplate.cs">
       <DependentUpon>RawTestDataInvoiceTemplate.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -409,6 +425,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Invoices\ConsultingInvoiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ConsultingInvoiceTemplate.cs</LastGenOutput>
+    </Content>
     <Content Include="Invoices\RawTestDataInvoiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>RawTestDataInvoiceTemplate.cs</LastGenOutput>

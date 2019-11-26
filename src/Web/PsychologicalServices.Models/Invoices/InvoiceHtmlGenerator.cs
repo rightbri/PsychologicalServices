@@ -65,6 +65,19 @@ namespace PsychologicalServices.Models.Invoices
                     html = rawTestDataTemplate.TransformText();
 
                     break;
+                case InvoiceType.Consulting:
+                    var consultingTemplate = new ConsultingInvoiceTemplate();
+
+                    consultingTemplate.Session = new Dictionary<string, object>()
+                    {
+                        { "Model", invoice }
+                    };
+
+                    consultingTemplate.Initialize();
+
+                    html = consultingTemplate.TransformText();
+
+                    break;
                 default:
                     throw new NotImplementedException(
                         string.Format("Invoice HTML Generator not implemented for invoice type {0}", invoice.InvoiceType.InvoiceTypeId)

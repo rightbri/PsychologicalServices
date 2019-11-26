@@ -160,6 +160,15 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                             .Prefetch<CompanyEntity>(rawTestData => rawTestData.Company)
                                         )
                                 )
+                            .Prefetch<InvoiceLineGroupConsultingAgreementEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupConsultingAgreement)
+                                .SubPath(invoiceLineGroupConsultingAgreementPath => invoiceLineGroupConsultingAgreementPath
+                                    .Prefetch<ConsultingAgreementEntity>(invoiceLineGroupConsultingAgreement => invoiceLineGroupConsultingAgreement.ConsultingAgreement)
+                                        .SubPath(consultingAgreementPath => consultingAgreementPath
+                                            .Prefetch<CompanyEntity>(consultingAgreement => consultingAgreement.Company)
+                                            .Prefetch<UserEntity>(consultingAgreement => consultingAgreement.Psychologist)
+                                            .Prefetch<ReferralSourceEntity>(consultingAgreement => consultingAgreement.BillToReferralSource)
+                                        )
+                                )
                         )
                 );
 
@@ -187,13 +196,6 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                 )
                                         )
                                 )
-                            //.Prefetch<InvoiceLineGroupArbitrationEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupArbitration)
-                            //    .SubPath(invoiceLineGroupArbitrationPath => invoiceLineGroupArbitrationPath
-                            //        .Prefetch<ArbitrationEntity>(invoiceLineGroupArbitration => invoiceLineGroupArbitration.Arbitration)
-                            //            .SubPath(arbitrationPath => arbitrationPath
-                            //                .Prefetch<ClaimantEntity>(arbitration => arbitration.Claimant)
-                            //            )
-                            //    )
                         )
                 );
 
@@ -324,6 +326,21 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                                 )
                                             .Prefetch<CompanyEntity>(rawTestData => rawTestData.Company)
                                             .Prefetch<RawTestDataStatusEntity>(rawTestData => rawTestData.RawTestDataStatus)
+                                        )
+                                )
+                            .Prefetch<InvoiceLineGroupConsultingAgreementEntity>(invoiceLineGroup => invoiceLineGroup.InvoiceLineGroupConsultingAgreement)
+                                .SubPath(invoiceLineGroupConsultingAgreementPath => invoiceLineGroupConsultingAgreementPath
+                                    .Prefetch<ConsultingAgreementEntity>(invoiceLineGroupConsultingAgreement => invoiceLineGroupConsultingAgreement.ConsultingAgreement)
+                                        .SubPath(consultingAgreementPath => consultingAgreementPath
+                                            .Prefetch<CompanyEntity>(consultingAgreement => consultingAgreement.Company)
+                                            .Prefetch<UserEntity>(consultingAgreement => consultingAgreement.Psychologist)
+                                            .Prefetch<ReferralSourceEntity>(consultingAgreement => consultingAgreement.BillToReferralSource)
+                                                .SubPath(referralSourcePath => referralSourcePath
+                                                    .Prefetch<AddressEntity>(referralSource => referralSource.Address)
+                                                        .SubPath(addressPath => addressPath
+                                                            .Prefetch<CityEntity>(address => address.City)
+                                                        )
+                                                )
                                         )
                                 )
                         )
@@ -584,6 +601,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                     invoiceLineGroupPath
                         .SubPath.Add(InvoiceLineGroupEntity.PrefetchPathInvoiceLineGroupRawTestData);
 
+                    invoiceLineGroupPath
+                        .SubPath.Add(InvoiceLineGroupEntity.PrefetchPathInvoiceLineGroupConsultingAgreement);
+
                     adapter.FetchEntity(invoiceEntity, prefetch);
                 }
                 else
@@ -646,6 +666,11 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             uow.AddForDelete(lineGroup.InvoiceLineGroupRawTestData);
                         }
 
+                        if (null != lineGroup.InvoiceLineGroupConsultingAgreement)
+                        {
+                            uow.AddForDelete(lineGroup.InvoiceLineGroupConsultingAgreement);
+                        }
+
                         uow.AddForDelete(lineGroup);
                     }
 
@@ -667,6 +692,10 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                     (null != lg.RawTestData && null != lineGroup.InvoiceLineGroupRawTestData && lg.RawTestData.RawTestDataId != lineGroup.InvoiceLineGroupRawTestData.RawTestDataId) ||
                                     (null != lg.RawTestData && null == lineGroup.InvoiceLineGroupRawTestData) ||
                                     (null == lg.RawTestData && null != lineGroup.InvoiceLineGroupRawTestData) ||
+                                    //consulting agreement
+                                    (null != lg.ConsultingAgreement && null != lineGroup.InvoiceLineGroupConsultingAgreement && lg.ConsultingAgreement.ConsultingAgreementId != lineGroup.InvoiceLineGroupConsultingAgreement.ConsultingAgreementId) ||
+                                    (null != lg.ConsultingAgreement && null == lineGroup.InvoiceLineGroupConsultingAgreement) ||
+                                    (null == lg.ConsultingAgreement && null != lineGroup.InvoiceLineGroupConsultingAgreement) ||
                                     //new lines
                                     lg.Lines.Any(line => !lineGroup.InvoiceLines.Any(invoiceLine => invoiceLine.InvoiceLineId == line.InvoiceLineId)) ||
                                     lineGroup.InvoiceLines.Any(invoiceLine =>
@@ -751,6 +780,25 @@ namespace PsychologicalServices.Infrastructure.Invoices
                                 uow.AddForDelete(lineGroupEntity.InvoiceLineGroupRawTestData);
                             }
 
+                            //consulting agreement
+                            if (null != lg.ConsultingAgreement && null != lineGroupEntity.InvoiceLineGroupConsultingAgreement && lg.ConsultingAgreement.ConsultingAgreementId != lineGroupEntity.InvoiceLineGroupConsultingAgreement.ConsultingAgreementId)
+                            {
+                                lineGroupEntity.InvoiceLineGroupConsultingAgreement.ConsultingAgreementId = lg.ConsultingAgreement.ConsultingAgreementId;
+                            }
+
+                            if (null != lg.ConsultingAgreement && null == lineGroupEntity.InvoiceLineGroupConsultingAgreement)
+                            {
+                                lineGroupEntity.InvoiceLineGroupConsultingAgreement = new InvoiceLineGroupConsultingAgreementEntity
+                                {
+                                    ConsultingAgreementId = lg.ConsultingAgreement.ConsultingAgreementId,
+                                };
+                            }
+
+                            if (null == lg.ConsultingAgreement && null != lineGroupEntity.InvoiceLineGroupConsultingAgreement)
+                            {
+                                uow.AddForDelete(lineGroupEntity.InvoiceLineGroupConsultingAgreement);
+                            }
+
                             #region invoice lines
 
                             var linesToAdd = lg.Lines
@@ -825,6 +873,9 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             : null,
                         InvoiceLineGroupRawTestData = null != lg.RawTestData
                             ? new InvoiceLineGroupRawTestDataEntity { RawTestDataId = lg.RawTestData.RawTestDataId }
+                            : null,
+                        InvoiceLineGroupConsultingAgreement = null != lg.ConsultingAgreement
+                            ? new InvoiceLineGroupConsultingAgreementEntity { ConsultingAgreementId = lg.ConsultingAgreement.ConsultingAgreementId }
                             : null,
                     };
                     
@@ -1395,6 +1446,30 @@ namespace PsychologicalServices.Infrastructure.Invoices
                             PayableTo = Convert.ToString(row["PayableTo"]),
                             PayableToId = Convert.ToInt32(row["PayableToId"]),
                             RequestReceivedDate = row["RequestReceivedDate"] as DateTimeOffset?,
+                        })
+                    .ToList();
+            }
+        }
+
+        public IEnumerable<InvoiceableConsultingAgreementData> GetInvoiceableConsultingAgreementData(InvoiceableConsultingAgreementSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.InvoiceableConsultingAgreementData(criteria.CompanyId, criteria.Year, criteria.Month, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new InvoiceableConsultingAgreementData
+                        {
+                            ConsultingAgreementId = Convert.ToInt32(row["ConsultingAgreementId"]),
+                            ReferralSource = Convert.ToString(row["ReferralSource"]),
+                            PayableTo = Convert.ToString(row["PayableTo"]),
+                            PayableToId = Convert.ToInt32(row["PayableToId"]),
+                            Year = Convert.ToInt32(row["Year"]),
+                            Month = Convert.ToInt32(row["Month"]),
+                            InvoiceId = row["InvoiceId"] as int?,
+                            CanCreateInvoice = Convert.ToBoolean(row["CanCreateInvoice"]),
                         })
                     .ToList();
             }

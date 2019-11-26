@@ -34,6 +34,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentTypeInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.CalendarNoteEntityUsingCompanyId);
 			toReturn.Add(this.CompanyAttributeEntityUsingCompanyId);
+			toReturn.Add(this.ConsultingAgreementEntityUsingCompanyId);
 			toReturn.Add(this.EventEntityUsingCompanyId);
 			toReturn.Add(this.IssueInDisputeInvoiceAmountEntityUsingCompanyId);
 			toReturn.Add(this.PsychometristInvoiceAmountEntityUsingCompanyId);
@@ -123,6 +124,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(CompanyFields.CompanyId, CompanyAttributeFields.CompanyId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyAttributeEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CompanyEntity and ConsultingAgreementEntity over the 1:n relation they have, using the relation between the fields:
+		/// Company.CompanyId - ConsultingAgreement.CompanyId
+		/// </summary>
+		public virtual IEntityRelation ConsultingAgreementEntityUsingCompanyId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ConsultingAgreements" , true);
+				relation.AddEntityFieldPair(CompanyFields.CompanyId, ConsultingAgreementFields.CompanyId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CompanyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ConsultingAgreementEntity", false);
 				return relation;
 			}
 		}
@@ -335,6 +351,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AssessmentTypeInvoiceAmountEntityUsingCompanyIdStatic = new CompanyRelations().AssessmentTypeInvoiceAmountEntityUsingCompanyId;
 		internal static readonly IEntityRelation CalendarNoteEntityUsingCompanyIdStatic = new CompanyRelations().CalendarNoteEntityUsingCompanyId;
 		internal static readonly IEntityRelation CompanyAttributeEntityUsingCompanyIdStatic = new CompanyRelations().CompanyAttributeEntityUsingCompanyId;
+		internal static readonly IEntityRelation ConsultingAgreementEntityUsingCompanyIdStatic = new CompanyRelations().ConsultingAgreementEntityUsingCompanyId;
 		internal static readonly IEntityRelation EventEntityUsingCompanyIdStatic = new CompanyRelations().EventEntityUsingCompanyId;
 		internal static readonly IEntityRelation IssueInDisputeInvoiceAmountEntityUsingCompanyIdStatic = new CompanyRelations().IssueInDisputeInvoiceAmountEntityUsingCompanyId;
 		internal static readonly IEntityRelation PsychometristInvoiceAmountEntityUsingCompanyIdStatic = new CompanyRelations().PsychometristInvoiceAmountEntityUsingCompanyId;

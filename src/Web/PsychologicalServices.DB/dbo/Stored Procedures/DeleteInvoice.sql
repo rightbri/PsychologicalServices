@@ -39,6 +39,24 @@ BEGIN
 		SELECT InvoiceId FROM @invoiceIds
 	)
 
+	DELETE ilga FROM dbo.InvoiceLineGroupArbitrations ilga
+	INNER JOIN dbo.InvoiceLineGroups ilg ON ilga.InvoiceLineGroupId = ilg.InvoiceLineGroupId 
+	WHERE ilg.InvoiceId IN (
+		SELECT InvoiceId FROM @invoiceIds
+	)
+
+	DELETE ilgr FROM dbo.InvoiceLineGroupRawTestData ilgr
+	INNER JOIN dbo.InvoiceLineGroups ilg ON ilgr.InvoiceLineGroupId = ilg.InvoiceLineGroupId 
+	WHERE ilg.InvoiceId IN (
+		SELECT InvoiceId FROM @invoiceIds
+	)
+
+	DELETE ilgc FROM dbo.InvoiceLineGroupConsultingAgreements ilgc
+	INNER JOIN dbo.InvoiceLineGroups ilg ON ilgc.InvoiceLineGroupId = ilg.InvoiceLineGroupId 
+	WHERE ilg.InvoiceId IN (
+		SELECT InvoiceId FROM @invoiceIds
+	)
+
 	DELETE FROM dbo.InvoiceLineGroups 
 	WHERE InvoiceId IN (
 		SELECT InvoiceId FROM @invoiceIds

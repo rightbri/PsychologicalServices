@@ -9,6 +9,7 @@ using PsychologicalServices.Models.Cities;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Companies;
+using PsychologicalServices.Models.Consulting;
 using PsychologicalServices.Models.Contacts;
 using PsychologicalServices.Models.Credibilities;
 using PsychologicalServices.Models.DiagnosisFoundResponses;
@@ -31,6 +32,19 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static ConsultingAgreement ToConsultingAgreement(this ConsultingAgreementEntity consultingAgreement)
+        {
+            return consultingAgreement == null
+                ? null
+                : new ConsultingAgreement
+                {
+                    ConsultingAgreementId = consultingAgreement.ConsultingAgreementId,
+                    Company = consultingAgreement.Company.ToCompany(),
+                    Psychologist = consultingAgreement.Psychologist.ToUserLite(),
+                    BillToReferralSource = consultingAgreement.BillToReferralSource.ToReferralSource(),
+                };
+        }
+
         public static AssessmentTestingResults ToAssessmentTestingResults(this AssessmentEntity assessment, string name)
         {
             if (null == assessment)
@@ -467,6 +481,9 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                         : null,
                     RawTestData = null != invoiceLineGroup.InvoiceLineGroupRawTestData
                         ? invoiceLineGroup.InvoiceLineGroupRawTestData.RawTestData.ToRawTestData()
+                        : null,
+                    ConsultingAgreement = null != invoiceLineGroup.InvoiceLineGroupConsultingAgreement
+                        ? invoiceLineGroup.InvoiceLineGroupConsultingAgreement.ConsultingAgreement.ToConsultingAgreement()
                         : null,
                 }
                 : null;

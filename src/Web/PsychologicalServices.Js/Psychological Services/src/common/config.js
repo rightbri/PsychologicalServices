@@ -58,7 +58,8 @@ export class Config {
 			'psychologist': 1,
 			'psychometrist': 2,
 			'arbitration': 3,
-			'rawTestData': 4
+			'rawTestData': 4,
+			'consulting': 5
 		}
 		
 		this.addressDefaults = {
