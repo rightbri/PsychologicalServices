@@ -20,6 +20,7 @@
     "js-snackbar": "^0.3.1",
     "moment": "^2.22.1",
     "moment-timezone": "^0.5.17",
+    "number-to-words": "^1.2.4",
     "numeral": "^2.0.6",
     "smoothscroll": "^0.3.0",
     "text": "github:requirejs/text#latest",

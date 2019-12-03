@@ -4,15 +4,19 @@ import {BindingSignaler} from 'aurelia-templating-resources';
 import {Context} from 'common/context';
 import {DataRepository} from 'services/dataRepository';
 import {Notifier} from 'services/notifier';
+import {AgeService} from 'common/ageService';
+import 'number-to-words';
 
-@inject(BindingSignaler, DataRepository, Context, Notifier)
+@inject(BindingSignaler, DataRepository, Context, Notifier, AgeService, numberToWords)
 export class Notes {
 
-    constructor(signaler, dataRepository, context, notifier) {
+    constructor(signaler, dataRepository, context, notifier, ageService, numberToWords) {
         this.signaler = signaler;
         this.dataRepository = dataRepository;
         this.context = context;
         this.notifier = notifier;
+        this.ageService = ageService;
+        this.numberToWords = numberToWords;
 
         this.searchCompanyId = null;
         this.claimant = null;
@@ -37,10 +41,10 @@ export class Notes {
         this.emotionalIssues = [];
         this.depressionSymptoms = [];
         this.worries = [];
+        this.stressors = [];
         this.whereaboutsObjects = [];
         this.memoryAids = [];
         this.visualSpatialIssues = [];
-        this.atypicalIssues = [];
         this.languageIssues = [];
         this.executiveIssues = [];
         this.inappropriateSocialBehaviors = [];
@@ -50,6 +54,7 @@ export class Notes {
         this.moodChangeTypes = [];
         this.travelIssues = [];
         this.travelPreferences = [];
+        this.currentStateTasks = [];
         this.currentStateAbilities = [];
         this.currentStateIssues = [];
         this.leisureParticipationRates = [];
@@ -65,8 +70,16 @@ export class Notes {
             return this.getItemValueForContext(item, this);
         }.bind(this);
 
-        this.getItemValueForCurrentPronoun = function(item) {
-            return this.getItemValueForPronoun(item, this.pronoun);
+        this.isNotSkipAbilityWithContext = function(task) {
+            return this.isNotSkipAbility(task, this);
+        }.bind(this);
+
+        this.currentStateIssueDescriptionWithContext = function(value) {
+            return this.currentStateIssueDescription(value, this);
+        }.bind(this);
+
+        this.getAgeTextForCurrentContext = function(age) {
+            return this.getAgeTextForContext(age, this);
         }.bind(this);
     }
 
@@ -101,10 +114,13 @@ export class Notes {
                     this.getEmotionalIssues().then(data => this.emotionalIssues = data),
                     this.getDepressionSymptoms().then(data => this.depressionSymptoms = data),
                     this.getWorries().then(data => this.worries = data),
+                    this.getStressors().then(data => {
+                        this.stressors = this.asArray(data);
+                        this.stressorsMap = data;
+                    }),
                     this.getWhereaboutsObjects().then(data => this.whereaboutsObjects = data),
                     this.getMemoryAids().then(data => this.memoryAids = data),
                     this.getVisualSpatialIssues().then(data => this.visualSpatialIssues = data),
-                    this.getAtypicalIssues().then(data => this.atypicalIssues = data),
                     this.getLanguageIssues().then(data => this.languageIssues = data),
                     this.getExecutiveIssues().then(data => this.executiveIssues = data),
                     this.getInappropriateSocialBehaviors().then(data => this.inappropriateSocialBehaviors = data),
@@ -114,8 +130,18 @@ export class Notes {
                     this.getMoodChangeTypes().then(data => this.moodChangeTypes = data),
                     this.getTravelIssues().then(data => this.travelIssues = data),
                     this.getTravelPreferences().then(data => this.travelPreferences = data),
-                    this.getCurrentStateAbilities().then(data => this.currentStateAbilities = data),
-                    this.getCurrentStateIssues().then(data => this.currentStateIssues = data),
+                    this.getCurrentStateTasks().then(data => {
+                        this.currentStateTasks = this.asArray(data);
+                        this.currentStateTasksMap = data;
+                    }),
+                    this.getCurrentStateAbilities().then(data => {
+                        this.currentStateAbilities = this.asArray(data);
+                        this.currentStateAbilitiesMap = data;
+                    }),
+                    this.getCurrentStateIssues().then(data => {
+                        this.currentStateIssues = this.asArray(data);
+                        this.currentStateIssuesMap = data;
+                    }),
                     this.getLeisureParticipationRates().then(data => this.leisureParticipationRates = data),
                     this.getTravelAbilities().then(data => this.travelAbilities = data)
                 ]);
@@ -300,7 +326,7 @@ export class Notes {
             { "description": "Middle Class", "value": "middleClass", "format": function(context) { return `a middle-class socioeconomic household`; } },
             { "description": "Upper Class", "value": "upperClass", "format": function(context) { return `an upper-class socioeconomic household`; } },
             { "description": "Rich", "value": "rich", "format": function(context) { return `a household that ${context.pronoun.subject} would describe as being rich`; } },
-            { "description": "Skip", "value": null, "format": null }
+            { "description": "Skip", "value": null, "format": null, "isSkip": true }
         ];
 
         return getPromise(data);
@@ -353,6 +379,8 @@ export class Notes {
             "withdrawn": { "description": "Withdrawn", "format": function(context) { return `withdrawal`; } },
             "dependency": { "description": "Dependency", "format": function(context) { return `dependency`; } },
             "irritable": { "description": "Irritable", "format": function(context) { return `irritability`; } },
+            "lessIndependent": { "description": "Less independent", "format": function(context) { return `feelings of being less independent`; } },
+            "cryEasily": { "description": "Cry Easily", "isCriesEasily": true },
             "anhedonia": { "description": "Anhedonia", "format": function(context) { return `anhedonia`; } },
             "burden": { "description": "Burden", "format": function(context) { return `feelings of being a burden on others`; } },
             "apathy": { "description": "Apathy", "format": function(context) { return `apathy`; } },
@@ -378,6 +406,20 @@ export class Notes {
             "future": { "description": "Future", "format": function(context) { return `future`; } },
             "recovery": { "description": "Recovery", "format": function(context) { return `recovery`; } },
             "finances": { "description": "Finances", "format": function(context) { return `finances`; }, "isFinances": true }
+        };
+
+        return getPromise(data);
+    }
+
+    getStressors() {
+        let data = {
+            "relationshipBreakup": { "description": "Breakup of Relationship(s)", "format": function(context) { return ``; } },
+            "deathInFamily": { "description": "Death(s) in the family", "format": function(context) { return ``; } },
+            "legalIssues": { "description": "Legal Issues/Arrests", "format": function(context) { return ``; } },
+            "lossOfEmployment": { "description": "Loss of Employment", "format": function(context) { return ``; } },
+            "majorIllness": { "description": "Major Illness", "format": function(context) { return ``; } },
+            "majorFinancialProblems": { "description": "Major Financial Problems", "format": function(context) { return ``; } },
+            "otherAccidents": { "description": "OTHER accidents/injuries", "format": function(context) { return ``; } }
         };
 
         return getPromise(data);
@@ -426,16 +468,9 @@ export class Notes {
             "changeInTaste": { "description": "Change in sense of taste", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of taste`; } },
             "blurryVision": { "description": "Blurry vision", "format": function(context) { return `blurry vision`; } },
             "changeInSmell": { "description": "Change in sense of smell", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of smell`; } },
-            "doubleVision": { "description": "Double vision", "format": function(context) { return `double vision`; } }
-        };
-
-        return getPromise(data);
-    }
-
-    getAtypicalIssues() {
-        let data = {
-            "itchyFingernails": { "description": "Itchy fingernails", "format": function(context) { return `itchy fingernails (atypical symptomology)`; } },
-            "blackAndWhiteTransientVision": { "description": "Black/white transient vision", "format": function(context) { return `black and white transient vision (atypical symptomology)`; } }
+            "doubleVision": { "description": "Double vision", "format": function(context) { return `double vision`; } },
+            "itchyFingernails": { "description": "Itchy fingernails", "format": function(context) { return `itchy fingernails (atypical symptomology)`; }, "isAtypical": true },
+            "blackAndWhiteTransientVision": { "description": "Black/white transient vision", "format": function(context) { return `black and white transient vision (atypical symptomology)`; }, "isAtypical": true }
         };
 
         return getPromise(data);
@@ -550,24 +585,54 @@ export class Notes {
         return getPromise(data);
     }
 
-    getSelfCareTasks() {
-        let data = [
-            { "description": "Personal care", "value": "personal care", "ability": null, "issues": [] },
-            { "description": "Bathing", "value": "bathing", "ability": null, "issues": [] },
-            { "description": "Grooming", "value": "grooming", "ability": null, "issues": [] },
-            { "description": "Haircare", "value": "haircare", "ability": null, "issues": [] }
-        ];
+    getCurrentStateTasks() {
+        let data = {
+            "personalCare": { "description": "Personal care", "value": "personalCare" },
+            "bathing": { "description": "Bathing", "value": "bathing" },
+            "grooming": { "description": "Grooming", "value": "grooming" },
+            "haircare": { "description": "Haircare", "value": "haircare" },
+            "exercising": { "description": "Exercising", "value": "exercising" },
+            "indoorChores": { "description": "Housekeeping?", "value": "indoorChores" },
+            "outdoorChores": { "description": "Outdoor chores", "value": "outdoorChores" },
+            "watchingTv": { "description": "Watching TV", "value": "watchingTv" },
+            "volunteering": { "description": "Volunteering", "value": "volunteering" },
+            "religiousActivities": { "description": "Religious Activities", "value": "religiousActivities" },
+            "vacationing": { "description": "Vacationing", "value": "vacationing" },
+            "banking": { "description": "Banking", "value": "banking" },
+            "caregiving": { "description": "Caregiving", "value": "caregiving" },
+            "alone": { "description": "Left alone?", "value": "alone" }
+        };
 
         return getPromise(data);
     }
 
     getCurrentStateAbilities() {
-        let data = [
-            { "description": "Unable", "value": "unable", "isUnable": true },
-            { "description": "Partial", "value": "partially able", "isPartiallyAble": true },
-            { "description": "Able", "value": "able", "isAble": true },
-            { "description": "Skip", "value": null }
-        ];
+        let data = {
+            "unable": { "description": "Unable", "value": "unable", "isUnable": true },
+            "partiallyAble": { "description": "Partial", "value": "partiallyAble", "isPartiallyAble": true },
+            "able": { "description": "Able", "value": "able", "isAble": true },
+            "skip": { "description": "Skip", "value": "skip", "isSkip": true }
+        };
+
+        return getPromise(data);
+    }
+    
+    isNotSkipAbility(task, context) {
+        return task && (task.isNA || (task.ability && !context.currentStateAbilitiesMap[task.ability].isSkip));
+    }
+
+    currentStateIssueDescription(value, context) {
+        return value && context && context.currentStateIssuesMap[value].description;
+    }
+
+    getCurrentStateIssues() {
+        let data = {
+            "physical": { "description": "Physical", "value": "physical", "format": function(context) { return `physical issues`; } },
+            "pain": { "description": "Pain", "value": "pain", "format": function(context) { return `pain`; } },
+            "apathy": { "description": "Apathy", "value": "apathy", "format": function(context) { return `apathy`; } },
+            "mental": { "description": "Mental", "value": "mental", "format": function(context) { return `mental health issues`; } },
+            "cognitive": { "description": "Cognitive", "value": "cognitive", "format": function(context) { return `cognition`; } }
+        };
 
         return getPromise(data);
     }
@@ -578,18 +643,6 @@ export class Notes {
             { "description": "Partial", "value": "only partially able", "isPartiallyAble": true },
             { "description": "Able", "value": "able", "isAble": true },
             { "description": "Skip", "value": null }
-        ];
-
-        return getPromise(data);
-    }
-
-    getCurrentStateIssues() {
-        let data = [
-            { "description": "Physical", "value": "physical", "format": function(context) { return `physical issues`; } },
-            { "description": "Pain", "value": "pain", "format": function(context) { return `pain`; } },
-            { "description": "Apathy", "value": "apathy", "format": function(context) { return `apathy`; } },
-            { "description": "Mental", "value": "mental", "format": function(context) { return `mental health issues`; } },
-            { "description": "Cognitive", "value": "cognitive", "format": function(context) { return `cognition`; } }
         ];
 
         return getPromise(data);
@@ -712,17 +765,17 @@ export class Notes {
 
     @computedFrom('responses.psychological.emotional')
     get yesEmotionalIssues() {
-        return this.getEmotionalIssuesForResponses(item => this.isYes(item.response));
+        return this.getEmotionalIssuesForResponses(item => this.isYes(item.response) && !this.emotionalIssues[item.value].isCriesEasily);
     }
 
     @computedFrom('responses.psychological.emotional')
     get noEmotionalIssues() {
-        return this.getEmotionalIssuesForResponses(item => this.isNo(item.response));
+        return this.getEmotionalIssuesForResponses(item => this.isNo(item.response) && !this.emotionalIssues[item.value].isCriesEasily);
     }
 
     @computedFrom('responses.psychological.emotional')
     get dontKnowEmotionalIssues() {
-        return this.getEmotionalIssuesForResponses(item => this.isDontKnow(item.response));
+        return this.getEmotionalIssuesForResponses(item => this.isDontKnow(item.response) && !this.emotionalIssues[item.value].isCriesEasily);
     }
 
     @computedFrom('responses.psychological.emotional')
@@ -739,6 +792,23 @@ export class Notes {
     get anyDontKnowEmotionalIssues() {
         return this.dontKnowEmotionalIssues.some(item => item);
     }
+
+    @computedFrom('responses.psychological.emotional')
+    get yesCriesEasily() {
+        return this.getEmotionalIssuesForResponses(item => this.isYes(item.response) && this.emotionalIssues[item.value].isCriesEasily).some(item => item);
+    }
+
+    @computedFrom('responses.psychological.emotional')
+    get noCriesEasily() {
+        return this.getEmotionalIssuesForResponses(item => this.isNo(item.response) && this.emotionalIssues[item.value].isCriesEasily).some(item => item);
+    }
+
+    @computedFrom('responses.psychological.emotional')
+    get dontKnowCriesEasily() {
+        return this.getEmotionalIssuesForResponses(item => this.isDontKnow(item.response) && this.emotionalIssues[item.value].isCriesEasily).some(item => item);
+    }
+
+    
 
     @computedFrom('responses.psychological.emotional')
     get anyEmotionalIssues() {
@@ -870,9 +940,21 @@ export class Notes {
         let any =
             this.responses &&
             this.isYes(this.responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects) &&
-            this.responses.neuropsychological.memory.visual.forgetWhereaboutsOf.some(item => item);
+            this.forgottenWhereaboutsObjects.some(item => item);
 
         return any;
+    }
+
+    @computedFrom(
+        'responses.neuropsychological.memory.visual.forgetWhereaboutsOf',
+        'responses.neuropsychological.memory.visual.additionalWhereaboutsObjects'
+    )
+    get forgottenWhereaboutsObjects() {
+        let data = this.responses.neuropsychological.memory.visual.forgetWhereaboutsOf.concat(
+            this.responses.neuropsychological.memory.visual.additionalWhereaboutsObjects.filter(item => item && item.length > 0).map(item => { return { "description": item, "value": item }; })
+        );
+
+        return data;
     }
 
     @computedFrom('responses.neuropsychological.memory.aids.aidsUsed')
@@ -924,6 +1006,7 @@ export class Notes {
         if (!this.responses) { return []; }
 
         let data = this.responses.neuropsychological.visualSpatial
+            .concat(this.responses.neuropsychological.atypical)
             .filter(item => item.response != null && criteria(item))
             .map(item => this.visualSpatialIssues[item.value]);
 
@@ -949,25 +1032,21 @@ export class Notes {
     get unselectedVisualSpatialIssues() {
         return this.getVisualSpatialIssuesForResponses(item => this.isNo(item.response));
     }
-    
-    getAtypicalIssuesForResponses(criteria) {
-        if (!this.responses) { return []; }
 
-        let data = this.responses.neuropsychological.atypical
-            .filter(item => item.response != null && criteria(item))
-            .map(item => this.atypicalIssues[item.value]);
-
-        return data;
+    @computedFrom('responses.neuropsychological.atypical')
+    get selectedAtypicalIssues() {
+        return this.selectedVisualSpatialIssues.filter(item => item.isAtypical);
     }
 
     @computedFrom('responses.neuropsychological.atypical')
-    get selectedAtypicalSymptomology() {
-        return this.getAtypicalIssuesForResponses(item => this.isYes(item.response));
+    get unselectedAtypicalIssues() {
+        return this.unselectedVisualSpatialIssues.filter(item => item.isAtypical);
     }
 
     @computedFrom('responses.neuropsychological.atypical')
-    get anySelectedAtypicalSymptomology() {
-        return this.selectedAtypicalSymptomology.some(item => item);
+    get deniedAtypicalSymptomology() {
+        //must not have any "yes" responses and at least one "no" response
+        return !this.selectedAtypicalIssues.some(item => item) && this.unselectedAtypicalIssues.some(item => item);
     }
 
     getExecutiveIssuesForResponses(criteria) {
@@ -1028,6 +1107,13 @@ export class Notes {
 
     any(items) {
         return items && items.some(item => item);
+    }
+
+    @computedFrom('responses.neuropsychological.currentState.tasks')
+    get anyCurrentStateTaskResponses() {
+        let data = this.responses && this.responses.neuropsychological.currentState.tasks.filter(item => item && (item.isNA || (item.ability && !this.currentStateAbilitiesMap[item.ability].isSkip)));
+
+        return data.some(item => item);
     }
 
     @computedFrom('responses.neuropsychological.currentState.alone.issues')
@@ -1109,6 +1195,14 @@ export class Notes {
             this.changed('child-count-changed');
         }
     }
+
+    addOtherStressor() {
+        this.responses.psychological.otherStressors.push({ "self": null, "family": null, "value": "" });
+    }
+
+    addWhereaboutsObject() {
+        this.responses.neuropsychological.memory.visual.additionalWhereaboutsObjects.push("");
+    }
     
     addAloneIssue() {
         this.responses.neuropsychological.currentState.alone.issues.push("");
@@ -1116,6 +1210,33 @@ export class Notes {
 
     addPreAccidentRecreationalActivity() {
         this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.push("");
+    }
+
+    @computedFrom(
+        'responses.personalHistory.birthPosition',
+        'responses.personalHistory.brothers.ages.length',
+        'responses.personalHistory.sisters.ages.length'
+    )
+    get birthPositionText() {
+        let position = this.responses.personalHistory.birthPosition || 1;
+        let siblingCount = this.responses.personalHistory.brothers.ages.length + this.responses.personalHistory.sisters.ages.length + 1;
+        let siblingCountText = this.numberToWords.toWords(siblingCount);
+        let positionOrdinal = this.numberToWords.toWordsOrdinal(position);
+
+        if (siblingCount === 1) {
+            return "";
+        }
+        else if (siblingCount === 2) {
+            return `${position === 1 ? "elder" : "younger"} of the ${siblingCountText} children`;
+        }
+        else if (siblingCount > 2) {
+            if (position === 1) { return `youngest of the ${siblingCountText} children`; }
+            else if (position === siblingCount) { return `oldest of the ${siblingCountText} children`; }
+            else if (siblingCount === 3 && position === 2) { return `middle child`; }
+            else {
+                return `${positionOrdinal} of ${siblingCountText} children`;
+            }
+        }
     }
 
     getItemValueForContext(item, context) {
@@ -1129,8 +1250,8 @@ export class Notes {
         return "";
     }
 
-    getItemValueForPronoun(item, pronoun) {
-        return item.value(pronoun);
+    getAgeTextForContext(age, context) {
+        return age && age.value && age.unit ? (age.value + " " + age.unit) : "";
     }
 
     getItemValue(item) {
@@ -1139,6 +1260,14 @@ export class Notes {
 
     getItemDescription(item) {
         return item.description;
+    }
+
+    notSkip(item) {
+        return item && !item.isSkip;
+    }
+
+    notAtypical(item) {
+        return item && !item.isAtypical;
     }
 }
 
@@ -1169,7 +1298,7 @@ function reviver(key, value) {
 }
 
 function getResponsesString(responses) {
-    return JSON.stringify(responses, replacer, 2);
+    return JSON.stringify(responses, replacer, 0);
 }
 
 function getResponses(responsesData) {
@@ -1179,7 +1308,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "4";
+    return "5";
 }
 
 function upgrade(responses, toVersion) {
@@ -1450,6 +1579,118 @@ function upgrade_3_to_4(responses) {
     return responses;
 }
 
+function upgrade_4_to_5(responses) {
+    if (!responses.neuropsychological.memory.visual.hasOwnProperty('additionalWhereaboutsObjects')) {
+        responses.neuropsychological.memory.visual.additionalWhereaboutsObjects = [""];
+    }
+
+    if (!responses.psychological.hasOwnProperty('lettingFamilyDown')) {
+        responses.psychological.lettingFamilyDown = null;
+    }
+
+    if (!responses.psychological.hasOwnProperty('feelSurveilled')) {
+        responses.psychological.feelSurveilled = null;
+    }
+
+    if (!responses.psychological.travel.hasOwnProperty('ableToDrive')) {
+        responses.psychological.travel.ableToDrive = null;
+    }
+
+    if (!responses.neuropsychological.attention.hasOwnProperty('issuesUsingDevicesWithScreens')) {
+        responses.neuropsychological.attention.issuesUsingDevicesWithScreens = null;
+    }
+
+    if (!responses.neuropsychological.attention.hasOwnProperty('hadToReduceScreenBrightness')) {
+        responses.neuropsychological.attention.hadToReduceScreenBrightness = null;
+    }
+
+    if (!responses.neuropsychological.currentState.hasOwnProperty('moreSocialBeforeAccident')) {
+        responses.neuropsychological.currentState.moreSocialBeforeAccident = null;
+    }
+
+    let emotionalIrritableIndex = responses.psychological.emotional.findIndex(item => item.value === "irritable");
+
+    if (!responses.psychological.emotional.some(item => item.value === "lessIndependent")) {
+        responses.psychological.emotional.splice(emotionalIrritableIndex + 1, 0, { "response": null, "value": "lessIndependent" });
+    }
+    
+    if (!responses.psychological.emotional.some(item => item.value === "cryEasily")) {
+        responses.psychological.emotional.splice(emotionalIrritableIndex + 1, 0, { "response": null, "value": "cryEasily" });
+    }
+
+    if (!responses.neuropsychological.currentState.hasOwnProperty('tasks')) {
+        responses.neuropsychological.currentState.tasks = [];
+
+        let props = [
+            'personalCare',
+            'bathing',
+            'grooming',
+            'haircare',
+            'exercising',
+            'indoorChores',
+            'outdoorChores',
+            'watchingTv',
+            'volunteering',
+            'religiousActivities',
+            'vacationing',
+            'banking',
+            'caregiving'
+        ];
+
+        for (let i = 0; i < props.length; i++) {
+
+            if (responses.neuropsychological.currentState.hasOwnProperty(props[i])) {
+                if (!responses.neuropsychological.currentState.tasks.some(item => item.value === props[i])) {
+                    responses.neuropsychological.currentState.tasks.splice(i, 0, { "ability": responses.neuropsychological.currentState[props[i]].ability || null, "issues": responses.neuropsychological.currentState[props[i]].issues || [], "isNA": false, "value": props[i] });
+                }
+    
+                delete responses.neuropsychological.currentState[props[i]];
+            }
+            else {
+                if (!responses.neuropsychological.currentState.tasks.some(item => item.value === props[i])) {
+                    responses.neuropsychological.currentState.tasks.splice(i, 0, { "ability": null, "issues": [], "isNA": false, "value": props[i] });
+                }
+            }
+        }
+
+        if (responses.neuropsychological.currentState.hasOwnProperty("alone")) {
+            if (!responses.neuropsychological.currentState.tasks.some(item => item.value === "alone")) {
+                responses.neuropsychological.currentState.tasks.splice(responses.neuropsychological.currentState.tasks.length, 0, { "ability": responses.neuropsychological.currentState.alone.ability || null, "issues": responses.neuropsychological.currentState.alone.issues || [], "isNA": false, "value": "alone" });
+            }
+
+            if (responses.neuropsychological.currentState.alone.hasOwnProperty('ability')) {
+                delete responses.neuropsychological.currentState.alone.ability;
+            }
+
+            if (responses.neuropsychological.currentState.alone.hasOwnProperty('issues')) {
+                delete responses.neuropsychological.currentState.alone.issues;
+            }
+        }
+    }
+
+    if (!responses.psychological.hasOwnProperty('stressors')) {
+        responses.psychological.stressors = [
+            { "self": null, "family": null, "value": "relationshipBreakup" },
+            { "self": null, "family": null, "value": "deathInFamily" },
+            { "self": null, "family": null, "value": "legalIssues" },
+            { "self": null, "family": null, "value": "lossOfEmployment" },
+            { "self": null, "family": null, "value": "majorIllness" },
+            { "self": null, "family": null, "value": "majorFinancialProblems" },
+            { "self": null, "family": null, "value": "otherAccidents" }
+        ];
+    }
+
+    if (!responses.psychological.hasOwnProperty('otherStressors')) {
+        responses.psychological.otherStressors = [
+            { "self": null, "family": null, "value": "" }
+        ];
+    }
+
+    responses.version = "5";
+
+    return responses;
+}  
+
 function upgradeIfApplicable(responses, fromVersion, toVersion) {
     let functionName = "upgrade_" + fromVersion + "_to_" + toVersion;
 
@@ -1501,7 +1742,7 @@ function getNewResponses() {
                 "howMany": 0,
                 "ages": []
             },
-            "birthPosition": null,
+            "birthPosition": 0,
             "familyHistoryOfNeurologicalOrPsychiatricDisease": null,
             "relationship": {
                 "status": null,
@@ -1543,11 +1784,14 @@ function getNewResponses() {
                 { "response": null, "value": "withdrawn" },
                 { "response": null, "value": "dependency" },
                 { "response": null, "value": "irritable" },
+                { "response": null, "value": "lessIndependent" },
+                { "response": null, "value": "cryEasily" },
                 { "response": null, "value": "anhedonia" },
                 { "response": null, "value": "burden" },
                 { "response": null, "value": "apathy" },
                 { "response": null, "value": "amotivation" }
             ],
+            "lettingFamilyDown": null,
             "selfHarm": {
                 "pastThoughts": { "response": null },
                 "currentThoughts": { "response": null },
@@ -1588,9 +1832,23 @@ function getNewResponses() {
             "hallucinationsAuditory": null,
             "hallucinationsVisual": null,
             "hallucinationsCommand": null,
+            "feelSurveilled": null,
+            "stressors": [
+                { "self": null, "family": null, "value": "relationshipBreakup" },
+                { "self": null, "family": null, "value": "deathInFamily" },
+                { "self": null, "family": null, "value": "legalIssues" },
+                { "self": null, "family": null, "value": "lossOfEmployment" },
+                { "self": null, "family": null, "value": "majorIllness" },
+                { "self": null, "family": null, "value": "majorFinancialProblems" },
+                { "self": null, "family": null, "value": "otherAccidents" }
+            ],
+            "otherStressors": [
+                { "self": null, "family": null, "value": "" }
+            ],
             "travel": {
                 "abilityToTravel": null,
                 "travelIssues": [],
+                "ableToDrive": null,
                 "nervousDriver": null,
                 "anxiousDriver": null,
                 "nervousPassenger": null,
@@ -1610,7 +1868,8 @@ function getNewResponses() {
             "memory": {
                 "visual": {
                     "forgetWhereaboutsOfObjects": null,
-                    "forgetWhereaboutsOf": []
+                    "forgetWhereaboutsOf": [],
+                    "additionalWhereaboutsObjects": [""]
                 },
                 "working": {
                     "walkIntoRoomAndForgetWhyFrequently": null,
@@ -1645,7 +1904,9 @@ function getNewResponses() {
                 "loseTrackWhenReading": null,
                 "needToReRead": null,
                 "readingIssues": [],
-                "loseTrackWhenWatchingTv": null
+                "loseTrackWhenWatchingTv": null,
+                "issuesUsingDevicesWithScreens": null,
+                "hadToReduceScreenBrightness": null
             },
             "executive": {
                 "issues": [
@@ -1723,17 +1984,23 @@ function getNewResponses() {
             },
             "currentState": {
                 "spendTime": null,
-                "personalCare": { "ability": null, "issues": [] },
-                "bathing": { "ability": null, "issues": [] },
-                "grooming": { "ability": null, "issues": [] },
-                "haircare": { "ability": null, "issues": [] },
-                "indoorChores": { "ability": null, "issues": [] },
-                "outdoorChores": { "ability": null, "issues": [] },
-                "caregiving": { "ability": null, "issues": [] },
-                "banking": { "ability": null, "issues": [] },
+                "tasks": [
+                    { "ability": null, "issues": [], "isNA": false, "value": "personalCare" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "bathing" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "grooming" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "haircare" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "exercising" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "indoorChores" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "outdoorChores" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "watchingTv" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "volunteering" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "religiousActivities" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "vacationing" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "banking" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "caregiving" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "alone" }
+                ],
                 "alone": {
-                    "ability": null,
-                    "issues": [""],
                     "inContactFrequently": null,
                     "contactFrequency": null
                 },
@@ -1748,7 +2015,8 @@ function getNewResponses() {
                     ""
                 ],
                 "leisureAbility": null,
-                "leisureParticipationRate": null
+                "leisureParticipationRate": null,
+                "moreSocialBeforeAccident": null
             }
         }
     };

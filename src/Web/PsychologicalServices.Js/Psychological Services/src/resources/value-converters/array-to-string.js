@@ -6,7 +6,7 @@ export class ArrayToStringValueConverter {
         let delimiter = c.delimiter || ", ";
         let removeEmptyElements = c.removeEmptyElements || true;
         let connector = c.connector || "and";
-        let lastConnector = config.hasOwnProperty('lastConnector') ? !!c.lastConnector : true;
+        let lastConnector = c.hasOwnProperty('lastConnector') ? !!c.lastConnector : true;
 
         let value = array
         .map(item => isFunction(format) ? format(item) : item)

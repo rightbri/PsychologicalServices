@@ -17,38 +17,38 @@ export class SortArrayValueConverter {
    *
    * @return {array} sorted array
    * @example
-   * "item of $parent.results.facets[facet.name] | sort: { property: 'doc_count', direction: 'desc' }"
+   * "item of $parent.results.facets[facet.name] | sortArray: { property: 'doc_count', direction: 'desc' }"
    *
    */
-  toView(array, config) {
-		return (array || []).sort((val1, val2) => {
-        var sortTotal = 0;
+  toView(array, config, copy) {
+		return (copy ? (array || []).map(item => item) : (array || [])).sort((val1, val2) => {
+        	var sortTotal = 0;
 		
-				if (!Array.isArray(config)) {
-					config = [config];
+			if (!Array.isArray(config)) {
+				config = [config];
+			}
+	
+			config.forEach((sortConfig, i, arr) => {
+				let a = val1, b = val2;
+
+				if (sortConfig.direction.toLowerCase() !== 'asc' && sortConfig.direction.toLowerCase() !== 'ascending') {
+					a = val2;
+					b = val1;
 				}
-		
-				config.forEach((sortConfig, i, arr) => {
-					let a = val1, b = val2;
 
-					if (sortConfig.direction.toLowerCase() !== 'asc' && sortConfig.direction.toLowerCase() !== 'ascending') {
-						a = val2;
-						b = val1;
-					}
-
-					//resolve property reference
-					let aValue = resolvePath(a, sortConfig.property, null);
-					let bValue = resolvePath(b, sortConfig.property, null);
-					
-					//weight the sort configuration by order
-					let weight = Math.pow(10, arr.length - 1 - i);
-					
-					let sortValue = aValue > bValue ? 1 : aValue === bValue ? 0 : -1;
-					
-					sortTotal = sortTotal + (weight * sortValue);
-				});
+				//resolve property reference
+				let aValue = resolvePath(a, sortConfig.property, null);
+				let bValue = resolvePath(b, sortConfig.property, null);
 				
-				return sortTotal;
+				//weight the sort configuration by order
+				let weight = Math.pow(10, arr.length - 1 - i);
+				
+				let sortValue = aValue > bValue ? 1 : aValue === bValue ? 0 : -1;
+				
+				sortTotal = sortTotal + (weight * sortValue);
+			});
+			
+			return sortTotal;
       });
   }
 }

@@ -164,6 +164,11 @@
 			"main": "numeral"
 		  },
 		  {
+			"name": "number-to-words",
+			"path": "../node_modules/number-to-words",
+			"main": "numberToWords.min"
+		  },
+		  {
 			"name": "smoothscroll",
 			"path": "../node_modules/smoothscroll",
 			"main": "smoothscroll.min"
