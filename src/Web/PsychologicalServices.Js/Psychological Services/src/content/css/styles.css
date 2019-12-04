@@ -81,3 +81,13 @@
 .assessment-summary .reassessment {
 	color: orange;
 }
+
+.chart td {
+	border-style: solid;
+	border-width: 1px;
+}
+.report-text {
+	font-family: arial;
+	font-size: 11pt;
+	font-weight: normal;
+}

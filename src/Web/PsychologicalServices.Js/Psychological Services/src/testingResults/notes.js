@@ -74,8 +74,8 @@ export class Notes {
             return this.isNotSkipAbility(task, this);
         }.bind(this);
 
-        this.currentStateIssueDescriptionWithContext = function(value) {
-            return this.currentStateIssueDescription(value, this);
+        this.currentStateIssueTextWithContext = function(value) {
+            return this.currentStateIssueText(value, this);
         }.bind(this);
 
         this.getAgeTextForCurrentContext = function(age) {
@@ -167,6 +167,8 @@ export class Notes {
         if (resetClaimantData) {
             this.claimants = null;
             this.claimant = null;
+
+            this.changed('claimant-changed');
         }
     }
 
@@ -592,7 +594,7 @@ export class Notes {
             "grooming": { "description": "Grooming", "value": "grooming" },
             "haircare": { "description": "Haircare", "value": "haircare" },
             "exercising": { "description": "Exercising", "value": "exercising" },
-            "indoorChores": { "description": "Housekeeping?", "value": "indoorChores" },
+            "indoorChores": { "description": "Housekeeping", "value": "indoorChores" },
             "outdoorChores": { "description": "Outdoor chores", "value": "outdoorChores" },
             "watchingTv": { "description": "Watching TV", "value": "watchingTv" },
             "volunteering": { "description": "Volunteering", "value": "volunteering" },
@@ -600,7 +602,7 @@ export class Notes {
             "vacationing": { "description": "Vacationing", "value": "vacationing" },
             "banking": { "description": "Banking", "value": "banking" },
             "caregiving": { "description": "Caregiving", "value": "caregiving" },
-            "alone": { "description": "Left alone?", "value": "alone" }
+            "alone": { "description": "Left alone", "value": "alone" }
         };
 
         return getPromise(data);
@@ -621,17 +623,17 @@ export class Notes {
         return task && (task.isNA || (task.ability && !context.currentStateAbilitiesMap[task.ability].isSkip));
     }
 
-    currentStateIssueDescription(value, context) {
-        return value && context && context.currentStateIssuesMap[value].description;
+    currentStateIssueText(value, context) {
+        return value && context && context.currentStateIssuesMap[value].format(context);
     }
 
     getCurrentStateIssues() {
         let data = {
-            "physical": { "description": "Physical", "value": "physical", "format": function(context) { return `physical issues`; } },
-            "pain": { "description": "Pain", "value": "pain", "format": function(context) { return `pain`; } },
-            "apathy": { "description": "Apathy", "value": "apathy", "format": function(context) { return `apathy`; } },
-            "mental": { "description": "Mental", "value": "mental", "format": function(context) { return `mental health issues`; } },
-            "cognitive": { "description": "Cognitive", "value": "cognitive", "format": function(context) { return `cognition`; } }
+            "physical": { "description": "Physical", "value": "physical", "format": function(context) { return `Physical issues`; } },
+            "pain": { "description": "Pain", "value": "pain", "format": function(context) { return `Pain`; } },
+            "apathy": { "description": "Apathy", "value": "apathy", "format": function(context) { return `Apathy`; } },
+            "mental": { "description": "Mental", "value": "mental", "format": function(context) { return `Mental health issues`; } },
+            "cognitive": { "description": "Cognitive", "value": "cognitive", "format": function(context) { return `Cognition`; } }
         };
 
         return getPromise(data);
@@ -937,6 +939,8 @@ export class Notes {
 
     @computedFrom('responses.neuropsychological.memory.visual.forgetWhereaboutsOf')
     get anyForgottenWhereaboutsObjects() {
+        if (!this.responses) { return []; }
+
         let any =
             this.responses &&
             this.isYes(this.responses.neuropsychological.memory.visual.forgetWhereaboutsOfObjects) &&
@@ -950,6 +954,8 @@ export class Notes {
         'responses.neuropsychological.memory.visual.additionalWhereaboutsObjects'
     )
     get forgottenWhereaboutsObjects() {
+        if (!this.responses) { return []; }
+
         let data = this.responses.neuropsychological.memory.visual.forgetWhereaboutsOf.concat(
             this.responses.neuropsychological.memory.visual.additionalWhereaboutsObjects.filter(item => item && item.length > 0).map(item => { return { "description": item, "value": item }; })
         );
@@ -1111,9 +1117,9 @@ export class Notes {
 
     @computedFrom('responses.neuropsychological.currentState.tasks')
     get anyCurrentStateTaskResponses() {
-        let data = this.responses && this.responses.neuropsychological.currentState.tasks.filter(item => item && (item.isNA || (item.ability && !this.currentStateAbilitiesMap[item.ability].isSkip)));
+        let any = this.responses && this.responses.neuropsychological.currentState.tasks.filter(item => item && (item.isNA || (item.ability && !this.currentStateAbilitiesMap[item.ability].isSkip))).some(item => item);
 
-        return data.some(item => item);
+        return any;
     }
 
     @computedFrom('responses.neuropsychological.currentState.alone.issues')
@@ -1218,6 +1224,8 @@ export class Notes {
         'responses.personalHistory.sisters.ages.length'
     )
     get birthPositionText() {
+        if (!this.responses) { return ""; }
+
         let position = this.responses.personalHistory.birthPosition || 1;
         let siblingCount = this.responses.personalHistory.brothers.ages.length + this.responses.personalHistory.sisters.ages.length + 1;
         let siblingCountText = this.numberToWords.toWords(siblingCount);
