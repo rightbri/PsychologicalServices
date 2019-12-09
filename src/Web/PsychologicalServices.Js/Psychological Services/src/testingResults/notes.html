@@ -206,10 +206,10 @@
                             </template>
                         </template>
     
-                        <template if.bind="isNo(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
+                        <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
                             &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
                         </template>
-                        <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
+                        <template if.bind="isNo(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
                             &nbsp;To the best of ${pronoun.possessiveAdjective} knowledge, ${gender.title} ${claimant.lastName} believes that ${pronoun.subject} hit all developmental milestones (i.e. walking/talking/toilet training) as expected.
                         </template>
     
@@ -432,6 +432,64 @@
                 
                 <hr if.bind="responses.personalHistory.sisters.howMany">
 
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many half-brothers do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.halfBrothers.howMany | int" input.delegate="siblingCountChanged(responses.personalHistory.halfBrothers.howMany, responses.personalHistory.halfBrothers.ages)" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.halfBrothers.howMany">
+                    What are their ages?
+                </div>
+
+                <template repeat.for="i of responses.personalHistory.halfBrothers.ages.length" if.bind="responses.personalHistory.halfBrothers.howMany">
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.halfBrothers.ages[i].value | int" input.delegate="changed('sibling-count-changed')" />
+        
+                        <label repeat.for="response of ageUnits">
+                            <input type="radio" name="halfBrothers-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.halfBrothers.ages[i].unit" value.bind="response.value" change.delegate="changed('sibling-count-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+                </template>
+                
+                <hr if.bind="responses.personalHistory.halfBrothers.howMany">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many half-sisters do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.halfSisters.howMany | int" input.delegate="siblingCountChanged(responses.personalHistory.halfSisters.howMany, responses.personalHistory.halfSisters.ages)" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.halfSisters.howMany">
+                    What are their ages?
+                </div>
+
+                <template repeat.for="i of responses.personalHistory.halfSisters.ages.length" if.bind="responses.personalHistory.halfSisters.howMany">
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.halfSisters.ages[i].value | int" />
+        
+                        <label repeat.for="response of ageUnits">
+                            <input type="radio" name="halfSisters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.halfSisters.ages[i].unit" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+                </template>
+                
+                <hr if.bind="responses.personalHistory.halfSisters.howMany">
+
+
+
                 <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
                     If you have siblings are you the
                 </div>
@@ -443,17 +501,36 @@
 
                 <hr if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    Is there any familial history of neurological or psychiatric disease?
+                <div class="uk-margin-remove uk-width-1-1">
+                    Have you (or your family) ever been diagnosed with any of the following:
                 </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="familyHistoryOfNeurologicalOrPsychiatricDisease" class="uk-radio" checked.bind="responses.personalHistory.familyHistoryOfNeurologicalOrPsychiatricDisease" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
+                
+                <table class="uk-table uk-table-striped">
+                    <thead>
+                        <tr>
+                            <th class="uk-padding-remove">Diagnosis</th>
+                            <th class="uk-padding-remove">You</th>
+                            <th class="uk-padding-remove">Your family</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="i of responses.personalHistory.neurologicalOrPsychiatricDiseases.length">
+                            <td class="uk-padding-remove">
+                                ${neurologicalAndPsychiatricDiseasesMap[$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].value].description}
+                            </td>
+                            <td class="uk-padding-remove">
+                                <label repeat.for="response of yesNo">
+                                    <input type="radio" name="self-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].self" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </td>
+                            <td class="uk-padding-remove">
+                                <label repeat.for="response of yesNo">
+                                    <input type="radio" name="family-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <div class="uk-margin-remove uk-width-1-2">
                     Are you currently:
@@ -631,30 +708,6 @@
 
                 <hr if.bind="childCount > 0 & signal:'child-count-changed'">
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    Is your family supportive of you?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="isFamilySupportive" class="uk-radio" checked.bind="responses.personalHistory.isFamilySupportive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Have you noticed any relationship disruption due to your psychological problems?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of relationshipDisruptionFrequencies">
-                        <input type="radio" name="extentOfDisruption" class="uk-radio" checked.bind="responses.personalHistory.extentOfDisruption" model.bind="response" matcher.bind="valueMatcher" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
                 <div class="report-text uk-background-muted uk-padding" contenteditable="true">
                     <!-- Father / Mother / Brothers / Sisters -->
                     <p>
@@ -770,6 +823,36 @@
                             &nbsp;${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} is the ${birthPositionText & signal:'sibling-count-changed'}.
                         </template>
                     </p>
+
+                    <p>
+
+                    </p>
+
+                    <p>
+                           
+                            
+                        <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
+                            When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
+                            
+                            <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally has been diagnosed with ${selectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject | proper} denied ever being diagnosed with any ${unselectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
+                            <template if.bind="anySelectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject | proper} shared that members of ${pronoun.possessiveAdjective} family have been diagnosed with ${selectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}
+                                <template if.bind="anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                    &nbsp;but not ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}
+                                </template>    
+                                .
+                            </template>
+                            <template if.bind="anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject | proper} denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
+                        </template>
+                    </p>
+
                 </div>
 
                 <hr>
@@ -1603,6 +1686,27 @@
                     </tbody>
                 </table>
 
+                <div class="report-text uk-background-muted uk-padding" contenteditable="true">
+                    <!-- Stressors -->
+                    <p>
+                        <template if.bind="(anySelectedStressors || anyUnselectedStressors || anySelectedFamilyStressors || anyUnselectedFamilyStressors) & signal:'stressor-changed'">
+                            ${gender.title} ${claimant.lastName} was asked about any major stressors in ${pronoun.possessiveAdjective} life in the last five years (aside from the subject accident). 
+                            
+                            <template if.bind="anySelectedStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} has experienced ${selectedStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} denied having experienced ${unselectedStressors | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'stressor-changed'}.
+                            </template>
+                            <template if.bind="anySelectedFamilyStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} added that ${pronoun.possessiveAdjective} family has experienced ${selectedFamilyStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedFamilyStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.possessiveAdjective} family had experienced ${unselectedFamilyStressors | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'stressor-changed'}.
+                            </template>
+                        </template>
+                    </p>
+                </div>
             </div>
         </fieldset>
 
@@ -2132,26 +2236,6 @@
                     <hr>
                 </template>
 
-                <div class="report-text uk-background-muted uk-padding" contenteditable="true">
-                    <!-- Linguistic Functioning / Attention -->
-                    <p>
-                        <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issue-changed'">
-                            When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
-                            <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
-                                &nbsp;reported that at the present time ${pronoun.subject} experiences:
-                                &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
-                            </template>
-                            <template if.bind="anyUnselectedLanguageIssues & signal:'language-issue-changed'">
-                                <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
-                                    &nbsp;${pronoun.subject | proper}
-                                </template>
-                                &nbsp;specifically denied any of the following:
-                                &nbsp;${unselectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
-                            </template>
-                        </template>
-                    </p>
-                </div>
-
                 <hr>
             </div>
         </fieldset>
@@ -2269,92 +2353,108 @@
                 </div>
 
                 <hr if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+            </div>
+        </fieldset>
 
-                <div class="report-text uk-background-muted uk-padding" contenteditable="true">
-                    <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToFocus)">
-                        &nbsp;${gender.title} ${claimant.lastName} related that ${pronoun.possessiveAdjective} ability to focus has
-                        <template if.bind="isNo(responses.neuropsychological.attention.abilityToFocus)">
-                            &nbsp;not
-                        </template>
-                        &nbsp;been affected.
+        <div class="report-text uk-background-muted uk-padding" contenteditable="true">
+            <p>
+                <!-- Linguistic Functioning / Attention -->
+                <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issue-changed'">
+                    When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
+                    <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
+                        &nbsp;reported that at the present time ${pronoun.subject} experiences:
+                        &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
                     </template>
-        
-                    <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToSustainAttention)">
-                        &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} 
-                        <template if.bind="isYes(responses.neuropsychological.attention.abilityToSustainAttention)">
-                            &nbsp;has
+                    <template if.bind="anyUnselectedLanguageIssues & signal:'language-issue-changed'">
+                        <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
+                            &nbsp;${pronoun.subject | proper}
                         </template>
-                        <template else>
-                            &nbsp;does not have
-                        </template>
-                        &nbsp;a harder time sustaining attention.
+                        &nbsp;specifically denied any of the following:
+                        &nbsp;${unselectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
                     </template>
-                    
-                    <template if.bind="isAnswered(responses.neuropsychological.attention.areMoreDistractible)">
-                        &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} is 
-                        <template if.bind="isNo(responses.neuropsychological.attention.areMoreDistractible)">
-                            &nbsp;not
-                        </template>
-                        &nbsp;more distractible.
+                </template>
+
+                <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToFocus)">
+                    &nbsp;${gender.title} ${claimant.lastName} related that ${pronoun.possessiveAdjective} ability to focus has
+                    <template if.bind="isNo(responses.neuropsychological.attention.abilityToFocus)">
+                        &nbsp;not
                     </template>
-                    
-                    <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenReading)">
-                        &nbsp;When asked about ${pronoun.possessiveAdjective} ability to read, ${gender.title} ${claimant.lastName} noted that 
-                        <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenReading)">
-                            &nbsp;${pronoun.subject} may 
-                        </template>
-                        <template else>
-                            &nbsp;generally ${pronoun.subject} does not
-                        </template>
-                        &nbsp;lose track when reading.
+                    &nbsp;been affected.
+                </template>
+    
+                <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToSustainAttention)">
+                    &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} 
+                    <template if.bind="isYes(responses.neuropsychological.attention.abilityToSustainAttention)">
+                        &nbsp;has
                     </template>
-                    
-                    <template if.bind="isAnswered(responses.neuropsychological.attention.needToReRead)">
-                        <template if.bind="isYes(responses.neuropsychological.attention.needToReRead)">
-                            &nbsp;${pronoun.subject | proper} went on to express that ${pronoun.subject} may need to go back and re-read
-                            <template if.bind="any(responses.neuropsychological.attention.readingIssues) & signal:'reading-issues-changed'">
-                                , noting that currently ${pronoun.possessiveAdjective} ability to read is affected by ${pronoun.possessiveAdjective}: 
-                                ${responses.neuropsychological.attention.readingIssues | arrayToString:{"format":getItemValue} & signal:'reading-issues-changed'}
-                            </template>
-                            .
-                        </template>
-                        <template else>
-                            &nbsp;${pronoun.subject | proper} denied needing to go back and re-read.
-                        </template>
+                    <template else>
+                        &nbsp;does not have
                     </template>
-                    
-                    <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
-                        &nbsp;${gender.title} ${claimant.lastName} 
-                        <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
-                            &nbsp;also shared that ${pronoun.subject} finds it hard to watch television without losing track. 
-                        </template>
-                        <template else>
-                            &nbsp;advised that ${pronoun.subject} does not lose track when ${pronoun.subject} is watching television. 
-                        </template>
+                    &nbsp;a harder time sustaining attention.
+                </template>
+                
+                <template if.bind="isAnswered(responses.neuropsychological.attention.areMoreDistractible)">
+                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} is 
+                    <template if.bind="isNo(responses.neuropsychological.attention.areMoreDistractible)">
+                        &nbsp;not
                     </template>
-        
-                    <template if.bind="isAnswered(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
-                        &nbsp;${pronoun.subject | proper} expressed that ${pronoun.possessiveAdjective} ability to use computers and devices with screens has    
-                        <template if.bind="isNo(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
-                            &nbsp;not
-                        </template>
-                        &nbsp;been affected
-                        <template if.bind="isAnswered(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                            <template if.bind="isYes(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                                , adding that ${pronoun.subject} has 
-                            </template>
-                            <template if.bind="isNo(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                                , but advised that ${pronoun.subject} has not
-                            </template>
-                            &nbsp;had to reduce the brightness of the screen
+                    &nbsp;more distractible.
+                </template>
+                
+                <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenReading)">
+                    &nbsp;When asked about ${pronoun.possessiveAdjective} ability to read, ${gender.title} ${claimant.lastName} noted that 
+                    <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenReading)">
+                        &nbsp;${pronoun.subject} may 
+                    </template>
+                    <template else>
+                        &nbsp;generally ${pronoun.subject} does not
+                    </template>
+                    &nbsp;lose track when reading.
+                </template>
+                
+                <template if.bind="isAnswered(responses.neuropsychological.attention.needToReRead)">
+                    <template if.bind="isYes(responses.neuropsychological.attention.needToReRead)">
+                        &nbsp;${pronoun.subject | proper} went on to express that ${pronoun.subject} may need to go back and re-read
+                        <template if.bind="any(responses.neuropsychological.attention.readingIssues) & signal:'reading-issues-changed'">
+                            , noting that currently ${pronoun.possessiveAdjective} ability to read is affected by ${pronoun.possessiveAdjective}: 
+                            ${responses.neuropsychological.attention.readingIssues | arrayToString:{"format":getItemValue} & signal:'reading-issues-changed'}
                         </template>
                         .
                     </template>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
+                    <template else>
+                        &nbsp;${pronoun.subject | proper} denied needing to go back and re-read.
+                    </template>
+                </template>
+                
+                <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
+                    &nbsp;${gender.title} ${claimant.lastName} 
+                    <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
+                        &nbsp;also shared that ${pronoun.subject} finds it hard to watch television without losing track. 
+                    </template>
+                    <template else>
+                        &nbsp;advised that ${pronoun.subject} does not lose track when ${pronoun.subject} is watching television. 
+                    </template>
+                </template>
+    
+                <template if.bind="isAnswered(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+                    &nbsp;${pronoun.subject | proper} expressed that ${pronoun.possessiveAdjective} ability to use computers and devices with screens has    
+                    <template if.bind="isNo(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+                        &nbsp;not
+                    </template>
+                    &nbsp;been affected
+                    <template if.bind="isAnswered(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
+                        <template if.bind="isYes(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
+                            , adding that ${pronoun.subject} has 
+                        </template>
+                        <template if.bind="isNo(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
+                            , but advised that ${pronoun.subject} has not
+                        </template>
+                        &nbsp;had to reduce the brightness of the screen
+                    </template>
+                    .
+                </template>
+            </p>
+        </div>
 
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Executive</legend>
@@ -2491,11 +2591,11 @@
                                 <template if.bind="anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
                                     &nbsp;Upon inquiry, ${pronoun.subject} denied 
                                     <template if.bind="deniedAtypicalSymptomology & signal:'visual-spatial-issue-changed'">
-                                        &nbsp;having any atypical symptomatology or experiencing any 
+                                        &nbsp;having any atypical symptomatology or experiencing any: 
                                         ${unselectedVisualSpatialIssues | filter:notAtypical | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or","delimiter":"; "} & signal:'visual-spatial-issue-changed'}.
                                     </template>
                                     <template else>
-                                        &nbsp;experiencing any 
+                                        &nbsp;experiencing any: 
                                         ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or","delimiter":"; "} & signal:'visual-spatial-issue-changed'}.
                                     </template>
                                 </template>
@@ -2503,12 +2603,12 @@
                             <template else>
                                 &nbsp;When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} denied 
                                 <template if.bind="deniedAtypicalSymptomology & signal:'visual-spatial-issue-changed'">
-                                    &nbsp;having any atypical symptomatology or experiencing any 
-                                    ${unselectedVisualSpatialIssues | filter:notAtypical | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'visual-spatial-issue-changed'}.
+                                    &nbsp;having any atypical symptomatology or experiencing any: 
+                                    ${unselectedVisualSpatialIssues | filter:notAtypical | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or","delimiter":"; "} & signal:'visual-spatial-issue-changed'}.
                                 </template>
                                 <template else>
-                                    &nbsp;experiencing any 
-                                    ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'visual-spatial-issue-changed'}.
+                                    &nbsp;experiencing any: 
+                                    ${unselectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or","delimiter":"; "} & signal:'visual-spatial-issue-changed'}.
                                 </template>
                             </template>
                         </template>
@@ -2610,7 +2710,7 @@
                             <template if.bind="isYes(responses.neuropsychological.physical.weight.changed)">
                                 &nbsp;${responses.neuropsychological.physical.weight.changeType.format(self)}
                                 <template if.bind="responses.neuropsychological.physical.weight.changeType.isIncreaseOrDecrease">
-                                    &nbsp;${responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'}
+                                    ${responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'}
                                 </template>
                                 .
                             </template>
@@ -3107,7 +3207,7 @@
                                     Is ${pronoun.subject} able, partially able, or unable to do the same?
                                 </th>
                                 <th class="uk-padding-remove-vertical">
-                                    ${pronoun.possessiveAdjective | proper} ability to do said task is currently affected by her: 
+                                    ${pronoun.possessiveAdjective | proper} ability to do said task is currently affected by ${pronoun.possessiveAdjective}: 
                                 </th>
                             </tr>
                         </thead>
@@ -3115,13 +3215,13 @@
                             <tr repeat.for="task of responses.neuropsychological.currentState.tasks | filter:isNotSkipAbilityWithContext & signal:'current-state-task-changed'">
                                 <td class="uk-padding-remove-vertical">${currentStateTasksMap[task.value].description}</td>
                                 <template if.bind="task.isNA">
-                                    <td colspan="2" class="uk-padding-remove-vertical">Not applicable</td>
+                                    <td colspan="2" class="uk-padding-remove-vertical" style="text-align:center;">Not applicable</td>
                                 </template>
                                 <template else>
-                                    <td class="uk-padding-remove-vertical">
-                                        ${currentStateAbilitiesMap[task.ability].description}
+                                    <td class="uk-padding-remove-vertical" style="text-align:center;">
+                                        ${currentStateAbilitiesMap[task.ability].format(self)}
                                     </td>
-                                    <td class="uk-padding-remove-vertical">
+                                    <td class="uk-padding-remove-vertical" style="text-align:center;">
                                         ${task.issues | arrayToString:{"format":currentStateIssueTextWithContext} & signal:'current-state-task-changed'}
                                     </td>
                                 </template>
@@ -3132,130 +3232,15 @@
                 </div>
 
                 <hr>
-
-                <div class="uk-margin-remove uk-width-1-1">
-                    Traveling
+                
+                <div class="uk-margin-remove uk-width-3-4">
+                    Were you more social before the accident then you are currently?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    Before the accident
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    Local Travel
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of travelAbilities">
-                        <input type="radio" name="travelBeforeAbility" class="uk-radio" checked.bind="responses.neuropsychological.currentState.travel.before" model.bind="response" matcher.bind="valueMatcher" change.delegate="changed('travel-ability-changed')" />&nbsp;${response.description}&nbsp;
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="moreSocialBeforeAccident" class="uk-radio" checked.bind="responses.neuropsychological.currentState.moreSocialBeforeAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    Currently
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    Local Travel
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of travelAbilities">
-                        <input type="radio" name="travelCurrentAbility" class="uk-radio" checked.bind="responses.neuropsychological.currentState.travel.current" model.bind="response" matcher.bind="valueMatcher" change.delegate="changed('travel-ability-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4"></div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    Taxi/Uber
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of travelAbilities">
-                        <input type="radio" name="travelTaxiAbility" class="uk-radio" checked.bind="responses.neuropsychological.currentState.travel.taxi" model.bind="response" matcher.bind="valueMatcher" change.delegate="changed('travel-ability-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-background-muted uk-padding" contenteditable="true">
-                    <p>
-                        <!-- Alone
-                        
-                        <template if.bind="responses.neuropsychological.currentState.alone.ability.value">
-                            &nbsp;${gender.title} ${claimant.lastName}
-                            <template if.bind="responses.neuropsychological.currentState.alone.ability.isUnable">
-                                &nbsp;expressed that at the current time ${pronoun.subject} is not 
-                            </template>
-                            <template if.bind="responses.neuropsychological.currentState.alone.ability.isPartiallyAble">
-                                &nbsp;indicated that ${pronoun.subject} is only partially 
-                            </template>
-                            <template if.bind="responses.neuropsychological.currentState.alone.ability.isAble">
-                                &nbsp;confirmed that ${pronoun.subject} is still 
-                            </template>
-                            &nbsp;able to be left home alone.
-                            <template if.bind="anyAloneIssues & signal:'current-state-alone-changed'">
-                                &nbsp;${pronoun.subject | proper} added that this is due to ${responses.neuropsychological.currentState.alone.issues | arrayToString & signal:'current-state-alone-changed'}.
-                            </template>
-                            <template if.bind="isAnswered(responses.neuropsychological.currentState.alone.inContactFrequently)">
-                                &nbsp;${pronoun.subject | proper} then added that ${pronoun.subject} 
-                                <template if.bind="isYes(responses.neuropsychological.currentState.alone.inContactFrequently)">
-                                    &nbsp;is frequently 
-                                </template>
-                                <template else>
-                                    &nbsp;does not need to frequently be
-                                </template>
-                                &nbsp;in contact with others when ${pronoun.subject} is home alone.
-                                <template if.bind="isYes(responses.neuropsychological.currentState.alone.inContactFrequently) && responses.neuropsychological.currentState.alone.inContactFrequency">
-                                    &nbsp;When asked how often ${gender.title} ${claimant.lastName} was in contact with others when ${pronoun.subject} was alone, 
-                                    ${pronoun.subject} indicated a frequency of ${responses.neuropsychological.currentState.alone.inContactFrequency}.
-                                </template>
-                            </template>
-                        </template>
-                        -->
-                        <template if.bind="anyCurrentStateTravelAbility & signal:'travel-ability-changed'">
-                            ${gender.title} ${claimant.lastName} noted that 
-                            <template if.bind="responses.neuropsychological.currentState.travel.before.value">
-                                &nbsp;before the accident ${pronoun.subject} 
-                                <template if.bind="responses.neuropsychological.currentState.travel.before.isUnable">
-                                    &nbsp;was unable to travel locally without assistance
-                                </template>
-                                <template if.bind="responses.neuropsychological.currentState.travel.before.isPartiallyAble">
-                                    &nbsp;required assistance to travel locally
-                                </template>
-                                <template if.bind="responses.neuropsychological.currentState.travel.before.isAble">
-                                    &nbsp;was able to travel locally without assistance
-                                </template>
-                                .
-                            </template>
-                            <template if.bind="responses.neuropsychological.currentState.travel.current.value">
-                                <template if.bind="responses.neuropsychological.currentState.travel.before.value">
-                                    &nbsp;${pronoun.subject | proper} added that 
-                                </template>
-                                &nbsp;at the current time ${pronoun.subject} is ${responses.neuropsychological.currentState.travel.current.value} to travel locally without assistance
-                                <template if.bind="responses.neuropsychological.currentState.travel.taxi.value">
-                                    , and detailed that ${pronoun.subject} is ${responses.neuropsychological.currentState.travel.taxi.value} 
-                                    to call a taxicab or Uber and tell the driver where to go
-                                </template>
-                                .
-                            </template>
-                            <template else>
-                                <template if.bind="responses.neuropsychological.currentState.travel.taxi.value">
-                                    <template if.bind="responses.neuropsychological.currentState.travel.before.value">
-                                        &nbsp;${pronoun.subject | proper} added that 
-                                    </template>
-                                    &nbsp;at the current time ${pronoun.subject} is ${responses.neuropsychological.currentState.travel.taxi.value} 
-                                    to call a taxicab or Uber and tell the driver where to go.
-                                </template>
-                            </template>
-                        </template>
-            
-                    </p>
                 </div>
 
                 <hr>
@@ -3280,47 +3265,6 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    Has your ability to participate in your regular social and leisure activities outside the home been affected since the accident?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="leisureAbility" class="uk-radio" checked.bind="responses.neuropsychological.currentState.leisureAbility" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.currentState.leisureAbility)"></div>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.currentState.leisureAbility)">
-                    Do you participate:
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.neuropsychological.currentState.leisureAbility)">
-                    <template repeat.for="response of leisureParticipationRates">
-                        <label>
-                            <input type="radio" name="leisureParticipationRate" class="uk-radio" checked.bind="responses.neuropsychological.currentState.leisureParticipationRate" model.bind="response" matcher.bind="valueMatcher" change.delegate="changed('leisure-participation-rate-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                        <br if.bind="!$last">
-                    </template>
-                </div>
-
-                <hr if.bind="isYes(responses.neuropsychological.currentState.leisureAbility)">
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    Were you more social before the accident then you are currently?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="moreSocialBeforeAccident" class="uk-radio" checked.bind="responses.neuropsychological.currentState.moreSocialBeforeAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
                 <div class="report-text uk-background-muted uk-padding" contenteditable="true">
                     <!-- Social Activities -->
                     <p>
@@ -3337,7 +3281,7 @@
                         </template>
             
                         <template if.bind="isYes(responses.neuropsychological.currentState.moreSocialBeforeAccident)">
-                            &nbsp;${pronoun.subject | proper} also shared that prior to the accident ${pronoun.subject} was more social than ${pronoun.subject} currently is.
+                            &nbsp;${pronoun.subject | proper} also shared that prior to the accident ${pronoun.subject} was more social than ${pronoun.subject} is currently.
                         </template>
                         <template if.bind="isNo(responses.neuropsychological.currentState.moreSocialBeforeAccident)">
                             &nbsp;${pronoun.subject | proper} also shared that ${pronoun.subject} is not less social than ${pronoun.subject} was prior to the accident.

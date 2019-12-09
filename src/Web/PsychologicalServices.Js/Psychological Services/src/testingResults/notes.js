@@ -36,8 +36,8 @@ export class Notes {
         this.genders = [];
         this.socioeconomicStatuses = [];
         this.relationshipStatuses = [];
-        this.relationshipDisruptionFrequencies = [];
         this.ageUnits = [];
+        this.neurologicalAndPsychiatricDiseases = [];
         this.emotionalIssues = [];
         this.depressionSymptoms = [];
         this.worries = [];
@@ -106,10 +106,13 @@ export class Notes {
                     this.getGenders().then(data => this.genders = data),
                     this.getSocioeconomicStatuses().then(data => this.socioeconomicStatuses = data),
                     this.getRelationshipStatuses().then(data => this.relationshipStatuses = data),
-                    this.getRelationshipDisruptionFrequencies().then(data => this.relationshipDisruptionFrequencies = data),
                     this.getAgeUnits().then(data => {
                         this.ageUnits = this.asArray(data);
                         this.ageUnitsMap = data;
+                    }),
+                    this.getNeurologicalAndPsychiatricDiseases().then(data => {
+                        this.neurologicalAndPsychiatricDiseases = this.asArray(data);
+                        this.neurologicalAndPsychiatricDiseasesMap = data;
                     }),
                     this.getEmotionalIssues().then(data => this.emotionalIssues = data),
                     this.getDepressionSymptoms().then(data => this.depressionSymptoms = data),
@@ -348,20 +351,23 @@ export class Notes {
         return getPromise(data);
     }
 
-    getRelationshipDisruptionFrequencies() {
-        let data = [
-            { "description": "Occasional (less than weekly)", "value": "occasionally" },
-            { "description": "Frequent (once a week or more but not tolerable)", "value": "frequently" },
-            { "description": "Constant (daily and intolerable)", "value": "constantly" }
-        ];
-
-        return getPromise(data);
-    }
-
     getAgeUnits() {
         let data = {
             "years": { "description": "Years", "value": "years" },
             "months": { "description": "Months", "value": "months" }
+        };
+
+        return getPromise(data);
+    }
+
+    getNeurologicalAndPsychiatricDiseases() {
+        let data = {
+            "adhd": { "description": "ADHD/ADD", "value": "adhd", "format": function(context) { return `ADHD/ADD`; } },
+            "dementia": { "description": "Alzheimer’s/Dementia", "value": "dementia", "format": function(context) { return `Alzheimer's/dementia`; } },
+            "bipolar": { "description": "Bipolar", "value": "bipolar", "format": function(context) { return `bipolar disorder`; } },
+            "depression": { "description": "Depression", "value": "depression", "format": function(context) { return `depression`; } },
+            "epilepsy": { "description": "Epilepsy", "value": "epilepsy", "format": function(context) { return `epilepsy`; } },
+            "learningDisorder": { "description": "Learning Disorder", "value": "learningDisorder", "format": function(context) { return `learning disorder`; } }
         };
 
         return getPromise(data);
@@ -415,13 +421,13 @@ export class Notes {
 
     getStressors() {
         let data = {
-            "relationshipBreakup": { "description": "Breakup of Relationship(s)", "format": function(context) { return ``; } },
-            "deathInFamily": { "description": "Death(s) in the family", "format": function(context) { return ``; } },
-            "legalIssues": { "description": "Legal Issues/Arrests", "format": function(context) { return ``; } },
-            "lossOfEmployment": { "description": "Loss of Employment", "format": function(context) { return ``; } },
-            "majorIllness": { "description": "Major Illness", "format": function(context) { return ``; } },
-            "majorFinancialProblems": { "description": "Major Financial Problems", "format": function(context) { return ``; } },
-            "otherAccidents": { "description": "OTHER accidents/injuries", "format": function(context) { return ``; } }
+            "relationshipBreakup": { "description": "Breakup of Relationship(s)", "format": function(context) { return `a breakup in a relationship`; } },
+            "deathInFamily": { "description": "Death(s) in the family", "format": function(context) { return `a death in the family`; } },
+            "legalIssues": { "description": "Legal Issues/Arrests", "format": function(context) { return `legal issues/arrests`; } },
+            "lossOfEmployment": { "description": "Loss of Employment", "format": function(context) { return `loss of employment`; } },
+            "majorIllness": { "description": "Major Illness", "format": function(context) { return `major illness`; } },
+            "majorFinancialProblems": { "description": "Major Financial Problems", "format": function(context) { return `major financial problems`; } },
+            "otherAccidents": { "description": "OTHER accidents/injuries", "format": function(context) { return `another accident or injury`; } }
         };
 
         return getPromise(data);
@@ -460,18 +466,18 @@ export class Notes {
     getVisualSpatialIssues() {
         let data = {
             "balanceIssues": { "description": "Balance Issues", "format": function(context) { return `balance issues`; } },
-            "seizures": { "description": "Seizures", "format": function(context) { return `seizures`; } },
             "weaknessInHands": { "description": "Weakness in hands", "format": function(context) { return `weakness in ${context.pronoun.possessiveAdjective} hands`; } },
-            "fainting": { "description": "Fainting", "format": function(context) { return `fainting`; } },
             "dizzinessIssues": { "description": "Dizziness issues", "format": function(context) { return `dizziness`; } },
-            "lightSensitivity": { "description": "Light Sensitivity", "format": function(context) { return `sensitivity to light`; } },
             "tinnitus": { "description": "Tinnitus", "format": function(context) { return `tinnitus`; } },
-            "noiseSensitivity": { "description": "Noise sensitivity", "format": function(context) { return `sensitivity to noise`; } },
             "changeInTaste": { "description": "Change in sense of taste", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of taste`; } },
-            "blurryVision": { "description": "Blurry vision", "format": function(context) { return `blurry vision`; } },
             "changeInSmell": { "description": "Change in sense of smell", "format": function(context) { return `change in ${context.pronoun.possessiveAdjective} sense of smell`; } },
-            "doubleVision": { "description": "Double vision", "format": function(context) { return `double vision`; } },
             "itchyFingernails": { "description": "Itchy fingernails", "format": function(context) { return `itchy fingernails (atypical symptomology)`; }, "isAtypical": true },
+            "seizures": { "description": "Seizures", "format": function(context) { return `seizures`; } },
+            "fainting": { "description": "Fainting", "format": function(context) { return `fainting`; } },
+            "lightSensitivity": { "description": "Light Sensitivity", "format": function(context) { return `sensitivity to light`; } },
+            "noiseSensitivity": { "description": "Noise sensitivity", "format": function(context) { return `sensitivity to noise`; } },
+            "blurryVision": { "description": "Blurry vision", "format": function(context) { return `blurry vision`; } },
+            "doubleVision": { "description": "Double vision", "format": function(context) { return `double vision`; } },
             "blackAndWhiteTransientVision": { "description": "Black/white transient vision", "format": function(context) { return `black and white transient vision (atypical symptomology)`; }, "isAtypical": true }
         };
 
@@ -610,10 +616,10 @@ export class Notes {
 
     getCurrentStateAbilities() {
         let data = {
-            "unable": { "description": "Unable", "value": "unable", "isUnable": true },
-            "partiallyAble": { "description": "Partial", "value": "partiallyAble", "isPartiallyAble": true },
-            "able": { "description": "Able", "value": "able", "isAble": true },
-            "skip": { "description": "Skip", "value": "skip", "isSkip": true }
+            "unable": { "description": "Unable", "value": "unable", format: function(context) { return `Unable`; }, "isUnable": true },
+            "partiallyAble": { "description": "Partial", "value": "partiallyAble", format: function(context) { return `Partially able`; }, "isPartiallyAble": true },
+            "able": { "description": "Able", "value": "able", format: function(context) { return `Able`; }, "isAble": true },
+            "skip": { "description": "Skip", "value": "skip", format: function(context) { return ``; }, "isSkip": true }
         };
 
         return getPromise(data);
@@ -731,7 +737,13 @@ export class Notes {
                 : 0) +
             (this.responses.personalHistory.sisters.howMany !== null
                 ? parseInt(this.responses.personalHistory.sisters.howMany, 10)
-                : 0) : 0;
+                : 0) +
+            (this.responses.personalHistory.halfBrothers.howMany !== null
+                ? parseInt(this.responses.personalHistory.halfBrothers.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.halfSisters.howMany !== null
+                ? parseInt(this.responses.personalHistory.halfSisters.howMany, 10)
+                : 0) : 0 ;
     }
 
     @computedFrom(
@@ -753,6 +765,56 @@ export class Notes {
         let status = this.responses ? this.responses.personalHistory.relationship.status : null;
 
         return status && (status.isMarried || status.isCommonLaw);
+    }
+
+    getNeurologicalOrPsychiatricDiagnosisForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.personalHistory.neurologicalOrPsychiatricDiseases
+            .filter(item => criteria(item))
+            .map(item => this.neurologicalAndPsychiatricDiseasesMap[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get selectedNeurologicalOrPsychiatricDiagnosis() {
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.self !== null && this.isYes(item.self));
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get unselectedNeurologicalOrPsychiatricDiagnosis() {
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.self !== null && this.isNo(item.self));
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get anySelectedNeurologicalOrPsychiatricDiagnosis() {
+        return this.selectedNeurologicalOrPsychiatricDiagnosis.some(item => item);
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get anyUnselectedNeurologicalOrPsychiatricDiagnosis() {
+        return this.unselectedNeurologicalOrPsychiatricDiagnosis.some(item => item);
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get selectedFamilyNeurologicalOrPsychiatricDiagnosis() {
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isYes(item.family));
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get unselectedFamilyNeurologicalOrPsychiatricDiagnosis() {
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isNo(item.family));
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get anySelectedFamilyNeurologicalOrPsychiatricDiagnosis() {
+        return this.selectedFamilyNeurologicalOrPsychiatricDiagnosis.some(item => item);
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis() {
+        return this.unselectedFamilyNeurologicalOrPsychiatricDiagnosis.some(item => item);
     }
 
     getEmotionalIssuesForResponses(criteria) {
@@ -1111,6 +1173,85 @@ export class Notes {
         return data;
     }
 
+    getStressorsForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.psychological.stressors
+            .concat(this.responses.psychological.otherStressors.map(item => {
+                return { "self": item.self, "family": item.family, "value": item.value };
+            }))
+            .filter(item => criteria(item))
+            .map(item => {
+                return this.stressorsMap[item.value] || { "description": item.value, "format": function(context) { return item.value; } };
+            });
+
+        return data;
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get selectedStressors() {
+        return this.getStressorsForResponses(item => item.self !== null && this.isYes(item.self));
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get unselectedStressors() {
+        return this.getStressorsForResponses(item => item.self !== null && this.isNo(item.self));
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get anySelectedStressors() {
+        return this.selectedStressors.some(item => item);
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get anyUnselectedStressors() {
+        return this.unselectedStressors.some(item => item);
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get selectedFamilyStressors() {
+        return this.getStressorsForResponses(item => item.family !== null && this.isYes(item.family));
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get unselectedFamilyStressors() {
+        return this.getStressorsForResponses(item => item.family !== null && this.isNo(item.family));
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get anySelectedFamilyStressors() {
+        return this.selectedFamilyStressors.some(item => item);
+    }
+
+    @computedFrom(
+        'this.responses.psychological.stressors',
+        'this.responses.psychological.otherStressors'
+    )
+    get anyUnselectedFamilyStressors() {
+        return this.unselectedFamilyStressors.some(item => item);
+    }
+
     any(items) {
         return items && items.some(item => item);
     }
@@ -1316,7 +1457,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "5";
+    return "6";
 }
 
 function upgrade(responses, toVersion) {
@@ -1499,7 +1640,6 @@ function upgrade_3_to_4(responses) {
     if (responses.personalHistory.relationship.isAbusive && responses.personalHistory.relationship.isAbusive.description) {responses.personalHistory.relationship.isAbusive = getYesNoDontKnowConversion(responses.personalHistory.relationship.isAbusive);}
     if (responses.personalHistory.relationship.previousRelationshipAbusive && responses.personalHistory.relationship.previousRelationshipAbusive.description) {responses.personalHistory.relationship.previousRelationshipAbusive = getYesNoDontKnowConversion(responses.personalHistory.relationship.previousRelationshipAbusive);}
     if (responses.personalHistory.relationship.hadPriorSeriousRelationship && responses.personalHistory.relationship.hadPriorSeriousRelationship.description) {responses.personalHistory.relationship.hadPriorSeriousRelationship = getYesNoDontKnowConversion(responses.personalHistory.relationship.hadPriorSeriousRelationship);}
-    if (responses.personalHistory.isFamilySupportive && responses.personalHistory.isFamilySupportive.description) {responses.personalHistory.isFamilySupportive = getYesNoDontKnowConversion(responses.personalHistory.isFamilySupportive);}
     if (responses.psychological.selfHarm.pastThoughts.response && responses.psychological.selfHarm.pastThoughts.response.description) {responses.psychological.selfHarm.pastThoughts.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.pastThoughts.response);}
     if (responses.psychological.selfHarm.currentThoughts.response && responses.psychological.selfHarm.currentThoughts.response.description) {responses.psychological.selfHarm.currentThoughts.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.currentThoughts.response);}
     if (responses.psychological.selfHarm.planToAct.response && responses.psychological.selfHarm.planToAct.response.description) {responses.psychological.selfHarm.planToAct.response = getYesNoDontKnowConversion(responses.psychological.selfHarm.planToAct.response);}
@@ -1562,8 +1702,6 @@ function upgrade_3_to_4(responses) {
     if (responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident && responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident.description) {responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident);}
     if (responses.neuropsychological.physical.pain.currentlyExperiencePain && responses.neuropsychological.physical.pain.currentlyExperiencePain.description) {responses.neuropsychological.physical.pain.currentlyExperiencePain = getYesNoDontKnowConversion(responses.neuropsychological.physical.pain.currentlyExperiencePain);}
     if (responses.neuropsychological.physical.pain.experiencePainPriorToAccident && responses.neuropsychological.physical.pain.experiencePainPriorToAccident.description) {responses.neuropsychological.physical.pain.experiencePainPriorToAccident = getYesNoDontKnowConversion(responses.neuropsychological.physical.pain.experiencePainPriorToAccident);}
-    if (responses.neuropsychological.currentState.alone.inContactFrequently && responses.neuropsychological.currentState.alone.inContactFrequently.description) {responses.neuropsychological.currentState.alone.inContactFrequently = getYesNoDontKnowConversion(responses.neuropsychological.currentState.alone.inContactFrequently);}
-    if (responses.neuropsychological.currentState.leisureAbility && responses.neuropsychological.currentState.leisureAbility.description) {responses.neuropsychological.currentState.leisureAbility = getYesNoDontKnowConversion(responses.neuropsychological.currentState.leisureAbility);}
 
     let yesNoResponses2 = [
         responses.psychological.emotional,
@@ -1642,7 +1780,8 @@ function upgrade_4_to_5(responses) {
             'religiousActivities',
             'vacationing',
             'banking',
-            'caregiving'
+            'caregiving',
+            'alone'
         ];
 
         for (let i = 0; i < props.length; i++) {
@@ -1658,20 +1797,6 @@ function upgrade_4_to_5(responses) {
                 if (!responses.neuropsychological.currentState.tasks.some(item => item.value === props[i])) {
                     responses.neuropsychological.currentState.tasks.splice(i, 0, { "ability": null, "issues": [], "isNA": false, "value": props[i] });
                 }
-            }
-        }
-
-        if (responses.neuropsychological.currentState.hasOwnProperty("alone")) {
-            if (!responses.neuropsychological.currentState.tasks.some(item => item.value === "alone")) {
-                responses.neuropsychological.currentState.tasks.splice(responses.neuropsychological.currentState.tasks.length, 0, { "ability": responses.neuropsychological.currentState.alone.ability || null, "issues": responses.neuropsychological.currentState.alone.issues || [], "isNA": false, "value": "alone" });
-            }
-
-            if (responses.neuropsychological.currentState.alone.hasOwnProperty('ability')) {
-                delete responses.neuropsychological.currentState.alone.ability;
-            }
-
-            if (responses.neuropsychological.currentState.alone.hasOwnProperty('issues')) {
-                delete responses.neuropsychological.currentState.alone.issues;
             }
         }
     }
@@ -1697,7 +1822,39 @@ function upgrade_4_to_5(responses) {
     responses.version = "5";
 
     return responses;
-}  
+}
+
+function upgrade_5_to_6(responses) {
+
+    if (!responses.personalHistory.hasOwnProperty('neurologicalOrPsychiatricDiseases')) {
+        responses.personalHistory.neurologicalOrPsychiatricDiseases = [
+            { "self": null, "family": null, "value": "adhd" },
+            { "self": null, "family": null, "value": "dementia" },
+            { "self": null, "family": null, "value": "bipolar" },
+            { "self": null, "family": null, "value": "depression" },
+            { "self": null, "family": null, "value": "epilepsy" },
+            { "self": null, "family": null, "value": "learningDisorder" }
+        ];
+    }
+
+    if (!responses.personalHistory.hasOwnProperty('halfBrothers')) {
+        responses.personalHistory.halfBrothers = {
+            "howMany": null,
+            "ages": []
+        };
+    }
+
+    if (!responses.personalHistory.hasOwnProperty('halfSisters')) {
+        responses.personalHistory.halfSisters = {
+            "howMany": null,
+            "ages": []
+        };
+    }
+    
+    responses.version = "6";
+
+    return responses;
+}
 
 function upgradeIfApplicable(responses, fromVersion, toVersion) {
     let functionName = "upgrade_" + fromVersion + "_to_" + toVersion;
@@ -1743,15 +1900,30 @@ function getNewResponses() {
             },
             "didParentsSeparateOrDivorce": null,
             "brothers": {
-                "howMany": 0,
+                "howMany": null,
                 "ages": []
             },
             "sisters": {
-                "howMany": 0,
+                "howMany": null,
+                "ages": []
+            },
+            "halfBrothers": {
+                "howMany": null,
+                "ages": []
+            },
+            "halfSisters": {
+                "howMany": null,
                 "ages": []
             },
             "birthPosition": 0,
-            "familyHistoryOfNeurologicalOrPsychiatricDisease": null,
+            "neurologicalOrPsychiatricDiseases": [
+                { "self": null, "family": null, "value": "adhd" },
+                { "self": null, "family": null, "value": "dementia" },
+                { "self": null, "family": null, "value": "bipolar" },
+                { "self": null, "family": null, "value": "depression" },
+                { "self": null, "family": null, "value": "epilepsy" },
+                { "self": null, "family": null, "value": "learningDisorder" }
+            ],
             "relationship": {
                 "status": null,
                 "marriageLength": { "value": null, "unit": null },
@@ -1765,18 +1937,15 @@ function getNewResponses() {
             },
             "children": {
                 "sons": {
-                    "howMany": 0,
+                    "howMany": null,
                     "ages": []
                 },
                 "daughters": {
-                    "howMany": 0,
+                    "howMany": null,
                     "ages": []
                 },
                 "howManyLiveWithYou": null
-            },
-            "isFamilySupportive": null,
-            "relationshipDisruptionDueToPsychProblems": null,
-            "extentOfDisruption": null
+            }
         },
         "psychological": {
             "emotional": [
@@ -1934,16 +2103,16 @@ function getNewResponses() {
             },
             "visualSpatial": [
                 { "response": null, "value": "balanceIssues" },
-                { "response": null, "value": "seizures" },
                 { "response": null, "value": "weaknessInHands" },
-                { "response": null, "value": "fainting" },
                 { "response": null, "value": "dizzinessIssues" },
-                { "response": null, "value": "lightSensitivity" },
                 { "response": null, "value": "tinnitus" },
-                { "response": null, "value": "noiseSensitivity" },
                 { "response": null, "value": "changeInTaste" },
-                { "response": null, "value": "blurryVision" },
                 { "response": null, "value": "changeInSmell" },
+                { "response": null, "value": "seizures" },
+                { "response": null, "value": "fainting" },
+                { "response": null, "value": "lightSensitivity" },
+                { "response": null, "value": "noiseSensitivity" },
+                { "response": null, "value": "blurryVision" },
                 { "response": null, "value": "doubleVision" }
             ],
             "atypical": [
@@ -2008,22 +2177,11 @@ function getNewResponses() {
                     { "ability": null, "issues": [], "isNA": false, "value": "caregiving" },
                     { "ability": null, "issues": [], "isNA": false, "value": "alone" }
                 ],
-                "alone": {
-                    "inContactFrequently": null,
-                    "contactFrequency": null
-                },
-                "travel": {
-                    "before": null,
-                    "current": null,
-                    "taxi": null
-                },
                 "preAccidentRecreationalActivities": [
                     "",
                     "",
                     ""
                 ],
-                "leisureAbility": null,
-                "leisureParticipationRate": null,
                 "moreSocialBeforeAccident": null
             }
         }
