@@ -287,28 +287,29 @@ export class Notes {
 
     isAnswered(value) {
         try {
-            return value !== null && !this.yesNoDontKnowMap[value].isSkip;
+            return value !== undefined && value !== null && (!this.yesNoDontKnowMap.hasOwnProperty(value) || !this.yesNoDontKnowMap[value].isSkip);
         }
         catch (err) {
+            //console.log(value);
             console.log(err);
             throw err;
         }
     }
 
     isYes(value) {
-        return value !== null && this.yesNoDontKnowMap[value].isYes;
+        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isYes;
     }
 
     isNo(value) {
-        return value !== null && this.yesNoDontKnowMap[value].isNo;
+        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isNo;
     }
 
     isDontKnow(value) {
-        return value !== null && this.yesNoDontKnowMap[value].isDontKnow;
+        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isDontKnow;
     }
 
     isSkip(value) {
-        return value !== null && this.yesNoDontKnowMap[value].isSkip;
+        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isSkip;
     }
 
     getMatch(values, value) {
@@ -617,7 +618,7 @@ export class Notes {
     getCurrentStateAbilities() {
         let data = {
             "unable": { "description": "Unable", "value": "unable", format: function(context) { return `Unable`; }, "isUnable": true },
-            "partiallyAble": { "description": "Partial", "value": "partiallyAble", format: function(context) { return `Partially able`; }, "isPartiallyAble": true },
+            "partiallyAble": { "description": "Partial", "value": "partiallyAble", format: function(context) { return `Partially Able`; }, "isPartiallyAble": true },
             "able": { "description": "Able", "value": "able", format: function(context) { return `Able`; }, "isAble": true },
             "skip": { "description": "Skip", "value": "skip", format: function(context) { return ``; }, "isSkip": true }
         };
@@ -727,6 +728,22 @@ export class Notes {
     }
 
     @computedFrom(
+        'responses.personalHistory.brothers.skip',
+        'responses.personalHistory.sisters.skip'        
+    )
+    get skipSiblings() {
+        return this.responses && this.responses.personalHistory.brothers.skip && this.responses.personalHistory.sisters.skip;
+    }
+
+    @computedFrom(
+        'responses.personalHistory.children.sons.skip',
+        'responses.personalHistory.children.daughters.skip'        
+    )
+    get skipChildren() {
+        return this.responses && this.responses.personalHistory.children.sons.skip && this.responses.personalHistory.children.daughters.skip;
+    }
+
+    @computedFrom(
         'responses.personalHistory.brothers.howMany',
         'responses.personalHistory.sisters.howMany'
     )
@@ -737,12 +754,6 @@ export class Notes {
                 : 0) +
             (this.responses.personalHistory.sisters.howMany !== null
                 ? parseInt(this.responses.personalHistory.sisters.howMany, 10)
-                : 0) +
-            (this.responses.personalHistory.halfBrothers.howMany !== null
-                ? parseInt(this.responses.personalHistory.halfBrothers.howMany, 10)
-                : 0) +
-            (this.responses.personalHistory.halfSisters.howMany !== null
-                ? parseInt(this.responses.personalHistory.halfSisters.howMany, 10)
                 : 0) : 0 ;
     }
 
@@ -1263,41 +1274,15 @@ export class Notes {
         return any;
     }
 
-    @computedFrom('responses.neuropsychological.currentState.alone.issues')
-    get aloneIssues() {
-        let aloneAbilityProblem =
-            this.responses &&
-            this.responses.neuropsychological.currentState.alone.ability &&
-            (this.responses.neuropsychological.currentState.alone.ability.isUnable ||
-            this.responses.neuropsychological.currentState.alone.ability.isPartiallyAble);
-
-        let data = aloneAbilityProblem ? this.responses.neuropsychological.currentState.alone.issues.filter(item => aloneAbilityProblem) : [];
-
-        return data;
-    }
-
-    @computedFrom('responses.neuropsychological.currentState.alone.issues')
-    get anyAloneIssues() {
-        return this.any(this.aloneIssues);
-    }
-
     @computedFrom(
-        'responses.neuropsychological.currentState.travel.before',
-        'responses.neuropsychological.currentState.travel.current',
-        'responses.neuropsychological.currentState.travel.taxi'
+        'responses.neuropsychological.currentState.tasks'
     )
-    get anyCurrentStateTravelAbility() {
-        if (!this.responses) { return []; }
+    get isCaregivingAbilityAnswered() {
+        if (!this.responses) { return false; }
 
-        let data = [
-            this.responses.neuropsychological.currentState.travel.before,
-            this.responses.neuropsychological.currentState.travel.current,
-            this.responses.neuropsychological.currentState.travel.taxi
-        ];
-
-        let any = data.some(item => item && item.value);
-
-        return any;
+        let caregiving = this.responses.neuropsychological.currentState.tasks.find(item => item.value === "caregiving");
+        
+        return caregiving && !caregiving.isNA && this.isAnswered(caregiving.ability);
     }
 
     @computedFrom('responses.neuropsychological.currentState.preAccidentRecreationalActivities')
@@ -1837,18 +1822,42 @@ function upgrade_5_to_6(responses) {
         ];
     }
 
-    if (!responses.personalHistory.hasOwnProperty('halfBrothers')) {
-        responses.personalHistory.halfBrothers = {
-            "howMany": null,
-            "ages": []
-        };
+    let caregiving = responses.neuropsychological.currentState.tasks.find(item => item.value === "caregiving");
+
+    if (caregiving && !caregiving.hasOwnProperty('isCaregiving')) {
+        caregiving.isCaregiving = true;
+    }
+    
+    if (!responses.personalHistory.brothers.hasOwnProperty('skip')) {
+        responses.personalHistory.brothers.skip = false;
     }
 
-    if (!responses.personalHistory.hasOwnProperty('halfSisters')) {
-        responses.personalHistory.halfSisters = {
-            "howMany": null,
-            "ages": []
-        };
+    if (!responses.personalHistory.sisters.hasOwnProperty('skip')) {
+        responses.personalHistory.sisters.skip = false;
+    }
+    
+    if (!responses.personalHistory.children.sons.hasOwnProperty('skip')) {
+        responses.personalHistory.children.sons.skip = false;
+    }
+    
+    if (!responses.personalHistory.children.daughters.hasOwnProperty('skip')) {
+        responses.personalHistory.children.daughters.skip = false;
+    }
+    
+    if (!responses.personalHistory.brothers.hasOwnProperty('skipAges')) {
+        responses.personalHistory.brothers.skipAges = false;
+    }
+
+    if (!responses.personalHistory.sisters.hasOwnProperty('skipAges')) {
+        responses.personalHistory.sisters.skipAges = false;
+    }
+    
+    if (!responses.personalHistory.children.sons.hasOwnProperty('skipAges')) {
+        responses.personalHistory.children.sons.skipAges = false;
+    }
+    
+    if (!responses.personalHistory.children.daughters.hasOwnProperty('skipAges')) {
+        responses.personalHistory.children.daughters.skipAges = false;
     }
     
     responses.version = "6";
@@ -1900,19 +1909,15 @@ function getNewResponses() {
             },
             "didParentsSeparateOrDivorce": null,
             "brothers": {
-                "howMany": null,
+                "skip": true,
+                "skipAges": false,
+                "howMany": 0,
                 "ages": []
             },
             "sisters": {
-                "howMany": null,
-                "ages": []
-            },
-            "halfBrothers": {
-                "howMany": null,
-                "ages": []
-            },
-            "halfSisters": {
-                "howMany": null,
+                "skip": true,
+                "skipAges": false,
+                "howMany": 0,
                 "ages": []
             },
             "birthPosition": 0,
@@ -1937,11 +1942,15 @@ function getNewResponses() {
             },
             "children": {
                 "sons": {
-                    "howMany": null,
+                    "skip": true,
+                    "skipAges": false,
+                    "howMany": 0,
                     "ages": []
                 },
                 "daughters": {
-                    "howMany": null,
+                    "skip": true,
+                    "skipAges": false,
+                    "howMany": 0,
                     "ages": []
                 },
                 "howManyLiveWithYou": null
@@ -2160,7 +2169,6 @@ function getNewResponses() {
                 }
             },
             "currentState": {
-                "spendTime": null,
                 "tasks": [
                     { "ability": null, "issues": [], "isNA": false, "value": "personalCare" },
                     { "ability": null, "issues": [], "isNA": false, "value": "bathing" },
@@ -2174,9 +2182,10 @@ function getNewResponses() {
                     { "ability": null, "issues": [], "isNA": false, "value": "religiousActivities" },
                     { "ability": null, "issues": [], "isNA": false, "value": "vacationing" },
                     { "ability": null, "issues": [], "isNA": false, "value": "banking" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "caregiving" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "caregiving", "isCaregiving": true },
                     { "ability": null, "issues": [], "isNA": false, "value": "alone" }
                 ],
+                "caregivingCasInvolved": null,
                 "preAccidentRecreationalActivities": [
                     "",
                     "",
