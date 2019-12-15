@@ -105,7 +105,10 @@ export class Notes {
                     }),
                     this.getGenders().then(data => this.genders = data),
                     this.getSocioeconomicStatuses().then(data => this.socioeconomicStatuses = data),
-                    this.getRelationshipStatuses().then(data => this.relationshipStatuses = data),
+                    this.getRelationshipStatuses().then(data => {
+                        this.relationshipStatuses = this.asArray(data);
+                        this.relationshipStatusesMap = data;
+                    }),
                     this.getAgeUnits().then(data => {
                         this.ageUnits = this.asArray(data);
                         this.ageUnitsMap = data;
@@ -339,15 +342,15 @@ export class Notes {
     }
 
     getRelationshipStatuses() {
-        let data = [
-            { "description": "Single", "value": "single" },
-            { "description": "Married", "value": "married", "isMarried": true },
-            { "description": "Common Law", "value": "in a common law relationship", "isCommonLaw": true },
-            { "description": "Separated", "value": "separated" },
-            { "description": "Divorced", "value": "divorced" },
-            { "description": "a Widow", "value": "a widow" },
-            { "description": "a Widower", "value": "a widower" }
-        ];
+        let data = {
+            "single": { "description": "Single", "value": "single", "format": function(context) { return `single`; } },
+            "married": { "description": "Married", "value": "married", "format": function(context) { return `married`; }, "isMarried": true },
+            "commonLaw": { "description": "Common Law", "value": "commonLaw", "format": function(context) { return `in a common law relationship`; }, "isCommonLaw": true },
+            "separated": { "description": "Separated", "value": "separated", "format": function(context) { return `separated`; } },
+            "divorced": { "description": "Divorced", "value": "divorced", "format": function(context) { return `divorced`; } },
+            "widow": { "description": "a Widow", "value": "widow", "format": function(context) { return `a widow`; } },
+            "widower": { "description": "a Widower", "value": "widower", "format": function(context) { return `a widower`; } }
+        };
 
         return getPromise(data);
     }
@@ -773,7 +776,9 @@ export class Notes {
 
     @computedFrom('responses.personalHistory.relationship.status')
     get isMarriedOrCommonLaw() {
-        let status = this.responses ? this.responses.personalHistory.relationship.status : null;
+        let status = this.responses && this.responses.personalHistory.relationship.status
+            ? this.relationshipStatusesMap[this.responses.personalHistory.relationship.status]
+            : null;
 
         return status && (status.isMarried || status.isCommonLaw);
     }
@@ -1384,8 +1389,16 @@ export class Notes {
         return "";
     }
 
+    getNumberText(number) {
+        if (!number) { return ""; }
+
+        return number < 10
+            ? this.numberToWords.toWords(number)
+            : number;
+    }
+
     getAgeTextForContext(age, context) {
-        return age && age.value && age.unit ? (age.value + " " + age.unit) : "";
+        return age && age.value && age.unit ? (context.getNumberText(age.value) + " " + age.unit) : "";
     }
 
     getItemValue(item) {
@@ -1442,7 +1455,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "6";
+    return "7";
 }
 
 function upgrade(responses, toVersion) {
@@ -1860,7 +1873,68 @@ function upgrade_5_to_6(responses) {
         responses.personalHistory.children.daughters.skipAges = false;
     }
     
+    if (responses.personalHistory.relationship.status && responses.personalHistory.relationship.status.description) {
+        responses.personalHistory.relationship.status = responses.personalHistory.relationship.status.value;
+    }
+    
     responses.version = "6";
+
+    return responses;
+}
+
+function upgrade_6_to_7(responses) {
+
+    if (!responses.personalHistory.father.hasOwnProperty('skip')) {
+        responses.personalHistory.father.skip = false;
+    }
+    if (!responses.personalHistory.father.hasOwnProperty('dontKnow')) {
+        responses.personalHistory.father.dontKnow = false;
+    }
+    if (!responses.personalHistory.father.hasOwnProperty('age')) {
+        responses.personalHistory.father.age = responses.personalHistory.father.yearOfBirth;
+    }
+    if (responses.personalHistory.father.hasOwnProperty('yearOfBirth')) {
+        delete responses.personalHistory.father.yearOfBirth;
+    }
+    if (responses.personalHistory.father.hasOwnProperty('causeOfDeath')) {
+        responses.personalHistory.father.causeOfDeath = { "value": responses.personalHistory.father.causeOfDeath, "skip": false, "dontKnow": false };
+    }
+    if (responses.personalHistory.father.hasOwnProperty('yearOfDeath')) {
+        responses.personalHistory.father.yearOfDeath = { "value": responses.personalHistory.father.yearOfDeath, "skip": false, "dontKnow": false };
+    }
+    if (responses.personalHistory.father.hasOwnProperty('educationLevel')) {
+        responses.personalHistory.father.educationLevel = { "value": responses.personalHistory.father.educationLevel, "skip": false, "dontKnow": false };
+    }
+    if (responses.personalHistory.father.hasOwnProperty('employmentAreas')) {
+        responses.personalHistory.father.employmentAreas = { "value": responses.personalHistory.father.employmentAreas, "skip": false, "dontKnow": false };
+    }
+
+    if (!responses.personalHistory.mother.hasOwnProperty('skip')) {
+        responses.personalHistory.mother.skip = false;
+    }
+    if (!responses.personalHistory.mother.hasOwnProperty('dontKnow')) {
+        responses.personalHistory.mother.dontKnow = false;
+    }
+    if (!responses.personalHistory.mother.hasOwnProperty('age')) {
+        responses.personalHistory.mother.age = responses.personalHistory.mother.yearOfBirth;
+    }
+    if (responses.personalHistory.mother.hasOwnProperty('yearOfBirth')) {
+        delete responses.personalHistory.mother.yearOfBirth;
+    }
+    if (responses.personalHistory.mother.hasOwnProperty('causeOfDeath')) {
+        responses.personalHistory.mother.causeOfDeath = { "value": responses.personalHistory.mother.causeOfDeath, "skip": false, "dontKnow": false };
+    }
+    if (responses.personalHistory.mother.hasOwnProperty('yearOfDeath')) {
+        responses.personalHistory.mother.yearOfDeath = { "value": responses.personalHistory.mother.yearOfDeath, "skip": false, "dontKnow": false };
+    }
+    if (responses.personalHistory.mother.hasOwnProperty('educationLevel')) {
+        responses.personalHistory.mother.educationLevel = { "value": responses.personalHistory.mother.educationLevel, "skip": false, "dontKnow": false };
+    }
+    if (responses.personalHistory.mother.hasOwnProperty('employmentAreas')) {
+        responses.personalHistory.mother.employmentAreas = { "value": responses.personalHistory.mother.employmentAreas, "skip": false, "dontKnow": false };
+    }
+
+    responses.version = "7";
 
     return responses;
 }
@@ -1892,20 +1966,24 @@ function getNewResponses() {
                 "socioeconomicClass": null
             },
             "father": {
-                "yearOfBirth": null,
+                "skip": null,
+                "dontKnow": null,
+                "age": { "value": null, "skip": false, "dontKnow": false },
                 "isAlive": null,
-                "causeOfDeath": null,
-                "yearOfDeath": null,
-                "educationLevel": null,
-                "employmentAreas": null
+                "causeOfDeath": { "value": null, "skip": false, "dontKnow": false },
+                "yearOfDeath": { "value": null, "skip": false, "dontKnow": false },
+                "educationLevel": { "value": null, "skip": false, "dontKnow": false },
+                "employmentAreas": { "value": null, "skip": false, "dontKnow": false }
             },
             "mother": {
-                "yearOfBirth": null,
+                "skip": null,
+                "dontKnow": null,
+                "age": { "value": null, "skip": false, "dontKnow": false },
                 "isAlive": null,
-                "causeOfDeath": null,
-                "yearOfDeath": null,
-                "educationLevel": null,
-                "employmentAreas": null
+                "causeOfDeath": { "value": null, "skip": false, "dontKnow": false },
+                "yearOfDeath": { "value": null, "skip": false, "dontKnow": false },
+                "educationLevel": { "value": null, "skip": false, "dontKnow": false },
+                "employmentAreas": { "value": null, "skip": false, "dontKnow": false }
             },
             "didParentsSeparateOrDivorce": null,
             "brothers": {
