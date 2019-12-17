@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Api.Infrastructure.Filters;
+using PsychologicalServices.Models.Common;
 using PsychologicalServices.Models.Rights;
 using PsychologicalServices.Models.Roles;
 using System;
@@ -28,6 +29,28 @@ namespace PsychologicalServices.Api.Controllers
             var roles = _roleService.GetRoles();
 
             return Ok(roles);
+        }
+
+        [RightAuthorize(StaticRights.ViewRole)]
+        [Route("{id}")]
+        [HttpGet]
+        [ResponseType(typeof(Role))]
+        public IHttpActionResult Get(int id)
+        {
+            var role = _roleService.GetRole(id);
+
+            return Ok(role);
+        }
+
+        [RightAuthorize(StaticRights.EditRole)]
+        [Route("save")]
+        [HttpPut]
+        [ResponseType(typeof(SaveResult<Role>))]
+        public IHttpActionResult SaveRole(Role role)
+        {
+            var result = _roleService.SaveRole(role);
+
+            return Ok(result);
         }
     }
 }

@@ -79,5 +79,7 @@ export const Permissions = {
     "ViewRole":"ViewRole",
     "ViewAssessmentNote":"ViewAssessmentNote",
     "EditAssessmentNote":"EditAssessmentNote",
-    "CreateConsultingInvoice":"CreateConsultingInvoice"
+    "CreateConsultingInvoice":"CreateConsultingInvoice",
+    "ViewSelf":"ViewSelf",
+    "EditRole":"EditRole"
 }

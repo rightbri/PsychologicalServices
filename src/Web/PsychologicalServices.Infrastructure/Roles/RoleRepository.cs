@@ -1,8 +1,10 @@
-﻿using PsychologicalServices.Data.EntityClasses;
+﻿using PsychologicalServices.Data;
+using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
 using PsychologicalServices.Models.Roles;
 using SD.LLBLGen.Pro.LinqSupportClasses;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +68,8 @@ namespace PsychologicalServices.Infrastructure.Roles
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
+                var uow = new UnitOfWork2();
+
                 var isNew = role.IsNew();
 
                 var entity = new RoleEntity
@@ -76,11 +80,15 @@ namespace PsychologicalServices.Infrastructure.Roles
 
                 if (!isNew)
                 {
-                    adapter.FetchEntity(entity);
+                    var prefetch = new PrefetchPath2(EntityType.RoleEntity);
+
+                    prefetch.Add(RoleEntity.PrefetchPathRoleRights);
+
+                    adapter.FetchEntity(entity, prefetch);
                 }
 
                 entity.Name = role.Name;
-                entity.Description = role.Description;
+                entity.Description = role.Description ?? "";
                 entity.IsActive = role.IsActive;
 
                 var rightsToAdd = role.Rights.Where(right => !entity.RoleRights.Any(roleRight => roleRight.RightId == right.RightId));
@@ -88,19 +96,21 @@ namespace PsychologicalServices.Infrastructure.Roles
                 var rightsToRemove = entity.RoleRights.Where(roleRight => !role.Rights.Any(right => right.RightId == roleRight.RightId));
 
                 entity.RoleRights.AddRange(
-                    role.Rights.Select(right => new RoleRightEntity
+                    rightsToAdd.Select(right => new RoleRightEntity
                     {
                         RoleId = role.RoleId,
                         RightId = right.RightId,
                     })
                 );
-                
-                foreach (var right in rightsToRemove)
+
+                foreach (var roleRight in rightsToRemove)
                 {
-                    entity.RoleRights.Remove(right);
+                    uow.AddForDelete(roleRight);
                 }
 
-                adapter.SaveEntity(entity, false);
+                uow.AddForSave(entity);
+
+                uow.Commit(adapter);
 
                 return entity.RoleId;
             }

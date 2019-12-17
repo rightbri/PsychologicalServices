@@ -379,9 +379,11 @@
     <Compile Include="Reports\ReportType.cs" />
     <Compile Include="Rights\Right.cs" />
     <Compile Include="Roles\IRoleService.cs" />
+    <Compile Include="Roles\IRoleValidator.cs" />
     <Compile Include="Roles\Role.cs" />
     <Compile Include="Referrals\ReferralType.cs" />
     <Compile Include="Roles\RoleService.cs" />
+    <Compile Include="Roles\RoleValidator.cs" />
     <Compile Include="Schedule\IScheduleHtmlGenerator.cs" />
     <Compile Include="Schedule\IScheduleService.cs" />
     <Compile Include="Schedule\PsychologistScheduleDay.cs" />

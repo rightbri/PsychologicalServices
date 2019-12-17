@@ -1,0 +1,62 @@
+<template>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="common/validation-summary.html"></require>
+	
+<div class="uk-container">
+
+	<fieldset class="uk-fieldset">
+		<legend class="uk-legend">${editType} Role</legend>
+		
+		<form class="uk-form-stacked uk-grid-medium uk-child-width-1-2@s" uk-grid>
+		
+			<div class="uk-width-1-1" if.bind="validationErrors">
+				<validation-summary errors.bind="validationErrors"></validation-summary>
+			</div>
+
+			<div>
+				<label class="uk-form-label" for="firstName">Name</label>
+				<div class="uk-form-controls">
+					<input id="name" type="text" class="uk-input" value.bind="editRole.name" />
+				</div>
+			</div>
+		
+			<div>
+				<label class="uk-form-label" for="description">Description</label>
+				<div class="uk-form-controls">
+					<input id="description" type="text" class="uk-input" value.bind="editRole.description" />
+				</div>
+			</div>
+			
+			<div>
+				<label class="uk-form-label">Rights</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label" repeat.for="right of rights | sortArray:[{ property: 'name', direction: 'asc' }]">
+						<input type="checkbox" class="uk-checkbox" model.bind="right" checked.bind="editRole.rights" matcher.bind="rightMatcher" />&nbsp;${right.name}
+					</label>
+				</div>
+			</div>
+			
+			<div>
+				<label class="uk-form-label">Status</label>
+				<div class="uk-form-controls">
+					<label class="uk-form-label">
+						<input type="checkbox" class="uk-checkbox" checked.bind="editRole.isActive" />&nbsp;Is Active?
+					</label>
+				</div>
+			</div>
+
+			<div class="uk-width-1-1">
+				<button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
+					<i class="fa fa-arrow-left"></i>&nbsp;Back
+				</button>
+				<button type="button" class="uk-button uk-button-primary" click.delegate="save()">
+					<i class="fa fa-save"></i>&nbsp;Save
+				</button>
+			</div>
+		</form>
+		
+	</fieldset>
+
+</div>
+
+</template>

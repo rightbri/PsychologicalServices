@@ -26,7 +26,7 @@ namespace PsychologicalServices.Infrastructure.Rights
                 return Execute<RightEntity>(
                         (ILLBLGenProQuery)
                         meta.Right
-                        .Where(right => isActive == null || right.IsActive == isActive.Value)
+                        .Where(right => isActive == null || right.IsActive == isActive)
                     )
                     .Select(right => right.ToRight())
                     .ToList();

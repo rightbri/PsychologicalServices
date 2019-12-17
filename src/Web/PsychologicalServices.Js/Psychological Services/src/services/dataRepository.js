@@ -522,6 +522,14 @@ export class DataRepository {
 	searchUnavailability(criteria) {
 		return this.searchBasic(criteria, 'userunavailability');
 	}
+
+	getRole(id) {
+		return this.getSingleBasic(id, 'role');
+	}
+
+	saveRole(role) {
+		return this.saveBasic(role, 'role');
+	}
 	
 	getRoles() {
 		return this.getManyBasic('role', true);
@@ -539,8 +547,8 @@ export class DataRepository {
 		return this.getManyBasic('company', true);
 	}
 	
-	saveCompany(assessment) {
-		return this.saveBasic(assessment, 'company');
+	saveCompany(company) {
+		return this.saveBasic(company, 'company');
 	}
 	
 	getCalendarNote(id) {

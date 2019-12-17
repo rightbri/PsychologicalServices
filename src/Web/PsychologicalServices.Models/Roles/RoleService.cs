@@ -1,19 +1,25 @@
-﻿using PsychologicalServices.Models.Common;
+﻿using log4net;
+using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PsychologicalServices.Models.Roles
 {
     public class RoleService : IRoleService
     {
+        private readonly IRoleValidator _roleValidator = null;
         private readonly IRoleRepository _roleRepository = null;
+        private readonly ILog _log = null;
 
         public RoleService(
-            IRoleRepository roleRepository
+            IRoleValidator roleValidator,
+            IRoleRepository roleRepository,
+            ILog log
         )
         {
+            _roleValidator = roleValidator;
             _roleRepository = roleRepository;
+            _log = log;
         }
 
         public Role GetRole(int id)
@@ -32,7 +38,30 @@ namespace PsychologicalServices.Models.Roles
 
         public SaveResult<Role> SaveRole(Role role)
         {
-            throw new NotImplementedException();
+            var result = new SaveResult<Role>();
+
+            try
+            {
+                var validation = _roleValidator.Validate(role);
+
+                result.ValidationResult = validation;
+
+                if (result.ValidationResult.IsValid)
+                {
+                    var id = _roleRepository.SaveRole(role);
+
+                    result.Item = _roleRepository.GetRole(id);
+                    result.IsSaved = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error("SaveRole", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
         }
     }
 }

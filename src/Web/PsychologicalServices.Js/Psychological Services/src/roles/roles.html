@@ -1,0 +1,31 @@
+<template>
+	<require from="resources/value-converters/boolean"></require>
+	<require from="resources/value-converters/sort-array"></require>
+	<require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+
+	<div class="uk-overflow-auto">
+		<table class="uk-table uk-table-divider" fixed-header>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Is Active?</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr repeat.for="role of roles | sortArray:[{ property: 'Name', direction: 'asc' }]">
+					<td>
+						<a route-href="route: editRole; params.bind: { id: role.roleId }" class="uk-button uk-button-default">
+							Edit
+						</a>
+					</td>
+					<td>${role.name}</td>
+					<td>${role.description}</td>
+					<td>${role.isActive | boolean}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</template>

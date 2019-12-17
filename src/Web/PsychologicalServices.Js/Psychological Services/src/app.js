@@ -75,6 +75,9 @@ export class App {
 			{ route: 'users', name: 'users', moduleId: 'users/users', title: 'Users', nav: true, settings: { permissions: [p.SearchUser] } },
 			{ route: 'users/:id', name: 'editUser', moduleId: 'users/editUser', title: 'Edit User', nav: false, settings: { permissions: [p.EditUser] } },
 			{ route: 'users/add', name: 'addUser', moduleId: 'users/editUser', title: 'Add User', nav: false, settings: { permissions: [p.EditUser] } },
+			{ route: 'roles', name: 'roles', moduleId: 'roles/roles', title: 'Roles', nav: true, settings: { permissions: [p.ViewRole] } },
+			{ route: 'roles/:id', name: 'editRole', moduleId: 'roles/editRole', title: 'Edit Role', nav: false, settings: { permissions: [p.EditRole] } },
+			{ route: 'roles/add', name: 'addRole', moduleId: 'roles/editRole', title: 'Add Role', nav: false, settings: { permissions: [p.EditRole] } },
 			{ route: 'calendarNotes', name: 'calendarNotes', moduleId: 'calendarNotes/calendarNotes', title: 'Calendar Notes', nav: true, settings: { permissions: [p.SearchCalendarNote] } },
 			{ route: 'calendarNotes/:id', name: 'editCalendarNote', moduleId: 'calendarNotes/editCalendarNote', title: 'Edit Calendar Note', nav: false, settings: { permissions: [p.EditCalendarNote] } },
 			{ route: 'calendarNotes/add', name: 'addCalendarNote', moduleId: 'calendarNotes/editCalendarNote', title: 'Add Calendar Note', nav: false, settings: { permissions: [p.EditCalendarNote] } },
@@ -220,7 +223,8 @@ export class App {
 					{ "name": "Employers", "route": "/employers", "permissions": [p.SearchEmployer] },
 					{ "name": "Events", "route": "/events", "permissions": [p.SearchEvent] },
 					{ "name": "Referral Sources", "route": "/referralSources", "permissions": [p.SearchReferralSource] },
-					{ "name": "Users", "route": "/users", "permissions": [p.SearchUser] }
+					{ "name": "Users", "route": "/users", "permissions": [p.SearchUser] },
+					{ "name": "Roles", "route": "/roles", "permissions": [p.ViewRole] }
 				]
 			},
 			{
