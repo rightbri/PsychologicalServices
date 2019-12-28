@@ -35,6 +35,8 @@
 
 
 
+
+
 GO
 -- =============================================
 -- Author:		<Author,,Name>
@@ -74,3 +76,7 @@ BEGIN
 			SELECT [InvoiceId],[InvoiceStatusId],[UpdateDate] FROM inserted
 
 END
+GO
+CREATE NONCLUSTERED INDEX [IX_Invoices]
+    ON [dbo].[Invoices]([InvoiceId] ASC, [InvoiceDate] ASC, [InvoiceTypeId] ASC, [InvoiceStatusId] ASC, [PayableToId] ASC);
+

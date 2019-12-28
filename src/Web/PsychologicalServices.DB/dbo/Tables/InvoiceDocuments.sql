@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[InvoiceDocuments] (
+CREATE TABLE [dbo].[InvoiceDocuments] (
     [InvoiceDocumentId] INT                IDENTITY (1, 1) NOT NULL,
     [InvoiceId]         INT                NOT NULL,
     [Document]          VARBINARY (MAX)    NOT NULL,
@@ -17,4 +17,9 @@
 
 
 
+
+
 GO
+CREATE NONCLUSTERED INDEX [IX_InvoiceDocuments]
+    ON [dbo].[InvoiceDocuments]([InvoiceId] ASC);
+

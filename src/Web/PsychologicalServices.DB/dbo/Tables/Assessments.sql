@@ -65,3 +65,10 @@
 
 
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Assessments]
+    ON [dbo].[Assessments]([ClaimantId] ASC, [ReferralSourceId] ASC, [AssessmentTypeId] ASC);
+

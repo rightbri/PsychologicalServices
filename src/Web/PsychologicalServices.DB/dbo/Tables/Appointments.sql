@@ -41,3 +41,10 @@
 
 
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Appointments]
+    ON [dbo].[Appointments]([AppointmentStatusId] ASC, [AppointmentTime] ASC);
+
