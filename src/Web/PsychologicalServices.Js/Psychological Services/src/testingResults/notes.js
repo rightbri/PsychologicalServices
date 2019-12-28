@@ -4,17 +4,19 @@ import {BindingSignaler} from 'aurelia-templating-resources';
 import {Context} from 'common/context';
 import {DataRepository} from 'services/dataRepository';
 import {Notifier} from 'services/notifier';
+import {Scroller} from 'services/scroller';
 import {AgeService} from 'common/ageService';
 import 'number-to-words';
 
-@inject(BindingSignaler, DataRepository, Context, Notifier, AgeService, numberToWords)
+@inject(BindingSignaler, DataRepository, Context, Notifier, Scroller, AgeService, numberToWords)
 export class Notes {
 
-    constructor(signaler, dataRepository, context, notifier, ageService, numberToWords) {
+    constructor(signaler, dataRepository, context, notifier, scroller, ageService, numberToWords) {
         this.signaler = signaler;
         this.dataRepository = dataRepository;
         this.context = context;
         this.notifier = notifier;
+        this.scroller = scroller;
         this.ageService = ageService;
         this.numberToWords = numberToWords;
 
@@ -57,7 +59,6 @@ export class Notes {
         this.currentStateTasks = [];
         this.currentStateAbilities = [];
         this.currentStateIssues = [];
-        this.leisureParticipationRates = [];
         this.travelAbilities = [];
 
         this.self = this;
@@ -124,18 +125,42 @@ export class Notes {
                         this.stressors = this.asArray(data);
                         this.stressorsMap = data;
                     }),
-                    this.getWhereaboutsObjects().then(data => this.whereaboutsObjects = data),
-                    this.getMemoryAids().then(data => this.memoryAids = data),
+                    this.getWhereaboutsObjects().then(data => {
+                        this.whereaboutsObjects = this.asArray(data);
+                        this.whereaboutsObjectsMap = data;
+                    }),
+                    this.getMemoryAids().then(data => {
+                        this.memoryAids = this.asArray(data);
+                        this.memoryAidsMap = data;
+                    }),
                     this.getVisualSpatialIssues().then(data => this.visualSpatialIssues = data),
                     this.getLanguageIssues().then(data => this.languageIssues = data),
                     this.getExecutiveIssues().then(data => this.executiveIssues = data),
                     this.getInappropriateSocialBehaviors().then(data => this.inappropriateSocialBehaviors = data),
-                    this.getReadingIssues().then(data => this.readingIssues = data),
-                    this.getWeightChangeTypes().then(data => this.weightChangeTypes = data),
-                    this.getCognitiveChangeTypes().then(data => this.cognitiveChangeTypes = data),
-                    this.getMoodChangeTypes().then(data => this.moodChangeTypes = data),
-                    this.getTravelIssues().then(data => this.travelIssues = data),
-                    this.getTravelPreferences().then(data => this.travelPreferences = data),
+                    this.getReadingIssues().then(data => {
+                        this.readingIssues = this.asArray(data);
+                        this.readingIssuesMap = data;
+                    }),
+                    this.getWeightChangeTypes().then(data => {
+                        this.weightChangeTypes = this.asArray(data);
+                        this.weightChangeTypesMap = data;
+                    }),
+                    this.getCognitiveChangeTypes().then(data => {
+                        this.cognitiveChangeTypes = this.asArray(data);
+                        this.cognitiveChangeTypesMap = data;
+                    }),
+                    this.getMoodChangeTypes().then(data => {
+                        this.moodChangeTypes = this.asArray(data);
+                        this.moodChangeTypesMap = data;
+                    }),
+                    this.getTravelIssues().then(data => {
+                        this.travelIssues = this.asArray(data);
+                        this.travelIssuesMap = data;
+                    }),
+                    this.getTravelPreferences().then(data => {
+                        this.travelPreferences = this.asArray(data);
+                        this.travelPreferencesMap = data;
+                    }),
                     this.getCurrentStateTasks().then(data => {
                         this.currentStateTasks = this.asArray(data);
                         this.currentStateTasksMap = data;
@@ -148,7 +173,6 @@ export class Notes {
                         this.currentStateIssues = this.asArray(data);
                         this.currentStateIssuesMap = data;
                     }),
-                    this.getLeisureParticipationRates().then(data => this.leisureParticipationRates = data),
                     this.getTravelAbilities().then(data => this.travelAbilities = data)
                 ]);
             });
@@ -162,20 +186,18 @@ export class Notes {
         this.genderChanged(this.gender);
 
         this.search(e.detail.claimant, this.searchCompanyId);
+
+        this.claimants = null;
     }
 
     reset(resetClaimantData) {
+        this.responses = null;
         this.assessments = null;
         this.assessment = null;
         this.name = null;
-        this.responses = null;
-        
-        if (resetClaimantData) {
-            this.claimants = null;
-            this.claimant = null;
 
-            this.changed('claimant-changed');
-        }
+        this.claimant = null;
+        this.changed('claimant-changed');
     }
 
     search(claimant, companyId) {
@@ -193,6 +215,10 @@ export class Notes {
             this.assessment = data.assessment;
             this.responses = getResponses(data.responses);
         });
+    }
+
+    scrollToTop() {
+        this.scroller.scrollTo(document.body);
     }
 
     save() {
@@ -438,31 +464,31 @@ export class Notes {
     }
 
     getWhereaboutsObjects() {
-        let data = [
-            { "description": "Bank card", "value": "bank card" },
-            { "description": "Eye Glasses", "value": "eye glasses" },
-            { "description": "iPad/tablet", "value": "iPad/tablet" },
-            { "description": "Keys", "value": "keys" },
-            { "description": "Paperwork", "value": "paperwork" },
-            { "description": "Phone", "value": "phone" },
-            { "description": "Wallet", "value": "wallet" },
-            { "description": "Beverage", "value": "beverage" }
-        ];
+        let data = {
+            "bank card": { "description": "Bank card", "value": "bank card", "format": function(context) { return `bank card`; } },
+            "eye glasses": { "description": "Eye Glasses", "value": "eye glasses", "format": function(context) { return `eye glasses`; } },
+            "iPad/tablet": { "description": "iPad/tablet", "value": "iPad/tablet", "format": function(context) { return `iPad/tablet`; } },
+            "keys": { "description": "Keys", "value": "keys", "format": function(context) { return `keys`; } },
+            "paperwork": { "description": "Paperwork", "value": "paperwork", "format": function(context) { return `paperwork`; } },
+            "phone": { "description": "Phone", "value": "phone", "format": function(context) { return `phone`; } },
+            "wallet": { "description": "Wallet", "value": "wallet", "format": function(context) { return `wallet`; } },
+            "beverage": { "description": "Beverage", "value": "beverage", "format": function(context) { return `beverage`; } }
+        };
 
         return getPromise(data);
     }
 
     getMemoryAids() {
-        let data = [
-            { "description": "Alarms", "value": "alarms" },
-            { "description": "Calendar", "value": "calendar" },
-            { "description": "List", "value": "lists" },
-            { "description": "Notes", "value": "notes" },
-            { "description": "Phone", "value": "phone" },
-            { "description": "Reminders", "value": "reminders" },
-            { "description": "Schedules", "value": "schedules" },
-            { "description": "Whiteboard", "value": "whiteboard" }
-        ];
+        let data = {
+            "alarms": { "description": "Alarms", "value": "alarms", "format": function(context) { return `alarms`; } },
+            "calendar": { "description": "Calendar", "value": "calendar", "format": function(context) { return `calendar`; } },
+            "lists": { "description": "List", "value": "lists", "format": function(context) { return `lists`; } },
+            "notes": { "description": "Notes", "value": "notes", "format": function(context) { return `notes`; } },
+            "phone": { "description": "Phone", "value": "phone", "format": function(context) { return `phone`; } },
+            "reminders": { "description": "Reminders", "value": "reminders", "format": function(context) { return `reminders`; } },
+            "schedules": { "description": "Schedules", "value": "schedules", "format": function(context) { return `schedules`; } },
+            "whiteboard": { "description": "Whiteboard", "value": "whiteboard", "format": function(context) { return `whiteboard`; } }
+        };
 
         return getPromise(data);
     }
@@ -528,71 +554,71 @@ export class Notes {
     }
 
     getReadingIssues() {
-        let data = [
-            { "description": "Headaches", "value": "headaches" },
-            { "description": "Vision Issues", "value": "visual issues" },
-            { "description": "Focus", "value": "ability to focus" }
-        ];
+        let data = {
+            "headaches": { "description": "Headaches", "value": "headaches", "format": function(context) { return `headaches`; } },
+            "visual issues": { "description": "Vision Issues", "value": "visual issues", "format": function(context) { return `visual issues`; } },
+            "ability to focus": { "description": "Focus", "value": "ability to focus", "format": function(context) { return `ability to focus`; } }
+        };
         
         return getPromise(data);
     }
 
     getWeightChangeTypes() {
-        let data = [
-            { "description": "Don't know", "value": "don't know", "format": function(context) { return `${context.pronoun.subject} does not know how much ${context.pronoun.possessiveAdjective} weight has changed`; } },
-            { "description": "Increased", "value": "increased", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has changed, noting an increase of `; }, "isIncreaseOrDecrease": true },
-            { "description": "Decreased", "value": "decreased", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has changed, noting a decrease of `; }, "isIncreaseOrDecrease": true },
-            { "description": "Fluctuated", "value": "fluctuated", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has fluctuated`; } }
-        ];
+        let data = {
+            "don't know": { "description": "Don't know", "value": "don't know", "format": function(context) { return `${context.pronoun.subject} does not know how much ${context.pronoun.possessiveAdjective} weight has changed`; } },
+            "increased": { "description": "Increased", "value": "increased", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has changed, noting an increase of `; }, "isIncreaseOrDecrease": true },
+            "decreased": { "description": "Decreased", "value": "decreased", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has changed, noting a decrease of `; }, "isIncreaseOrDecrease": true },
+            "fluctuated": { "description": "Fluctuated", "value": "fluctuated", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has fluctuated`; } }
+        };
 
         return getPromise(data);
     }
 
     getCognitiveChangeTypes() {
-        let data = [
-            { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognition is worse`; } },
-            { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `overall ${context.pronoun.subject} has seen little improvement`; } },
-            { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognition is the same`; } },
-            { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognitive state is better`; } },
-            { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} feels that any cognitive issues have resolved`; } },
-            { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognitive recovery has reached a plateau`; } },
-            { "description": "Skip", "value": null, "format": null }
-        ];
+        let data = {
+            "worse": { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognition is worse`; } },
+            "little improvement": { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `overall ${context.pronoun.subject} has seen little improvement`; } },
+            "same": { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognition is the same`; } },
+            "better": { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognitive state is better`; } },
+            "resolved": { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} feels that any cognitive issues have resolved`; } },
+            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognitive recovery has reached a plateau`; } },
+            "skip": { "description": "Skip", "value": "skip", "format": function(context) { return ``; }, "isSkip": true }
+        };
 
         return getPromise(data);
     }
 
     getMoodChangeTypes() {
-        let data = [
-            { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is worse`; } },
-            { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `overall ${context.pronoun.subject} has seen little improvement`; } },
-            { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is the same`; } },
-            { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is better`; } },
-            { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} feels that any mood issues have resolved`; } },
-            { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} emotional recovery has reached a plateau`; } },
-            { "description": "Skip", "value": null, "format": null }
-        ];
+        let data = {
+            "worse": { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is worse`; } },
+            "little improvement": { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `overall ${context.pronoun.subject} has seen little improvement`; } },
+            "same": { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is the same`; } },
+            "better": { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is better`; } },
+            "resolved": { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} feels that any mood issues have resolved`; } },
+            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} emotional recovery has reached a plateau`; } },
+            "skip": { "description": "Skip", "value": "skip", "format": function(context) { return ``; }, "isSkip": true }
+        };
 
         return getPromise(data);
     }
 
     getTravelIssues() {
-        let data = [
-            { "description": "Physical", "value": "physical issues" },
-            { "description": "Mental", "value": "mental health issues" },
-            { "description": "Cognitive", "value": "cognitive state" }
-        ];
+        let data = {
+            "physical issues": { "description": "Physical", "value": "physical issues" },
+            "mental health issues": { "description": "Mental", "value": "mental health issues" },
+            "cognitive state": { "description": "Cognitive", "value": "cognitive state" }
+        };
 
         return getPromise(data);
     }
 
     getTravelPreferences() {
-        let data = [
-            { "description": "Driver", "value": "driver" },
-            { "description": "Passenger", "value": "passenger" },
-            { "description": "Pedestrian", "value": "pedestrian" },
-            { "description": "Skip", "value": null }
-        ];
+        let data = {
+            "driver": { "description": "Driver", "value": "driver", "format": function(context) { return `driver`; } },
+            "passenger": { "description": "Passenger", "value": "passenger", "format": function(context) { return `passenger`; } },
+            "pedestrian": { "description": "Pedestrian", "value": "pedestrian", "format": function(context) { return `pedestrian`; } },
+            "skip": { "description": "Skip", "value": "skip", "isSkip": true, "format": function(context) { return ``; } }
+        };
         
         return getPromise(data);
     }
@@ -660,25 +686,25 @@ export class Notes {
         return getPromise(data);
     }
 
-    getLeisureParticipationRates() {
-        let data = [
-            { "description": "a bit less (at least half as often)", "value": "a bit less", "format": function(context) { return `participates a bit less than ${context.pronoun.subject} did before the accident`; } },
-            { "description": "much less (less than half as often)", "value": "much less", "format": function(context) { return `participates much less than ${context.pronoun.subject} did before the accident`; } },
-            { "description": "unable (rarely, if ever)", "value": "unable", "format": function(context) { return `is now unable to participate in those activities`; } }
-        ];
-
-        return getPromise(data);
-    }
-
     changed(signalName) {
         this.signaler.signal(signalName);
+    }
+
+    @computedFrom(
+        'responses',
+        'claimants'
+    )
+    get formVisible() {
+        return this.responses && !this.claimants;
     }
 
     @computedFrom(
         'responses.personalHistory.languages'
     )
     get knownLanguages() {
-        let data = this.responses ? this.responses.personalHistory.languages.filter(item => item && item.length > 0) : [];
+        if (!this.responses || !this.responses.personalHistory.languages) { return []; }
+
+        let data = this.responses.personalHistory.languages.filter(item => item && item.length > 0);
 
         return data;
     }
@@ -689,7 +715,7 @@ export class Notes {
         'responses.personalHistory.growingUp.abuse.mental'
     )
     get yesAbuseTypes() {
-        if (!this.responses) { return []; }
+        if (!this.responses || !this.responses.personalHistory.growingUp || !this.responses.personalHistory.growingUp.abuse) { return []; }
         
         let data = [
             { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
@@ -706,7 +732,7 @@ export class Notes {
         'responses.personalHistory.growingUp.abuse.mental'
     )
     get noAbuseTypes() {
-        if (!this.responses) { return []; }
+        if (!this.responses || !this.responses.personalHistory.growingUp || !this.responses.personalHistory.growingUp.abuse) { return []; }
         
         let data = [
             { "response": this.responses.personalHistory.growingUp.abuse.physical, "value": "physical" },
@@ -723,7 +749,7 @@ export class Notes {
         'responses.personalHistory.growingUp.abuse.mental'
     )
     get noAbuseGrowingUp() {
-        if (!this.responses) { return false; }
+        if (!this.responses || !this.responses.personalHistory.growingUp || !this.responses.personalHistory.growingUp.abuse) { return false; }
 
         return this.responses.personalHistory.growingUp.abuse.physical === "no" &&
             this.responses.personalHistory.growingUp.abuse.sexual === "no" &&
@@ -776,9 +802,9 @@ export class Notes {
 
     @computedFrom('responses.personalHistory.relationship.status')
     get isMarriedOrCommonLaw() {
-        let status = this.responses && this.responses.personalHistory.relationship.status
-            ? this.relationshipStatusesMap[this.responses.personalHistory.relationship.status]
-            : null;
+        if (!this.responses || !this.responses.personalHistory.relationship || !this.responses.personalHistory.relationship.status || !this.relationshipStatusesMap.hasOwnProperty(this.responses.personalHistory.relationship.status)) { return false; }
+        
+        let status = this.relationshipStatusesMap[this.responses.personalHistory.relationship.status];
 
         return status && (status.isMarried || status.isCommonLaw);
     }
@@ -834,7 +860,7 @@ export class Notes {
     }
 
     getEmotionalIssuesForResponses(criteria) {
-        if (!this.responses) { return []; }
+        if (!this.responses || !this.responses.psychological.emotional) { return []; }
 
         let data = this.responses.psychological.emotional
             .filter(item => item.response != null && criteria(item))
@@ -892,11 +918,13 @@ export class Notes {
 
     @computedFrom('responses.psychological.emotional')
     get anyEmotionalIssues() {
-        return this.responses && this.responses.psychological.emotional.filter(item => this.isAnswered(item.response)).some(item => item);
+        if (!this.responses || !this.responses.psychological.emotional) { return false; }
+
+        return this.responses.psychological.emotional.filter(item => this.isAnswered(item.response)).some(item => item);
     }
 
     getDepressionSymptomsForResponses(criteria) {
-        if (!this.responses) { return []; }
+        if (!this.responses || !this.responses.psychological.depressionSymptoms) { return []; }
 
         let data = this.responses.psychological.depressionSymptoms
             .filter(item => item.response != null && criteria(item))
@@ -941,7 +969,7 @@ export class Notes {
     }
 
     getWorriesForResponses(criteria) {
-        if (!this.responses) { return []; }
+        if (!this.responses || !this.responses.psychological.worry) { return []; }
 
         let data = this.responses.psychological.worry
             .filter(item => item.response != null && criteria(item))
@@ -1010,9 +1038,20 @@ export class Notes {
 
     @computedFrom('responses.psychological.travel.travelIssues')
     get anyTravelIssues() {
-        let any = this.responses && this.responses.psychological.travel.travelIssues.some(item => item);
+        if (!this.responses || !this.responses.psychological.travel || !this.responses.psychological.travel.travelIssues) { return false; }
+
+        let any = this.responses.psychological.travel.travelIssues.some(item => item);
 
         return any;
+    }
+
+    @computedFrom('responses.psychological.travel.travelIssues')
+    get selectedTravelIssues() {
+        if (!this.responses || !this.responses.psychological.travel || !this.responses.psychological.travel.travelIssues) { return []; }
+
+        let data = this.responses.psychological.travel.travelIssues.map(item => this.travelIssuesMap[item]);
+
+        return data;
     }
 
     @computedFrom('responses.neuropsychological.memory.visual.forgetWhereaboutsOf')
@@ -1035,8 +1074,11 @@ export class Notes {
         if (!this.responses) { return []; }
 
         let data = this.responses.neuropsychological.memory.visual.forgetWhereaboutsOf.concat(
-            this.responses.neuropsychological.memory.visual.additionalWhereaboutsObjects.filter(item => item && item.length > 0).map(item => { return { "description": item, "value": item }; })
-        );
+            this.responses.neuropsychological.memory.visual.additionalWhereaboutsObjects.filter(item => item && item.length > 0)
+        ).reduce(function (accumulator, currentValue) {
+            if (!accumulator.some(item => item === currentValue)) { accumulator.push(currentValue); }
+            return accumulator;
+          }, []).map(item => this.whereaboutsObjectsMap.hasOwnProperty(item) ? this.whereaboutsObjectsMap[item].format(this) : item);
 
         return data;
     }
@@ -1046,6 +1088,23 @@ export class Notes {
         let any = this.responses && this.responses.neuropsychological.memory.aids.aidsUsed.some(item => item);
 
         return any;
+    }
+
+    @computedFrom('responses.neuropsychological.memory.aids.aidsUsed')
+    get selectedMemoryAids() {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.neuropsychological.memory.aids.aidsUsed.map(item => this.memoryAidsMap[item]);
+
+        return data;
+    }
+
+    get selectedReadingIssues() {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.neuropsychological.attention.readingIssues.map(item => this.readingIssuesMap[item]);
+
+        return data;
     }
 
     getLanguageIssuesForResponses(criteria) {
@@ -1340,10 +1399,6 @@ export class Notes {
     addWhereaboutsObject() {
         this.responses.neuropsychological.memory.visual.additionalWhereaboutsObjects.push("");
     }
-    
-    addAloneIssue() {
-        this.responses.neuropsychological.currentState.alone.issues.push("");
-    }
 
     addPreAccidentRecreationalActivity() {
         this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.push("");
@@ -1455,7 +1510,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "7";
+    return "8";
 }
 
 function upgrade(responses, toVersion) {
@@ -1935,6 +1990,71 @@ function upgrade_6_to_7(responses) {
     }
 
     responses.version = "7";
+
+    return responses;
+}
+
+function upgrade_7_to_8(responses) {
+    if (responses.neuropsychological.currentState.hasOwnProperty('alone')) {
+        delete responses.neuropsychological.currentState.alone;
+    }
+
+    if (responses.neuropsychological.currentState.hasOwnProperty('travel')) {
+        delete responses.neuropsychological.currentState.travel;
+    }
+    
+    if (responses.neuropsychological.currentState.hasOwnProperty('leisureParticipationRate')) {
+        delete responses.neuropsychological.currentState.leisureParticipationRate;
+    }
+    
+    if (responses.neuropsychological.memory.working.hasOwnProperty('loseTrackOfWhatYouWantedToSay')) {
+        delete responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSay;
+    }
+
+    if (responses.psychological.travel.travelIssues && responses.psychological.travel.travelIssues.length) {
+        responses.psychological.travel.travelIssues = responses.psychological.travel.travelIssues.map(item => {
+            return item.hasOwnProperty('value') ? item.value : item;
+        });
+    }
+
+    if (responses.psychological.travel.travelPreference && responses.psychological.travel.travelPreference.hasOwnProperty('value')) {
+        responses.psychological.travel.travelPreference = responses.psychological.travel.travelPreference.value;
+    }
+    
+    if (responses.neuropsychological.memory.visual.forgetWhereaboutsOf && responses.neuropsychological.memory.visual.forgetWhereaboutsOf.length) {
+        responses.neuropsychological.memory.visual.forgetWhereaboutsOf = responses.neuropsychological.memory.visual.forgetWhereaboutsOf.map(item => {
+            return item.hasOwnProperty('value') ? item.value : item;
+        });
+    }
+    
+    if (responses.neuropsychological.memory.aids.aidsUsed && responses.neuropsychological.memory.aids.aidsUsed.length) {
+        responses.neuropsychological.memory.aids.aidsUsed = responses.neuropsychological.memory.aids.aidsUsed.map(item => {
+            return item.hasOwnProperty('value') ? item.value : item;
+        });
+    }
+
+    if (responses.neuropsychological.attention.readingIssues && responses.neuropsychological.attention.readingIssues.length) {
+        responses.neuropsychological.attention.readingIssues = responses.neuropsychological.attention.readingIssues.map(item => {
+            return item.hasOwnProperty('value') ? item.value : item;
+        });
+    }
+
+    if (responses.neuropsychological.physical.weight.changeType && responses.neuropsychological.physical.weight.changeType.hasOwnProperty('value')) {
+        responses.neuropsychological.physical.weight.changeType = responses.neuropsychological.physical.weight.changeType.value;
+    }
+
+    if (responses.neuropsychological.physical.changes.changeInCognition && responses.neuropsychological.physical.changes.changeInCognition.hasOwnProperty('value')) {
+        responses.neuropsychological.physical.changes.changeInCognition = responses.neuropsychological.physical.changes.changeInCognition.value;
+    }
+
+    if (responses.neuropsychological.physical.changes.changeInMood && responses.neuropsychological.physical.changes.changeInMood.hasOwnProperty('value')) {
+        responses.neuropsychological.physical.changes.changeInMood = responses.neuropsychological.physical.changes.changeInMood.value;
+    }
+    
+/*
+responses.neuropsychological.physical.changes.changeInCognition
+*/
+    responses.version = "8";
 
     return responses;
 }
