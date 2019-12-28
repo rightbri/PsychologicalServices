@@ -57,7 +57,7 @@ namespace PsychologicalServices.Models.Invoices
 
             var invoiceDate = _dateService.UtcNow;
             var invoicePeriodBeginDate = _timezoneService.GetDateTimeOffset(new DateTime(year, month, 1), timezoneInfo);
-            var invoicePeriodEndDate = _timezoneService.GetDateTimeOffset(new DateTime(year, month + 1, 1).AddSeconds(-1), timezoneInfo);
+            var invoicePeriodEndDate = _timezoneService.GetDateTimeOffset(new DateTime(year, month, 1).AddMonths(1).AddSeconds(-1), timezoneInfo);
 
             var invoice = new Invoice
             {
