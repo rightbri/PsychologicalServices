@@ -1748,7 +1748,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-11-26T01:37:50.6442515Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-12-30T00:33:38.9167757Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2563,12 +2563,13 @@
                         <Field Name="AssessmentId" Ordinal="1" DbType="8" Precision="10" />
                         <Field Name="ReferralSourceId" Ordinal="2" DbType="8" Precision="10" />
                         <Field Name="ReferralSource" Ordinal="3" DbType="12" Length="100" />
-                        <Field Name="Year" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="Month" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="AppointmentCount" Ordinal="6" DbType="8" Precision="10" />
-                        <Field Name="BillableCount" Ordinal="7" DbType="8" Precision="10" />
-                        <Field Name="CanceledCount" Ordinal="8" DbType="8" Precision="10" />
-                        <Field Name="LateCanceledCount" Ordinal="9" DbType="8" Precision="10" />
+                        <Field Name="InsuranceCompany" Ordinal="4" IsOptional="true" DbType="12" Length="50" />
+                        <Field Name="Year" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="Month" Ordinal="6" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="AppointmentCount" Ordinal="7" DbType="8" Precision="10" />
+                        <Field Name="BillableCount" Ordinal="8" DbType="8" Precision="10" />
+                        <Field Name="CanceledCount" Ordinal="9" DbType="8" Precision="10" />
+                        <Field Name="LateCanceledCount" Ordinal="10" DbType="8" Precision="10" />
                       </Fields>
                     </Resultset>
                   </Resultsets>

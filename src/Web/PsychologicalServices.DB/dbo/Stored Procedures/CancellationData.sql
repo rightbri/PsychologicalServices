@@ -26,6 +26,11 @@ BEGIN
 	 ass.AssessmentId
 	,ass.ReferralSourceId
 	,rs.[Name] AS ReferralSource
+	,CASE
+		WHEN ac.AssessmentId IS NULL THEN 'No Claim'
+		WHEN cl.InsuranceCompany IS NULL THEN 'Insurance Company Not Specified'
+		ELSE cl.InsuranceCompany
+	END AS InsuranceCompany
 	,DATEPART(YEAR, app.AppointmentTime) AS [Year]
 	,DATEPART(MONTH, app.AppointmentTime) AS [Month]
 	,1 AS AppointmentCount
@@ -44,7 +49,9 @@ BEGIN
 	FROM dbo.Assessments ass
 	INNER JOIN dbo.ReferralSources rs ON ass.ReferralSourceId = rs.ReferralSourceId
 	INNER JOIN dbo.AssessmentTypes t ON ass.AssessmentTypeId = t.AssessmentTypeId
-	INNER JOIN dbo.Appointments app ON ass.AssessmentId = app.AssessmentId
+	INNER JOIN dbo.Appointments app ON ass.AssessmentId = app.AssessmentId 
+	LEFT JOIN dbo.AssessmentClaims ac ON ass.AssessmentId = ac.AssessmentId 
+	LEFT JOIN dbo.Claims cl ON ac.ClaimId = cl.ClaimId 
 	WHERE
 	app.AppointmentTime < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 0)
 	AND (

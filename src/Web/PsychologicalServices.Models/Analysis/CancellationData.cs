@@ -10,6 +10,8 @@ namespace PsychologicalServices.Models.Analysis
 
         public string ReferralSource { get; set; }
 
+        public string InsuranceCompany { get; set; }
+
         public int Year { get; set; }
 
         public int Month { get; set; }

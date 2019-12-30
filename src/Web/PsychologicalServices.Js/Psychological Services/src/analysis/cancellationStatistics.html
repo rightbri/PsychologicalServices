@@ -41,10 +41,13 @@
             <a href="#" click.delegate="showTab(0)">Summary</a>
         </li>
         <li>
-            <a href="#" click.delegate="showTab(1)">By Referral Source</a>
+            <a href="#" click.delegate="showTab(1)">By Insurance Company</a>
         </li>
         <li>
-            <a href="#" click.delegate="showTab(2)">By Referral Source by Month</a>
+            <a href="#" click.delegate="showTab(2)">By Referral Source</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(3)">By Referral Source by Month</a>
         </li>
     </ul>
 
@@ -77,6 +80,38 @@
                 </table>
             </div>
         </li>
+
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 1">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th class="uk-table-shrink">Insurance Company</th>
+                            <th># Bookings</th>
+                            <th># Billable</th>
+                            <th># Canceled</th>
+                            <th># Late Canceled</th>
+                            <th>% Billable</th>
+                            <th>% Canceled</th>
+                            <th>% Late Canceled</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="insuranceCompany of insuranceCompanies | sortArray:[{ property: 'insuranceCompany', direction: 'asc' }]">
+                            <td class="uk-table-shrink">${insuranceCompany.insuranceCompany}</td>
+                            <td>${insuranceCompany.appointmentCount | numeric:'0,0'}</td>
+                            <td>${insuranceCompany.billableCount | numeric:'0,0'}</td>
+                            <td>${insuranceCompany.canceledCount | numeric:'0,0'}</td>
+                            <td>${insuranceCompany.lateCanceledCount | numeric:'0,0'}</td>
+                            <td>${insuranceCompany.percentBillable | numeric:'0.00%'}</td>
+                            <td>${insuranceCompany.percentCanceled | numeric:'0.00%'}</td>
+                            <td>${insuranceCompany.percentLateCanceled | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+
         <li>
             <div class="uk-overflow-auto" if.bind="visibleTab === 1">
                 <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>

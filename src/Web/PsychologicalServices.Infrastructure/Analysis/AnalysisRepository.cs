@@ -56,6 +56,7 @@ namespace PsychologicalServices.Infrastructure.Analysis
                             AssessmentId = Convert.ToInt32(row["AssessmentId"]),
                             ReferralSourceId = Convert.ToInt32(row["ReferralSourceId"]),
                             ReferralSource = Convert.ToString(row["ReferralSource"]),
+                            InsuranceCompany = Convert.ToString(row["InsuranceCompany"]),
                             Year = Convert.ToInt32(row["Year"]),
                             Month = Convert.ToInt32(row["Month"]),
                             AppointmentCount = Convert.ToInt32(row["AppointmentCount"]),

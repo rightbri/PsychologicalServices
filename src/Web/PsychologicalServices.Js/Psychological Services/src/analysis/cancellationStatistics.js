@@ -79,6 +79,31 @@ export class CancellationStatistics {
                 return accumulator;
             }, []);
 
+            this.insuranceCompanies = this.cancellationData.reduce(function(accumulator, currentValue) {
+                let insuranceCompany = accumulator.find(element =>
+                    element.insuranceCompany === currentValue.insuranceCompany
+                );
+                
+                if (insuranceCompany === undefined) {
+                    insuranceCompany = {
+                        'insuranceCompany': currentValue.insuranceCompany,
+                        'appointmentCount': 0,
+                        'billableCount': 0,
+                        'canceledCount': 0,
+                        'lateCanceledCount': 0
+                    };
+
+                    accumulator.push(insuranceCompany);
+                }
+
+                insuranceCompany.appointmentCount += currentValue.appointmentCount;
+                insuranceCompany.billableCount += currentValue.billableCount;
+                insuranceCompany.canceledCount += currentValue.canceledCount;
+                insuranceCompany.lateCanceledCount += currentValue.lateCanceledCount;
+
+                return accumulator;
+            }.bind(this), []);
+
             this.summary = this.referralSources.reduce(function(accumulator, currentValue) {
                 accumulator.appointmentCount += currentValue.appointmentCount;
                 accumulator.billableCount += currentValue.billableCount;
@@ -113,8 +138,14 @@ export class CancellationStatistics {
                 rsm.percentLateCanceled = rsm.lateCanceledCount / rsm.appointmentCount;
             }
 
+            for (let i = 0; i < this.insuranceCompanies.length; i++) {
+                let ic = this.insuranceCompanies[i];
+
+                ic.percentBillable = ic.billableCount / ic.appointmentCount;
+                ic.percentCanceled = ic.canceledCount / ic.appointmentCount;
+                ic.percentLateCanceled = ic.lateCanceledCount / ic.appointmentCount;
+            }
         });
-        
     }
     
     showTab(index) {
