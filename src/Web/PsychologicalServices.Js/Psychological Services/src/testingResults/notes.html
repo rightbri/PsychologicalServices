@@ -71,1019 +71,6 @@
 
     <div class="uk-container" if.bind="formVisible">
 
-        <fieldset id="personalHistory" class="uk-fieldset">
-            <legend class="uk-legend">Personal History</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Where were you born?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.locationOfBirth" input.delegate="changed('birth-location-changed') & debounce:500" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    If applicable, when did you come to Canada?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" input.delegate="changed('arrival-time-changed') & debounce:500" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    What is your first language?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <button class="uk-button uk-button-default uk-button-small" type="button" click.delegate="addLanguage()">
-                        Add
-                    </button>
-                </div>
-
-                <div class="uk-margin-remove-vertical uk-width-1-4" repeat.for="i of responses.personalHistory.languages.length">
-                    <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.personalHistory.languages[i]" input.delegate="changed('languages-changed') & debounce:500" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Were you the victim of any physical abuse when growing up?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="physicalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.physical" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Were you the victim of any sexual abuse when growing up?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="sexualAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.sexual" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Were you the victim of any mental abuse when growing up?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="mentalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.mental" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Are you aware of any issues hitting developmental milestones?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="developmentalMilestoneIssues" class="uk-radio" checked.bind="responses.personalHistory.growingUp.developmentalMilestoneIssues" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Were you raised in a ${socioeconomicStatuses | filter:notSkip | arrayToString:{"format":getItemDescription,"connector":"or"} | lower } household?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of socioeconomicStatuses">
-                        <input type="radio" name="socioeconomicStatus" class="uk-radio" checked.bind="responses.personalHistory.growingUp.socioeconomicClass" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Are you currently:
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of relationshipStatuses">
-                        <input type="radio" name="relationshipStatus" class="uk-radio" checked.bind="responses.personalHistory.relationship.status" value.bind="response.value" change.delegate="changed('relationship-status-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-                    If married or common law, how long have you been in this relationship?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" input.delegate="changed('marriage-length-changed')" />
-
-                    <label repeat.for="response of ageUnits">
-                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" change.delegate="changed('marriage-length-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    How old is your partner?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="1" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.partnerAge" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What is your partner’s job title?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Are you currently in an abusive relationship?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="relationshipIsAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.isAbusive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
-                    Have any of your previous relationships been abusive?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Have you previously been in a serious relationship?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="hadPriorSeriousRelationship" class="uk-radio" checked.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                    If you have previously been in a prior serious relationship;
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                    How long did that relationship last?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.value" input.delegate="changed('prior-serious-relationship-length-changed')" />
-
-                    <label repeat.for="response of ageUnits">
-                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.unit" value.bind="response.value" change.delegate="changed('prior-serious-relationship-length-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                    What was the reason that relationship ended?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded" />
-                </div>
-
-                <hr if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Birth / Languages / Relationship / Familial Stress / Abusive Relationships -->
-                    <p>
-                        <template if.bind="responses.personalHistory.locationOfBirth">
-                            ${gender.title} ${claimant.lastName} was born on ${claimant.dateOfBirth | dateFormat:"MMMM Do, YYYY"} in ${responses.personalHistory.locationOfBirth & signal:'birth-location-changed'}. 
-                        </template>
-                        
-                        <template if.bind="knownLanguages.length & signal:'languages-changed'">
-                            &nbsp;${pronoun.subject | proper} is a ${claimant.dateOfBirth | age}-year-old ${claimant.gender | gender | lower} who identified
-                            <template if.bind="knownLanguages.length === 1 & signal:'languages-changed'">
-                                &nbsp;${knownLanguages | arrayToString & signal:'languages-changed'} as ${pronoun.possessiveAdjective} first language.
-                            </template>
-                            <template else>
-                                &nbsp;${pronoun.possessiveAdjective} known languages as ${knownLanguages | arrayToString & signal:'languages-changed'}.
-                            </template>    
-                        </template>
-
-                        <template if.bind="isAnswered(responses.personalHistory.relationship.status)">
-                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} is ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
-                            <template if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-                                <template if.bind="isAnswered(responses.personalHistory.relationship.marriageLength.value)">
-                                    &nbsp;for ${getAgeTextForCurrentContext(responses.personalHistory.relationship.marriageLength) & signal:'marriage-length-changed'} now
-                                </template>
-                                <template if.bind="relationshipStatusesMap[responses.personalHistory.relationship.status].isMarried & signal:'relationship-status-changed'">
-                                    &nbsp;to
-                                </template>
-                                <template else>
-                                    &nbsp;with
-                                </template>
-                                 &nbsp;${pronoun.possessiveAdjective} 
-                                 <template if.bind="isAnswered(responses.personalHistory.relationship.partnerAge)">
-                                    &nbsp;${responses.personalHistory.relationship.partnerAge}-year-old partner
-                                 </template>
-                                 <template if.bind="isAnswered(responses.personalHistory.relationship.partnerJobTitle)">
-                                    &nbsp;who has experience working as ${responses.personalHistory.relationship.partnerJobTitle}
-                                 </template>
-                            </template>
-                            . 
-                        </template>
-
-                        <template if.bind="isAnswered(responses.personalHistory.relationship.isAbusive)">
-                            &nbsp;${gender.title} ${claimant.lastName} 
-                            <template if.bind="isYes(responses.personalHistory.relationship.isAbusive)">
-                                &nbsp;disclosed that ${pronoun.subject} is
-                            </template>
-                            <template else>
-                                &nbsp;confirmed that ${pronoun.subject} is not
-                            </template>
-                            &nbsp;currently in an abusive relationship
-                            <template if.bind="isAnswered(responses.personalHistory.relationship.previousRelationshipAbusive)">
-                                <template if.bind="isYes(responses.personalHistory.relationship.previousRelationshipAbusive)">
-                                    , nor has ${pronoun.subject} been in an abusive relationship in the past
-                                </template>
-                                <template else>
-                                    , but acknowledged that in the past ${pronoun.subject} was in an abusive relationship
-                                </template>
-                            </template>
-                            . 
-                        </template>
-
-                        <template if.bind="isAnswered(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                            <template if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                                &nbsp;When asked about any previous serious relationships, ${pronoun.subject} shared that ${pronoun.subject} was in a relationship
-                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.value)">
-                                    &nbsp;for a period of ${getAgeTextForCurrentContext(responses.personalHistory.relationship.priorSeriousRelationshipLength) & signal:'prior-serious-relationship-length-changed'}
-                                </template>
-                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded)">
-                                    , adding that this ended due to ${responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded}.
-                                </template>
-                            </template>
-                            <template else>
-                                &nbsp;${gender.title} ${claimant.lastName} denied having any previous relationships.
-                            </template>
-                        </template>
-
-                    </p>
-                    
-                    <!-- Growing up -->
-                    <p>
-                        <template if.bind="responses.personalHistory.growingUp.socioeconomicClass">
-                            ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} was raised in ${getItemValueForCurrentContext(getMatch(socioeconomicStatuses, responses.personalHistory.growingUp.socioeconomicClass))}.
-                        </template>
-    
-                        <template if.bind="yesAbuseTypes.length || noAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                            <template if.bind="noAbuseGrowingUp & signal:'growing-up-abuse-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
-                            </template>
-                            <template else>
-                                &nbsp;When asked about any abuse when ${pronoun.subject} was growing up, 
-                                <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                                    &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
-                                </template>
-                                <template if.bind="noAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                                    <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                                        &nbsp;${pronoun.subject | proper}
-                                    </template>
-                                    <template else>
-                                        &nbsp;${pronoun.subject} 
-                                    </template>
-                                    &nbsp;denied experiencing any ${noAbuseTypes | arrayToString:{"format":getItemValue,"connector":"or"} & signal:'growing-up-abuse-changed'} abuse.
-                                </template>
-                            </template>
-                        </template>
-    
-                        <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
-                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
-                        </template>
-                        <template if.bind="isNo(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
-                            &nbsp;To the best of ${pronoun.possessiveAdjective} knowledge, ${gender.title} ${claimant.lastName} believes that ${pronoun.subject} hit all developmental milestones (i.e. walking/talking/toilet training) as expected.
-                        </template>
-    
-                        <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
-                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada & signal:'arrival-time-changed'}.
-                        </template>
-                    </p>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Information about your family</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-            <!--
-                <div class="uk-margin-remove uk-width-1-2">
-                    About your father:
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.skip" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What was your father’s year of birth?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.age.value" input.delegate="changed('father-birth-year-changed') & debounce:500" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.age.dontKnow" value.bind="true" />&nbsp;Don't Know
-                    </label>
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.age.skip" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Is your father alive?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="fatherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.father.isAlive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-                    If not, what was the cause of his death?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.causeOfDeath.value" input.delegate="changed('father-death-changed') & debounce:500" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.causeOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
-                    </label>
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.causeOfDeath.skip" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-                    What year did he die?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfDeath.value" input.delegate="changed('father-death-changed') & debounce:500" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.yearOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
-                    </label>
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.yearOfDeath.skip" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr if.bind="isNo(responses.personalHistory.father.isAlive.value)">
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What was his education level?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.educationLevel.value" input.delegate="changed('father-education-or-employment-changed') & debounce:500" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.educationLevel.dontKnow" value.bind="true" />&nbsp;Don't Know
-                    </label>
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.educationLevel.skip" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What type of employment areas has he worked in?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.employmentAreas.value" input.delegate="changed('father-education-or-employment-changed') & debounce:500" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.employmentAreas.dontKnow" value.bind="true" />&nbsp;Don't Know
-                    </label>
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.employmentAreas.skip" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-1">
-                    About your mother:
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What was your mother's year of birth?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfBirth" input.delegate="changed('mother-birth-year-changed') & debounce:500" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    Is your mother alive?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="motherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.mother.isAlive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                    If not, what was the cause of her death?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
-                </div>
-
-                <hr if.bind="isNo(responses.personalHistory.mother.isAlive)">
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                    What year did she die?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
-                </div>
-
-                <hr if.bind="isNo(responses.personalHistory.mother.isAlive)">
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What was her education level?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.educationLevel" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What type of employment areas has she worked in?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.employmentAreas" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
-                </div>
-
-                <hr>
-            -->
-                <div class="uk-margin-remove uk-width-1-2">
-                    Did your parents separate or divorce?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="didParentsSeparateOrDivorce" class="uk-radio" checked.bind="responses.personalHistory.didParentsSeparateOrDivorce" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-1">
-                    Siblings:
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    How many brothers do you have?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.brothers.howMany | int" disabled.bind="responses.personalHistory.brothers.skip" input.delegate="siblingCountChanged(responses.personalHistory.brothers.howMany, responses.personalHistory.brothers.ages)" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.brothers.skip" value.bind="true" change.delegate="siblingCountChanged(responses.personalHistory.brothers.howMany, responses.personalHistory.brothers.ages)" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.brothers.skip && responses.personalHistory.brothers.howMany">
-                    What are their ages?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.brothers.skip && responses.personalHistory.brothers.howMany">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.brothers.skipAges" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <template if.bind="!responses.personalHistory.brothers.skip && responses.personalHistory.brothers.skipAges">
-                    <div class="uk-margin-remove uk-width-1-2"></div>
-                    <hr>
-                </template>
-                
-                <template if.bind="!responses.personalHistory.brothers.skip && !responses.personalHistory.brothers.skipAges">
-                    <template repeat.for="i of responses.personalHistory.brothers.ages.length" if.bind="responses.personalHistory.brothers.howMany">
-                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
-    
-                        <div class="uk-margin-remove uk-width-1-2">
-                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.brothers.ages[i].value | int" input.delegate="changed('sibling-count-changed')" />
-            
-                            <label repeat.for="response of ageUnits">
-                                <input type="radio" name="brothers-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.brothers.ages[i].unit" value.bind="response.value" change.delegate="changed('sibling-count-changed')" />&nbsp;${response.description}&nbsp;
-                            </label>
-                        </div>
-                    </template>
-
-                    <hr if.bind="responses.personalHistory.brothers.howMany">
-                </template>
-                
-                <div class="uk-margin-remove uk-width-1-2">
-                    How many sisters do you have?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.sisters.howMany | int" disabled.bind="responses.personalHistory.sisters.skip" input.delegate="siblingCountChanged(responses.personalHistory.sisters.howMany, responses.personalHistory.sisters.ages)" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.sisters.skip" value.bind="true" change.delegate="siblingCountChanged(responses.personalHistory.sisters.howMany, responses.personalHistory.sisters.ages)" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.sisters.skip && responses.personalHistory.sisters.howMany">
-                    What are their ages?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.sisters.skip && responses.personalHistory.sisters.howMany">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.sisters.skipAges" value.bind="true" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <template if.bind="!responses.personalHistory.sisters.skip && responses.personalHistory.sisters.skipAges">
-                    <div class="uk-margin-remove uk-width-1-2"></div>
-                    <hr>
-                </template>
-
-                <template if.bind="!responses.personalHistory.sisters.skip && !responses.personalHistory.sisters.skipAges">
-                    <template repeat.for="i of responses.personalHistory.sisters.ages.length">
-                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
-    
-                        <div class="uk-margin-remove uk-width-1-2">
-                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.sisters.ages[i].value | int" input.delegate="changed('sibling-count-changed')" />
-            
-                            <label repeat.for="response of ageUnits">
-                                <input type="radio" name="sisters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.sisters.ages[i].unit" value.bind="response.value" change.delegate="changed('sibling-count-changed')" />&nbsp;${response.description}&nbsp;
-                            </label>
-                        </div>
-                    </template>
-                    
-                    <hr if.bind="responses.personalHistory.sisters.howMany">    
-                </template>
-                
-                <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
-                    If you have siblings are you the
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
-                    <input type="number" min="1" max.bind="siblingCount + 1 & signal:'sibling-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.birthPosition | int" /> 
-                    &nbsp;of ${siblingCount + 1 & signal:'sibling-count-changed'}
-                </div>
-
-                <hr if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
-
-                <div class="uk-margin-remove uk-width-1-1">
-                    Have you (or your family) ever been diagnosed with any of the following:
-                </div>
-                
-                <table class="uk-table uk-table-striped">
-                    <thead>
-                        <tr>
-                            <th class="uk-padding-remove">Diagnosis</th>
-                            <th class="uk-padding-remove">You</th>
-                            <th class="uk-padding-remove">Your family</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr repeat.for="i of responses.personalHistory.neurologicalOrPsychiatricDiseases.length">
-                            <td class="uk-padding-remove">
-                                ${neurologicalAndPsychiatricDiseasesMap[$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].value].description}
-                            </td>
-                            <td class="uk-padding-remove">
-                                <label repeat.for="response of yesNo">
-                                    <input type="radio" name="self-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].self" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
-                                </label>
-                            </td>
-                            <td class="uk-padding-remove">
-                                <label repeat.for="response of yesNo">
-                                    <input type="radio" name="family-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
-                                </label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    How many sons do you have?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.sons.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.sons.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />&nbsp;Skip
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.sons.howMany > 0">
-                    What are their ages?
-                </div>
-
-                <template repeat.for="i of responses.personalHistory.children.sons.ages.length" if.bind="responses.personalHistory.children.sons.howMany > 0">
-                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
-
-                    <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
-                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.sons.ages[i].value" input.delegate="changed('child-count-changed')" />
-    
-                        <label repeat.for="response of ageUnits">
-                            <input type="radio" name="sons-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.sons.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>    
-                </template>
-                
-                <hr if.bind="responses.personalHistory.children.sons.howMany > 0">
-                
-                <div class="uk-margin-remove uk-width-1-2">
-                    How many daughters do you have?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.daughters.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.daughters.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />&nbsp;Skip
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.daughters.howMany > 0">
-                    What are their ages?
-                </div>
-
-                <template repeat.for="i of responses.personalHistory.children.daughters.ages.length" if.bind="responses.personalHistory.children.daughters.howMany > 0">
-                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
-
-                    <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
-                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.daughters.ages[i].value" input.delegate="changed('child-count-changed')" />
-    
-                        <label repeat.for="response of ageUnits">
-                            <input type="radio" name="daughters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.daughters.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
-                </template>
-
-                <hr if.bind="responses.personalHistory.children.daughters.howMany > 0">
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
-                    How many of your children reside with you?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
-                    <input type="number" min="0" max.bind="childCount & signal:'child-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.howManyLiveWithYou" />
-                </div>
-
-                <hr if.bind="childCount > 0 & signal:'child-count-changed'">
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Father / Mother / Brothers / Sisters / Sons / Daughters -->
-                    <p>
-                        <!--
-                        <template if.bind="!responses.personalHistory.father.skip">
-                            <template if.bind="!isSkip(responses.personalHistory.father.isAlive)">
-                                ${gender.title} ${claimant.lastName} advised that 
-                                <template if.bind="isDontKnow(responses.personalHistory.father.isAlive)">
-                                    &nbsp;${pronoun.subject} does not know whether ${pronoun.possessiveAdjective} father is currently living.
-                                </template>
-                                <template if.bind="isYes(responses.personalHistory.father.isAlive)">
-                                    &nbsp;${pronoun.possessiveAdjective} father is still alive
-
-                                    <template if.bind="!responses.personalHistory.father.age.skip">
-                                        <template if.bind="responses.personalHistory.father.age.dontKnow">
-                                            , however ${pronoun.subject} does not know his current age
-                                        </template>
-                                        <template else>
-                                            <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
-                                                &nbsp;and ${responses.personalHistory.father.age.value}
-                                            </template>
-                                        </template>
-                                    </template>
-                                </template>
-                                <template if.bind="isNo(responses.personalHistory.father.isAlive)">
-                                    &nbsp;${pronoun.possessiveAdjective} father is no longer alive
-                                    <template if.bind="!responses.personalHistory.father.yearOfDeath.skip">
-                                        <template if.bind="responses.personalHistory.father.yearOfDeath.dontKnow">
-                                            , adding that ${pronoun.subject} does not know when he died.
-                                        </template>
-                                        <template else>
-                                            , adding that he died
-                                            <template if.bind="responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'">
-                                                &nbsp;in ${responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'}    
-                                            </template>
-
-                                            <template if.bind="!responses.personalHistory.father.age.skip">
-                                                <template if.bind="responses.personalHistory.father.age.dontKnow">
-                                                </template>
-                                                <template else>
-                                                    <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
-                                                        &nbsp;${responses.personalHistory.father.age.value}
-                                                    </template>
-                                                </template>
-                                            </template>
-
-                                            <template if.bind="!responses.personalHistory.father.causeOfDeath.skip">
-                                                <template if.bind="responses.personalHistory.father.causeOfDeath.dontKnow">
-                                                    &nbsp;but ${pronoun.subject} does not know the cause of his death.
-                                                </template>
-                                                <template else>
-                                                    <template if.bind="responses.personalHistory.father.causeOfDeath.value & signal:'father-death-changed'">
-                                                        &nbsp;with ${responses.personalHistory.father.causeOfDeath.value & signal:'father-death-changed'}
-                                                    </template>
-                                                </template>
-                                            </template>
-                                        </template>
-                                    </template>
-                                </template>
-                                .
-                            </template>
-
-                            <template if.bind="!(responses.personalHistory.father.educationLevel.skip && responses.personalHistory.father.employmentAreas.skip) & signal:'father-education-or-employment-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName}
-                                <template if.bind="!responses.personalHistory.father.educationLevel.skip">
-                                    <template if.bind="responses.personalHistory.father.educationLevel.dontKnow">
-                                        &nbsp;indicated that ${pronoun.subject} does not know the level of education completed by ${pronoun.possessiveAdjective} father.
-                                    </template>
-                                    <template else>
-                                        <template if.bind="responses.personalHistory.father.educationLevel.value & signal:'father-education-or-employment-changed'">
-                                            's father attended ${responses.personalHistory.father.educationLevel.value & signal:'father-education-or-employment-changed'}
-                                        </template>
-                                    </template>
-                                </template>
-                                <template if.bind="!responses.personalHistory.father.employmentAreas.skip">
-                                    <template if.bind="responses.personalHistory.father.employmentAreas.dontKnow">
-                                        . 
-                                    </template>
-                                </template>
-                                .
-                            </template>
-                            
-                            <template if.bind="responses.personalHistory.father.educationLevel || responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName}’s father 
-                                <template if.bind="responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'">
-                                    &nbsp;attended ${responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'} 
-                                </template>
-                                <template if.bind="responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'">
-                                    <template if.bind="responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'">
-                                        &nbsp;and
-                                    </template>
-                                    &nbsp;had experience working as ${responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'}
-                                </template>
-                                .
-                            </template>
-                        </template>
-                        
-                        <template if.bind="responses.personalHistory.mother.yearOfBirth & signal:'mother-birth-year-changed'">
-                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} mother was born in ${responses.personalHistory.mother.yearOfBirth & signal:'mother-birth-year-changed'}.
-                        </template>
-                
-                        <template if.bind="isAnswered(responses.personalHistory.mother.isAlive)">
-                            &nbsp;${gender.title} ${claimant.lastName} went on to note that ${pronoun.possessiveAdjective} mother is 
-                            <template if.bind="isYes(responses.personalHistory.mother.isAlive)">
-                                &nbsp;currently ${responses.personalHistory.mother.yearOfBirth | age & signal:'mother-birth-year-changed'}
-                            </template>
-                            <template if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                                &nbsp;no longer alive
-                                <template if.bind="responses.personalHistory.mother.yearOfDeath || responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'">
-                                    , adding that she died 
-                                    <template if.bind="responses.personalHistory.mother.yearOfDeath & signal:'mother-death-changed'">
-                                        &nbsp;in ${responses.personalHistory.mother.yearOfDeath & signal:'mother-death-changed'}
-                                    </template>
-                                    <template if.bind="responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'">
-                                        &nbsp;with ${responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'}
-                                    </template>
-                                </template>
-                            </template>
-                            .
-                        </template>
-                        
-                        <template if.bind="responses.personalHistory.mother.educationLevel || responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'">
-                            &nbsp;${gender.title} ${claimant.lastName}’s mother 
-                            <template if.bind="responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'">
-                                &nbsp;attended ${responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'} 
-                            </template>
-                            <template if.bind="responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'">
-                                <template if.bind="responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'">
-                                    &nbsp;and
-                                </template>
-                                &nbsp;had experience working as ${responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'}
-                            </template>
-                            .
-                        </template>
-                    -->
-            
-                        <template if.bind="isAnswered(responses.personalHistory.didParentsSeparateOrDivorce)">
-                            &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} parents 
-                            <template if.bind="isYes(responses.personalHistory.didParentsSeparateOrDivorce)">
-                                &nbsp;did not remain together.
-                            </template>
-                            <template else>
-                                &nbsp;remained together.
-                            </template>
-                        </template>
-            
-                        <template if.bind="!skipSiblings">
-                            <template if.bind="siblingCount === 0 & signal:'sibling-count-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} is an only child.
-                            </template>
-                
-                            <template if.bind="!responses.personalHistory.brothers.skip">
-                                <template if.bind="responses.personalHistory.brothers.howMany == 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has a brother
-                                    <template if.bind="!responses.personalHistory.brothers.skipAges">
-                                        &nbsp;who is currently 
-                                        ${getAgeTextForCurrentContext(responses.personalHistory.brothers.ages[0]) & signal:'sibling-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                                <template if.bind="responses.personalHistory.brothers.howMany > 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has ${responses.personalHistory.brothers.howMany | numberText | lower} brothers
-                                    <template if.bind="!responses.personalHistory.brothers.skipAges">
-                                        &nbsp;who are currently 
-                                        ${responses.personalHistory.brothers.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'sibling-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                            </template>
-                            
-                            <template if.bind="!responses.personalHistory.sisters.skip">
-                                <template if.bind="responses.personalHistory.sisters.howMany == 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has a sister
-                                    <template if.bind="!responses.personalHistory.sisters.skipAges">
-                                        &nbsp;who is currently 
-                                        ${getAgeTextForCurrentContext(responses.personalHistory.sisters.ages[0]) & signal:'sibling-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                                <template if.bind="responses.personalHistory.sisters.howMany > 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has ${responses.personalHistory.sisters.howMany | numberText | lower} sisters
-                                    <template if.bind="!responses.personalHistory.sisters.skipAges">
-                                        &nbsp;who are currently 
-                                        ${responses.personalHistory.sisters.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'sibling-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                            </template>
-                            
-                            <template if.bind="siblingCount > 0">
-                                &nbsp;${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} is the ${birthPositionText & signal:'sibling-count-changed'}.
-                            </template>
-                        </template>
-                    
-                        
-                        <template if.bind="!skipChildren">
-                            <template if.bind="childCount === 0 & signal:'child-count-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} has no children.
-                            </template>
-                
-                            <template if.bind="!responses.personalHistory.children.sons.skip">
-                                <template if.bind="responses.personalHistory.children.sons.howMany == 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has a son
-                                    <template if.bind="!responses.personalHistory.children.sons.skipAges">
-                                        &nbsp;who is currently 
-                                        ${getAgeTextForCurrentContext(responses.personalHistory.children.sons.ages[0]) & signal:'child-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                                <template if.bind="responses.personalHistory.children.sons.howMany > 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has ${responses.personalHistory.children.sons.howMany | numberText | lower} sons
-                                    <template if.bind="!responses.personalHistory.children.sons.skipAges">
-                                        &nbsp;who are currently 
-                                        ${responses.personalHistory.children.sons.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'child-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                            </template>
-                            
-                            <template if.bind="!responses.personalHistory.children.daughters.skip">
-                                <template if.bind="responses.personalHistory.children.daughters.howMany == 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has a daughter
-                                    <template if.bind="!responses.personalHistory.children.daughters.skipAges">
-                                        &nbsp;who is currently 
-                                        ${getAgeTextForCurrentContext(responses.personalHistory.children.daughters.ages[0]) & signal:'child-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                                <template if.bind="responses.personalHistory.children.daughters.howMany > 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has ${responses.personalHistory.children.daughters.howMany | numberText | lower} daughters
-                                    <template if.bind="!responses.personalHistory.children.daughters.skipAges">
-                                        &nbsp;who are currently 
-                                        ${responses.personalHistory.children.daughters.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'child-count-changed'} old
-                                    </template>
-                                    .
-                                </template>
-                            </template>
-                        </template>
-
-                        <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
-                            &nbsp;When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
-                            
-                            <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally has been diagnosed with ${selectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
-                            </template>
-                            <template if.bind="anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject | proper} denied ever being diagnosed with any ${unselectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
-                            </template>
-                            <template if.bind="anySelectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject} shared that members of ${pronoun.possessiveAdjective} family have been diagnosed with ${selectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}
-                                <template if.bind="anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                    &nbsp;but not ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}
-                                </template>    
-                                .
-                            </template>
-                            <template if.bind="!anySelectedFamilyNeurologicalOrPsychiatricDiagnosis && anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject | proper} denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
-                            </template>
-                        </template>
-                    </p>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
-
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Present Psychological Status</legend>
 
@@ -2599,108 +1586,110 @@
                 </div>
 
                 <hr if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+        
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <p>
+                        <!-- Linguistic Functioning / Attention -->
+                        <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issue-changed'">
+                            When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
+                            <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
+                                &nbsp;reported that at the present time ${pronoun.subject} experiences:
+                                &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedLanguageIssues & signal:'language-issue-changed'">
+                                <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                &nbsp;specifically denied any of the following:
+                                &nbsp;${unselectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
+                            </template>
+                        </template>
+
+                        <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToFocus)">
+                            &nbsp;${gender.title} ${claimant.lastName} related that ${pronoun.possessiveAdjective} ability to focus has
+                            <template if.bind="isNo(responses.neuropsychological.attention.abilityToFocus)">
+                                &nbsp;not
+                            </template>
+                            &nbsp;been affected.
+                        </template>
+            
+                        <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToSustainAttention)">
+                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} 
+                            <template if.bind="isYes(responses.neuropsychological.attention.abilityToSustainAttention)">
+                                &nbsp;has
+                            </template>
+                            <template else>
+                                &nbsp;does not have
+                            </template>
+                            &nbsp;a harder time sustaining attention.
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.attention.areMoreDistractible)">
+                            &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} is 
+                            <template if.bind="isNo(responses.neuropsychological.attention.areMoreDistractible)">
+                                &nbsp;not
+                            </template>
+                            &nbsp;more distractible.
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenReading)">
+                            &nbsp;When asked about ${pronoun.possessiveAdjective} ability to read, ${gender.title} ${claimant.lastName} noted that 
+                            <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenReading)">
+                                &nbsp;${pronoun.subject} may 
+                            </template>
+                            <template else>
+                                &nbsp;generally ${pronoun.subject} does not
+                            </template>
+                            &nbsp;lose track when reading.
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.attention.needToReRead)">
+                            <template if.bind="isYes(responses.neuropsychological.attention.needToReRead)">
+                                &nbsp;${pronoun.subject | proper} went on to express that ${pronoun.subject} may need to go back and re-read
+                                <template if.bind="any(responses.neuropsychological.attention.readingIssues) & signal:'reading-issues-changed'">
+                                    , noting that currently ${pronoun.possessiveAdjective} ability to read is affected by ${pronoun.possessiveAdjective}: 
+                                    ${selectedReadingIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'reading-issues-changed'}
+                                </template>
+                                .
+                            </template>
+                            <template else>
+                                &nbsp;${pronoun.subject | proper} denied needing to go back and re-read.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
+                            &nbsp;${gender.title} ${claimant.lastName} 
+                            <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
+                                &nbsp;also shared that ${pronoun.subject} finds it hard to watch television without losing track. 
+                            </template>
+                            <template else>
+                                &nbsp;advised that ${pronoun.subject} does not lose track when ${pronoun.subject} is watching television. 
+                            </template>
+                        </template>
+            
+                        <template if.bind="isAnswered(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+                            &nbsp;${pronoun.subject | proper} expressed that ${pronoun.possessiveAdjective} ability to use computers and devices with screens has    
+                            <template if.bind="isNo(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+                                &nbsp;not
+                            </template>
+                            &nbsp;been affected
+                            <template if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens) && isAnswered(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
+                                <template if.bind="isYes(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
+                                    , adding that ${pronoun.subject} has 
+                                </template>
+                                <template if.bind="isNo(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
+                                    , but advised that ${pronoun.subject} has not
+                                </template>
+                                &nbsp;had to reduce the brightness of the screen
+                            </template>
+                            .
+                        </template>
+                    </p>
+                </div>
+
+                <hr>
             </div>
         </fieldset>
-
-        <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-            <p>
-                <!-- Linguistic Functioning / Attention -->
-                <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issue-changed'">
-                    When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
-                    <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
-                        &nbsp;reported that at the present time ${pronoun.subject} experiences:
-                        &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
-                    </template>
-                    <template if.bind="anyUnselectedLanguageIssues & signal:'language-issue-changed'">
-                        <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
-                            &nbsp;${pronoun.subject | proper}
-                        </template>
-                        &nbsp;specifically denied any of the following:
-                        &nbsp;${unselectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
-                    </template>
-                </template>
-
-                <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToFocus)">
-                    &nbsp;${gender.title} ${claimant.lastName} related that ${pronoun.possessiveAdjective} ability to focus has
-                    <template if.bind="isNo(responses.neuropsychological.attention.abilityToFocus)">
-                        &nbsp;not
-                    </template>
-                    &nbsp;been affected.
-                </template>
-    
-                <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToSustainAttention)">
-                    &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} 
-                    <template if.bind="isYes(responses.neuropsychological.attention.abilityToSustainAttention)">
-                        &nbsp;has
-                    </template>
-                    <template else>
-                        &nbsp;does not have
-                    </template>
-                    &nbsp;a harder time sustaining attention.
-                </template>
-                
-                <template if.bind="isAnswered(responses.neuropsychological.attention.areMoreDistractible)">
-                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} is 
-                    <template if.bind="isNo(responses.neuropsychological.attention.areMoreDistractible)">
-                        &nbsp;not
-                    </template>
-                    &nbsp;more distractible.
-                </template>
-                
-                <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenReading)">
-                    &nbsp;When asked about ${pronoun.possessiveAdjective} ability to read, ${gender.title} ${claimant.lastName} noted that 
-                    <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenReading)">
-                        &nbsp;${pronoun.subject} may 
-                    </template>
-                    <template else>
-                        &nbsp;generally ${pronoun.subject} does not
-                    </template>
-                    &nbsp;lose track when reading.
-                </template>
-                
-                <template if.bind="isAnswered(responses.neuropsychological.attention.needToReRead)">
-                    <template if.bind="isYes(responses.neuropsychological.attention.needToReRead)">
-                        &nbsp;${pronoun.subject | proper} went on to express that ${pronoun.subject} may need to go back and re-read
-                        <template if.bind="any(responses.neuropsychological.attention.readingIssues) & signal:'reading-issues-changed'">
-                            , noting that currently ${pronoun.possessiveAdjective} ability to read is affected by ${pronoun.possessiveAdjective}: 
-                            ${selectedReadingIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'reading-issues-changed'}
-                        </template>
-                        .
-                    </template>
-                    <template else>
-                        &nbsp;${pronoun.subject | proper} denied needing to go back and re-read.
-                    </template>
-                </template>
-                
-                <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
-                    &nbsp;${gender.title} ${claimant.lastName} 
-                    <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
-                        &nbsp;also shared that ${pronoun.subject} finds it hard to watch television without losing track. 
-                    </template>
-                    <template else>
-                        &nbsp;advised that ${pronoun.subject} does not lose track when ${pronoun.subject} is watching television. 
-                    </template>
-                </template>
-    
-                <template if.bind="isAnswered(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
-                    &nbsp;${pronoun.subject | proper} expressed that ${pronoun.possessiveAdjective} ability to use computers and devices with screens has    
-                    <template if.bind="isNo(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
-                        &nbsp;not
-                    </template>
-                    &nbsp;been affected
-                    <template if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens) && isAnswered(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                        <template if.bind="isYes(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                            , adding that ${pronoun.subject} has 
-                        </template>
-                        <template if.bind="isNo(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                            , but advised that ${pronoun.subject} has not
-                        </template>
-                        &nbsp;had to reduce the brightness of the screen
-                    </template>
-                    .
-                </template>
-            </p>
-        </div>
 
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Executive</legend>
@@ -3540,6 +2529,1019 @@
                         </template>
                         <template if.bind="isNo(responses.neuropsychological.currentState.moreSocialBeforeAccident)">
                             &nbsp;${pronoun.subject | proper} also shared that ${pronoun.subject} is not less social than ${pronoun.subject} was prior to the accident.
+                        </template>
+                    </p>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <fieldset id="personalHistory" class="uk-fieldset">
+            <legend class="uk-legend">Personal History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Where were you born?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.locationOfBirth" input.delegate="changed('birth-location-changed') & debounce:500" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    If applicable, when did you come to Canada?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" input.delegate="changed('arrival-time-changed') & debounce:500" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    What is your first language?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <button class="uk-button uk-button-default uk-button-small" type="button" click.delegate="addLanguage()">
+                        Add
+                    </button>
+                </div>
+
+                <div class="uk-margin-remove-vertical uk-width-1-4" repeat.for="i of responses.personalHistory.languages.length">
+                    <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.personalHistory.languages[i]" input.delegate="changed('languages-changed') & debounce:500" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you the victim of any physical abuse when growing up?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="physicalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.physical" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you the victim of any sexual abuse when growing up?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="sexualAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.sexual" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you the victim of any mental abuse when growing up?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="mentalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.mental" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Are you aware of any issues hitting developmental milestones?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="developmentalMilestoneIssues" class="uk-radio" checked.bind="responses.personalHistory.growingUp.developmentalMilestoneIssues" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you raised in a ${socioeconomicStatuses | filter:notSkip | arrayToString:{"format":getItemDescription,"connector":"or"} | lower } household?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of socioeconomicStatuses">
+                        <input type="radio" name="socioeconomicStatus" class="uk-radio" checked.bind="responses.personalHistory.growingUp.socioeconomicClass" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Are you currently:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of relationshipStatuses">
+                        <input type="radio" name="relationshipStatus" class="uk-radio" checked.bind="responses.personalHistory.relationship.status" value.bind="response.value" change.delegate="changed('relationship-status-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                    If married or common law, how long have you been in this relationship?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" input.delegate="changed('marriage-length-changed')" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" change.delegate="changed('marriage-length-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How old is your partner?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="1" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.partnerAge" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What is your partner’s job title?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Are you currently in an abusive relationship?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="relationshipIsAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.isAbusive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
+                    Have any of your previous relationships been abusive?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you previously been in a serious relationship?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="hadPriorSeriousRelationship" class="uk-radio" checked.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                    If you have previously been in a prior serious relationship;
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                    How long did that relationship last?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.value" input.delegate="changed('prior-serious-relationship-length-changed')" />
+
+                    <label repeat.for="response of ageUnits">
+                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.unit" value.bind="response.value" change.delegate="changed('prior-serious-relationship-length-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                    What was the reason that relationship ended?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded" />
+                </div>
+
+                <hr if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                
+
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <!-- Birth / Languages / Relationship / Familial Stress / Abusive Relationships -->
+                    <p>
+                        <template if.bind="responses.personalHistory.locationOfBirth">
+                            ${gender.title} ${claimant.lastName} was born on ${claimant.dateOfBirth | dateFormat:"MMMM Do, YYYY"} in ${responses.personalHistory.locationOfBirth & signal:'birth-location-changed'}. 
+                        </template>
+                        
+                        <template if.bind="knownLanguages.length & signal:'languages-changed'">
+                            &nbsp;${pronoun.subject | proper} is a ${claimant.dateOfBirth | age}-year-old ${claimant.gender | gender | lower} who identified
+                            <template if.bind="knownLanguages.length === 1 & signal:'languages-changed'">
+                                &nbsp;${knownLanguages | arrayToString & signal:'languages-changed'} as ${pronoun.possessiveAdjective} first language.
+                            </template>
+                            <template else>
+                                &nbsp;${pronoun.possessiveAdjective} known languages as ${knownLanguages | arrayToString & signal:'languages-changed'}.
+                            </template>    
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.relationship.status)">
+                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} is ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
+                            <template if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                                <template if.bind="isAnswered(responses.personalHistory.relationship.marriageLength.value)">
+                                    &nbsp;for ${getAgeTextForCurrentContext(responses.personalHistory.relationship.marriageLength) & signal:'marriage-length-changed'} now
+                                </template>
+                                <template if.bind="relationshipStatusesMap[responses.personalHistory.relationship.status].isMarried & signal:'relationship-status-changed'">
+                                    &nbsp;to
+                                </template>
+                                <template else>
+                                    &nbsp;with
+                                </template>
+                                 &nbsp;${pronoun.possessiveAdjective} 
+                                 <template if.bind="isAnswered(responses.personalHistory.relationship.partnerAge)">
+                                    &nbsp;${responses.personalHistory.relationship.partnerAge}-year-old partner
+                                 </template>
+                                 <template if.bind="isAnswered(responses.personalHistory.relationship.partnerJobTitle)">
+                                    &nbsp;who has experience working as ${responses.personalHistory.relationship.partnerJobTitle}
+                                 </template>
+                            </template>
+                            . 
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.relationship.isAbusive)">
+                            &nbsp;${gender.title} ${claimant.lastName} 
+                            <template if.bind="isYes(responses.personalHistory.relationship.isAbusive)">
+                                &nbsp;disclosed that ${pronoun.subject} is
+                            </template>
+                            <template else>
+                                &nbsp;confirmed that ${pronoun.subject} is not
+                            </template>
+                            &nbsp;currently in an abusive relationship
+                            <template if.bind="isAnswered(responses.personalHistory.relationship.previousRelationshipAbusive)">
+                                <template if.bind="isYes(responses.personalHistory.relationship.previousRelationshipAbusive)">
+                                    , nor has ${pronoun.subject} been in an abusive relationship in the past
+                                </template>
+                                <template else>
+                                    , but acknowledged that in the past ${pronoun.subject} was in an abusive relationship
+                                </template>
+                            </template>
+                            . 
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                            <template if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                                &nbsp;When asked about any previous serious relationships, ${pronoun.subject} shared that ${pronoun.subject} was in a relationship
+                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.value)">
+                                    &nbsp;for a period of ${getAgeTextForCurrentContext(responses.personalHistory.relationship.priorSeriousRelationshipLength) & signal:'prior-serious-relationship-length-changed'}
+                                </template>
+                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded)">
+                                    , adding that this ended due to ${responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded}.
+                                </template>
+                            </template>
+                            <template else>
+                                &nbsp;${gender.title} ${claimant.lastName} denied having any previous relationships.
+                            </template>
+                        </template>
+
+                    </p>
+                    
+                    <!-- Growing up -->
+                    <p>
+                        <template if.bind="responses.personalHistory.growingUp.socioeconomicClass">
+                            ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} was raised in ${getItemValueForCurrentContext(getMatch(socioeconomicStatuses, responses.personalHistory.growingUp.socioeconomicClass))}.
+                        </template>
+    
+                        <template if.bind="yesAbuseTypes.length || noAbuseTypes.length & signal:'growing-up-abuse-changed'">
+                            <template if.bind="noAbuseGrowingUp & signal:'growing-up-abuse-changed'">
+                                &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
+                            </template>
+                            <template else>
+                                &nbsp;When asked about any abuse when ${pronoun.subject} was growing up, 
+                                <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
+                                    &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
+                                </template>
+                                <template if.bind="noAbuseTypes.length & signal:'growing-up-abuse-changed'">
+                                    <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
+                                        &nbsp;${pronoun.subject | proper}
+                                    </template>
+                                    <template else>
+                                        &nbsp;${pronoun.subject} 
+                                    </template>
+                                    &nbsp;denied experiencing any ${noAbuseTypes | arrayToString:{"format":getItemValue,"connector":"or"} & signal:'growing-up-abuse-changed'} abuse.
+                                </template>
+                            </template>
+                        </template>
+    
+                        <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
+                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
+                        </template>
+                        <template if.bind="isNo(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
+                            &nbsp;To the best of ${pronoun.possessiveAdjective} knowledge, ${gender.title} ${claimant.lastName} believes that ${pronoun.subject} hit all developmental milestones (i.e. walking/talking/toilet training) as expected.
+                        </template>
+    
+                        <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
+                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada & signal:'arrival-time-changed'}.
+                        </template>
+                    </p>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Information about your family</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+            <!--
+                <div class="uk-margin-remove uk-width-1-2">
+                    About your father:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.skip" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was your father’s year of birth?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.age.value" input.delegate="changed('father-birth-year-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.age.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.age.skip" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Is your father alive?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="fatherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.father.isAlive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                    If not, what was the cause of his death?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.causeOfDeath.value" input.delegate="changed('father-death-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.causeOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.causeOfDeath.skip" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <hr if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                    What year did he die?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfDeath.value" input.delegate="changed('father-death-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.yearOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.yearOfDeath.skip" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <hr if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was his education level?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.educationLevel.value" input.delegate="changed('father-education-or-employment-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.educationLevel.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.educationLevel.skip" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What type of employment areas has he worked in?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.employmentAreas.value" input.delegate="changed('father-education-or-employment-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.employmentAreas.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.employmentAreas.skip" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    About your mother:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was your mother's year of birth?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfBirth" input.delegate="changed('mother-birth-year-changed') & debounce:500" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Is your mother alive?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="motherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.mother.isAlive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
+                    If not, what was the cause of her death?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
+                </div>
+
+                <hr if.bind="isNo(responses.personalHistory.mother.isAlive)">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
+                    What year did she die?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
+                </div>
+
+                <hr if.bind="isNo(responses.personalHistory.mother.isAlive)">
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was her education level?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.educationLevel" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What type of employment areas has she worked in?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.employmentAreas" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
+                </div>
+
+                <hr>
+            -->
+                <div class="uk-margin-remove uk-width-1-2">
+                    Did your parents separate or divorce?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="didParentsSeparateOrDivorce" class="uk-radio" checked.bind="responses.personalHistory.didParentsSeparateOrDivorce" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Siblings:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many brothers do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.brothers.howMany | int" disabled.bind="responses.personalHistory.brothers.skip" input.delegate="siblingCountChanged(responses.personalHistory.brothers.howMany, responses.personalHistory.brothers.ages)" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.brothers.skip" value.bind="true" change.delegate="siblingCountChanged(responses.personalHistory.brothers.howMany, responses.personalHistory.brothers.ages)" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.brothers.skip && responses.personalHistory.brothers.howMany">
+                    What are their ages?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.brothers.skip && responses.personalHistory.brothers.howMany">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.brothers.skipAges" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <template if.bind="!responses.personalHistory.brothers.skip && responses.personalHistory.brothers.skipAges">
+                    <div class="uk-margin-remove uk-width-1-2"></div>
+                    <hr>
+                </template>
+                
+                <template if.bind="!responses.personalHistory.brothers.skip && !responses.personalHistory.brothers.skipAges">
+                    <template repeat.for="i of responses.personalHistory.brothers.ages.length" if.bind="responses.personalHistory.brothers.howMany">
+                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+    
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.brothers.ages[i].value | int" input.delegate="changed('sibling-count-changed')" />
+            
+                            <label repeat.for="response of ageUnits">
+                                <input type="radio" name="brothers-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.brothers.ages[i].unit" value.bind="response.value" change.delegate="changed('sibling-count-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+                    </template>
+
+                    <hr if.bind="responses.personalHistory.brothers.howMany">
+                </template>
+                
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many sisters do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.sisters.howMany | int" disabled.bind="responses.personalHistory.sisters.skip" input.delegate="siblingCountChanged(responses.personalHistory.sisters.howMany, responses.personalHistory.sisters.ages)" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.sisters.skip" value.bind="true" change.delegate="siblingCountChanged(responses.personalHistory.sisters.howMany, responses.personalHistory.sisters.ages)" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.sisters.skip && responses.personalHistory.sisters.howMany">
+                    What are their ages?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.sisters.skip && responses.personalHistory.sisters.howMany">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.sisters.skipAges" value.bind="true" />&nbsp;Skip
+                    </label>
+                </div>
+
+                <template if.bind="!responses.personalHistory.sisters.skip && responses.personalHistory.sisters.skipAges">
+                    <div class="uk-margin-remove uk-width-1-2"></div>
+                    <hr>
+                </template>
+
+                <template if.bind="!responses.personalHistory.sisters.skip && !responses.personalHistory.sisters.skipAges">
+                    <template repeat.for="i of responses.personalHistory.sisters.ages.length">
+                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+    
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.sisters.ages[i].value | int" input.delegate="changed('sibling-count-changed')" />
+            
+                            <label repeat.for="response of ageUnits">
+                                <input type="radio" name="sisters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.sisters.ages[i].unit" value.bind="response.value" change.delegate="changed('sibling-count-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+                    </template>
+                    
+                    <hr if.bind="responses.personalHistory.sisters.howMany">    
+                </template>
+                
+                <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
+                    If you have siblings are you the
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
+                    <input type="number" min="1" max.bind="siblingCount + 1 & signal:'sibling-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.birthPosition | int" /> 
+                    &nbsp;of ${siblingCount + 1 & signal:'sibling-count-changed'}
+                </div>
+
+                <hr if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Have you (or your family) ever been diagnosed with any of the following:
+                </div>
+                
+                <table class="uk-table uk-table-striped">
+                    <thead>
+                        <tr>
+                            <th class="uk-padding-remove">Diagnosis</th>
+                            <th class="uk-padding-remove">You</th>
+                            <th class="uk-padding-remove">Your family</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="i of responses.personalHistory.neurologicalOrPsychiatricDiseases.length">
+                            <td class="uk-padding-remove">
+                                ${neurologicalAndPsychiatricDiseasesMap[$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].value].description}
+                            </td>
+                            <td class="uk-padding-remove">
+                                <label repeat.for="response of yesNo">
+                                    <input type="radio" name="self-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].self" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </td>
+                            <td class="uk-padding-remove">
+                                <label repeat.for="response of yesNo">
+                                    <input type="radio" name="family-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many sons do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.sons.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.sons.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />&nbsp;Skip
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.sons.howMany > 0">
+                    What are their ages?
+                </div>
+
+                <template repeat.for="i of responses.personalHistory.children.sons.ages.length" if.bind="responses.personalHistory.children.sons.howMany > 0">
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+
+                    <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
+                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.sons.ages[i].value" input.delegate="changed('child-count-changed')" />
+    
+                        <label repeat.for="response of ageUnits">
+                            <input type="radio" name="sons-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.sons.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>    
+                </template>
+                
+                <hr if.bind="responses.personalHistory.children.sons.howMany > 0">
+                
+                <div class="uk-margin-remove uk-width-1-2">
+                    How many daughters do you have?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.daughters.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.daughters.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />&nbsp;Skip
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.daughters.howMany > 0">
+                    What are their ages?
+                </div>
+
+                <template repeat.for="i of responses.personalHistory.children.daughters.ages.length" if.bind="responses.personalHistory.children.daughters.howMany > 0">
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+
+                    <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
+                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.daughters.ages[i].value" input.delegate="changed('child-count-changed')" />
+    
+                        <label repeat.for="response of ageUnits">
+                            <input type="radio" name="daughters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.daughters.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+                </template>
+
+                <hr if.bind="responses.personalHistory.children.daughters.howMany > 0">
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
+                    How many of your children reside with you?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
+                    <input type="number" min="0" max.bind="childCount & signal:'child-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.howManyLiveWithYou" />
+                </div>
+
+                <hr if.bind="childCount > 0 & signal:'child-count-changed'">
+
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <!-- Father / Mother / Brothers / Sisters / Sons / Daughters -->
+                    <p>
+                        <!--
+                        <template if.bind="!responses.personalHistory.father.skip">
+                            <template if.bind="!isSkip(responses.personalHistory.father.isAlive)">
+                                ${gender.title} ${claimant.lastName} advised that 
+                                <template if.bind="isDontKnow(responses.personalHistory.father.isAlive)">
+                                    &nbsp;${pronoun.subject} does not know whether ${pronoun.possessiveAdjective} father is currently living.
+                                </template>
+                                <template if.bind="isYes(responses.personalHistory.father.isAlive)">
+                                    &nbsp;${pronoun.possessiveAdjective} father is still alive
+
+                                    <template if.bind="!responses.personalHistory.father.age.skip">
+                                        <template if.bind="responses.personalHistory.father.age.dontKnow">
+                                            , however ${pronoun.subject} does not know his current age
+                                        </template>
+                                        <template else>
+                                            <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
+                                                &nbsp;and ${responses.personalHistory.father.age.value}
+                                            </template>
+                                        </template>
+                                    </template>
+                                </template>
+                                <template if.bind="isNo(responses.personalHistory.father.isAlive)">
+                                    &nbsp;${pronoun.possessiveAdjective} father is no longer alive
+                                    <template if.bind="!responses.personalHistory.father.yearOfDeath.skip">
+                                        <template if.bind="responses.personalHistory.father.yearOfDeath.dontKnow">
+                                            , adding that ${pronoun.subject} does not know when he died.
+                                        </template>
+                                        <template else>
+                                            , adding that he died
+                                            <template if.bind="responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'">
+                                                &nbsp;in ${responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'}    
+                                            </template>
+
+                                            <template if.bind="!responses.personalHistory.father.age.skip">
+                                                <template if.bind="responses.personalHistory.father.age.dontKnow">
+                                                </template>
+                                                <template else>
+                                                    <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
+                                                        &nbsp;${responses.personalHistory.father.age.value}
+                                                    </template>
+                                                </template>
+                                            </template>
+
+                                            <template if.bind="!responses.personalHistory.father.causeOfDeath.skip">
+                                                <template if.bind="responses.personalHistory.father.causeOfDeath.dontKnow">
+                                                    &nbsp;but ${pronoun.subject} does not know the cause of his death.
+                                                </template>
+                                                <template else>
+                                                    <template if.bind="responses.personalHistory.father.causeOfDeath.value & signal:'father-death-changed'">
+                                                        &nbsp;with ${responses.personalHistory.father.causeOfDeath.value & signal:'father-death-changed'}
+                                                    </template>
+                                                </template>
+                                            </template>
+                                        </template>
+                                    </template>
+                                </template>
+                                .
+                            </template>
+
+                            <template if.bind="!(responses.personalHistory.father.educationLevel.skip && responses.personalHistory.father.employmentAreas.skip) & signal:'father-education-or-employment-changed'">
+                                &nbsp;${gender.title} ${claimant.lastName}
+                                <template if.bind="!responses.personalHistory.father.educationLevel.skip">
+                                    <template if.bind="responses.personalHistory.father.educationLevel.dontKnow">
+                                        &nbsp;indicated that ${pronoun.subject} does not know the level of education completed by ${pronoun.possessiveAdjective} father.
+                                    </template>
+                                    <template else>
+                                        <template if.bind="responses.personalHistory.father.educationLevel.value & signal:'father-education-or-employment-changed'">
+                                            's father attended ${responses.personalHistory.father.educationLevel.value & signal:'father-education-or-employment-changed'}
+                                        </template>
+                                    </template>
+                                </template>
+                                <template if.bind="!responses.personalHistory.father.employmentAreas.skip">
+                                    <template if.bind="responses.personalHistory.father.employmentAreas.dontKnow">
+                                        . 
+                                    </template>
+                                </template>
+                                .
+                            </template>
+                            
+                            <template if.bind="responses.personalHistory.father.educationLevel || responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'">
+                                &nbsp;${gender.title} ${claimant.lastName}’s father 
+                                <template if.bind="responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'">
+                                    &nbsp;attended ${responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'} 
+                                </template>
+                                <template if.bind="responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'">
+                                    <template if.bind="responses.personalHistory.father.educationLevel & signal:'father-education-or-employment-changed'">
+                                        &nbsp;and
+                                    </template>
+                                    &nbsp;had experience working as ${responses.personalHistory.father.employmentAreas & signal:'father-education-or-employment-changed'}
+                                </template>
+                                .
+                            </template>
+                        </template>
+                        
+                        <template if.bind="responses.personalHistory.mother.yearOfBirth & signal:'mother-birth-year-changed'">
+                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} mother was born in ${responses.personalHistory.mother.yearOfBirth & signal:'mother-birth-year-changed'}.
+                        </template>
+                
+                        <template if.bind="isAnswered(responses.personalHistory.mother.isAlive)">
+                            &nbsp;${gender.title} ${claimant.lastName} went on to note that ${pronoun.possessiveAdjective} mother is 
+                            <template if.bind="isYes(responses.personalHistory.mother.isAlive)">
+                                &nbsp;currently ${responses.personalHistory.mother.yearOfBirth | age & signal:'mother-birth-year-changed'}
+                            </template>
+                            <template if.bind="isNo(responses.personalHistory.mother.isAlive)">
+                                &nbsp;no longer alive
+                                <template if.bind="responses.personalHistory.mother.yearOfDeath || responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'">
+                                    , adding that she died 
+                                    <template if.bind="responses.personalHistory.mother.yearOfDeath & signal:'mother-death-changed'">
+                                        &nbsp;in ${responses.personalHistory.mother.yearOfDeath & signal:'mother-death-changed'}
+                                    </template>
+                                    <template if.bind="responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'">
+                                        &nbsp;with ${responses.personalHistory.mother.causeOfDeath & signal:'mother-death-changed'}
+                                    </template>
+                                </template>
+                            </template>
+                            .
+                        </template>
+                        
+                        <template if.bind="responses.personalHistory.mother.educationLevel || responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'">
+                            &nbsp;${gender.title} ${claimant.lastName}’s mother 
+                            <template if.bind="responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'">
+                                &nbsp;attended ${responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'} 
+                            </template>
+                            <template if.bind="responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'">
+                                <template if.bind="responses.personalHistory.mother.educationLevel & signal:'mother-education-or-employment-changed'">
+                                    &nbsp;and
+                                </template>
+                                &nbsp;had experience working as ${responses.personalHistory.mother.employmentAreas & signal:'mother-education-or-employment-changed'}
+                            </template>
+                            .
+                        </template>
+                    -->
+            
+                        <template if.bind="isAnswered(responses.personalHistory.didParentsSeparateOrDivorce)">
+                            &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} parents 
+                            <template if.bind="isYes(responses.personalHistory.didParentsSeparateOrDivorce)">
+                                &nbsp;did not remain together.
+                            </template>
+                            <template else>
+                                &nbsp;remained together.
+                            </template>
+                        </template>
+            
+                        <template if.bind="!skipSiblings">
+                            <template if.bind="siblingCount === 0 & signal:'sibling-count-changed'">
+                                &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} is an only child.
+                            </template>
+                
+                            <template if.bind="!responses.personalHistory.brothers.skip">
+                                <template if.bind="responses.personalHistory.brothers.howMany == 1 & signal:'sibling-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has a brother
+                                    <template if.bind="!responses.personalHistory.brothers.skipAges">
+                                        &nbsp;who is currently 
+                                        ${getAgeTextForCurrentContext(responses.personalHistory.brothers.ages[0]) & signal:'sibling-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                                <template if.bind="responses.personalHistory.brothers.howMany > 1 & signal:'sibling-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has ${responses.personalHistory.brothers.howMany | numberText | lower} brothers
+                                    <template if.bind="!responses.personalHistory.brothers.skipAges">
+                                        &nbsp;who are currently 
+                                        ${responses.personalHistory.brothers.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'sibling-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                            </template>
+                            
+                            <template if.bind="!responses.personalHistory.sisters.skip">
+                                <template if.bind="responses.personalHistory.sisters.howMany == 1 & signal:'sibling-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has a sister
+                                    <template if.bind="!responses.personalHistory.sisters.skipAges">
+                                        &nbsp;who is currently 
+                                        ${getAgeTextForCurrentContext(responses.personalHistory.sisters.ages[0]) & signal:'sibling-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                                <template if.bind="responses.personalHistory.sisters.howMany > 1 & signal:'sibling-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has ${responses.personalHistory.sisters.howMany | numberText | lower} sisters
+                                    <template if.bind="!responses.personalHistory.sisters.skipAges">
+                                        &nbsp;who are currently 
+                                        ${responses.personalHistory.sisters.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'sibling-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                            </template>
+                            
+                            <template if.bind="siblingCount > 0">
+                                &nbsp;${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} is the ${birthPositionText & signal:'sibling-count-changed'}.
+                            </template>
+                        </template>
+                    
+                        
+                        <template if.bind="!skipChildren">
+                            <template if.bind="childCount === 0 & signal:'child-count-changed'">
+                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} has no children.
+                            </template>
+                
+                            <template if.bind="!responses.personalHistory.children.sons.skip">
+                                <template if.bind="responses.personalHistory.children.sons.howMany == 1 & signal:'child-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has a son
+                                    <template if.bind="!responses.personalHistory.children.sons.skipAges">
+                                        &nbsp;who is currently 
+                                        ${getAgeTextForCurrentContext(responses.personalHistory.children.sons.ages[0]) & signal:'child-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                                <template if.bind="responses.personalHistory.children.sons.howMany > 1 & signal:'child-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has ${responses.personalHistory.children.sons.howMany | numberText | lower} sons
+                                    <template if.bind="!responses.personalHistory.children.sons.skipAges">
+                                        &nbsp;who are currently 
+                                        ${responses.personalHistory.children.sons.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'child-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                            </template>
+                            
+                            <template if.bind="!responses.personalHistory.children.daughters.skip">
+                                <template if.bind="responses.personalHistory.children.daughters.howMany == 1 & signal:'child-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has a daughter
+                                    <template if.bind="!responses.personalHistory.children.daughters.skipAges">
+                                        &nbsp;who is currently 
+                                        ${getAgeTextForCurrentContext(responses.personalHistory.children.daughters.ages[0]) & signal:'child-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                                <template if.bind="responses.personalHistory.children.daughters.howMany > 1 & signal:'child-count-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has ${responses.personalHistory.children.daughters.howMany | numberText | lower} daughters
+                                    <template if.bind="!responses.personalHistory.children.daughters.skipAges">
+                                        &nbsp;who are currently 
+                                        ${responses.personalHistory.children.daughters.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'child-count-changed'} old
+                                    </template>
+                                    .
+                                </template>
+                            </template>
+                        </template>
+
+                        <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
+                            &nbsp;When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
+                            
+                            <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally has been diagnosed with ${selectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject | proper} denied ever being diagnosed with any ${unselectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
+                            <template if.bind="anySelectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject} shared that members of ${pronoun.possessiveAdjective} family have been diagnosed with ${selectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}
+                                <template if.bind="anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                    &nbsp;but not ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}
+                                </template>    
+                                .
+                            </template>
+                            <template if.bind="!anySelectedFamilyNeurologicalOrPsychiatricDiagnosis && anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject | proper} denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
                         </template>
                     </p>
                 </div>
