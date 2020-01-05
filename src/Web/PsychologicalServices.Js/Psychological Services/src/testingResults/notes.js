@@ -47,6 +47,7 @@ export class Notes {
         this.whereaboutsObjects = [];
         this.memoryAids = [];
         this.visualSpatialIssues = [];
+        this.sleepIssues = [];
         this.languageIssues = [];
         this.executiveIssues = [];
         this.inappropriateSocialBehaviors = [];
@@ -134,6 +135,10 @@ export class Notes {
                         this.memoryAidsMap = data;
                     }),
                     this.getVisualSpatialIssues().then(data => this.visualSpatialIssues = data),
+                    this.getSleepIssues().then(data => {
+                        this.sleepIssues = this.asArray(data);
+                        this.sleepIssuesMap = data;
+                    }),
                     this.getLanguageIssues().then(data => this.languageIssues = data),
                     this.getExecutiveIssues().then(data => this.executiveIssues = data),
                     this.getInappropriateSocialBehaviors().then(data => this.inappropriateSocialBehaviors = data),
@@ -509,6 +514,16 @@ export class Notes {
             "blurryVision": { "description": "Blurry vision", "format": function(context) { return `blurry vision`; } },
             "doubleVision": { "description": "Double vision", "format": function(context) { return `double vision`; } },
             "blackAndWhiteTransientVision": { "description": "Black/white transient vision", "format": function(context) { return `black and white transient vision (atypical symptomology)`; }, "isAtypical": true }
+        };
+
+        return getPromise(data);
+    }
+
+    getSleepIssues() {
+        let data = {
+            "attaining": { "description": "Do you have issues attaining sleep?", "format": function(context) { return `attain`; } },
+            "sustaining": { "description": "Do you have issues sustaining sleep?", "format": function(context) { return `sustain`; } },
+            "regaining": { "description": "Do you have issues regaining sleep?", "format": function(context) { return `regain`; } }
         };
 
         return getPromise(data);
@@ -1192,6 +1207,45 @@ export class Notes {
         return !this.selectedAtypicalIssues.some(item => item) && this.unselectedAtypicalIssues.some(item => item);
     }
 
+    getSleepIssuesForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.neuropsychological.physical.sleep.issues
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.sleepIssuesMap[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.sleep.issues')
+    get selectedSleepIssues() {
+        let data = this.getSleepIssuesForResponses(item => this.isYes(item.response));
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.sleep.issues')
+    get unselectedSleepIssues() {
+        let data = this.getSleepIssuesForResponses(item => this.isNo(item.response));
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.sleep.issues')
+    get allSelectedSleepIssues() {
+        return this.selectedSleepIssues.some(item => item) && this.selectedSleepIssues.length === this.sleepIssues.length;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.sleep.issues')
+    get anySelectedSleepIssues() {
+        return this.selectedSleepIssues.some(item => item);
+    }
+
+    @computedFrom('responses.neuropsychological.physical.sleep.issues')
+    get anyUnselectedSleepIssues() {
+        return this.unselectedSleepIssues.some(item => item);
+    }
+
     getExecutiveIssuesForResponses(criteria) {
         if (!this.responses) { return []; }
 
@@ -1510,7 +1564,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "8";
+    return "9";
 }
 
 function upgrade(responses, toVersion) {
@@ -1532,6 +1586,21 @@ function upgradeIfApplicable(responses, fromVersion, toVersion) {
     if (isFunction(eval(functionName))) {
         return eval(functionName)(responses);
     }
+
+    return responses;
+}
+
+function upgrade_8_to_9(responses) {
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('issues')) {
+        responses.neuropsychological.physical.sleep.issues = [
+            { "response": null, "value": "attaining" },
+            { "response": null, "value": "sustaining" },
+            { "response": null, "value": "regaining" }
+        ];
+    }
+    
+    responses.version = "9";
 
     return responses;
 }
@@ -1812,6 +1881,11 @@ function getNewResponses() {
                     "skipAmountOfSleepCurrent": false,
                     "amountOfSleepCurrent": null,
                     "brokenSleep": null,
+                    "issues": [
+                        { "response": null, "value": "attaining" },
+                        { "response": null, "value": "sustaining" },
+                        { "response": null, "value": "regaining" }
+                    ],
                     "fatiguedWhenWaking": null,
                     "takeNaps": null
                 },

@@ -2045,6 +2045,20 @@
 
                 <hr if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent">
 
+                <template repeat.for="i of responses.neuropsychological.physical.sleep.issues.length">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        ${sleepIssuesMap[$parent.responses.neuropsychological.physical.sleep.issues[i].value].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="sleepIssue-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.neuropsychological.physical.sleep.issues[i].response" value.bind="response.value" change.delegate="changed('sleep-issue-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-3-4">
                     Do you still feel fatigued and not rested when you wake up?
                 </div>
@@ -2115,7 +2129,28 @@
                                 .
                             </template>
                         </template>
-            
+
+                        <template if.bind="allSelectedSleepIssues & signal:'sleep-issue-changed'">
+                            &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to attain sleep has been affected, and that ${pronoun.subject} has issues sustaining and regaining sleep.
+                        </template>
+                        <template else>
+                            <template if.bind="anySelectedSleepIssues & signal:'sleep-issue-changed'">
+                                &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to 
+                                ${selectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep has been affected
+                                <template if.bind="anyUnselectedSleepIssues & signal:'sleep-issue-changed'">
+                                    , but denied having any current issues with ${pronoun.possessiveAdjective} ability to 
+                                    ${unselectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep
+                                </template>
+                                .
+                            </template>
+                            <template else>
+                                <template if.bind="anyUnselectedSleepIssues & signal:'sleep-issue-changed'">
+                                    &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to
+                                    ${unselectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep has not been affected.
+                                </template>
+                            </template>            
+                        </template>
+                        
                         <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
                             &nbsp;${pronoun.subject | proper} then shared that when waking ${pronoun.subject} 
                             <template if.bind="isYes(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
