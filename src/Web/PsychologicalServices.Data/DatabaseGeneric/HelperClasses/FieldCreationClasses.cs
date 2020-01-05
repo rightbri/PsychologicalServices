@@ -1186,6 +1186,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(ConsultingAgreementFieldIndex.IsActive);}
 		}
+		/// <summary>Creates a new ConsultingAgreementEntity.BillReferenceNumber field instance</summary>
+		public static EntityField2 BillReferenceNumber
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(ConsultingAgreementFieldIndex.BillReferenceNumber);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity ContactEntity</summary>

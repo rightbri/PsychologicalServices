@@ -462,6 +462,7 @@
       </EntityDefinition>
       <EntityDefinition Name="ConsultingAgreement" ObjectID="f22c3778-0fa1-4631-be56-49e5a8702538">
         <Fields>
+          <Field Name="BillReferenceNumber" Type="string" IsOptional="true" MaxLength="50" FieldIndex="5" />
           <Field Name="BillToReferralSourceId" Type="int" FieldIndex="3" />
           <Field Name="CompanyId" Type="int" FieldIndex="1" />
           <Field Name="ConsultingAgreementId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
@@ -1748,7 +1749,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-12-30T00:33:38.9167757Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-12-30T01:36:15.7398072Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2119,6 +2120,7 @@
                     <Field Name="PsychologistId" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="BillToReferralSourceId" Ordinal="4" DbType="8" Precision="10" />
                     <Field Name="IsActive" Ordinal="5" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
+                    <Field Name="BillReferenceNumber" Ordinal="6" IsOptional="true" DbType="24" Length="50" />
                   </Fields>
                 </Table>
                 <Table Name="Contacts">
@@ -3841,6 +3843,7 @@
         </EntityMapping>
         <EntityMapping EntityName=":ConsultingAgreement" TargetName="PsychologicalServices:dbo:ConsultingAgreements">
           <FieldMappings>
+            <FieldMapping FieldName="BillReferenceNumber" TargetFieldName="BillReferenceNumber" />
             <FieldMapping FieldName="BillToReferralSourceId" TargetFieldName="BillToReferralSourceId" />
             <FieldMapping FieldName="CompanyId" TargetFieldName="CompanyId" />
             <FieldMapping FieldName="ConsultingAgreementId" TargetFieldName="ConsultingAgreementId" SequenceToUse="SCOPE_IDENTITY()" />

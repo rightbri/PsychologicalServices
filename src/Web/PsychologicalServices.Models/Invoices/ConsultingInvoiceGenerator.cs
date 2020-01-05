@@ -37,7 +37,9 @@ namespace PsychologicalServices.Models.Invoices
                 {
                     new InvoiceLineGroup
                     {
-                        Description = "Consulting Services",
+                        Description = !string.IsNullOrWhiteSpace(consultingAgreement.BillReferenceNumber)
+                            ? $"Consulting Services - P.O. {consultingAgreement.BillReferenceNumber}"
+                            : "Consulting Services",
                         Sort = 1,
                         Lines = new List<InvoiceLine>
                         {

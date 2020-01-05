@@ -613,6 +613,8 @@ namespace PsychologicalServices.Data
 		BillToReferralSourceId,
 		///<summary>IsActive. </summary>
 		IsActive,
+		///<summary>BillReferenceNumber. </summary>
+		BillReferenceNumber,
 		/// <summary></summary>
 		AmountOfFields
 	}

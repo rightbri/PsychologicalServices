@@ -42,6 +42,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Company = consultingAgreement.Company.ToCompany(),
                     Psychologist = consultingAgreement.Psychologist.ToUserLite(),
                     BillToReferralSource = consultingAgreement.BillToReferralSource.ToReferralSource(),
+                    BillReferenceNumber = consultingAgreement.BillReferenceNumber
                 };
         }
 

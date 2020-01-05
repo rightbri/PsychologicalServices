@@ -461,6 +461,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("BillToReferralSourceId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("IsActive", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("BillReferenceNumber", fieldHashtable);
 		}
 		#endregion
 
@@ -676,6 +678,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (System.Boolean)GetValue((int)ConsultingAgreementFieldIndex.IsActive, true); }
 			set	{ SetValue((int)ConsultingAgreementFieldIndex.IsActive, value); }
+		}
+
+		/// <summary> The BillReferenceNumber property of the Entity ConsultingAgreement<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "ConsultingAgreements"."BillReferenceNumber"<br/>
+		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 50<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String BillReferenceNumber
+		{
+			get { return (System.String)GetValue((int)ConsultingAgreementFieldIndex.BillReferenceNumber, true); }
+			set	{ SetValue((int)ConsultingAgreementFieldIndex.BillReferenceNumber, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'InvoiceLineGroupConsultingAgreementEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

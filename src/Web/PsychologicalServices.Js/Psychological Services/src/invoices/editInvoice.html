@@ -70,14 +70,34 @@
 							<tbody>
 								<template repeat.for="lineGroup of invoice.lineGroups | sortArray:[{ 'property': 'sort', 'direction': 'asc' }]">
 									<tr class="uk-background-muted">
-										<td colspan="2">
-											${lineGroup.description}
-										</td>
-										<td>
-											<a href="#" click.delegate="addLine(lineGroup)" if.bind="invoice.invoiceStatus.canEdit">
-												<i class="fa fa-plus"></i>
-											</a>
-										</td>
+										<template if.bind="invoice.invoiceStatus.canEdit">
+											<template if.bind="lineGroup.editDescription">
+												<td colspan="2">
+													<input type="text" class="uk-input" value.bind="lineGroup.description" />
+												</td>
+											</template>
+											<template else>
+												<td>
+													${lineGroup.description}
+												</td>
+												<td>
+													<a href="#" click.delegate="editLineGroupDescription(lineGroup)">
+														<i class="fa fa-pencil"></i>
+													</a>
+												</td>
+											</template>
+											<td>
+												<a href="#" click.delegate="addLine(lineGroup)">
+													<i class="fa fa-plus"></i>
+												</a>
+											</td>
+										</template>
+										<template else>
+											<td colspan="2">
+												${lineGroup.description}
+											</td>
+											<td></td>
+										</template>
 									</tr>
 									<tr repeat.for="line of lineGroup.lines">
 										<td>

@@ -85,6 +85,10 @@ export class EditInvoice {
 				this.calculateTotals();
 			});
 	}
+
+	editLineGroupDescription(lineGroup) {
+		lineGroup.editDescription = true;
+	}
 	
     removeLine(lineGroup, line) {
 		if (confirm('Remove Invoice Line\nAre you sure?')) {

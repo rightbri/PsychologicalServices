@@ -14,5 +14,7 @@ namespace PsychologicalServices.Models.Consulting
         public ReferralSource BillToReferralSource { get; set; }
 
         public Company Company { get; set; }
+
+        public string BillReferenceNumber { get; set; }
     }
 }
