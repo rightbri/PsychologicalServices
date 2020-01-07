@@ -2835,10 +2835,10 @@
                             &nbsp;currently in an abusive relationship
                             <template if.bind="isAnswered(responses.personalHistory.relationship.previousRelationshipAbusive)">
                                 <template if.bind="isYes(responses.personalHistory.relationship.previousRelationshipAbusive)">
-                                    , nor has ${pronoun.subject} been in an abusive relationship in the past
+                                    , but acknowledged that in the past ${pronoun.subject} was in an abusive relationship
                                 </template>
                                 <template else>
-                                    , but acknowledged that in the past ${pronoun.subject} was in an abusive relationship
+                                    , nor has ${pronoun.subject} been in an abusive relationship in the past
                                 </template>
                             </template>
                             . 
