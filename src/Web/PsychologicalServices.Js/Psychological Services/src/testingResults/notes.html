@@ -3250,65 +3250,71 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.sons.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.sons.howMany" disabled.bind="responses.personalHistory.children.sons.skip" input.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.sons.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />&nbsp;Skip
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.sons.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.sons.howMany > 0">
+                <div class="uk-margin-remove uk-width-1-2" if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
                     What are their ages?
                 </div>
 
-                <template repeat.for="i of responses.personalHistory.children.sons.ages.length" if.bind="responses.personalHistory.children.sons.howMany > 0">
-                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+                <template if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
+                    <template repeat.for="i of responses.personalHistory.children.sons.ages.length">
+                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
 
-                    <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
-                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.sons.ages[i].value" input.delegate="changed('child-count-changed')" />
-    
-                        <label repeat.for="response of ageUnits">
-                            <input type="radio" name="sons-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.sons.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>    
+                        <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
+                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.sons.ages[i].value" input.delegate="changed('child-count-changed')" />
+        
+                            <label repeat.for="response of ageUnits">
+                                <input type="radio" name="sons-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.sons.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>    
+                    </template>
+                    <hr>
                 </template>
-                
-                <hr if.bind="responses.personalHistory.children.sons.howMany > 0">
-                
+
                 <div class="uk-margin-remove uk-width-1-2">
                     How many daughters do you have?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.daughters.howMany" input.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.daughters.howMany" disabled.bind="responses.personalHistory.children.daughters.skip" input.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.daughters.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />&nbsp;Skip
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.daughters.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="responses.personalHistory.children.daughters.howMany > 0">
+                <div class="uk-margin-remove uk-width-1-2" if.bind="!responses.personalHistory.children.daughters.skip && responses.personalHistory.children.daughters.howMany">
                     What are their ages?
                 </div>
 
-                <template repeat.for="i of responses.personalHistory.children.daughters.ages.length" if.bind="responses.personalHistory.children.daughters.howMany > 0">
-                    <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+                <template if.bind="!responses.personalHistory.children.daughters.skip && responses.personalHistory.children.daughters.howMany">
+                    <template repeat.for="i of responses.personalHistory.children.daughters.ages.length">
+                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
 
-                    <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
-                        <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.daughters.ages[i].value" input.delegate="changed('child-count-changed')" />
-    
-                        <label repeat.for="response of ageUnits">
-                            <input type="radio" name="daughters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.daughters.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
+                        <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
+                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.daughters.ages[i].value" input.delegate="changed('child-count-changed')" />
+        
+                            <label repeat.for="response of ageUnits">
+                                <input type="radio" name="daughters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.daughters.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+                    </template>                    
+                    <hr>
                 </template>
-
-                <hr if.bind="responses.personalHistory.children.daughters.howMany > 0">
-
+                
                 <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
                     How many of your children reside with you?
                 </div>
@@ -3565,17 +3571,35 @@
                                 &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally has been diagnosed with ${selectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
                             </template>
                             <template if.bind="anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject | proper} denied ever being diagnosed with any ${unselectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                                <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                <template else>
+                                    &nbsp;${pronoun.subject}
+                                </template>
+                                &nbsp;denied ever being diagnosed with any ${unselectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
                             </template>
-                            <template if.bind="anySelectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject} shared that members of ${pronoun.possessiveAdjective} family have been diagnosed with ${selectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}
+                            <template if.bind="anySelectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">                                
+                                <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                    &nbsp;${pronoun.subject | proper} 
+                                </template>
+                                <template else>
+                                    &nbsp;${pronoun.subject} 
+                                </template>
+                                &nbsp;disclosed that members of ${pronoun.possessiveAdjective} family have been diagnosed with ${selectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}
                                 <template if.bind="anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
                                     &nbsp;but not ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}
-                                </template>    
+                                </template>
                                 .
                             </template>
                             <template if.bind="!anySelectedFamilyNeurologicalOrPsychiatricDiagnosis && anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject | proper} denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                                <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                <template else>
+                                    &nbsp;${pronoun.subject}
+                                </template>
+                                &nbsp;denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
                             </template>
                         </template>
                     </p>
