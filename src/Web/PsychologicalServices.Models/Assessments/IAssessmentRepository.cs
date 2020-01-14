@@ -24,5 +24,7 @@ namespace PsychologicalServices.Models.Assessments
         int SaveAssessmentType(AssessmentType assessmentType);
 
         int DeleteAssessment(int id);
+
+        bool DeleteAssessmentTestingResults(int assessmentId, string name);
     }
 }

@@ -252,6 +252,23 @@ export class Notes {
         }
     }
 
+    delete() {
+        if (confirm('Delete Notes\nAre you sure?')) {
+            this.dataRepository.deleteAssessmentTestingResults(this.assessment.assessmentId, this.name).then(data => {
+				if (data.isError) {
+					this.notifier.error(data.errorDetails);
+				}
+				else {
+					this.reset(true);
+                    
+                    if (data.isDeleted) {
+                        this.notifier.info('Deleted');
+                    }
+				}
+			});
+        }
+    }
+
     genderChanged(gender) {
         let pronoun = this.pronouns.filter(p => p.gender === gender.abbreviation);
 

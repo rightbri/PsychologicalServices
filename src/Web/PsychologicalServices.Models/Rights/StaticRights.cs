@@ -86,6 +86,7 @@ namespace PsychologicalServices.Models.Rights
         EditAssessmentNote,
         CreateConsultingInvoice,
         ViewSelf,
-        EditRole
+        EditRole,
+        DeleteAssessmentNote
     }
 }

@@ -158,5 +158,23 @@ namespace PsychologicalServices.Models.Assessments
 
             return result;
         }
+
+        public DeleteResult DeleteAssessmentTestingResults(int assessmentId, string name)
+        {
+            var result = new DeleteResult();
+
+            try
+            {
+                result.IsDeleted = _assessmentRepository.DeleteAssessmentTestingResults(assessmentId, name);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("DeleteAssessmentTestingResults", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
     }
 }

@@ -1131,5 +1131,19 @@ namespace PsychologicalServices.Infrastructure.Assessments
                 return rowsAffected;
             }
         }
+
+        public bool DeleteAssessmentTestingResults(int assessmentId, string name)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var success = adapter.DeleteEntity(
+                    new AssessmentTestingResultEntity(assessmentId, name)
+                );
+
+                return success;
+            }
+        }
     }
 }

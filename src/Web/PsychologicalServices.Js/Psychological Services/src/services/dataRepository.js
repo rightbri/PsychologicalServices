@@ -211,6 +211,10 @@ export class DataRepository {
 	saveAssessmentTestingResults(testingResults) {
 		return this.saveBasic(testingResults, 'assessmenttestingresults');
 	}
+
+	deleteAssessmentTestingResults(assessmentId, name) {
+		return this.deleteBasic(`${assessmentId}/${name}`, 'assessmenttestingresults');
+	}
 	
 	getAssessmentTypes() {
 		return this.getManyBasic('assessmenttype', true);

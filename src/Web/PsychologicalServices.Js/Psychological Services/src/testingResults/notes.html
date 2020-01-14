@@ -54,6 +54,8 @@
             <button type="button" class="uk-button uk-button-primary" click.delegate="save()">Save</button>
             &nbsp;
             <button type="button" class="uk-button uk-button-default" click.delegate="reset(true)">Reset</button>
+            &nbsp;
+            <button type="button" class="uk-button uk-button-danger" click.delegate="delete()">Delete</button>
         </div>
     </div>
 
@@ -327,12 +329,7 @@
                             <template if.bind="isDontKnow(responses.psychological.selfHarm.interestedInTreatment.response)">
                                 &nbsp;does not know if ${pronoun.subject} is interested in psychological treatment.
                             </template>
-                        </template>
-            
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInMood)">
-                            &nbsp;When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} emotional state with the passage of time, ${gender.title} ${claimant.lastName} shared that 
-                            ${moodChangeTypesMap[responses.neuropsychological.physical.changes.changeInMood].format(self)}.
-                        </template>    
+                        </template> 
                     </p>
                 </div>
 
@@ -1941,16 +1938,25 @@
                         </template>
                         
                         <template if.bind="isAnswered(responses.neuropsychological.physical.weight.changed)">
-                            &nbsp;${pronoun.subject | proper} shared that 
                             <template if.bind="isYes(responses.neuropsychological.physical.weight.changed)">
-                                &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)}
-                                <template if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
-                                    ${responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'}
+                                <template if.bind="isAnswered(responses.neuropsychological.physical.weight.changeType)">
+                                    &nbsp;${pronoun.subject | proper} shared that 
+                                    <template if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
+                                        <template if.bind="responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'">
+                                            &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)} ${responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'}
+                                        </template>
+                                        <template else>
+                                            &nbsp;${pronoun.possessiveAdjective} weight has ${responses.neuropsychological.physical.weight.changeType}
+                                        </template>                                        
+                                    </template>
+                                    <template else>
+                                        &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)}
+                                    </template>
+                                    .
                                 </template>
-                                .
                             </template>
                             <template else>
-                                &nbsp;${pronoun.possessiveAdjective} weight has not changed.
+                                &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} weight has not changed.
                             </template>
                         </template>
                         
@@ -2406,7 +2412,14 @@
                         <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInCognition)">
                             When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} cognition with the passage of time, ${gender.title} ${claimant.lastName} shared that 
                             ${cognitiveChangeTypesMap[responses.neuropsychological.physical.changes.changeInCognition].format(self)}.
-                        </template>
+                        </template> 
+                    </p>
+
+                    <p>
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInMood)">
+                            &nbsp;When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} emotional state with the passage of time, ${gender.title} ${claimant.lastName} shared that 
+                            ${moodChangeTypesMap[responses.neuropsychological.physical.changes.changeInMood].format(self)}.
+                        </template>  
                     </p>
                 </div>
 
@@ -2804,7 +2817,7 @@
                         <template if.bind="isAnswered(responses.personalHistory.relationship.status)">
                             &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} is ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
                             <template if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-                                <template if.bind="isAnswered(responses.personalHistory.relationship.marriageLength.value)">
+                                <template if.bind="responses.personalHistory.relationship.marriageLength.value">
                                     &nbsp;for ${getAgeTextForCurrentContext(responses.personalHistory.relationship.marriageLength) & signal:'marriage-length-changed'} now
                                 </template>
                                 <template if.bind="relationshipStatusesMap[responses.personalHistory.relationship.status].isMarried & signal:'relationship-status-changed'">
@@ -2814,10 +2827,13 @@
                                     &nbsp;with
                                 </template>
                                  &nbsp;${pronoun.possessiveAdjective} 
-                                 <template if.bind="isAnswered(responses.personalHistory.relationship.partnerAge)">
+                                 <template if.bind="responses.personalHistory.relationship.partnerAge">
                                     &nbsp;${responses.personalHistory.relationship.partnerAge}-year-old partner
                                  </template>
-                                 <template if.bind="isAnswered(responses.personalHistory.relationship.partnerJobTitle)">
+                                 <template else>
+                                    &nbsp;partner
+                                 </template>
+                                 <template if.bind="responses.personalHistory.relationship.partnerJobTitle">
                                     &nbsp;who has experience working as ${responses.personalHistory.relationship.partnerJobTitle}
                                  </template>
                             </template>
@@ -3092,7 +3108,7 @@
                 </div>
 
                 <hr>
-            -->
+            
                 <div class="uk-margin-remove uk-width-1-2">
                     Did your parents separate or divorce?
                 </div>
@@ -3213,7 +3229,7 @@
                 </div>
 
                 <hr if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
-
+                -->
                 <div class="uk-margin-remove uk-width-1-1">
                     Have you (or your family) ever been diagnosed with any of the following:
                 </div>
@@ -3244,7 +3260,7 @@
                         </tr>
                     </tbody>
                 </table>
-
+                <!--
                 <div class="uk-margin-remove uk-width-1-2">
                     How many sons do you have?
                 </div>
@@ -3324,7 +3340,7 @@
                 </div>
 
                 <hr if.bind="childCount > 0 & signal:'child-count-changed'">
-
+                -->
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <!-- Father / Mother / Brothers / Sisters / Sons / Daughters -->
                     <p>
@@ -3459,8 +3475,7 @@
                             </template>
                             .
                         </template>
-                    -->
-            
+
                         <template if.bind="isAnswered(responses.personalHistory.didParentsSeparateOrDivorce)">
                             &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} parents 
                             <template if.bind="isYes(responses.personalHistory.didParentsSeparateOrDivorce)">
@@ -3563,7 +3578,7 @@
                                 </template>
                             </template>
                         </template>
-
+                        -->
                         <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
                             &nbsp;When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
                             
@@ -3610,5 +3625,7 @@
         </fieldset>
 
         <button type="button" class="uk-button uk-button-primary" click.delegate="save()">Save</button>
+        &nbsp;
+        <button type="button" class="uk-button uk-button-danger" click.delegate="delete()">Delete</button>
     </div>
 </template>

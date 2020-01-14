@@ -42,5 +42,16 @@ namespace PsychologicalServices.Api.Controllers
 
             return Ok(result);
         }
+
+        [RightAuthorize(StaticRights.DeleteAssessmentNote)]
+        [Route("{assessmentId}/{name}")]
+        [HttpDelete]
+        [ResponseType(typeof(DeleteResult))]
+        public IHttpActionResult Delete(int assessmentId, string name)
+        {
+            var result = _assessmentService.DeleteAssessmentTestingResults(assessmentId, name);
+
+            return Ok(result);
+        }
     }
 }
