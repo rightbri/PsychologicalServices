@@ -18,6 +18,8 @@ export class ArbitrationInvoices {
 	}
 	
 	createInvoice(arbitration) {
+		arbitration.canCreateInvoice = false;
+		
 		this.dataRepository.createArbitrationInvoice(arbitration.arbitrationId)
 			.then(data => {
 				let invoice = data;

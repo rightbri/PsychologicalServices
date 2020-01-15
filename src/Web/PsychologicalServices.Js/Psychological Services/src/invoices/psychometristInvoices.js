@@ -18,6 +18,8 @@ export class PsychometristInvoices {
 	}
 	
 	createInvoice(psychometristPeriod) {
+		psychometristPeriod.canCreateInvoice = false;
+		
 		this.dataRepository.createPsychometristInvoice(this.user.company.companyId, psychometristPeriod.payableToId, psychometristPeriod.startDate, psychometristPeriod.endDate)
 			.then(data => {
 				let invoice = data;

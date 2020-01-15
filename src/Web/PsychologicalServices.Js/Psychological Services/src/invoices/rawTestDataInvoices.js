@@ -18,6 +18,8 @@ export class RawTestDataInvoices {
 	}
 	
 	createInvoice(rawTestData) {
+		rawTestData.canCreateInvoice = false;
+		
 		this.dataRepository.createRawTestDataInvoice(rawTestData.rawTestDataId)
 			.then(data => {
 				let invoice = data;

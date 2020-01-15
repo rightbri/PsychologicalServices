@@ -39,6 +39,8 @@ export class ConsultingInvoices {
 	}
 	
 	createInvoice(consultingAgreement) {
+		consultingAgreement.canCreateInvoice = false;
+		
 		this.dataRepository.createConsultingInvoice(consultingAgreement.consultingAgreementId, consultingAgreement.year, consultingAgreement.month)
 			.then(data => {
 				let invoice = data;

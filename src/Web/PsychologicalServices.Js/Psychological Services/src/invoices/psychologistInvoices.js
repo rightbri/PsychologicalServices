@@ -18,6 +18,8 @@ export class PsychologistInvoices {
 	}
 	
 	createInvoice(appointment) {
+		appointment.canCreateInvoice = false;
+		
 		this.dataRepository.createPsychologistInvoice(appointment.appointmentId)
 			.then(data => {
 				let invoice = data;
