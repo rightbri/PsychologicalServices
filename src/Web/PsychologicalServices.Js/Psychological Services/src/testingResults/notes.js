@@ -695,13 +695,19 @@ export class Notes {
         return value && context && context.currentStateIssuesMap[value].format(context);
     }
 
+    currentStateIssuesSorted(issues) {
+        let issuesSorted = issues.slice().sort((a, b) => a && b ? this.currentStateIssuesMap[a].sort - this.currentStateIssuesMap[b].sort : 0);
+
+        return issuesSorted;
+    }
+
     getCurrentStateIssues() {
         let data = {
-            "physical": { "description": "Physical", "value": "physical", "format": function(context) { return `Physical issues`; } },
-            "pain": { "description": "Pain", "value": "pain", "format": function(context) { return `Pain`; } },
-            "apathy": { "description": "Apathy", "value": "apathy", "format": function(context) { return `Apathy`; } },
-            "mental": { "description": "Mental", "value": "mental", "format": function(context) { return `Mental health issues`; } },
-            "cognitive": { "description": "Cognitive", "value": "cognitive", "format": function(context) { return `Cognition`; } }
+            "physical": { "description": "Physical", "value": "physical", "sort": 1, "format": function(context) { return `Physical issues`; } },
+            "pain": { "description": "Pain", "value": "pain", "sort": 2, "format": function(context) { return `Pain`; } },
+            "apathy": { "description": "Apathy", "value": "apathy", "sort": 3, "format": function(context) { return `Apathy`; } },
+            "mental": { "description": "Mental", "value": "mental", "sort": 4, "format": function(context) { return `Mental health issues`; } },
+            "cognitive": { "description": "Cognitive", "value": "cognitive", "sort": 5, "format": function(context) { return `Cognition`; } }
         };
 
         return getPromise(data);

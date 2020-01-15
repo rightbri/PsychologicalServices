@@ -2512,7 +2512,7 @@
                                             </template>
                                         </td>
                                         <td class="uk-padding-remove-vertical" style="text-align:center;">
-                                            ${task.issues | arrayToString:{"format":currentStateIssueTextWithContext} & signal:'current-state-task-changed'}
+                                            ${currentStateIssuesSorted(task.issues) | arrayToString:{"format":currentStateIssueTextWithContext} & signal:'current-state-task-changed'}
                                         </td>
                                     </template>
                                 </tr>
