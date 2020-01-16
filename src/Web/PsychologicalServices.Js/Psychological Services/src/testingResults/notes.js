@@ -417,7 +417,9 @@ export class Notes {
             "adhd": { "description": "ADHD/ADD", "value": "adhd", "format": function(context) { return `ADHD/ADD`; } },
             "dementia": { "description": "Alzheimer’s/Dementia", "value": "dementia", "format": function(context) { return `Alzheimer's/dementia`; } },
             "bipolar": { "description": "Bipolar", "value": "bipolar", "format": function(context) { return `bipolar disorder`; } },
+            "schizophrenia": { "description": "Schizophrenia", "value": "schizophrenia", "format": function(context) { return `schizophrenia`; } },
             "depression": { "description": "Depression", "value": "depression", "format": function(context) { return `depression`; } },
+            "anxiety": { "description": "Anxiety", "value": "anxiety", "format": function(context) { return `anxiety`; } },
             "epilepsy": { "description": "Epilepsy", "value": "epilepsy", "format": function(context) { return `epilepsy`; } },
             "learningDisorder": { "description": "Learning Disorder", "value": "learningDisorder", "format": function(context) { return `learning disorder`; } }
         };
@@ -1587,7 +1589,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "9";
+    return "10";
 }
 
 function upgrade(responses, toVersion) {
@@ -1624,6 +1626,17 @@ function upgrade_8_to_9(responses) {
     }
     
     responses.version = "9";
+
+    return responses;
+}
+
+function upgrade_9_to_10(responses) {
+
+    responses.personalHistory.neurologicalOrPsychiatricDiseases.splice(3, 0, { "self": null, "family": null, "value": "schizophrenia" });
+
+    responses.personalHistory.neurologicalOrPsychiatricDiseases.splice(5, 0, { "self": null, "family": null, "value": "anxiety" });
+    
+    responses.version = "10";
 
     return responses;
 }
@@ -1682,7 +1695,9 @@ function getNewResponses() {
                 { "self": null, "family": null, "value": "adhd" },
                 { "self": null, "family": null, "value": "dementia" },
                 { "self": null, "family": null, "value": "bipolar" },
+                { "self": null, "family": null, "value": "schizophrenia" },
                 { "self": null, "family": null, "value": "depression" },
+                { "self": null, "family": null, "value": "anxiety" },
                 { "self": null, "family": null, "value": "epilepsy" },
                 { "self": null, "family": null, "value": "learningDisorder" }
             ],

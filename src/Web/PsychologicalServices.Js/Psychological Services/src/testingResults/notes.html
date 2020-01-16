@@ -1818,7 +1818,7 @@
                     <p>
                         <template if.bind="anySelectedVisualSpatialIssues || anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
                             <template if.bind="anySelectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
-                                &nbsp;When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has experienced:
+                                When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has experienced:
                                 ${selectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'visual-spatial-issue-changed'}. 
                                 <template if.bind="anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
                                     &nbsp;Upon inquiry, ${pronoun.subject} denied 
@@ -1833,7 +1833,7 @@
                                 </template>
                             </template>
                             <template else>
-                                &nbsp;When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} denied 
+                                When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} denied 
                                 <template if.bind="deniedAtypicalSymptomology & signal:'visual-spatial-issue-changed'">
                                     &nbsp;having any atypical symptomatology or experiencing any: 
                                     ${unselectedVisualSpatialIssues | filter:notAtypical | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or","delimiter":"; "} & signal:'visual-spatial-issue-changed'}.
@@ -2278,36 +2278,49 @@
                                 .
                             </template>
                             <template else>
-                                &nbsp;${pronoun.subject | proper} denied having a pre-accident history of headaches.
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
-                            &nbsp;${gender.title} ${claimant.lastName} 
-                            <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
-                                &nbsp;also expressed that ${pronoun.subject} currently experiences migraines.
-                            </template>
-                            <template else>
-                                &nbsp;denied experiencing migraines at the present time.
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
-                            <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
-                                &nbsp;${pronoun.subject | proper} acknowledged pre-accident history of migraines
-                                <template if.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident">
-                                    <template if.bind="isYes(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident)">
-                                        , adding that ${pronoun.possessiveAdjective} migraines have 
-                                    </template>
-                                    <template else>
-                                        , but indicated that ${pronoun.possessiveAdjective} migraines have not 
-                                    </template>
-                                    &nbsp;worsened since the subject accident
+                                &nbsp;${pronoun.subject | proper}
+                                <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
+                                    &nbsp;also
                                 </template>
-                                .
+                                &nbsp;denied having a pre-accident history of headaches.
                             </template>
-                            <template else>
-                                &nbsp;${pronoun.subject | proper} denied having any pre-accident history of migraines.
+                        </template>
+                        
+                        <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent) && isNo(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                            &nbsp;${gender.title} ${claimant.lastName}
+                            <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent) && isNo(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
+                                &nbsp;further
+                            </template>
+                            &nbsp;denied experiencing migraines at the present time or having any pre-accident history of migraines.
+                        </template>
+                        <template else>
+                            <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
+                                &nbsp;${gender.title} ${claimant.lastName} 
+                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
+                                    &nbsp;also expressed that ${pronoun.subject} currently experiences migraines.
+                                </template>
+                                <template else>
+                                    &nbsp;denied experiencing migraines at the present time.
+                                </template>
+                            </template>
+                            
+                            <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                                    &nbsp;${pronoun.subject | proper} acknowledged pre-accident history of migraines
+                                    <template if.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident">
+                                        <template if.bind="isYes(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident)">
+                                            , adding that ${pronoun.possessiveAdjective} migraines have 
+                                        </template>
+                                        <template else>
+                                            , but indicated that ${pronoun.possessiveAdjective} migraines have not 
+                                        </template>
+                                        &nbsp;worsened since the subject accident
+                                    </template>
+                                    .
+                                </template>
+                                <template else>
+                                    &nbsp;${pronoun.subject | proper} denied having any pre-accident history of migraines.
+                                </template>
                             </template>
                         </template>
                     </p>
@@ -3580,7 +3593,7 @@
                         </template>
                         -->
                         <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
-                            &nbsp;When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
+                            When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
                             
                             <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
                                 &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally has been diagnosed with ${selectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
