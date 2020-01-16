@@ -29,6 +29,7 @@ export class EditInvoice {
             return this.dataRepository.getInvoice(params.id)
                 .then(data => {
 					this.invoice = data;
+					this.canSendInvoiceDocument = this.invoice.documents && this.invoice.documents.some(x => x);
 
 					this.calculateTotals();
 					
@@ -138,6 +139,8 @@ export class EditInvoice {
 	}
 
 	sendInvoiceDocument(invoiceDocument) {
+		this.canSendInvoiceDocument = false;
+
 		this.dataRepository.sendInvoiceDocument(invoiceDocument.invoiceDocumentId)
 			.then(result => {
 				if (result.success) {
@@ -151,6 +154,8 @@ export class EditInvoice {
 						result.errors.map((value) => value.message).reduce((accumulator, value) => "-" + value + '\n')
 					);
 				}
+
+				this.canSendInvoiceDocument = this.invoice.documents && this.invoice.documents.some(x => x);
 			});
 	}
 }

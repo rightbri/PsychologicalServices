@@ -159,7 +159,7 @@
 										${document.createDate | dateFormat:config.longDateTimeFormat}
 									</td>
 									<td if.bind="invoice.invoiceType.canSend">
-										<button type="button" class="uk-button uk-button-default" click.delegate="sendInvoiceDocument(document)" if.bind="$first">
+										<button type="button" class="uk-button uk-button-default" click.delegate="sendInvoiceDocument(document)" if.bind="$first && canSendInvoiceDocument">
 											<i class="fa fa-envelope-o"></i>
 										</button>
 									</td>
