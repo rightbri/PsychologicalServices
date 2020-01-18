@@ -1,4 +1,4 @@
-import {inject} from 'aurelia-framework';
+import {inject, computedFrom} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {DataRepository} from 'services/dataRepository';
 import {Config} from 'common/config';
@@ -29,7 +29,6 @@ export class EditInvoice {
             return this.dataRepository.getInvoice(params.id)
                 .then(data => {
 					this.invoice = data;
-					this.canSendInvoiceDocument = this.invoice.documents && this.invoice.documents.some(x => x);
 
 					this.calculateTotals();
 					
@@ -139,8 +138,6 @@ export class EditInvoice {
 	}
 
 	sendInvoiceDocument(invoiceDocument) {
-		this.canSendInvoiceDocument = false;
-
 		this.dataRepository.sendInvoiceDocument(invoiceDocument.invoiceDocumentId)
 			.then(result => {
 				if (result.success) {
@@ -154,8 +151,11 @@ export class EditInvoice {
 						result.errors.map((value) => value.message).reduce((accumulator, value) => "-" + value + '\n')
 					);
 				}
-
-				this.canSendInvoiceDocument = this.invoice.documents && this.invoice.documents.some(x => x);
 			});
+	}
+
+	@computedFrom('invoice.documents')
+	get canSendInvoiceDocument() {
+		return this.invoice.documents && this.invoice.documents.some(x => x);
 	}
 }
