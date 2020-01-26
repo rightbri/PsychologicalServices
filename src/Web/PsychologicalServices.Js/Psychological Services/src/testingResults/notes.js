@@ -1652,6 +1652,14 @@ function upgrade_10_to_11(responses) {
     if (index === -1) {
         responses.neuropsychological.currentState.tasks.splice(1, 0, { "ability": null, "issues": [], "isNA": false, "value": "housekeeping" });
     }
+
+    if (!responses.psychological.travel.hasOwnProperty("nervousPedestrian")) {
+        responses.psychological.travel.nervousPedestrian = null;
+    }
+    
+    if (!responses.psychological.travel.hasOwnProperty("anxiousPedestrian")) {
+        responses.psychological.travel.anxiousPedestrian = null;
+    }
     
     responses.version = "11";
 
@@ -1828,6 +1836,8 @@ function getNewResponses() {
                 "anxiousDriver": null,
                 "nervousPassenger": null,
                 "anxiousPassenger": null,
+                "nervousPedestrian": null,
+                "anxiousPedestrian": null,
                 "usePhantomBrake": null,
                 "vigilantWhenTravelling": null,
                 "avoidSceneOfAccident": null,

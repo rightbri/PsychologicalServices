@@ -991,6 +991,20 @@
                     </label>
                 </div>
 
+                <div class="uk-margin-remove uk-width-1-2"></div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.psychological.travel.nervousPedestrian" value.bind="true" change.delegate="changed('travel-changed')"> Nervous Pedestrian
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.psychological.travel.anxiousPedestrian" value.bind="true" change.delegate="changed('travel-changed')"> Anxious Pedestrian
+                    </label>
+                </div>
+
                 <hr>
                 
                 <div class="uk-margin-remove uk-width-3-4">
@@ -1085,6 +1099,20 @@
                                 &nbsp;anxious
                             </template>
                             &nbsp;when ${pronoun.subject} is traveling as a passenger.
+                        </template>
+                
+                        <template if.bind="responses.psychological.travel.nervousPedestrian || responses.psychological.travel.anxiousPedestrian">
+                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} is 
+                            <template if.bind="responses.psychological.travel.nervousPedestrian && responses.psychological.travel.anxiousPedestrian">
+                                &nbsp;a nervous and anxious
+                            </template>
+                            <template if.bind="responses.psychological.travel.nervousPedestrian && !responses.psychological.travel.anxiousPedestrian">
+                                &nbsp;a nervous
+                            </template>
+                            <template if.bind="!responses.psychological.travel.nervousPedestrian && responses.psychological.travel.anxiousPedestrian">
+                                &nbsp;an anxious
+                            </template>
+                            &nbsp;pedestrian.
                         </template>
                 
                         <template if.bind="isAnswered(responses.psychological.travel.usePhantomBrake)">
