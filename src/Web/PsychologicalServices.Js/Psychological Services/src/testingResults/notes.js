@@ -1436,6 +1436,13 @@ export class Notes {
         return any;
     }
 
+    @computedFrom('responses.neuropsychological.physical.pain.currentPainAreas')
+    get multipleCurrentPainAreas() {
+        let areas = this.responses.neuropsychological.physical.pain.currentPainAreas.filter(x => x && x.length > 0);
+
+        return areas && areas.length > 1;
+    }
+
     addLanguage() {
         this.responses.personalHistory.languages.push("");
     }
@@ -1482,6 +1489,10 @@ export class Notes {
 
     addPreAccidentRecreationalActivity() {
         this.responses.neuropsychological.currentState.preAccidentRecreationalActivities.push("");
+    }
+
+    addCurrentPainArea() {
+        this.responses.neuropsychological.physical.pain.currentPainAreas.push("");
     }
 
     @computedFrom(
@@ -1661,6 +1672,12 @@ function upgrade_10_to_11(responses) {
         responses.psychological.travel.anxiousPedestrian = null;
     }
     
+    if (!responses.neuropsychological.physical.pain.hasOwnProperty("currentPainAreas")) {
+        responses.neuropsychological.physical.pain.currentPainAreas = [responses.neuropsychological.physical.pain.currentPainArea];
+
+        delete responses.neuropsychological.physical.pain.currentPainArea;
+    }
+
     responses.version = "11";
 
     return responses;
@@ -1964,7 +1981,7 @@ function getNewResponses() {
                 },
                 "pain": {
                     "currentlyExperiencePain": null,
-                    "currentPainArea": "",
+                    "currentPainAreas": [""],
                     "experiencePainPriorToAccident": null
                 },
                 "changes": {

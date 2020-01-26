@@ -2368,17 +2368,27 @@
 
                 <hr>
                 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)"></div>
-                
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
-                    Where do you currently experience pain?
-                </div>
+                <template if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        Where do you currently experience pain?
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
-                    <input type="text" name="currentPainArea" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.pain.currentPainArea" input.delegate="changed('current-pain-changed')" />
-                </div>
-                
-                <hr if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addCurrentPainArea()">
+                            Add
+                        </button>
+                    </div>
+    
+                    <template repeat.for="i of responses.neuropsychological.physical.pain.currentPainAreas.length">
+                        <div class="uk-margin-remove-vertical uk-width-1-4">
+                            <label class="uk-form-label">
+                                <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.physical.pain.currentPainAreas[i]" input.delegate="changed('current-pain-changed') & debounce:500" />
+                            </label>
+                        </div>
+                    </template>
+
+                    <hr>
+                </template>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Did you experience pain prior to the accident?
@@ -2398,8 +2408,10 @@
                         <template if.bind="isAnswered(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
                             <template if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
                                 When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences pain
-                                <template if.bind="responses.neuropsychological.physical.pain.currentPainArea">
-                                    &nbsp;in the following area(s): ${responses.neuropsychological.physical.pain.currentPainArea}
+                                <template if.bind="responses.neuropsychological.physical.pain.currentPainAreas.length">
+                                    &nbsp;in the following area
+                                    <template if.bind="multipleCurrentPainAreas & signal:'current-pain-changed'">s</template>
+                                    : ${responses.neuropsychological.physical.pain.currentPainAreas | arrayToString & signal:'current-pain-changed'}
                                 </template>
                                 .
                             </template>
