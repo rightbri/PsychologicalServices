@@ -290,6 +290,13 @@ export class Notes {
                 "object": "her",
                 "possessiveAdjective": "her",
                 "possessivePronoun": "hers"
+            },
+            {
+                "gender": "U",
+                "subject": "they",
+                "object": "their",
+                "possessiveAdjective": "their",
+                "possessivePronoun": "theirs"
             }
         ];
 
@@ -330,7 +337,8 @@ export class Notes {
     getGenders() {
         let data = [
             { "abbreviation": "M", "description": "Male", "title": "Mr." },
-            { "abbreviation": "F", "description": "Female", "title": "Ms." }
+            { "abbreviation": "F", "description": "Female", "title": "Ms." },
+            { "abbreviation": "U", "description": "Unkonwn", "title": "Mr." }
         ];
 
         return getPromise(data);
@@ -660,19 +668,12 @@ export class Notes {
     getCurrentStateTasks() {
         let data = {
             "personalCare": { "description": "Personal care", "value": "personalCare" },
-            "bathing": { "description": "Bathing", "value": "bathing" },
-            "grooming": { "description": "Grooming", "value": "grooming" },
-            "haircare": { "description": "Haircare", "value": "haircare" },
-            "exercising": { "description": "Exercising", "value": "exercising" },
-            "indoorChores": { "description": "Housekeeping", "value": "indoorChores" },
-            "outdoorChores": { "description": "Outdoor chores", "value": "outdoorChores" },
+            "housekeeping": { "description": "Housekeeping", "value": "housekeeping" },
+            "outdoorChores": { "description": "Outdoor Tasks", "value": "outdoorChores" },
             "watchingTv": { "description": "Watching TV", "value": "watchingTv" },
-            "volunteering": { "description": "Volunteering", "value": "volunteering" },
-            "religiousActivities": { "description": "Religious Activities", "value": "religiousActivities" },
-            "vacationing": { "description": "Vacationing", "value": "vacationing" },
             "banking": { "description": "Banking", "value": "banking" },
             "caregiving": { "description": "Caregiving", "value": "caregiving" },
-            "alone": { "description": "Left alone", "value": "alone" }
+            "alone": { "description": "Being Left alone", "value": "alone" }
         };
 
         return getPromise(data);
@@ -1589,7 +1590,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "10";
+    return "11";
 }
 
 function upgrade(responses, toVersion) {
@@ -1637,6 +1638,22 @@ function upgrade_9_to_10(responses) {
     responses.personalHistory.neurologicalOrPsychiatricDiseases.splice(5, 0, { "self": null, "family": null, "value": "anxiety" });
     
     responses.version = "10";
+
+    return responses;
+}
+
+function upgrade_10_to_11(responses) {
+
+    let currentStateTasks = [ "personalCare", "housekeeping", "outdoorChores", "watchingTv", "banking", "caregiving", "alone" ];
+
+    responses.neuropsychological.currentState.tasks = responses.neuropsychological.currentState.tasks.filter(t => currentStateTasks.findIndex(x => x === t.value) > -1);
+
+    let index = responses.neuropsychological.currentState.tasks.findIndex(item => item.value === "housekeeping");
+    if (index === -1) {
+        responses.neuropsychological.currentState.tasks.splice(1, 0, { "ability": null, "issues": [], "isNA": false, "value": "housekeeping" });
+    }
+    
+    responses.version = "11";
 
     return responses;
 }
@@ -1948,16 +1965,9 @@ function getNewResponses() {
             "currentState": {
                 "tasks": [
                     { "ability": null, "issues": [], "isNA": false, "value": "personalCare" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "bathing" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "grooming" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "haircare" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "exercising" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "indoorChores" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "housekeeping" },
                     { "ability": null, "issues": [], "isNA": false, "value": "outdoorChores" },
                     { "ability": null, "issues": [], "isNA": false, "value": "watchingTv" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "volunteering" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "religiousActivities" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "vacationing" },
                     { "ability": null, "issues": [], "isNA": false, "value": "banking" },
                     { "ability": null, "issues": [], "isNA": false, "value": "caregiving", "isCaregiving": true },
                     { "ability": null, "issues": [], "isNA": false, "value": "alone" }
