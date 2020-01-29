@@ -314,33 +314,33 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)"></div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Do you have a plan to act on these thoughts?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="psychologicalSelfHarmPlanToAct" class="uk-radio" checked.bind="responses.psychological.selfHarm.planToAct.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="psychologicalSelfHarmPlanToAct" class="uk-radio" checked.bind="responses.psychological.selfHarm.planToAct.response" value.bind="response.value" disabled.bind="!isYes(responses.psychological.selfHarm.currentThoughts.response)" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)">
+                <hr>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)"></div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Have you told your doctor?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="psychologicalSelfHarmToldDoctor" class="uk-radio" checked.bind="responses.psychological.selfHarm.toldDoctor.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="psychologicalSelfHarmToldDoctor" class="uk-radio" checked.bind="responses.psychological.selfHarm.toldDoctor.response" value.bind="response.value" disabled.bind="!isYes(responses.psychological.selfHarm.currentThoughts.response)" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Have you ever hurt yourself on purpose?
@@ -580,21 +580,21 @@
                     <hr>
                 </template>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="worriesAboutFinances & signal:'worry-changed'">
+                <div class="uk-margin-remove uk-width-1-2">
                     Amount of debt
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="worriesAboutFinances & signal:'worry-changed'">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.psychological.dontKnowAmountOfDebt" value.bind="true" />&nbsp;Don't know&nbsp;
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.psychological.dontKnowAmountOfDebt" value.bind="true" disabled.bind="!worriesAboutFinances & signal:'worry-changed'" />&nbsp;Don't know&nbsp;
                     </label>
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="worriesAboutFinances & signal:'worry-changed'">
-                    <input type="text" name="amountOfDebt" class="uk-input uk-form-small" value.bind="responses.psychological.amountOfDebt" disabled.bind="responses.psychological.dontKnowAmountOfDebt" />
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="amountOfDebt" class="uk-input uk-form-small" value.bind="responses.psychological.amountOfDebt" disabled.bind="(!worriesAboutFinances || responses.psychological.dontKnowAmountOfDebt) & signal:'worry-changed'" />
                 </div>
 
-                <hr if.bind="worriesAboutFinances & signal:'worry-changed'">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Do you currently experience panic attacks?
@@ -704,47 +704,47 @@
 
                 <hr>
 
-                <div class="uk-marin-remove uk-width-1-4" if.bind="isYes(responses.psychological.hallucinations)"></div>
+                <div class="uk-marin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.psychological.hallucinations)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Are the hallucinations auditory?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.hallucinations)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="hallucinationsAuditory" class="uk-radio" checked.bind="responses.psychological.hallucinationsAuditory" value.bind="response.value" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="hallucinationsAuditory" class="uk-radio" checked.bind="responses.psychological.hallucinationsAuditory" value.bind="response.value" disabled.bind="!isYes(responses.psychological.hallucinations)" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.psychological.hallucinations)">
+                <hr>
 
-                <div class="uk-marin-remove uk-width-1-4" if.bind="isYes(responses.psychological.hallucinations)"></div>
+                <div class="uk-marin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.psychological.hallucinations)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Are the hallucinations visual in nature?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.hallucinations)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="hallucinationsVisual" class="uk-radio" checked.bind="responses.psychological.hallucinationsVisual" value.bind="response.value" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="hallucinationsVisual" class="uk-radio" checked.bind="responses.psychological.hallucinationsVisual" value.bind="response.value" disabled.bind="!isYes(responses.psychological.hallucinations)" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.psychological.hallucinations)">
+                <hr>
 
-                <div class="uk-marin-remove uk-width-1-4" if.bind="isYes(responses.psychological.hallucinations)"></div>
+                <div class="uk-marin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.psychological.hallucinations)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Do the hallucinations tell/command you to do something?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.hallucinations)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="hallucinationsCommand" class="uk-radio" checked.bind="responses.psychological.hallucinationsCommand" value.bind="response.value" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="hallucinationsCommand" class="uk-radio" checked.bind="responses.psychological.hallucinationsCommand" value.bind="response.value" disabled.bind="!isYes(responses.psychological.hallucinations)" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.psychological.hallucinations)">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Do you feel that you are being watched/surveilled?
@@ -1079,19 +1079,19 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.travel.abilityToTravel)"></div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.psychological.travel.abilityToTravel)">
+                <div class="uk-margin-remove uk-width-1-4">
                     Is this due to?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2 uk-grid-small uk-child-width-auto uk-grid" if.bind="isYes(responses.psychological.travel.abilityToTravel)">
+                <div class="uk-margin-remove uk-width-1-2 uk-grid-small uk-child-width-auto uk-grid">
                     <label repeat.for="i of travelIssues.length">
-                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.psychological.travel.travelIssues" model.bind="travelIssues[i].value" change.delegate="changed('travel-changed')"> ${travelIssues[i].description}
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.psychological.travel.travelIssues" model.bind="travelIssues[i].value" disabled.bind="!isYes(responses.psychological.travel.abilityToTravel)" change.delegate="changed('travel-changed')"> ${travelIssues[i].description}
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.psychological.travel.abilityToTravel)">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Are you able to drive when you have to?
@@ -1357,13 +1357,13 @@
     
                 <div class="uk-margin-remove uk-width-1-4"></div>
     
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.neuropsychological.problems.memory)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Short Term Memory
                 </div>
     
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.problems.memory)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="problemShortTermMemory" class="uk-radio" checked.bind="responses.neuropsychological.problems.shortTermMemory" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="problemShortTermMemory" class="uk-radio" checked.bind="responses.neuropsychological.problems.shortTermMemory" disabled.bind="!isYes(responses.neuropsychological.problems.memory)" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
     
@@ -1704,15 +1704,15 @@
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.neuropsychological.attention.needToReRead)">
+                <hr>
 
-                <div class="uk-margin-remove uk-width-4-5" if.bind="isYes(responses.neuropsychological.attention.needToReRead)">
+                <div class="uk-margin-remove uk-width-4-5">
                     Are your issues with reading due to:
                 </div>
 
-                <div class="uk-margin-remove uk-margin-left uk-width-1-1 uk-grid-small uk-child-width-auto uk-grid" if.bind="isYes(responses.neuropsychological.attention.needToReRead)">
+                <div class="uk-margin-remove uk-margin-left uk-width-1-1 uk-grid-small uk-child-width-auto uk-grid">
                     <label repeat.for="i of readingIssues.length">
-                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.neuropsychological.attention.readingIssues" value.bind="readingIssues[i].value" change.delegate="changed('reading-issues-changed')"> ${readingIssues[i].description}
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.neuropsychological.attention.readingIssues" value.bind="readingIssues[i].value" disabled.bind="!isYes(responses.neuropsychological.attention.needToReRead)" change.delegate="changed('reading-issues-changed')"> ${readingIssues[i].description}
                     </label>
                 </div>
 
@@ -1742,19 +1742,19 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)"></div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Have you had to reduce the brightness of the screen?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="hadToReduceScreenBrightness" class="uk-radio" checked.bind="responses.neuropsychological.attention.hadToReduceScreenBrightness" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="hadToReduceScreenBrightness" class="uk-radio" checked.bind="responses.neuropsychological.attention.hadToReduceScreenBrightness" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)">
+                <hr>
         
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <p>
@@ -1895,24 +1895,24 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-1" if.bind="isYes(responses.neuropsychological.executive.inappropriateSocialBehavior)">
+                <div class="uk-margin-remove uk-width-1-1">
                     &nbsp;&nbsp;&nbsp;&nbsp;Does this include:
                 </div>
 
                 <template repeat.for="i of responses.neuropsychological.executive.inappropriateSocialBehaviors.length">
-                    <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.executive.inappropriateSocialBehavior)"></div>
+                    <div class="uk-margin-remove uk-width-1-4"></div>
                     
-                    <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.neuropsychological.executive.inappropriateSocialBehavior)">
+                    <div class="uk-margin-remove uk-width-1-2">
                         ${inappropriateSocialBehaviors[$parent.responses.neuropsychological.executive.inappropriateSocialBehaviors[i].value].description}
                     </div>
 
-                    <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.executive.inappropriateSocialBehavior)">
+                    <div class="uk-margin-remove uk-width-1-4">
                         <label repeat.for="response of yesNo">
-                            <input type="radio" name="inappropriateSocialBehaviors-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.neuropsychological.executive.inappropriateSocialBehaviors[i].response" value.bind="response.value" change.delegate="changed('inappropriate-social-behavior-changed')" />&nbsp;${response.description}&nbsp;
+                            <input type="radio" name="inappropriateSocialBehaviors-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.neuropsychological.executive.inappropriateSocialBehaviors[i].response" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.executive.inappropriateSocialBehavior)" change.delegate="changed('inappropriate-social-behavior-changed')" />&nbsp;${response.description}&nbsp;
                         </label>
                     </div>
 
-                    <hr if.bind="isYes(responses.neuropsychological.executive.inappropriateSocialBehavior)">
+                    <hr>
                 </template>
             
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
@@ -2052,27 +2052,27 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.physical.weight.changed)"></div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-3-4" if.bind="isYes(responses.neuropsychological.physical.weight.changed)">
+                <div class="uk-margin-remove uk-width-3-4">
                     <label repeat.for="response of weightChangeTypes">
-                        <input type="radio" name="weightChangeType" class="uk-radio" checked.bind="responses.neuropsychological.physical.weight.changeType" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="weightChangeType" class="uk-radio" checked.bind="responses.neuropsychological.physical.weight.changeType" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.physical.weight.changed)" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.neuropsychological.physical.weight.changed)">
+                <hr>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease"></div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
+                <div class="uk-margin-remove uk-width-1-2">
                     How much has your weight increased/decreased?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
-                    <input type="text" name="weightChangeAmount" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.weight.changeAmount" blur.delegate="changed('weight-change-amount-changed')" />
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="weightChangeAmount" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.weight.changeAmount" disabled.bind="!weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease" blur.delegate="changed('weight-change-amount-changed')" />
                 </div>
 
-                <hr if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Do you have less energy now than before the accident?
@@ -2211,17 +2211,17 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4" if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent">
+                <div class="uk-margin-remove uk-width-3-4">
                     Is the sleep you are getting currently broken?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="brokenSleep" class="uk-radio" checked.bind="responses.neuropsychological.physical.sleep.brokenSleep" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="brokenSleep" class="uk-radio" checked.bind="responses.neuropsychological.physical.sleep.brokenSleep" value.bind="response.value" disabled.bind="!responses.neuropsychological.physical.sleep.amountOfSleepCurrent" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent">
+                <hr>
 
                 <template repeat.for="i of responses.neuropsychological.physical.sleep.issues.length">
                     <div class="uk-margin-remove uk-width-3-4">
@@ -2377,17 +2377,17 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4" if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
+                <div class="uk-margin-remove uk-width-3-4">
                     Have your headaches worsened since the accident?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="changesInHeadachesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="changesInHeadachesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Do you experience migraines?
@@ -2413,17 +2413,17 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4" if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                <div class="uk-margin-remove uk-width-3-4">
                     Have your migraines worsened since the accident?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="changesInMigrainesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="changesInMigrainesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                <hr>
 
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <!-- Headaches / Migraines -->
@@ -2512,27 +2512,25 @@
 
                 <hr>
                 
-                <template if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
-                    <div class="uk-margin-remove uk-width-1-2">
-                        Where do you currently experience pain?
-                    </div>
+                <div class="uk-margin-remove uk-width-1-2">
+                    Where do you currently experience pain?
+                </div>
 
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addCurrentPainArea()">
-                            Add
-                        </button>
-                    </div>
-    
-                    <template repeat.for="i of responses.neuropsychological.physical.pain.currentPainAreas.length">
-                        <div class="uk-margin-remove-vertical uk-width-1-4">
-                            <label class="uk-form-label">
-                                <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.physical.pain.currentPainAreas[i]" input.delegate="changed('current-pain-changed') & debounce:500" />
-                            </label>
-                        </div>
-                    </template>
+                <div class="uk-margin-remove uk-width-1-4">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" disabled.bind="!isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)" click.delegate="addCurrentPainArea()">
+                        Add
+                    </button>
+                </div>
 
-                    <hr>
+                <template repeat.for="i of responses.neuropsychological.physical.pain.currentPainAreas.length">
+                    <div class="uk-margin-remove-vertical uk-width-1-4">
+                        <label class="uk-form-label">
+                            <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.physical.pain.currentPainAreas[i]" disabled.bind="!isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)" input.delegate="changed('current-pain-changed') & debounce:500" />
+                        </label>
+                    </div>
                 </template>
+
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Did you experience pain prior to the accident?
@@ -2660,18 +2658,18 @@
 
                     <hr>
 
-                    <template if.bind="$parent.responses.neuropsychological.currentState.tasks[i].isCaregiving && isCaregivingAbilityAnswered & signal:'current-state-task-changed'">
+                    <template if.bind="$parent.responses.neuropsychological.currentState.tasks[i].isCaregiving">
                         <div class="uk-margin-remove uk-width-1-6"></div>
 
                         <div class="uk-margin-remove uk-width-5-6">
                             Has CAS been involved?&nbsp;
                             <label repeat.for="response of yesNo">
-                                <input type="radio" name="currentlyExperiencePain" class="uk-radio" checked.bind="responses.neuropsychological.currentState.caregivingCasInvolved" value.bind="response.value" change.delegate="changed('current-pain-changed')" />&nbsp;${response.description}&nbsp;
+                                <input type="radio" name="currentlyExperiencePain" class="uk-radio" checked.bind="responses.neuropsychological.currentState.caregivingCasInvolved" value.bind="response.value" disabled.bind="!isCaregivingAbilityAnswered & signal:'current-state-task-changed'" change.delegate="changed('current-pain-changed')" />&nbsp;${response.description}&nbsp;
                             </label>
                         </div>
-                    </template>
 
-                    <hr if.bind="isCaregivingAbilityAnswered & signal:'current-state-task-changed'">
+                        <hr>
+                    </template>
                 </template>
 
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
@@ -2895,19 +2893,19 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                <div class="uk-margin-remove uk-width-1-2">
                     If married or common law, how long have you been in this relationship?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" input.delegate="changed('marriage-length-changed')" />
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" disabled.bind="!isMarriedOrCommonLaw & signal:'relationship-status-changed'" input.delegate="changed('marriage-length-changed')" />
 
                     <label repeat.for="response of ageUnits">
-                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" change.delegate="changed('marriage-length-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" disabled.bind="!isMarriedOrCommonLaw & signal:'relationship-status-changed'" change.delegate="changed('marriage-length-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
                     How old is your partner?
@@ -2941,17 +2939,17 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
+                <div class="uk-margin-remove uk-width-1-2">
                     Have any of your previous relationships been abusive?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
+                <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" disabled.bind="!isNo(responses.personalHistory.relationship.isAbusive)" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isNo(responses.personalHistory.relationship.isAbusive)">
+                <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
                     Have you previously been in a serious relationship?
@@ -2965,33 +2963,33 @@
 
                 <hr>
 
-                <div if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                <div>
                     If you have previously been in a prior serious relationship;
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                <div class="uk-margin-remove uk-width-1-2">
                     How long did that relationship last?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.value" input.delegate="changed('prior-serious-relationship-length-changed')" />
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.value" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" input.delegate="changed('prior-serious-relationship-length-changed')" />
 
                     <label repeat.for="response of ageUnits">
-                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.unit" value.bind="response.value" change.delegate="changed('prior-serious-relationship-length-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.unit" value.bind="response.value" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" change.delegate="changed('prior-serious-relationship-length-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
-                <hr if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                <hr>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                <div class="uk-margin-remove uk-width-1-2">
                     What was the reason that relationship ended?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded" />
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" />
                 </div>
 
-                <hr if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                <hr>
                 
 
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
