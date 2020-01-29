@@ -61,6 +61,8 @@ export class Notes {
         this.currentStateAbilities = [];
         this.currentStateIssues = [];
         this.travelAbilities = [];
+        this.treatmentPrograms = [];
+        this.treatmentProviders = [];
 
         this.self = this;
 
@@ -178,7 +180,15 @@ export class Notes {
                         this.currentStateIssues = this.asArray(data);
                         this.currentStateIssuesMap = data;
                     }),
-                    this.getTravelAbilities().then(data => this.travelAbilities = data)
+                    this.getTravelAbilities().then(data => this.travelAbilities = data),
+                    this.getTreatmentPrograms().then(data => {
+                        this.treatmentPrograms = this.asArray(data);
+                        this.treatmentProgramsMap = data;
+                    }),
+                    this.getTreatmentProviders().then(data => {
+                        this.treatmentProviders = this.asArray(data);
+                        this.treatmentProvidersMap = data;
+                    })
                 ]);
             });
     }
@@ -723,6 +733,33 @@ export class Notes {
             { "description": "Able", "value": "able", "isAble": true },
             { "description": "Skip", "value": null }
         ];
+
+        return getPromise(data);
+    }
+
+    getTreatmentProviders() {
+        let data = {
+            "physiotherapist": { "description": "Physiotherapist", "value": "physiotherapist", "format": function(context) { return `Physiotherapist`; } },
+            "chiropractor": { "description": "Chiropractor", "value": "chiropractor", "format": function(context) { return `Chiropractor`; } },
+            "massageTherapist": { "description": "Massage Therapist", "value": "massageTherapist", "format": function(context) { return `Massage Therapist`; } },
+            "acupuncturist": { "description": "Acupuncturist", "value": "acupuncturist", "format": function(context) { return `Acupuncturist`; } },
+            "osteopathicProvider": { "description": "Osteopathic Provider", "value": "osteopathicProvider", "format": function(context) { return `Osteopathic Provider`; } },
+            "naturopathicProvider": { "description": "Naturopathic Provider", "value": "naturopathicProvider", "format": function(context) { return `Naturopathic Provider`; } },
+            "occupationalTherapist": { "description": "Occupational Therapist", "value": "occupationalTherapist", "format": function(context) { return `Occupational Therapist`; } },
+            "rehabilitationWorker": { "description": "Rehabilitation Worker", "value": "rehabilitationWorker", "format": function(context) { return `Rehabilitation Worker`; } },
+            "supportWorker": { "description": "Support Worker", "value": "supportWorker", "format": function(context) { return `Support Worker`; } },
+            "speechLanguagePathologist": { "description": "Speech Language Pathologist", "value": "speechLanguagePathologist", "format": function(context) { return `Speech Language Pathologist`; } },
+            "caseManager": { "description": "Case Manager", "value": "caseManager", "format": function(context) { return `Case Manager`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getTreatmentPrograms() {
+        let data = {
+            "painProgram": { "description": "Pain Program", "past": null, "current": null, "beneficial": null, "value": "painProgram", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
+            "driversRehab": { "description": "Driver's Rehab", "past": null, "current": null, "beneficial": null, "value": "driversRehab", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
+        };
 
         return getPromise(data);
     }
@@ -1407,6 +1444,128 @@ export class Notes {
         return this.unselectedFamilyStressors.some(item => item);
     }
 
+
+    getTreatmentProvidersForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.treatment.initial.providers
+            .filter(item => criteria(item))
+            .map(item => {
+                return this.treatmentProvidersMap[item.value];
+            });
+
+        return data;
+    }
+
+    @computedFrom('this.responses.treatment.initial.providers')
+    get selectedCurrentTreatmentProviders() {
+        return this.getTreatmentProvidersForResponses(item => item.current !== null && this.isYes(item.current.response));
+    }
+
+    @computedFrom('this.responses.treatment.initial.providers')
+    get anySelectedCurrentTreatmentProviders() {
+        return this.selectedCurrentTreatmentProviders.some(item => item);
+    }
+
+    @computedFrom('this.responses.treatment.initial.providers')
+    get selectedPastTreatmentProviders() {
+        return this.getTreatmentProvidersForResponses(item => item.past !== null && this.isYes(item.past.response));
+    }
+
+    @computedFrom('this.responses.treatment.initial.providers')
+    get anySelectedPastTreatmentProviders() {
+        return this.selectedPastTreatmentProviders.some(item => item);
+    }
+
+    @computedFrom('this.responses.treatment.initial.providers')
+    get unselectedPastTreatmentProviders() {
+        return this.getTreatmentProvidersForResponses(item => item.past !== null && this.isNo(item.past.response));
+    }
+
+    @computedFrom('this.responses.treatment.initial.providers')
+    get anyUnselectedPastTreatmentProviders() {
+        return this.unselectedPastTreatmentProviders.some(item => item);
+    }
+
+    @computedFrom(
+        'this.responses.treatment.initial.providers',
+        'this.responses.treatment.initial.programs'
+    )
+    get selectedBeneficialTreatments() {
+        return this.getTreatmentProvidersForResponses(item => item.beneficial !== null && this.isYes(item.beneficial.response)
+        ).concat(this.getTreatmentProgramsForResponses(item => item.beneficial !== null && this.isYes(item.beneficial.response)));
+    }
+
+    @computedFrom(
+        'this.responses.treatment.initial.providers',
+        'this.responses.treatment.initial.programs'
+    )
+    get anySelectedBeneficialTreatments() {
+        return this.selectedBeneficialTreatments.some(item => item);
+    }
+
+    @computedFrom(
+        'this.responses.treatment.initial.providers',
+        'this.responses.treatment.initial.programs'
+    )
+    get unselectedBeneficialTreatments() {
+        return this.getTreatmentProvidersForResponses(item => item.beneficial !== null && this.isNo(item.beneficial.response)
+        ).concat(this.getTreatmentProgramsForResponses(item => item.beneficial !== null && this.isNo(item.beneficial.response)));
+    }
+
+    @computedFrom(
+        'this.responses.treatment.initial.providers',
+        'this.responses.treatment.initial.programs'
+    )
+    get anyUnselectedBeneficialTreatments() {
+        return this.unselectedBeneficialTreatments.some(item => item);
+    }
+
+    getTreatmentProgramsForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.treatment.initial.programs
+            .filter(item => criteria(item))
+            .map(item => {
+                return this.treatmentProgramsMap[item.value];
+            });
+
+        return data;
+    }
+
+    @computedFrom('this.responses.treatment.initial.programs')
+    get unselectedPastTreatmentPrograms() {
+        return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isNo(item.past.response));
+    }
+
+    @computedFrom('this.responses.treatment.initial.programs')
+    get anyUnselectedPastTreatmentPrograms() {
+        return this.unselectedPastTreatmentPrograms.some(item => item);
+    }
+
+    @computedFrom('this.responses.treatment.initial.programs')
+    get unselectedPainProgram() {
+        return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isNo(item.past.response) && this.treatmentProgramsMap[item.value].isPainProgram).some(item => item);
+    }
+    
+    @computedFrom('this.responses.treatment.initial.programs')
+    get unselectedDriversRehabProgram() {
+        return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isNo(item.past.response) && this.treatmentProgramsMap[item.value].isDriversRehab).some(item => item);
+    }
+
+    @computedFrom('this.responses.treatment.initial.programs')
+    get selectedPainProgram() {
+        return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isYes(item.past.response) && this.treatmentProgramsMap[item.value].isPainProgram).some(item => item);
+    }
+    
+    @computedFrom('this.responses.treatment.initial.programs')
+    get selectedDriversRehabProgram() {
+        return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isYes(item.past.response) && this.treatmentProgramsMap[item.value].isDriversRehab).some(item => item);
+    }
+
+
+
+
     any(items) {
         return items && items.some(item => item);
     }
@@ -1438,6 +1597,8 @@ export class Notes {
 
     @computedFrom('responses.neuropsychological.physical.pain.currentPainAreas')
     get multipleCurrentPainAreas() {
+        if (!this.responses) { return false; }
+
         let areas = this.responses.neuropsychological.physical.pain.currentPainAreas.filter(x => x && x.length > 0);
 
         return areas && areas.length > 1;
@@ -1601,7 +1762,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "11";
+    return "12";
 }
 
 function upgrade(responses, toVersion) {
@@ -1679,6 +1840,37 @@ function upgrade_10_to_11(responses) {
     }
 
     responses.version = "11";
+
+    return responses;
+}
+
+function upgrade_11_to_12(responses) {
+    
+    if (!responses.hasOwnProperty('treatment')) {
+        responses.treatment = {
+            "initial": {
+                "providers": [
+                    { "past": null, "current": null, "beneficial": null, "value": "physiotherapist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "chiropractor" },
+                    { "past": null, "current": null, "beneficial": null, "value": "massageTherapist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "acupuncturist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "osteopathicProvider" },
+                    { "past": null, "current": null, "beneficial": null, "value": "naturopathicProvider" },
+                    { "past": null, "current": null, "beneficial": null, "value": "occupationalTherapist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "rehabilitationWorker" },
+                    { "past": null, "current": null, "beneficial": null, "value": "supportWorker" },
+                    { "past": null, "current": null, "beneficial": null, "value": "speechLanguagePathologist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "caseManager" }
+                ],
+                "programs": [
+                    { "past": null, "current": null, "beneficial": null, "value": "painProgram" },
+                    { "past": null, "current": null, "beneficial": null, "value": "driversRehab" }
+                ]
+            }
+        };
+    }
+
+    responses.version = "12";
 
     return responses;
 }
@@ -2006,6 +2198,27 @@ function getNewResponses() {
                     ""
                 ],
                 "moreSocialBeforeAccident": null
+            }
+        },
+        "treatment": {
+            "initial": {
+                "providers": [
+                    { "past": null, "current": null, "beneficial": null, "value": "physiotherapist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "chiropractor" },
+                    { "past": null, "current": null, "beneficial": null, "value": "massageTherapist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "acupuncturist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "osteopathicProvider" },
+                    { "past": null, "current": null, "beneficial": null, "value": "naturopathicProvider" },
+                    { "past": null, "current": null, "beneficial": null, "value": "occupationalTherapist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "rehabilitationWorker" },
+                    { "past": null, "current": null, "beneficial": null, "value": "supportWorker" },
+                    { "past": null, "current": null, "beneficial": null, "value": "speechLanguagePathologist" },
+                    { "past": null, "current": null, "beneficial": null, "value": "caseManager" }
+                ],
+                "programs": [
+                    { "past": null, "current": null, "beneficial": null, "value": "painProgram" },
+                    { "past": null, "current": null, "beneficial": null, "value": "driversRehab" }
+                ]
             }
         }
     };

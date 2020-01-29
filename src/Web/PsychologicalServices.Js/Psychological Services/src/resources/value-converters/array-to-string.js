@@ -15,7 +15,7 @@ export class ArrayToStringValueConverter {
             let isFirst = index === 0;
             let isLast = index === array.length - 1;
             let useConnector = lastConnector && isLast && !isFirst;
-            let useDelimiter = (!isLast && !useConnector && array.length > 2) || (!isLast && array.length > 2);
+            let useDelimiter = (!isLast && !useConnector && array.length > 2) || (!isLast && array.length > 2) || (!isLast && array.length > 1 && !lastConnector);
 
             return accumulator + (useConnector ? ` ${connector} ` : "") + currentValue + (useDelimiter ? delimiter : "");
         }, "");
