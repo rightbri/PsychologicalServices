@@ -138,77 +138,79 @@
 
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <p>
-                        ${gender.title} ${claimant.lastName} 
-                        <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
-                            &nbsp;shared that at the current time ${pronoun.subject} is receiving treatment provided by the following: 
-                            ${selectedCurrentTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.        
-                        </template>
-                        <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                        <template if.bind="anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram || selectedPainProgram || selectedDriversRehabProgram || anySelectedBeneficialTreatments || anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
+                            ${gender.title} ${claimant.lastName} 
                             <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
-                                &nbsp;${pronoun.subject | proper} 
+                                &nbsp;shared that at the current time ${pronoun.subject} is receiving treatment provided by the following: 
+                                ${selectedCurrentTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.        
                             </template>
-                            &nbsp;shared that in the past ${pronoun.subject} has been seen by a: 
-                            ${selectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
-                        </template>
-                        <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
-                            <template if.bind="(anySelectedPastTreatmentProviders && anySelectedCurrentTreatmentProviders) & signal:'treatment-initial-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName}
-                            </template>
-                            <template if.bind="(anySelectedCurrentTreatmentProviders && !anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
-                                &nbsp;${pronoun.subject | proper} 
-                            </template>
-                            &nbsp;went on to deny seeing any of the following: 
-                            ${unselectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
-                        </template>
-
-                        <template if.bind="(unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
-                            <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
-                                &nbsp;${pronoun.subject | proper}
+                            <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper} 
+                                </template>
+                                &nbsp;shared that in the past ${pronoun.subject} has been seen by a: 
+                                ${selectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
                             </template>
                             <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
-                                &nbsp;also
+                                <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName}
+                                </template>
+                                <template if.bind="(anySelectedCurrentTreatmentProviders && !anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper} 
+                                </template>
+                                &nbsp;went on to deny seeing any of the following: 
+                                ${unselectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
                             </template>
-                            &nbsp;denied 
-                            <template if.bind="unselectedPainProgram & signal:'treatment-initial-changed'">
-                                &nbsp;attending a pain program
-                            </template>
-                            <template if.bind="unselectedDriversRehabProgram & signal:'treatment-initial-changed'">
+
+                            <template if.bind="(unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
+                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                    &nbsp;also
+                                </template>
+                                &nbsp;denied 
                                 <template if.bind="unselectedPainProgram & signal:'treatment-initial-changed'">
-                                    &nbsp;or
+                                    &nbsp;attending a pain program
                                 </template>
-                                &nbsp;having any driver's rehabilitation services
+                                <template if.bind="unselectedDriversRehabProgram & signal:'treatment-initial-changed'">
+                                    <template if.bind="unselectedPainProgram & signal:'treatment-initial-changed'">
+                                        &nbsp;or
+                                    </template>
+                                    &nbsp;having any driver's rehabilitation services
+                                </template>
+                                .
                             </template>
-                            .
-                        </template>
 
-                        <template if.bind="(selectedPainProgram || selectedDriversRehabProgram) & signal:'treatment-initial-changed'">
-                            <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
-                                &nbsp;${pronoun.subject | proper}
-                            </template>
-                            &nbsp;further detailed that ${pronoun.subject} has
-                            <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
-                                &nbsp;attended a pain program
-                            </template>
-                            <template if.bind="selectedDriversRehabProgram & signal:'treatment-initial-changed'">
+                            <template if.bind="(selectedPainProgram || selectedDriversRehabProgram) & signal:'treatment-initial-changed'">
+                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                &nbsp;further detailed that ${pronoun.subject} has
                                 <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
-                                    &nbsp;and has
+                                    &nbsp;attended a pain program
                                 </template>
-                                &nbsp;attended driver's rehabilitation services
+                                <template if.bind="selectedDriversRehabProgram & signal:'treatment-initial-changed'">
+                                    <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
+                                        &nbsp;and has
+                                    </template>
+                                    &nbsp;attended driver's rehabilitation services
+                                </template>
+                                .
                             </template>
-                            .
-                        </template>
 
-                        <template if.bind="anySelectedBeneficialTreatments & signal:'treatment-initial-changed'">
-                            <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName}
+                            <template if.bind="anySelectedBeneficialTreatments & signal:'treatment-initial-changed'">
+                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName}
+                                </template>
+                                &nbsp;shared that ${pronoun.subject} has found the following to be beneficial: 
+                                ${selectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
                             </template>
-                            &nbsp;shared that ${pronoun.subject} has found the following to be beneficial: 
-                            ${selectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
-                        </template>
 
-                        <template if.bind="anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
-                            &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} did not find the following beneficial: 
-                            ${unselectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
+                            <template if.bind="anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
+                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} did not find the following beneficial: 
+                                ${unselectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
+                            </template>
                         </template>
                     </p>
                 </div>
