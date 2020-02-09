@@ -20,12 +20,6 @@
                 <search-claimant claimant.bind="claimant" claimants.bind="claimants" selected.delegate="claimantSelected($event)"></search-claimant>
             </div>
         </div>
-        
-        <div class="uk-margin-remove" if.bind="claimant & signal:'claimant-changed'">
-            <p class="uk-heading-divider">
-                ${claimant.firstName} ${claimant.lastName}
-            </p>
-        </div>
 
         <table class="uk-table uk-table-divider" fixed-header if.bind="assessments && !assessment">
             <thead>
@@ -73,10 +67,755 @@
 
     <div class="uk-container" if.bind="formVisible">
 
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Treatment</legend>
+        <fieldset class="uk-fieldset" if.bind="claimant & signal:'claimant-changed'">
+            <legend class="uk-legend">Identification</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Name of Client
+                </div>
+        
+                <div class="uk-margin-remove uk-width-1-4">
+                    ${claimant.firstName} ${claimant.lastName}
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Date of Birth
+                </div>
+        
+                <div class="uk-margin-remove uk-width-1-4">
+                    ${claimant.dateOfBirth | dateFormat:"MMMM Do, YYYY"}
+                </div>
+        
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Type of Assessment
+                </div>
+        
+                <div class="uk-margin-remove uk-width-1-4">
+                    ${assessment.assessmentType.name}
+                </div>
+        
+                <div class="uk-margin-remove uk-width-1-4">
+                    Date of Assessment
+                </div>
+        
+                <div class="uk-margin-remove uk-width-1-4">
+                    ${assessmentDate | dateFormat:config.longDateFormat}
+                </div>
+        
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Informed Consent - Addressing
+                </div>
+        
+                <div class="uk-margin-remove uk-width-3-4">
+                    ${issuesInDispute | sortArray:{"property":"name","direction":"asc"} | arrayToString}
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    ID Verified with:
+                </div>
+        
+                <div class="uk-margin-remove uk-width-3-4">
+                    
+                    <label>
+                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="driversLicense" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Driver's License&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="passport" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Passport&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="other" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Other&nbsp;
+                    </label>                    
+                    <label>
+                        <input type="text" name="idVerificationMethodOther" class="uk-input uk-form-small" value.bind="responses.identification.verificationMethod.otherMethod" disabled.bind="!idMethodIsOther & signal:'id-method-changed'" />
+                    </label>
+
+                </div>
+        
+                <hr>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Day of Assessment</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Were you driven to the assessment?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="dayOfAssessmentWasDriven-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.dayOfAssessment.wasDriven" value.bind="response.value" change.delegate="changed('travel-method-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    If no, did you drive to the assessment?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="dayOfAssessmentDroveSelf-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.dayOfAssessment.droveSelf" value.bind="response.value" change.delegate="changed('travel-method-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How long did it take you to get to the assessment today?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="dayOfAssessmentTravelMinutes" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.dayOfAssessment.travelTime.minutes" />&nbsp;Minutes&nbsp;
+                </div>
+                
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="dayOfAssessmentTravelHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.dayOfAssessment.travelTime.hours" />&nbsp;Hours&nbsp;
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How would you describe your sleep the night prior to the assessment?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="dayOfAssessmentPriorSleepDescription" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.priorNightSleepDescription" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addDayOfAssessmentMedication()">Add</button>
+                </div>
+                <div class="uk-margin-remove uk-width-1-3">Name of Medication</div>
+                <div class="uk-margin-remove uk-width-1-3">What does this treat?</div>
+                <div class="uk-margin-remove uk-width-1-3">When did you start using/taking this?</div>
+                <hr>
+
+                <template repeat.for="i of responses.dayOfAssessment.medications.length">
+                    
+                    <div class="uk-margin-remove uk-width-1-3">
+                        <input type="text" name="dayOfAssessmentMedicationName-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.medications[i].name" />
+                    </div>
+
+                    <div class="uk-margin-remove uk-width-1-3">
+                        <input type="text" name="dayOfAssessmentMedicationPurpose-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.medications[i].purpose" />
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-3">
+                        <input type="text" name="dayOfAssessmentMedicationWhenStarted-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.medications[i].whenStarted" />
+                    </div>
+
+                    <hr>
+                </template>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    In the past 24/48 hours before the assessment, have you taken you regularly prescribed medication?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="dayOfAssessmentTakenMedications-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.dayOfAssessment.takenMedicationBeforeAssessment" value.bind="response.value" change.delegate="changed('taken-medication-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Motor Vehicle Accident Details</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Date of MVA
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    ${dateOfAccident | dateFormat:config.longDateFormat}
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Were you:
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    
+                    <label>
+                        <input type="radio" name="accidentDetailsRole" class="uk-radio" value="driver" checked.bind="responses.accidentDetails.role" change.delegate="changed('accident-role-changed')" />&nbsp;Driver&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentDetailsRole" class="uk-radio" value="passenger" checked.bind="responses.accidentDetails.role" change.delegate="changed('accident-role-changed')" />&nbsp;Passenger&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentDetailsRole" class="uk-radio" value="pedestrian" checked.bind="responses.accidentDetails.role" change.delegate="changed('accident-role-changed')" />&nbsp;Pedestrian&nbsp;
+                    </label>
+
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Would you describe the accident as a:
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label>
+                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="singleVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Single Vehicle Accident&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="twoVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Two Vehicle Accident&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="multipleVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Multiple Vehicle Accident&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="rearEndAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Rear-end Accident&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="tBoneCollision" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;T-Bone Collision&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="sideSwipe" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Side swipe&nbsp;
+                    </label>
+
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Was there a secondary impact?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentSecondaryImpact-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.secondaryImpact" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did any airbags in your vehicle deploy?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentAirbagsDeployed-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.airbagsDeployed" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did the vehicle you were in roll?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentVehicleRolled-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.vehicleRolled" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did you hit your head on anything?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentHitHead-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.hitHead" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4"></div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label>
+                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="airbag" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" />&nbsp;Airbag&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="headRest" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" />&nbsp;Head rest&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="steeringWheel" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" />&nbsp;Steering wheel&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="window" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" />&nbsp;Window&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="other" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" />&nbsp;Other&nbsp;
+                    </label>
+                    <label>
+                        <input type="text" name="idVerificationMethodOther" class="uk-input uk-form-small" value.bind="responses.accidentDetails.hitHeadOnOther" disabled.bind="!hitHeadOnIsOther & signal:'accident-hit-head-changed'" />
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Were you thrown around inside the vehicle upon impact?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentThrownInside-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.thrownInsideVehicle" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Initial Injuries/Symptoms:
+                </div>
+
+                <template repeat.for="i of responses.accidentDetails.injuriesAndSymptoms.length">
+                    <div class="uk-margin-remove uk-width-1-4">
+                        ${initialInjuriesAndSymptomsMap[$parent.responses.accidentDetails.injuriesAndSymptoms[i].value].description}
+                    </div>
+
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <template if.bind="!$parent.responses.accidentDetails.injuriesAndSymptoms[i].skip">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="accidentInjurySymptom-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.accidentDetails.injuriesAndSymptoms[i].response" value.bind="response.value" change.delegate="changed('accident-injury-symptom-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </template>
+                    </div>
+
+                    <hr if.bind="$odd">
+                </template>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Other:
+
+                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addOtherAccidentInjurySymptom()">Add</button>
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <template repeat.for="i of responses.accidentDetails.otherInjuriesAndSymptoms.length">
+                        <input type="text" name="accidentOtherInjuriesSymptoms-${$parent.$index}" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.otherInjuriesAndSymptoms[i]" />
+                    </template>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did you have any surgeries as a result of your injures?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentInjurySurgeries" class="uk-radio" checked.bind="$parent.responses.accidentDetails.hadSurgeriesForInjuries" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Would you describe yourself as being dazed?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentWasDazed" class="uk-radio" checked.bind="$parent.responses.accidentDetails.wasDazed" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Was there any loss of consciousness?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentLossOfConsciousness" class="uk-radio" checked.bind="$parent.responses.accidentDetails.lossOfConsciousness.experienced" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    <input type="text" name="accidentLossOfConsciousnessSeconds" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.lossOfConsciousness.length.seconds" />&nbsp;Seconds&nbsp;
+                    <input type="text" name="accidentLossOfConsciousnessMinutes" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.lossOfConsciousness.length.minutes" />&nbsp;Minutes&nbsp;
+                    <input type="text" name="accidentLossOfConsciousnessHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.lossOfConsciousness.length.hours" />&nbsp;Hours&nbsp;
+                    <input type="text" name="accidentLossOfConsciousnessDays" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.lossOfConsciousness.length.days" />&nbsp;Days&nbsp;
+                    <input type="text" name="accidentLossOfConsciousnessWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.lossOfConsciousness.length.weeks" />&nbsp;Weeks&nbsp;
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.accidentDetails.lossOfConsciousness.length.dontKnow" value.bind="true" />&nbsp;Don't know&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did you experience any loss of time?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentLossOfTime" class="uk-radio" checked.bind="$parent.responses.accidentDetails.lossOfTime" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did you experience any Post Traumatic Amnesia?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentPostTraumaticAmnesia" class="uk-radio" checked.bind="$parent.responses.accidentDetails.postTraumaticAmnesia.experienced" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    <input type="text" name="accidentPostTraumaticAmnesiaSeconds" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.postTraumaticAmnesia.length.seconds" />&nbsp;Seconds&nbsp;
+                    <input type="text" name="accidentPostTraumaticAmnesiaMinutes" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.postTraumaticAmnesia.length.minutes" />&nbsp;Minutes&nbsp;
+                    <input type="text" name="accidentPostTraumaticAmnesiaHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.postTraumaticAmnesia.length.hours" />&nbsp;Hours&nbsp;
+                    <input type="text" name="accidentPostTraumaticAmnesiaDays" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.postTraumaticAmnesia.length.days" />&nbsp;Days&nbsp;
+                    <input type="text" name="accidentPostTraumaticAmnesiaWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.postTraumaticAmnesia.length.weeks" />&nbsp;Weeks&nbsp;
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.accidentDetails.postTraumaticAmnesia.length.dontKnow" value.bind="true" />&nbsp;Don't know&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What is your last memory before impact?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="accidentLastMemoryBeforeImpact" class="uk-input uk-form-small" value.bind="responses.accidentDetails.lastMemoryBeforeImpact" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What is your first memory after the impact?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="accidentFirstMemoryAfterImpact" class="uk-input uk-form-small" value.bind="responses.accidentDetails.firstMemoryAfterImpact" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    At the time of the accident, did you feel that you could die?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentFeltCouldHaveDied" class="uk-radio" checked.bind="$parent.responses.accidentDetails.feltCouldHaveDied" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Were you assessed by Ambulance Personnel?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentAssessedByAmbulancePersonnel" class="uk-radio" checked.bind="$parent.responses.accidentDetails.assessedByAmbulancePersonnel" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did you go to the hospital?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentWentToHospital" class="uk-radio" checked.bind="$parent.responses.accidentDetails.wentToHospital" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    How long were you in the hospital?
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-1">
+                    <input type="text" name="accidentHospitalStayLengthHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.hours" />&nbsp;Hours&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthDays" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.days" />&nbsp;Days&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.weeks" />&nbsp;Weeks&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.months" />&nbsp;Months&nbsp;
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Do you have a family doctor?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentHaveFamilyDoctor" class="uk-radio" checked.bind="$parent.responses.accidentDetails.haveFamilyDoctor" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Name of Family doctor
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="accidentFamilyDoctorName" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.familyDoctorName" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    How long has this been your family doctor?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="accidentFamilyDoctorHowLong" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.familyDoctorHowLong" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Since the accident have you seen your family doctor?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentSawFamilyDoctorSinceAccident" class="uk-radio" checked.bind="$parent.responses.accidentDetails.sawFamilyDoctorSinceAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Was psychological treatment recommended?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentPsychologicalTreatmentRecommended" class="uk-radio" checked.bind="$parent.responses.accidentDetails.psychologicalTreatmentRecommended" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you had any brain imaging investigations?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentHadBrainImagingInvestigations" class="uk-radio" checked.bind="$parent.responses.accidentDetails.hadBrainImagingInvestigations" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Were the findings normal?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentBrainImagingInvestigationFindingsNormal" class="uk-radio" checked.bind="$parent.responses.accidentDetails.brainImagingInvestigationFindingsNormal" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you ever completed a Psychological examination before?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentPsychologicalExamCompleted" class="uk-radio" checked.bind="$parent.responses.accidentDetails.examinations.psychological.completed" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4"></div>
+                <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
+                <div class="uk-margin-remove uk-width-1-4">When?</div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
+                
+                <template repeat.for="i of responses.accidentDetails.examinations.psychological.completions.length">
+                    <div class="uk-margin-remove uk-width-1-4"></div>    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="accidentPsychologicalExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychological.completions[i].withWhom" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="accidentPsychologicalExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychological.completions[i].when" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4"></div>    
+
+                    <hr>
+                </template>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you ever completed a Psychiatry examination before?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentPsychiatryExamCompleted" class="uk-radio" checked.bind="$parent.responses.accidentDetails.examinations.psychiatric.completed" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4"></div>
+                <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
+                <div class="uk-margin-remove uk-width-1-4">When?</div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
+                
+                <template repeat.for="i of responses.accidentDetails.examinations.psychiatric.completions.length">
+                    <div class="uk-margin-remove uk-width-1-4"></div>    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="accidentPsychiatryExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychiatric.completions[i].withWhom" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="accidentPsychiatryExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychiatric.completions[i].when" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4"></div>    
+
+                    <hr>
+                </template>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you ever completed a NP/NC examination before?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentNP/NCExamCompleted" class="uk-radio" checked.bind="$parent.responses.accidentDetails.examinations.npNc.completed" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4"></div>
+                <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
+                <div class="uk-margin-remove uk-width-1-4">When?</div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
+                
+                <template repeat.for="i of responses.accidentDetails.examinations.npNc.completions.length">
+                    <div class="uk-margin-remove uk-width-1-4"></div>    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="accidentNP/NCExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.npNc.completions[i].withWhom" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="accidentNP/NCExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.npNc.completions[i].when" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4"></div>    
+
+                    <hr>
+                </template>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you had attended a TBI/ABI program?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentTbiAbiProgramAttended" class="uk-radio" checked.bind="$parent.responses.accidentDetails.attendedTbiAbiProgram" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you started Counselling yet?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentStartedCounselling" class="uk-radio" checked.bind="$parent.responses.accidentDetails.startedCounselling" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    When did you start counselling?
+                </div>
+    
+                <div class="uk-margin-remove uk-width-1-2">
+                    &nbsp;Month&nbsp;<input type="text" name="accidentStartedCounsellingMonth" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingMonth" />
+                    &nbsp;Year&nbsp;<input type="text" name="accidentStartedCounsellingYear" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingYear" />
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-1-2">
+                    How often are you currently having counselling?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="accidentCounsellingHowOften" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingHowOften" />
+                </div>
+
+                <hr>
+                             
+                <div class="uk-margin-remove uk-width-1-4">
+                    Is this treatment done over the phone or in person?
+                </div>
+    
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label>
+                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="overThePhone" change.delegate="changed('counselling-method-changed')" />&nbsp;Over the phone&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="inPerson" change.delegate="changed('counselling-method-changed')" />&nbsp;In person&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="other" change.delegate="changed('counselling-method-changed')" />&nbsp;Other&nbsp;
+                    </label>
+                    &nbsp;<input type="text" name="accidentCounsellingMethodOther" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingMethodOther" disabled.bind="!counsellingMethodIsOther & signal:'counselling-method-changed'" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Do you find that the counselling is beneficial?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="accidentIsTheCounsellingBeneficial" class="uk-radio" checked.bind="$parent.responses.accidentDetails.isTheCounsellingBeneficial" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
 
                 <div class="uk-margin-remove uk-width-1-4"></div>
                 <div class="uk-margin-remove uk-width-1-4">In the past?</div>
@@ -135,6 +874,16 @@
 
                     <hr>
                 </template>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    What is particularly troubling you now? 
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <input type="text" name="accidentWhatIsTroublingYou" class="uk-input uk-form-small" value.bind="responses.accidentDetails.whatIsTroublingYou" />
+                </div>
+
+                <hr>
 
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <p>

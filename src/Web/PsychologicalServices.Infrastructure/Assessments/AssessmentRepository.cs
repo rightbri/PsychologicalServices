@@ -161,6 +161,19 @@ namespace PsychologicalServices.Infrastructure.Assessments
         {
             return (assessmentPath => assessmentPath
                 .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
+                .Prefetch<AssessmentClaimEntity>(assessment => assessment.AssessmentClaims)
+                    .SubPath(assessmentClaimsPath => assessmentClaimsPath
+                        .Prefetch<ClaimEntity>(assessmentClaim => assessmentClaim.Claim)
+                    )
+                .Prefetch<AssessmentTypeEntity>(assessment => assessment.AssessmentType)
+                .Prefetch<AssessmentReportEntity>(assessment => assessment.AssessmentReports)
+                    .SubPath(assessmentReportPath => assessmentReportPath
+                        .Prefetch<AssessmentReportIssueInDisputeEntity>(assessmentReport => assessmentReport.AssessmentReportIssuesInDispute)
+                            .SubPath(assessmentReportIssueInDisputePath => assessmentReportIssueInDisputePath
+                                .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
+                            )
+                    )
+                .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                 .Prefetch<AssessmentTestingResultEntity>(assessment => assessment.AssessmentTestingResults)
                     .FilterOn(testingResults => testingResults.Name == name)
             );

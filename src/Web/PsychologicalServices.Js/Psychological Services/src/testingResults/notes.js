@@ -63,6 +63,7 @@ export class Notes {
         this.travelAbilities = [];
         this.treatmentPrograms = [];
         this.treatmentProviders = [];
+        this.initialInjuriesAndSymptoms = [];
 
         this.self = this;
 
@@ -188,6 +189,10 @@ export class Notes {
                     this.getTreatmentProviders().then(data => {
                         this.treatmentProviders = this.asArray(data);
                         this.treatmentProvidersMap = data;
+                    }),
+                    this.getInitialInjuriesAndSymptoms().then(data => {
+                        this.initialInjuriesAndSymptoms = this.asArray(data);
+                        this.initialInjuriesAndSymptomsMap = data;
                     })
                 ]);
             });
@@ -764,8 +769,91 @@ export class Notes {
         return getPromise(data);
     }
 
+    getInitialInjuriesAndSymptoms() {
+        let data = {
+            "fractures": { "description": "Fractures", "value": "fractures", "format": function(context) { return `Fractures` } },
+            "sti": { "description": "STI", "value": "sti", "format": function(context) { return `STI` } },
+            "back": { "description": "Back", "value": "back", "format": function(context) { return `Back` } },
+            "neck": { "description": "Neck", "value": "neck", "format": function(context) { return `Neck` } },
+            "shoulder": { "description": "Shoulder", "value": "shoulder", "format": function(context) { return `Shoulder` } },
+            "lacerations": { "description": "Lacerations", "value": "lacerations", "format": function(context) { return `Lacerations` } },
+            "headaches": { "description": "Headaches", "value": "headaches", "format": function(context) { return `Headaches` } },
+            "dizziness": { "description": "Dizziness", "value": "dizziness", "format": function(context) { return `Dizziness` } },
+            "nausea": { "description": "Nausea", "value": "nausea", "format": function(context) { return `Nausea` } },
+            "vomiting": { "description": "Vomiting", "value": "vomiting", "format": function(context) { return `Vomiting` } },
+            "tinnitus": { "description": "Tinnitus", "value": "tinnitus", "format": function(context) { return `Tinnitus` } },
+            "skip": { "description": "", "value": "skip" }
+        };
+
+        return getPromise(data);
+    }
+
     changed(signalName) {
         this.signaler.signal(signalName);
+    }
+
+    @computedFrom('assessment')
+    get assessmentDate() {
+        let appointmentTimes = this.assessment !== null && this.assessment.appointments !== null ? this.assessment.appointments.map(appointment => appointment.appointmentTime).sort((a, b) => a - b) : [];
+        
+        return appointmentTimes.length > 0 ? appointmentTimes[0] : null;
+    }
+
+    @computedFrom('assessment')
+    get issuesInDispute() {
+        if (this.assessment === null) { return []; }
+
+        let idMap = {};
+
+        var issues = this.distinct(
+            this.assessment.reports.map(r => r.issuesInDispute.map(id => id.name)).reduce((accumulator, currentValue) => {
+                return accumulator.concat(currentValue);
+            }, [])
+        );
+
+        return issues;
+    }
+
+    @computedFrom('assessment')
+    get dateOfAccident() {
+        if (this.assessment === null) { return ""; }
+
+        var claims = this.assessment.claims !== null
+            ? this.assessment.claims.map(c => c.dateOfLoss)
+            : [];
+        
+        return claims.length > 0 ? claims[0] : "";
+    }
+
+    distinct(arr) {
+        let aMap = {};
+
+        return arr.filter(element => {
+            let count = (aMap[element] || 0) + 1;
+            aMap[element] = count;
+            return count === 1;
+        });
+    }
+
+    @computedFrom('responses.identification.verificationMethod.method')
+    get idMethodIsOther() {
+        if (this.responses === null || this.responses.identification === null) { return false; }
+        
+        return this.responses.identification.verificationMethod.method === "other";
+    }
+
+    @computedFrom('responses.accidentDetails.hitHeadOn')
+    get hitHeadOnIsOther() {
+        if (this.responses === null || this.responses.accidentDetails === null) { return false; }
+
+        return this.responses.accidentDetails.hitHeadOn === "other";
+    }
+
+    @computedFrom('responses.accidentDetails.counsellingMethod')
+    get counsellingMethodIsOther() {
+        if (this.responses === null || this.responses.accidentDetails === null) { return false; }
+
+        return this.responses.accidentDetails.counsellingMethod === "other";
     }
 
     @computedFrom(
@@ -1640,6 +1728,14 @@ export class Notes {
         }
     }
 
+    addDayOfAssessmentMedication() {
+        this.responses.dayOfAssessment.medications.push({ "name": "", "purpose": "", "whenStarted": "" });
+    }
+
+    addOtherAccidentInjurySymptom() {
+        this.responses.accidentDetails.otherInjuriesAndSymptoms.push("");
+    }
+
     addOtherStressor() {
         this.responses.psychological.otherStressors.push({ "self": null, "family": null, "value": "" });
     }
@@ -1762,7 +1858,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "12";
+    return "13";
 }
 
 function upgrade(responses, toVersion) {
@@ -1845,29 +1941,10 @@ function upgrade_10_to_11(responses) {
 }
 
 function upgrade_11_to_12(responses) {
-    
+    let newResponses = getNewResponses();
+
     if (!responses.hasOwnProperty('treatment')) {
-        responses.treatment = {
-            "initial": {
-                "providers": [
-                    { "past": null, "current": null, "beneficial": null, "value": "physiotherapist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "chiropractor" },
-                    { "past": null, "current": null, "beneficial": null, "value": "massageTherapist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "acupuncturist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "osteopathicProvider" },
-                    { "past": null, "current": null, "beneficial": null, "value": "naturopathicProvider" },
-                    { "past": null, "current": null, "beneficial": null, "value": "occupationalTherapist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "rehabilitationWorker" },
-                    { "past": null, "current": null, "beneficial": null, "value": "supportWorker" },
-                    { "past": null, "current": null, "beneficial": null, "value": "speechLanguagePathologist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "caseManager" }
-                ],
-                "programs": [
-                    { "past": null, "current": null, "beneficial": null, "value": "painProgram" },
-                    { "past": null, "current": null, "beneficial": null, "value": "driversRehab" }
-                ]
-            }
-        };
+        responses.treatment = newResponses.treatment;
     }
 
     responses.version = "12";
@@ -1875,9 +1952,174 @@ function upgrade_11_to_12(responses) {
     return responses;
 }
 
+function upgrade_12_to_13(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.hasOwnProperty('identification')) {
+        responses.identification = newResponses.identification;
+    }
+
+    if (!responses.hasOwnProperty('dayOfAssessment')) {
+        responses.dayOfAssessment = newResponses.dayOfAssessment;
+    }
+
+    if (!responses.hasOwnProperty('accidentDetails')) {
+        responses.accidentDetails = newResponses.accidentDetails;
+    }
+
+    responses.version = "13";
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
+        "identification": {
+            "verificationMethod": {
+                "method": null,
+                "otherMethod": ""
+            }
+        },
+        "dayOfAssessment": {
+            "wasDriven": null,
+            "droveSelf": null,
+            "travelTime": {
+                "minutes": "",
+                "hours": ""
+            },
+            "priorNightSleepDescription": "",
+            "medications": [
+                { "name": "", "purpose": "", "whenStarted": "" }
+            ],
+            "takenMedicationBeforeAssessment": null
+        },
+        "accidentDetails": {
+            "dateOfAccident": null,
+            "role": null,
+            "category": null,
+            "secondaryImpact": null,
+            "airbagsDeployed": null,
+            "vehicleRolled": null,
+            "hitHead": null,
+            "hitHeadOn": null,
+            "hitHeadOnOther": "",
+            "thrownInsideVehicle": null,
+            "injuriesAndSymptoms": [
+                { "response": null, "value": "fractures" },
+                { "response": null, "value": "lacerations" },
+                { "response": null, "value": "sti" },
+                { "response": null, "value": "headaches" },
+                { "response": null, "value": "back" },
+                { "response": null, "value": "dizziness" },
+                { "response": null, "value": "neck" },
+                { "response": null, "value": "nausea" },
+                { "response": null, "value": "shoulder" },
+                { "response": null, "value": "vomiting" },
+                { "response": null, "value": "skip", "skip": true },
+                { "response": null, "value": "tinnitus" }
+            ],
+            "otherInjuriesAndSymptoms": [""],
+            "hadSurgeriesForInjuries": null,
+            "wasDazed": null,
+            "lossOfConsciousness": {
+                "experienced": null,
+                "length": {
+                    "dontKnow": null,
+                    "seconds": "",
+                    "minutes": "",
+                    "hours": "",
+                    "days": "",
+                    "weeks": ""
+                }
+            },
+            "lossOfTime": null,
+            "postTraumaticAmnesia": {
+                "experienced": null,
+                "length": {
+                    "dontKnow": null,
+                    "seconds": "",
+                    "minutes": "",
+                    "hours": "",
+                    "days": "",
+                    "weeks": ""
+                }
+            },
+            "lastMemoryBeforeImpact": "",
+            "firstMemoryAfterImpact": "",
+            "feltCouldHaveDied": null,
+            "assessedByAmbulancePersonnel": null,
+            "wentToHospital": null,
+            "hospitalStayLength": {
+                "hours": "",
+                "days": "",
+                "weeks": "",
+                "months": ""
+            },
+            "haveFamilyDoctor": null,
+            "familyDoctorName": "",
+            "familyDoctorHowLong": "",
+            "sawFamilyDoctorSinceAccident": null,
+            "psychologicalTreatmentRecommended": null,
+            "hadBrainImagingInvestigations": null,
+            "brainImagingInvestigationFindingsNormal": null,
+            "examinations": {
+                "psychological": {
+                    "completed": null,
+                    "completions": [
+                        { "withWhom": "", "when": "" },
+                        { "withWhom": "", "when": "" }
+                    ]
+                },
+                "psychiatric": {
+                    "completed": null,
+                    "completions": [
+                        { "withWhom": "", "when": "" },
+                        { "withWhom": "", "when": "" }
+                    ]
+                },
+                "npNc": {
+                    "completed": null,
+                    "completions": [
+                        { "withWhom": "", "when": "" },
+                        { "withWhom": "", "when": "" }
+                    ]
+                }
+            },
+            "attendedTbiAbiProgram": null,
+            "startedCounselling": null,
+            "startedCounsellingMonth": "",
+            "startedCounsellingYear": "",
+            "counsellingHowOften": "",
+            "counsellingMethod": "",
+            "counsellingMethodOther": "",
+            "isTheCounsellingBeneficial": null,
+            "whatIsTroublingYou": "",
+            "ocfCompleter": {
+                "metWith": null,
+                "spokenWith": null,
+                "treatmentSessions": {
+                    "hadSessions": null,
+                    "sessionFormat": null,   //in person, phone
+                    "where": ""
+                }
+            }
+        },
+        "reminderChecklist": {
+            "items": [
+                { "response": null, "value": "introducedSelf" },
+                { "response": null, "value": "explainedRole" },
+                { "response": null, "value": "usedClaimantName" },
+                { "response": null, "value": "explainedPurpose" },
+                { "response": null, "value": "reviewedFile" },
+                { "response": null, "value": "actedProfessionally" },
+                { "response": null, "value": "thoroughQuestions" },
+                { "response": null, "value": "privateRoom" },
+                { "response": null, "value": "accommodationForm" },
+                { "response": null, "value": "claimantNotWaiting" },
+                { "response": null, "value": "businessCard" }
+            ]
+        },
         "personalHistory": {
             "locationOfBirth": null,
             "timeOfArrivalInCanada": null,
@@ -1960,7 +2202,169 @@ function getNewResponses() {
                     "ages": []
                 },
                 "howManyLiveWithYou": null
-            }
+            },
+            "education": {
+                "lastCompletedGrade": "",
+                "areaOfStudy": "",
+                "selfRating": null, //good/average/poor/excellent
+                "everHeldBack": null,
+                "everFailedACourse": null,
+                "bestSubject": "",
+                "worstSubject": ""
+            },
+            "occupation": {
+                "employedAtTheTimeOfTHeAccident": null,
+                "wereYouWorkingAtTheTimeOfTHeAccident": null,
+                "start": {
+                    "month": "",
+                    "year": ""
+                },
+                "end": {
+                    "month": "",
+                    "year": "",
+                    "na": ""
+                },
+                "jobTitle": "",
+                "essentialDuties": "",
+                "hoursPerWeek": "",
+                "preAccidentIncome": "",
+                "returnToWork": {
+                    "attempted": null,
+                    "when": "",
+                    "successful": null,
+                    "modifiedDutiesOrHours": "",
+                    "ableToReturn": null,
+                    "whenAble": null,
+                    "necessaryAccommodations": ""
+                },
+                "timeOff": "",
+                "previousEmploymentHistory": ""
+            },
+            "financial": {
+                "experiencingFinancialStress": null,
+                "tightFinancially": null,
+                "haveDebt": null,
+                "amountOfDebt": ""
+            },
+            "medical": {
+                "familyMedicalHistory": null,
+                "familyMedicalConditions": [
+                    { "response": null, "value": "alchoholAbuse" },
+                    { "response": null, "value": "cancer" },
+                    { "response": null, "value": "cholesterol" },
+                    { "response": null, "value": "diabetes" },
+                    { "response": null, "value": "fibromyalgia" },
+                    { "response": null, "value": "heartDisease" },
+                    { "response": null, "value": "hypertension" },
+                    { "response": null, "value": "stroke" },
+                    { "response": null, "value": "thyroidDisorder" }
+                ],
+                "drugsUsed": [
+                    { "response": null, "value": "alchohol" },
+                    { "response": null, "value": "tobacco" },
+                    { "response": null, "value": "thc" },
+                    { "response": null, "value": "streetDrugs" },
+                    { "response": null, "value": "prescriptionDrugs" }
+                ],
+                "everTreatedForSubstanceAbuse": null,
+                "currently": {
+                    "alchoholConsumptionIncreased": null,
+                    "tobaccoUseIncreased": null,
+                    "thcUseIncreased": null
+                },
+                "beforeAccident": {
+                    "medicalConditions": [
+                        { "response": null, "value": "alchoholAbuse" },
+                        { "response": null, "value": "cancer" },
+                        { "response": null, "value": "cholesterol" },
+                        { "response": null, "value": "diabetes" },
+                        { "response": null, "value": "fibromyalgia" },
+                        { "response": null, "value": "heartDisease" },
+                        { "response": null, "value": "hypertension" },
+                        { "response": null, "value": "stroke" },
+                        { "response": null, "value": "thyroidDisorder" }
+                    ],
+                    "surgeries": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "injuries": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "illnesses": {
+                        "repsonse": null,
+                        "details": ""
+                    },
+                    "mvas": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "headInjuries": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "priorState": null
+                },
+                "sinceAccident": {
+                    "medicalDiagnosis": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "surgeries": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "mvas": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "headInjuries": {
+                        "response": null,
+                        "details": ""
+                    }
+                }
+            },
+            "legal": {
+                "everArrested": {
+                    "response": null,
+                    "details": ""
+                },
+                "everCharged": {
+                    "response": null,
+                    "details": ""
+                },
+                "bondableIssues": {
+                    "response": null
+                }
+            },
+            "psychological": {
+                "anyHistory": null,
+                "takenMoodMedication": null,
+                "onMoodMedicationAtTimeOfAccident": null,
+                "hospitalizedDueToPsychologicalConcerns": null,
+                "hadMentalHealthTesting": null,
+                "hadMentalHealthCounselling": null
+            },
+            "diagnosis": "",
+            "prognosis": null,
+            "impaired": {
+                "response": null,
+                "categories": [
+                    { "response": null, "value": "physical" },
+                    { "response": null, "value": "cognitive" },
+                    { "response": null, "value": "mental" }
+                ]
+            },
+            "disabled": {
+                "response": null,
+                "categories": [
+                    { "response": null, "value": "physical" },
+                    { "response": null, "value": "cognitive" },
+                    { "response": null, "value": "mental" }
+                ]
+            },
+            "additionalInformation": ""
         },
         "psychological": {
             "emotional": [
