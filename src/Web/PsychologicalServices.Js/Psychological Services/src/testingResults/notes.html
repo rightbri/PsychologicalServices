@@ -53,6 +53,12 @@
         </div>
     </div>
 
+    <div class="uk-position-fixed" style="top: 100px; right: 10px;" if.bind="formVisible">
+        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToBottom()">
+            <i class="fa fa-lg fa-chevron-down"></i>
+        </button>
+    </div>
+
     <div class="uk-position-fixed" style="bottom: 10px; right: 10px;" if.bind="formVisible">
         <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToTop()">
             <i class="fa fa-lg fa-chevron-up"></i>
@@ -329,6 +335,16 @@
                     <label repeat.for="response of yesNoDontKnow">
                         <input type="radio" name="accidentVehicleRolled-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.vehicleRolled" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Additional details
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <textarea class="uk-textarea uk-form-small" value.bind="responses.accidentDetails.additionalAccidentDetails"></textarea>
                 </div>
 
                 <hr>
@@ -663,7 +679,9 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4"></div>
+                <div class="uk-margin-remove uk-width-1-4">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPsychologicalCompletion()">Add</button>
+                </div>
                 <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
                 <div class="uk-margin-remove uk-width-1-4">When?</div>
                 <div class="uk-margin-remove uk-width-1-4"></div>
@@ -693,7 +711,9 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4"></div>
+                <div class="uk-margin-remove uk-width-1-4">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPsychiatricCompletion()">Add</button>
+                </div>
                 <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
                 <div class="uk-margin-remove uk-width-1-4">When?</div>
                 <div class="uk-margin-remove uk-width-1-4"></div>
@@ -723,7 +743,9 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4"></div>
+                <div class="uk-margin-remove uk-width-1-4">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addNpNcCompletion()">Add</button>
+                </div>
                 <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
                 <div class="uk-margin-remove uk-width-1-4">When?</div>
                 <div class="uk-margin-remove uk-width-1-4"></div>
@@ -2987,6 +3009,18 @@
     
                     <hr>
                 </template>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Do you have issues with your sleep because of anyone of the following?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="i of sleepIssueCauses.length">
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.neuropsychological.physical.sleep.issueCauses" value.bind="sleepIssueCauses[i].value" change.delegate="changed('sleep-issue-cause-changed')">&nbsp;${sleepIssueCauses[i].description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
                 
                 <div class="uk-margin-remove uk-width-3-4">
                     Do you still feel fatigued and not rested when you wake up?
@@ -3078,6 +3112,11 @@
                                     ${unselectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep has not been affected.
                                 </template>
                             </template>            
+                        </template>
+                        
+                        <template if.bind="anySelectedSleepIssueCauses & signal:'sleep-issue-cause-changed'">
+                            &nbsp;${pronoun.subject | proper} then added that ${pronoun.possessiveAdjective} ability to sleep has been affected by ${pronoun.possessiveAdjective} 
+                            ${selectedSleepIssueCauses | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-cause-changed'}. 
                         </template>
                         
                         <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
@@ -4570,8 +4609,1004 @@
             </div>
         </fieldset>
 
-        <button type="button" class="uk-button uk-button-primary" click.delegate="save()">Save</button>
-        &nbsp;
-        <button type="button" class="uk-button uk-button-danger" click.delegate="delete()">Delete</button>
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Education</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    What was the last grade you completed?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="educationLastGradeCompleted" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.lastCompletedGrade" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    What did you study?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="educationAreaOfStudy" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.areaOfStudy" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What kind of student were you?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of studentSelfRatings">
+                        <input type="radio" name="educationStudentSelfRating" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.selfRating" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-3-4">
+                    Were you ever held back a grade or did you ever repeat a grade?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="educationEverHeldBack" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.everHeldBack" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did you ever fail a course?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="educationEverFailCourse" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.everFailedACourse" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    What was your best subject?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="educationBestSubject" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.bestSubject" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Your worst?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="educationWorstSubject" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.worstSubject" />
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Occupation</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    At the time of the accident were you employed?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="occupationWasEmployed" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.employedAtTheTimeOfTHeAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Were you working? (compared to seasonal work or being laid off)
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="occupationWasWorking" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.wereYouWorkingAtTheTimeOfTHeAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    When did you start working at this job?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Month:&nbsp;<input type="text" name="occupationJobStartMonth" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.occupation.start.month" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Year:&nbsp;<input type="text" name="occupationJobStartYear" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.occupation.start.year" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    If applicable, when did you stop working at this job?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" name="occupationJobStartNotApplicable" class="uk-checkbox" checked.bind="responses.personalHistory.occupation.end.na" value.bind="true" change.delegate="changed('occupation-end-na-changed')" />&nbsp;N/A&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Month:&nbsp;<input type="text" name="occupationJobEndMonth" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.occupation.end.month" disabled.bind="responses.personalHistory.occupation.end.na & signal:'occupation-end-na-changed'" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Year:&nbsp;<input type="text" name="occupationJobEndYear" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.occupation.end.year" disabled.bind="responses.personalHistory.occupation.end.na & signal:'occupation-end-na-changed'" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What was your job title?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="occupationJobTitle" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.jobTitle" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-3">
+                    What were the essential duties of your position?
+                </div>
+
+                <div class="uk-margin-remove uk-width-2-3">
+                    <textarea name="occupationJobDuties" class="uk-textarea uk-form-small" value.bind="responses.personalHistory.occupation.essentialDuties" rows="3"></textarea>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    How many hours a week were you typical working?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="occupationJobHoursPerWeek" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.occupation.hoursPerWeek" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    What was your pre-accident income?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="occupationPreAccidentIncome" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.occupation.preAccidentIncome" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you attempted a return to work?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="occupationReturnToWorkAttempted" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.attempted" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    When?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="occupationReturnToWorkWhen" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.when" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    If applicable, were you successful with your return to work?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoPartially">
+                        <input type="radio" name="occupationReturnToWorkSuccessful" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.successful" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    If applicable, provide information about any modified duties and/or hours that are currently in place?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="occupationReturnToWorkModifications" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.modifiedDutiesOrHours" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Do you feel that you can return to work in your current state?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="occupationReturnToWorkAble" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.ableToReturn" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    If you have not returned to work in your previous state, when do you feel that you will be able to return to work?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="occupationReturnToWorkWhenAble" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.whenAble" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    If you have not returned to work, what accommodation(s) could be put into place for you to be able to return to work?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="occupationReturnToWorkNecessaryAccommodations" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.necessaryAccommodations" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Besides vacation, please describe any time you have taken off of work.
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="occupationTimeOff" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.timeOff" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-3">
+                    Previous Employment History includes:
+                </div>
+
+                <div class="uk-margin-remove uk-width-2-3">
+                    <textarea name="occupationEmploymentHistory" class="uk-textarea uk-form-small" value.bind="responses.personalHistory.occupation.previousEmploymentHistory" rows="3"></textarea>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Current Financial State</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Are you currently experiencing financial stress?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="financialStateStress" class="uk-radio" checked.bind="$parent.responses.personalHistory.financial.experiencingFinancialStress" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Are things tighter financially since the subject accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="financialStateTighter" class="uk-radio" checked.bind="$parent.responses.personalHistory.financial.tightFinancially" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Do you currently have debt?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="financialStateHaveDebt" class="uk-radio" checked.bind="$parent.responses.personalHistory.financial.haveDebt" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    If yes, what is the amount of the debt?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" name="financialStateAmountOfDebt" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.financial.amountOfDebt" />
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Medical History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Do you have any familial medical history?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="medicalHistoryFamilial" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.familyMedicalHistory" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Do you have any familial medical history?
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <template repeat.for="i of medicalConditions.length">
+                        <label>
+                            <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.familyMedicalConditions" value.bind="medicalConditions[i].value" change.delegate="changed('family-medical-condition-changed')" >&nbsp;${medicalConditions[i].description}&nbsp;
+                        </label>
+                    </template>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Other family medical condition:
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.familyMedicalConditionOther" disabled.bind="!familyMedicalConditionOtherIsSelected & signal:'family-medical-condition-changed'" />
+                </div>
+
+                <br>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Have you ever used any of the following?
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label repeat.for="i of abusedDrugs.length">
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.drugsUsed" value.bind="abusedDrugs[i].value" change.delegate="changed('drug-use-changed')">&nbsp;${abusedDrugs[i].description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you ever been treated for substance abuse or dependence?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="medicalTreatedForSubstanceAbuse" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.everTreatedForSubstanceAbuse" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">Currently:</div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Has your consumption of Alcohol increased since the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoNa">
+                        <input type="radio" name="medicalAlchoholConsumptionIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.alchoholConsumptionIncreased" value.bind="response.value" disabled.bind="!everUsedAlchohol & signal:'drug-use-changed'" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-3-4">
+                    Has your Tobacco use increased since the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoNa">
+                        <input type="radio" name="medicalTobaccoUseIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.tobaccoUseIncreased" value.bind="response.value" disabled.bind="!everUsedTobacco & signal:'drug-use-changed'" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-3-4">
+                    Has your use of THC increased since the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoNa">
+                        <input type="radio" name="medicalThcUseIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.thcUseIncreased" value.bind="response.value" disabled.bind="!everUsedThc & signal:'drug-use-changed'" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Pre-accident history
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Did you have any medical conditions diagnosed before the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="medicalPreAccidentAnyMedicalConditions" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.medicalConditionsDiagnosed" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4"></div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label repeat.for="i of medicalConditions.length">
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.medicalConditions" value.bind="medicalConditions[i].value">&nbsp;${medicalConditions[i].description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Did you have any surgeries?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPreAccidentAnySurgeries" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.surgeries.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.beforeAccident.surgeries.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Did you have any injuries?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPreAccidentAnyInjuries" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.injuries.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.beforeAccident.injuries.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Did you have any other illnesses?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPreAccidentAnyIllnesses" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.illnesses.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.beforeAccident.illnesses.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Did you have any previous MVAs?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPreAccidentAnyMvas" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.mvas.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.beforeAccident.mvas.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Did you have any prior head injuries?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPreAccidentAnyHeadInjuries" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.headInjuries.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.beforeAccident.headInjuries.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    In the year prior to the accident would you describe your state to be:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of physicalStates">
+                        <input class="uk-radio" type="radio" name="medicalPhysicalState" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.priorState" value.bind="response.value">&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Since the accident:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you had any medical conditions diagnosed?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPostAccidentAnyMedicalConditions" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.sinceAccident.medicalDiagnosis.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.sinceAccident.medicalDiagnosis.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you had any surgeries?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPostAccidentAnySurgeries" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.sinceAccident.surgeries.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.sinceAccident.surgeries.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you had any further motor vehicle accidents?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPostAccidentAnyMvas" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.sinceAccident.mvas.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.sinceAccident.mvas.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you had any subsequent head injuries?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPostAccidentAnyHeadInjuries" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.sinceAccident.headInjuries.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.sinceAccident.headInjuries.details" />
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+        
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Legal History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you ever been arrested?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="legalEverArrested" class="uk-radio" checked.bind="$parent.responses.personalHistory.legal.everArrested.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    For?&nbsp;<input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.legal.everArrested.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you ever been charged?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="legalEverCharged" class="uk-radio" checked.bind="$parent.responses.personalHistory.legal.everCharged.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    For?&nbsp;<input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.legal.everCharged.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Do you have issues being bondable?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="legalBondableIssues" class="uk-radio" checked.bind="$parent.responses.personalHistory.legal.bondableIssues.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+    
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Psychological History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Prior to this subject accident did you have any psychological history?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalAnyHistory" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.anyHistory" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    In the past have you taken any medication for your mood?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalTakenMoodMedication" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.takenMoodMedication" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Were you on this medication at the time of the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalOnMoodMedicationAtTimeOfAccident" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Have you ever been hospitalized due to psychological concerns?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalHospitalizedDueToPsychologicalConcerns" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Before the accident, had you ever had any mental health assessments or psychological testing?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalHadMentalHealthTesting" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hadMentalHealthTesting" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    Before the accident, did you have any mental health counselling with a psychologist, psychiatrist, SW/counsellor or your Family Doctor?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalHadMentalHealthCounselling" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hadMentalHealthCounselling" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    DIAGNOSES:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    What have you been given as diagnoses?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <textarea class="uk-textarea uk-form-small" value.bind="responses.personalHistory.diagnosis" cols="2"></textarea>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    PROGNOSIS:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Have you been told your Prognosis is:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label repeat.for="response of prognosis">
+                        <input type="radio" name="psychologicalPrognosis" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.prognosis" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-1">
+                    Do you feel you are:
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    IMPAIRED?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalImpaired" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.impaired.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    DISABLED?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalDisabled" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.disabled.response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+                
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Physically?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalImpairedPhysically" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.impaired.physically" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Physically?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalDisabledPhysically" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.disabled.physically" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+                
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Cognitively?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalImpairedCognitively" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.impaired.cognitively" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Cognitively?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalDisabledCognitively" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.disabled.cognitively" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+                
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Mentally?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalImpairedMentally" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.impaired.mentally" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Mentally?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="psychologicalDisabledMentally" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.disabled.mentally" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+                
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-1-4">
+                    Anything you wish to add?
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <textarea class="uk-textarea uk-form-small" value.bind="responses.personalHistory.psychological.additionalInformation" rows="2"></textarea>
+                </div>
+                
+                <hr>
+            </div>
+        </fieldset>
+
+        
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">If an OCF-18/TX plan is in dispute</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you met with the person who completed the OCF-18?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="ocfCompleterMetWith" class="uk-radio" checked.bind="$parent.responses.accidentDetails.ocfCompleter.metWith" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Have you spoken with the person who completed the OCF-18?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="ocfCompleterSpokenWith" class="uk-radio" checked.bind="$parent.responses.accidentDetails.ocfCompleter.spokenWith" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    If you have had treatment sessions with his person before, were these sessions over the phone or in person?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="radio" name="ocfCompleterTreatmentSessionFormat" class="uk-radio" checked.bind="responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat" value="inPerson" />&nbsp;In person&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="ocfCompleterTreatmentSessionFormat" class="uk-radio" checked.bind="responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat" value="phone" />&nbsp;Phone&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    If you have had treatment sessions with this person before, where were the sessions completed? (i.e. Location)
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.accidentDetails.ocfCompleter.treatmentSessions.where" />
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Dr. Watson's Reminder Checklist</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <template repeat.for="i of responses.reminderChecklist.length">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        ${reminderChecklistItemsMap[$parent.responses.reminderChecklist[i].value].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="reminderChecklist_${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.reminderChecklist[i].response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+
+            </div>
+        </fieldset>
+        
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Observations of Dr. Watson</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <template repeat.for="i of responses.observations.length">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        ${observationsMap[$parent.responses.observations[i].value].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <template if.bind="observationsMap[$parent.responses.observations[i].value].isNaAllowed">
+                            <label repeat.for="response of yesNoNa">
+                                <input type="radio" name="observations_${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.observations[i].response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </template>
+                        <template else>
+                            <label repeat.for="response of yesNo">
+                                <input type="radio" name="observations_${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.observations[i].response" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </template>
+                    </div>
+    
+                    <hr>
+                </template>
+
+            </div>
+        </fieldset>
+
+        <br>
+        <br>
+        <a id="bottom" name="bottom"></a>
     </div>
 </template>

@@ -33,8 +33,9 @@ export class Notes {
         
         this.pronouns = [];
         this.yesNo = [];
-        this.yesNoOld = [];
         this.yesNoDontKnow = [];
+        this.yesNoNa = [];
+        this.yesNoPartially = [];
         this.genders = [];
         this.socioeconomicStatuses = [];
         this.relationshipStatuses = [];
@@ -48,6 +49,7 @@ export class Notes {
         this.memoryAids = [];
         this.visualSpatialIssues = [];
         this.sleepIssues = [];
+        this.sleepIssueCauses = [];
         this.languageIssues = [];
         this.executiveIssues = [];
         this.inappropriateSocialBehaviors = [];
@@ -64,6 +66,13 @@ export class Notes {
         this.treatmentPrograms = [];
         this.treatmentProviders = [];
         this.initialInjuriesAndSymptoms = [];
+        this.studentSelfRatings = [];
+        this.medicalConditions = [];
+        this.abusedDrugs = [];
+        this.physicalStates = [];
+        this.prognosis = [];
+        this.reminderChecklistItems = [];
+        this.observations = [];
 
         this.self = this;
 
@@ -108,6 +117,14 @@ export class Notes {
                         this.yesNoDontKnow = this.asArray(data);
                         this.yesNoDontKnowMap = data;
                     }),
+                    this.getYesNoNa().then(data => {
+                        this.yesNoNa = this.asArray(data);
+                        this.yesNoNaMap = data;
+                    }),
+                    this.getYesNoPartially().then(data => {
+                        this.yesNoPartially = this.asArray(data);
+                        this.yesNoPartiallyMap = data;
+                    }),
                     this.getGenders().then(data => this.genders = data),
                     this.getSocioeconomicStatuses().then(data => this.socioeconomicStatuses = data),
                     this.getRelationshipStatuses().then(data => {
@@ -141,6 +158,10 @@ export class Notes {
                     this.getSleepIssues().then(data => {
                         this.sleepIssues = this.asArray(data);
                         this.sleepIssuesMap = data;
+                    }),
+                    this.getSleepIssueCauses().then(data => {
+                        this.sleepIssueCauses = this.asArray(data);
+                        this.sleepIssueCausesMap = data;
                     }),
                     this.getLanguageIssues().then(data => this.languageIssues = data),
                     this.getExecutiveIssues().then(data => this.executiveIssues = data),
@@ -193,6 +214,34 @@ export class Notes {
                     this.getInitialInjuriesAndSymptoms().then(data => {
                         this.initialInjuriesAndSymptoms = this.asArray(data);
                         this.initialInjuriesAndSymptomsMap = data;
+                    }),
+                    this.getStudentSelfRatings().then(data => {
+                        this.studentSelfRatings = this.asArray(data);
+                        this.studentSelfRatingsMap = data;
+                    }),
+                    this.getMedicalConditions().then(data => {
+                        this.medicalConditions = this.asArray(data);
+                        this.medicalConditionsMap = data;
+                    }),
+                    this.getAbusedDrugs().then(data => {
+                        this.abusedDrugs = this.asArray(data);
+                        this.abusedDrugsMap = data;
+                    }),
+                    this.getPhysicalStates().then(data => {
+                        this.physicalStates = this.asArray(data);
+                        this.physicalStatesMap = data;
+                    }),
+                    this.getPrognosis().then(data => {
+                        this.prognosis = this.asArray(data);
+                        this.prognosisMap = data;
+                    }),
+                    this.getReminderChecklistItems().then(data => {
+                        this.reminderChecklistItems = this.asArray(data);
+                        this.reminderChecklistItemsMap = data;
+                    }),
+                    this.getObservations().then(data => {
+                        this.observations = this.asArray(data);
+                        this.observationsMap = data;
                     })
                 ]);
             });
@@ -239,6 +288,10 @@ export class Notes {
 
     scrollToTop() {
         this.scroller.scrollTo(document.body);
+    }
+
+    scrollToBottom() {
+        this.scroller.scrollTo(document.getElementById("bottom"));
     }
 
     save() {
@@ -343,6 +396,28 @@ export class Notes {
             "yes": { "description": "Yes", "value": "yes", "isYes": true },
             "no": { "description": "No", "value": "no", "isNo": true },
             "dontKnow": { "description": "DK", "value": "dontKnow", "isDontKnow": true },
+            "skip": { "description": "Skip", "value": "skip", "isSkip": true }
+        };
+
+        return getPromise(data);
+    }
+
+    getYesNoNa() {
+        let data = {
+            "yes": { "description": "Yes", "value": "yes", "isYes": true },
+            "no": { "description": "No", "value": "no", "isNo": true },
+            "na": { "description": "NA", "value": "notApplicable", "isNotApplicable": true },
+            "skip": { "description": "Skip", "value": "skip", "isSkip": true }
+        };
+
+        return getPromise(data);
+    }
+
+    getYesNoPartially() {
+        let data = {
+            "yes": { "description": "Yes", "value": "yes", "isYes": true },
+            "no": { "description": "No", "value": "no", "isNo": true },
+            "partially": { "description": "Partially", "value": "partially", "isPartially": true },
             "skip": { "description": "Skip", "value": "skip", "isSkip": true }
         };
 
@@ -571,6 +646,16 @@ export class Notes {
         return getPromise(data);
     }
 
+    getSleepIssueCauses() {
+        let data = {
+            "pain": { "description": "Pain", "value": "pain", "format": function(context) { return `pain`; } },
+            "nightmares": { "description": "Nightmares", "value": "nightmares", "format": function(context) { return `nightmares`; } },
+            "thinking": { "description": "Thinking", "value": "thinking", "format": function(context) { return `thinking`; } }
+        };
+        
+        return getPromise(data);
+    }
+
     getLanguageIssues() {
         let data = {
             "lostInConversations": { "description": "Easily lost in conversations?", "format": function(context) { return `feeling lost in conversations`; } },
@@ -783,6 +868,110 @@ export class Notes {
             "vomiting": { "description": "Vomiting", "value": "vomiting", "format": function(context) { return `Vomiting` } },
             "tinnitus": { "description": "Tinnitus", "value": "tinnitus", "format": function(context) { return `Tinnitus` } },
             "skip": { "description": "", "value": "skip" }
+        };
+
+        return getPromise(data);
+    }
+
+    getStudentSelfRatings() {
+        let data = {
+            "good": { "description": "Good", "value": "good", "format": function(context) { return `Good`; } },
+            "average": { "description": "Average", "value": "average", "format": function(context) { return `Average`; } },
+            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `Poor`; } },
+            "excellent": { "description": "Excellent", "value": "excellent", "format": function(context) { return `Excellent`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getMedicalConditions() {
+        let data = {
+            "alchoholAbuse": { "description": "Alchohol Abuse", "value": "alchoholAbuse", "format": function(context) { return `Alchohol Abuse`; } },
+            "cancer": { "description": "Cancer", "value": "cancer", "format": function(context) { return `Cancer`; } },
+            "cholesterol": { "description": "Cholesterol", "value": "cholesterol", "format": function(context) { return `Cholesterol`; } },
+            "diabetes": { "description": "Diabetes", "value": "diabetes", "format": function(context) { return `Diabetes`; } },
+            "fibromyalgia": { "description": "Fibromyalgia", "value": "fibromyalgia", "format": function(context) { return `Fibromyalgia`; } },
+            "heartDisease": { "description": "Heart Disease", "value": "heartDisease", "format": function(context) { return `Heart Disease`; } },
+            "hypertension": { "description": "Hypertension", "value": "hypertension", "format": function(context) { return `Hypertension`; } },
+            "stroke": { "description": "Stroke", "value": "stroke", "format": function(context) { return `Stroke`; } },
+            "thyroidDisorder": { "description": "Thyroid Disorder", "value": "thyroidDisorder", "format": function(context) { return `Thyroid Disorder`; } },
+            "other": { "description": "Other", "value": "other", "format": function(context) { return `Other`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getAbusedDrugs() {
+        let data = {
+            "alchohol": { "description": "Alchohol", "value": "alchohol", "format": function(context) { return `Alchohol`; } },
+            "tobacco": { "description": "Tobacco", "value": "tobacco", "format": function(context) { return `Tobacco`; } },
+            "thc": { "description": "THC", "value": "thc", "format": function(context) { return `THC`; } },
+            "streetDrugs": { "description": "Street drugs", "value": "streetDrugs", "format": function(context) { return `Street drugs`; } },
+            "prescriptionMeds": { "description": "Prescription medication that was not prescribed to you", "value": "prescriptionMeds", "format": function(context) { return `Prescription medication that was not prescribed to you`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getPhysicalStates() {
+        let data = {
+            "excellent": { "description": "Excellent", "value": "excellent", "format": function(context) { return `Excellent`; } },
+            "good": { "description": "Good", "value": "good", "format": function(context) { return `Good`; } },
+            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `Fair`; } },
+            "stable": { "description": "Stable", "value": "stable", "format": function(context) { return `Stable`; } },
+            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `Poor`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getPrognosis() {
+        let data = {
+            "good": { "description": "Good", "value": "good", "format": function(context) { return `Good`; } },
+            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `Fair`; } },
+            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `Poor`; } },
+            "chronic": { "description": "Chronic", "value": "chronic", "format": function(context) { return `Chronic`; } },
+            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `Plateaued`; } },
+            "dontKnow": { "description": "DK", "value": "dontKnow", "format": function(context) { return `Don't know`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getReminderChecklistItems() {
+        let data = {
+            "introducedSelf": { "description": " 1. Did I introduce myself?", "value": "introducedSelf" },
+            "explainedRole": { "description": " 2. Did I explain my role in the assessment process?", "value": "explainedRole" },
+            "usedClaimantName": { "description": " 3. Did I refer to the claimant by the name?", "value": "usedClaimantName" },
+            "explainedPurpose": { "description": " 4. Did I explain the purpose of the assessment?", "value": "explainedPurpose" },
+            "reviewedFile": { "description": " 5. Did I review the medical file before the assessment so I knew what areas to ask about and what testing would be reasonable?", "order": 5, "value": "reviewedFile" },
+            "actedProfessionally": { "description": " 6. Did I act in a professional manner?", "value": "actedProfessionally" },
+            "thoroughQuestions": { "description": " 7. Was I thorough with what questions I was asking?", "value": "thoroughQuestions" },
+            "privateRoom": { "description": " 8. Did I make sure that the room was private?", "value": "privateRoom" },
+            "accommodationForm": { "description": " 9. Was the accommodation form completed by them?", "value": "accommodationForm" },
+            "claimantNotWaiting": { "description": "10. Did I strive to make sure that the claimant was not waiting on me?", "value": "claimantNotWaiting" },
+            "businessCard": { "description": "11. Did I provide them with a business card if they wanted to contact me with additional information after the assessment?", "value": "businessCard" }
+        };
+
+        return getPromise(data);
+    }
+
+    getObservations() {
+        let data = {
+            "claimantFriendly": { "description": "1.	Overall, was the claimant friendly and pleasant?", "value": "claimantFriendly" },
+            "claimantBathedRecently": { "description": "2.	Did it appear that the claimant had bathed recently?", "value": "claimantBathedRecently" },
+            "claimantAppropriateClothing": { "description": "3.	Was the claimant’s clothing appropriate for age/weather?", "value": "claimantAppropriateClothing" },
+            "claimantAbleToWrite": { "description": "4.	Was the claimant able to use a pen/pencil to complete questionnaires/testing?", "value": "claimantAbleToWrite" },
+            "claimantAnswersOrganized": { "description": "5.	Were the claimant’s answers well thought out/organized?", "value": "claimantAnswersOrganized" },
+            "claimantAbleToRemainSeated": { "description": "6.	Was the claimant able to remain seated during the interview without taking a break or getting up to stretch?", "value": "claimantAbleToRemainSeated" },
+            "neededToRepeatQuestionsOrAnswers": { "description": "7.	Did I have to repeat the questions or choices for answers?", "value": "neededToRepeatQuestionsOrAnswers" },
+            "claimantWordFindingOrStuttering": { "description": "8.	Did I notice any issues with word finding/stuttering? (N/A if translator)", "value": "claimantWordFindingOrStuttering", "isNaAllowed": true },
+            "claimantIssuesRecallingPreviousState": { "description": "9.	Did the claimant having any issues recalling their previous state? (i.e. Education/work/health)", "value": "claimantIssuesRecallingPreviousState" },
+            "claimantIssuesRecallingIncident": { "description": "10.	Did the claimant have any issues recalling the specific details of the incident?", "value": "claimantIssuesRecallingIncident" },
+            "claimantIssuesRecallingTreatment": { "description": "11.	Did the claimant have any issues recalling their post-incident treatment?", "value": "claimantIssuesRecallingTreatment" },
+            "claimantCriedWhenDiscussingIncident": { "description": "12.	During the interview did the claimant tear up when discussing the incident?", "value": "claimantCriedWhenDiscussingIncident" },
+            "claimantCriedWhenDiscussingLifeChanges": { "description": "13.	During the interview did the claimant tear up when discussing any changes in their life?", "value": "claimantCriedWhenDiscussingLifeChanges" },
+            "claimantIssuesWithExecutiveFunctioning": { "description": "14.	Were any issues with executive functioning noted during the interview?", "value": "claimantIssuesWithExecutiveFunctioning" }
         };
 
         return getPromise(data);
@@ -1358,6 +1547,26 @@ export class Notes {
         return !this.selectedAtypicalIssues.some(item => item) && this.unselectedAtypicalIssues.some(item => item);
     }
 
+    getSleepIssueCausesForResponses() {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.neuropsychological.physical.sleep.issueCauses
+            .map(item => this.sleepIssueCausesMap[item]);
+        
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.sleep.issueCauses')
+    get selectedSleepIssueCauses() {
+        let data = this.getSleepIssueCausesForResponses();
+        
+        return data;
+    }
+
+    get anySelectedSleepIssueCauses() {
+        return this.selectedSleepIssueCauses.some(item => item);
+    }
+
     getSleepIssuesForResponses(criteria) {
         if (!this.responses) { return []; }
 
@@ -1652,7 +1861,33 @@ export class Notes {
     }
 
 
+    @computedFrom('responses.personalHistory.medical.familyMedicalConditions')
+    get familyMedicalConditionOtherIsSelected() {
+        if (this.responses === null) { return false; }
+        
+        return this.responses.personalHistory.medical.familyMedicalConditions.some(item => item === "other");
+    }
 
+    @computedFrom('responses.personalHistory.medical.drugsUsed')
+    get everUsedAlchohol() {
+        if (this.responses === null) { return false; }
+        
+        return this.responses.personalHistory.medical.drugsUsed.some(item => item === "alchohol");
+    }
+
+    @computedFrom('responses.personalHistory.medical.drugsUsed')
+    get everUsedTobacco() {
+        if (this.responses === null) { return false; }
+        
+        return this.responses.personalHistory.medical.drugsUsed.some(item => item === "tobacco");
+    }
+
+    @computedFrom('responses.personalHistory.medical.drugsUsed')
+    get everUsedThc() {
+        if (this.responses === null) { return false; }
+        
+        return this.responses.personalHistory.medical.drugsUsed.some(item => item === "thc");
+    }
 
     any(items) {
         return items && items.some(item => item);
@@ -1734,6 +1969,18 @@ export class Notes {
 
     addOtherAccidentInjurySymptom() {
         this.responses.accidentDetails.otherInjuriesAndSymptoms.push("");
+    }
+
+    addPsychologicalCompletion() {
+        this.responses.accidentDetails.examinations.psychological.completions.push({ "withWhom": "", "when": "" });
+    }
+
+    addPsychiatricCompletion() {
+        this.responses.accidentDetails.examinations.psychiatric.completions.push({ "withWhom": "", "when": "" });
+    }
+
+    addNpNcCompletion() {
+        this.responses.accidentDetails.examinations.npNc.completions.push({ "withWhom": "", "when": "" });
     }
 
     addOtherStressor() {
@@ -1967,6 +2214,38 @@ function upgrade_12_to_13(responses) {
         responses.accidentDetails = newResponses.accidentDetails;
     }
 
+    if (!responses.hasOwnProperty('reminderChecklist')) {
+        responses.reminderChecklist = newResponses.reminderChecklist;
+    }
+
+    if (!responses.hasOwnProperty('observations')) {
+        responses.observations = newResponses.observations;
+    }
+
+    let personalHistoryProperties = [
+        "education",
+        "occupation",
+        "financial",
+        "medical",
+        "legal",
+        "psychological",
+        "diagnosis",
+        "prognosis",
+        "impaired",
+        "disabled",
+        "additionalInformation"
+    ];
+
+    for (let i = 0; i < personalHistoryProperties.length; i++) {
+        if (!responses.personalHistory.hasOwnProperty(personalHistoryProperties[i])) {
+            responses.personalHistory[personalHistoryProperties[i]] = newResponses.personalHistory[personalHistoryProperties[i]];
+        }
+    }
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('issueCauses')) {
+        responses.neuropsychological.physical.sleep.issueCauses = newResponses.neuropsychological.physical.sleep.issueCauses;
+    }
+    
     responses.version = "13";
 
     return responses;
@@ -2001,6 +2280,7 @@ function getNewResponses() {
             "secondaryImpact": null,
             "airbagsDeployed": null,
             "vehicleRolled": null,
+            "additionalAccidentDetails": "",
             "hitHead": null,
             "hitHeadOn": null,
             "hitHeadOnOther": "",
@@ -2100,26 +2380,40 @@ function getNewResponses() {
                 "spokenWith": null,
                 "treatmentSessions": {
                     "hadSessions": null,
-                    "sessionFormat": null,   //in person, phone
+                    "sessionFormat": null,
                     "where": ""
                 }
             }
         },
-        "reminderChecklist": {
-            "items": [
-                { "response": null, "value": "introducedSelf" },
-                { "response": null, "value": "explainedRole" },
-                { "response": null, "value": "usedClaimantName" },
-                { "response": null, "value": "explainedPurpose" },
-                { "response": null, "value": "reviewedFile" },
-                { "response": null, "value": "actedProfessionally" },
-                { "response": null, "value": "thoroughQuestions" },
-                { "response": null, "value": "privateRoom" },
-                { "response": null, "value": "accommodationForm" },
-                { "response": null, "value": "claimantNotWaiting" },
-                { "response": null, "value": "businessCard" }
-            ]
-        },
+        "reminderChecklist": [
+            { "value": "introducedSelf", "response": "yes" },
+            { "value": "explainedRole", "response": "yes" },
+            { "value": "usedClaimantName", "response": "yes" },
+            { "value": "explainedPurpose", "response": "yes" },
+            { "value": "reviewedFile", "response": "yes" },
+            { "value": "actedProfessionally", "response": "yes" },
+            { "value": "thoroughQuestions", "response": "yes" },
+            { "value": "privateRoom", "response": "yes" },
+            { "value": "accommodationForm", "response": "yes" },
+            { "value": "claimantNotWaiting", "response": "yes" },
+            { "value": "businessCard", "response": "yes" }
+        ],
+        "observations": [
+            { "value": "claimantFriendly", "response": null },
+            { "value": "claimantBathedRecently", "response": null },
+            { "value": "claimantAppropriateClothing", "response": null },
+            { "value": "claimantAbleToWrite", "response": null },
+            { "value": "claimantAnswersOrganized", "response": null },
+            { "value": "claimantAbleToRemainSeated", "response": null },
+            { "value": "neededToRepeatQuestionsOrAnswers", "response": null },
+            { "value": "claimantWordFindingOrStuttering", "response": null },
+            { "value": "claimantIssuesRecallingPreviousState", "response": null },
+            { "value": "claimantIssuesRecallingIncident", "response": null },
+            { "value": "claimantIssuesRecallingTreatment", "response": null },
+            { "value": "claimantCriedWhenDiscussingIncident", "response": null },
+            { "value": "claimantCriedWhenDiscussingLifeChanges", "response": null },
+            { "value": "claimantIssuesWithExecutiveFunctioning", "response": null }
+        ],
         "personalHistory": {
             "locationOfBirth": null,
             "timeOfArrivalInCanada": null,
@@ -2206,7 +2500,7 @@ function getNewResponses() {
             "education": {
                 "lastCompletedGrade": "",
                 "areaOfStudy": "",
-                "selfRating": null, //good/average/poor/excellent
+                "selfRating": null,
                 "everHeldBack": null,
                 "everFailedACourse": null,
                 "bestSubject": "",
@@ -2222,7 +2516,7 @@ function getNewResponses() {
                 "end": {
                     "month": "",
                     "year": "",
-                    "na": ""
+                    "na": false
                 },
                 "jobTitle": "",
                 "essentialDuties": "",
@@ -2248,24 +2542,9 @@ function getNewResponses() {
             },
             "medical": {
                 "familyMedicalHistory": null,
-                "familyMedicalConditions": [
-                    { "response": null, "value": "alchoholAbuse" },
-                    { "response": null, "value": "cancer" },
-                    { "response": null, "value": "cholesterol" },
-                    { "response": null, "value": "diabetes" },
-                    { "response": null, "value": "fibromyalgia" },
-                    { "response": null, "value": "heartDisease" },
-                    { "response": null, "value": "hypertension" },
-                    { "response": null, "value": "stroke" },
-                    { "response": null, "value": "thyroidDisorder" }
-                ],
-                "drugsUsed": [
-                    { "response": null, "value": "alchohol" },
-                    { "response": null, "value": "tobacco" },
-                    { "response": null, "value": "thc" },
-                    { "response": null, "value": "streetDrugs" },
-                    { "response": null, "value": "prescriptionDrugs" }
-                ],
+                "familyMedicalConditions": [],
+                "familyMedicalConditionOther": "",
+                "drugsUsed": [],
                 "everTreatedForSubstanceAbuse": null,
                 "currently": {
                     "alchoholConsumptionIncreased": null,
@@ -2273,17 +2552,8 @@ function getNewResponses() {
                     "thcUseIncreased": null
                 },
                 "beforeAccident": {
-                    "medicalConditions": [
-                        { "response": null, "value": "alchoholAbuse" },
-                        { "response": null, "value": "cancer" },
-                        { "response": null, "value": "cholesterol" },
-                        { "response": null, "value": "diabetes" },
-                        { "response": null, "value": "fibromyalgia" },
-                        { "response": null, "value": "heartDisease" },
-                        { "response": null, "value": "hypertension" },
-                        { "response": null, "value": "stroke" },
-                        { "response": null, "value": "thyroidDisorder" }
-                    ],
+                    "medicalConditionsDiagnosed": null,
+                    "medicalConditions": [],
                     "surgeries": {
                         "response": null,
                         "details": ""
@@ -2350,19 +2620,15 @@ function getNewResponses() {
             "prognosis": null,
             "impaired": {
                 "response": null,
-                "categories": [
-                    { "response": null, "value": "physical" },
-                    { "response": null, "value": "cognitive" },
-                    { "response": null, "value": "mental" }
-                ]
+                "physically": null,
+                "cognitively": null,
+                "mentally": null
             },
             "disabled": {
                 "response": null,
-                "categories": [
-                    { "response": null, "value": "physical" },
-                    { "response": null, "value": "cognitive" },
-                    { "response": null, "value": "mental" }
-                ]
+                "physically": null,
+                "cognitively": null,
+                "mentally": null
             },
             "additionalInformation": ""
         },
@@ -2564,6 +2830,7 @@ function getNewResponses() {
                         { "response": null, "value": "sustaining" },
                         { "response": null, "value": "regaining" }
                     ],
+                    "issueCauses": [],
                     "fatiguedWhenWaking": null,
                     "takeNaps": null
                 },
