@@ -1,5 +1,4 @@
 ﻿using PsychologicalServices.Models.Appointments;
-using PsychologicalServices.Models.Arbitrations;
 using PsychologicalServices.Models.Claims;
 using PsychologicalServices.Models.Colors;
 using PsychologicalServices.Models.Common.Utility;
@@ -180,11 +179,15 @@ namespace PsychologicalServices.Models.Assessments
                         new ValidationError { PropertyName = "DocListWriterId", Message = "Invalid doc list writer" }
                     );
                 }
-                else if (!docListWriters.First().IsActive)
+                else
                 {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "DocListWriterId", Message = "The selected doc list writer is not active." }
-                    );
+                    var docListWriter = docListWriters.First();
+                    if (!docListWriter.IsActive && !item.Appointments.Any(app => docListWriter.IsAvailable(app.AppointmentTime)))
+                    {
+                        result.ValidationErrors.Add(
+                            new ValidationError { PropertyName = "DocListWriterId", Message = "The selected doc list writer is not active." }
+                        );
+                    }
                 }
             }
             
@@ -203,11 +206,15 @@ namespace PsychologicalServices.Models.Assessments
                         new ValidationError { PropertyName = "NotesWriterId", Message = "Invalid notes writer" }
                     );
                 }
-                else if (!notesWriters.First().IsActive)
+                else
                 {
-                    result.ValidationErrors.Add(
-                        new ValidationError { PropertyName = "NotesWriterId", Message = "The selected notes writer is not active." }
-                    );
+                    var notesWriter = notesWriters.First();
+                    if (!notesWriter.IsActive && !item.Appointments.Any(app => notesWriter.IsAvailable(app.AppointmentTime)))
+                    {
+                        result.ValidationErrors.Add(
+                            new ValidationError { PropertyName = "NotesWriterId", Message = "The selected notes writer is not active." }
+                        );
+                    }
                 }
             }
             
