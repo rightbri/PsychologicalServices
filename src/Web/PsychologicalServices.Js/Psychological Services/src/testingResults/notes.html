@@ -3910,7 +3910,7 @@
             <legend class="uk-legend">Information about your family</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-            <!--
+            
                 <div class="uk-margin-remove uk-width-1-2">
                     About your father:
                 </div>
@@ -4058,8 +4058,17 @@
                     If not, what was the cause of her death?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive)">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath.value" input.delegate="changed('mother-death-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive.value)">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.causeOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.causeOfDeath.skip" value.bind="true" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <hr if.bind="isNo(responses.personalHistory.mother.isAlive)">
@@ -4068,8 +4077,17 @@
                     What year did she die?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath" input.delegate="changed('mother-death-changed') & debounce:500" />
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive)">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath.value" input.delegate="changed('mother-death-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive.value)">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.yearOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.yearOfDeath.skip" value.bind="true" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <hr if.bind="isNo(responses.personalHistory.mother.isAlive)">
@@ -4078,8 +4096,17 @@
                     What was her education level?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.educationLevel" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.educationLevel.value" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.educationLevel.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.educationLevel.skip" value.bind="true" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <hr>
@@ -4088,8 +4115,17 @@
                     What type of employment areas has she worked in?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.employmentAreas" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.employmentAreas.value" input.delegate="changed('mother-education-or-employment-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.employmentAreas.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.employmentAreas.skip" value.bind="true" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <hr>
@@ -4214,7 +4250,7 @@
                 </div>
 
                 <hr if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
-                -->
+
                 <div class="uk-margin-remove uk-width-1-1">
                     Have you (or your family) ever been diagnosed with any of the following:
                 </div>
@@ -4245,7 +4281,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <!--
+                
                 <div class="uk-margin-remove uk-width-1-2">
                     How many sons do you have?
                 </div>
@@ -4325,7 +4361,7 @@
                 </div>
 
                 <hr if.bind="childCount > 0 & signal:'child-count-changed'">
-                -->
+
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <!-- Father / Mother / Brothers / Sisters / Sons / Daughters -->
                     <p>
@@ -5497,7 +5533,6 @@
             </div>
         </fieldset>
 
-        
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">If an OCF-18/TX plan is in dispute</legend>
 
