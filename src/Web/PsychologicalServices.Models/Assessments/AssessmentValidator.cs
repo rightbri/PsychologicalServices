@@ -179,16 +179,6 @@ namespace PsychologicalServices.Models.Assessments
                         new ValidationError { PropertyName = "DocListWriterId", Message = "Invalid doc list writer" }
                     );
                 }
-                else
-                {
-                    var docListWriter = docListWriters.First();
-                    if (!docListWriter.IsActive && !item.Appointments.Any(app => docListWriter.IsAvailable(app.AppointmentTime)))
-                    {
-                        result.ValidationErrors.Add(
-                            new ValidationError { PropertyName = "DocListWriterId", Message = "The selected doc list writer is not active." }
-                        );
-                    }
-                }
             }
             
             if (null != item.NotesWriter)
@@ -205,16 +195,6 @@ namespace PsychologicalServices.Models.Assessments
                     result.ValidationErrors.Add(
                         new ValidationError { PropertyName = "NotesWriterId", Message = "Invalid notes writer" }
                     );
-                }
-                else
-                {
-                    var notesWriter = notesWriters.First();
-                    if (!notesWriter.IsActive && !item.Appointments.Any(app => notesWriter.IsAvailable(app.AppointmentTime)))
-                    {
-                        result.ValidationErrors.Add(
-                            new ValidationError { PropertyName = "NotesWriterId", Message = "The selected notes writer is not active." }
-                        );
-                    }
                 }
             }
             
