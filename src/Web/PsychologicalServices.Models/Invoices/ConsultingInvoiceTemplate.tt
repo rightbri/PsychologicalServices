@@ -220,18 +220,18 @@
 					<td colspan="4" class="spacer">&nbsp;</td>
 				</tr>
 
-				<tr>
-					<td class="label"></td>
-					<td colspan="3">
-						Consulting Services
-					</td>
-				</tr>
-
 				<#
 				for (var i = 0; i < Model.LineGroups.Count(); i++)
 				{
 					var lineGroup = Model.LineGroups.ElementAt(i);
-					
+				#>
+					<tr>
+						<td class="label"></td>
+						<td colspan="3">
+							<#= lineGroup.Description #>
+						</td>
+					</tr>
+				<#
 					for (var j = 0; j < lineGroup.Lines.Count(); j++)
 					{
 						var line = lineGroup.Lines.ElementAt(j);
