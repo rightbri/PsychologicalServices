@@ -938,6 +938,153 @@ namespace PsychologicalServices.Data.FactoryClasses
 		#endregion
 	}
 
+	/// <summary>Factory to create new, empty GoseAccidentTimeframeEntity objects.</summary>
+	[Serializable]
+	public partial class GoseAccidentTimeframeEntityFactory : EntityFactoryBase2<GoseAccidentTimeframeEntity> {
+		/// <summary>CTor</summary>
+		public GoseAccidentTimeframeEntityFactory() : base("GoseAccidentTimeframeEntity", PsychologicalServices.Data.EntityType.GoseAccidentTimeframeEntity, false) { }
+		
+		/// <summary>Creates a new GoseAccidentTimeframeEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new GoseAccidentTimeframeEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseAccidentTimeframeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty GoseFamilyAndFriendshipsDisruptionLevelEntity objects.</summary>
+	[Serializable]
+	public partial class GoseFamilyAndFriendshipsDisruptionLevelEntityFactory : EntityFactoryBase2<GoseFamilyAndFriendshipsDisruptionLevelEntity> {
+		/// <summary>CTor</summary>
+		public GoseFamilyAndFriendshipsDisruptionLevelEntityFactory() : base("GoseFamilyAndFriendshipsDisruptionLevelEntity", PsychologicalServices.Data.EntityType.GoseFamilyAndFriendshipsDisruptionLevelEntity, false) { }
+		
+		/// <summary>Creates a new GoseFamilyAndFriendshipsDisruptionLevelEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new GoseFamilyAndFriendshipsDisruptionLevelEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseFamilyAndFriendshipsDisruptionLevelUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty GoseInterviewEntity objects.</summary>
+	[Serializable]
+	public partial class GoseInterviewEntityFactory : EntityFactoryBase2<GoseInterviewEntity> {
+		/// <summary>CTor</summary>
+		public GoseInterviewEntityFactory() : base("GoseInterviewEntity", PsychologicalServices.Data.EntityType.GoseInterviewEntity, false) { }
+		
+		/// <summary>Creates a new GoseInterviewEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new GoseInterviewEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseInterviewUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty GoseRespondentTypeEntity objects.</summary>
+	[Serializable]
+	public partial class GoseRespondentTypeEntityFactory : EntityFactoryBase2<GoseRespondentTypeEntity> {
+		/// <summary>CTor</summary>
+		public GoseRespondentTypeEntityFactory() : base("GoseRespondentTypeEntity", PsychologicalServices.Data.EntityType.GoseRespondentTypeEntity, false) { }
+		
+		/// <summary>Creates a new GoseRespondentTypeEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new GoseRespondentTypeEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseRespondentTypeUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty GoseReturnToNormalLifeOutcomeFactorEntity objects.</summary>
+	[Serializable]
+	public partial class GoseReturnToNormalLifeOutcomeFactorEntityFactory : EntityFactoryBase2<GoseReturnToNormalLifeOutcomeFactorEntity> {
+		/// <summary>CTor</summary>
+		public GoseReturnToNormalLifeOutcomeFactorEntityFactory() : base("GoseReturnToNormalLifeOutcomeFactorEntity", PsychologicalServices.Data.EntityType.GoseReturnToNormalLifeOutcomeFactorEntity, false) { }
+		
+		/// <summary>Creates a new GoseReturnToNormalLifeOutcomeFactorEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new GoseReturnToNormalLifeOutcomeFactorEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseReturnToNormalLifeOutcomeFactorUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty GoseSocialAndLeisureRestrictionExtentEntity objects.</summary>
+	[Serializable]
+	public partial class GoseSocialAndLeisureRestrictionExtentEntityFactory : EntityFactoryBase2<GoseSocialAndLeisureRestrictionExtentEntity> {
+		/// <summary>CTor</summary>
+		public GoseSocialAndLeisureRestrictionExtentEntityFactory() : base("GoseSocialAndLeisureRestrictionExtentEntity", PsychologicalServices.Data.EntityType.GoseSocialAndLeisureRestrictionExtentEntity, false) { }
+		
+		/// <summary>Creates a new GoseSocialAndLeisureRestrictionExtentEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new GoseSocialAndLeisureRestrictionExtentEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseSocialAndLeisureRestrictionExtentUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty GoseWorkRestrictionLevelEntity objects.</summary>
+	[Serializable]
+	public partial class GoseWorkRestrictionLevelEntityFactory : EntityFactoryBase2<GoseWorkRestrictionLevelEntity> {
+		/// <summary>CTor</summary>
+		public GoseWorkRestrictionLevelEntityFactory() : base("GoseWorkRestrictionLevelEntity", PsychologicalServices.Data.EntityType.GoseWorkRestrictionLevelEntity, false) { }
+		
+		/// <summary>Creates a new GoseWorkRestrictionLevelEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new GoseWorkRestrictionLevelEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseWorkRestrictionLevelUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
 	/// <summary>Factory to create new, empty InvoiceEntity objects.</summary>
 	[Serializable]
 	public partial class InvoiceEntityFactory : EntityFactoryBase2<InvoiceEntity> {
@@ -1755,6 +1902,27 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.EventEntity:
 					factoryToUse = new EventEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.GoseAccidentTimeframeEntity:
+					factoryToUse = new GoseAccidentTimeframeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.GoseFamilyAndFriendshipsDisruptionLevelEntity:
+					factoryToUse = new GoseFamilyAndFriendshipsDisruptionLevelEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.GoseInterviewEntity:
+					factoryToUse = new GoseInterviewEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.GoseRespondentTypeEntity:
+					factoryToUse = new GoseRespondentTypeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.GoseReturnToNormalLifeOutcomeFactorEntity:
+					factoryToUse = new GoseReturnToNormalLifeOutcomeFactorEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.GoseSocialAndLeisureRestrictionExtentEntity:
+					factoryToUse = new GoseSocialAndLeisureRestrictionExtentEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.GoseWorkRestrictionLevelEntity:
+					factoryToUse = new GoseWorkRestrictionLevelEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					factoryToUse = new InvoiceEntityFactory();

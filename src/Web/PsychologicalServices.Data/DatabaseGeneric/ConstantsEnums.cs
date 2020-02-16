@@ -738,6 +738,136 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseAccidentTimeframe.</summary>
+	public enum GoseAccidentTimeframeFieldIndex
+	{
+		///<summary>GoseAccidentTimeframeId. </summary>
+		GoseAccidentTimeframeId,
+		///<summary>Months. </summary>
+		Months,
+		///<summary>Description. </summary>
+		Description,
+		///<summary>Basic. </summary>
+		Basic,
+		///<summary>Intermediate. </summary>
+		Intermediate,
+		///<summary>Advanced. </summary>
+		Advanced,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseFamilyAndFriendshipsDisruptionLevel.</summary>
+	public enum GoseFamilyAndFriendshipsDisruptionLevelFieldIndex
+	{
+		///<summary>GoseFamilyAndFriendshipsDisruptionLevelId. </summary>
+		GoseFamilyAndFriendshipsDisruptionLevelId,
+		///<summary>Description. </summary>
+		Description,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseInterview.</summary>
+	public enum GoseInterviewFieldIndex
+	{
+		///<summary>Id. </summary>
+		Id,
+		///<summary>AssessmentId. </summary>
+		AssessmentId,
+		///<summary>AccidentTimeframeId. </summary>
+		AccidentTimeframeId,
+		///<summary>RespondentTypeId. </summary>
+		RespondentTypeId,
+		///<summary>ConciousnessAbleToObeyCommandsOrSpeak. </summary>
+		ConciousnessAbleToObeyCommandsOrSpeak,
+		///<summary>IndependenceAtHomeRequireEveryDayAssistance. </summary>
+		IndependenceAtHomeRequireEveryDayAssistance,
+		///<summary>IndependenceAtHomeNeedFrequentHelp. </summary>
+		IndependenceAtHomeNeedFrequentHelp,
+		///<summary>IndependenceAtHomeIndependentBeforeInjury. </summary>
+		IndependenceAtHomeIndependentBeforeInjury,
+		///<summary>IndependenceOutsideHomeAbleToShopWithoutAssistance. </summary>
+		IndependenceOutsideHomeAbleToShopWithoutAssistance,
+		///<summary>IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury. </summary>
+		IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury,
+		///<summary>IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance. </summary>
+		IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance,
+		///<summary>IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury. </summary>
+		IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury,
+		///<summary>WorkAbleToWorkAtPreviousCapacity. </summary>
+		WorkAbleToWorkAtPreviousCapacity,
+		///<summary>WorkRestrictionLevelId. </summary>
+		WorkRestrictionLevelId,
+		///<summary>WorkRestrictionLevelDifferentAfterInjury. </summary>
+		WorkRestrictionLevelDifferentAfterInjury,
+		///<summary>SocialAndLeisureAbleToResumeRegularActivities. </summary>
+		SocialAndLeisureAbleToResumeRegularActivities,
+		///<summary>SocialAndLeisureExtentOfRestrictionId. </summary>
+		SocialAndLeisureExtentOfRestrictionId,
+		///<summary>SocialAndLeisureExtentOfRestrictionDifferentAfterInjury. </summary>
+		SocialAndLeisureExtentOfRestrictionDifferentAfterInjury,
+		///<summary>FamilyAndFriendshipsDisruptionDueToPsychologicalProblems. </summary>
+		FamilyAndFriendshipsDisruptionDueToPsychologicalProblems,
+		///<summary>FamilyAndFriendshipsDisruptionLevelId. </summary>
+		FamilyAndFriendshipsDisruptionLevelId,
+		///<summary>FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury. </summary>
+		FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury,
+		///<summary>ReturnToNormalLifeAnyOtherCurrentProblems. </summary>
+		ReturnToNormalLifeAnyOtherCurrentProblems,
+		///<summary>ReturnToNormalLifeSimilarProblemsHaveBecomeWorse. </summary>
+		ReturnToNormalLifeSimilarProblemsHaveBecomeWorse,
+		///<summary>ReturnToNormalLifeMostImportantFactorInOutcomeId. </summary>
+		ReturnToNormalLifeMostImportantFactorInOutcomeId,
+		///<summary>CreatedDate. </summary>
+		CreatedDate,
+		///<summary>CreateUserId. </summary>
+		CreateUserId,
+		///<summary>UpdateDate. </summary>
+		UpdateDate,
+		///<summary>UpdateUserId. </summary>
+		UpdateUserId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseRespondentType.</summary>
+	public enum GoseRespondentTypeFieldIndex
+	{
+		///<summary>GoseRespondentTypeId. </summary>
+		GoseRespondentTypeId,
+		///<summary>Description. </summary>
+		Description,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseReturnToNormalLifeOutcomeFactor.</summary>
+	public enum GoseReturnToNormalLifeOutcomeFactorFieldIndex
+	{
+		///<summary>GoseReturnToNormalLifeOutcomeFactorId. </summary>
+		GoseReturnToNormalLifeOutcomeFactorId,
+		///<summary>Description. </summary>
+		Description,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseSocialAndLeisureRestrictionExtent.</summary>
+	public enum GoseSocialAndLeisureRestrictionExtentFieldIndex
+	{
+		///<summary>GoseSocialAndLeisureRestrictionExtentId. </summary>
+		GoseSocialAndLeisureRestrictionExtentId,
+		///<summary>Description. </summary>
+		Description,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseWorkRestrictionLevel.</summary>
+	public enum GoseWorkRestrictionLevelFieldIndex
+	{
+		///<summary>GoseWorkRestrictionLevelId. </summary>
+		GoseWorkRestrictionLevelId,
+		///<summary>Description. </summary>
+		Description,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Invoice.</summary>
 	public enum InvoiceFieldIndex
 	{
@@ -1318,6 +1448,20 @@ namespace PsychologicalServices.Data
 		EmployerTypeEntity,
 		///<summary>Event</summary>
 		EventEntity,
+		///<summary>GoseAccidentTimeframe</summary>
+		GoseAccidentTimeframeEntity,
+		///<summary>GoseFamilyAndFriendshipsDisruptionLevel</summary>
+		GoseFamilyAndFriendshipsDisruptionLevelEntity,
+		///<summary>GoseInterview</summary>
+		GoseInterviewEntity,
+		///<summary>GoseRespondentType</summary>
+		GoseRespondentTypeEntity,
+		///<summary>GoseReturnToNormalLifeOutcomeFactor</summary>
+		GoseReturnToNormalLifeOutcomeFactorEntity,
+		///<summary>GoseSocialAndLeisureRestrictionExtent</summary>
+		GoseSocialAndLeisureRestrictionExtentEntity,
+		///<summary>GoseWorkRestrictionLevel</summary>
+		GoseWorkRestrictionLevelEntity,
 		///<summary>Invoice</summary>
 		InvoiceEntity,
 		///<summary>InvoiceDocument</summary>

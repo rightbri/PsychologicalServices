@@ -187,6 +187,27 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.EventEntity:
 					toReturn = this.Event;
 					break;
+				case PsychologicalServices.Data.EntityType.GoseAccidentTimeframeEntity:
+					toReturn = this.GoseAccidentTimeframe;
+					break;
+				case PsychologicalServices.Data.EntityType.GoseFamilyAndFriendshipsDisruptionLevelEntity:
+					toReturn = this.GoseFamilyAndFriendshipsDisruptionLevel;
+					break;
+				case PsychologicalServices.Data.EntityType.GoseInterviewEntity:
+					toReturn = this.GoseInterview;
+					break;
+				case PsychologicalServices.Data.EntityType.GoseRespondentTypeEntity:
+					toReturn = this.GoseRespondentType;
+					break;
+				case PsychologicalServices.Data.EntityType.GoseReturnToNormalLifeOutcomeFactorEntity:
+					toReturn = this.GoseReturnToNormalLifeOutcomeFactor;
+					break;
+				case PsychologicalServices.Data.EntityType.GoseSocialAndLeisureRestrictionExtentEntity:
+					toReturn = this.GoseSocialAndLeisureRestrictionExtent;
+					break;
+				case PsychologicalServices.Data.EntityType.GoseWorkRestrictionLevelEntity:
+					toReturn = this.GoseWorkRestrictionLevel;
+					break;
 				case PsychologicalServices.Data.EntityType.InvoiceEntity:
 					toReturn = this.Invoice;
 					break;
@@ -555,6 +576,48 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<EventEntity> Event
 		{
 			get { return new DataSource2<EventEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting GoseAccidentTimeframeEntity instances in the database.</summary>
+		public DataSource2<GoseAccidentTimeframeEntity> GoseAccidentTimeframe
+		{
+			get { return new DataSource2<GoseAccidentTimeframeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting GoseFamilyAndFriendshipsDisruptionLevelEntity instances in the database.</summary>
+		public DataSource2<GoseFamilyAndFriendshipsDisruptionLevelEntity> GoseFamilyAndFriendshipsDisruptionLevel
+		{
+			get { return new DataSource2<GoseFamilyAndFriendshipsDisruptionLevelEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting GoseInterviewEntity instances in the database.</summary>
+		public DataSource2<GoseInterviewEntity> GoseInterview
+		{
+			get { return new DataSource2<GoseInterviewEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting GoseRespondentTypeEntity instances in the database.</summary>
+		public DataSource2<GoseRespondentTypeEntity> GoseRespondentType
+		{
+			get { return new DataSource2<GoseRespondentTypeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting GoseReturnToNormalLifeOutcomeFactorEntity instances in the database.</summary>
+		public DataSource2<GoseReturnToNormalLifeOutcomeFactorEntity> GoseReturnToNormalLifeOutcomeFactor
+		{
+			get { return new DataSource2<GoseReturnToNormalLifeOutcomeFactorEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting GoseSocialAndLeisureRestrictionExtentEntity instances in the database.</summary>
+		public DataSource2<GoseSocialAndLeisureRestrictionExtentEntity> GoseSocialAndLeisureRestrictionExtent
+		{
+			get { return new DataSource2<GoseSocialAndLeisureRestrictionExtentEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting GoseWorkRestrictionLevelEntity instances in the database.</summary>
+		public DataSource2<GoseWorkRestrictionLevelEntity> GoseWorkRestrictionLevel
+		{
+			get { return new DataSource2<GoseWorkRestrictionLevelEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting InvoiceEntity instances in the database.</summary>

@@ -1413,6 +1413,261 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity GoseAccidentTimeframeEntity</summary>
+	public partial class GoseAccidentTimeframeFields
+	{
+		/// <summary>Creates a new GoseAccidentTimeframeEntity.GoseAccidentTimeframeId field instance</summary>
+		public static EntityField2 GoseAccidentTimeframeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseAccidentTimeframeFieldIndex.GoseAccidentTimeframeId);}
+		}
+		/// <summary>Creates a new GoseAccidentTimeframeEntity.Months field instance</summary>
+		public static EntityField2 Months
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseAccidentTimeframeFieldIndex.Months);}
+		}
+		/// <summary>Creates a new GoseAccidentTimeframeEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseAccidentTimeframeFieldIndex.Description);}
+		}
+		/// <summary>Creates a new GoseAccidentTimeframeEntity.Basic field instance</summary>
+		public static EntityField2 Basic
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseAccidentTimeframeFieldIndex.Basic);}
+		}
+		/// <summary>Creates a new GoseAccidentTimeframeEntity.Intermediate field instance</summary>
+		public static EntityField2 Intermediate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseAccidentTimeframeFieldIndex.Intermediate);}
+		}
+		/// <summary>Creates a new GoseAccidentTimeframeEntity.Advanced field instance</summary>
+		public static EntityField2 Advanced
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseAccidentTimeframeFieldIndex.Advanced);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity GoseFamilyAndFriendshipsDisruptionLevelEntity</summary>
+	public partial class GoseFamilyAndFriendshipsDisruptionLevelFields
+	{
+		/// <summary>Creates a new GoseFamilyAndFriendshipsDisruptionLevelEntity.GoseFamilyAndFriendshipsDisruptionLevelId field instance</summary>
+		public static EntityField2 GoseFamilyAndFriendshipsDisruptionLevelId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseFamilyAndFriendshipsDisruptionLevelFieldIndex.GoseFamilyAndFriendshipsDisruptionLevelId);}
+		}
+		/// <summary>Creates a new GoseFamilyAndFriendshipsDisruptionLevelEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseFamilyAndFriendshipsDisruptionLevelFieldIndex.Description);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity GoseInterviewEntity</summary>
+	public partial class GoseInterviewFields
+	{
+		/// <summary>Creates a new GoseInterviewEntity.Id field instance</summary>
+		public static EntityField2 Id
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.Id);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.AssessmentId field instance</summary>
+		public static EntityField2 AssessmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.AssessmentId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.AccidentTimeframeId field instance</summary>
+		public static EntityField2 AccidentTimeframeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.AccidentTimeframeId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.RespondentTypeId field instance</summary>
+		public static EntityField2 RespondentTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.RespondentTypeId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.ConciousnessAbleToObeyCommandsOrSpeak field instance</summary>
+		public static EntityField2 ConciousnessAbleToObeyCommandsOrSpeak
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.ConciousnessAbleToObeyCommandsOrSpeak);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.IndependenceAtHomeRequireEveryDayAssistance field instance</summary>
+		public static EntityField2 IndependenceAtHomeRequireEveryDayAssistance
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.IndependenceAtHomeRequireEveryDayAssistance);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.IndependenceAtHomeNeedFrequentHelp field instance</summary>
+		public static EntityField2 IndependenceAtHomeNeedFrequentHelp
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.IndependenceAtHomeNeedFrequentHelp);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.IndependenceAtHomeIndependentBeforeInjury field instance</summary>
+		public static EntityField2 IndependenceAtHomeIndependentBeforeInjury
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.IndependenceAtHomeIndependentBeforeInjury);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.IndependenceOutsideHomeAbleToShopWithoutAssistance field instance</summary>
+		public static EntityField2 IndependenceOutsideHomeAbleToShopWithoutAssistance
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToShopWithoutAssistance);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury field instance</summary>
+		public static EntityField2 IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance field instance</summary>
+		public static EntityField2 IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury field instance</summary>
+		public static EntityField2 IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.WorkAbleToWorkAtPreviousCapacity field instance</summary>
+		public static EntityField2 WorkAbleToWorkAtPreviousCapacity
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.WorkAbleToWorkAtPreviousCapacity);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.WorkRestrictionLevelId field instance</summary>
+		public static EntityField2 WorkRestrictionLevelId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.WorkRestrictionLevelId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.WorkRestrictionLevelDifferentAfterInjury field instance</summary>
+		public static EntityField2 WorkRestrictionLevelDifferentAfterInjury
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.WorkRestrictionLevelDifferentAfterInjury);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.SocialAndLeisureAbleToResumeRegularActivities field instance</summary>
+		public static EntityField2 SocialAndLeisureAbleToResumeRegularActivities
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.SocialAndLeisureAbleToResumeRegularActivities);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.SocialAndLeisureExtentOfRestrictionId field instance</summary>
+		public static EntityField2 SocialAndLeisureExtentOfRestrictionId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.SocialAndLeisureExtentOfRestrictionId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.SocialAndLeisureExtentOfRestrictionDifferentAfterInjury field instance</summary>
+		public static EntityField2 SocialAndLeisureExtentOfRestrictionDifferentAfterInjury
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.SocialAndLeisureExtentOfRestrictionDifferentAfterInjury);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.FamilyAndFriendshipsDisruptionDueToPsychologicalProblems field instance</summary>
+		public static EntityField2 FamilyAndFriendshipsDisruptionDueToPsychologicalProblems
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.FamilyAndFriendshipsDisruptionDueToPsychologicalProblems);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.FamilyAndFriendshipsDisruptionLevelId field instance</summary>
+		public static EntityField2 FamilyAndFriendshipsDisruptionLevelId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.FamilyAndFriendshipsDisruptionLevelId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury field instance</summary>
+		public static EntityField2 FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.ReturnToNormalLifeAnyOtherCurrentProblems field instance</summary>
+		public static EntityField2 ReturnToNormalLifeAnyOtherCurrentProblems
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.ReturnToNormalLifeAnyOtherCurrentProblems);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.ReturnToNormalLifeSimilarProblemsHaveBecomeWorse field instance</summary>
+		public static EntityField2 ReturnToNormalLifeSimilarProblemsHaveBecomeWorse
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.ReturnToNormalLifeSimilarProblemsHaveBecomeWorse);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.ReturnToNormalLifeMostImportantFactorInOutcomeId field instance</summary>
+		public static EntityField2 ReturnToNormalLifeMostImportantFactorInOutcomeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.ReturnToNormalLifeMostImportantFactorInOutcomeId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.CreatedDate field instance</summary>
+		public static EntityField2 CreatedDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.CreatedDate);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.CreateUserId field instance</summary>
+		public static EntityField2 CreateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.CreateUserId);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.UpdateDate field instance</summary>
+		public static EntityField2 UpdateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.UpdateDate);}
+		}
+		/// <summary>Creates a new GoseInterviewEntity.UpdateUserId field instance</summary>
+		public static EntityField2 UpdateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.UpdateUserId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity GoseRespondentTypeEntity</summary>
+	public partial class GoseRespondentTypeFields
+	{
+		/// <summary>Creates a new GoseRespondentTypeEntity.GoseRespondentTypeId field instance</summary>
+		public static EntityField2 GoseRespondentTypeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseRespondentTypeFieldIndex.GoseRespondentTypeId);}
+		}
+		/// <summary>Creates a new GoseRespondentTypeEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseRespondentTypeFieldIndex.Description);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity GoseReturnToNormalLifeOutcomeFactorEntity</summary>
+	public partial class GoseReturnToNormalLifeOutcomeFactorFields
+	{
+		/// <summary>Creates a new GoseReturnToNormalLifeOutcomeFactorEntity.GoseReturnToNormalLifeOutcomeFactorId field instance</summary>
+		public static EntityField2 GoseReturnToNormalLifeOutcomeFactorId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseReturnToNormalLifeOutcomeFactorFieldIndex.GoseReturnToNormalLifeOutcomeFactorId);}
+		}
+		/// <summary>Creates a new GoseReturnToNormalLifeOutcomeFactorEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseReturnToNormalLifeOutcomeFactorFieldIndex.Description);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity GoseSocialAndLeisureRestrictionExtentEntity</summary>
+	public partial class GoseSocialAndLeisureRestrictionExtentFields
+	{
+		/// <summary>Creates a new GoseSocialAndLeisureRestrictionExtentEntity.GoseSocialAndLeisureRestrictionExtentId field instance</summary>
+		public static EntityField2 GoseSocialAndLeisureRestrictionExtentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseSocialAndLeisureRestrictionExtentFieldIndex.GoseSocialAndLeisureRestrictionExtentId);}
+		}
+		/// <summary>Creates a new GoseSocialAndLeisureRestrictionExtentEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseSocialAndLeisureRestrictionExtentFieldIndex.Description);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity GoseWorkRestrictionLevelEntity</summary>
+	public partial class GoseWorkRestrictionLevelFields
+	{
+		/// <summary>Creates a new GoseWorkRestrictionLevelEntity.GoseWorkRestrictionLevelId field instance</summary>
+		public static EntityField2 GoseWorkRestrictionLevelId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseWorkRestrictionLevelFieldIndex.GoseWorkRestrictionLevelId);}
+		}
+		/// <summary>Creates a new GoseWorkRestrictionLevelEntity.Description field instance</summary>
+		public static EntityField2 Description
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(GoseWorkRestrictionLevelFieldIndex.Description);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity InvoiceEntity</summary>
 	public partial class InvoiceFields
 	{

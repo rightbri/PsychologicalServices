@@ -38,6 +38,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<AssessmentNoteEntity> _assessmentNotes;
 		private EntityCollection<AssessmentReportEntity> _assessmentReports;
 		private EntityCollection<AssessmentTestingResultEntity> _assessmentTestingResults;
+		private EntityCollection<GoseInterviewEntity> _goseInterviews;
 		private AssessmentTypeEntity _assessmentType;
 		private ClaimantEntity _claimant;
 		private CompanyEntity _company;
@@ -110,6 +111,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AssessmentReports = "AssessmentReports";
 			/// <summary>Member name AssessmentTestingResults</summary>
 			public static readonly string AssessmentTestingResults = "AssessmentTestingResults";
+			/// <summary>Member name GoseInterviews</summary>
+			public static readonly string GoseInterviews = "GoseInterviews";
 		}
 		#endregion
 		
@@ -176,6 +179,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				_assessmentNotes = (EntityCollection<AssessmentNoteEntity>)info.GetValue("_assessmentNotes", typeof(EntityCollection<AssessmentNoteEntity>));
 				_assessmentReports = (EntityCollection<AssessmentReportEntity>)info.GetValue("_assessmentReports", typeof(EntityCollection<AssessmentReportEntity>));
 				_assessmentTestingResults = (EntityCollection<AssessmentTestingResultEntity>)info.GetValue("_assessmentTestingResults", typeof(EntityCollection<AssessmentTestingResultEntity>));
+				_goseInterviews = (EntityCollection<GoseInterviewEntity>)info.GetValue("_goseInterviews", typeof(EntityCollection<GoseInterviewEntity>));
 				_assessmentType = (AssessmentTypeEntity)info.GetValue("_assessmentType", typeof(AssessmentTypeEntity));
 				if(_assessmentType!=null)
 				{
@@ -384,6 +388,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTestingResults":
 					this.AssessmentTestingResults.Add((AssessmentTestingResultEntity)entity);
 					break;
+				case "GoseInterviews":
+					this.GoseInterviews.Add((GoseInterviewEntity)entity);
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -474,6 +481,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AssessmentTestingResults":
 					toReturn.Add(Relations.AssessmentTestingResultEntityUsingAssessmentId);
+					break;
+				case "GoseInterviews":
+					toReturn.Add(Relations.GoseInterviewEntityUsingAssessmentId);
 					break;
 				default:
 					break;				
@@ -586,6 +596,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "AssessmentTestingResults":
 					this.AssessmentTestingResults.Add((AssessmentTestingResultEntity)relatedEntity);
 					break;
+				case "GoseInterviews":
+					this.GoseInterviews.Add((GoseInterviewEntity)relatedEntity);
+					break;
 				default:
 					break;
 			}
@@ -667,6 +680,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "AssessmentTestingResults":
 					this.PerformRelatedEntityRemoval(this.AssessmentTestingResults, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "GoseInterviews":
+					this.PerformRelatedEntityRemoval(this.GoseInterviews, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				default:
 					break;
@@ -760,6 +776,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.AssessmentNotes);
 			toReturn.Add(this.AssessmentReports);
 			toReturn.Add(this.AssessmentTestingResults);
+			toReturn.Add(this.GoseInterviews);
 			return toReturn;
 		}
 
@@ -780,6 +797,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_assessmentNotes", ((_assessmentNotes!=null) && (_assessmentNotes.Count>0) && !this.MarkedForDeletion)?_assessmentNotes:null);
 				info.AddValue("_assessmentReports", ((_assessmentReports!=null) && (_assessmentReports.Count>0) && !this.MarkedForDeletion)?_assessmentReports:null);
 				info.AddValue("_assessmentTestingResults", ((_assessmentTestingResults!=null) && (_assessmentTestingResults.Count>0) && !this.MarkedForDeletion)?_assessmentTestingResults:null);
+				info.AddValue("_goseInterviews", ((_goseInterviews!=null) && (_goseInterviews.Count>0) && !this.MarkedForDeletion)?_goseInterviews:null);
 				info.AddValue("_assessmentType", (!this.MarkedForDeletion?_assessmentType:null));
 				info.AddValue("_claimant", (!this.MarkedForDeletion?_claimant:null));
 				info.AddValue("_company", (!this.MarkedForDeletion?_company:null));
@@ -887,6 +905,15 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AssessmentTestingResultFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'GoseInterview' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoGoseInterviews()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(GoseInterviewFields.AssessmentId, null, ComparisonOperator.Equal, this.AssessmentId));
 			return bucket;
 		}
 
@@ -1037,6 +1064,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._assessmentNotes);
 			collectionsQueue.Enqueue(this._assessmentReports);
 			collectionsQueue.Enqueue(this._assessmentTestingResults);
+			collectionsQueue.Enqueue(this._goseInterviews);
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -1053,6 +1081,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._assessmentNotes = (EntityCollection<AssessmentNoteEntity>) collectionsQueue.Dequeue();
 			this._assessmentReports = (EntityCollection<AssessmentReportEntity>) collectionsQueue.Dequeue();
 			this._assessmentTestingResults = (EntityCollection<AssessmentTestingResultEntity>) collectionsQueue.Dequeue();
+			this._goseInterviews = (EntityCollection<GoseInterviewEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -1070,6 +1099,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn |=(this._assessmentNotes != null);
 			toReturn |=(this._assessmentReports != null);
 			toReturn |=(this._assessmentTestingResults != null);
+			toReturn |=(this._goseInterviews != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -1088,6 +1118,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentReportEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentReportEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AssessmentTestingResultEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTestingResultEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<GoseInterviewEntity>(EntityFactoryCache2.GetEntityFactory(typeof(GoseInterviewEntityFactory))) : null);
 		}
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -1118,6 +1149,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("AssessmentNotes", _assessmentNotes);
 			toReturn.Add("AssessmentReports", _assessmentReports);
 			toReturn.Add("AssessmentTestingResults", _assessmentTestingResults);
+			toReturn.Add("GoseInterviews", _goseInterviews);
 			return toReturn;
 		}
 
@@ -1664,6 +1696,13 @@ namespace PsychologicalServices.Data.EntityClasses
 			get	{ return new PrefetchPathElement2( new EntityCollection<AssessmentTestingResultEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AssessmentTestingResultEntityFactory))), (IEntityRelation)GetRelationsForField("AssessmentTestingResults")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.AssessmentTestingResultEntity, 0, null, null, null, null, "AssessmentTestingResults", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'GoseInterview' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathGoseInterviews
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<GoseInterviewEntity>(EntityFactoryCache2.GetEntityFactory(typeof(GoseInterviewEntityFactory))), (IEntityRelation)GetRelationsForField("GoseInterviews")[0], (int)PsychologicalServices.Data.EntityType.AssessmentEntity, (int)PsychologicalServices.Data.EntityType.GoseInterviewEntity, 0, null, null, null, null, "GoseInterviews", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AssessmentType' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathAssessmentType
@@ -2097,6 +2136,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<AssessmentTestingResultEntity> AssessmentTestingResults
 		{
 			get { return GetOrCreateEntityCollection<AssessmentTestingResultEntity, AssessmentTestingResultEntityFactory>("Assessment", true, false, ref _assessmentTestingResults);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'GoseInterviewEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(GoseInterviewEntity))]
+		public virtual EntityCollection<GoseInterviewEntity> GoseInterviews
+		{
+			get { return GetOrCreateEntityCollection<GoseInterviewEntity, GoseInterviewEntityFactory>("Assessment", true, false, ref _goseInterviews);	}
 		}
 
 		/// <summary> Gets / sets related entity of type 'AssessmentTypeEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>

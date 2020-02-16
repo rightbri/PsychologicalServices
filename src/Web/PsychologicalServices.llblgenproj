@@ -538,6 +538,78 @@
           <Field Name="Url" Type="string" IsOptional="true" MaxLength="1000" FieldIndex="4" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="GoseAccidentTimeframe" ObjectID="3bfbfb8c-5239-40c5-8d24-a6fd112b03c7">
+        <Fields>
+          <Field Name="Advanced" Type="bool" FieldIndex="5" />
+          <Field Name="Basic" Type="bool" FieldIndex="3" />
+          <Field Name="Description" Type="string" MaxLength="50" FieldIndex="2" />
+          <Field Name="GoseAccidentTimeframeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="Intermediate" Type="bool" FieldIndex="4" />
+          <Field Name="Months" Type="int" Precision="10" FieldIndex="1" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="GoseFamilyAndFriendshipsDisruptionLevel" ObjectID="06ba85c5-0cbb-4f12-8431-eb67bb992de6">
+        <Fields>
+          <Field Name="Description" Type="string" MaxLength="50" FieldIndex="1" />
+          <Field Name="GoseFamilyAndFriendshipsDisruptionLevelId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="GoseInterview" ObjectID="cda182fc-ae09-4c0c-a90d-b5c36ce99033">
+        <Fields>
+          <Field Name="AccidentTimeframeId" Type="int" IsOptional="true" Precision="10" FieldIndex="2" />
+          <Field Name="AssessmentId" Type="int" FieldIndex="1" />
+          <Field Name="ConciousnessAbleToObeyCommandsOrSpeak" Type="bool" IsOptional="true" FieldIndex="4" />
+          <Field Name="CreatedDate" Type="datetimeoffset" FieldIndex="24" />
+          <Field Name="CreateUserId" Type="int" FieldIndex="25" />
+          <Field Name="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" Type="bool" IsOptional="true" FieldIndex="18" />
+          <Field Name="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" Type="bool" IsOptional="true" FieldIndex="20" />
+          <Field Name="FamilyAndFriendshipsDisruptionLevelId" Type="int" IsOptional="true" Precision="10" FieldIndex="19" />
+          <Field Name="Id" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="IndependenceAtHomeIndependentBeforeInjury" Type="bool" IsOptional="true" FieldIndex="7" />
+          <Field Name="IndependenceAtHomeNeedFrequentHelp" Type="bool" IsOptional="true" FieldIndex="6" />
+          <Field Name="IndependenceAtHomeRequireEveryDayAssistance" Type="bool" IsOptional="true" FieldIndex="5" />
+          <Field Name="IndependenceOutsideHomeAbleToShopWithoutAssistance" Type="bool" IsOptional="true" FieldIndex="8" />
+          <Field Name="IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" Type="bool" IsOptional="true" FieldIndex="9" />
+          <Field Name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance" Type="bool" IsOptional="true" FieldIndex="10" />
+          <Field Name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" Type="bool" IsOptional="true" FieldIndex="11" />
+          <Field Name="RespondentTypeId" Type="int" IsOptional="true" Precision="10" FieldIndex="3" />
+          <Field Name="ReturnToNormalLifeAnyOtherCurrentProblems" Type="bool" IsOptional="true" FieldIndex="21" />
+          <Field Name="ReturnToNormalLifeMostImportantFactorInOutcomeId" Type="int" IsOptional="true" Precision="10" FieldIndex="23" />
+          <Field Name="ReturnToNormalLifeSimilarProblemsHaveBecomeWorse" Type="bool" IsOptional="true" FieldIndex="22" />
+          <Field Name="SocialAndLeisureAbleToResumeRegularActivities" Type="bool" IsOptional="true" FieldIndex="15" />
+          <Field Name="SocialAndLeisureExtentOfRestrictionDifferentAfterInjury" Type="bool" IsOptional="true" FieldIndex="17" />
+          <Field Name="SocialAndLeisureExtentOfRestrictionId" Type="int" IsOptional="true" Precision="10" FieldIndex="16" />
+          <Field Name="UpdateDate" Type="datetimeoffset" FieldIndex="26" />
+          <Field Name="UpdateUserId" Type="int" FieldIndex="27" />
+          <Field Name="WorkAbleToWorkAtPreviousCapacity" Type="bool" IsOptional="true" FieldIndex="12" />
+          <Field Name="WorkRestrictionLevelDifferentAfterInjury" Type="bool" IsOptional="true" FieldIndex="14" />
+          <Field Name="WorkRestrictionLevelId" Type="int" IsOptional="true" Precision="10" FieldIndex="13" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="GoseRespondentType" ObjectID="56e8211d-d800-4302-8ac3-a2a5ec1bae4b">
+        <Fields>
+          <Field Name="Description" Type="string" MaxLength="50" FieldIndex="1" />
+          <Field Name="GoseRespondentTypeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="GoseReturnToNormalLifeOutcomeFactor" ObjectID="c613b8c4-c139-4d3c-a6df-f03a553ebf86">
+        <Fields>
+          <Field Name="Description" Type="string" MaxLength="100" FieldIndex="1" />
+          <Field Name="GoseReturnToNormalLifeOutcomeFactorId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="GoseSocialAndLeisureRestrictionExtent" ObjectID="dec39b8c-e181-44ff-8a88-6d715186c1a8">
+        <Fields>
+          <Field Name="Description" Type="string" MaxLength="100" FieldIndex="1" />
+          <Field Name="GoseSocialAndLeisureRestrictionExtentId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="GoseWorkRestrictionLevel" ObjectID="f519979c-2436-4cf1-a346-e7548c65713d">
+        <Fields>
+          <Field Name="Description" Type="string" MaxLength="100" FieldIndex="1" />
+          <Field Name="GoseWorkRestrictionLevelId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="Invoice" ObjectID="474bbfd3-312e-43c8-92fc-dc3b1c03e91a">
         <Fields>
           <Field Name="Identifier" Type="string" MaxLength="20" FieldIndex="1" />
@@ -1229,6 +1301,51 @@
           <FieldFieldRelationship FkField="CompanyId" PkField="CompanyId" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.Assessment-Assessment.GoseInterviews" Start=":GoseInterview" End=":Assessment" StartNavigator="Assessment" EndNavigator="GoseInterviews" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AssessmentId" PkField="AssessmentId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.CreateUser-User.GoseInterviews" Start=":GoseInterview" End=":User" StartNavigator="CreateUser" EndNavigator="GoseInterviews" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CreateUserId" PkField="UserId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.GoseAccidentTimeframe-GoseAccidentTimeframe.GoseInterviews" Start=":GoseInterview" End=":GoseAccidentTimeframe" StartNavigator="GoseAccidentTimeframe" EndNavigator="GoseInterviews" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AccidentTimeframeId" PkField="GoseAccidentTimeframeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.GoseFamilyAndFriendshipsDisruptionLevel-GoseFamilyAndFriendshipsDisruptionLevel.GoseInterviews" Start=":GoseInterview" End=":GoseFamilyAndFriendshipsDisruptionLevel" StartNavigator="GoseFamilyAndFriendshipsDisruptionLevel" EndNavigator="GoseInterviews" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="FamilyAndFriendshipsDisruptionLevelId" PkField="GoseFamilyAndFriendshipsDisruptionLevelId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.GoseRespondentType-GoseRespondentType.GoseInterviews" Start=":GoseInterview" End=":GoseRespondentType" StartNavigator="GoseRespondentType" EndNavigator="GoseInterviews" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="RespondentTypeId" PkField="GoseRespondentTypeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.GoseReturnToNormalLifeOutcomeFactor-GoseReturnToNormalLifeOutcomeFactor.GoseInterviews" Start=":GoseInterview" End=":GoseReturnToNormalLifeOutcomeFactor" StartNavigator="GoseReturnToNormalLifeOutcomeFactor" EndNavigator="GoseInterviews" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ReturnToNormalLifeMostImportantFactorInOutcomeId" PkField="GoseReturnToNormalLifeOutcomeFactorId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.GoseSocialAndLeisureRestrictionExtent-GoseSocialAndLeisureRestrictionExtent.GoseInterviews" Start=":GoseInterview" End=":GoseSocialAndLeisureRestrictionExtent" StartNavigator="GoseSocialAndLeisureRestrictionExtent" EndNavigator="GoseInterviews" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SocialAndLeisureExtentOfRestrictionId" PkField="GoseSocialAndLeisureRestrictionExtentId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.GoseWorkRestrictionLevel-GoseWorkRestrictionLevel.GoseInterviews" Start=":GoseInterview" End=":GoseWorkRestrictionLevel" StartNavigator="GoseWorkRestrictionLevel" EndNavigator="GoseInterviews" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="WorkRestrictionLevelId" PkField="GoseWorkRestrictionLevelId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="GoseInterview.UpdateUser-User.GoseInterviews1" Start=":GoseInterview" End=":User" StartNavigator="UpdateUser" EndNavigator="GoseInterviews1" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="UpdateUserId" PkField="UserId" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="Invoice.InvoiceStatus-InvoiceStatus.Invoices" Start=":Invoice" End=":InvoiceStatus" StartNavigator="InvoiceStatus" EndNavigator="Invoices" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="InvoiceStatusId" PkField="InvoiceStatusId" />
@@ -1749,7 +1866,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2019-12-30T01:36:15.7398072Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-02-16T21:29:11.4858663Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2197,6 +2314,85 @@
                     <Field Name="Expires" Ordinal="6" DbType="30" />
                     <Field Name="IsActive" Ordinal="7" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
                     <Field Name="CompanyId" Ordinal="8" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="GoseAccidentTimeframes">
+                  <PkConstraintName Name="PK_GoseAccidentTimeframes" />
+                  <Fields>
+                    <Field Name="GoseAccidentTimeframeId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Months" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="Description" Ordinal="3" DbType="24" Length="50" />
+                    <Field Name="Basic" Ordinal="4" DbType="2" />
+                    <Field Name="Intermediate" Ordinal="5" DbType="2" />
+                    <Field Name="Advanced" Ordinal="6" DbType="2" />
+                  </Fields>
+                </Table>
+                <Table Name="GoseFamilyAndFriendshipsDisruptionLevels">
+                  <PkConstraintName Name="PK_GoseFamilyAndFriendshipsDisruptionLevels" />
+                  <Fields>
+                    <Field Name="GoseFamilyAndFriendshipsDisruptionLevelId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Description" Ordinal="2" DbType="24" Length="50" />
+                  </Fields>
+                </Table>
+                <Table Name="GoseInterviews">
+                  <PkConstraintName Name="PK_GoseInterviews_1" />
+                  <Fields>
+                    <Field Name="Id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="AssessmentId" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="AccidentTimeframeId" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="RespondentTypeId" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="ConciousnessAbleToObeyCommandsOrSpeak" Ordinal="5" IsOptional="true" DbType="2" />
+                    <Field Name="IndependenceAtHomeRequireEveryDayAssistance" Ordinal="6" IsOptional="true" DbType="2" />
+                    <Field Name="IndependenceAtHomeNeedFrequentHelp" Ordinal="7" IsOptional="true" DbType="2" />
+                    <Field Name="IndependenceAtHomeIndependentBeforeInjury" Ordinal="8" IsOptional="true" DbType="2" />
+                    <Field Name="IndependenceOutsideHomeAbleToShopWithoutAssistance" Ordinal="9" IsOptional="true" DbType="2" />
+                    <Field Name="IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" Ordinal="10" IsOptional="true" DbType="2" />
+                    <Field Name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance" Ordinal="11" IsOptional="true" DbType="2" />
+                    <Field Name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" Ordinal="12" IsOptional="true" DbType="2" />
+                    <Field Name="WorkAbleToWorkAtPreviousCapacity" Ordinal="13" IsOptional="true" DbType="2" />
+                    <Field Name="WorkRestrictionLevelId" Ordinal="14" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="WorkRestrictionLevelDifferentAfterInjury" Ordinal="15" IsOptional="true" DbType="2" />
+                    <Field Name="SocialAndLeisureAbleToResumeRegularActivities" Ordinal="16" IsOptional="true" DbType="2" />
+                    <Field Name="SocialAndLeisureExtentOfRestrictionId" Ordinal="17" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="SocialAndLeisureExtentOfRestrictionDifferentAfterInjury" Ordinal="18" IsOptional="true" DbType="2" />
+                    <Field Name="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" Ordinal="19" IsOptional="true" DbType="2" />
+                    <Field Name="FamilyAndFriendshipsDisruptionLevelId" Ordinal="20" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" Ordinal="21" IsOptional="true" DbType="2" />
+                    <Field Name="ReturnToNormalLifeAnyOtherCurrentProblems" Ordinal="22" IsOptional="true" DbType="2" />
+                    <Field Name="ReturnToNormalLifeSimilarProblemsHaveBecomeWorse" Ordinal="23" IsOptional="true" DbType="2" />
+                    <Field Name="ReturnToNormalLifeMostImportantFactorInOutcomeId" Ordinal="24" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="CreatedDate" Ordinal="25" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
+                    <Field Name="CreateUserId" Ordinal="26" DbType="8" Precision="10" />
+                    <Field Name="UpdateDate" Ordinal="27" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
+                    <Field Name="UpdateUserId" Ordinal="28" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="GoseRespondentTypes">
+                  <PkConstraintName Name="PK_GoseRespondentTypes" />
+                  <Fields>
+                    <Field Name="GoseRespondentTypeId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Description" Ordinal="2" DbType="24" Length="50" />
+                  </Fields>
+                </Table>
+                <Table Name="GoseReturnToNormalLifeOutcomeFactors">
+                  <PkConstraintName Name="PK_GoseReturnToNormalLifeOutcomeFactors" />
+                  <Fields>
+                    <Field Name="GoseReturnToNormalLifeOutcomeFactorId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Description" Ordinal="2" DbType="24" Length="100" />
+                  </Fields>
+                </Table>
+                <Table Name="GoseSocialAndLeisureRestrictionExtents">
+                  <PkConstraintName Name="PK_GoseSocialAndLeisureRestrictionExtents" />
+                  <Fields>
+                    <Field Name="GoseSocialAndLeisureRestrictionExtentId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Description" Ordinal="2" DbType="24" Length="100" />
+                  </Fields>
+                </Table>
+                <Table Name="GoseWorkRestrictionLevels">
+                  <PkConstraintName Name="PK_GoseWorkRestrictionLevels" />
+                  <Fields>
+                    <Field Name="GoseWorkRestrictionLevelId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Description" Ordinal="2" DbType="24" Length="100" />
                   </Fields>
                 </Table>
                 <Table Name="InvoiceDocuments">
@@ -3250,6 +3446,51 @@
                 <FieldPair PkField="dbo:Companies:CompanyId" FkField="dbo:Events:CompanyId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_Assessments">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Assessments:AssessmentId" FkField="dbo:GoseInterviews:AssessmentId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_CreateUsers">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:GoseInterviews:CreateUserId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_GoseAccidentTimeframes">
+              <FieldPairs>
+                <FieldPair PkField="dbo:GoseAccidentTimeframes:GoseAccidentTimeframeId" FkField="dbo:GoseInterviews:AccidentTimeframeId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_GoseFamilyAndFriendshipsDisruptionLevels">
+              <FieldPairs>
+                <FieldPair PkField="dbo:GoseFamilyAndFriendshipsDisruptionLevels:GoseFamilyAndFriendshipsDisruptionLevelId" FkField="dbo:GoseInterviews:FamilyAndFriendshipsDisruptionLevelId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_GoseRespondentTypes">
+              <FieldPairs>
+                <FieldPair PkField="dbo:GoseRespondentTypes:GoseRespondentTypeId" FkField="dbo:GoseInterviews:RespondentTypeId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_GoseReturnToNormalLifeOutcomeFactors">
+              <FieldPairs>
+                <FieldPair PkField="dbo:GoseReturnToNormalLifeOutcomeFactors:GoseReturnToNormalLifeOutcomeFactorId" FkField="dbo:GoseInterviews:ReturnToNormalLifeMostImportantFactorInOutcomeId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_GoseSocialAndLeisureRestrictionExtents">
+              <FieldPairs>
+                <FieldPair PkField="dbo:GoseSocialAndLeisureRestrictionExtents:GoseSocialAndLeisureRestrictionExtentId" FkField="dbo:GoseInterviews:SocialAndLeisureExtentOfRestrictionId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_GoseWorkRestrictionLevels">
+              <FieldPairs>
+                <FieldPair PkField="dbo:GoseWorkRestrictionLevels:GoseWorkRestrictionLevelId" FkField="dbo:GoseInterviews:WorkRestrictionLevelId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:GoseInterviews:FK_GoseInterviews_UpdateUsers">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:GoseInterviews:UpdateUserId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:InvoiceDocuments:FK_InvoiceDocuments_Invoices">
               <FieldPairs>
                 <FieldPair PkField="dbo:Invoices:InvoiceId" FkField="dbo:InvoiceDocuments:InvoiceId" />
@@ -3917,6 +4158,78 @@
             <FieldMapping FieldName="Location" TargetFieldName="Location" />
             <FieldMapping FieldName="Time" TargetFieldName="Time" />
             <FieldMapping FieldName="Url" TargetFieldName="Url" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":GoseAccidentTimeframe" TargetName="PsychologicalServices:dbo:GoseAccidentTimeframes">
+          <FieldMappings>
+            <FieldMapping FieldName="Advanced" TargetFieldName="Advanced" />
+            <FieldMapping FieldName="Basic" TargetFieldName="Basic" />
+            <FieldMapping FieldName="Description" TargetFieldName="Description" />
+            <FieldMapping FieldName="GoseAccidentTimeframeId" TargetFieldName="GoseAccidentTimeframeId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Intermediate" TargetFieldName="Intermediate" />
+            <FieldMapping FieldName="Months" TargetFieldName="Months" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":GoseFamilyAndFriendshipsDisruptionLevel" TargetName="PsychologicalServices:dbo:GoseFamilyAndFriendshipsDisruptionLevels">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="Description" />
+            <FieldMapping FieldName="GoseFamilyAndFriendshipsDisruptionLevelId" TargetFieldName="GoseFamilyAndFriendshipsDisruptionLevelId" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":GoseInterview" TargetName="PsychologicalServices:dbo:GoseInterviews">
+          <FieldMappings>
+            <FieldMapping FieldName="AccidentTimeframeId" TargetFieldName="AccidentTimeframeId" />
+            <FieldMapping FieldName="AssessmentId" TargetFieldName="AssessmentId" />
+            <FieldMapping FieldName="ConciousnessAbleToObeyCommandsOrSpeak" TargetFieldName="ConciousnessAbleToObeyCommandsOrSpeak" />
+            <FieldMapping FieldName="CreatedDate" TargetFieldName="CreatedDate" />
+            <FieldMapping FieldName="CreateUserId" TargetFieldName="CreateUserId" />
+            <FieldMapping FieldName="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" TargetFieldName="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" />
+            <FieldMapping FieldName="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" TargetFieldName="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" />
+            <FieldMapping FieldName="FamilyAndFriendshipsDisruptionLevelId" TargetFieldName="FamilyAndFriendshipsDisruptionLevelId" />
+            <FieldMapping FieldName="Id" TargetFieldName="Id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="IndependenceAtHomeIndependentBeforeInjury" TargetFieldName="IndependenceAtHomeIndependentBeforeInjury" />
+            <FieldMapping FieldName="IndependenceAtHomeNeedFrequentHelp" TargetFieldName="IndependenceAtHomeNeedFrequentHelp" />
+            <FieldMapping FieldName="IndependenceAtHomeRequireEveryDayAssistance" TargetFieldName="IndependenceAtHomeRequireEveryDayAssistance" />
+            <FieldMapping FieldName="IndependenceOutsideHomeAbleToShopWithoutAssistance" TargetFieldName="IndependenceOutsideHomeAbleToShopWithoutAssistance" />
+            <FieldMapping FieldName="IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" TargetFieldName="IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" />
+            <FieldMapping FieldName="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance" TargetFieldName="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance" />
+            <FieldMapping FieldName="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" TargetFieldName="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" />
+            <FieldMapping FieldName="RespondentTypeId" TargetFieldName="RespondentTypeId" />
+            <FieldMapping FieldName="ReturnToNormalLifeAnyOtherCurrentProblems" TargetFieldName="ReturnToNormalLifeAnyOtherCurrentProblems" />
+            <FieldMapping FieldName="ReturnToNormalLifeMostImportantFactorInOutcomeId" TargetFieldName="ReturnToNormalLifeMostImportantFactorInOutcomeId" />
+            <FieldMapping FieldName="ReturnToNormalLifeSimilarProblemsHaveBecomeWorse" TargetFieldName="ReturnToNormalLifeSimilarProblemsHaveBecomeWorse" />
+            <FieldMapping FieldName="SocialAndLeisureAbleToResumeRegularActivities" TargetFieldName="SocialAndLeisureAbleToResumeRegularActivities" />
+            <FieldMapping FieldName="SocialAndLeisureExtentOfRestrictionDifferentAfterInjury" TargetFieldName="SocialAndLeisureExtentOfRestrictionDifferentAfterInjury" />
+            <FieldMapping FieldName="SocialAndLeisureExtentOfRestrictionId" TargetFieldName="SocialAndLeisureExtentOfRestrictionId" />
+            <FieldMapping FieldName="UpdateDate" TargetFieldName="UpdateDate" />
+            <FieldMapping FieldName="UpdateUserId" TargetFieldName="UpdateUserId" />
+            <FieldMapping FieldName="WorkAbleToWorkAtPreviousCapacity" TargetFieldName="WorkAbleToWorkAtPreviousCapacity" />
+            <FieldMapping FieldName="WorkRestrictionLevelDifferentAfterInjury" TargetFieldName="WorkRestrictionLevelDifferentAfterInjury" />
+            <FieldMapping FieldName="WorkRestrictionLevelId" TargetFieldName="WorkRestrictionLevelId" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":GoseRespondentType" TargetName="PsychologicalServices:dbo:GoseRespondentTypes">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="Description" />
+            <FieldMapping FieldName="GoseRespondentTypeId" TargetFieldName="GoseRespondentTypeId" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":GoseReturnToNormalLifeOutcomeFactor" TargetName="PsychologicalServices:dbo:GoseReturnToNormalLifeOutcomeFactors">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="Description" />
+            <FieldMapping FieldName="GoseReturnToNormalLifeOutcomeFactorId" TargetFieldName="GoseReturnToNormalLifeOutcomeFactorId" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":GoseSocialAndLeisureRestrictionExtent" TargetName="PsychologicalServices:dbo:GoseSocialAndLeisureRestrictionExtents">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="Description" />
+            <FieldMapping FieldName="GoseSocialAndLeisureRestrictionExtentId" TargetFieldName="GoseSocialAndLeisureRestrictionExtentId" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":GoseWorkRestrictionLevel" TargetName="PsychologicalServices:dbo:GoseWorkRestrictionLevels">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="Description" />
+            <FieldMapping FieldName="GoseWorkRestrictionLevelId" TargetFieldName="GoseWorkRestrictionLevelId" SequenceToUse="SCOPE_IDENTITY()" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Invoice" TargetName="PsychologicalServices:dbo:Invoices">

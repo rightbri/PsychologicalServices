@@ -88,6 +88,13 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitEmployerEntityMappings();
 			InitEmployerTypeEntityMappings();
 			InitEventEntityMappings();
+			InitGoseAccidentTimeframeEntityMappings();
+			InitGoseFamilyAndFriendshipsDisruptionLevelEntityMappings();
+			InitGoseInterviewEntityMappings();
+			InitGoseRespondentTypeEntityMappings();
+			InitGoseReturnToNormalLifeOutcomeFactorEntityMappings();
+			InitGoseSocialAndLeisureRestrictionExtentEntityMappings();
+			InitGoseWorkRestrictionLevelEntityMappings();
 			InitInvoiceEntityMappings();
 			InitInvoiceDocumentEntityMappings();
 			InitInvoiceDocumentSendLogEntityMappings();
@@ -612,6 +619,92 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("EventEntity", "Expires", "Expires", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5);
 			this.AddElementFieldMapping("EventEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 6);
 			this.AddElementFieldMapping("EventEntity", "CompanyId", "CompanyId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 7);
+		}
+
+		/// <summary>Inits GoseAccidentTimeframeEntity's mappings</summary>
+		private void InitGoseAccidentTimeframeEntityMappings()
+		{
+			this.AddElementMapping("GoseAccidentTimeframeEntity", @"PsychologicalServices", @"dbo", "GoseAccidentTimeframes", 6, 0);
+			this.AddElementFieldMapping("GoseAccidentTimeframeEntity", "GoseAccidentTimeframeId", "GoseAccidentTimeframeId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseAccidentTimeframeEntity", "Months", "Months", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("GoseAccidentTimeframeEntity", "Description", "Description", false, "VarChar", 50, 0, 0, false, "", null, typeof(System.String), 2);
+			this.AddElementFieldMapping("GoseAccidentTimeframeEntity", "Basic", "Basic", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 3);
+			this.AddElementFieldMapping("GoseAccidentTimeframeEntity", "Intermediate", "Intermediate", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 4);
+			this.AddElementFieldMapping("GoseAccidentTimeframeEntity", "Advanced", "Advanced", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 5);
+		}
+
+		/// <summary>Inits GoseFamilyAndFriendshipsDisruptionLevelEntity's mappings</summary>
+		private void InitGoseFamilyAndFriendshipsDisruptionLevelEntityMappings()
+		{
+			this.AddElementMapping("GoseFamilyAndFriendshipsDisruptionLevelEntity", @"PsychologicalServices", @"dbo", "GoseFamilyAndFriendshipsDisruptionLevels", 2, 0);
+			this.AddElementFieldMapping("GoseFamilyAndFriendshipsDisruptionLevelEntity", "GoseFamilyAndFriendshipsDisruptionLevelId", "GoseFamilyAndFriendshipsDisruptionLevelId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseFamilyAndFriendshipsDisruptionLevelEntity", "Description", "Description", false, "VarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
+		}
+
+		/// <summary>Inits GoseInterviewEntity's mappings</summary>
+		private void InitGoseInterviewEntityMappings()
+		{
+			this.AddElementMapping("GoseInterviewEntity", @"PsychologicalServices", @"dbo", "GoseInterviews", 28, 0);
+			this.AddElementFieldMapping("GoseInterviewEntity", "Id", "Id", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseInterviewEntity", "AssessmentId", "AssessmentId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("GoseInterviewEntity", "AccidentTimeframeId", "AccidentTimeframeId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("GoseInterviewEntity", "RespondentTypeId", "RespondentTypeId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 3);
+			this.AddElementFieldMapping("GoseInterviewEntity", "ConciousnessAbleToObeyCommandsOrSpeak", "ConciousnessAbleToObeyCommandsOrSpeak", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 4);
+			this.AddElementFieldMapping("GoseInterviewEntity", "IndependenceAtHomeRequireEveryDayAssistance", "IndependenceAtHomeRequireEveryDayAssistance", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 5);
+			this.AddElementFieldMapping("GoseInterviewEntity", "IndependenceAtHomeNeedFrequentHelp", "IndependenceAtHomeNeedFrequentHelp", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 6);
+			this.AddElementFieldMapping("GoseInterviewEntity", "IndependenceAtHomeIndependentBeforeInjury", "IndependenceAtHomeIndependentBeforeInjury", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 7);
+			this.AddElementFieldMapping("GoseInterviewEntity", "IndependenceOutsideHomeAbleToShopWithoutAssistance", "IndependenceOutsideHomeAbleToShopWithoutAssistance", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 8);
+			this.AddElementFieldMapping("GoseInterviewEntity", "IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury", "IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 9);
+			this.AddElementFieldMapping("GoseInterviewEntity", "IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance", "IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 10);
+			this.AddElementFieldMapping("GoseInterviewEntity", "IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury", "IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 11);
+			this.AddElementFieldMapping("GoseInterviewEntity", "WorkAbleToWorkAtPreviousCapacity", "WorkAbleToWorkAtPreviousCapacity", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 12);
+			this.AddElementFieldMapping("GoseInterviewEntity", "WorkRestrictionLevelId", "WorkRestrictionLevelId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 13);
+			this.AddElementFieldMapping("GoseInterviewEntity", "WorkRestrictionLevelDifferentAfterInjury", "WorkRestrictionLevelDifferentAfterInjury", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 14);
+			this.AddElementFieldMapping("GoseInterviewEntity", "SocialAndLeisureAbleToResumeRegularActivities", "SocialAndLeisureAbleToResumeRegularActivities", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 15);
+			this.AddElementFieldMapping("GoseInterviewEntity", "SocialAndLeisureExtentOfRestrictionId", "SocialAndLeisureExtentOfRestrictionId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 16);
+			this.AddElementFieldMapping("GoseInterviewEntity", "SocialAndLeisureExtentOfRestrictionDifferentAfterInjury", "SocialAndLeisureExtentOfRestrictionDifferentAfterInjury", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 17);
+			this.AddElementFieldMapping("GoseInterviewEntity", "FamilyAndFriendshipsDisruptionDueToPsychologicalProblems", "FamilyAndFriendshipsDisruptionDueToPsychologicalProblems", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 18);
+			this.AddElementFieldMapping("GoseInterviewEntity", "FamilyAndFriendshipsDisruptionLevelId", "FamilyAndFriendshipsDisruptionLevelId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 19);
+			this.AddElementFieldMapping("GoseInterviewEntity", "FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury", "FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 20);
+			this.AddElementFieldMapping("GoseInterviewEntity", "ReturnToNormalLifeAnyOtherCurrentProblems", "ReturnToNormalLifeAnyOtherCurrentProblems", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 21);
+			this.AddElementFieldMapping("GoseInterviewEntity", "ReturnToNormalLifeSimilarProblemsHaveBecomeWorse", "ReturnToNormalLifeSimilarProblemsHaveBecomeWorse", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 22);
+			this.AddElementFieldMapping("GoseInterviewEntity", "ReturnToNormalLifeMostImportantFactorInOutcomeId", "ReturnToNormalLifeMostImportantFactorInOutcomeId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 23);
+			this.AddElementFieldMapping("GoseInterviewEntity", "CreatedDate", "CreatedDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 24);
+			this.AddElementFieldMapping("GoseInterviewEntity", "CreateUserId", "CreateUserId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 25);
+			this.AddElementFieldMapping("GoseInterviewEntity", "UpdateDate", "UpdateDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 26);
+			this.AddElementFieldMapping("GoseInterviewEntity", "UpdateUserId", "UpdateUserId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 27);
+		}
+
+		/// <summary>Inits GoseRespondentTypeEntity's mappings</summary>
+		private void InitGoseRespondentTypeEntityMappings()
+		{
+			this.AddElementMapping("GoseRespondentTypeEntity", @"PsychologicalServices", @"dbo", "GoseRespondentTypes", 2, 0);
+			this.AddElementFieldMapping("GoseRespondentTypeEntity", "GoseRespondentTypeId", "GoseRespondentTypeId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseRespondentTypeEntity", "Description", "Description", false, "VarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
+		}
+
+		/// <summary>Inits GoseReturnToNormalLifeOutcomeFactorEntity's mappings</summary>
+		private void InitGoseReturnToNormalLifeOutcomeFactorEntityMappings()
+		{
+			this.AddElementMapping("GoseReturnToNormalLifeOutcomeFactorEntity", @"PsychologicalServices", @"dbo", "GoseReturnToNormalLifeOutcomeFactors", 2, 0);
+			this.AddElementFieldMapping("GoseReturnToNormalLifeOutcomeFactorEntity", "GoseReturnToNormalLifeOutcomeFactorId", "GoseReturnToNormalLifeOutcomeFactorId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseReturnToNormalLifeOutcomeFactorEntity", "Description", "Description", false, "VarChar", 100, 0, 0, false, "", null, typeof(System.String), 1);
+		}
+
+		/// <summary>Inits GoseSocialAndLeisureRestrictionExtentEntity's mappings</summary>
+		private void InitGoseSocialAndLeisureRestrictionExtentEntityMappings()
+		{
+			this.AddElementMapping("GoseSocialAndLeisureRestrictionExtentEntity", @"PsychologicalServices", @"dbo", "GoseSocialAndLeisureRestrictionExtents", 2, 0);
+			this.AddElementFieldMapping("GoseSocialAndLeisureRestrictionExtentEntity", "GoseSocialAndLeisureRestrictionExtentId", "GoseSocialAndLeisureRestrictionExtentId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseSocialAndLeisureRestrictionExtentEntity", "Description", "Description", false, "VarChar", 100, 0, 0, false, "", null, typeof(System.String), 1);
+		}
+
+		/// <summary>Inits GoseWorkRestrictionLevelEntity's mappings</summary>
+		private void InitGoseWorkRestrictionLevelEntityMappings()
+		{
+			this.AddElementMapping("GoseWorkRestrictionLevelEntity", @"PsychologicalServices", @"dbo", "GoseWorkRestrictionLevels", 2, 0);
+			this.AddElementFieldMapping("GoseWorkRestrictionLevelEntity", "GoseWorkRestrictionLevelId", "GoseWorkRestrictionLevelId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseWorkRestrictionLevelEntity", "Description", "Description", false, "VarChar", 100, 0, 0, false, "", null, typeof(System.String), 1);
 		}
 
 		/// <summary>Inits InvoiceEntity's mappings</summary>
