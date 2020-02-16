@@ -2258,6 +2258,10 @@ function getNewResponses() {
             "verificationMethod": {
                 "method": null,
                 "otherMethod": ""
+            },
+            "assistance": {
+                "devices": null,
+                "personnel": null
             }
         },
         "dayOfAssessment": {

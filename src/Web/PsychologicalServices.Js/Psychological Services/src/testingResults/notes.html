@@ -131,7 +131,10 @@
                 <div class="uk-margin-remove uk-width-3-4">
                     
                     <label>
-                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="driversLicense" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Driver's License&nbsp;
+                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="healthCard" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Health card&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="driversLicense" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Driver's Licence&nbsp;
                     </label>
                     <label>
                         <input type="radio" name="idVerificationMethod" class="uk-radio" value="passport" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Passport&nbsp;
@@ -144,7 +147,35 @@
                     </label>
 
                 </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Assistive devices:
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <input type="text" name="assistanceDevices" class="uk-input uk-form-small" value.bind="responses.identification.assistance.devices" />
+                </div>
         
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    Translator / Reader?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="radio" name="assistancePersonnel" class="uk-radio" checked.bind="responses.identification.assistance.personnel" value="translator" />&nbsp;Translator&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="assistancePersonnel" class="uk-radio" checked.bind="responses.identification.assistance.personnel" value="reader" />&nbsp;Reader&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="assistancePersonnel" class="uk-radio" checked.bind="responses.identification.assistance.personnel" value.bind="null" />&nbsp;Skip&nbsp;
+                    </label>
+                </div>
+
                 <hr>
             </div>
         </fieldset>
@@ -3946,7 +3977,7 @@
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="fatherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.father.isAlive" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="fatherIsAlive" class="uk-radio" checked.bind="responses.personalHistory.father.isAlive" value.bind="response.value" change.delegate="changed('father-death-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
