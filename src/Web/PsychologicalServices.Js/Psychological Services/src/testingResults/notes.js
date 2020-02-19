@@ -2105,7 +2105,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "13";
+    return "14";
 }
 
 function upgrade(responses, toVersion) {
@@ -2251,6 +2251,18 @@ function upgrade_12_to_13(responses) {
     return responses;
 }
 
+function upgrade_13_to_14(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.identification.assistance.hasOwnProperty('wearsGlasses')) {
+        responses.identification.assistance = newResponses.identification.assistance.wearsGlasses;
+    }
+
+    responses.version = "14";
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
@@ -2260,6 +2272,7 @@ function getNewResponses() {
                 "otherMethod": ""
             },
             "assistance": {
+                "wearsGlasses": null,
                 "devices": null,
                 "personnel": null
             }

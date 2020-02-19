@@ -151,6 +151,18 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-4">
+                    Wears glasses:
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="assistanceWearsGlasses" class="uk-radio" checked.bind="$parent.responses.identification.assistance.wearsGlasses" value.bind="response.value" change.delegate="changed('assistance-wears-glasses-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
                     Assistive devices:
                 </div>
 
