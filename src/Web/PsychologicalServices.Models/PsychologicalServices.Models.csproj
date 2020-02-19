@@ -116,6 +116,11 @@
     <Compile Include="Events\IEventRepository.cs" />
     <Compile Include="Events\IEventService.cs" />
     <Compile Include="Events\IEventValidator.cs" />
+    <Compile Include="Gose\GoseAccidentTimeframe.cs" />
+    <Compile Include="Gose\GoseFamilyAndFriendshipsDisruptionLevel.cs" />
+    <Compile Include="Gose\GoseInterview.cs" />
+    <Compile Include="Gose\GoseRespondentType.cs" />
+    <Compile Include="Gose\GoseReturnToNormalLifeOutcomeFactor.cs" />
     <Compile Include="Invoices\AppointmentStatusInvoiceRate.cs" />
     <Compile Include="Invoices\ConsultingInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceGenerator.cs" />
