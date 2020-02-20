@@ -13,7 +13,7 @@
 	<require from="common/fixed-header"></require>
 	<require from="content/css/fixed-header.css"></require>
 
-    <div class="uk-container">
+    <div class="uk-container print-hide">
         <div class="uk-margin-remove uk-width-auto">
             <label class="uk-form-label">Claimant</label>
             <div class="uk-form-controls">
@@ -53,13 +53,13 @@
         </div>
     </div>
 
-    <div class="uk-position-fixed" style="top: 100px; right: 10px;" if.bind="formVisible">
+    <div class="uk-position-fixed print-hide" style="top: 100px; right: 10px;" if.bind="formVisible">
         <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToBottom()">
             <i class="fa fa-lg fa-chevron-down"></i>
         </button>
     </div>
 
-    <div class="uk-position-fixed" style="bottom: 10px; right: 10px;" if.bind="formVisible">
+    <div class="uk-position-fixed print-hide" style="bottom: 10px; right: 10px;" if.bind="formVisible">
         <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToTop()">
             <i class="fa fa-lg fa-chevron-up"></i>
         </button>
@@ -69,7 +69,7 @@
         </button>
     </div>
     
-    <hr if.bind="formVisible">
+    <hr if.bind="formVisible" class="print-hide">
 
     <div class="uk-container" if.bind="formVisible">
 
@@ -3965,7 +3965,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    What was your father’s year of birth?
+                    What is/was your father’s age?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
@@ -3995,15 +3995,15 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive)">
                     If not, what was the cause of his death?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive)">
                     <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.father.causeOfDeath.value" input.delegate="changed('father-death-changed') & debounce:500" />
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive)">
                     <label>
                         <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.causeOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
                     </label>
@@ -4012,17 +4012,17 @@
                     </label>
                 </div>
 
-                <hr if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <hr if.bind="isNo(responses.personalHistory.father.isAlive)">
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive)">
                     What year did he die?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive)">
                     <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.father.yearOfDeath.value" input.delegate="changed('father-death-changed') & debounce:500" />
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.father.isAlive)">
                     <label>
                         <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.father.yearOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
                     </label>
@@ -4031,7 +4031,7 @@
                     </label>
                 </div>
 
-                <hr if.bind="isNo(responses.personalHistory.father.isAlive.value)">
+                <hr if.bind="isNo(responses.personalHistory.father.isAlive)">
 
                 <div class="uk-margin-remove uk-width-1-2">
                     What was his education level?
@@ -4076,11 +4076,20 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    What was your mother's year of birth?
+                    What is/was your mother's age?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfBirth" input.delegate="changed('mother-birth-year-changed') & debounce:500" />
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.age.value" input.delegate="changed('mother-birth-year-changed') & debounce:500" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.age.dontKnow" value.bind="true" />&nbsp;Don't Know
+                    </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.age.skip" value.bind="true" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <hr>
@@ -4105,7 +4114,7 @@
                     <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.mother.causeOfDeath.value" input.delegate="changed('mother-death-changed') & debounce:500" />
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive)">
                     <label>
                         <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.causeOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
                     </label>
@@ -4124,7 +4133,7 @@
                     <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.mother.yearOfDeath.value" input.delegate="changed('mother-death-changed') & debounce:500" />
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive.value)">
+                <div class="uk-margin-remove uk-width-1-4" if.bind="isNo(responses.personalHistory.mother.isAlive)">
                     <label>
                         <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.yearOfDeath.dontKnow" value.bind="true" />&nbsp;Don't Know
                     </label>

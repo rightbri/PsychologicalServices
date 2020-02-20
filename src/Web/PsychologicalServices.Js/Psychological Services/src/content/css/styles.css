@@ -96,3 +96,9 @@
 	font-size: 11pt;
 	font-weight: normal;
 }
+
+@media print {
+	.print-hide {
+		display: none;
+	}
+}

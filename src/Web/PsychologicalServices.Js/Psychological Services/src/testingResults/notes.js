@@ -2105,7 +2105,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "14";
+    return "15";
 }
 
 function upgrade(responses, toVersion) {
@@ -2254,11 +2254,45 @@ function upgrade_12_to_13(responses) {
 function upgrade_13_to_14(responses) {
     let newResponses = getNewResponses();
 
-    if (!responses.identification.assistance.hasOwnProperty('wearsGlasses')) {
-        responses.identification.assistance = newResponses.identification.assistance.wearsGlasses;
+    if (!responses.identification.hasOwnProperty('assistance')) {
+        responses.identification.assistance = newResponses.identification.assistance;
     }
 
     responses.version = "14";
+
+    return responses;
+}
+
+function upgrade_14_to_15(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.personalHistory.father.hasOwnProperty('age')) {
+        responses.personalHistory.father.age = newResponses.personalHistory.father.age;
+
+        if (responses.personalHistory.father.hasOwnProperty('yearOfBirth')) {
+            responses.personalHistory.father.age.value = responses.personalHistory.father.yearOfBirth;
+        }
+    }
+    else if (typeof responses.personalHistory.father.age === "string") {
+        let tempAge = responses.personalHistory.father.age;
+        responses.personalHistory.father.age = newResponses.personalHistory.father.age;
+        responses.personalHistory.father.age.value = tempAge;
+    }
+
+    if (!responses.personalHistory.mother.hasOwnProperty('age')) {
+        responses.personalHistory.mother.age = newResponses.personalHistory.mother.age;
+
+        if (responses.personalHistory.mother.hasOwnProperty('yearOfBirth')) {
+            responses.personalHistory.mother.age.value = responses.personalHistory.mother.yearOfBirth;
+        }
+    }
+    else if (typeof responses.personalHistory.mother.age === "string") {
+        let tempAge = responses.personalHistory.mother.age;
+        responses.personalHistory.mother.age = newResponses.personalHistory.mother.age;
+        responses.personalHistory.mother.age.value = tempAge;
+    }
+
+    responses.version = "15";
 
     return responses;
 }
