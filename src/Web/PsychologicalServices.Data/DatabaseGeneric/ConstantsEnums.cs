@@ -769,8 +769,8 @@ namespace PsychologicalServices.Data
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: GoseInterview.</summary>
 	public enum GoseInterviewFieldIndex
 	{
-		///<summary>Id. </summary>
-		Id,
+		///<summary>GoseInterviewId. </summary>
+		GoseInterviewId,
 		///<summary>AssessmentId. </summary>
 		AssessmentId,
 		///<summary>AccidentTimeframeId. </summary>

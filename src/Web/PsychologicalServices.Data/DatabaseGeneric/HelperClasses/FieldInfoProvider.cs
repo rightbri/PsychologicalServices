@@ -606,7 +606,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		private void InitGoseInterviewEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(GoseInterviewFieldIndex), "GoseInterviewEntity");
-			this.AddElementFieldInfo("GoseInterviewEntity", "Id", typeof(System.Int32), true, false, true, false,  (int)GoseInterviewFieldIndex.Id, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "GoseInterviewId", typeof(System.Int32), true, false, true, false,  (int)GoseInterviewFieldIndex.GoseInterviewId, 0, 0, 10);
 			this.AddElementFieldInfo("GoseInterviewEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)GoseInterviewFieldIndex.AssessmentId, 0, 0, 10);
 			this.AddElementFieldInfo("GoseInterviewEntity", "AccidentTimeframeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.AccidentTimeframeId, 0, 0, 10);
 			this.AddElementFieldInfo("GoseInterviewEntity", "RespondentTypeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.RespondentTypeId, 0, 0, 10);

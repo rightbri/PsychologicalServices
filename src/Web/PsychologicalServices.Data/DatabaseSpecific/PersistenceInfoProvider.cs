@@ -645,7 +645,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		private void InitGoseInterviewEntityMappings()
 		{
 			this.AddElementMapping("GoseInterviewEntity", @"PsychologicalServices", @"dbo", "GoseInterviews", 28, 0);
-			this.AddElementFieldMapping("GoseInterviewEntity", "Id", "Id", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("GoseInterviewEntity", "GoseInterviewId", "GoseInterviewId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("GoseInterviewEntity", "AssessmentId", "AssessmentId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 			this.AddElementFieldMapping("GoseInterviewEntity", "AccidentTimeframeId", "AccidentTimeframeId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
 			this.AddElementFieldMapping("GoseInterviewEntity", "RespondentTypeId", "RespondentTypeId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 3);

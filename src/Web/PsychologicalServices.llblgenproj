@@ -564,7 +564,7 @@
           <Field Name="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" Type="bool" IsOptional="true" FieldIndex="18" />
           <Field Name="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" Type="bool" IsOptional="true" FieldIndex="20" />
           <Field Name="FamilyAndFriendshipsDisruptionLevelId" Type="int" IsOptional="true" Precision="10" FieldIndex="19" />
-          <Field Name="Id" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="GoseInterviewId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
           <Field Name="IndependenceAtHomeIndependentBeforeInjury" Type="bool" IsOptional="true" FieldIndex="7" />
           <Field Name="IndependenceAtHomeNeedFrequentHelp" Type="bool" IsOptional="true" FieldIndex="6" />
           <Field Name="IndependenceAtHomeRequireEveryDayAssistance" Type="bool" IsOptional="true" FieldIndex="5" />
@@ -1866,7 +1866,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-02-16T21:29:11.4858663Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-02-29T01:07:04.3709906Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2337,7 +2337,7 @@
                 <Table Name="GoseInterviews">
                   <PkConstraintName Name="PK_GoseInterviews_1" />
                   <Fields>
-                    <Field Name="Id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="GoseInterviewId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="AssessmentId" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="AccidentTimeframeId" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="RespondentTypeId" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
@@ -4186,7 +4186,7 @@
             <FieldMapping FieldName="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" TargetFieldName="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" />
             <FieldMapping FieldName="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" TargetFieldName="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" />
             <FieldMapping FieldName="FamilyAndFriendshipsDisruptionLevelId" TargetFieldName="FamilyAndFriendshipsDisruptionLevelId" />
-            <FieldMapping FieldName="Id" TargetFieldName="Id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="GoseInterviewId" TargetFieldName="GoseInterviewId" SequenceToUse="SCOPE_IDENTITY()" />
             <FieldMapping FieldName="IndependenceAtHomeIndependentBeforeInjury" TargetFieldName="IndependenceAtHomeIndependentBeforeInjury" />
             <FieldMapping FieldName="IndependenceAtHomeNeedFrequentHelp" TargetFieldName="IndependenceAtHomeNeedFrequentHelp" />
             <FieldMapping FieldName="IndependenceAtHomeRequireEveryDayAssistance" TargetFieldName="IndependenceAtHomeRequireEveryDayAssistance" />

@@ -1466,10 +1466,10 @@ namespace PsychologicalServices.Data.HelperClasses
 	/// <summary>Field Creation Class for entity GoseInterviewEntity</summary>
 	public partial class GoseInterviewFields
 	{
-		/// <summary>Creates a new GoseInterviewEntity.Id field instance</summary>
-		public static EntityField2 Id
+		/// <summary>Creates a new GoseInterviewEntity.GoseInterviewId field instance</summary>
+		public static EntityField2 GoseInterviewId
 		{
-			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.Id);}
+			get { return (EntityField2)EntityFieldFactory.Create(GoseInterviewFieldIndex.GoseInterviewId);}
 		}
 		/// <summary>Creates a new GoseInterviewEntity.AssessmentId field instance</summary>
 		public static EntityField2 AssessmentId

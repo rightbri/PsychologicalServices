@@ -1,16 +1,18 @@
-﻿using System;
+﻿using PsychologicalServices.Models.Assessments;
+using PsychologicalServices.Models.Users;
+using System;
 
 namespace PsychologicalServices.Models.Gose
 {
     public class GoseInterview
     {
-		public int Id { get; set; }
+		public int GoseInterviewId { get; set; }
 
-		public int AssessmentId { get; set; }
+		public Assessment Assessment { get; set; }
 
-		public int? AccidentTimeframeId { get; set; }
+		public GoseAccidentTimeframe AccidentTimeframe { get; set; }
 
-		public int? RespondentTypeId { get; set; }
+		public GoseRespondentType RespondentType { get; set; }
 
 		public bool? ConciousnessAbleToObeyCommandsOrSpeak { get; set; }
 
@@ -30,19 +32,19 @@ namespace PsychologicalServices.Models.Gose
 
 		public bool? WorkAbleToWorkAtPreviousCapacity { get; set; }
 
-		public int? WorkRestrictionLevelId { get; set; }
+		public GoseWorkRestrictionLevel WorkRestrictionLevel { get; set; }
 
 		public bool? WorkRestrictionLevelDifferentAfterInjury { get; set; }
 
 		public bool? SocialAndLeisureAbleToResumeRegularActivities { get; set; }
 
-		public int? SocialAndLeisureExtentOfRestrictionId { get; set; }
+		public GoseSocialAndLeisureRestrictionExtent SocialAndLeisureExtentOfRestriction { get; set; }
 
 		public bool? SocialAndLeisureExtentOfRestrictionDifferentAfterInjury { get; set; }
 
 		public bool? FamilyAndFriendshipsDisruptionDueToPsychologicalProblems { get; set; }
 
-		public int? FamilyAndFriendshipsDisruptionLevelId { get; set; }
+		public GoseFamilyAndFriendshipsDisruptionLevel FamilyAndFriendshipsDisruptionLevel { get; set; }
 
 		public bool? FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury { get; set; }
 
@@ -50,14 +52,19 @@ namespace PsychologicalServices.Models.Gose
 
 		public bool? ReturnToNormalLifeSimilarProblemsHaveBecomeWorse { get; set; }
 
-		public int? ReturnToNormalLifeMostImportantFactorInOutcomeId { get; set; }
+		public GoseReturnToNormalLifeOutcomeFactor ReturnToNormalLifeMostImportantFactorInOutcome { get; set; }
 
 		public DateTimeOffset CreatedDate { get; set; }
 
-		public int CreateUserId { get; set; }
+		public User CreateUser { get; set; }
 
 		public DateTimeOffset UpdateDate { get; set; }
 
-		public int UpdateUserId { get; set; }
+		public User UpdateUser { get; set; }
+
+		public bool IsNew()
+		{
+			return GoseInterviewId == 0;
+		}
 	}
 }

@@ -951,7 +951,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new GoseAccidentTimeframeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseAccidentTimeframeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -972,7 +971,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new GoseFamilyAndFriendshipsDisruptionLevelEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseFamilyAndFriendshipsDisruptionLevelUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -993,7 +991,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new GoseInterviewEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseInterviewUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1014,7 +1011,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new GoseRespondentTypeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseRespondentTypeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1035,7 +1031,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new GoseReturnToNormalLifeOutcomeFactorEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseReturnToNormalLifeOutcomeFactorUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1056,7 +1051,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new GoseSocialAndLeisureRestrictionExtentEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseSocialAndLeisureRestrictionExtentUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -1077,7 +1071,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new GoseWorkRestrictionLevelEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewGoseWorkRestrictionLevelUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code

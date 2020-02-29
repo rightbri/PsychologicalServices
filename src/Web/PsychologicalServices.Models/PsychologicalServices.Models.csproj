@@ -119,8 +119,15 @@
     <Compile Include="Gose\GoseAccidentTimeframe.cs" />
     <Compile Include="Gose\GoseFamilyAndFriendshipsDisruptionLevel.cs" />
     <Compile Include="Gose\GoseInterview.cs" />
+    <Compile Include="Gose\GoseInterviewValidator.cs" />
     <Compile Include="Gose\GoseRespondentType.cs" />
     <Compile Include="Gose\GoseReturnToNormalLifeOutcomeFactor.cs" />
+    <Compile Include="Gose\GoseService.cs" />
+    <Compile Include="Gose\GoseSocialAndLeisureRestrictionExtent.cs" />
+    <Compile Include="Gose\GoseWorkRestrictionLevel.cs" />
+    <Compile Include="Gose\IGoseInterviewValidator.cs" />
+    <Compile Include="Gose\IGoseRepository.cs" />
+    <Compile Include="Gose\IGoseService.cs" />
     <Compile Include="Invoices\AppointmentStatusInvoiceRate.cs" />
     <Compile Include="Invoices\ConsultingInvoiceGenerator.cs" />
     <Compile Include="Invoices\IInvoiceGenerator.cs" />

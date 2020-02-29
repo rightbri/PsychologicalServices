@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[GoseInterviews] (
-    [Id]                                                                      INT                IDENTITY (1, 1) NOT NULL,
+    [GoseInterviewId]                                                         INT                IDENTITY (1, 1) NOT NULL,
     [AssessmentId]                                                            INT                NOT NULL,
     [AccidentTimeframeId]                                                     INT                NULL,
     [RespondentTypeId]                                                        INT                NULL,
@@ -27,7 +27,7 @@
     [CreateUserId]                                                            INT                NOT NULL,
     [UpdateDate]                                                              DATETIMEOFFSET (7) CONSTRAINT [DF_GoseInterviews_UpdateDate] DEFAULT (sysutcdatetime()) NOT NULL,
     [UpdateUserId]                                                            INT                NOT NULL,
-    CONSTRAINT [PK_GoseInterviews_1] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [PK_GoseInterviews_1] PRIMARY KEY CLUSTERED ([GoseInterviewId] ASC),
     CONSTRAINT [FK_GoseInterviews_Assessments] FOREIGN KEY ([AssessmentId]) REFERENCES [dbo].[Assessments] ([AssessmentId]),
     CONSTRAINT [FK_GoseInterviews_CreateUsers] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_GoseInterviews_GoseAccidentTimeframes] FOREIGN KEY ([AccidentTimeframeId]) REFERENCES [dbo].[GoseAccidentTimeframes] ([GoseAccidentTimeframeId]),
@@ -38,4 +38,6 @@
     CONSTRAINT [FK_GoseInterviews_GoseWorkRestrictionLevels] FOREIGN KEY ([WorkRestrictionLevelId]) REFERENCES [dbo].[GoseWorkRestrictionLevels] ([GoseWorkRestrictionLevelId]),
     CONSTRAINT [FK_GoseInterviews_UpdateUsers] FOREIGN KEY ([UpdateUserId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 

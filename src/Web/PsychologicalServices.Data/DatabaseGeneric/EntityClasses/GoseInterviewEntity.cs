@@ -22,13 +22,11 @@ namespace PsychologicalServices.Data.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity class which represents the entity 'GoseInterview'.<br/><br/></summary>
 	[Serializable]
 	public partial class GoseInterviewEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private AssessmentEntity _assessment;
@@ -43,7 +41,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -102,22 +99,22 @@ namespace PsychologicalServices.Data.EntityClasses
 		}
 				
 		/// <summary> CTor</summary>
-		/// <param name="id">PK value for GoseInterview which data should be fetched into this GoseInterview object</param>
+		/// <param name="goseInterviewId">PK value for GoseInterview which data should be fetched into this GoseInterview object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public GoseInterviewEntity(System.Int32 id):base("GoseInterviewEntity")
+		public GoseInterviewEntity(System.Int32 goseInterviewId):base("GoseInterviewEntity")
 		{
 			InitClassEmpty(null, null);
-			this.Id = id;
+			this.GoseInterviewId = goseInterviewId;
 		}
 
 		/// <summary> CTor</summary>
-		/// <param name="id">PK value for GoseInterview which data should be fetched into this GoseInterview object</param>
+		/// <param name="goseInterviewId">PK value for GoseInterview which data should be fetched into this GoseInterview object</param>
 		/// <param name="validator">The custom validator object for this GoseInterviewEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public GoseInterviewEntity(System.Int32 id, IValidator validator):base("GoseInterviewEntity")
+		public GoseInterviewEntity(System.Int32 goseInterviewId, IValidator validator):base("GoseInterviewEntity")
 		{
 			InitClassEmpty(validator, null);
-			this.Id = id;
+			this.GoseInterviewId = goseInterviewId;
 		}
 
 		/// <summary> Protected CTor for deserialization</summary>
@@ -177,7 +174,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -485,7 +481,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -641,7 +636,6 @@ namespace PsychologicalServices.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -654,7 +648,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("Id", fieldHashtable);
+			_fieldsCustomProperties.Add("GoseInterviewId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("AssessmentId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
@@ -967,7 +961,6 @@ namespace PsychologicalServices.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 
@@ -1074,14 +1067,14 @@ namespace PsychologicalServices.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Id property of the Entity GoseInterview<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "GoseInterviews"."Id"<br/>
+		/// <summary> The GoseInterviewId property of the Entity GoseInterview<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "GoseInterviews"."GoseInterviewId"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 Id
+		public virtual System.Int32 GoseInterviewId
 		{
-			get { return (System.Int32)GetValue((int)GoseInterviewFieldIndex.Id, true); }
-			set	{ SetValue((int)GoseInterviewFieldIndex.Id, value); }
+			get { return (System.Int32)GetValue((int)GoseInterviewFieldIndex.GoseInterviewId, true); }
+			set	{ SetValue((int)GoseInterviewFieldIndex.GoseInterviewId, value); }
 		}
 
 		/// <summary> The AssessmentId property of the Entity GoseInterview<br/><br/></summary>
@@ -1542,7 +1535,6 @@ namespace PsychologicalServices.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code
