@@ -1,0 +1,501 @@
+<template>
+    <require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
+    <require from="resources/value-converters/array-to-string"></require>
+    <require from="resources/value-converters/filter"></require>
+	<require from="claimants/search-claimant"></require>
+	<require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+    
+    <div class="uk-container">
+        <div class="uk-margin-remove uk-width-auto">
+            <label class="uk-form-label">Claimant</label>
+            <div class="uk-form-controls">
+                <search-claimant claimant.bind="claimant" claimants.bind="claimants" selected.delegate="claimantSelected($event)"></search-claimant>
+            </div>
+        </div>
+
+        <table class="uk-table uk-table-divider" fixed-header if.bind="assessments && !assessment">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Assessment Type</th>
+                    <th>Referral Source</th>
+                    <th>Claimant</th>
+                    <th>Appointment Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="assessment of assessments">
+                    <td>
+                        <button type="button" class="uk-button uk-button-primary" click.delegate="select(assessment)">Select</button>
+                    </td>
+                    <td>${assessment.assessmentType}</td>
+                    <td>${assessment.referralSource}</td>
+                    <td>${assessment.claimant}</td>
+                    <td>${assessment.appointmentTime | dateFormat:config.longDateFormat}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="uk-margin-remove" if.bind="formVisible">
+            <button type="button" class="uk-button uk-button-primary" click.delegate="save()">Save</button>
+            &nbsp;
+            <button type="button" class="uk-button uk-button-default" click.delegate="reset(true)">Reset</button>
+            &nbsp;
+            <button type="button" class="uk-button uk-button-danger" click.delegate="delete()">Delete</button>
+        </div>
+    </div>
+
+    
+    <div class="uk-position-fixed" style="top: 100px; right: 10px;" if.bind="formVisible">
+        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToBottom()">
+            <i class="fa fa-lg fa-chevron-down"></i>
+        </button>
+    </div>
+
+    <div class="uk-position-fixed" style="bottom: 10px; right: 10px;" if.bind="formVisible">
+        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToTop()">
+            <i class="fa fa-lg fa-chevron-up"></i>
+        </button>
+        <br>
+        <button type="button" class="uk-button uk-button-primary uk-button-small" click.delegate="save()">
+            <i class="fa fa-lg fa-save"></i>
+        </button>
+    </div>
+
+    
+    <hr if.bind="formVisible">
+
+    <div class="uk-container" if.bind="formVisible">
+
+        <div class="uk-text-lead uk-text-center">
+            POST DISCHARGE STRUCTURED INTERVIEW FOR GOSE
+        </div>
+
+        <div class="uk-child-width-1-1" uk-grid>
+
+            <div class="uk-margin-remove">
+                Respondent:
+            </div>
+            <div class="uk-margin-remove-top">
+                <label repeat.for="response of respondentTypes">
+                    <input type="radio" name="respondentType" class="uk-radio" checked.bind="interview.respondentType" model.bind="response" matcher.bind="respondentTypeMatcher" />&nbsp;${response.description}&nbsp;
+                </label>
+                <br>
+            </div>
+
+        </div>
+
+        <div class="uk-child-width-1-1" uk-grid>
+
+            <div class="uk-margin-remove uk-text-large">
+                Conciousness:
+            </div>
+            <div class="uk-margin-remove-bottom">
+                1. Is the head-injured person able to obey simple commands or say any words?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="ConciousnessAbleToObeyCommandsOrSpeak" class="uk-radio" checked.bind="interview.conciousnessAbleToObeyCommandsOrSpeak" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="ConciousnessAbleToObeyCommandsOrSpeak" class="uk-radio" checked.bind="interview.conciousnessAbleToObeyCommandsOrSpeak" model.bind="false" />&nbsp;No (VS)&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="ConciousnessAbleToObeyCommandsOrSpeak" class="uk-radio" checked.bind="interview.conciousnessAbleToObeyCommandsOrSpeak" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: anyone who shows the ability to obey even simple commands or utter any word or communicate specifically in any other way is no longer considered to be in vegetative state. Eye movements are not reliable evidence of meaningful responsiveness. Corroborate with nursing staff and/or other caretakers. Confirmation of VS requires full assessment.
+            </div>
+
+
+            <div class="uk-text-large">
+                Independence at home:
+            </div>
+            <div class="uk-margin-remove-bottom">
+                2a. Is the assistance of another person at home essential every day for some activities of daily living?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="IndependenceAtHomeRequireEveryDayAssistance" class="uk-radio" checked.bind="interview.independenceAtHomeRequireEveryDayAssistance" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceAtHomeRequireEveryDayAssistance" class="uk-radio" checked.bind="interview.independenceAtHomeRequireEveryDayAssistance" model.bind="false" />&nbsp;No (VS)&nbsp;
+                </label>
+                <span class="uk-text-bold">
+                    If no: go to 3
+                </span>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceAtHomeRequireEveryDayAssistance" class="uk-radio" checked.bind="interview.independenceAtHomeRequireEveryDayAssistance" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: for a NO answer they should be able to look after themselves at home for 24 hours if necessary, though they need not actually look after themselves. Independence includes the ability to plan for and carry out the following activities: getting washed, putting on clean clothes without prompting, preparing food for themselves, dealing with callers and handling minor domestic crises. The person should be able to carry out activities without needing prompting or reminding and should be capable of being left alone overnight.
+            </div>
+
+            <div class="uk-margin-remove-bottom">
+                2b. Do they need frequent help of someone to be around at home most of the time?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="IndependenceAtHomeNeedFrequentHelp" class="uk-radio" checked.bind="interview.independenceAtHomeNeedFrequentHelp" model.bind="true" />&nbsp;Yes (lower SD)&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceAtHomeNeedFrequentHelp" class="uk-radio" checked.bind="interview.independenceAtHomeNeedFrequentHelp" model.bind="false" />&nbsp;No (upper SD)&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceAtHomeNeedFrequentHelp" class="uk-radio" checked.bind="interview.independenceAtHomeNeedFrequentHelp" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: for a NO answer they should be able to look after themselves at home up to eight hours during the day if necessary, though they need not actually look after themselves.
+            </div>
+            
+            <div class="uk-margin-remove-bottom">
+                2c. Was the patient independent at home before the injury?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="IndependenceAtHomeIndependentBeforeInjury" class="uk-radio" checked.bind="interview.independenceAtHomeIndependentBeforeInjury" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceAtHomeIndependentBeforeInjury" class="uk-radio" checked.bind="interview.independenceAtHomeIndependentBeforeInjury" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceAtHomeIndependentBeforeInjury" class="uk-radio" checked.bind="interview.independenceAtHomeIndependentBeforeInjury" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+            <div class="uk-text-large">
+                Independence outside home:
+            </div>
+            <div class="uk-margin-remove-bottom">
+                3a. Are they able to shop without assistance?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToShopWithoutAssistance" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToShopWithoutAssistance" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToShopWithoutAssistance" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToShopWithoutAssistance" model.bind="false" />&nbsp;No (upper SD)&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToShopWithoutAssistance" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToShopWithoutAssistance" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: this includes being able to plan what to buy, take care of money themselves and behave appropriately in public. They need not normally shop, but must be able to do so.
+            </div>
+
+            <div class="uk-margin-remove-bottom">
+                3b. Were they able to shop without assistance before?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+            <div class="uk-margin-remove-bottom">
+                4a. Are they able to travel locally without assistance?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToTravelLocallyWithoutAssistance" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToTravelLocallyWithoutAssistance" model.bind="false" />&nbsp;No (upper SD)&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToTravelLocallyWithoutAssistance" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: they may drive or use public transport to get around. Ability to use a taxi is sufficient, provided the person can phone for it themselves and instruct the driver.
+            </div>
+            
+            <div class="uk-margin-remove-bottom">
+                4b. Were they able to travel locally without assistance before the injury?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" class="uk-radio" checked.bind="interview.independenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+
+            <div class="uk-text-large">
+                Work:
+            </div>
+            <div class="uk-margin-remove-bottom">
+                5a. Are they currently able to work (or look after others at home) to their previous capacity?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="WorkAbleToWorkAtPreviousCapacity" class="uk-radio" checked.bind="interview.workAbleToWorkAtPreviousCapacity" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <span class="uk-text-bold">
+                    If yes, go to 6 
+                </span>
+                <br>
+                <label>
+                    <input type="radio" name="WorkAbleToWorkAtPreviousCapacity" class="uk-radio" checked.bind="interview.workAbleToWorkAtPreviousCapacity" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="WorkAbleToWorkAtPreviousCapacity" class="uk-radio" checked.bind="interview.workAbleToWorkAtPreviousCapacity" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+            <div class="uk-margin-remove-bottom">
+                5b. How restricted are they?
+            </div>
+            <div class="uk-margin-remove">
+                <template repeat.for="response of workRestrictionLevels">
+                    <label>
+                        <input type="radio" name="WorkRestrictionLevelId" class="uk-radio" checked.bind="interview.workRestrictionLevel" model.bind="response" matcher.bind="workRestrictionLevelMatcher" />&nbsp;${response.description}&nbsp;
+                    </label>
+                    <br>
+                </template>                
+                <label>
+                    <input type="radio" name="WorkRestrictionLevelId" class="uk-radio" checked.bind="interview.workRestrictionLevel" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+            <div class="uk-margin-remove-bottom">
+                5c. Does the level of restriction represent a change in respect to the pre-trauma situation?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="WorkRestrictionLevelDifferentAfterInjury" class="uk-radio" checked.bind="interview.workRestrictionLevelDifferentAfterInjury" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="WorkRestrictionLevelDifferentAfterInjury" class="uk-radio" checked.bind="interview.workRestrictionLevelDifferentAfterInjury" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="WorkRestrictionLevelDifferentAfterInjury" class="uk-radio" checked.bind="interview.workRestrictionLevelDifferentAfterInjury" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+
+
+            <div class="uk-text-large">
+                Social and Leisure activities:
+            </div>
+            <div class="uk-margin-remove-bottom">
+                6a. Are they able to resume regular social and leisure activities outside home?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="SocialAndLeisureAbleToResumeRegularActivities" class="uk-radio" checked.bind="interview.socialAndLeisureAbleToResumeRegularActivities" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <span class="uk-text-bold">
+                    If yes, go to 7
+                </span>
+                <br>
+                <label>
+                    <input type="radio" name="SocialAndLeisureAbleToResumeRegularActivities" class="uk-radio" checked.bind="interview.socialAndLeisureAbleToResumeRegularActivities" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="SocialAndLeisureAbleToResumeRegularActivities" class="uk-radio" checked.bind="interview.socialAndLeisureAbleToResumeRegularActivities" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: they need not have resumed all their previous leisure activities, but should not be prevented by physical or mental impairment. If they have stopped the majority of activities because of loss of interest or motivation, then this is also considered a disability.
+            </div>
+
+            
+            <div class="uk-margin-remove-bottom">
+                6b. What is the extent of restriction on their social and leisure activities?
+            </div>
+            <div class="uk-margin-remove">
+                <template repeat.for="response of socialAndLeisureRestrictionExtents">
+                    <label>
+                        <input type="radio" name="SocialAndLeisureExtentOfRestrictionId" class="uk-radio" checked.bind="interview.socialAndLeisureExtentOfRestriction" model.bind="response" matcher.bind="socialAndLeisureRestrictionExtentMatcher" />&nbsp;${response.description}&nbsp;
+                    </label>
+                    <br>
+                </template>                
+                <label>
+                    <input type="radio" name="SocialAndLeisureExtentOfRestrictionId" class="uk-radio" checked.bind="interview.socialAndLeisureExtentOfRestriction" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+            <div class="uk-margin-remove-bottom">
+                6c. Does the extent of restriction in regular social and leisure activities outside home represent a change in respect or pre-trauma?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="SocialAndLeisureExtentOfRestrictionDifferentAfterInjury" class="uk-radio" checked.bind="interview.socialAndLeisureExtentOfRestrictionDifferentAfterInjury" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="SocialAndLeisureExtentOfRestrictionDifferentAfterInjury" class="uk-radio" checked.bind="interview.socialAndLeisureExtentOfRestrictionDifferentAfterInjury" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="SocialAndLeisureExtentOfRestrictionDifferentAfterInjury" class="uk-radio" checked.bind="interview.socialAndLeisureExtentOfRestrictionDifferentAfterInjury" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+
+            <div class="uk-text-large">
+                Family and friendships:
+            </div>
+            <div class="uk-margin-remove-bottom">
+                7a. Has there been family or friendship disruption due to psychological problems?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionDueToPsychologicalProblems" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionDueToPsychologicalProblems" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <span class="uk-text-bold">
+                    If no, go to 8
+                </span>
+                <br>
+                <label>
+                    <input type="radio" name="FamilyAndFriendshipsDisruptionDueToPsychologicalProblems" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionDueToPsychologicalProblems" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: typical post-traumatic personality changes are: quick temper, irritability, anxiety, insensitivity to others, mood swings, depression and unreasonable or childish behaviour.
+            </div>
+            
+            <div class="uk-margin-remove-bottom">
+                7b. What has been the extent of disruption or strain?
+            </div>
+            <div class="uk-margin-remove">
+                <template repeat.for="response of familyAndFriendshipsDisruptionLevels">
+                    <label>
+                        <input type="radio" name="FamilyAndFriendshipsDisruptionLevelId" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionLevel" model.bind="response" matcher.bind="familyAndFriendshipsDisruptionLevelMatcher" />&nbsp;${response.description}&nbsp;
+                    </label>
+                    <br>
+                </template>                
+                <label>
+                    <input type="radio" name="FamilyAndFriendshipsDisruptionLevelId" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionLevel" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+
+            <div class="uk-margin-remove-bottom">
+                7c. Does the level of disruption or strain represent a change in respect to pre-trauma situation?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionLevelDifferentAfterInjury" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionLevelDifferentAfterInjury" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury" class="uk-radio" checked.bind="interview.familyAndFriendshipsDisruptionLevelDifferentAfterInjury" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: if there were some problems before injury, but these have become markedly worse since the injury then answer yes to question.
+            </div>
+            
+            
+            <div class="uk-text-large">
+                Return to normal life:
+            </div>
+            <div class="uk-margin-remove-bottom">
+                8a. Are there any other current problems relating to the injury which affect daily life?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="ReturnToNormalLifeAnyOtherCurrentProblems" class="uk-radio" checked.bind="interview.returnToNormalLifeAnyOtherCurrentProblems" model.bind="true" />&nbsp;Yes (Lower GR)&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="ReturnToNormalLifeAnyOtherCurrentProblems" class="uk-radio" checked.bind="interview.returnToNormalLifeAnyOtherCurrentProblems" model.bind="false" />&nbsp;No (Upper GR)&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="ReturnToNormalLifeAnyOtherCurrentProblems" class="uk-radio" checked.bind="interview.returnToNormalLifeAnyOtherCurrentProblems" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: other typical problems reported after head injury: headaches, dizziness, sensitivity to noise or light, slowness, memory failures and concentration problems.
+            </div>
+
+            <div class="uk-margin-remove-bottom">
+                8b. If similar problems were present before the injury, have these become markedly worse?
+            </div>
+            <div class="uk-margin-remove">
+                <label>
+                    <input type="radio" name="ReturnToNormalLifeSimilarProblemsHaveBecomeWorse" class="uk-radio" checked.bind="interview.returnToNormalLifeSimilarProblemsHaveBecomeWorse" model.bind="true" />&nbsp;Yes&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="ReturnToNormalLifeSimilarProblemsHaveBecomeWorse" class="uk-radio" checked.bind="interview.returnToNormalLifeSimilarProblemsHaveBecomeWorse" model.bind="false" />&nbsp;No&nbsp;
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="ReturnToNormalLifeSimilarProblemsHaveBecomeWorse" class="uk-radio" checked.bind="interview.returnToNormalLifeSimilarProblemsHaveBecomeWorse" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            
+            
+            <div class="uk-margin-remove-bottom">
+                9. What is the most important factor in outcome?
+            </div>
+            <div class="uk-margin-remove">
+                <template repeat.for="response of returnToNormalLifeOutcomeFactors">
+                    <label>
+                        <input type="radio" name="ReturnToNormalLifeMostImportantFactorInOutcomeId" class="uk-radio" checked.bind="interview.returnToNormalLifeMostImportantFactorInOutcome" model.bind="response" matcher.bind="returnToNormalLifeOutcomeFactorMatcher" />&nbsp;${response.description}&nbsp;
+                    </label>
+                    <br>
+                </template>                
+                <label>
+                    <input type="radio" name="ReturnToNormalLifeMostImportantFactorInOutcomeId" class="uk-radio" checked.bind="interview.returnToNormalLifeMostImportantFactorInOutcome" model.bind="null" />&nbsp;Skip&nbsp;
+                </label>
+            </div>
+            <div class="uk-margin-remove-top uk-text-small">
+                Note: extended GOS grades are shown beside responses on the CRF. The overall rating is based on the lowest outcome category indicated.  Areas in which there has been no change with respect to the pre-trauma situation are ignored when the overall rating is made.
+            </div>
+            
+        </div>
+        
+    </div>
+
+    <br>
+    <br>
+    <a id="bottom" name="bottom"></a>
+</template>

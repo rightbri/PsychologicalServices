@@ -91,6 +91,13 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitEmployerEntityInfos();
 			InitEmployerTypeEntityInfos();
 			InitEventEntityInfos();
+			InitGoseAccidentTimeframeEntityInfos();
+			InitGoseFamilyAndFriendshipsDisruptionLevelEntityInfos();
+			InitGoseInterviewEntityInfos();
+			InitGoseRespondentTypeEntityInfos();
+			InitGoseReturnToNormalLifeOutcomeFactorEntityInfos();
+			InitGoseSocialAndLeisureRestrictionExtentEntityInfos();
+			InitGoseWorkRestrictionLevelEntityInfos();
 			InitInvoiceEntityInfos();
 			InitInvoiceDocumentEntityInfos();
 			InitInvoiceDocumentSendLogEntityInfos();
@@ -576,6 +583,85 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("EventEntity", "Expires", typeof(System.DateTimeOffset), false, false, false, false,  (int)EventFieldIndex.Expires, 0, 0, 0);
 			this.AddElementFieldInfo("EventEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)EventFieldIndex.IsActive, 0, 0, 0);
 			this.AddElementFieldInfo("EventEntity", "CompanyId", typeof(System.Int32), false, true, false, false,  (int)EventFieldIndex.CompanyId, 0, 0, 10);
+		}
+		/// <summary>Inits GoseAccidentTimeframeEntity's FieldInfo objects</summary>
+		private void InitGoseAccidentTimeframeEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(GoseAccidentTimeframeFieldIndex), "GoseAccidentTimeframeEntity");
+			this.AddElementFieldInfo("GoseAccidentTimeframeEntity", "GoseAccidentTimeframeId", typeof(System.Int32), true, false, true, false,  (int)GoseAccidentTimeframeFieldIndex.GoseAccidentTimeframeId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseAccidentTimeframeEntity", "Months", typeof(System.Int32), false, false, false, false,  (int)GoseAccidentTimeframeFieldIndex.Months, 0, 0, 10);
+			this.AddElementFieldInfo("GoseAccidentTimeframeEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseAccidentTimeframeFieldIndex.Description, 50, 0, 0);
+			this.AddElementFieldInfo("GoseAccidentTimeframeEntity", "Basic", typeof(System.Boolean), false, false, false, false,  (int)GoseAccidentTimeframeFieldIndex.Basic, 0, 0, 0);
+			this.AddElementFieldInfo("GoseAccidentTimeframeEntity", "Intermediate", typeof(System.Boolean), false, false, false, false,  (int)GoseAccidentTimeframeFieldIndex.Intermediate, 0, 0, 0);
+			this.AddElementFieldInfo("GoseAccidentTimeframeEntity", "Advanced", typeof(System.Boolean), false, false, false, false,  (int)GoseAccidentTimeframeFieldIndex.Advanced, 0, 0, 0);
+		}
+		/// <summary>Inits GoseFamilyAndFriendshipsDisruptionLevelEntity's FieldInfo objects</summary>
+		private void InitGoseFamilyAndFriendshipsDisruptionLevelEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(GoseFamilyAndFriendshipsDisruptionLevelFieldIndex), "GoseFamilyAndFriendshipsDisruptionLevelEntity");
+			this.AddElementFieldInfo("GoseFamilyAndFriendshipsDisruptionLevelEntity", "GoseFamilyAndFriendshipsDisruptionLevelId", typeof(System.Int32), true, false, true, false,  (int)GoseFamilyAndFriendshipsDisruptionLevelFieldIndex.GoseFamilyAndFriendshipsDisruptionLevelId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseFamilyAndFriendshipsDisruptionLevelEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseFamilyAndFriendshipsDisruptionLevelFieldIndex.Description, 50, 0, 0);
+		}
+		/// <summary>Inits GoseInterviewEntity's FieldInfo objects</summary>
+		private void InitGoseInterviewEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(GoseInterviewFieldIndex), "GoseInterviewEntity");
+			this.AddElementFieldInfo("GoseInterviewEntity", "GoseInterviewId", typeof(System.Int32), true, false, true, false,  (int)GoseInterviewFieldIndex.GoseInterviewId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "AssessmentId", typeof(System.Int32), false, true, false, false,  (int)GoseInterviewFieldIndex.AssessmentId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "AccidentTimeframeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.AccidentTimeframeId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "RespondentTypeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.RespondentTypeId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "ConciousnessAbleToObeyCommandsOrSpeak", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.ConciousnessAbleToObeyCommandsOrSpeak, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "IndependenceAtHomeRequireEveryDayAssistance", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.IndependenceAtHomeRequireEveryDayAssistance, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "IndependenceAtHomeNeedFrequentHelp", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.IndependenceAtHomeNeedFrequentHelp, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "IndependenceAtHomeIndependentBeforeInjury", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.IndependenceAtHomeIndependentBeforeInjury, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "IndependenceOutsideHomeAbleToShopWithoutAssistance", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToShopWithoutAssistance, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToShopWithoutAssistanceBeforeInjury, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistance, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.IndependenceOutsideHomeAbleToTravelLocallyWithoutAssistanceBeforeInjury, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "WorkAbleToWorkAtPreviousCapacity", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.WorkAbleToWorkAtPreviousCapacity, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "WorkRestrictionLevelId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.WorkRestrictionLevelId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "WorkRestrictionLevelDifferentAfterInjury", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.WorkRestrictionLevelDifferentAfterInjury, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "SocialAndLeisureAbleToResumeRegularActivities", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.SocialAndLeisureAbleToResumeRegularActivities, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "SocialAndLeisureExtentOfRestrictionId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.SocialAndLeisureExtentOfRestrictionId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "SocialAndLeisureExtentOfRestrictionDifferentAfterInjury", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.SocialAndLeisureExtentOfRestrictionDifferentAfterInjury, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "FamilyAndFriendshipsDisruptionDueToPsychologicalProblems", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.FamilyAndFriendshipsDisruptionDueToPsychologicalProblems, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "FamilyAndFriendshipsDisruptionLevelId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.FamilyAndFriendshipsDisruptionLevelId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.FamilyAndFriendshipsDisruptionLevelDifferentAfterInjury, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "ReturnToNormalLifeAnyOtherCurrentProblems", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.ReturnToNormalLifeAnyOtherCurrentProblems, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "ReturnToNormalLifeSimilarProblemsHaveBecomeWorse", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)GoseInterviewFieldIndex.ReturnToNormalLifeSimilarProblemsHaveBecomeWorse, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "ReturnToNormalLifeMostImportantFactorInOutcomeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)GoseInterviewFieldIndex.ReturnToNormalLifeMostImportantFactorInOutcomeId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "CreatedDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)GoseInterviewFieldIndex.CreatedDate, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "CreateUserId", typeof(System.Int32), false, true, false, false,  (int)GoseInterviewFieldIndex.CreateUserId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseInterviewEntity", "UpdateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)GoseInterviewFieldIndex.UpdateDate, 0, 0, 0);
+			this.AddElementFieldInfo("GoseInterviewEntity", "UpdateUserId", typeof(System.Int32), false, true, false, false,  (int)GoseInterviewFieldIndex.UpdateUserId, 0, 0, 10);
+		}
+		/// <summary>Inits GoseRespondentTypeEntity's FieldInfo objects</summary>
+		private void InitGoseRespondentTypeEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(GoseRespondentTypeFieldIndex), "GoseRespondentTypeEntity");
+			this.AddElementFieldInfo("GoseRespondentTypeEntity", "GoseRespondentTypeId", typeof(System.Int32), true, false, true, false,  (int)GoseRespondentTypeFieldIndex.GoseRespondentTypeId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseRespondentTypeEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseRespondentTypeFieldIndex.Description, 50, 0, 0);
+		}
+		/// <summary>Inits GoseReturnToNormalLifeOutcomeFactorEntity's FieldInfo objects</summary>
+		private void InitGoseReturnToNormalLifeOutcomeFactorEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(GoseReturnToNormalLifeOutcomeFactorFieldIndex), "GoseReturnToNormalLifeOutcomeFactorEntity");
+			this.AddElementFieldInfo("GoseReturnToNormalLifeOutcomeFactorEntity", "GoseReturnToNormalLifeOutcomeFactorId", typeof(System.Int32), true, false, true, false,  (int)GoseReturnToNormalLifeOutcomeFactorFieldIndex.GoseReturnToNormalLifeOutcomeFactorId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseReturnToNormalLifeOutcomeFactorEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseReturnToNormalLifeOutcomeFactorFieldIndex.Description, 100, 0, 0);
+		}
+		/// <summary>Inits GoseSocialAndLeisureRestrictionExtentEntity's FieldInfo objects</summary>
+		private void InitGoseSocialAndLeisureRestrictionExtentEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(GoseSocialAndLeisureRestrictionExtentFieldIndex), "GoseSocialAndLeisureRestrictionExtentEntity");
+			this.AddElementFieldInfo("GoseSocialAndLeisureRestrictionExtentEntity", "GoseSocialAndLeisureRestrictionExtentId", typeof(System.Int32), true, false, true, false,  (int)GoseSocialAndLeisureRestrictionExtentFieldIndex.GoseSocialAndLeisureRestrictionExtentId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseSocialAndLeisureRestrictionExtentEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseSocialAndLeisureRestrictionExtentFieldIndex.Description, 100, 0, 0);
+		}
+		/// <summary>Inits GoseWorkRestrictionLevelEntity's FieldInfo objects</summary>
+		private void InitGoseWorkRestrictionLevelEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(GoseWorkRestrictionLevelFieldIndex), "GoseWorkRestrictionLevelEntity");
+			this.AddElementFieldInfo("GoseWorkRestrictionLevelEntity", "GoseWorkRestrictionLevelId", typeof(System.Int32), true, false, true, false,  (int)GoseWorkRestrictionLevelFieldIndex.GoseWorkRestrictionLevelId, 0, 0, 10);
+			this.AddElementFieldInfo("GoseWorkRestrictionLevelEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseWorkRestrictionLevelFieldIndex.Description, 100, 0, 0);
 		}
 		/// <summary>Inits InvoiceEntity's FieldInfo objects</summary>
 		private void InitInvoiceEntityInfos()

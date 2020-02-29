@@ -160,5 +160,12 @@
     <Build Include="dbo\Tables\InvoiceLineGroupConsultingAgreements.sql" />
     <Build Include="dbo\Tables\ConsultingAgreements.sql" />
     <Build Include="dbo\Stored Procedures\InvoiceableConsultingAgreementData.sql" />
+    <Build Include="dbo\Tables\GoseWorkRestrictionLevels.sql" />
+    <Build Include="dbo\Tables\GoseSocialAndLeisureRestrictionExtents.sql" />
+    <Build Include="dbo\Tables\GoseReturnToNormalLifeOutcomeFactors.sql" />
+    <Build Include="dbo\Tables\GoseRespondentTypes.sql" />
+    <Build Include="dbo\Tables\GoseInterviews.sql" />
+    <Build Include="dbo\Tables\GoseFamilyAndFriendshipsDisruptionLevels.sql" />
+    <Build Include="dbo\Tables\GoseAccidentTimeframes.sql" />
   </ItemGroup>
 </Project>

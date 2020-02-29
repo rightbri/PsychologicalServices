@@ -216,6 +216,42 @@ export class DataRepository {
 		return this.deleteBasic(`${assessmentId}/${name}`, 'assessmenttestingresults');
 	}
 	
+	getGoseInterview(assessmentId) {
+		return this.getBasic(`goseinterview/${assessmentId}`);
+	}
+
+	saveGoseInterview(interview) {
+		return this.saveBasic(interview, 'goseinterview');
+	}
+
+	deleteGoseInterview(id) {
+		return this.deleteBasic(id, 'goseinterview');
+	}
+	
+	getGoseAccidentTimeframes() {
+		return this.getManyBasic('goseaccidenttimeframe', true);
+	}
+	
+	getGoseFamilyAndFriendshipsDisruptionLevels() {
+		return this.getManyBasic('gosefamilyandfriendshipsdisruptionlevel', true);
+	}
+	
+	getGoseRespondentTypes() {
+		return this.getManyBasic('goserespondenttype', true);
+	}
+	
+	getGoseReturnToNormalLifeOutcomeFactors() {
+		return this.getManyBasic('gosereturntonormallifeoutcomefactor', true);
+	}
+	
+	getGoseSocialAndLeisureRestrictionExtents() {
+		return this.getManyBasic('gosesocialandleisurerestrictionextent', true);
+	}
+	
+	getGoseWorkRestrictionLevels() {
+		return this.getManyBasic('goseworkrestrictionlevel', true);
+	}
+
 	getAssessmentTypes() {
 		return this.getManyBasic('assessmenttype', true);
 	}

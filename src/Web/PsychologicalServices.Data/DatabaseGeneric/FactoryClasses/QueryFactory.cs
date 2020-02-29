@@ -357,6 +357,48 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<EventEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the GoseAccidentTimeframe entity</summary>
+		public EntityQuery<GoseAccidentTimeframeEntity> GoseAccidentTimeframe
+		{
+			get { return Create<GoseAccidentTimeframeEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the GoseFamilyAndFriendshipsDisruptionLevel entity</summary>
+		public EntityQuery<GoseFamilyAndFriendshipsDisruptionLevelEntity> GoseFamilyAndFriendshipsDisruptionLevel
+		{
+			get { return Create<GoseFamilyAndFriendshipsDisruptionLevelEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the GoseInterview entity</summary>
+		public EntityQuery<GoseInterviewEntity> GoseInterview
+		{
+			get { return Create<GoseInterviewEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the GoseRespondentType entity</summary>
+		public EntityQuery<GoseRespondentTypeEntity> GoseRespondentType
+		{
+			get { return Create<GoseRespondentTypeEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the GoseReturnToNormalLifeOutcomeFactor entity</summary>
+		public EntityQuery<GoseReturnToNormalLifeOutcomeFactorEntity> GoseReturnToNormalLifeOutcomeFactor
+		{
+			get { return Create<GoseReturnToNormalLifeOutcomeFactorEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the GoseSocialAndLeisureRestrictionExtent entity</summary>
+		public EntityQuery<GoseSocialAndLeisureRestrictionExtentEntity> GoseSocialAndLeisureRestrictionExtent
+		{
+			get { return Create<GoseSocialAndLeisureRestrictionExtentEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the GoseWorkRestrictionLevel entity</summary>
+		public EntityQuery<GoseWorkRestrictionLevelEntity> GoseWorkRestrictionLevel
+		{
+			get { return Create<GoseWorkRestrictionLevelEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the Invoice entity</summary>
 		public EntityQuery<InvoiceEntity> Invoice
 		{

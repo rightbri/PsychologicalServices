@@ -41,6 +41,8 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.CompanyEntityUsingNewAppointmentPsychologistId);
 			toReturn.Add(this.CompanyEntityUsingNewAppointmentPsychometristId);
 			toReturn.Add(this.ConsultingAgreementEntityUsingPsychologistId);
+			toReturn.Add(this.GoseInterviewEntityUsingCreateUserId);
+			toReturn.Add(this.GoseInterviewEntityUsingUpdateUserId);
 			toReturn.Add(this.InvoiceEntityUsingPayableToId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
@@ -237,6 +239,36 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and GoseInterviewEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - GoseInterview.CreateUserId
+		/// </summary>
+		public virtual IEntityRelation GoseInterviewEntityUsingCreateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "GoseInterviews" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, GoseInterviewFields.CreateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("GoseInterviewEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and GoseInterviewEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - GoseInterview.UpdateUserId
+		/// </summary>
+		public virtual IEntityRelation GoseInterviewEntityUsingUpdateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "GoseInterviews1" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, GoseInterviewFields.UpdateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("GoseInterviewEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between UserEntity and InvoiceEntity over the 1:n relation they have, using the relation between the fields:
 		/// User.UserId - Invoice.PayableToId
 		/// </summary>
@@ -426,6 +458,8 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation CompanyEntityUsingNewAppointmentPsychologistIdStatic = new UserRelations().CompanyEntityUsingNewAppointmentPsychologistId;
 		internal static readonly IEntityRelation CompanyEntityUsingNewAppointmentPsychometristIdStatic = new UserRelations().CompanyEntityUsingNewAppointmentPsychometristId;
 		internal static readonly IEntityRelation ConsultingAgreementEntityUsingPsychologistIdStatic = new UserRelations().ConsultingAgreementEntityUsingPsychologistId;
+		internal static readonly IEntityRelation GoseInterviewEntityUsingCreateUserIdStatic = new UserRelations().GoseInterviewEntityUsingCreateUserId;
+		internal static readonly IEntityRelation GoseInterviewEntityUsingUpdateUserIdStatic = new UserRelations().GoseInterviewEntityUsingUpdateUserId;
 		internal static readonly IEntityRelation InvoiceEntityUsingPayableToIdStatic = new UserRelations().InvoiceEntityUsingPayableToId;
 		internal static readonly IEntityRelation NoteEntityUsingCreateUserIdStatic = new UserRelations().NoteEntityUsingCreateUserId;
 		internal static readonly IEntityRelation NoteEntityUsingUpdateUserIdStatic = new UserRelations().NoteEntityUsingUpdateUserId;
