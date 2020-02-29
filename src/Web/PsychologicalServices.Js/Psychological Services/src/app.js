@@ -112,7 +112,8 @@ export class App {
 			{ route: 'users/spinner', name: 'userSpinner', moduleId: 'users/userSpinner', title: 'Edit User Spinner', nav: true, settings: { permissions: [p.EditUser] } },
 			{ route: 'forms/typicalday', name: 'typicalDay', moduleId: 'forms/typicalDay', title: 'Typical Day', nav: true },
 			{ route: 'testingresults/psychological', name: 'psychologicalTestResults', moduleId: 'testingResults/psychological', title: 'Psychological testing results', nav: true },
-			{ route: 'testingresults/notes', name: 'notes', moduleId: 'testingResults/notes', title: 'Notes', nav: true }
+			{ route: 'testingresults/notes', name: 'notes', moduleId: 'testingResults/notes', title: 'Notes', nav: true },
+			{ route: 'gose/interview', name: 'goseInterview', moduleId: 'gose/goseInterview', title: 'GOSE', nav: true }
 		]);
 	}
 
@@ -169,7 +170,8 @@ export class App {
 				"items": [
 					{ "name": "Typical Day", "route": "/forms/typicalDay", "permissions": [] },
 					{ "name": "Psychological testing results", "route": "/testingResults/psychological", "permissions": [] },
-					{ "name": "Notes", "route": "/testingResults/notes", "permissions": [] }
+					{ "name": "Notes", "route": "/testingResults/notes", "permissions": [p.ViewAssessmentNote] },
+					{ "name": "Gose Interview", "route": "/gose/interview", "permissions": [p.ViewGoseInterview] }
 				]
 			},
 			{
