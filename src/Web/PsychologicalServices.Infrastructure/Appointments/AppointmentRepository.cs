@@ -377,11 +377,25 @@ namespace PsychologicalServices.Infrastructure.Appointments
 
                     if (criteria.ExcludePsychometristInvoicedAppointments)
                     {
-                        appointments = appointments.Where(appointment =>
-                            !appointment.InvoiceLineGroupAppointments.Any(ilga =>
-                                ilga.InvoiceLineGroup.Invoice.PayableToId == criteria.PsychometristId
-                            )
-                        );
+                        if (criteria.ExcludePsychometristInvoiceAppointmentsIgnoreInvoiceId.HasValue)
+                        {
+                            var invoiceId = criteria.ExcludePsychometristInvoiceAppointmentsIgnoreInvoiceId.Value;
+
+                            appointments = appointments.Where(appointment =>
+                                !appointment.InvoiceLineGroupAppointments.Any(ilga =>
+                                    ilga.InvoiceLineGroup.Invoice.PayableToId == criteria.PsychometristId &&
+                                    ilga.InvoiceLineGroup.Invoice.InvoiceId != invoiceId
+                                )
+                            );
+                        }
+                        else
+                        {
+                            appointments = appointments.Where(appointment =>
+                                !appointment.InvoiceLineGroupAppointments.Any(ilga =>
+                                    ilga.InvoiceLineGroup.Invoice.PayableToId == criteria.PsychometristId
+                                )
+                            );
+                        }
                     }
                 }
 

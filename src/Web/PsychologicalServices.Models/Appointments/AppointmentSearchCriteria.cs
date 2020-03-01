@@ -23,6 +23,8 @@ namespace PsychologicalServices.Models.Appointments
 
         public bool ExcludePsychometristInvoicedAppointments { get; set; }
 
+        public int? ExcludePsychometristInvoiceAppointmentsIgnoreInvoiceId { get; set; }
+
         public int? CompanyId { get; set; }
     }
 }
