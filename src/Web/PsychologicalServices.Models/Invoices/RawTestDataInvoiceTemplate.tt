@@ -249,7 +249,7 @@
 								<#= line.Description #>
 							</td>
 							<td class="invoice-amount">
-								<#= $"{(line.Amount / 100):$#,##0.00}" #>
+								<#= $"{(line.Amount / 100.0m):$#,##0.00}" #>
 							</td>
 						</tr>
 					<#

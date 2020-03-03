@@ -297,7 +297,7 @@ namespace PsychologicalServices.Models.Invoices
             this.Write("\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t<td class=\"invoice-amount\">\r\n\t\t\t\t\t\t\t\t");
             
             #line 245 "C:\Users\brian\Documents\GitHub\PsychologicalServices\src\Web\PsychologicalServices.Models\Invoices\ConsultingInvoiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture($"{(line.Amount / 100):$#,##0.00}"));
+            this.Write(this.ToStringHelper.ToStringWithCulture($"{(line.Amount / 100.0m):$#,##0.00}"));
             
             #line default
             #line hidden
