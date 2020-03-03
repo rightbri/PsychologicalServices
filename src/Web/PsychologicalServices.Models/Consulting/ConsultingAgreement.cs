@@ -16,5 +16,7 @@ namespace PsychologicalServices.Models.Consulting
         public Company Company { get; set; }
 
         public string BillReferenceNumber { get; set; }
+
+        public string ConsultingEmailAddress { get; set; }
     }
 }

@@ -507,6 +507,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("ConsultingAgreementEntity", "BillToReferralSourceId", typeof(System.Int32), false, true, false, false,  (int)ConsultingAgreementFieldIndex.BillToReferralSourceId, 0, 0, 10);
 			this.AddElementFieldInfo("ConsultingAgreementEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)ConsultingAgreementFieldIndex.IsActive, 0, 0, 0);
 			this.AddElementFieldInfo("ConsultingAgreementEntity", "BillReferenceNumber", typeof(System.String), false, false, false, true,  (int)ConsultingAgreementFieldIndex.BillReferenceNumber, 50, 0, 0);
+			this.AddElementFieldInfo("ConsultingAgreementEntity", "ConsultingEmailAddress", typeof(System.String), false, false, false, true,  (int)ConsultingAgreementFieldIndex.ConsultingEmailAddress, 100, 0, 0);
 		}
 		/// <summary>Inits ContactEntity's FieldInfo objects</summary>
 		private void InitContactEntityInfos()

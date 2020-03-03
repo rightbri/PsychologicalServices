@@ -615,6 +615,8 @@ namespace PsychologicalServices.Data
 		IsActive,
 		///<summary>BillReferenceNumber. </summary>
 		BillReferenceNumber,
+		///<summary>ConsultingEmailAddress. </summary>
+		ConsultingEmailAddress,
 		/// <summary></summary>
 		AmountOfFields
 	}

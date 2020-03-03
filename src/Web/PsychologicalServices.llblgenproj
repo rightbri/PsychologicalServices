@@ -466,6 +466,7 @@
           <Field Name="BillToReferralSourceId" Type="int" FieldIndex="3" />
           <Field Name="CompanyId" Type="int" FieldIndex="1" />
           <Field Name="ConsultingAgreementId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="ConsultingEmailAddress" Type="string" IsOptional="true" MaxLength="100" FieldIndex="6" />
           <Field Name="IsActive" Type="bool" FieldIndex="4" />
           <Field Name="PsychologistId" Type="int" FieldIndex="2" />
         </Fields>
@@ -1866,7 +1867,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-02-29T01:07:04.3709906Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-03-03T02:18:50.9743892Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2238,6 +2239,7 @@
                     <Field Name="BillToReferralSourceId" Ordinal="4" DbType="8" Precision="10" />
                     <Field Name="IsActive" Ordinal="5" HasDefaultValue="true" DefaultValue="(0)" DbType="2" />
                     <Field Name="BillReferenceNumber" Ordinal="6" IsOptional="true" DbType="24" Length="50" />
+                    <Field Name="ConsultingEmailAddress" Ordinal="7" IsOptional="true" DbType="12" Length="100" />
                   </Fields>
                 </Table>
                 <Table Name="Contacts">
@@ -4088,6 +4090,7 @@
             <FieldMapping FieldName="BillToReferralSourceId" TargetFieldName="BillToReferralSourceId" />
             <FieldMapping FieldName="CompanyId" TargetFieldName="CompanyId" />
             <FieldMapping FieldName="ConsultingAgreementId" TargetFieldName="ConsultingAgreementId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ConsultingEmailAddress" TargetFieldName="ConsultingEmailAddress" />
             <FieldMapping FieldName="IsActive" TargetFieldName="IsActive" />
             <FieldMapping FieldName="PsychologistId" TargetFieldName="PsychologistId" />
           </FieldMappings>

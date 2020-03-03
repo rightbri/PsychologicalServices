@@ -92,7 +92,16 @@ namespace PsychologicalServices.Models.Invoices
             //set model properties
             SenderEmail = consultingAgreement.Company.Email;
             RecipientEmail = consultingAgreement.BillToReferralSource.InvoicesContactEmail;
-            CourtesyCopyEmail = consultingAgreement.Psychologist.Email;
+
+            var cc = consultingAgreement.Psychologist.Email;
+
+            if (!string.IsNullOrWhiteSpace(consultingAgreement.ConsultingEmailAddress))
+            {
+                cc += consultingAgreement.ConsultingEmailAddress;
+            }
+
+            CourtesyCopyEmail = cc;
+
             ReplyToEmail = consultingAgreement.Company.ReplyToEmail;
             EmailSubject = $"Invoice {invoice.Identifier}";
             EmailBody = $"Please see the attached invoice regarding consulting services for {consultingAgreement.BillToReferralSource.Name}.";
