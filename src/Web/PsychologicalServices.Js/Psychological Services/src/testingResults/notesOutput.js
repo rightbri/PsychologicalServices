@@ -1189,16 +1189,6 @@ export class NotesOutput {
     }
 
     @computedFrom('this.responses.treatment.initial.programs')
-    get unselectedPastTreatmentPrograms() {
-        return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isNo(item.past.response));
-    }
-
-    @computedFrom('this.responses.treatment.initial.programs')
-    get anyUnselectedPastTreatmentPrograms() {
-        return this.unselectedPastTreatmentPrograms.some(item => item);
-    }
-
-    @computedFrom('this.responses.treatment.initial.programs')
     get unselectedPainProgram() {
         return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isNo(item.past.response) && this.treatmentProgramsMap[item.value].isPainProgram).some(item => item);
     }
@@ -1216,35 +1206,6 @@ export class NotesOutput {
     @computedFrom('this.responses.treatment.initial.programs')
     get selectedDriversRehabProgram() {
         return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isYes(item.past.response) && this.treatmentProgramsMap[item.value].isDriversRehab).some(item => item);
-    }
-
-
-    @computedFrom('responses.personalHistory.medical.familyMedicalConditions')
-    get familyMedicalConditionOtherIsSelected() {
-        if (this.responses === null) { return false; }
-        
-        return this.responses.personalHistory.medical.familyMedicalConditions.some(item => item === "other");
-    }
-
-    @computedFrom('responses.personalHistory.medical.drugsUsed')
-    get everUsedAlchohol() {
-        if (this.responses === null) { return false; }
-        
-        return this.responses.personalHistory.medical.drugsUsed.some(item => item === "alchohol");
-    }
-
-    @computedFrom('responses.personalHistory.medical.drugsUsed')
-    get everUsedTobacco() {
-        if (this.responses === null) { return false; }
-        
-        return this.responses.personalHistory.medical.drugsUsed.some(item => item === "tobacco");
-    }
-
-    @computedFrom('responses.personalHistory.medical.drugsUsed')
-    get everUsedThc() {
-        if (this.responses === null) { return false; }
-        
-        return this.responses.personalHistory.medical.drugsUsed.some(item => item === "thc");
     }
 
     any(items) {

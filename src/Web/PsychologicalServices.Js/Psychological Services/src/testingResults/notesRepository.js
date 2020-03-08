@@ -19,7 +19,6 @@ export class NotesRepository {
     getNotes(assessmentId) {
         return this.dataRepository.getAssessmentTestingResults(assessmentId, 'notes').then(data => {
             let x = {
-                'name': data.name,
                 'assessment': data.assessment,
                 'responses': getResponses(data.responses)
             };
