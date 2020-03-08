@@ -189,6 +189,19 @@
                 </div>
 
                 <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    Interview Type
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label>
+                        <input type="radio" name="interviewType" class="uk-radio" checked.bind="responses.interviewType" value="mva" change.delegate="changed('interview-type-changed')" />&nbsp;MVA&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="interviewType" class="uk-radio" checked.bind="responses.interviewType" value="ltd" change.delegate="changed('interview-type-changed')" />&nbsp;LTD&nbsp;
+                    </label>
+                </div>
             </div>
         </fieldset>
 
@@ -283,7 +296,7 @@
             </div>
         </fieldset>
 
-        <fieldset class="uk-fieldset">
+        <fieldset class="uk-fieldset" if.bind="isMvaInterview & signal:'interview-type-changed'">
             <legend class="uk-legend">Motor Vehicle Accident Details</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
@@ -593,6 +606,25 @@
 
                 <hr>
 
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset" if.bind="isLtdInterview & signal:'interview-type-changed'">
+            <legend class="uk-legend">Information</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove">
+                    <textarea name="ltdInformation" class="uk-textarea uk-form-small" value.bind="responses.ltdInformation" rows="4"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Details of initial treatment</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
                 <div class="uk-margin-remove uk-width-3-4">
                     Were you assessed by Ambulance Personnel?
                 </div>
@@ -817,6 +849,13 @@
                 </div>
 
                 <hr>
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Treatment Details</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     Have you started Counselling yet?
@@ -939,6 +978,14 @@
 
                     <hr>
                 </template>
+
+            </div>
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Present Issue</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     What is particularly troubling you now? 
@@ -2963,6 +3010,7 @@
                             <th class="uk-padding-remove">Diagnosis</th>
                             <th class="uk-padding-remove">You</th>
                             <th class="uk-padding-remove">Your family</th>
+                            <th class="uk-padding-remove">Who</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2979,6 +3027,9 @@
                                 <label repeat.for="response of yesNo">
                                     <input type="radio" name="family-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
+                            </td>
+                            <td class="uk-padding-remove">
+                                <input type="text" name="family-member-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-input uk-form-small" value.bind="$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].familyMember" />    
                             </td>
                         </tr>
                     </tbody>
@@ -3406,11 +3457,11 @@
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
-                <div class="uk-margin-remove uk-width-3-4">
+                <div class="uk-margin-remove uk-width-1-4">
                     Do you have any familial medical history?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
+                <div class="uk-margin-remove uk-width-3-4">
                     <label repeat.for="response of yesNoDontKnow">
                         <input type="radio" name="medicalHistoryFamilial" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.familyMedicalHistory" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -3418,9 +3469,7 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    Do you have any familial medical history?
-                </div>
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <template repeat.for="i of medicalConditions.length">
@@ -3445,6 +3494,16 @@
                 <div class="uk-margin-remove uk-width-1-4">
                     Have you ever used any of the following?
                 </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="medicalEverUsedDrugs" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.everUsedDrugs" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <label repeat.for="i of abusedDrugs.length">

@@ -49,7 +49,6 @@
         </div>
     </div>
 
-    
     <hr if.bind="formVisible">
 
     <div class="uk-container" if.bind="formVisible">
@@ -107,102 +106,262 @@
         </fieldset>
 
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Day of Assessment</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Motor Vehicle Accident Details</legend>
+            <legend class="uk-legend">Physical</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <!-- Appetite / Weight / Energy / Libido -->
                     <p>
-                        <template if.bind="anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram || selectedPainProgram || selectedDriversRehabProgram || anySelectedBeneficialTreatments || anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
-                            ${gender.title} ${claimant.lastName} 
-                            <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
-                                &nbsp;shared that at the current time ${pronoun.subject} is receiving treatment provided by the following: 
-                                ${selectedCurrentTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.weight.appetiteAffected)">
+                            ${gender.title} ${claimant.lastName} related that since the accident ${pronoun.possessiveAdjective} appetite has 
+                            <template if.bind="isNo(responses.neuropsychological.physical.weight.appetiteAffected)">
+                                &nbsp;not
                             </template>
-                            <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
-                                <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
-                                    &nbsp;${pronoun.subject | proper} 
+                            &nbsp;been affected. 
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.weight.changed)">
+                            <template if.bind="isYes(responses.neuropsychological.physical.weight.changed)">
+                                <template if.bind="isAnswered(responses.neuropsychological.physical.weight.changeType)">
+                                    &nbsp;${pronoun.subject | proper} shared that 
+                                    <template if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
+                                        <template if.bind="responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'">
+                                            &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)} ${responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'}
+                                        </template>
+                                        <template else>
+                                            &nbsp;${pronoun.possessiveAdjective} weight has ${responses.neuropsychological.physical.weight.changeType}
+                                        </template>                                        
+                                    </template>
+                                    <template else>
+                                        &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)}
+                                    </template>
+                                    .
                                 </template>
-                                &nbsp;shared that in the past ${pronoun.subject} has been seen by a: 
-                                ${selectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
                             </template>
-                            <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
-                                <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName}
-                                </template>
-                                <template if.bind="(anySelectedCurrentTreatmentProviders && !anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
-                                    &nbsp;${pronoun.subject | proper} 
-                                </template>
-                                &nbsp;went on to deny seeing any of the following: 
-                                ${unselectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
+                            <template else>
+                                &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} weight has not changed.
                             </template>
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.energy.lessEnergy)">
+                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.possessiveAdjective} energy level has 
+                            <template if.bind="isYes(responses.neuropsychological.physical.energy.lessEnergy)">
+                                &nbsp;decreased
+                            </template>
+                            <template else>
+                                &nbsp;not changed
+                            </template>
+                            .
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.energy.libidoAffected)">
+                            &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.possessiveAdjective} libido has 
+                            <template if.bind="isNo(responses.neuropsychological.physical.energy.libidoAffected)">
+                                &nbsp;not
+                            </template>
+                            &nbsp;been adversely affected.
+                        </template>
+                    </p>
+                    
+                    <!-- Sleep / Fatigue / Naps -->
+                    <p>
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.sleepAffected)">
+                            When asked about ${pronoun.possessiveAdjective} sleep, ${gender.title} ${claimant.lastName} shared that since the accident ${pronoun.possessiveAdjective} sleep has 
+                            <template if.bind="isNo(responses.neuropsychological.physical.sleep.sleepAffected)">
+                                &nbsp;not
+                            </template>
+                            &nbsp;been affected.
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident)">
+                            &nbsp;${pronoun.subject | proper} indicated that prior to the accident ${pronoun.subject} 
+                            <template if.bind="isYes(responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident)">
+                                &nbsp;had
+                            </template>
+                            <template else>
+                                &nbsp;did not have any
+                            </template>
+                            &nbsp;issues sleeping.
+                        </template>
+                        
+                        <template if.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident">
+                            <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
+                                &nbsp;${pronoun.subject | proper} advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
+                                <template if.bind="isYes(responses.neuropsychological.physical.sleep.brokenSleep)">
+                                    &nbsp;broken
+                                </template>
+                                &nbsp;sleep.
+                            </template>
+                        </template>
+                        <template else>
+                            <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident.value !== null">
+                                &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident}
+                                <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
+                                    <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent.value !== null">
+                                        &nbsp;and advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
+                                        <template if.bind="isYes(responses.neuropsychological.physical.sleep.brokenSleep)">
+                                            &nbsp;broken
+                                        </template>
+                                        &nbsp;sleep
+                                    </template>
+                                </template>
+                                .
+                            </template>
+                        </template>
 
-                            <template if.bind="(unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
-                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
-                                    &nbsp;${pronoun.subject | proper}
+                        <template if.bind="allSelectedSleepIssues & signal:'sleep-issue-changed'">
+                            &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to attain sleep has been affected, and that ${pronoun.subject} has issues sustaining and regaining sleep.
+                        </template>
+                        <template else>
+                            <template if.bind="anySelectedSleepIssues & signal:'sleep-issue-changed'">
+                                &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to 
+                                ${selectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep has been affected
+                                <template if.bind="anyUnselectedSleepIssues & signal:'sleep-issue-changed'">
+                                    , but denied having any current issues with ${pronoun.possessiveAdjective} ability to 
+                                    ${unselectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep
                                 </template>
-                                <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                .
+                            </template>
+                            <template else>
+                                <template if.bind="anyUnselectedSleepIssues & signal:'sleep-issue-changed'">
+                                    &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to
+                                    ${unselectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep has not been affected.
+                                </template>
+                            </template>            
+                        </template>
+                        
+                        <template if.bind="anySelectedSleepIssueCauses & signal:'sleep-issue-cause-changed'">
+                            &nbsp;${pronoun.subject | proper} then added that ${pronoun.possessiveAdjective} ability to sleep has been affected by ${pronoun.possessiveAdjective} 
+                            ${selectedSleepIssueCauses | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-cause-changed'}. 
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
+                            &nbsp;${pronoun.subject | proper} then shared that when waking ${pronoun.subject} 
+                            <template if.bind="isYes(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
+                                &nbsp;does not feel well rested, rather still feels fatigued.
+                            </template>
+                            <template else>
+                                &nbsp;feels rested and is not still fatigued.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.takeNaps)">
+                            &nbsp;${gender.title} ${claimant.lastName} 
+                            <template if.bind="isYes(responses.neuropsychological.physical.sleep.takeNaps)">
+                                &nbsp;expressed that ${pronoun.subject} currently naps as needed.
+                            </template>
+                            <template else>
+                                &nbsp;denied napping.
+                            </template>
+                        </template>
+                    </p>
+                    
+                    <!-- Headaches / Migraines -->
+                    <p>
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
+                            When asked about headaches, ${gender.title} ${claimant.lastName} 
+                            <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
+                                &nbsp;shared that currently ${pronoun.subject} experiences the same.
+                            </template>
+                            <template else>
+                                &nbsp;denied currently experiencing the same.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
+                            <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
+                                &nbsp;${pronoun.subject | proper} advised that prior to the accident ${pronoun.subject} experienced headaches
+                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident)">
+                                    , and noted that since the accident ${pronoun.subject} has noticed a change in ${pronoun.possessiveAdjective} headaches
+                                </template>
+                                <template else>
+                                    , but denied any changes in ${pronoun.possessiveAdjective} headaches since the subject accident
+                                </template>
+                                .
+                            </template>
+                            <template else>
+                                &nbsp;${pronoun.subject | proper}
+                                <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
                                     &nbsp;also
                                 </template>
-                                &nbsp;denied 
-                                <template if.bind="unselectedPainProgram & signal:'treatment-initial-changed'">
-                                    &nbsp;attending a pain program
+                                &nbsp;denied having a pre-accident history of headaches.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent) && isNo(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                            &nbsp;${gender.title} ${claimant.lastName}
+                            <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent) && isNo(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
+                                &nbsp;further
+                            </template>
+                            &nbsp;denied experiencing migraines at the present time or having any pre-accident history of migraines.
+                        </template>
+                        <template else>
+                            <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
+                                &nbsp;${gender.title} ${claimant.lastName} 
+                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
+                                    &nbsp;also expressed that ${pronoun.subject} currently experiences migraines.
                                 </template>
-                                <template if.bind="unselectedDriversRehabProgram & signal:'treatment-initial-changed'">
-                                    <template if.bind="unselectedPainProgram & signal:'treatment-initial-changed'">
-                                        &nbsp;or
+                                <template else>
+                                    &nbsp;denied experiencing migraines at the present time.
+                                </template>
+                            </template>
+                            
+                            <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
+                                    &nbsp;${pronoun.subject | proper} acknowledged pre-accident history of migraines
+                                    <template if.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident">
+                                        <template if.bind="isYes(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident)">
+                                            , adding that ${pronoun.possessiveAdjective} migraines have 
+                                        </template>
+                                        <template else>
+                                            , but indicated that ${pronoun.possessiveAdjective} migraines have not 
+                                        </template>
+                                        &nbsp;worsened since the subject accident
                                     </template>
-                                    &nbsp;having any driver's rehabilitation services
+                                    .
+                                </template>
+                                <template else>
+                                    &nbsp;${pronoun.subject | proper} denied having any pre-accident history of migraines.
+                                </template>
+                            </template>
+                        </template>
+                    </p>
+                    
+                    <!-- Pain -->
+                    <p>
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
+                            <template if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
+                                When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences pain
+                                <template if.bind="responses.neuropsychological.physical.pain.currentPainAreas.length">
+                                    &nbsp;in the following area
+                                    <template if.bind="multipleCurrentPainAreas & signal:'current-pain-changed'">s</template>
+                                    : ${responses.neuropsychological.physical.pain.currentPainAreas | arrayToString & signal:'current-pain-changed'}
                                 </template>
                                 .
                             </template>
-
-                            <template if.bind="(selectedPainProgram || selectedDriversRehabProgram) & signal:'treatment-initial-changed'">
-                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
-                                    &nbsp;${pronoun.subject | proper}
-                                </template>
-                                &nbsp;further detailed that ${pronoun.subject} has
-                                <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
-                                    &nbsp;attended a pain program
-                                </template>
-                                <template if.bind="selectedDriversRehabProgram & signal:'treatment-initial-changed'">
-                                    <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
-                                        &nbsp;and has
-                                    </template>
-                                    &nbsp;attended driver's rehabilitation services
-                                </template>
-                                .
+                            <template else>
+                                &nbsp;${pronoun.subject | proper} denied having any physical pain at the current time.
                             </template>
-
-                            <template if.bind="anySelectedBeneficialTreatments & signal:'treatment-initial-changed'">
-                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName}
-                                </template>
-                                &nbsp;shared that ${pronoun.subject} has found the following to be beneficial: 
-                                ${selectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.pain.experiencePainPriorToAccident)">
+                            <template if.bind="isYes(responses.neuropsychological.physical.pain.experiencePainPriorToAccident)">
+                                &nbsp;${pronoun.subject | proper} acknowledged ongoing pain at the time of the subject accident.
                             </template>
-
-                            <template if.bind="anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
-                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} did not find the following beneficial: 
-                                ${unselectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector": false} & signal:'treatment-initial-changed'}.
+                            <template else>
+                                &nbsp;${pronoun.subject | proper} denied having any ongoing pain at the time of the subject accident.
                             </template>
                         </template>
                     </p>
                 </div>
+
                 <hr>
-            </div>            
+            </div>
         </fieldset>
 
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Present Psychological Status</legend>
+            <legend class="uk-legend">P</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
@@ -240,11 +399,7 @@
                             &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not feel that ${pronoun.subject} is currently letting ${pronoun.possessiveAdjective} family down.
                         </template>
                     </p>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                
                     <!-- Self Harm -->
                     <p>
                         <template if.bind="isAnswered(responses.psychological.selfHarm.pastThoughts.response)">
@@ -326,26 +481,6 @@
                         </template>
                     </p>
 
-                    <!-- Interest in counselling -->
-                    <p>
-                        <template if.bind="isAnswered(responses.psychological.selfHarm.interestedInTreatment.response)">
-                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} 
-                            <template if.bind="isYes(responses.psychological.selfHarm.interestedInTreatment.response)">
-                                &nbsp;is interested in psychological treatment. 
-                            </template>
-                            <template if.bind="isNo(responses.psychological.selfHarm.interestedInTreatment.response)">
-                                &nbsp;is not interested in psychological treatment.
-                            </template>
-                            <template if.bind="isDontKnow(responses.psychological.selfHarm.interestedInTreatment.response)">
-                                &nbsp;does not know if ${pronoun.subject} is interested in psychological treatment.
-                            </template>
-                        </template> 
-                    </p>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <!-- Depression Symptoms -->
                     <p>
                         <template if.bind="anyDepressionSymptoms & signal:'depression-symptom-changed'">
@@ -567,40 +702,7 @@
                             &nbsp;${pronoun.subject | proper} denied currently feeling watched or surveilled.
                         </template>
                     </p>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Stressors -->
-                    <p>
-                        <template if.bind="(anySelectedStressors || anyUnselectedStressors || anySelectedFamilyStressors || anyUnselectedFamilyStressors) & signal:'stressor-changed'">
-                            ${gender.title} ${claimant.lastName} was asked about any major stressors in ${pronoun.possessiveAdjective} life in the last five years (aside from the subject accident). 
-                            
-                            <template if.bind="anySelectedStressors & signal:'stressor-changed'">
-                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} has experienced ${selectedStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
-                            </template>
-                            <template if.bind="anyUnselectedStressors & signal:'stressor-changed'">
-                                &nbsp;${pronoun.subject | proper} denied having experienced ${unselectedStressors | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'stressor-changed'}.
-                            </template>
-                            <template if.bind="anySelectedFamilyStressors & signal:'stressor-changed'">
-                                &nbsp;${pronoun.subject | proper} added that ${pronoun.possessiveAdjective} family has experienced ${selectedFamilyStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
-                            </template>
-                            <template if.bind="anyUnselectedFamilyStressors & signal:'stressor-changed'">
-                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.possessiveAdjective} family had experienced ${unselectedFamilyStressors | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'stressor-changed'}.
-                            </template>
-                        </template>
-                    </p>
-                </div>
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Traveling</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                
                     <!-- Travel -->
                     <p>
                         <template if.bind="isAnswered(responses.psychological.travel.abilityToTravel)">
@@ -712,6 +814,50 @@
                             &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} cannot drive, even when ${pronoun.subject} needs to.
                         </template>
                     </p>
+
+                    <!-- Stressors -->
+                    <p>
+                        <template if.bind="(anySelectedStressors || anyUnselectedStressors || anySelectedFamilyStressors || anyUnselectedFamilyStressors) & signal:'stressor-changed'">
+                            ${gender.title} ${claimant.lastName} was asked about any major stressors in ${pronoun.possessiveAdjective} life in the last five years (aside from the subject accident). 
+                            
+                            <template if.bind="anySelectedStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} has experienced ${selectedStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} denied having experienced ${unselectedStressors | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'stressor-changed'}.
+                            </template>
+                            <template if.bind="anySelectedFamilyStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} added that ${pronoun.possessiveAdjective} family has experienced ${selectedFamilyStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedFamilyStressors & signal:'stressor-changed'">
+                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.possessiveAdjective} family had experienced ${unselectedFamilyStressors | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'stressor-changed'}.
+                            </template>
+                        </template>
+                    </p>
+
+                    <!-- Interest in counselling -->
+                    <p>
+                        <template if.bind="isAnswered(responses.psychological.selfHarm.interestedInTreatment.response)">
+                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} 
+                            <template if.bind="isYes(responses.psychological.selfHarm.interestedInTreatment.response)">
+                                &nbsp;is interested in psychological treatment. 
+                            </template>
+                            <template if.bind="isNo(responses.psychological.selfHarm.interestedInTreatment.response)">
+                                &nbsp;is not interested in psychological treatment.
+                            </template>
+                            <template if.bind="isDontKnow(responses.psychological.selfHarm.interestedInTreatment.response)">
+                                &nbsp;does not know if ${pronoun.subject} is interested in psychological treatment.
+                            </template>
+                        </template> 
+                    </p>
+
+                    <!-- Physical 6 -->
+                    <p>
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInMood)">
+                            &nbsp;When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} emotional state with the passage of time, ${gender.title} ${claimant.lastName} shared that 
+                            ${moodChangeTypesMap[responses.neuropsychological.physical.changes.changeInMood].format(self)}.
+                        </template>  
+                    </p>
                 </div>
 
                 <hr>
@@ -719,7 +865,7 @@
         </fieldset>
 
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Present Neuropsychological Status</legend>
+            <legend class="uk-legend">NP</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
                 
@@ -838,29 +984,9 @@
                             &nbsp;blister packs.
                         </template>
                     </p>
-                </div>
-
-                <hr>
-            </div>
-            
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Language</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
                 
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Attention</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-                
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <!-- Linguistic Functioning / Attention -->
                     <p>
-                        <!-- Linguistic Functioning / Attention -->
                         <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issue-changed'">
                             When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
                             <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
@@ -956,18 +1082,7 @@
                             .
                         </template>
                     </p>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Executive</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                
                     <!-- Executive Functioning -->
                     <p>
                         <template if.bind="anySelectedExecutiveFunctionIssues || anyUnselectedExecutiveFunctionIssues & signal:'executive-function-issue-changed'">
@@ -998,18 +1113,7 @@
                             </template>
                         </template>
                     </p>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
-        
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Visual Spatial</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                
                     <!-- Visual Spatial -->
                     <p>
                         <template if.bind="anySelectedVisualSpatialIssues || anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
@@ -1041,278 +1145,7 @@
                             </template>
                         </template>
                     </p>
-                </div>
 
-                <hr>
-            </div>
-        </fieldset>
-        
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Physical</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Appetite / Weight / Energy / Libido -->
-                    <p>
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.weight.appetiteAffected)">
-                            ${gender.title} ${claimant.lastName} related that since the accident ${pronoun.possessiveAdjective} appetite has 
-                            <template if.bind="isNo(responses.neuropsychological.physical.weight.appetiteAffected)">
-                                &nbsp;not
-                            </template>
-                            &nbsp;been affected. 
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.weight.changed)">
-                            <template if.bind="isYes(responses.neuropsychological.physical.weight.changed)">
-                                <template if.bind="isAnswered(responses.neuropsychological.physical.weight.changeType)">
-                                    &nbsp;${pronoun.subject | proper} shared that 
-                                    <template if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
-                                        <template if.bind="responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'">
-                                            &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)} ${responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'}
-                                        </template>
-                                        <template else>
-                                            &nbsp;${pronoun.possessiveAdjective} weight has ${responses.neuropsychological.physical.weight.changeType}
-                                        </template>                                        
-                                    </template>
-                                    <template else>
-                                        &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)}
-                                    </template>
-                                    .
-                                </template>
-                            </template>
-                            <template else>
-                                &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} weight has not changed.
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.energy.lessEnergy)">
-                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.possessiveAdjective} energy level has 
-                            <template if.bind="isYes(responses.neuropsychological.physical.energy.lessEnergy)">
-                                &nbsp;decreased
-                            </template>
-                            <template else>
-                                &nbsp;not changed
-                            </template>
-                            .
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.energy.libidoAffected)">
-                            &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.possessiveAdjective} libido has 
-                            <template if.bind="isNo(responses.neuropsychological.physical.energy.libidoAffected)">
-                                &nbsp;not
-                            </template>
-                            &nbsp;been adversely affected.
-                        </template>
-                    </p>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Sleep / Fatigue / Naps -->
-                    <p>
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.sleepAffected)">
-                            When asked about ${pronoun.possessiveAdjective} sleep, ${gender.title} ${claimant.lastName} shared that since the accident ${pronoun.possessiveAdjective} sleep has 
-                            <template if.bind="isNo(responses.neuropsychological.physical.sleep.sleepAffected)">
-                                &nbsp;not
-                            </template>
-                            &nbsp;been affected.
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident)">
-                            &nbsp;${pronoun.subject | proper} indicated that prior to the accident ${pronoun.subject} 
-                            <template if.bind="isYes(responses.neuropsychological.physical.sleep.problemsSleepingPriorToAccident)">
-                                &nbsp;had
-                            </template>
-                            <template else>
-                                &nbsp;did not have any
-                            </template>
-                            &nbsp;issues sleeping.
-                        </template>
-                        
-                        <template if.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident">
-                            <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
-                                &nbsp;${pronoun.subject | proper} advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
-                                <template if.bind="isYes(responses.neuropsychological.physical.sleep.brokenSleep)">
-                                    &nbsp;broken
-                                </template>
-                                &nbsp;sleep.
-                            </template>
-                        </template>
-                        <template else>
-                            <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident.value !== null">
-                                &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident}
-                                <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
-                                    <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent.value !== null">
-                                        &nbsp;and advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
-                                        <template if.bind="isYes(responses.neuropsychological.physical.sleep.brokenSleep)">
-                                            &nbsp;broken
-                                        </template>
-                                        &nbsp;sleep
-                                    </template>
-                                </template>
-                                .
-                            </template>
-                        </template>
-
-                        <template if.bind="allSelectedSleepIssues & signal:'sleep-issue-changed'">
-                            &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to attain sleep has been affected, and that ${pronoun.subject} has issues sustaining and regaining sleep.
-                        </template>
-                        <template else>
-                            <template if.bind="anySelectedSleepIssues & signal:'sleep-issue-changed'">
-                                &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to 
-                                ${selectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep has been affected
-                                <template if.bind="anyUnselectedSleepIssues & signal:'sleep-issue-changed'">
-                                    , but denied having any current issues with ${pronoun.possessiveAdjective} ability to 
-                                    ${unselectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep
-                                </template>
-                                .
-                            </template>
-                            <template else>
-                                <template if.bind="anyUnselectedSleepIssues & signal:'sleep-issue-changed'">
-                                    &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to
-                                    ${unselectedSleepIssues | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-changed'} sleep has not been affected.
-                                </template>
-                            </template>            
-                        </template>
-                        
-                        <template if.bind="anySelectedSleepIssueCauses & signal:'sleep-issue-cause-changed'">
-                            &nbsp;${pronoun.subject | proper} then added that ${pronoun.possessiveAdjective} ability to sleep has been affected by ${pronoun.possessiveAdjective} 
-                            ${selectedSleepIssueCauses | arrayToString:{"format":getItemValueForCurrentContext} & signal:'sleep-issue-cause-changed'}. 
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
-                            &nbsp;${pronoun.subject | proper} then shared that when waking ${pronoun.subject} 
-                            <template if.bind="isYes(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
-                                &nbsp;does not feel well rested, rather still feels fatigued.
-                            </template>
-                            <template else>
-                                &nbsp;feels rested and is not still fatigued.
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.takeNaps)">
-                            &nbsp;${gender.title} ${claimant.lastName} 
-                            <template if.bind="isYes(responses.neuropsychological.physical.sleep.takeNaps)">
-                                &nbsp;expressed that ${pronoun.subject} currently naps as needed.
-                            </template>
-                            <template else>
-                                &nbsp;denied napping.
-                            </template>
-                        </template>
-                    </p>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Headaches / Migraines -->
-                    <p>
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
-                            When asked about headaches, ${gender.title} ${claimant.lastName} 
-                            <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
-                                &nbsp;shared that currently ${pronoun.subject} experiences the same.
-                            </template>
-                            <template else>
-                                &nbsp;denied currently experiencing the same.
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
-                            <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
-                                &nbsp;${pronoun.subject | proper} advised that prior to the accident ${pronoun.subject} experienced headaches
-                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident)">
-                                    , and noted that since the accident ${pronoun.subject} has noticed a change in ${pronoun.possessiveAdjective} headaches
-                                </template>
-                                <template else>
-                                    , but denied any changes in ${pronoun.possessiveAdjective} headaches since the subject accident
-                                </template>
-                                .
-                            </template>
-                            <template else>
-                                &nbsp;${pronoun.subject | proper}
-                                <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
-                                    &nbsp;also
-                                </template>
-                                &nbsp;denied having a pre-accident history of headaches.
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent) && isNo(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
-                            &nbsp;${gender.title} ${claimant.lastName}
-                            <template if.bind="isNo(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent) && isNo(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
-                                &nbsp;further
-                            </template>
-                            &nbsp;denied experiencing migraines at the present time or having any pre-accident history of migraines.
-                        </template>
-                        <template else>
-                            <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
-                                &nbsp;${gender.title} ${claimant.lastName} 
-                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
-                                    &nbsp;also expressed that ${pronoun.subject} currently experiences migraines.
-                                </template>
-                                <template else>
-                                    &nbsp;denied experiencing migraines at the present time.
-                                </template>
-                            </template>
-                            
-                            <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
-                                <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)">
-                                    &nbsp;${pronoun.subject | proper} acknowledged pre-accident history of migraines
-                                    <template if.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident">
-                                        <template if.bind="isYes(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident)">
-                                            , adding that ${pronoun.possessiveAdjective} migraines have 
-                                        </template>
-                                        <template else>
-                                            , but indicated that ${pronoun.possessiveAdjective} migraines have not 
-                                        </template>
-                                        &nbsp;worsened since the subject accident
-                                    </template>
-                                    .
-                                </template>
-                                <template else>
-                                    &nbsp;${pronoun.subject | proper} denied having any pre-accident history of migraines.
-                                </template>
-                            </template>
-                        </template>
-                    </p>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Pain -->
-                    <p>
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
-                            <template if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
-                                When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences pain
-                                <template if.bind="responses.neuropsychological.physical.pain.currentPainAreas.length">
-                                    &nbsp;in the following area
-                                    <template if.bind="multipleCurrentPainAreas & signal:'current-pain-changed'">s</template>
-                                    : ${responses.neuropsychological.physical.pain.currentPainAreas | arrayToString & signal:'current-pain-changed'}
-                                </template>
-                                .
-                            </template>
-                            <template else>
-                                &nbsp;${pronoun.subject | proper} denied having any physical pain at the current time.
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.pain.experiencePainPriorToAccident)">
-                            <template if.bind="isYes(responses.neuropsychological.physical.pain.experiencePainPriorToAccident)">
-                                &nbsp;${pronoun.subject | proper} acknowledged ongoing pain at the time of the subject accident.
-                            </template>
-                            <template else>
-                                &nbsp;${pronoun.subject | proper} denied having any ongoing pain at the time of the subject accident.
-                            </template>
-                        </template>
-                    </p>
-                </div>
-
-                <hr>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <!-- Change in Cognition -->
                     <p>
                         <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInCognition)">
@@ -1320,19 +1153,102 @@
                             ${cognitiveChangeTypesMap[responses.neuropsychological.physical.changes.changeInCognition].format(self)}.
                         </template> 
                     </p>
-
-                    <p>
-                        <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInMood)">
-                            &nbsp;When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} emotional state with the passage of time, ${gender.title} ${claimant.lastName} shared that 
-                            ${moodChangeTypesMap[responses.neuropsychological.physical.changes.changeInMood].format(self)}.
-                        </template>  
-                    </p>
                 </div>
 
                 <hr>
             </div>
         </fieldset>
+        
 
+        
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Motor Vehicle Accident Details</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <p>
+                        <template if.bind="anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram || selectedPainProgram || selectedDriversRehabProgram || anySelectedBeneficialTreatments || anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
+                            ${gender.title} ${claimant.lastName} 
+                            <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
+                                &nbsp;shared that at the current time ${pronoun.subject} is receiving treatment provided by the following: 
+                                ${selectedCurrentTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'treatment-initial-changed'}.        
+                            </template>
+                            <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper} 
+                                </template>
+                                &nbsp;shared that in the past ${pronoun.subject} has been seen by a: 
+                                ${selectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'treatment-initial-changed'}.
+                            </template>
+                            <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName}
+                                </template>
+                                <template if.bind="(anySelectedCurrentTreatmentProviders && !anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper} 
+                                </template>
+                                &nbsp;went on to deny seeing any of the following: 
+                                ${unselectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"} & signal:'treatment-initial-changed'}.
+                            </template>
+
+                            <template if.bind="(unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
+                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
+                                    &nbsp;also
+                                </template>
+                                &nbsp;denied 
+                                <template if.bind="unselectedPainProgram & signal:'treatment-initial-changed'">
+                                    &nbsp;attending a pain program
+                                </template>
+                                <template if.bind="unselectedDriversRehabProgram & signal:'treatment-initial-changed'">
+                                    <template if.bind="unselectedPainProgram & signal:'treatment-initial-changed'">
+                                        &nbsp;or
+                                    </template>
+                                    &nbsp;having any driver's rehabilitation services
+                                </template>
+                                .
+                            </template>
+
+                            <template if.bind="(selectedPainProgram || selectedDriversRehabProgram) & signal:'treatment-initial-changed'">
+                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                &nbsp;further detailed that ${pronoun.subject} has
+                                <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
+                                    &nbsp;attended a pain program
+                                </template>
+                                <template if.bind="selectedDriversRehabProgram & signal:'treatment-initial-changed'">
+                                    <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
+                                        &nbsp;and has
+                                    </template>
+                                    &nbsp;attended driver's rehabilitation services
+                                </template>
+                                .
+                            </template>
+
+                            <template if.bind="anySelectedBeneficialTreatments & signal:'treatment-initial-changed'">
+                                <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
+                                    &nbsp;${gender.title} ${claimant.lastName}
+                                </template>
+                                &nbsp;shared that ${pronoun.subject} has found the following to be beneficial: 
+                                ${selectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'treatment-initial-changed'}.
+                            </template>
+
+                            <template if.bind="anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
+                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} did not find the following beneficial: 
+                                ${unselectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"} & signal:'treatment-initial-changed'}.
+                            </template>
+                        </template>
+                    </p>
+                </div>
+                <hr>
+            </div>            
+        </fieldset>
+    
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Current State (as of the last two weeks)</legend>
 
@@ -1808,7 +1724,7 @@
                                 <template else>
                                     &nbsp;${pronoun.subject} 
                                 </template>
-                                &nbsp;disclosed that members of ${pronoun.possessiveAdjective} family have been diagnosed with ${selectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}
+                                &nbsp;disclosed that members of ${pronoun.possessiveAdjective} family have been diagnosed with ${selectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getFamilyNeurologicalOrPsychiatricDiseasesTextForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}
                                 <template if.bind="anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
                                     &nbsp;but not ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}
                                 </template>
@@ -1828,78 +1744,6 @@
                 </div>
 
                 <hr>
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Education</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Occupation</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Current Financial State</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Medical History</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-        
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Legal History</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-    
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Psychological History</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">If an OCF-18/TX plan is in dispute</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Dr. Watson's Reminder Checklist</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-            </div>
-        </fieldset>
-        
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Observations of Dr. Watson</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
             </div>
         </fieldset>
 

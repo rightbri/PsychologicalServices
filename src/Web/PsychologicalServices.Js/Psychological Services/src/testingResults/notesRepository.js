@@ -651,7 +651,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "15";
+    return "16";
 }
 
 function upgrade(responses, toVersion) {
@@ -843,9 +843,43 @@ function upgrade_14_to_15(responses) {
     return responses;
 }
 
+function upgrade_15_to_16(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.hasOwnProperty('interviewType')) {
+        responses.interviewType = newResponses.interviewType;
+    }
+
+    if (!responses.hasOwnProperty('ltdInformation')) {
+        responses.ltdInformation = newResponses.ltdInformation;
+    }
+
+    if (!responses.personalHistory.medical.hasOwnProperty('everUsedDrugs'))
+    {
+        responses.personalHistory.medical.everUsedDrugs = newResponses.personalHistory.medical.everUsedDrugs;
+    }
+
+    let tempNeurologicalOrPsychiatricDiseases = responses.personalHistory.neurologicalOrPsychiatricDiseases.map(x => {
+        return {
+            "self": x.self || null,
+            "family": x.family || null,
+            "familyMember": x.familyMember || null,
+            "value": x.value || ""
+        };
+    })
+
+    responses.personalHistory.neurologicalOrPsychiatricDiseases = tempNeurologicalOrPsychiatricDiseases;
+
+    responses.version = "16";
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
+        "interviewType": "mva",
+        "ltdInformation": null,
         "identification": {
             "verificationMethod": {
                 "method": null,
@@ -1059,14 +1093,14 @@ function getNewResponses() {
             },
             "birthPosition": 0,
             "neurologicalOrPsychiatricDiseases": [
-                { "self": null, "family": null, "value": "adhd" },
-                { "self": null, "family": null, "value": "dementia" },
-                { "self": null, "family": null, "value": "bipolar" },
-                { "self": null, "family": null, "value": "schizophrenia" },
-                { "self": null, "family": null, "value": "depression" },
-                { "self": null, "family": null, "value": "anxiety" },
-                { "self": null, "family": null, "value": "epilepsy" },
-                { "self": null, "family": null, "value": "learningDisorder" }
+                { "self": null, "family": null, "familyMember": null, "value": "adhd" },
+                { "self": null, "family": null, "familyMember": null, "value": "dementia" },
+                { "self": null, "family": null, "familyMember": null, "value": "bipolar" },
+                { "self": null, "family": null, "familyMember": null, "value": "schizophrenia" },
+                { "self": null, "family": null, "familyMember": null, "value": "depression" },
+                { "self": null, "family": null, "familyMember": null, "value": "anxiety" },
+                { "self": null, "family": null, "familyMember": null, "value": "epilepsy" },
+                { "self": null, "family": null, "familyMember": null, "value": "learningDisorder" }
             ],
             "relationship": {
                 "status": null,
@@ -1141,6 +1175,7 @@ function getNewResponses() {
                 "familyMedicalHistory": null,
                 "familyMedicalConditions": [],
                 "familyMedicalConditionOther": "",
+                "everUsedDrugs": null,
                 "drugsUsed": [],
                 "everTreatedForSubstanceAbuse": null,
                 "currently": {

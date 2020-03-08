@@ -86,6 +86,10 @@ export class NotesOutput {
             return this.getItemValueForContext(item, this);
         }.bind(this);
 
+        this.getFamilyNeurologicalOrPsychiatricDiseasesTextForCurrentContext = function(item) {
+            return this.getFamilyNeurologicalOrPsychiatricDiseasesTextForContext(item, this);
+        }.bind(this);
+        
         this.isNotSkipAbilityWithContext = function(task) {
             return this.isNotSkipAbility(task, this);
         }.bind(this);
@@ -554,7 +558,18 @@ export class NotesOutput {
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get selectedFamilyNeurologicalOrPsychiatricDiagnosis() {
-        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isYes(item.family));
+        if (!this.responses) { return []; }
+
+        let data = this.responses.personalHistory.neurologicalOrPsychiatricDiseases
+            .filter(item => item.family !== null && this.isYes(item.family))
+            .map(item => {
+                return {
+                    "value": this.neurologicalAndPsychiatricDiseasesMap[item.value],
+                    "data": item
+                };
+            });
+
+        return data;
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
@@ -1282,6 +1297,19 @@ export class NotesOutput {
                 : isFunction(item.value)
                     ? item.value(context)
                     : item.value;
+        }
+        return "";
+    }
+
+    getFamilyNeurologicalOrPsychiatricDiseasesTextForContext(item, context) {
+        if (item) {
+            let text = this.getItemValueForContext(item.value, context);
+
+            if (item.data.familyMember) {
+                text += ` (${item.data.familyMember})`;
+            }
+            
+            return text;
         }
         return "";
     }

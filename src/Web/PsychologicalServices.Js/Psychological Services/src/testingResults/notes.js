@@ -425,6 +425,20 @@ export class Notes {
         return this.responses.accidentDetails.counsellingMethod === "other";
     }
 
+    @computedFrom('responses.interviewType')
+    get isMvaInterview() {
+        if (this.responses == null) { return false; }
+
+        return this.responses.interviewType === "mva";
+    }
+
+    @computedFrom('responses.interviewType')
+    get isLtdInterview() {
+        if (this.responses == null) { return false; }
+
+        return this.responses.interviewType === "ltd";
+    }
+
     @computedFrom(
         'responses',
         'claimants'
