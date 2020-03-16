@@ -548,8 +548,8 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                     )
                                 ) ||
                                 appointmentEntity.RoomRentalBillableAmount != appointment.RoomRentalBillableAmount ||
-                                appointmentEntity.PsychologistInvoiceLock != appointment.PsychologistInvoiceLock
-                            )
+                                appointmentEntity.PsychologistInvoiceLock != appointment.PsychologistInvoiceLock ||
+                                appointmentEntity.CancellationDate != appointment.CancellationDate                            )
                         )
                     )
                     .ToList();
@@ -576,7 +576,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     appointmentEntity.UpdateDate = _date.UtcNow;
                     appointmentEntity.UpdateUserId = assessment.UpdateUser.UserId;
                     appointmentEntity.PsychologistInvoiceLock = appointment.PsychologistInvoiceLock;
-
+                    
                     if (null == appointment.RoomRentalBillableAmount)
                     {
                         appointmentEntity.SetNewFieldValue((int)AppointmentFieldIndex.RoomRentalBillableAmount, null);
@@ -584,6 +584,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                     else
                     {
                         appointmentEntity.RoomRentalBillableAmount = appointment.RoomRentalBillableAmount;
+                    }
+
+                    if (null == appointment.CancellationDate)
+                    {
+                        appointmentEntity.SetNewFieldValue((int)AppointmentFieldIndex.CancellationDate, null);
+                    }
+                    else
+                    {
+                        appointmentEntity.CancellationDate = appointment.CancellationDate;
                     }
 
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
@@ -652,6 +661,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         UpdateUserId = assessment.UpdateUser.UserId,
                         RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                         PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
+                        CancellationDate = appointment.CancellationDate,
                     };
 
                     appointmentEntity.AppointmentAttributes.AddRange(
