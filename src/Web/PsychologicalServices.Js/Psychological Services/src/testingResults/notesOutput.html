@@ -928,12 +928,12 @@
                                 <template if.bind="anyNonFamilyMemoryAidsUsed & signal:'memory-aids-used-changed'">
                                     &nbsp;currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${selectedMemoryAids | arrayToString:{"format":getItemValueForCurrentContext} & signal:'memory-aids-used-changed'}
                                     <template if.bind="responses.neuropsychological.memory.aids.familyUsed">
-                                        , adding that ${pronoun.possessiveAdjective} family also helps ${pronoun.possessiveAdjective} to remember things
+                                        , adding that ${pronoun.possessiveAdjective} family also helps ${pronoun.object} to remember things
                                     </template>
                                     .
                                 </template>
                                 <template if.bind="!anyNonFamilyMemoryAidsUsed && responses.neuropsychological.memory.aids.familyUsed & signal:'memory-aids-used-changed'">
-                                    &nbsp;${pronoun.possessiveAdjective} family helps ${pronoun.possessiveAdjective} to remember things.
+                                    &nbsp;${pronoun.possessiveAdjective} family helps ${pronoun.object} to remember things.
                                 </template>
                             </template>
                             <template else>
