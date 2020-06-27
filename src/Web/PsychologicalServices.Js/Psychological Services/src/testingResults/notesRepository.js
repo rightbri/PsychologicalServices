@@ -651,7 +651,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "16";
+    return "17";
 }
 
 function upgrade(responses, toVersion) {
@@ -875,12 +875,25 @@ function upgrade_15_to_16(responses) {
     return responses;
 }
 
+function upgrade_16_to_17(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.identification.hasOwnProperty('preferredPronoun')) {
+        responses.identification.preferredPronoun = newResponses.identification.preferredPronoun;
+    }
+    
+    responses.version = "17";
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
         "interviewType": "mva",
         "ltdInformation": null,
         "identification": {
+            "preferredPronoun": null,
             "verificationMethod": {
                 "method": null,
                 "otherMethod": ""
