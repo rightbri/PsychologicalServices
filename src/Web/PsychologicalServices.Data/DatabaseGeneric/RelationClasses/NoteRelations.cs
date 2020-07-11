@@ -33,6 +33,7 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.AssessmentEntityUsingSummaryNoteId);
 			toReturn.Add(this.AssessmentNoteEntityUsingNoteId);
 			toReturn.Add(this.CalendarNoteEntityUsingNoteId);
+			toReturn.Add(this.PhoneLogEntityUsingNoteId);
 			toReturn.Add(this.RawTestDataEntityUsingNoteId);
 			toReturn.Add(this.UserNoteEntityUsingNoteId);
 			toReturn.Add(this.UserEntityUsingCreateUserId);
@@ -98,6 +99,21 @@ namespace PsychologicalServices.Data.RelationClasses
 				relation.AddEntityFieldPair(NoteFields.NoteId, CalendarNoteFields.NoteId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CalendarNoteEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between NoteEntity and PhoneLogEntity over the 1:n relation they have, using the relation between the fields:
+		/// Note.NoteId - PhoneLog.NoteId
+		/// </summary>
+		public virtual IEntityRelation PhoneLogEntityUsingNoteId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PhoneLogs" , true);
+				relation.AddEntityFieldPair(NoteFields.NoteId, PhoneLogFields.NoteId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("NoteEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PhoneLogEntity", false);
 				return relation;
 			}
 		}
@@ -179,6 +195,7 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation AssessmentEntityUsingSummaryNoteIdStatic = new NoteRelations().AssessmentEntityUsingSummaryNoteId;
 		internal static readonly IEntityRelation AssessmentNoteEntityUsingNoteIdStatic = new NoteRelations().AssessmentNoteEntityUsingNoteId;
 		internal static readonly IEntityRelation CalendarNoteEntityUsingNoteIdStatic = new NoteRelations().CalendarNoteEntityUsingNoteId;
+		internal static readonly IEntityRelation PhoneLogEntityUsingNoteIdStatic = new NoteRelations().PhoneLogEntityUsingNoteId;
 		internal static readonly IEntityRelation RawTestDataEntityUsingNoteIdStatic = new NoteRelations().RawTestDataEntityUsingNoteId;
 		internal static readonly IEntityRelation UserNoteEntityUsingNoteIdStatic = new NoteRelations().UserNoteEntityUsingNoteId;
 		internal static readonly IEntityRelation UserEntityUsingCreateUserIdStatic = new NoteRelations().UserEntityUsingCreateUserId;

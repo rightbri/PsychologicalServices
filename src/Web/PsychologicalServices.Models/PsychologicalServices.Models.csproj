@@ -347,6 +347,14 @@
     <Compile Include="Notes\Note.cs" />
     <Compile Include="Notes\NoteValidator.cs" />
     <Compile Include="Outstanding\OutstandingService.cs" />
+    <Compile Include="PhoneLogs\IPhoneLogRepository.cs" />
+    <Compile Include="PhoneLogs\IPhoneLogService.cs" />
+    <Compile Include="PhoneLogs\IPhoneLogValidator.cs" />
+    <Compile Include="PhoneLogs\PhoneLog.cs" />
+    <Compile Include="PhoneLogs\PhoneLogNotFoundException.cs" />
+    <Compile Include="PhoneLogs\PhoneLogSearchCriteria.cs" />
+    <Compile Include="PhoneLogs\PhoneLogService.cs" />
+    <Compile Include="PhoneLogs\PhoneLogValidator.cs" />
     <Compile Include="RawTestData\IRawTestDataRepository.cs" />
     <Compile Include="RawTestData\IRawTestDataService.cs" />
     <Compile Include="RawTestData\IRawTestDataValidator.cs" />

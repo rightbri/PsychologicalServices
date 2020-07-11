@@ -114,7 +114,10 @@ export class App {
 			{ route: 'testingresults/psychological', name: 'psychologicalTestResults', moduleId: 'testingResults/psychological', title: 'Psychological testing results', nav: true },
 			{ route: 'testingresults/notes', name: 'notes', moduleId: 'testingResults/notes', title: 'Notes', nav: true },
 			{ route: 'testingresults/notesOutput', name: 'notesOutput', moduleId: 'testingResults/notesOutput', title: 'Notes Output', nav: true },
-			{ route: 'gose/interview', name: 'goseInterview', moduleId: 'gose/goseInterview', title: 'GOSE', nav: true }
+			{ route: 'gose/interview', name: 'goseInterview', moduleId: 'gose/goseInterview', title: 'GOSE', nav: true },
+			{ route: 'phoneLogs', name: 'phoneLogs', moduleId: 'phoneLogs/phoneLogs', title: 'Phone Logs', nav: true, settings: { permissions: [p.SearchPhoneLog] } },
+			{ route: 'phoneLogs/:id', name: 'editPhoneLog', moduleId: 'phoneLogs/editPhoneLog', title: 'Edit Phone Log', nav: false, settings: { permissions: [p.EditPhoneLog] } },
+			{ route: 'phoneLogs/add', name: 'addPhoneLog', moduleId: 'phoneLogs/editPhoneLog', title: 'Add Phone Log', nav: false, settings: { permissions: [p.EditPhoneLog] } }
 		]);
 	}
 
@@ -200,6 +203,12 @@ export class App {
 				"name": "Invoices",
 				"items": [
 					{ "name": "Search", "route": "/invoices", "permissions": [p.SearchInvoice] }
+				]
+			},
+			{
+				"name": "Phone Log",
+				"items": [
+					{ "name": "Search", "route": "/phoneLogs", "permissions": [p.SearchPhoneLog] }
 				]
 			},
 			{

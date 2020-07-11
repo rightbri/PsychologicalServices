@@ -91,6 +91,9 @@ namespace PsychologicalServices.Models.Rights
         ViewGoseInterview,
         EditGoseInterview,
         DeleteGoseInterview,
-        SearchGoseInterview
+        SearchGoseInterview,
+        ViewPhoneLog,
+        EditPhoneLog,
+        SearchPhoneLog
     }
 }

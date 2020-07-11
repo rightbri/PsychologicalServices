@@ -742,6 +742,21 @@
           <Field Name="UpdateUserId" Type="int" IsAutoCreated="true" FieldIndex="2" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="PhoneLog" ObjectID="72d1b5a3-1a70-4eae-b842-65ea373a73c1">
+        <Fields>
+          <Field Name="CallerName" Type="string" IsOptional="true" MaxLength="100" FieldIndex="3" />
+          <Field Name="CallTime" Type="datetimeoffset" FieldIndex="1" />
+          <Field Name="ClaimantFirstName" Type="string" IsOptional="true" MaxLength="50" FieldIndex="4" />
+          <Field Name="ClaimantLastName" Type="string" IsOptional="true" MaxLength="50" FieldIndex="5" />
+          <Field Name="CompanyName" Type="string" IsOptional="true" MaxLength="100" FieldIndex="2" />
+          <Field Name="CreateDate" Type="datetimeoffset" FieldIndex="7" />
+          <Field Name="CreateUserId" Type="int" FieldIndex="8" />
+          <Field Name="NoteId" Type="int" FieldIndex="6" />
+          <Field Name="PhoneLogId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="UpdateDate" Type="datetimeoffset" FieldIndex="9" />
+          <Field Name="UpdateUserId" Type="int" FieldIndex="10" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="PsychometristInvoiceAmount" ObjectID="daf89e3b-2377-41de-a2bf-cff03e4e0758">
         <Fields>
           <Field Name="AppointmentSequenceId" Type="int" IsPrimaryKey="true" IsAutoCreated="true" FieldIndex="3" />
@@ -1462,6 +1477,21 @@
           <FieldFieldRelationship FkField="UpdateUserId" PkField="UserId" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="PhoneLog.CreateUser-User.PhoneLogs" Start=":PhoneLog" End=":User" StartNavigator="CreateUser" EndNavigator="PhoneLogs" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CreateUserId" PkField="UserId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="PhoneLog.Note-Note.PhoneLogs" Start=":PhoneLog" End=":Note" StartNavigator="Note" EndNavigator="PhoneLogs" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="NoteId" PkField="NoteId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="PhoneLog.UpdateUser-User.PhoneLogs1" Start=":PhoneLog" End=":User" StartNavigator="UpdateUser" EndNavigator="PhoneLogs1" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="UpdateUserId" PkField="UserId" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="PsychometristInvoiceAmount.AppointmentSequence-AppointmentSequence.PsychometristInvoiceAmounts" Start=":PsychometristInvoiceAmount" End=":AppointmentSequence" StartNavigator="AppointmentSequence" EndNavigator="PsychometristInvoiceAmounts" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="AppointmentSequenceId" PkField="AppointmentSequenceId" />
@@ -1867,7 +1897,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-03-03T02:18:50.9743892Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-07-09T00:20:02.6247111Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2542,6 +2572,22 @@
                     <Field Name="UpdateDate" Ordinal="4" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
                     <Field Name="CreateUserId" Ordinal="5" DbType="8" Precision="10" />
                     <Field Name="CreateDate" Ordinal="6" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
+                  </Fields>
+                </Table>
+                <Table Name="PhoneLogs">
+                  <PkConstraintName Name="PK_PhoneLogs" />
+                  <Fields>
+                    <Field Name="PhoneLogId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="CallTime" Ordinal="2" DbType="30" />
+                    <Field Name="CompanyName" Ordinal="3" IsOptional="true" DbType="12" Length="100" />
+                    <Field Name="CallerName" Ordinal="4" IsOptional="true" DbType="12" Length="100" />
+                    <Field Name="ClaimantFirstName" Ordinal="5" IsOptional="true" DbType="12" Length="50" />
+                    <Field Name="ClaimantLastName" Ordinal="6" IsOptional="true" DbType="12" Length="50" />
+                    <Field Name="NoteId" Ordinal="7" DbType="8" Precision="10" />
+                    <Field Name="CreateDate" Ordinal="8" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
+                    <Field Name="CreateUserId" Ordinal="9" DbType="8" Precision="10" />
+                    <Field Name="UpdateDate" Ordinal="10" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
+                    <Field Name="UpdateUserId" Ordinal="11" DbType="8" Precision="10" />
                   </Fields>
                 </Table>
                 <Table Name="PsychometristInvoiceAmounts">
@@ -3608,6 +3654,21 @@
                 <FieldPair PkField="dbo:Users:UserId" FkField="dbo:Notes:UpdateUserId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:PhoneLogs:FK_PhoneLogs_CreateUser">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:PhoneLogs:CreateUserId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:PhoneLogs:FK_PhoneLogs_Notes">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Notes:NoteId" FkField="dbo:PhoneLogs:NoteId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:PhoneLogs:FK_PhoneLogs_UpdateUser">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:PhoneLogs:UpdateUserId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:PsychometristInvoiceAmounts:FK_PsychometristInvoiceAmounts_AppointmentSequences">
               <FieldPairs>
                 <FieldPair PkField="dbo:AppointmentSequences:AppointmentSequenceId" FkField="dbo:PsychometristInvoiceAmounts:AppointmentSequenceId" />
@@ -4362,6 +4423,21 @@
             <FieldMapping FieldName="CreateUserId" TargetFieldName="CreateUserId" />
             <FieldMapping FieldName="Note" TargetFieldName="Note" />
             <FieldMapping FieldName="NoteId" TargetFieldName="NoteId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="UpdateDate" TargetFieldName="UpdateDate" />
+            <FieldMapping FieldName="UpdateUserId" TargetFieldName="UpdateUserId" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":PhoneLog" TargetName="PsychologicalServices:dbo:PhoneLogs">
+          <FieldMappings>
+            <FieldMapping FieldName="CallerName" TargetFieldName="CallerName" />
+            <FieldMapping FieldName="CallTime" TargetFieldName="CallTime" />
+            <FieldMapping FieldName="ClaimantFirstName" TargetFieldName="ClaimantFirstName" />
+            <FieldMapping FieldName="ClaimantLastName" TargetFieldName="ClaimantLastName" />
+            <FieldMapping FieldName="CompanyName" TargetFieldName="CompanyName" />
+            <FieldMapping FieldName="CreateDate" TargetFieldName="CreateDate" />
+            <FieldMapping FieldName="CreateUserId" TargetFieldName="CreateUserId" />
+            <FieldMapping FieldName="NoteId" TargetFieldName="NoteId" />
+            <FieldMapping FieldName="PhoneLogId" TargetFieldName="PhoneLogId" SequenceToUse="SCOPE_IDENTITY()" />
             <FieldMapping FieldName="UpdateDate" TargetFieldName="UpdateDate" />
             <FieldMapping FieldName="UpdateUserId" TargetFieldName="UpdateUserId" />
           </FieldMappings>

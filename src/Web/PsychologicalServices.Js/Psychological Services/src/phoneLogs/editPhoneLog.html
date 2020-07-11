@@ -1,0 +1,93 @@
+<template>
+	<require from="claims/edit-claim"></require>
+    <require from="claimants/search-claimant"></require>
+	<require from="common/date-mask"></require>
+	<require from="common/validation-summary.html"></require>
+	<require from="resources/value-converters/age"></require>
+	<require from="resources/value-converters/date-format"></require>
+	<require from="resources/value-converters/sort-array"></require>
+    
+    <div id="editPhoneLog" class="uk-container uk-container-expand">
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">${editType} Phone Log</legend>
+            
+            <div class="uk-grid-medium uk-child-width-1-2@s" uk-grid>
+            
+                <div class="uk-width-1-1" if.bind="validationErrors">
+                    <validation-summary errors.bind="validationErrors"></validation-summary>
+                </div>
+            
+                <div>
+					<label class="uk-form-label" for="callDate">Call Date</label>
+					<div class="uk-form-controls">
+						<input id="callDate" type="text" class="uk-input" date-mask.bind="config.datemaskOptions" value.bind="callDate | dateFormat:config.shortDateFormat & updateTrigger:'blur'" />
+					</div>
+				</div>
+			
+				<div>
+					<label class="uk-form-label" for="callTime">Call Time</label>
+					<div class="uk-form-controls">
+						<input id="callTime" type="text" class="uk-input" date-mask.bind="config.timemaskOptions" value.bind="callTime" />
+					</div>
+				</div>
+                
+                <div>
+                    <label class="uk-form-label" for="callerName">Caller Name</label>
+                    <div class="uk-form-controls">
+                        <input id="callerName" type="text" class="uk-input" value.bind="phoneLog.callerName" />
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="uk-form-label" for="companyName">Company Name</label>
+                    <div class="uk-form-controls">
+                        <input id="companyName" type="text" class="uk-input" value.bind="phoneLog.companyName" />
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="uk-form-label" for="claimantFirstName">Claimant First Name</label>
+                    <div class="uk-form-controls">
+                        <input id="claimantFirstName" type="text" class="uk-input" value.bind="phoneLog.claimantFirstName" />
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="uk-form-label" for="claimantLastName">Claimant Last Name</label>
+                    <div class="uk-form-controls">
+                        <input id="claimantLastName" type="text" class="uk-input" value.bind="phoneLog.claimantLastName" />
+                    </div>
+                </div>
+                
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label" for="notes">Notes</label>
+                    <div class="uk-form-controls">
+                        <textarea id="notes" class="uk-textarea" value.bind="phoneLog.note.noteText" rows="6"></textarea>
+                    </div>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <hr>
+                </div>
+    
+                <div class="uk-width-1-2@s">
+                    <button type="button" class="uk-button uk-button-secondary" click.delegate="back()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="save()" disabled.bind="saveDisabled">
+                        Save <i class="fa fa-save"></i>
+                    </button>
+                </div>
+                
+				<div class="uk-width-1-1" if.bind="!phoneLog.isAdd && (phoneLog.createUser || phoneLog.updateUser)">
+					<p class="uk-text-meta" if.bind="phoneLog.createUser">Created by ${phoneLog.createUser.firstName} ${phoneLog.createUser.lastName} at ${phoneLog.createDate | dateFormat:config.longDateTimeFormat}</p>
+					<p class="uk-text-meta" if.bind="phoneLog.updateUser">Updated by ${phoneLog.updateUser.firstName} ${phoneLog.updateUser.lastName} at ${phoneLog.updateDate | dateFormat:config.longDateTimeFormat}</p>
+				</div>
+            </div>
+            
+        </fieldset>
+
+    </div>
+
+</template>

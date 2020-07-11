@@ -46,6 +46,8 @@ namespace PsychologicalServices.Data.RelationClasses
 			toReturn.Add(this.InvoiceEntityUsingPayableToId);
 			toReturn.Add(this.NoteEntityUsingCreateUserId);
 			toReturn.Add(this.NoteEntityUsingUpdateUserId);
+			toReturn.Add(this.PhoneLogEntityUsingCreateUserId);
+			toReturn.Add(this.PhoneLogEntityUsingUpdateUserId);
 			toReturn.Add(this.RawTestDataEntityUsingPsychologistId);
 			toReturn.Add(this.UserNoteEntityUsingUserId);
 			toReturn.Add(this.UserRoleEntityUsingUserId);
@@ -314,6 +316,36 @@ namespace PsychologicalServices.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and PhoneLogEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - PhoneLog.CreateUserId
+		/// </summary>
+		public virtual IEntityRelation PhoneLogEntityUsingCreateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PhoneLogs" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, PhoneLogFields.CreateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PhoneLogEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between UserEntity and PhoneLogEntity over the 1:n relation they have, using the relation between the fields:
+		/// User.UserId - PhoneLog.UpdateUserId
+		/// </summary>
+		public virtual IEntityRelation PhoneLogEntityUsingUpdateUserId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PhoneLogs1" , true);
+				relation.AddEntityFieldPair(UserFields.UserId, PhoneLogFields.UpdateUserId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UserEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PhoneLogEntity", false);
+				return relation;
+			}
+		}
+
 		/// <summary>Returns a new IEntityRelation object, between UserEntity and RawTestDataEntity over the 1:n relation they have, using the relation between the fields:
 		/// User.UserId - RawTestData.PsychologistId
 		/// </summary>
@@ -463,6 +495,8 @@ namespace PsychologicalServices.Data.RelationClasses
 		internal static readonly IEntityRelation InvoiceEntityUsingPayableToIdStatic = new UserRelations().InvoiceEntityUsingPayableToId;
 		internal static readonly IEntityRelation NoteEntityUsingCreateUserIdStatic = new UserRelations().NoteEntityUsingCreateUserId;
 		internal static readonly IEntityRelation NoteEntityUsingUpdateUserIdStatic = new UserRelations().NoteEntityUsingUpdateUserId;
+		internal static readonly IEntityRelation PhoneLogEntityUsingCreateUserIdStatic = new UserRelations().PhoneLogEntityUsingCreateUserId;
+		internal static readonly IEntityRelation PhoneLogEntityUsingUpdateUserIdStatic = new UserRelations().PhoneLogEntityUsingUpdateUserId;
 		internal static readonly IEntityRelation RawTestDataEntityUsingPsychologistIdStatic = new UserRelations().RawTestDataEntityUsingPsychologistId;
 		internal static readonly IEntityRelation UserNoteEntityUsingUserIdStatic = new UserRelations().UserNoteEntityUsingUserId;
 		internal static readonly IEntityRelation UserRoleEntityUsingUserIdStatic = new UserRelations().UserRoleEntityUsingUserId;

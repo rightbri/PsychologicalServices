@@ -32,6 +32,26 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static Models.PhoneLogs.PhoneLog ToModel(this PhoneLogEntity entity)
+        {
+            return entity != null
+                ? new Models.PhoneLogs.PhoneLog
+                {
+                    PhoneLogId = entity.PhoneLogId,
+                    CallTime = entity.CallTime,
+                    CallerName = entity.CallerName,
+                    CompanyName = entity.CompanyName,
+                    ClaimantFirstName = entity.ClaimantFirstName,
+                    ClaimantLastName = entity.ClaimantLastName,
+                    Note = entity.Note.ToNote(),
+                    CreateDate = entity.CreateDate,
+                    CreateUser = entity.CreateUser.ToUser(),
+                    UpdateDate = entity.UpdateDate,
+                    UpdateUser = entity.UpdateUser.ToUser(),
+                }
+                : null;
+        }
+
         public static ConsultingAgreement ToConsultingAgreement(this ConsultingAgreementEntity consultingAgreement)
         {
             return consultingAgreement == null

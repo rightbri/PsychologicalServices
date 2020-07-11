@@ -111,6 +111,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitIssueInDisputeEntityMappings();
 			InitIssueInDisputeInvoiceAmountEntityMappings();
 			InitNoteEntityMappings();
+			InitPhoneLogEntityMappings();
 			InitPsychometristInvoiceAmountEntityMappings();
 			InitRawTestDataEntityMappings();
 			InitRawTestDataStatusEntityMappings();
@@ -869,6 +870,23 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("NoteEntity", "UpdateDate", "UpdateDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 3);
 			this.AddElementFieldMapping("NoteEntity", "CreateUserId", "CreateUserId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 4);
 			this.AddElementFieldMapping("NoteEntity", "CreateDate", "CreateDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 5);
+		}
+
+		/// <summary>Inits PhoneLogEntity's mappings</summary>
+		private void InitPhoneLogEntityMappings()
+		{
+			this.AddElementMapping("PhoneLogEntity", @"PsychologicalServices", @"dbo", "PhoneLogs", 11, 0);
+			this.AddElementFieldMapping("PhoneLogEntity", "PhoneLogId", "PhoneLogId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("PhoneLogEntity", "CallTime", "CallTime", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 1);
+			this.AddElementFieldMapping("PhoneLogEntity", "CompanyName", "CompanyName", true, "NVarChar", 100, 0, 0, false, "", null, typeof(System.String), 2);
+			this.AddElementFieldMapping("PhoneLogEntity", "CallerName", "CallerName", true, "NVarChar", 100, 0, 0, false, "", null, typeof(System.String), 3);
+			this.AddElementFieldMapping("PhoneLogEntity", "ClaimantFirstName", "ClaimantFirstName", true, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 4);
+			this.AddElementFieldMapping("PhoneLogEntity", "ClaimantLastName", "ClaimantLastName", true, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 5);
+			this.AddElementFieldMapping("PhoneLogEntity", "NoteId", "NoteId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 6);
+			this.AddElementFieldMapping("PhoneLogEntity", "CreateDate", "CreateDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 7);
+			this.AddElementFieldMapping("PhoneLogEntity", "CreateUserId", "CreateUserId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
+			this.AddElementFieldMapping("PhoneLogEntity", "UpdateDate", "UpdateDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 9);
+			this.AddElementFieldMapping("PhoneLogEntity", "UpdateUserId", "UpdateUserId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 10);
 		}
 
 		/// <summary>Inits PsychometristInvoiceAmountEntity's mappings</summary>

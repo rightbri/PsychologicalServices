@@ -167,5 +167,6 @@
     <Build Include="dbo\Tables\GoseInterviews.sql" />
     <Build Include="dbo\Tables\GoseFamilyAndFriendshipsDisruptionLevels.sql" />
     <Build Include="dbo\Tables\GoseAccidentTimeframes.sql" />
+    <Build Include="dbo\Tables\PhoneLogs.sql" />
   </ItemGroup>
 </Project>

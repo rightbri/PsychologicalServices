@@ -252,6 +252,18 @@ export class DataRepository {
 		return this.getManyBasic('goseworkrestrictionlevel', true);
 	}
 
+	searchPhoneLogs(criteria) {
+		return this.searchBasic(criteria, 'phoneLog');
+	}
+
+	getPhoneLog(id) {
+		return this.getSingleBasic(id, 'phoneLog');
+	}
+
+	savePhoneLog(phoneLog) {
+		return this.saveBasic(phoneLog, 'phoneLog');
+	}
+
 	getAssessmentTypes() {
 		return this.getManyBasic('assessmenttype', true);
 	}

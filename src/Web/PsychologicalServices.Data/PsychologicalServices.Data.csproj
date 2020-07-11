@@ -248,6 +248,9 @@
     <Compile Include="DatabaseGeneric\EntityClasses\NoteEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="DatabaseGeneric\EntityClasses\PhoneLogEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="DatabaseGeneric\EntityClasses\PsychometristInvoiceAmountEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -531,6 +534,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\NoteRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DatabaseGeneric\RelationClasses\PhoneLogRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DatabaseGeneric\RelationClasses\PsychometristInvoiceAmountRelations.cs">

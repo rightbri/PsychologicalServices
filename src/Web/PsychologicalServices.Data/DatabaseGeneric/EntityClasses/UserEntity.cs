@@ -37,6 +37,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		private EntityCollection<InvoiceEntity> _invoices;
 		private EntityCollection<NoteEntity> _noteCreator;
 		private EntityCollection<NoteEntity> _noteUpdater;
+		private EntityCollection<PhoneLogEntity> _phoneLogs;
+		private EntityCollection<PhoneLogEntity> _phoneLogs1;
 		private EntityCollection<RawTestDataEntity> _rawTestDatas;
 		private EntityCollection<UserNoteEntity> _userNotes;
 		private EntityCollection<UserRoleEntity> _userRoles;
@@ -79,6 +81,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string NoteCreator = "NoteCreator";
 			/// <summary>Member name NoteUpdater</summary>
 			public static readonly string NoteUpdater = "NoteUpdater";
+			/// <summary>Member name PhoneLogs</summary>
+			public static readonly string PhoneLogs = "PhoneLogs";
+			/// <summary>Member name PhoneLogs1</summary>
+			public static readonly string PhoneLogs1 = "PhoneLogs1";
 			/// <summary>Member name RawTestDatas</summary>
 			public static readonly string RawTestDatas = "RawTestDatas";
 			/// <summary>Member name UserNotes</summary>
@@ -154,6 +160,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				_invoices = (EntityCollection<InvoiceEntity>)info.GetValue("_invoices", typeof(EntityCollection<InvoiceEntity>));
 				_noteCreator = (EntityCollection<NoteEntity>)info.GetValue("_noteCreator", typeof(EntityCollection<NoteEntity>));
 				_noteUpdater = (EntityCollection<NoteEntity>)info.GetValue("_noteUpdater", typeof(EntityCollection<NoteEntity>));
+				_phoneLogs = (EntityCollection<PhoneLogEntity>)info.GetValue("_phoneLogs", typeof(EntityCollection<PhoneLogEntity>));
+				_phoneLogs1 = (EntityCollection<PhoneLogEntity>)info.GetValue("_phoneLogs1", typeof(EntityCollection<PhoneLogEntity>));
 				_rawTestDatas = (EntityCollection<RawTestDataEntity>)info.GetValue("_rawTestDatas", typeof(EntityCollection<RawTestDataEntity>));
 				_userNotes = (EntityCollection<UserNoteEntity>)info.GetValue("_userNotes", typeof(EntityCollection<UserNoteEntity>));
 				_userRoles = (EntityCollection<UserRoleEntity>)info.GetValue("_userRoles", typeof(EntityCollection<UserRoleEntity>));
@@ -243,6 +251,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "NoteUpdater":
 					this.NoteUpdater.Add((NoteEntity)entity);
 					break;
+				case "PhoneLogs":
+					this.PhoneLogs.Add((PhoneLogEntity)entity);
+					break;
+				case "PhoneLogs1":
+					this.PhoneLogs1.Add((PhoneLogEntity)entity);
+					break;
 				case "RawTestDatas":
 					this.RawTestDatas.Add((RawTestDataEntity)entity);
 					break;
@@ -312,6 +326,12 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "NoteUpdater":
 					toReturn.Add(Relations.NoteEntityUsingUpdateUserId);
+					break;
+				case "PhoneLogs":
+					toReturn.Add(Relations.PhoneLogEntityUsingCreateUserId);
+					break;
+				case "PhoneLogs1":
+					toReturn.Add(Relations.PhoneLogEntityUsingUpdateUserId);
 					break;
 				case "RawTestDatas":
 					toReturn.Add(Relations.RawTestDataEntityUsingPsychologistId);
@@ -389,6 +409,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "NoteUpdater":
 					this.NoteUpdater.Add((NoteEntity)relatedEntity);
 					break;
+				case "PhoneLogs":
+					this.PhoneLogs.Add((PhoneLogEntity)relatedEntity);
+					break;
+				case "PhoneLogs1":
+					this.PhoneLogs1.Add((PhoneLogEntity)relatedEntity);
+					break;
 				case "RawTestDatas":
 					this.RawTestDatas.Add((RawTestDataEntity)relatedEntity);
 					break;
@@ -449,6 +475,12 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "NoteUpdater":
 					this.PerformRelatedEntityRemoval(this.NoteUpdater, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "PhoneLogs":
+					this.PerformRelatedEntityRemoval(this.PhoneLogs, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "PhoneLogs1":
+					this.PerformRelatedEntityRemoval(this.PhoneLogs1, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "RawTestDatas":
 					this.PerformRelatedEntityRemoval(this.RawTestDatas, relatedEntity, signalRelatedEntityManyToOne);
@@ -512,6 +544,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add(this.Invoices);
 			toReturn.Add(this.NoteCreator);
 			toReturn.Add(this.NoteUpdater);
+			toReturn.Add(this.PhoneLogs);
+			toReturn.Add(this.PhoneLogs1);
 			toReturn.Add(this.RawTestDatas);
 			toReturn.Add(this.UserNotes);
 			toReturn.Add(this.UserRoles);
@@ -536,6 +570,8 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_invoices", ((_invoices!=null) && (_invoices.Count>0) && !this.MarkedForDeletion)?_invoices:null);
 				info.AddValue("_noteCreator", ((_noteCreator!=null) && (_noteCreator.Count>0) && !this.MarkedForDeletion)?_noteCreator:null);
 				info.AddValue("_noteUpdater", ((_noteUpdater!=null) && (_noteUpdater.Count>0) && !this.MarkedForDeletion)?_noteUpdater:null);
+				info.AddValue("_phoneLogs", ((_phoneLogs!=null) && (_phoneLogs.Count>0) && !this.MarkedForDeletion)?_phoneLogs:null);
+				info.AddValue("_phoneLogs1", ((_phoneLogs1!=null) && (_phoneLogs1.Count>0) && !this.MarkedForDeletion)?_phoneLogs1:null);
 				info.AddValue("_rawTestDatas", ((_rawTestDatas!=null) && (_rawTestDatas.Count>0) && !this.MarkedForDeletion)?_rawTestDatas:null);
 				info.AddValue("_userNotes", ((_userNotes!=null) && (_userNotes.Count>0) && !this.MarkedForDeletion)?_userNotes:null);
 				info.AddValue("_userRoles", ((_userRoles!=null) && (_userRoles.Count>0) && !this.MarkedForDeletion)?_userRoles:null);
@@ -631,6 +667,24 @@ namespace PsychologicalServices.Data.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'PhoneLog' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPhoneLogs()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(PhoneLogFields.CreateUserId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'PhoneLog' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoPhoneLogs1()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(PhoneLogFields.UpdateUserId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'RawTestData' to this entity.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoRawTestDatas()
@@ -723,6 +777,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(this._invoices);
 			collectionsQueue.Enqueue(this._noteCreator);
 			collectionsQueue.Enqueue(this._noteUpdater);
+			collectionsQueue.Enqueue(this._phoneLogs);
+			collectionsQueue.Enqueue(this._phoneLogs1);
 			collectionsQueue.Enqueue(this._rawTestDatas);
 			collectionsQueue.Enqueue(this._userNotes);
 			collectionsQueue.Enqueue(this._userRoles);
@@ -743,6 +799,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			this._invoices = (EntityCollection<InvoiceEntity>) collectionsQueue.Dequeue();
 			this._noteCreator = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
 			this._noteUpdater = (EntityCollection<NoteEntity>) collectionsQueue.Dequeue();
+			this._phoneLogs = (EntityCollection<PhoneLogEntity>) collectionsQueue.Dequeue();
+			this._phoneLogs1 = (EntityCollection<PhoneLogEntity>) collectionsQueue.Dequeue();
 			this._rawTestDatas = (EntityCollection<RawTestDataEntity>) collectionsQueue.Dequeue();
 			this._userNotes = (EntityCollection<UserNoteEntity>) collectionsQueue.Dequeue();
 			this._userRoles = (EntityCollection<UserRoleEntity>) collectionsQueue.Dequeue();
@@ -764,6 +822,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn |=(this._invoices != null);
 			toReturn |=(this._noteCreator != null);
 			toReturn |=(this._noteUpdater != null);
+			toReturn |=(this._phoneLogs != null);
+			toReturn |=(this._phoneLogs1 != null);
 			toReturn |=(this._rawTestDatas != null);
 			toReturn |=(this._userNotes != null);
 			toReturn |=(this._userRoles != null);
@@ -786,6 +846,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<InvoiceEntity>(EntityFactoryCache2.GetEntityFactory(typeof(InvoiceEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<PhoneLogEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PhoneLogEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<PhoneLogEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PhoneLogEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<RawTestDataEntity>(EntityFactoryCache2.GetEntityFactory(typeof(RawTestDataEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserNoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserNoteEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<UserRoleEntity>(EntityFactoryCache2.GetEntityFactory(typeof(UserRoleEntityFactory))) : null);
@@ -809,6 +871,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Invoices", _invoices);
 			toReturn.Add("NoteCreator", _noteCreator);
 			toReturn.Add("NoteUpdater", _noteUpdater);
+			toReturn.Add("PhoneLogs", _phoneLogs);
+			toReturn.Add("PhoneLogs1", _phoneLogs1);
 			toReturn.Add("RawTestDatas", _rawTestDatas);
 			toReturn.Add("UserNotes", _userNotes);
 			toReturn.Add("UserRoles", _userRoles);
@@ -1022,6 +1086,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathNoteUpdater
 		{
 			get	{ return new PrefetchPathElement2( new EntityCollection<NoteEntity>(EntityFactoryCache2.GetEntityFactory(typeof(NoteEntityFactory))), (IEntityRelation)GetRelationsForField("NoteUpdater")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.NoteEntity, 0, null, null, null, null, "NoteUpdater", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'PhoneLog' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPhoneLogs
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<PhoneLogEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PhoneLogEntityFactory))), (IEntityRelation)GetRelationsForField("PhoneLogs")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.PhoneLogEntity, 0, null, null, null, null, "PhoneLogs", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'PhoneLog' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathPhoneLogs1
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<PhoneLogEntity>(EntityFactoryCache2.GetEntityFactory(typeof(PhoneLogEntityFactory))), (IEntityRelation)GetRelationsForField("PhoneLogs1")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.PhoneLogEntity, 0, null, null, null, null, "PhoneLogs1", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'RawTestData' for this entity.</summary>
@@ -1248,6 +1326,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<NoteEntity> NoteUpdater
 		{
 			get { return GetOrCreateEntityCollection<NoteEntity, NoteEntityFactory>("UpdateUser", true, false, ref _noteUpdater);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'PhoneLogEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(PhoneLogEntity))]
+		public virtual EntityCollection<PhoneLogEntity> PhoneLogs
+		{
+			get { return GetOrCreateEntityCollection<PhoneLogEntity, PhoneLogEntityFactory>("CreateUser", true, false, ref _phoneLogs);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'PhoneLogEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(PhoneLogEntity))]
+		public virtual EntityCollection<PhoneLogEntity> PhoneLogs1
+		{
+			get { return GetOrCreateEntityCollection<PhoneLogEntity, PhoneLogEntityFactory>("UpdateUser", true, false, ref _phoneLogs1);	}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'RawTestDataEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

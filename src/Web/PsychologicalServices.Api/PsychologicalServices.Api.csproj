@@ -267,6 +267,7 @@
     <Compile Include="Controllers\InvoiceableConsultingAgreementDataController.cs" />
     <Compile Include="Controllers\ConsultingAgreementController.cs" />
     <Compile Include="Controllers\GoseAccidentTimeframeController.cs" />
+    <Compile Include="Controllers\PhoneLogController.cs" />
     <Compile Include="Controllers\ResearchConsentObtainedClaimantDataController.cs" />
     <Compile Include="Controllers\NonAbCompletionDataController.cs" />
     <Compile Include="Controllers\ClaimController.cs" />

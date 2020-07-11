@@ -1100,6 +1100,34 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: PhoneLog.</summary>
+	public enum PhoneLogFieldIndex
+	{
+		///<summary>PhoneLogId. </summary>
+		PhoneLogId,
+		///<summary>CallTime. </summary>
+		CallTime,
+		///<summary>CompanyName. </summary>
+		CompanyName,
+		///<summary>CallerName. </summary>
+		CallerName,
+		///<summary>ClaimantFirstName. </summary>
+		ClaimantFirstName,
+		///<summary>ClaimantLastName. </summary>
+		ClaimantLastName,
+		///<summary>NoteId. </summary>
+		NoteId,
+		///<summary>CreateDate. </summary>
+		CreateDate,
+		///<summary>CreateUserId. </summary>
+		CreateUserId,
+		///<summary>UpdateDate. </summary>
+		UpdateDate,
+		///<summary>UpdateUserId. </summary>
+		UpdateUserId,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: PsychometristInvoiceAmount.</summary>
 	public enum PsychometristInvoiceAmountFieldIndex
 	{
@@ -1496,6 +1524,8 @@ namespace PsychologicalServices.Data
 		IssueInDisputeInvoiceAmountEntity,
 		///<summary>Note</summary>
 		NoteEntity,
+		///<summary>PhoneLog</summary>
+		PhoneLogEntity,
 		///<summary>PsychometristInvoiceAmount</summary>
 		PsychometristInvoiceAmountEntity,
 		///<summary>RawTestData</summary>

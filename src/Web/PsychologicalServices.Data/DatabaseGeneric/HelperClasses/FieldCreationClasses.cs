@@ -2088,6 +2088,66 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity PhoneLogEntity</summary>
+	public partial class PhoneLogFields
+	{
+		/// <summary>Creates a new PhoneLogEntity.PhoneLogId field instance</summary>
+		public static EntityField2 PhoneLogId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.PhoneLogId);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.CallTime field instance</summary>
+		public static EntityField2 CallTime
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.CallTime);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.CompanyName field instance</summary>
+		public static EntityField2 CompanyName
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.CompanyName);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.CallerName field instance</summary>
+		public static EntityField2 CallerName
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.CallerName);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.ClaimantFirstName field instance</summary>
+		public static EntityField2 ClaimantFirstName
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.ClaimantFirstName);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.ClaimantLastName field instance</summary>
+		public static EntityField2 ClaimantLastName
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.ClaimantLastName);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.NoteId field instance</summary>
+		public static EntityField2 NoteId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.NoteId);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.CreateDate field instance</summary>
+		public static EntityField2 CreateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.CreateDate);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.CreateUserId field instance</summary>
+		public static EntityField2 CreateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.CreateUserId);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.UpdateDate field instance</summary>
+		public static EntityField2 UpdateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.UpdateDate);}
+		}
+		/// <summary>Creates a new PhoneLogEntity.UpdateUserId field instance</summary>
+		public static EntityField2 UpdateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(PhoneLogFieldIndex.UpdateUserId);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity PsychometristInvoiceAmountEntity</summary>
 	public partial class PsychometristInvoiceAmountFields
 	{

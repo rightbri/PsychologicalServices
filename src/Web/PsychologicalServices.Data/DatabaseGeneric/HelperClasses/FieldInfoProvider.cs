@@ -114,6 +114,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitIssueInDisputeEntityInfos();
 			InitIssueInDisputeInvoiceAmountEntityInfos();
 			InitNoteEntityInfos();
+			InitPhoneLogEntityInfos();
 			InitPsychometristInvoiceAmountEntityInfos();
 			InitRawTestDataEntityInfos();
 			InitRawTestDataStatusEntityInfos();
@@ -810,6 +811,22 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("NoteEntity", "UpdateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)NoteFieldIndex.UpdateDate, 0, 0, 0);
 			this.AddElementFieldInfo("NoteEntity", "CreateUserId", typeof(System.Int32), false, true, false, false,  (int)NoteFieldIndex.CreateUserId, 0, 0, 10);
 			this.AddElementFieldInfo("NoteEntity", "CreateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)NoteFieldIndex.CreateDate, 0, 0, 0);
+		}
+		/// <summary>Inits PhoneLogEntity's FieldInfo objects</summary>
+		private void InitPhoneLogEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(PhoneLogFieldIndex), "PhoneLogEntity");
+			this.AddElementFieldInfo("PhoneLogEntity", "PhoneLogId", typeof(System.Int32), true, false, true, false,  (int)PhoneLogFieldIndex.PhoneLogId, 0, 0, 10);
+			this.AddElementFieldInfo("PhoneLogEntity", "CallTime", typeof(System.DateTimeOffset), false, false, false, false,  (int)PhoneLogFieldIndex.CallTime, 0, 0, 0);
+			this.AddElementFieldInfo("PhoneLogEntity", "CompanyName", typeof(System.String), false, false, false, true,  (int)PhoneLogFieldIndex.CompanyName, 100, 0, 0);
+			this.AddElementFieldInfo("PhoneLogEntity", "CallerName", typeof(System.String), false, false, false, true,  (int)PhoneLogFieldIndex.CallerName, 100, 0, 0);
+			this.AddElementFieldInfo("PhoneLogEntity", "ClaimantFirstName", typeof(System.String), false, false, false, true,  (int)PhoneLogFieldIndex.ClaimantFirstName, 50, 0, 0);
+			this.AddElementFieldInfo("PhoneLogEntity", "ClaimantLastName", typeof(System.String), false, false, false, true,  (int)PhoneLogFieldIndex.ClaimantLastName, 50, 0, 0);
+			this.AddElementFieldInfo("PhoneLogEntity", "NoteId", typeof(System.Int32), false, true, false, false,  (int)PhoneLogFieldIndex.NoteId, 0, 0, 10);
+			this.AddElementFieldInfo("PhoneLogEntity", "CreateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)PhoneLogFieldIndex.CreateDate, 0, 0, 0);
+			this.AddElementFieldInfo("PhoneLogEntity", "CreateUserId", typeof(System.Int32), false, true, false, false,  (int)PhoneLogFieldIndex.CreateUserId, 0, 0, 10);
+			this.AddElementFieldInfo("PhoneLogEntity", "UpdateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)PhoneLogFieldIndex.UpdateDate, 0, 0, 0);
+			this.AddElementFieldInfo("PhoneLogEntity", "UpdateUserId", typeof(System.Int32), false, true, false, false,  (int)PhoneLogFieldIndex.UpdateUserId, 0, 0, 10);
 		}
 		/// <summary>Inits PsychometristInvoiceAmountEntity's FieldInfo objects</summary>
 		private void InitPsychometristInvoiceAmountEntityInfos()

@@ -1398,6 +1398,27 @@ namespace PsychologicalServices.Data.FactoryClasses
 		#endregion
 	}
 
+	/// <summary>Factory to create new, empty PhoneLogEntity objects.</summary>
+	[Serializable]
+	public partial class PhoneLogEntityFactory : EntityFactoryBase2<PhoneLogEntity> {
+		/// <summary>CTor</summary>
+		public PhoneLogEntityFactory() : base("PhoneLogEntity", PsychologicalServices.Data.EntityType.PhoneLogEntity, false) { }
+		
+		/// <summary>Creates a new PhoneLogEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new PhoneLogEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewPhoneLogUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
 	/// <summary>Factory to create new, empty PsychometristInvoiceAmountEntity objects.</summary>
 	[Serializable]
 	public partial class PsychometristInvoiceAmountEntityFactory : EntityFactoryBase2<PsychometristInvoiceAmountEntity> {
@@ -1964,6 +1985,9 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.NoteEntity:
 					factoryToUse = new NoteEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.PhoneLogEntity:
+					factoryToUse = new PhoneLogEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.PsychometristInvoiceAmountEntity:
 					factoryToUse = new PsychometristInvoiceAmountEntityFactory();

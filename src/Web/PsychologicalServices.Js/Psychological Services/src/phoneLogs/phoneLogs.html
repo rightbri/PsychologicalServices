@@ -1,0 +1,95 @@
+<template>
+    <require from="resources/value-converters/date-format"></require>
+    <require from="common/date-picker"></require>
+	<require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+	<require from="flatpickr/flatpickr.css"></require>
+	<require from="resources/value-converters/sort-array"></require>
+
+    <div class="uk-container">
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Search Phone Logs</legend>
+
+            <div class="uk-form-stacked uk-grid-small uk-child-width-1-2@s" uk-grid>
+
+                <div>
+                    <label class="uk-form-label" for="startCallTime">Begin Call Time</label>
+                    <div class="uk-form-controls">
+                        <input id="startCallTime" type="text" class="uk-input" value.bind="startCallTime" date-picker.bind="config.datepickerOptions" />
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="uk-form-label" for="endCallTime">End Call Time</label>
+                    <div class="uk-form-controls">
+                        <input id="endCallTime" type="text" class="uk-input" value.bind="endCallTime" date-picker.bind="config.datepickerOptions" />
+                    </div>
+                </div>
+                
+                <div class="uk-width-1-1">
+                    <label class="uk-form-label" for="companyName">Company Name</label>
+                    <div class="uk-form-controls">
+                        <input id="companyName" type="text" class="uk-input" value.bind="companyName" />
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="uk-form-label" for="claimantFirstName">Claimant First Name</label>
+                    <div class="uk-form-controls">
+                        <input id="claimantFirstName" type="text" class="uk-input" value.bind="claimantFirstName" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="uk-form-label" for="claimantLastName">Claimant Last Name</label>
+                    <div class="uk-form-controls">
+                        <input id="claimantLastName" type="text" class="uk-input" value.bind="claimantLastName" />
+                    </div>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <button class="uk-button uk-button-default" click.delegate="search()">Search</button>
+
+                    <a route-href="route: addPhoneLog" class="uk-button uk-button-secondary">
+                        <i class="fa fa-plus"></i>&nbsp;Add
+                    </a>
+                </div>
+
+            </div>
+
+        </fieldset>
+        
+    </div>
+
+<div class="uk-overflow-auto" if.bind="phoneLogs">
+    <table class="uk-table uk-table-divider">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Call Time</th>
+                <th>Caller Name</th>
+                <th>Company Name</th>
+                <th>Claimant Name</th>
+                <th>Re:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="phoneLog of phoneLogs | sortArray:{ property: 'callTime', direction: 'asc' }">
+                <td>
+                    <a route-href="route: editPhoneLog; params.bind: { id: phoneLog.phoneLogId }" class="uk-button uk-button-primary">
+                        Edit
+                    </a>
+                </td>
+                <td>${phoneLog.callTime | dateFormat:config.shortDateFormat}</td>
+                <td>${phoneLog.callerName}</td>
+                <td>${phoneLog.companyName}</td>
+                <td>${phoneLog.claimantFirstName} ${phoneLog.claimantLastName}</td>
+                <td class="uk-text-truncate uk-table-expand">${phoneLog.note.noteText}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</template>

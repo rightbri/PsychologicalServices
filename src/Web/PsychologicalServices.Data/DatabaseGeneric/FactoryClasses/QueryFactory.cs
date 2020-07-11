@@ -495,6 +495,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<NoteEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the PhoneLog entity</summary>
+		public EntityQuery<PhoneLogEntity> PhoneLog
+		{
+			get { return Create<PhoneLogEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the PsychometristInvoiceAmount entity</summary>
 		public EntityQuery<PsychometristInvoiceAmountEntity> PsychometristInvoiceAmount
 		{
