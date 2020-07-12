@@ -64,5 +64,23 @@ namespace PsychologicalServices.Models.PhoneLogs
 
             return result;
         }
+
+        public DeleteResult Delete(int id)
+        {
+            var result = new DeleteResult();
+
+            try
+            {
+                result.IsDeleted = _phoneLogRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("DeletePhoneLog", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
     }
 }

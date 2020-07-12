@@ -67,11 +67,12 @@
         <thead>
             <tr>
                 <th></th>
+                <th></th>
                 <th>Call Time</th>
                 <th>Caller Name</th>
                 <th>Company Name</th>
                 <th>Claimant Name</th>
-                <th>Re:</th>
+                <th>Note</th>
             </tr>
         </thead>
         <tbody>
@@ -81,7 +82,12 @@
                         Edit
                     </a>
                 </td>
-                <td>${phoneLog.callTime | dateFormat:config.shortDateFormat}</td>
+                <td>
+                    <button type="button" class="uk-button uk-button-default" click.delegate="delete(phoneLog)">
+                        Delete <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
+                <td>${phoneLog.callTime | dateFormat:config.shortDateTimeFormat}</td>
                 <td>${phoneLog.callerName}</td>
                 <td>${phoneLog.companyName}</td>
                 <td>${phoneLog.claimantFirstName} ${phoneLog.claimantLastName}</td>

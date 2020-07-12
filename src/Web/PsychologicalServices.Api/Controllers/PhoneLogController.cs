@@ -53,5 +53,16 @@ namespace PsychologicalServices.Api.Controllers
 
             return Ok(result);
         }
+
+        [RightAuthorize(StaticRights.DeletePhoneLog)]
+        [Route("{id}")]
+        [HttpDelete]
+        [ResponseType(typeof(DeleteResult))]
+        public IHttpActionResult Delete([FromUri] int id)
+        {
+            var result = _phoneLogService.Delete(id);
+
+            return Ok(result);
+        }
     }
 }

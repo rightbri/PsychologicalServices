@@ -180,5 +180,19 @@ namespace PsychologicalServices.Infrastructure.PhoneLog
                 return entity.PhoneLogId;
             }
         }
+
+        public bool Delete(int id)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var success = adapter.DeleteEntity(
+                    new PhoneLogEntity(id)
+                );
+
+                return success;
+            }
+        }
     }
 }

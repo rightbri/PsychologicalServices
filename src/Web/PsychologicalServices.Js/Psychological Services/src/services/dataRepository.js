@@ -264,6 +264,10 @@ export class DataRepository {
 		return this.saveBasic(phoneLog, 'phoneLog');
 	}
 
+	deletePhoneLog(id) {
+		return this.deleteBasic(id, 'phoneLog');
+	}
+
 	getAssessmentTypes() {
 		return this.getManyBasic('assessmenttype', true);
 	}

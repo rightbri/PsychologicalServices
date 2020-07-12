@@ -36,4 +36,20 @@ export class PhoneLogs {
             "claimantLastName": this.claimantLastName
         }).then(data => this.phoneLogs = data);
     }
+	
+	delete(phoneLog) {
+		if (confirm('Delete Phone Log entry\nAre you sure?')) {
+			this.dataRepository.deletePhoneLog(phoneLog.phoneLogId).then(data => {
+			
+				if (data.isError) {
+					this.notifier.error(data.errorDetails);
+				}
+				else {
+					this.phoneLogs = this.phoneLogs.filter(value => value.phoneLogId !== phoneLog.phoneLogId);
+
+					this.notifier.info('Deleted');
+				}
+			});
+		}
+	}
 }

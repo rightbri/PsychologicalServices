@@ -11,5 +11,7 @@ namespace PsychologicalServices.Models.PhoneLogs
         IEnumerable<PhoneLog> Get(PhoneLogSearchCriteria criteria);
 
         SaveResult<PhoneLog> Save(PhoneLog phoneLog);
+
+        DeleteResult Delete(int id);
     }
 }

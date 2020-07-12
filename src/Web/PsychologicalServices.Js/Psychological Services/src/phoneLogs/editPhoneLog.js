@@ -36,7 +36,14 @@ export class EditPhoneLog {
 				
 				if (id) {
                     return this.dataRepository.getPhoneLog(id).then(data => {
-                        this.phoneLog = data;
+						this.phoneLog = data;
+
+						this.phoneLog.updateUser = this.user;
+
+						this.callDate = this.phoneLog.callTime;
+						this.callTime = this.timezone.convert(moment.utc(this.phoneLog.callTime), this.config.timezone).format(this.config.shortTimeFormat);
+		
+						this.scroller.scrollTo(0);
                     });
                 }
                 else {
@@ -44,18 +51,16 @@ export class EditPhoneLog {
                     this.phoneLog = {
 						isAdd: true,
 						callTime: new Date(),
-						createUser: this.user
-                    };
+						note: this.newNote(),
+						createUser: this.user,
+						updateUser: this.user
+					};
+
+					this.callDate = this.phoneLog.callTime;
+					this.callTime = this.timezone.convert(moment.utc(this.phoneLog.callTime), this.config.timezone).format(this.config.shortTimeFormat);
+		
+					this.scroller.scrollTo(0);
 				}
-				
-				this.callDate = this.phoneLog.callTime;
-				this.callTime = this.timezone.convert(moment.utc(this.phoneLog.callTime), this.config.timezone).format(this.config.shortTimeFormat);
-
-				this.phoneLog.note = this.phoneLog.note || { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user };
-						
-				this.phoneLog.updateUser = this.user;
-
-				this.scroller.scrollTo(0);
             });
     }
 
@@ -111,5 +116,9 @@ export class EditPhoneLog {
 	
 	back() {
 		this.router.navigateBack();
-	}   
+	}
+
+	newNote() {
+		return { noteId: 0, noteText: '', createUser: this.user, updateUser: this.user };
+	}
 }
