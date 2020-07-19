@@ -46,6 +46,7 @@ export class Notes {
         this.sleepIssues = [];
         this.sleepIssueCauses = [];
         this.languageIssues = [];
+        this.safetyConcerns = [];
         this.executiveIssues = [];
         this.inappropriateSocialBehaviors = [];
         this.readingIssues = [];
@@ -76,8 +77,14 @@ export class Notes {
         }
     }
 
-    activate() {
-        return this.getData();
+    activate(params) {
+        var id = params.id;
+		
+        return this.getData().then(x => {
+            if (id) {
+                return this.load(id);
+            }
+        });
     }
 
     getData() {
@@ -142,6 +149,7 @@ export class Notes {
                         this.sleepIssueCauses = this.asArray(data);
                         this.sleepIssueCausesMap = data;
                     }),
+                    this.notesRepository.getSafetyConcerns().then(data => this.safetyConcerns = data),
                     this.notesRepository.getLanguageIssues().then(data => this.languageIssues = data),
                     this.notesRepository.getExecutiveIssues().then(data => this.executiveIssues = data),
                     this.notesRepository.getInappropriateSocialBehaviors().then(data => this.inappropriateSocialBehaviors = data),
@@ -168,10 +176,6 @@ export class Notes {
                     this.notesRepository.getTravelPreferences().then(data => {
                         this.travelPreferences = this.asArray(data);
                         this.travelPreferencesMap = data;
-                    }),
-                    this.notesRepository.getCurrentStateTasks().then(data => {
-                        this.currentStateTasks = this.asArray(data);
-                        this.currentStateTasksMap = data;
                     }),
                     this.notesRepository.getCurrentStateAbilities().then(data => {
                         this.currentStateAbilities = this.asArray(data);
@@ -257,9 +261,20 @@ export class Notes {
     }
     
     select(assessment) {
-        return this.notesRepository.getNotes(assessment.assessmentId).then(data => {
+        return this.load(assessment.assessmentId);
+    }
+
+    load(assessmentId) {
+        return this.notesRepository.getNotes(assessmentId).then(data => {
             this.assessment = data.assessment;
             this.responses = data.responses;
+
+            return Promise.all([
+                this.notesRepository.getCurrentStateTasks(this.responses.createdAtVersion).then(data => {
+                    this.currentStateTasks = this.asArray(data);
+                    this.currentStateTasksMap = data;
+                })
+            ]);
         });
     }
 
@@ -497,11 +512,6 @@ export class Notes {
     @computedFrom('responses.psychological.worry')
     get yesWorries() {
         return this.getWorriesForResponses(item => this.isYes(item.response));
-    } 
-
-    @computedFrom('responses.psychological.worry')
-    get worriesAboutFinances() {
-        return this.yesWorries.some(item => item.isFinances);
     }
 
     @computedFrom('responses.personalHistory.medical.familyMedicalConditions')
@@ -542,7 +552,7 @@ export class Notes {
     get isCaregivingAbilityAnswered() {
         if (!this.responses) { return false; }
 
-        let caregiving = this.responses.neuropsychological.currentState.tasks.find(item => item.value === "caregiving");
+        let caregiving = this.responses.neuropsychological.currentState.tasks.find(item => item.isCaregiving === true);
         
         return caregiving && !caregiving.isNA && this.isAnswered(caregiving.ability);
     }

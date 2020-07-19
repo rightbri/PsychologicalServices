@@ -306,10 +306,21 @@ export class NotesRepository {
         return getPromise(data);
     }
 
+    getSafetyConcerns() {
+        let data = {
+            "leftStoveOn": { "description": "Have you left the stove on?", format: function(context) { return `left the stove on`; } },
+            "leftOvenOn": { "description": "Have you left the oven on?", format: function(context) { return `left the oven on`; } },
+            "leftKeysInDoor": { "description": "Have you left keys in the door?", format: function(context) { return `left keys in the door`; } },
+            "leftDoorUnlocked": { "description": "Have you accidentally left the door unlocked?", format: function(context) { return `accidentally left the door unlocked`; } }
+        };
+
+        return getPromise(data);
+    }
+
     getLanguageIssues() {
         let data = {
             "lostInConversations": { "description": "Easily lost in conversations?", "format": function(context) { return `feeling lost in conversations`; } },
-            "tipOfTongueIssues": { "description": "Tip of the Tongue issues?", "format": function(context) { return `having tip of tongue issues`; } },
+            "tipOfTongueIssues": { "description": "Tip of the Tongue issues?", "format": function(context) { return `having tip of the tongue issues`; } },
             "repeatingYourself": { "description": "Repeating yourself?", "format": function(context) { return `times where ${context.pronoun.subject} repeats ${context.pronoun.object}self`; } },
             "askingOthersToRepeat": { "description": "Asking others to repeat?", "format": function(context) { return `times when ${context.pronoun.subject} asks others to repeat what they have said`; } },
             "filtering": { "description": "Filtering?", "format": function(context) { return `problems with filtering`; } },
@@ -415,18 +426,49 @@ export class NotesRepository {
         return getPromise(data);
     }
 
-    getCurrentStateTasks() {
-        let data = {
-            "personalCare": { "description": "Personal care", "value": "personalCare" },
-            "housekeeping": { "description": "Housekeeping", "value": "housekeeping" },
-            "outdoorChores": { "description": "Outdoor Tasks", "value": "outdoorChores" },
-            "watchingTv": { "description": "Watching TV", "value": "watchingTv" },
-            "banking": { "description": "Banking", "value": "banking" },
-            "caregiving": { "description": "Caregiving", "value": "caregiving" },
-            "alone": { "description": "Being Left alone", "value": "alone" }
-        };
+    getCurrentStateTasks(version) {
+        if (version && /\d+/.test(version) && parseInt(version, 10) >= 18) {
+            let data = {
+                "sleep": { "description": "Sleeping/Resting", "value": "sleep" },
+                "groom": { "description": "Grooming  (Bathing, brushing teeth, shaving) ", "value": "groom" },
+                "dressing": { "description": "Dressing (pick your clothes, dressing/undressing yourself etc)", "value": "dressing" },
+                "prepareBreakfast": { "description": "Prepare Breakfast/Lunch", "value": "prepareBreakfast" },
+                "eatBreakfast": { "description": "Eat Breakfast/lunch", "value": "eatBreakfast" },
+                "travelToWork": { "description": "Travel to and from work/school", "value": "travelToWork" },
+                "takeCareOfChildren": { "description": "Take care of the children/spending time with them", "value": "takeCareOfChildren" },
+                "attendWork": { "description": "Work/Attend school", "value": "attendWork" },
+                "runErrands": { "description": "Run errands (banking/groceries) etc.", "value": "runErrands" },
+                "prepareDinner": { "description": "Prepare Dinner/Clean up after dinner", "value": "prepareDinner" },
+                "eatDinner": { "description": "Eat Dinner", "value": "eatDinner" },
+                "indoorChores": { "description": "Indoor Household chores (dishes, laundry) ", "value": "indoorChores" },
+                "outdoorChores": { "description": "Outdoor Chores (Gardening/Snow removal)", "value": "outdoorChores" },
+                "petCare": { "description": "Taking care of any pets/animals", "value": "petCare" },
+                "exercise": { "description": "Exercise/Work out/be active", "value": "exercise" },
+                "read": { "description": "Reading", "value": "read" },
+                "watchTv": { "description": "Watching television/movies ", "value": "watchTv" },
+                "useInternet": { "description": "Use Internet/Send and get Emails/Text Messages", "value": "useInternet" },
+                "financialTasks": { "description": "Perform financial tasks such as banking", "value": "financialTasks" },
+                "socialActivities": { "description": "Social activities/games", "value": "socialActivities" },
+                "volunteering": { "description": "Volunteering", "value": "volunteering" },
+                "religiousActivities": { "description": "Religious Activities ", "value": "religiousActivities" },
+                "vacation": { "description": "Travel/vacation", "value": "vacation" }
+            };
 
-        return getPromise(data);
+            return getPromise(data);
+        }
+        else {
+            let data = {
+                "personalCare": { "description": "Personal care", "value": "personalCare" },
+                "housekeeping": { "description": "Housekeeping", "value": "housekeeping" },
+                "outdoorChores": { "description": "Outdoor Tasks", "value": "outdoorChores" },
+                "watchingTv": { "description": "Watching TV", "value": "watchingTv" },
+                "banking": { "description": "Banking", "value": "banking" },
+                "caregiving": { "description": "Caregiving", "value": "caregiving" },
+                "alone": { "description": "Being Left alone", "value": "alone" }
+            };
+
+            return getPromise(data);
+        }
     }
 
     getCurrentStateAbilities() {
@@ -651,7 +693,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "17";
+    return "19";
 }
 
 function upgrade(responses, toVersion) {
@@ -887,9 +929,62 @@ function upgrade_16_to_17(responses) {
     return responses;
 }
 
+function upgrade_17_to_18(responses) {
+    let newResponses = getNewResponses();
+    
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('betterSleepPriorToAccident')) {
+        responses.neuropsychological.physical.sleep.betterSleepPriorToAccident = newResponses.neuropsychological.physical.sleep.betterSleepPriorToAccident;
+    }
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('amountOfSleepBeforeAccidentBetween')) {
+        responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween = newResponses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween;
+    }
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('amountOfSleepBeforeAccidentBetweenMin')) {
+        responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin = newResponses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin;
+    }
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('amountOfSleepBeforeAccidentBetweenMax')) {
+        responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax = newResponses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax;
+    }
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('amountOfSleepCurrentBetween')) {
+        responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween = newResponses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween;
+    }
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('amountOfSleepCurrentBetweenMin')) {
+        responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMin = newResponses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMin;
+    }
+
+    if (!responses.neuropsychological.physical.sleep.hasOwnProperty('amountOfSleepCurrentBetweenMax')) {
+        responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMax = newResponses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMax;
+    }
+
+    if (!responses.neuropsychological.physical.weight.hasOwnProperty('changeUnits')) {
+        responses.neuropsychological.physical.weight.changeUnits = newResponses.neuropsychological.physical.weight.changeUnits;
+    }
+
+    responses.version = "18";
+
+    return responses;
+}
+
+function upgrade_18_to_19(responses) {
+    let newResponses = getNewResponses();
+    
+    if (!responses.neuropsychological.memory.hasOwnProperty('safetyConcerns')) {
+        responses.neuropsychological.memory.safetyConcerns = newResponses.neuropsychological.memory.safetyConcerns;
+    }
+
+    responses.version = "19";
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
+        "createdAtVersion": getCurrentVersion(),
         "interviewType": "mva",
         "ltdInformation": null,
         "identification": {
@@ -1325,8 +1420,6 @@ function getNewResponses() {
                 { "response": null, "value": "recovery" },
                 { "response": null, "value": "finances" }
             ],
-            "dontKnowAmountOfDebt": false,
-            "amountOfDebt": null,
             "panicAttacksCurrent": null,
             "panicAttacksPrior": null,
             "heightenedStartleResponse": null,
@@ -1396,7 +1489,13 @@ function getNewResponses() {
                     "errors": null,
                     "usesDosette": null,
                     "usesBlisterPacks": null
-                }
+                },
+                "safetyConcerns": [
+                    { "response": null, "value": "leftStoveOn" },
+                    { "response": null, "value": "leftOvenOn" },
+                    { "response": null, "value": "leftKeysInDoor" },
+                    { "response": null, "value": "leftDoorUnlocked" }
+                ]
             },
             "language": [
                 { "response": null, "value": "lostInConversations" },
@@ -1456,7 +1555,8 @@ function getNewResponses() {
                     "appetiteAffected": null,
                     "changed": null,
                     "changeType": null,
-                    "changeAmount": null
+                    "changeAmount": null,
+                    "changeUnits": null
                 },
                 "energy": {
                     "lessEnergy": null,
@@ -1465,10 +1565,17 @@ function getNewResponses() {
                 "sleep": {
                     "sleepAffected": null,
                     "problemsSleepingPriorToAccident": null,
+                    "betterSleepPriorToAccident": null,
                     "skipAmountOfSleepBeforeAccident": false,
                     "amountOfSleepBeforeAccident": null,
+                    "amountOfSleepBeforeAccidentBetween": false,
+                    "amountOfSleepBeforeAccidentBetweenMin": null,
+                    "amountOfSleepBeforeAccidentBetweenMax": null,
                     "skipAmountOfSleepCurrent": false,
                     "amountOfSleepCurrent": null,
+                    "amountOfSleepCurrentBetween": false,
+                    "amountOfSleepCurrentBetweenMin": null,
+                    "amountOfSleepCurrentBetweenMax": null,
                     "brokenSleep": null,
                     "issues": [
                         { "response": null, "value": "attaining" },
@@ -1499,13 +1606,29 @@ function getNewResponses() {
             },
             "currentState": {
                 "tasks": [
-                    { "ability": null, "issues": [], "isNA": false, "value": "personalCare" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "housekeeping" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "sleep" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "groom" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "dressing" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "prepareBreakfast" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "eatBreakfast" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "travelToWork" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "takeCareOfChildren", "isCaregiving": true },
+                    { "ability": null, "issues": [], "isNA": false, "value": "attendWork" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "runErrands" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "prepareDinner" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "eatDinner" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "indoorChores" },
                     { "ability": null, "issues": [], "isNA": false, "value": "outdoorChores" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "watchingTv" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "banking" },
-                    { "ability": null, "issues": [], "isNA": false, "value": "caregiving", "isCaregiving": true },
-                    { "ability": null, "issues": [], "isNA": false, "value": "alone" }
+                    { "ability": null, "issues": [], "isNA": false, "value": "petCare" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "exercise" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "read" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "watchTv" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "useInternet" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "financialTasks" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "socialActivities" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "volunteering" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "religiousActivities" },
+                    { "ability": null, "issues": [], "isNA": false, "value": "vacation" }
                 ],
                 "caregivingCasInvolved": null,
                 "preAccidentRecreationalActivities": [

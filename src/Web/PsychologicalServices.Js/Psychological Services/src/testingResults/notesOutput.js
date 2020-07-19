@@ -52,6 +52,7 @@ export class NotesOutput {
         this.visualSpatialIssues = [];
         this.sleepIssues = [];
         this.sleepIssueCauses = [];
+        this.safetyConcerns = [];
         this.languageIssues = [];
         this.executiveIssues = [];
         this.inappropriateSocialBehaviors = [];
@@ -169,6 +170,7 @@ export class NotesOutput {
                         this.sleepIssueCauses = this.asArray(data);
                         this.sleepIssueCausesMap = data;
                     }),
+                    this.notesRepository.getSafetyConcerns().then(data => this.safetyConcerns = data),
                     this.notesRepository.getLanguageIssues().then(data => this.languageIssues = data),
                     this.notesRepository.getExecutiveIssues().then(data => this.executiveIssues = data),
                     this.notesRepository.getInappropriateSocialBehaviors().then(data => this.inappropriateSocialBehaviors = data),
@@ -195,10 +197,6 @@ export class NotesOutput {
                     this.notesRepository.getTravelPreferences().then(data => {
                         this.travelPreferences = this.asArray(data);
                         this.travelPreferencesMap = data;
-                    }),
-                    this.notesRepository.getCurrentStateTasks().then(data => {
-                        this.currentStateTasks = this.asArray(data);
-                        this.currentStateTasksMap = data;
                     }),
                     this.notesRepository.getCurrentStateAbilities().then(data => {
                         this.currentStateAbilities = this.asArray(data);
@@ -287,6 +285,11 @@ export class NotesOutput {
             this.name = data.name;
             this.assessment = data.assessment;
             this.responses = data.responses;
+
+            return this.notesRepository.getCurrentStateTasks(this.responses.createdAtVersion).then(data => {
+                this.currentStateTasks = this.asArray(data);
+                this.currentStateTasksMap = data;
+            });
         });
     }
 
@@ -731,11 +734,6 @@ export class NotesOutput {
         return this.noWorries.some(item => item);
     }
 
-    @computedFrom('responses.psychological.worry')
-    get worriesAboutFinances() {
-        return this.yesWorries.some(item => item.isFinances);
-    }
-
     @computedFrom(
         'responses.psychological.hallucinationsAuditory',
         'responses.psychological.hallucinationsVisual',
@@ -833,6 +831,58 @@ export class NotesOutput {
         let data = this.responses.neuropsychological.attention.readingIssues.map(item => this.readingIssuesMap[item]);
 
         return data;
+    }
+
+    getSafetyConcernsForResponses(criteria) {
+        if (!this.responses) { return []; }
+
+        let data = this.responses.neuropsychological.memory.safetyConcerns
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.safetyConcerns[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.memory.safetyConcerns')
+    get selectedSafetyConcerns() {
+        let data = this.getSafetyConcernsForResponses(item => this.isYes(item.response));
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.memory.safetyConcerns')
+    get anySelectedSafetyConcerns() {
+        let any = this.selectedSafetyConcerns.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom('responses.neuropsychological.memory.safetyConcerns')
+    get unselectedSafetyConcerns() {
+        let data = this.getSafetyConcernsForResponses(item => this.isNo(item.response));
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.memory.safetyConcerns')
+    get anyUnselectedSafetyConcerns() {
+        let any = this.unselectedSafetyConcerns.some(item => item);
+
+        return any;
+    }
+
+    @computedFrom('responses.neuropsychological.memory.safetyConcerns')
+    get dontKnowSafetyConcerns() {
+        let data = this.getSafetyConcernsForResponses(item => this.isDontKnow(item.response));
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.memory.safetyConcerns')
+    get anyDontKnowSafetyConcerns() {
+        let any = this.dontKnowSafetyConcerns.some(item => item);
+
+        return any;
     }
 
     getLanguageIssuesForResponses(criteria) {

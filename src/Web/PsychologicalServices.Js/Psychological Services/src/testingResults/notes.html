@@ -1241,22 +1241,6 @@
                     <hr>
                 </template>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    Amount of debt
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.psychological.dontKnowAmountOfDebt" value.bind="true" disabled.bind="!worriesAboutFinances & signal:'worry-changed'" />&nbsp;Don't know&nbsp;
-                    </label>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="amountOfDebt" class="uk-input uk-form-small" value.bind="responses.psychological.amountOfDebt" disabled.bind="(!worriesAboutFinances || responses.psychological.dontKnowAmountOfDebt) & signal:'worry-changed'" />
-                </div>
-
-                <hr>
-
                 <div class="uk-margin-remove uk-width-3-4">
                     Do you currently experience panic attacks?
                 </div>
@@ -1700,11 +1684,11 @@
     
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-4">
                     Do you walk into a room and forget why <u>frequently</u>?
                 </div>
     
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="memoryWorkingWalkIntoRoomAndForgetWhyFrequently" class="uk-radio" checked.bind="responses.neuropsychological.memory.working.walkIntoRoomAndForgetWhyFrequently" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -1712,11 +1696,11 @@
     
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-4">
                     Do you lose track of what you wanted to say <u>frequently</u>?
                 </div>
     
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="memoryWorkingLoseTrackOfWhatYouWantedToSayFrequently" class="uk-radio" checked.bind="responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -1724,11 +1708,11 @@
     
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-4">
                     Do you use any of the following as aids to help you remember?
                 </div>
                 
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="memoryAidsUse" class="uk-radio" checked.bind="responses.neuropsychological.memory.aids.useAids" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -1747,11 +1731,11 @@
     
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-4">
                     Do you have issues recalling your address, DOB, phone #, others names?
                 </div>
     
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="memoryAutobiographicalPersonalInfo" class="uk-radio" checked.bind="responses.neuropsychological.memory.autobiographical.personalInfo" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -1759,11 +1743,11 @@
     
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-4">
                     Have you made any medication errors?
                 </div>
     
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="memoryMedicationErrors" class="uk-radio" checked.bind="responses.neuropsychological.memory.medication.errors" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -1771,11 +1755,11 @@
     
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
+                <div class="uk-margin-remove uk-width-3-4">
                     Do you use a Dosette?
                 </div>
     
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="memoryMedicationUseDosette" class="uk-radio" checked.bind="responses.neuropsychological.memory.medication.usesDosette" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -1783,17 +1767,34 @@
     
                 <hr>
     
-                <div class="uk-margin-remove uk-width-4-5">
-                    Blister packs?
+                <div class="uk-margin-remove uk-width-3-4">
+                    Do you use blister packs?
                 </div>
     
-                <div class="uk-margin-remove uk-width-1-5">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
                         <input type="radio" name="memoryMedicationUseBlisterPacks" class="uk-radio" checked.bind="responses.neuropsychological.memory.medication.usesBlisterPacks" value.bind="response.value" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
+
+                <template repeat.for="i of responses.neuropsychological.memory.safetyConcerns.length">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        ${safetyConcerns[$parent.responses.neuropsychological.memory.safetyConcerns[i].value].description}
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="safetyConcerns-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.neuropsychological.memory.safetyConcerns[i].response" value.bind="response.value" change.delegate="changed('language-issue-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+
+                <hr>
+
             </div>
             
         </fieldset>
@@ -2069,12 +2070,21 @@
 
                 <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-1-4">
                     How much has your weight increased/decreased?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="weightChangeAmount" class="uk-input uk-form-small" value.bind="responses.neuropsychological.physical.weight.changeAmount" disabled.bind="!weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease" blur.delegate="changed('weight-change-amount-changed')" />
+                    <input type="number" step="1" min="0" name="weightChangeAmount" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.weight.changeAmount" disabled.bind="!weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease" blur.delegate="changed('weight-change-amount-changed')" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="radio" name="weightChangeUnits" class="uk-radio" checked.bind="responses.neuropsychological.physical.weight.changeUnits" value="pounds" disabled.bind="!weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease" />&nbsp;Pounds&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="weightChangeUnits" class="uk-radio" checked.bind="responses.neuropsychological.physical.weight.changeUnits" value="kilograms" disabled.bind="!weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease" />&nbsp;Kilograms&nbsp;
+                    </label>
                 </div>
 
                 <hr>
@@ -2127,7 +2137,19 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-3-4">
+                    Would you describe your sleep as being BETTER prior to the accident?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="betterSleepPriorToAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.sleep.betterSleepPriorToAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-4">
                     How much sleep were you obtaining before the accident?
                 </div>
 
@@ -2138,12 +2160,23 @@
                 </div>
                 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="amountOfSleepBeforeAccident" class="uk-input uk-form-medium" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident" />
+                    <input type="number" step="1" min="0" name="amountOfSleepBeforeAccident" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" name="amountOfSleepBeforeAccidentBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident" />&nbsp;Between&nbsp;
+                    </label>                    
+                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepBeforeAccidentBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || !responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
+                    <label>
+                        &nbsp;and&nbsp;
+                    </label>
+                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepBeforeAccidentBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || !responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
                 </div>
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-1-4">
                     How much sleep are you currently obtaining?
                 </div>
 
@@ -2152,9 +2185,20 @@
                         <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent" value.bind="true" />&nbsp;Skip&nbsp;
                     </label>
                 </div>
+                
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="number" step="1" min="0" name="amountOfSleepCurrent" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent || responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween" />
+                </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="amountOfSleepCurrent" class="uk-input uk-form-medium" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent" />
+                    <label>
+                        <input type="checkbox" name="amountOfSleepCurrentBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent" />&nbsp;Between&nbsp;
+                    </label>
+                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepCurrentBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMin" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent || !responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween" />
+                    <label>
+                        &nbsp;and&nbsp;
+                    </label>
+                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepCurrentBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMax" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent || !responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween" />
                 </div>
 
                 <hr>

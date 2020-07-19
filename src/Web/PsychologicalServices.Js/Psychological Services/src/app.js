@@ -113,6 +113,7 @@ export class App {
 			{ route: 'forms/typicalday', name: 'typicalDay', moduleId: 'forms/typicalDay', title: 'Typical Day', nav: true },
 			{ route: 'testingresults/psychological', name: 'psychologicalTestResults', moduleId: 'testingResults/psychological', title: 'Psychological testing results', nav: true },
 			{ route: 'testingresults/notes', name: 'notes', moduleId: 'testingResults/notes', title: 'Notes', nav: true },
+			{ route: 'testingresults/notes/:id', href: '#', name: 'notes', moduleId: 'testingResults/notes', title: 'Notes', nav: true },
 			{ route: 'testingresults/notesOutput', name: 'notesOutput', moduleId: 'testingResults/notesOutput', title: 'Notes Output', nav: true },
 			{ route: 'gose/interview', name: 'goseInterview', moduleId: 'gose/goseInterview', title: 'GOSE', nav: true },
 			{ route: 'phoneLogs', name: 'phoneLogs', moduleId: 'phoneLogs/phoneLogs', title: 'Phone Logs', nav: true, settings: { permissions: [p.SearchPhoneLog] } },

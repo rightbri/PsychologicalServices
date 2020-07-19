@@ -312,7 +312,7 @@
                                     &nbsp;${pronoun.subject | proper} shared that 
                                     <template if.bind="weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].isIncreaseOrDecrease">
                                         <template if.bind="responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'">
-                                            &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)} ${responses.neuropsychological.physical.weight.changeAmount & signal:'weight-change-amount-changed'}
+                                            &nbsp;${weightChangeTypesMap[responses.neuropsychological.physical.weight.changeType].format(self)} ${responses.neuropsychological.physical.weight.changeAmount} ${responses.neuropsychological.physical.weight.changeUnits}
                                         </template>
                                         <template else>
                                             &nbsp;${pronoun.possessiveAdjective} weight has ${responses.neuropsychological.physical.weight.changeType}
@@ -369,6 +369,17 @@
                             </template>
                             &nbsp;issues sleeping.
                         </template>
+
+                        <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
+                            &nbsp;${pronoun.subject | proper} 
+                            <template if.bind="isYes(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
+                                &nbsp;described 
+                            </template>
+                            <template else>
+                                &nbsp;did not describe 
+                            </template>
+                            &nbsp;the quality of ${pronoun.possessiveAdjective} sleep prior to the accident as being better.
+                        </template>
                         
                         <template if.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident">
                             <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
@@ -381,10 +392,24 @@
                         </template>
                         <template else>
                             <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident.value !== null">
-                                &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident}
+                                &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining 
+                                <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween">
+                                    &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin} and ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax} 
+                                </template>
+                                <template else>
+                                    &nbsp;${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident}
+                                </template>
+                                &nbsp;hours of sleep
                                 <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
                                     <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent.value !== null">
-                                        &nbsp;and advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
+                                        &nbsp;and advised that currently ${pronoun.subject} is obtaining 
+                                        <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween">
+                                            &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMin} and ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMax}
+                                        </template>
+                                        <template else>
+                                            &nbsp;${responses.neuropsychological.physical.sleep.amountOfSleepCurrent}
+                                        </template>
+                                        &nbsp;hours of 
                                         <template if.bind="isYes(responses.neuropsychological.physical.sleep.brokenSleep)">
                                             &nbsp;broken
                                         </template>
@@ -520,7 +545,7 @@
                                     &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} has told ${pronoun.possessiveAdjective} doctor about these thoughts.
                                 </template>
                                 <template if.bind="isNo(responses.psychological.selfHarm.toldDoctor.response)">
-                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} has not told ${pronoun.possessiveAdjective} doctor these thoughts.
+                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} has not told ${pronoun.possessiveAdjective} doctor about these thoughts.
                                 </template>
                                 <template if.bind="isDontKnow(responses.psychological.selfHarm.toldDoctor.response)">
                                     &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} does not know if ${pronoun.subject} has told ${pronoun.possessiveAdjective} doctor about these thoughts. 
@@ -676,17 +701,6 @@
                             <template if.bind="(!anyYesWorries && anyNoWorries) & signal:'worry-changed'">
                                 &nbsp;${pronoun.subject | proper} denied worrying about ${pronoun.possessiveAdjective} 
                                 ${noWorries | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'worry-changed'}.
-                            </template>
-                        </template>
-                
-                        <template if.bind="worriesAboutFinances & signal:'worry-changed'">
-                            <template if.bind="responses.psychological.dontKnowAmountOfDebt">
-                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} does not know the amount of debt ${pronoun.subject} currently has.
-                            </template>
-                            <template else>
-                                <template if.bind="responses.psychological.amountOfDebt">
-                                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} has a current debt of ${responses.psychological.amountOfDebt}.
-                                </template>
                             </template>
                         </template>
                 
@@ -1071,11 +1085,32 @@
                             &nbsp;blister packs.
                         </template>
                     </p>
+                    
+                    <p>
+                        <template if.bind="anySelectedSafetyConcerns || anyUnselectedSafetyConcerns || anyDontKnowSafetyConcerns">
+                            When asked about safety concerns, ${gender.title} ${claimant.lastName} 
+                            <template if.bind="anySelectedSafetyConcerns">
+                                &nbsp;shared that ${pronoun.subject} has ${selectedSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", "}}.
+                            </template>
+                            <template if.bind="anyUnselectedSafetyConcerns">
+                                <template if.bind="anySelectedSafetyConcerns">
+                                    &nbsp;${pronoun.subject | proper} then 
+                                </template>
+                                &nbsp;denied having ${unselectedSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", ","connector":"or"}}.
+                            </template>
+                            <template if.bind="anyDontKnowSafetyConcerns">
+                                <template if.bind="anySelectedSafetyConcerns || anyUnselectedSafetyConcerns">
+                                    &nbsp;${pronoun.subject | proper} further 
+                                </template>
+                                &nbsp;reported that ${pronoun.subject} did not know if ${pronoun.subject} has ${dontKnowSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", ","connector":"or"}}.
+                            </template>
+                        </template>
+                    </p>
                 
                     <!-- Linguistic Functioning / Attention -->
                     <p>
                         <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issue-changed'">
-                            When asked about ${pronoun.possessiveAdjective} linguistic functioning ${gender.title} ${claimant.lastName} 
+                            When asked about ${pronoun.possessiveAdjective} linguistic functioning, ${gender.title} ${claimant.lastName} 
                             <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
                                 &nbsp;reported that at the present time ${pronoun.subject} experiences:
                                 &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
