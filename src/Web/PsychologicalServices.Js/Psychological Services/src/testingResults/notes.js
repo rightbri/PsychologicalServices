@@ -5,6 +5,7 @@ import {Context} from 'common/context';
 import {NotesRepository} from 'testingResults/notesRepository';
 import {Notifier} from 'services/notifier';
 import {Scroller} from 'services/scroller';
+import html2canvas from 'html2canvas';
 
 @inject(BindingSignaler, NotesRepository, Context, Notifier, Scroller)
 export class Notes {
@@ -627,5 +628,28 @@ export class Notes {
 
     addCurrentPainArea() {
         this.responses.neuropsychological.physical.pain.currentPainAreas.push("");
+    }
+
+    screenshot() {
+        let fileName = this.claimant.lastName + '_' + this.claimant.firstName + '_' + this.assessment.assessmentId + '.png';
+
+        html2canvas(document.getElementById("notesContent")).then(canvas => {
+            canvas.toBlob(function(blob) {
+                if (navigator.msSaveBlob) {
+                    return navigator.msSaveBlob(blob, fileName);
+                }
+                
+                var blobUrl = window.URL.createObjectURL(blob);
+                var anchor = document.createElement('a');
+                anchor.download = fileName;
+                anchor.href = blobUrl;
+                document.body.appendChild(anchor);
+                anchor.click();
+                document.body.removeChild(anchor);
+            });
+        }).catch(function (error) {
+            console.log(error);
+        	/* This is fired when the promise executes without the DOM */    
+    	});
     }
 }

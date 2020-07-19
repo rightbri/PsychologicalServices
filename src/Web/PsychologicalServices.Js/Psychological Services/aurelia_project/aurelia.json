@@ -216,7 +216,12 @@
         "name": "downloadjs",
         "path": "../node_modules/downloadjs",
         "main": "download.min"
-      }
+      },
+	  {
+		"name": "html2canvas",
+		"path": "../node_modules/html2canvas/dist",
+		"main": "html2canvas.min"
+	  }
         ],
 		"copyFiles": {
 		}

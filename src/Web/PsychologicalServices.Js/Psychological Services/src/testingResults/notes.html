@@ -67,11 +67,15 @@
         <button type="button" class="uk-button uk-button-primary uk-button-small" click.delegate="save()">
             <i class="fa fa-lg fa-save"></i>
         </button>
+        <br>
+        <button type="button" class="uk-button uk-button-secondary uk-button-small" click.delegate="screenshot()">
+            <i class="fa fa-lg fa-camera"></i>
+        </button>
     </div>
     
     <hr if.bind="formVisible" class="print-hide">
 
-    <div class="uk-container" if.bind="formVisible">
+    <div id="notesContent" class="uk-container" if.bind="formVisible">
 
         <fieldset class="uk-fieldset" if.bind="claimant & signal:'claimant-changed'">
             <legend class="uk-legend">Identification</legend>
