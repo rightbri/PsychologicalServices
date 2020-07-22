@@ -62,15 +62,19 @@
         <button type="button" class="uk-button uk-button-primary uk-button-small" click.delegate="save()">
             <i class="fa fa-lg fa-save"></i>
         </button>
+        <br>
+        <button type="button" class="uk-button uk-button-secondary uk-button-small" click.delegate="screenshot()">
+            <i class="fa fa-lg fa-camera"></i>
+        </button>
     </div>
 
     
     <hr if.bind="formVisible">
 
-    <div class="uk-container" if.bind="formVisible">
+    <div id="goseContent" class="uk-container" if.bind="formVisible">
 
         <div class="uk-text-lead uk-text-center">
-            POST DISCHARGE STRUCTURED INTERVIEW FOR GOSE
+            POST DISCHARGE STRUCTURED INTERVIEW FOR GOS-E
         </div>
 
         <div class="uk-child-width-1-1" uk-grid>

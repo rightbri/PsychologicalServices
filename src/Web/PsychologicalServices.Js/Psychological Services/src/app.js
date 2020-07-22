@@ -177,7 +177,7 @@ export class App {
 					{ "name": "Psychological testing results", "route": "/testingResults/psychological", "permissions": [] },
 					{ "name": "Notes", "route": "/testingResults/notes", "permissions": [p.ViewAssessmentNote] },
 					{ "name": "Notes Output", "route": "/testingResults/notesOutput", "permissions": [p.ViewAssessmentNote] },
-					{ "name": "Gose Interview", "route": "/gose/interview", "permissions": [p.ViewGoseInterview] }
+					{ "name": "GOS-E Interview", "route": "/gose/interview", "permissions": [p.ViewGoseInterview] }
 				]
 			},
 			{

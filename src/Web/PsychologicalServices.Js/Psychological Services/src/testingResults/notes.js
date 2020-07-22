@@ -631,7 +631,7 @@ export class Notes {
     }
 
     screenshot() {
-        let fileName = this.claimant.lastName + '_' + this.claimant.firstName + '_' + this.assessment.assessmentId + '.png';
+        let fileName = this.claimant.lastName + '_' + this.claimant.firstName + '_INTERVIEW_NOTES.png';
 
         html2canvas(document.getElementById("notesContent")).then(canvas => {
             canvas.toBlob(function(blob) {
