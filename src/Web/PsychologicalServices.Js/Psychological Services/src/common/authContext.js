@@ -19,9 +19,7 @@ export class AuthContext {
 		
 		gapi.load('auth2', () => {
 			
-			self.auth2 = gapi.auth2.init({
-				client_id: '799270231201-1f7g4ichevt8pup7jmbuqaqgj8j6bcm6.apps.googleusercontent.com'
-			});
+			self.auth2 = gapi.auth2.init();
 			
 			self.auth2.currentUser.listen((user) => {
 				
@@ -30,7 +28,7 @@ export class AuthContext {
 				console.log('signedIn?: ' + signedIn);
 				
 				if (signedIn) {
-					var profile = self.auth2.currentUser.get().getBasicProfile();
+					var profile = user.getBasicProfile();
 				
 					user.email = profile.getEmail();
 					
