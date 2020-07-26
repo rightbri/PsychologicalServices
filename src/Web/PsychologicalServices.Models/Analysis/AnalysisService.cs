@@ -22,6 +22,13 @@ namespace PsychologicalServices.Models.Analysis
             _timezoneService = timezoneService;
         }
 
+        public IEnumerable<ReferralTypeData> GetReferralTypeData(ReferralTypeDataSearchCriteria criteria)
+        {
+            var data = _analysisRepository.GetReferralTypeData(criteria);
+
+            return data;
+        }
+
         public IEnumerable<BookingData> GetBookingData(BookingDataSearchCriteria criteria)
         {
             var data = _analysisRepository.GetBookingData(criteria);

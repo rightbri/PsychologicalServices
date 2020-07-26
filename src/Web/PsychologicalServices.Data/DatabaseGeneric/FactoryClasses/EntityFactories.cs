@@ -1411,7 +1411,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new PhoneLogEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewPhoneLogUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code

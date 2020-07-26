@@ -602,7 +602,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(GoseFamilyAndFriendshipsDisruptionLevelFieldIndex), "GoseFamilyAndFriendshipsDisruptionLevelEntity");
 			this.AddElementFieldInfo("GoseFamilyAndFriendshipsDisruptionLevelEntity", "GoseFamilyAndFriendshipsDisruptionLevelId", typeof(System.Int32), true, false, true, false,  (int)GoseFamilyAndFriendshipsDisruptionLevelFieldIndex.GoseFamilyAndFriendshipsDisruptionLevelId, 0, 0, 10);
-			this.AddElementFieldInfo("GoseFamilyAndFriendshipsDisruptionLevelEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseFamilyAndFriendshipsDisruptionLevelFieldIndex.Description, 50, 0, 0);
+			this.AddElementFieldInfo("GoseFamilyAndFriendshipsDisruptionLevelEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseFamilyAndFriendshipsDisruptionLevelFieldIndex.Description, 100, 0, 0);
 		}
 		/// <summary>Inits GoseInterviewEntity's FieldInfo objects</summary>
 		private void InitGoseInterviewEntityInfos()
@@ -663,7 +663,7 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(GoseWorkRestrictionLevelFieldIndex), "GoseWorkRestrictionLevelEntity");
 			this.AddElementFieldInfo("GoseWorkRestrictionLevelEntity", "GoseWorkRestrictionLevelId", typeof(System.Int32), true, false, true, false,  (int)GoseWorkRestrictionLevelFieldIndex.GoseWorkRestrictionLevelId, 0, 0, 10);
-			this.AddElementFieldInfo("GoseWorkRestrictionLevelEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseWorkRestrictionLevelFieldIndex.Description, 100, 0, 0);
+			this.AddElementFieldInfo("GoseWorkRestrictionLevelEntity", "Description", typeof(System.String), false, false, false, false,  (int)GoseWorkRestrictionLevelFieldIndex.Description, 200, 0, 0);
 		}
 		/// <summary>Inits InvoiceEntity's FieldInfo objects</summary>
 		private void InitInvoiceEntityInfos()

@@ -406,7 +406,7 @@ namespace PsychologicalServices.Data.EntityClasses
 
 		/// <summary> The Description property of the Entity GoseWorkRestrictionLevel<br/><br/></summary>
 		/// <remarks>Mapped on  table field: "GoseWorkRestrictionLevels"."Description"<br/>
-		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 100<br/>
+		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 200<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Description
 		{

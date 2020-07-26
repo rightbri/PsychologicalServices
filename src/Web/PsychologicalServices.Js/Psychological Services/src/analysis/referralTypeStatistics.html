@@ -1,0 +1,183 @@
+<template>
+    <require from="resources/value-converters/boolean"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+	<require from="common/date-picker"></require>
+	<require from="flatpickr/flatpickr.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Referral Type Statistics</legend>
+
+        <form class="uk-form-stacked">
+
+            <div class="uk-margin">
+				<label class="uk-form-label" for="startAppointmentTime">Begin Appointment Date</label>
+				<div class="uk-form-controls">
+					<input id="startAppointmentTime" type="text" class="uk-input" value.bind="startAppointmentTime" date-picker.bind="config.datepickerOptions" />
+				</div>
+			</div>
+
+            <div class="uk-margin">
+				<label class="uk-form-label" for="endAppointmentTime">End Appointment Date</label>
+				<div class="uk-form-controls">
+					<input id="endAppointmentTime" type="text" class="uk-input" value.bind="endAppointmentTime" date-picker.bind="config.datepickerOptions" />
+				</div>
+            </div>
+            
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div if.bind="referralTypeData">
+
+    <ul uk-tab="swiping: false">
+        <li>
+            <a href="#" click.delegate="showTab(0)">Overall</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(1)">By Month</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(2)">By Referral Type</a>
+        </li>
+        <li>
+            <a href="#" click.delegate="showTab(3)">By Referral Type by Month</a>
+        </li>
+    </ul>
+
+    <ul class="uk-switcher">
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 0">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover">
+                    <thead>
+                        <tr>
+                            <th># Assesments</th>
+                            <th># Plaintiff</th>
+                            <th>% Plaintiff</th>
+                            <th># Defense</th>
+                            <th>% Defense</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${total.assessmentCount | numeric:'0,0'}</td>
+                            <td>${total.plaintiffCount | numeric:'0,0'}</td>
+                            <td>${total.percentPlaintiff | numeric:'0.00%'}</td>
+                            <td>${total.defenseCount | numeric:'0,0'}</td>
+                            <td>${total.percentDefense | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 1">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th># Assesments</th>
+                            <th>% Assesments</th>
+                            <th># Plaintiff</th>
+                            <th>% Plaintiff</th>
+                            <th># Defense</th>
+                            <th>% Defense</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="month of byMonth | sortArray:[{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                            <td>${month.year}</td>
+                            <td>${month.monthName}</td>
+                            <td>${month.assessmentCount | numeric:'0,0'}</td>
+                            <td>${month.percentAssessments | numeric:'0.00%'}</td>
+                            <td>${month.plaintiffCount | numeric:'0,0'}</td>
+                            <td>${month.percentPlaintiff | numeric:'0.00%'}</td>
+                            <td>${month.defenseCount | numeric:'0,0'}</td>
+                            <td>${month.percentDefense | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 2">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Referral Type</th>
+                            <th># Assesments</th>
+                            <th>Overall % Assesments</th>
+                            <th># Plaintiff</th>
+                            <th>% Plaintiff</th>
+                            <th># Defense</th>
+                            <th>% Defense</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="referralType of byReferralType | sortArray:[{ property: 'referralType', direction: 'asc' }]">
+                            <td class="uk-table-shrink">${referralType.referralType}</td>
+                            <td>${referralType.assessmentCount | numeric:'0,0'}</td>
+                            <td>${referralType.percentAssessments | numeric:'0.00%'}</td>
+                            <td>${referralType.plaintiffCount | numeric:'0,0'}</td>
+                            <td>${referralType.percentPlaintiff | numeric:'0.00%'}</td>
+                            <td>${referralType.defenseCount | numeric:'0,0'}</td>
+                            <td>${referralType.percentDefense | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 3">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped uk-table-hover" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Referral Type</th>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th># Assesments</th>
+                            <th>% Assesments of Month</th>
+                            <th># Plaintiff</th>
+                            <th>% Plaintiff of Month</th>
+                            <th># Defense</th>
+                            <th>% Defense of Month</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="referralType of byReferralTypeByMonth | sortArray:[{ property: 'referralType', direction: 'asc' },{ property: 'year', direction: 'asc' },{ property: 'month', direction: 'asc' }]">
+                            <td class="uk-table-shrink">${referralType.previous.referralType != referralType.referralType ? referralType.referralType : ''}</td>
+                            <td>${referralType.year}</td>
+                            <td>${referralType.monthName}</td>
+                            <td>${referralType.assessmentCount | numeric:'0,0'}</td>
+                            <td>${referralType.percentAssessments | numeric:'0.00%'}</td>
+                            <td>${referralType.plaintiffCount | numeric:'0,0'}</td>
+                            <td>${referralType.percentPlaintiff | numeric:'0.00%'}</td>
+                            <td>${referralType.defenseCount | numeric:'0,0'}</td>
+                            <td>${referralType.percentDefense | numeric:'0.00%'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+    
+</div>
+
+</template>

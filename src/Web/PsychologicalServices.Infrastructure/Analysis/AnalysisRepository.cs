@@ -19,6 +19,29 @@ namespace PsychologicalServices.Infrastructure.Analysis
         {
         }
 
+        public IEnumerable<ReferralTypeData> GetReferralTypeData(ReferralTypeDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.ReferralTypeData(criteria.CompanyId, criteria.StartAppointmentTime, criteria.EndAppointmentTime, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new ReferralTypeData
+                        {
+                            AssessmentId = Convert.ToInt32(row["AssessmentId"]),
+                            AppointmentTime = (DateTimeOffset)row["AppointmentTime"],
+                            IsDefense = Convert.ToBoolean(row["IsDefense"]),
+                            IsPlaintiff = Convert.ToBoolean(row["IsPlaintiff"]),
+                            ReferralType = Convert.ToString(row["ReferralType"]),
+                            Year = Convert.ToInt32(row["Year"]),
+                            Month = Convert.ToInt32(row["Month"]),
+                        }
+                    );
+            }
+        }
+
         public IEnumerable<BookingData> GetBookingData(BookingDataSearchCriteria criteria)
         {
             using (var adapter = AdapterFactory.CreateAdapter())

@@ -551,7 +551,7 @@
       </EntityDefinition>
       <EntityDefinition Name="GoseFamilyAndFriendshipsDisruptionLevel" ObjectID="06ba85c5-0cbb-4f12-8431-eb67bb992de6">
         <Fields>
-          <Field Name="Description" Type="string" MaxLength="50" FieldIndex="1" />
+          <Field Name="Description" Type="string" MaxLength="100" FieldIndex="1" />
           <Field Name="GoseFamilyAndFriendshipsDisruptionLevelId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
         </Fields>
       </EntityDefinition>
@@ -607,7 +607,7 @@
       </EntityDefinition>
       <EntityDefinition Name="GoseWorkRestrictionLevel" ObjectID="f519979c-2436-4cf1-a346-e7548c65713d">
         <Fields>
-          <Field Name="Description" Type="string" MaxLength="100" FieldIndex="1" />
+          <Field Name="Description" Type="string" MaxLength="200" FieldIndex="1" />
           <Field Name="GoseWorkRestrictionLevelId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
         </Fields>
       </EntityDefinition>
@@ -1875,6 +1875,13 @@
         <Parameter Name="SearchStart" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
       </Parameters>
     </SPCallDefinition>
+    <SPCallDefinition Name="ReferralTypeData" ObjectID="557bf25c-74e3-4a04-b485-f1fe4fe5a39d">
+      <Parameters>
+        <Parameter Name="CompanyId" Type="int" Precision="10" />
+        <Parameter Name="EndDateSearch" Type="datetimeoffset" IsOptional="true" />
+        <Parameter Name="StartDateSearch" Type="datetimeoffset" IsOptional="true" />
+      </Parameters>
+    </SPCallDefinition>
     <SPCallDefinition Name="ResearchConsentObtainedClaimantData" ObjectID="615ae04e-c38f-44b2-82d1-6483a3ac3d9c">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" Precision="10" />
@@ -1897,7 +1904,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-07-09T00:20:02.6247111Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-07-26T03:02:21.4095325Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2363,7 +2370,7 @@
                   <PkConstraintName Name="PK_GoseFamilyAndFriendshipsDisruptionLevels" />
                   <Fields>
                     <Field Name="GoseFamilyAndFriendshipsDisruptionLevelId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
-                    <Field Name="Description" Ordinal="2" DbType="24" Length="50" />
+                    <Field Name="Description" Ordinal="2" DbType="24" Length="100" />
                   </Fields>
                 </Table>
                 <Table Name="GoseInterviews">
@@ -2424,7 +2431,7 @@
                   <PkConstraintName Name="PK_GoseWorkRestrictionLevels" />
                   <Fields>
                     <Field Name="GoseWorkRestrictionLevelId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
-                    <Field Name="Description" Ordinal="2" DbType="24" Length="100" />
+                    <Field Name="Description" Ordinal="2" DbType="24" Length="200" />
                   </Fields>
                 </Table>
                 <Table Name="InvoiceDocuments">
@@ -3058,6 +3065,26 @@
                         <Field Name="AppointmentTime" Ordinal="2" DbType="30" />
                         <Field Name="Claimant" Ordinal="3" DbType="12" Length="101" />
                         <Field Name="ReferralSource" Ordinal="4" DbType="12" Length="100" />
+                      </Fields>
+                    </Resultset>
+                  </Resultsets>
+                </StoredProcedure>
+                <StoredProcedure Name="ReferralTypeData" NumberOfResultsets="1">
+                  <Parameters>
+                    <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                    <Parameter Name="@startDateSearch" Direction="1" Ordinal="2" DbType="30" />
+                    <Parameter Name="@endDateSearch" Direction="1" Ordinal="3" DbType="30" />
+                  </Parameters>
+                  <Resultsets>
+                    <Resultset Name="Resultset1">
+                      <Fields>
+                        <Field Name="AssessmentId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="AppointmentTime" Ordinal="2" DbType="30" />
+                        <Field Name="Year" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="Month" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="IsPlaintiff" Ordinal="5" DbType="8" Precision="10" />
+                        <Field Name="IsDefense" Ordinal="6" DbType="8" Precision="10" />
+                        <Field Name="ReferralType" Ordinal="7" DbType="24" Length="9" />
                       </Fields>
                     </Resultset>
                   </Resultsets>
@@ -4679,6 +4706,13 @@
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
             <FieldMapping FieldName="DaysOutstanding" TargetFieldName="@daysOutstanding" />
             <FieldMapping FieldName="SearchStart" TargetFieldName="@searchStart" />
+          </FieldMappings>
+        </SPCallMapping>
+        <SPCallMapping SPCallName=":ReferralTypeData" TargetName="PsychologicalServices:dbo:ReferralTypeData">
+          <FieldMappings>
+            <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
+            <FieldMapping FieldName="EndDateSearch" TargetFieldName="@endDateSearch" />
+            <FieldMapping FieldName="StartDateSearch" TargetFieldName="@startDateSearch" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":ResearchConsentObtainedClaimantData" TargetName="PsychologicalServices:dbo:ResearchConsentObtainedClaimantData">

@@ -92,6 +92,7 @@ export class App {
 			{ route: 'analysis/completion-statistics', name: 'completionStatistics', moduleId: 'analysis/completionStatistics', title: 'Completion Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/arbitration-statistics', name: 'arbitrationStatistics', moduleId: 'analysis/arbitrationStatistics', title: 'Arbitration Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/assessment-type-counts', name: 'assessmentTypeCounts', moduleId: 'analysis/assessmentTypeCounts', title: 'Assessment Type Counts', nav: true, settings: { permissions: [p.ViewReport] } },
+			{ route: 'analysis/referral-type-statistics', name: 'referralTypeStatistics', moduleId: 'analysis/referralTypeStatistics', title: 'Referral Type Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/credibility-statistics', name: 'credibilityStatistics', moduleId: 'analysis/credibilityStatistics', title: 'Credibility Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/non-ab-completions', name: 'nonAbCompletionData', moduleId: 'analysis/nonAbCompletionData', title: 'Non AB Completions', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/research-consent-obtained-claimants', name: 'researchConsentObtainedClaimants', moduleId: 'analysis/researchConsentObtainedClaimants', title: 'Research Consent Obtained Claimants', nav: true, settings: { permissions: [p.ViewReport] } },
@@ -217,6 +218,7 @@ export class App {
 				"items": [
 					{ "name": "Arbitration Statistics", "route": "/analysis/arbitration-statistics", "permissions": [p.ViewReport] },
 					{ "name": "Assessment Type Counts", "route": "/analysis/assessment-type-counts", "permissions": [p.ViewReport] },
+					{ "name": "Referral Type Statistics", "route": "/analysis/referral-type-statistics", "permissions": [p.ViewReport] },
 					{ "name": "Booking Statistics", "route": "/analysis/booking-statistics", "permissions": [p.ViewReport] },
 					{ "name": "Cancellation Statistics", "route": "/analysis/cancellation-statistics", "permissions": [p.ViewReport] },
 					{ "name": "Completion Statistics", "route": "/analysis/completion-statistics", "permissions": [p.ViewReport] },

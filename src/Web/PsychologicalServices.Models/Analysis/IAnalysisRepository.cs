@@ -5,6 +5,8 @@ namespace PsychologicalServices.Models.Analysis
 {
     public interface IAnalysisRepository
     {
+        IEnumerable<ReferralTypeData> GetReferralTypeData(ReferralTypeDataSearchCriteria criteria);
+
         IEnumerable<BookingData> GetBookingData(BookingDataSearchCriteria criteria);
 
         IEnumerable<CancellationData> GetCancellationData(CancellationDataSearchCriteria criteria);

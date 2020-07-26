@@ -640,7 +640,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		{
 			this.AddElementMapping("GoseFamilyAndFriendshipsDisruptionLevelEntity", @"PsychologicalServices", @"dbo", "GoseFamilyAndFriendshipsDisruptionLevels", 2, 0);
 			this.AddElementFieldMapping("GoseFamilyAndFriendshipsDisruptionLevelEntity", "GoseFamilyAndFriendshipsDisruptionLevelId", "GoseFamilyAndFriendshipsDisruptionLevelId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
-			this.AddElementFieldMapping("GoseFamilyAndFriendshipsDisruptionLevelEntity", "Description", "Description", false, "VarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
+			this.AddElementFieldMapping("GoseFamilyAndFriendshipsDisruptionLevelEntity", "Description", "Description", false, "VarChar", 100, 0, 0, false, "", null, typeof(System.String), 1);
 		}
 
 		/// <summary>Inits GoseInterviewEntity's mappings</summary>
@@ -706,7 +706,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		{
 			this.AddElementMapping("GoseWorkRestrictionLevelEntity", @"PsychologicalServices", @"dbo", "GoseWorkRestrictionLevels", 2, 0);
 			this.AddElementFieldMapping("GoseWorkRestrictionLevelEntity", "GoseWorkRestrictionLevelId", "GoseWorkRestrictionLevelId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
-			this.AddElementFieldMapping("GoseWorkRestrictionLevelEntity", "Description", "Description", false, "VarChar", 100, 0, 0, false, "", null, typeof(System.String), 1);
+			this.AddElementFieldMapping("GoseWorkRestrictionLevelEntity", "Description", "Description", false, "VarChar", 200, 0, 0, false, "", null, typeof(System.String), 1);
 		}
 
 		/// <summary>Inits InvoiceEntity's mappings</summary>

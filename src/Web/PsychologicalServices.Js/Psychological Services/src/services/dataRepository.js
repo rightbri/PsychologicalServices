@@ -288,6 +288,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'nonabcompletiondata');
 	}
 
+	searchReferralTypeData(criteria) {
+		return this.searchBasic(criteria, 'referraltypedata');
+	}
+
 	searchBookingData(criteria) {
 		return this.searchBasic(criteria, 'bookingdata');
 	}
