@@ -1090,19 +1090,19 @@
                         <template if.bind="anySelectedSafetyConcerns || anyUnselectedSafetyConcerns || anyDontKnowSafetyConcerns">
                             When asked about safety concerns, ${gender.title} ${claimant.lastName} 
                             <template if.bind="anySelectedSafetyConcerns">
-                                &nbsp;shared that ${pronoun.subject} has ${selectedSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", "}}.
+                                &nbsp;described ${selectedSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", "}}.
                             </template>
                             <template if.bind="anyUnselectedSafetyConcerns">
                                 <template if.bind="anySelectedSafetyConcerns">
                                     &nbsp;${pronoun.subject | proper} then 
                                 </template>
-                                &nbsp;denied having ${unselectedSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", ","connector":"or"}}.
+                                &nbsp;denied ever ${unselectedSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", ","connector":"or"}}.
                             </template>
                             <template if.bind="anyDontKnowSafetyConcerns">
                                 <template if.bind="anySelectedSafetyConcerns || anyUnselectedSafetyConcerns">
                                     &nbsp;${pronoun.subject | proper} further 
                                 </template>
-                                &nbsp;reported that ${pronoun.subject} did not know if ${pronoun.subject} has ${dontKnowSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":", ","connector":"or"}}.
+                                &nbsp;reported that ${pronoun.subject} did not know if ${pronoun.subject} has ${dontKnowSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContextPast,"delimiter":", ","connector":"or"}}.
                             </template>
                         </template>
                     </p>
@@ -1477,7 +1477,17 @@
                         </template>
     
                         <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
-                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada & signal:'arrival-time-changed'}.
+                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada}.
+                        </template>
+                        <template if.bind="responses.personalHistory.arrivalInCanadaType">
+                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada 
+                            <template if.bind="responses.personalHistory.arrivalInCanadaType === 'year'">
+                                &nbsp;in ${responses.personalHistory.arrivalInCanadaYear}
+                            </template>
+                            <template if.bind="responses.personalHistory.arrivalInCanadaType === 'age'">
+                                &nbsp;when ${pronoun.subject} was ${responses.personalHistory.arrivalInCanadaAge} years old
+                            </template>
+                            .
                         </template>
                     </p>
                 </div>
@@ -1764,7 +1774,7 @@
                                 <template else>
                                     &nbsp;${pronoun.subject}
                                 </template>
-                                &nbsp;denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                                &nbsp;then denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
                             </template>
                         </template>
                     </p>

@@ -308,10 +308,10 @@ export class NotesRepository {
 
     getSafetyConcerns() {
         let data = {
-            "leftStoveOn": { "description": "Have you left the stove on?", format: function(context) { return `left the stove on`; } },
-            "leftOvenOn": { "description": "Have you left the oven on?", format: function(context) { return `left the oven on`; } },
-            "leftKeysInDoor": { "description": "Have you left keys in the door?", format: function(context) { return `left keys in the door`; } },
-            "leftDoorUnlocked": { "description": "Have you accidentally left the door unlocked?", format: function(context) { return `accidentally left the door unlocked`; } }
+            "leftStoveOn": { "description": "Have you left the stove on?", format: function(context) { return `leaving the stove on`; }, formatPast: function(context) { return `left the stove on`; } },
+            "leftOvenOn": { "description": "Have you left the oven on?", format: function(context) { return `leaving the oven on`; }, formatPast: function(context) { return `left the oven on`; } },
+            "leftKeysInDoor": { "description": "Have you left keys in the door?", format: function(context) { return `leaving keys in the door`; }, formatPast: function(context) { return `left keys in the door`; } },
+            "leftDoorUnlocked": { "description": "Have you accidentally left the door unlocked?", format: function(context) { return `accidentally leaving the door unlocked`; }, formatPast: function(context) { return `accidentally left the door unlocked`; } }
         };
 
         return getPromise(data);
@@ -433,7 +433,7 @@ export class NotesRepository {
                 "groom": { "description": "Grooming  (Bathing, brushing teeth, shaving) ", "value": "groom" },
                 "dressing": { "description": "Dressing (pick your clothes, dressing/undressing yourself etc)", "value": "dressing" },
                 "prepareBreakfast": { "description": "Prepare Breakfast/Lunch", "value": "prepareBreakfast" },
-                "eatBreakfast": { "description": "Eat Breakfast/lunch", "value": "eatBreakfast" },
+                "eatBreakfast": { "description": "Eat Breakfast/Lunch", "value": "eatBreakfast" },
                 "travelToWork": { "description": "Travel to and from work/school", "value": "travelToWork" },
                 "takeCareOfChildren": { "description": "Take care of the children/spending time with them", "value": "takeCareOfChildren" },
                 "attendWork": { "description": "Work/Attend school", "value": "attendWork" },
@@ -443,7 +443,7 @@ export class NotesRepository {
                 "indoorChores": { "description": "Indoor Household chores (dishes, laundry) ", "value": "indoorChores" },
                 "outdoorChores": { "description": "Outdoor Chores (Gardening/Snow removal)", "value": "outdoorChores" },
                 "petCare": { "description": "Taking care of any pets/animals", "value": "petCare" },
-                "exercise": { "description": "Exercise/Work out/be active", "value": "exercise" },
+                "exercise": { "description": "Exercise/Work out/Be active", "value": "exercise" },
                 "read": { "description": "Reading", "value": "read" },
                 "watchTv": { "description": "Watching television/movies ", "value": "watchTv" },
                 "useInternet": { "description": "Use Internet/Send and get Emails/Text Messages", "value": "useInternet" },
@@ -693,7 +693,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "19";
+    return "20";
 }
 
 function upgrade(responses, toVersion) {
@@ -981,6 +981,20 @@ function upgrade_18_to_19(responses) {
     return responses;
 }
 
+function upgrade_19_to_20(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.personalHistory.hasOwnProperty('arrivalInCanadaType')) {
+        responses.personalHistory.arrivalInCanadaType = newResponses.personalHistory.arrivalInCanadaType;
+        responses.personalHistory.arrivalInCanadaYear = newResponses.personalHistory.arrivalInCanadaYear;
+        responses.personalHistory.arrivalInCanadaAge = newResponses.personalHistory.arrivalInCanadaAge;
+    }
+
+    responses.version = "20";
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
@@ -1155,7 +1169,9 @@ function getNewResponses() {
         ],
         "personalHistory": {
             "locationOfBirth": null,
-            "timeOfArrivalInCanada": null,
+            "arrivalInCanadaType": null,
+            "arrivalInCanadaYear": null,
+            "arrivalInCanadaAge": null,
             "languages": [""],
             "growingUp": {
                 "abuse": {

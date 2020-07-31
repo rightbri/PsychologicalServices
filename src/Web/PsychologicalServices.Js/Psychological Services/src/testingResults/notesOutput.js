@@ -87,6 +87,10 @@ export class NotesOutput {
             return this.getItemValueForContext(item, this);
         }.bind(this);
 
+        this.getItemValueForCurrentContextPast = function(item) {
+            return this.getItemValueForContextPast(item, this);
+        }.bind(this);
+
         this.getFamilyNeurologicalOrPsychiatricDiseasesTextForCurrentContext = function(item) {
             return this.getFamilyNeurologicalOrPsychiatricDiseasesTextForContext(item, this);
         }.bind(this);
@@ -1347,6 +1351,19 @@ export class NotesOutput {
                 : isFunction(item.value)
                     ? item.value(context)
                     : item.value;
+        }
+        return "";
+    }
+
+    getItemValueForContextPast(item, context) {
+        if (item) {
+            return isFunction(item.formatPast)
+                ? item.formatPast(context)
+                : isFunction(item.format)
+                    ? item.format(context)
+                    : isFunction(item.value)
+                        ? item.value(context)
+                        : item.value;
         }
         return "";
     }

@@ -2518,10 +2518,26 @@
                     If applicable, when did you come to Canada?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" input.delegate="changed('arrival-time-changed') & debounce:500" />
-                </div>
-
+                <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" input.delegate="changed('arrival-time-changed') & debounce:500" />
+                    </div>
+                </template>
+                <template else>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="radio" name="arrivalInCanadaOption" class="uk-radio" checked.bind="responses.personalHistory.arrivalInCanadaType" value="year" />&nbsp;Year&nbsp;
+                        </label>
+                        <input type="number" min="1900" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.arrivalInCanadaYear" disabled.bind="responses.personalHistory.arrivalInCanadaType !== 'year'" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="radio" name="arrivalInCanadaOption" class="uk-radio" checked.bind="responses.personalHistory.arrivalInCanadaType" value="age" />&nbsp;Age (in years)&nbsp;
+                        </label>
+                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.arrivalInCanadaAge" disabled.bind="responses.personalHistory.arrivalInCanadaType !== 'age'" />
+                    </div>
+                </template>
+                
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-4">
@@ -3412,7 +3428,7 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    Do you feel that you can return to work in your current state?
+                    Do you feel that you can return to pre-accident hours and duties in your current state?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
