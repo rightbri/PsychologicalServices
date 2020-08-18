@@ -83,10 +83,10 @@ export class NotesRepository {
 
     getYesNoDontKnow() {
         let data = {
-            "yes": { "description": "Yes", "value": "yes", "isYes": true },
-            "no": { "description": "No", "value": "no", "isNo": true },
-            "dontKnow": { "description": "DK", "value": "dontKnow", "isDontKnow": true },
-            "skip": { "description": "Skip", "value": "skip", "isSkip": true }
+            "yes": { "description": "Yes", "output": "Yes", "value": "yes", "isYes": true },
+            "no": { "description": "No", "output": "No", "value": "no", "isNo": true },
+            "dontKnow": { "description": "DK", "output": "Don't know", "value": "dontKnow", "isDontKnow": true },
+            "skip": { "description": "Skip", "output": "", "value": "skip", "isSkip": true }
         };
 
         return getPromise(data);
@@ -525,8 +525,8 @@ export class NotesRepository {
 
     getTreatmentPrograms() {
         let data = {
-            "painProgram": { "description": "Pain Program", "past": null, "current": null, "beneficial": null, "value": "painProgram", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
-            "driversRehab": { "description": "Driver's Rehab", "past": null, "current": null, "beneficial": null, "value": "driversRehab", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
+            "painProgram": { "description": "Pain Program", "value": "painProgram", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
+            "driversRehab": { "description": "Driver's Rehab", "value": "driversRehab", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
         };
 
         return getPromise(data);
@@ -654,6 +654,25 @@ export class NotesRepository {
 
         return getPromise(data);
     }
+
+    getMonths() {
+        let data = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+
+        return getPromise(data);
+    }
 }
 
 function getPromise(data) {
@@ -693,7 +712,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "20";
+    return "22";
 }
 
 function upgrade(responses, toVersion) {
@@ -995,6 +1014,29 @@ function upgrade_19_to_20(responses) {
     return responses;
 }
 
+function upgrade_20_to_21(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.neuropsychological.physical.hasOwnProperty('other')) {
+        responses.neuropsychological.physical.other = {
+            "anyIssues": newResponses.neuropsychological.physical.other.anyIssues,
+            "issues": newResponses.neuropsychological.physical.other.issues
+        };
+    }
+
+    responses.version = "21";
+
+    return responses;
+}
+
+function upgrade_21_to_22(responses) {
+    let newResponses = getNewResponses();
+
+    responses.version = newResponses.version;
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
@@ -1009,6 +1051,7 @@ function getNewResponses() {
             },
             "assistance": {
                 "wearsGlasses": null,
+                "usesDevices": null,
                 "devices": null,
                 "personnel": null
             }
@@ -1230,6 +1273,7 @@ function getNewResponses() {
                 "status": null,
                 "marriageLength": { "value": null, "unit": null },
                 "partnerAge": null,
+                "partnerJobTitleOrIndustry": null,
                 "partnerJobTitle": null,
                 "isAbusive": null,
                 "previousRelationshipAbusive": null,
@@ -1615,6 +1659,10 @@ function getNewResponses() {
                     "currentPainAreas": [""],
                     "experiencePainPriorToAccident": null
                 },
+                "other": {
+                    "anyIssues": null,
+                    "issues": [""]
+                },
                 "changes": {
                     "changeInCognition": null,
                     "changeInMood": null
@@ -1658,21 +1706,125 @@ function getNewResponses() {
         "treatment": {
             "initial": {
                 "providers": [
-                    { "past": null, "current": null, "beneficial": null, "value": "physiotherapist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "chiropractor" },
-                    { "past": null, "current": null, "beneficial": null, "value": "massageTherapist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "acupuncturist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "osteopathicProvider" },
-                    { "past": null, "current": null, "beneficial": null, "value": "naturopathicProvider" },
-                    { "past": null, "current": null, "beneficial": null, "value": "occupationalTherapist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "rehabilitationWorker" },
-                    { "past": null, "current": null, "beneficial": null, "value": "supportWorker" },
-                    { "past": null, "current": null, "beneficial": null, "value": "speechLanguagePathologist" },
-                    { "past": null, "current": null, "beneficial": null, "value": "caseManager" }
+                    { 
+                        "beneficial": null, 
+                        "value": "physiotherapist",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "chiropractor",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "massageTherapist",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "acupuncturist",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "osteopathicProvider",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "naturopathicProvider",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "occupationalTherapist",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "rehabilitationWorker",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "supportWorker",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "speechLanguagePathologist",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "caseManager",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    }
                 ],
                 "programs": [
-                    { "past": null, "current": null, "beneficial": null, "value": "painProgram" },
-                    { "past": null, "current": null, "beneficial": null, "value": "driversRehab" }
+                    {
+                        "isPainProgram": true,
+                        "beneficial": null, 
+                        "value": "painProgram",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "beneficial": null, 
+                        "value": "driversRehab",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    }
                 ]
             }
         }

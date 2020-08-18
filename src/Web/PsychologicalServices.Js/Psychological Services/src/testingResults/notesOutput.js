@@ -329,19 +329,31 @@ export class NotesOutput {
     }
 
     isYes(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isYes;
+        return value !== undefined &&
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isYes;
     }
 
     isNo(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isNo;
+        return value !== undefined &&
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isNo;
     }
 
     isDontKnow(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isDontKnow;
+        return value !== undefined &&
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isDontKnow;
     }
 
     isSkip(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isSkip;
+        return value !== undefined &&
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isSkip;
     }
 
     getMatch(values, value) {
@@ -1181,6 +1193,15 @@ export class NotesOutput {
         return data;
     }
 
+    @computedFrom('this.responses.treatment.initial.providers','this.responses.treatment.initial.programs')
+    get anySelectedTreatmentProvidersOrPrograms() {
+        let providers = this.getTreatmentProvidersForResponses(item => item.sinceAccident !== null && this.isYes(item.sinceAccident));
+
+        let programs = this.getTreatmentProgramsForResponses(item => item.sinceAccident !== null && this.isYes(item.sinceAccident));
+
+        return providers.some(item => item) || programs.some(item => item);
+    }
+
     @computedFrom('this.responses.treatment.initial.providers')
     get selectedCurrentTreatmentProviders() {
         return this.getTreatmentProvidersForResponses(item => item.current !== null && this.isYes(item.current.response));
@@ -1313,6 +1334,15 @@ export class NotesOutput {
         let areas = this.responses.neuropsychological.physical.pain.currentPainAreas.filter(x => x && x.length > 0);
 
         return areas && areas.length > 1;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.other.issues')
+    get anyOtherPhysicalIssues() {
+        if (!this.responses) { return false; }
+
+        let issues = this.responses.neuropsychological.physical.other.issues.filter(x => x && x.length > 0);
+
+        return issues && issues.length > 0;
     }
 
     @computedFrom(

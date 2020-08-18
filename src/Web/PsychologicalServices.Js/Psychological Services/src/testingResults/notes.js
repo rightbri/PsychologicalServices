@@ -62,6 +62,7 @@ export class Notes {
         this.travelAbilities = [];
         this.treatmentPrograms = [];
         this.treatmentProviders = [];
+        this.months = [];
         this.initialInjuriesAndSymptoms = [];
         this.studentSelfRatings = [];
         this.medicalConditions = [];
@@ -195,6 +196,7 @@ export class Notes {
                         this.treatmentProviders = this.asArray(data);
                         this.treatmentProvidersMap = data;
                     }),
+                    this.notesRepository.getMonths().then(data => this.months = data),
                     this.notesRepository.getInitialInjuriesAndSymptoms().then(data => {
                         this.initialInjuriesAndSymptoms = this.asArray(data);
                         this.initialInjuriesAndSymptomsMap = data;
@@ -358,7 +360,10 @@ export class Notes {
     }
 
     isDontKnow(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isDontKnow;
+        return value !== undefined &&
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isDontKnow;
     }
 
     isSkip(value) {
@@ -628,6 +633,10 @@ export class Notes {
 
     addCurrentPainArea() {
         this.responses.neuropsychological.physical.pain.currentPainAreas.push("");
+    }
+
+    addOtherPhysicalIssue() {
+        this.responses.neuropsychological.physical.other.issues.push("");
     }
 
     screenshot() {

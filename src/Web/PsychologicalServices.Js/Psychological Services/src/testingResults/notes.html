@@ -188,8 +188,13 @@
                     Assistive devices:
                 </div>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <input type="text" name="assistanceDevices" class="uk-input uk-form-small" value.bind="responses.identification.assistance.devices" />
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="usesAssistanceDevices" class="uk-radio" checked.bind="$parent.responses.identification.assistance.usesDevices" value.bind="response.value" change.delegate="changed('assistance-uses-devices-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+                <div class="uk-margin-remove uk-width-1-2">
+                    <input type="text" name="assistanceDevices" class="uk-input uk-form-small" value.bind="responses.identification.assistance.devices" disabled.bind="!isYes(responses.identification.assistance.usesDevices) & signal: 'assistance-uses-devices-changed'" />
                 </div>
         
                 <hr>
@@ -696,50 +701,52 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    Name of Family doctor
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" name="accidentFamilyDoctorName" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.familyDoctorName" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    How long has this been your family doctor?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" name="accidentFamilyDoctorHowLong" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.familyDoctorHowLong" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    Since the accident have you seen your family doctor?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentSawFamilyDoctorSinceAccident" class="uk-radio" checked.bind="$parent.responses.accidentDetails.sawFamilyDoctorSinceAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    Was psychological treatment recommended?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentPsychologicalTreatmentRecommended" class="uk-radio" checked.bind="$parent.responses.accidentDetails.psychologicalTreatmentRecommended" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
+                <template if.bind="isYes(responses.accidentDetails.haveFamilyDoctor)">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        Name of Family doctor
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="text" name="accidentFamilyDoctorName" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.familyDoctorName" />
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        How long has this been your family doctor?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="text" name="accidentFamilyDoctorHowLong" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.familyDoctorHowLong" />
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        Since the accident have you seen your family doctor?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentSawFamilyDoctorSinceAccident" class="uk-radio" checked.bind="$parent.responses.accidentDetails.sawFamilyDoctorSinceAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        Was psychological treatment recommended?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentPsychologicalTreatmentRecommended" class="uk-radio" checked.bind="$parent.responses.accidentDetails.psychologicalTreatmentRecommended" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-3-4">
                     Have you had any brain imaging investigations?
                 </div>
@@ -943,62 +950,395 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4"></div>
-                <div class="uk-margin-remove uk-width-1-4">In the past?</div>
-                <div class="uk-margin-remove uk-width-1-4">Currently?</div>
-                <div class="uk-margin-remove uk-width-1-4">Beneficial?</div>
-                <hr>
-
-                <template repeat.for="i of responses.treatment.initial.providers.length">
-                    <div class="uk-margin-remove uk-width-1-4">
-                        ${treatmentProvidersMap[$parent.responses.treatment.initial.providers[i].value].description}
-                    </div>
-                    
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <label repeat.for="response of yesNoDontKnow">
-                            <input type="radio" name="pastTreatmentProvider-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].past.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
-
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <label repeat.for="response of yesNoDontKnow">
-                            <input type="radio" name="currentTreatmentProvider-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].current.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
-
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <label repeat.for="response of yesNoDontKnow">
-                            <input type="radio" name="beneficialTreatmentProvider-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].beneficial.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
-
+                <template if.bind="responses.createdAtVersion < 22">
+                    <div class="uk-margin-remove uk-width-1-4"></div>
+                    <div class="uk-margin-remove uk-width-1-4">In the past?</div>
+                    <div class="uk-margin-remove uk-width-1-4">Currently?</div>
+                    <div class="uk-margin-remove uk-width-1-4">Beneficial?</div>
                     <hr>
+
+                    <template repeat.for="i of responses.treatment.initial.providers.length">
+                        <div class="uk-margin-remove uk-width-1-4">
+                            ${treatmentProvidersMap[$parent.responses.treatment.initial.providers[i].value].description}
+                        </div>
+                        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="pastTreatmentProvider-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].past.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="currentTreatmentProvider-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].current.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="beneficialTreatmentProvider-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].beneficial.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <hr>
+                    </template>
+
+                    <template repeat.for="i of responses.treatment.initial.programs.length">
+                        <div class="uk-margin-remove uk-width-1-4">
+                            ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}
+                        </div>
+                        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="pastTreatmentProgram-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].past.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="currentTreatmentProgram-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].current.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="beneficialTreatmentProgram-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].beneficial.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <hr>
+                    </template>
                 </template>
+                <template else>
+                    <template repeat.for="i of responses.treatment.initial.providers.length">
+                        <div class="uk-margin-remove uk-width-3-4">
+                            Since the accident have you been seen by a 
+                            ${treatmentProvidersMap[$parent.responses.treatment.initial.providers[i].value].description}
+                            for treatment?
+                        </div>
+                        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="treatmentSinceAccident-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].sinceAccident" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
 
-                <template repeat.for="i of responses.treatment.initial.programs.length">
-                    <div class="uk-margin-remove uk-width-1-4">
-                        ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}
-                    </div>
-                    
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <label repeat.for="response of yesNoDontKnow">
-                            <input type="radio" name="pastTreatmentProgram-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].past.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
+                        <template if.bind="isYes($parent.responses.treatment.initial.providers[i].sinceAccident) & signal:'treatment-initial-changed'">
+                            
+                            <hr>
 
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <label repeat.for="response of yesNoDontKnow">
-                            <input type="radio" name="currentTreatmentProgram-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].current.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                Approximately when did this treatment start?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-2">
+                                &nbsp;Month&nbsp;
+                                <select id="treatmentStartMonth" class="uk-select uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.providers[i].start.month">
+                                    <option></option>
+                                    <option repeat.for="month of months" model.bind="month">
+                                        ${month}
+                                    </option>
+                                </select>
+                                &nbsp;Year&nbsp;<input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.providers[i].start.year" />
+                            </div>
 
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <label repeat.for="response of yesNoDontKnow">
-                            <input type="radio" name="beneficialTreatmentProgram-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].beneficial.response" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
+                            <hr>
 
-                    <hr>
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                At the beginning how often were you attending?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-2">
+                                <label>
+                                    <input type="radio" name="treatmentStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="dontKnow" change.delegate="changed('treatment-initial-changed')" />&nbsp;DK&nbsp;
+                                </label>
+                                <label>
+                                    <input type="radio" name="treatmentStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="number" change.delegate="changed('treatment-initial-changed')" />&nbsp;Number&nbsp;
+                                </label>
+                                <label>
+                                    <input type="radio" name="treatmentStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="range" change.delegate="changed('treatment-initial-changed')" />&nbsp;Range&nbsp;                                    
+                                </label>
+                            </div>
+                            
+                            <hr if.bind="isAnswered($parent.responses.treatment.initial.providers[i].start.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.providers[i].start.frequency.unit) & signal:'treatment-initial-changed'">
+
+                            <div class="uk-margin-remove uk-width-1-2"></div>
+                            <div class="uk-margin-remove uk-width-1-2">
+                                <template if.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit === 'number' & signal:'treatment-initial-changed'">
+                                    <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.providers[i].start.frequency.number" />
+                                </template>
+                                <template if.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit === 'range' & signal:'treatment-initial-changed'">
+                                    <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.providers[i].start.frequency.rangeStart" />
+                                    &nbsp;to&nbsp;
+                                    <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.providers[i].start.frequency.rangeEnd" />
+                                </template>
+                                <template if.bind="isAnswered($parent.responses.treatment.initial.providers[i].start.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.providers[i].start.frequency.unit) & signal:'treatment-initial-changed'">
+                                    &nbsp;times per&nbsp;
+                                    <label>
+                                        <input type="radio" name="treatmentStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.period" value="week" change.delegate="changed('treatment-initial-changed')" />&nbsp;week&nbsp;
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="treatmentStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.period" value="month" change.delegate="changed('treatment-initial-changed')" />&nbsp;month&nbsp;
+                                    </label>
+                                </template>
+                            </div>
+                            
+                            <hr>
+
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
+                                Are you still attending treatment?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-4">
+                                <label repeat.for="response of yesNoDontKnow">
+                                    <input type="radio" name="treatmentCurrentAttending-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].current.attending" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <template if.bind="isYes($parent.responses.treatment.initial.providers[i].current.attending)">
+                                <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                    How often?
+                                </div>
+                                <div class="uk-margin-remove uk-width-1-2">
+                                    <label>
+                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="dontKnow" change.delegate="changed('treatment-initial-changed')" />&nbsp;DK&nbsp;
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="number" change.delegate="changed('treatment-initial-changed')" />&nbsp;Number&nbsp;
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="range" change.delegate="changed('treatment-initial-changed')" />&nbsp;Range&nbsp;                                    
+                                    </label>
+                                </div>
+                                
+                                <hr>
+    
+                                <div class="uk-margin-remove uk-width-1-2"></div>
+                                <div class="uk-margin-remove uk-width-1-2">
+                                    <template if.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit === 'number' & signal:'treatment-initial-changed'">
+                                        <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.providers[i].current.frequency.number" />
+                                    </template>
+                                    <template if.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit === 'range' & signal:'treatment-initial-changed'">
+                                        <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.providers[i].current.frequency.rangeStart" />
+                                        &nbsp;to&nbsp;
+                                        <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.providers[i].current.frequency.rangeEnd" />
+                                    </template>
+                                    <template if.bind="isAnswered($parent.responses.treatment.initial.providers[i].current.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.providers[i].current.frequency.unit) & signal:'treatment-initial-changed'">
+                                        &nbsp;times per&nbsp;
+                                        <label>
+                                            <input type="radio" name="treatmentCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.period" value="week" change.delegate="changed('treatment-initial-changed')" />&nbsp;week&nbsp;
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="treatmentCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.period" value="month" change.delegate="changed('treatment-initial-changed')" />&nbsp;month&nbsp;
+                                        </label>
+                                    </template>
+                                </div>
+                            </template>
+                            <template if.bind="isNo($parent.responses.treatment.initial.providers[i].current.attending)">
+                                <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                    When did you stop attending?
+                                </div>
+                                <div class="uk-margin-remove uk-width-1-2">
+                                    &nbsp;Month&nbsp;
+                                    <select id="treatmentStopMonth" class="uk-select uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.providers[i].stop.month">
+                                        <option></option>
+                                        <option repeat.for="month of months" model.bind="month">
+                                            ${month}
+                                        </option>
+                                    </select>
+                                    &nbsp;Year&nbsp;<input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.providers[i].stop.year" />
+                                </div>
+                            </template>
+
+                            <hr>
+
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
+                                Have you found this to be beneficial?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-4">
+                                <label repeat.for="response of yesNoDontKnow">
+                                    <input type="radio" name="treatmentBeneficial-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].beneficial" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
+                                Have funding/financial issues affected your ability to attend treatment?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-4">
+                                <label repeat.for="response of yesNoDontKnow">
+                                    <input type="radio" name="treatmentFundingIssues-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </div>
+                        </template>
+                        
+                        <hr>
+                    </template>
+                    <template repeat.for="i of responses.treatment.initial.programs.length">
+                        <div class="uk-margin-remove uk-width-3-4">
+                            Since the accident have you attended a 
+                            ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}?
+                        </div>
+                        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="treatmentProgramSinceAccident-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].sinceAccident" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <template if.bind="isYes($parent.responses.treatment.initial.programs[i].sinceAccident) & signal:'treatment-program-changed'">
+                            
+                            <hr>
+
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                Approximately when did this program start?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-2">
+                                &nbsp;Month&nbsp;
+                                <select id="treatmentProgramStartMonth" class="uk-select uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].start.month">
+                                    <option></option>
+                                    <option repeat.for="month of months" model.bind="month">
+                                        ${month}
+                                    </option>
+                                </select>
+                                &nbsp;Year&nbsp;<input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].start.year" />
+                            </div>
+
+                            <hr>
+
+                            <template if.bind="!$parent.responses.treatment.initial.programs[i].isPainProgram">
+                                <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                    At the beginning how often were you attending?
+                                </div>
+                                <div class="uk-margin-remove uk-width-1-2">
+                                    <label>
+                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="dontKnow" change.delegate="changed('treatment-program-changed')" />&nbsp;DK&nbsp;
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="number" change.delegate="changed('treatment-program-changed')" />&nbsp;Number&nbsp;
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="range" change.delegate="changed('treatment-program-changed')" />&nbsp;Range&nbsp;                                    
+                                    </label>
+                                </div>
+                                
+                                <hr if.bind="isAnswered($parent.responses.treatment.initial.programs[i].start.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.programs[i].start.frequency.unit) & signal:'treatment-program-changed'">
+    
+                                <div class="uk-margin-remove uk-width-1-2"></div>
+                                <div class="uk-margin-remove uk-width-1-2">
+                                    <template if.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit === 'number' & signal:'treatment-program-changed'">
+                                        <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].start.frequency.number" />
+                                    </template>
+                                    <template if.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit === 'range' & signal:'treatment-program-changed'">
+                                        <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].start.frequency.rangeStart" />
+                                        &nbsp;to&nbsp;
+                                        <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].start.frequency.rangeEnd" />
+                                    </template>
+                                    <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].start.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.programs[i].start.frequency.unit) & signal:'treatment-program-changed'">
+                                        &nbsp;times per&nbsp;
+                                        <label>
+                                            <input type="radio" name="treatmentProgramStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.period" value="week" change.delegate="changed('treatment-program-changed')" />&nbsp;week&nbsp;
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="treatmentProgramStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.period" value="month" change.delegate="changed('treatment-program-changed')" />&nbsp;month&nbsp;
+                                        </label>
+                                    </template>
+                                </div>
+                                
+                                <hr>
+    
+                                <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
+                                    Are you still attending treatment?
+                                </div>
+                                <div class="uk-margin-remove uk-width-1-4">
+                                    <label repeat.for="response of yesNoDontKnow">
+                                        <input type="radio" name="treatmentProgramCurrentAttending-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].current.attending" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
+                                    </label>
+                                </div>
+    
+                                <hr>
+    
+                                <template if.bind="isYes($parent.responses.treatment.initial.programs[i].current.attending)">
+                                    <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                        How often?
+                                    </div>
+                                    <div class="uk-margin-remove uk-width-1-2">
+                                        <label>
+                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="dontKnow" change.delegate="changed('treatment-program-changed')" />&nbsp;DK&nbsp;
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="number" change.delegate="changed('treatment-program-changed')" />&nbsp;Number&nbsp;
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="range" change.delegate="changed('treatment-program-changed')" />&nbsp;Range&nbsp;                                    
+                                        </label>
+                                    </div>
+                                    
+                                    <hr>
+        
+                                    <div class="uk-margin-remove uk-width-1-2"></div>
+                                    <div class="uk-margin-remove uk-width-1-2">
+                                        <template if.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit === 'number' & signal:'treatment-program-changed'">
+                                            <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].current.frequency.number" />
+                                        </template>
+                                        <template if.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit === 'range' & signal:'treatment-program-changed'">
+                                            <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].current.frequency.rangeStart" />
+                                            &nbsp;to&nbsp;
+                                            <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].current.frequency.rangeEnd" />
+                                        </template>
+                                        <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].current.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.programs[i].current.frequency.unit) & signal:'treatment-program-changed'">
+                                            &nbsp;times per&nbsp;
+                                            <label>
+                                                <input type="radio" name="treatmentProgramCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.period" value="week" change.delegate="changed('treatment-program-changed')" />&nbsp;week&nbsp;
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="treatmentProgramCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.period" value="month" change.delegate="changed('treatment-program-changed')" />&nbsp;month&nbsp;
+                                            </label>
+                                        </template>
+                                    </div>
+                                </template>
+                            </template>
+                            <template if.bind="$parent.responses.treatment.initial.programs[i].isPainProgram || isNo($parent.responses.treatment.initial.programs[i].current.attending)">
+                                <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
+                                    When did you stop attending?
+                                </div>
+                                <div class="uk-margin-remove uk-width-1-2">
+                                    &nbsp;Month&nbsp;
+                                    <select id="treatmentProgramStopMonth" class="uk-select uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].stop.month">
+                                        <option></option>
+                                        <option repeat.for="month of months" model.bind="month">
+                                            ${month}
+                                        </option>
+                                    </select>
+                                    &nbsp;Year&nbsp;<input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].stop.year" />
+                                </div>
+                            </template>
+
+                            <hr>
+
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
+                                Have you found this to be beneficial?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-4">
+                                <label repeat.for="response of yesNoDontKnow">
+                                    <input type="radio" name="treatmentProgramBeneficial-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].beneficial" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </div>
+
+                            <hr>
+
+                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
+                                Have funding/financial issues affected your ability to attend?
+                            </div>
+                            <div class="uk-margin-remove uk-width-1-4">
+                                <label repeat.for="response of yesNoDontKnow">
+                                    <input type="radio" name="treatmentProgramFundingIssues-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </div>
+                        </template>
+                        
+                        <hr>
+                    </template>
                 </template>
 
             </div>
@@ -2374,6 +2714,38 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
+                    Anything else bothering you?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="anyOtherPhysicalIssues" class="uk-radio" checked.bind="responses.neuropsychological.physical.other.anyIssues" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    What else is bothering you?
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <button type="button" class="uk-button uk-button-default uk-button-small" disabled.bind="!isYes(responses.neuropsychological.physical.other.anyIssues)" click.delegate="addOtherPhysicalIssue()">
+                        Add
+                    </button>
+                </div>
+
+                <template repeat.for="i of responses.neuropsychological.physical.other.issues.length">
+                    <div class="uk-margin-remove-vertical uk-width-1-4">
+                        <label class="uk-form-label">
+                            <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.physical.other.issues[i]" disabled.bind="!isYes(responses.neuropsychological.physical.other.anyIssues)" />
+                        </label>
+                    </div>
+                </template>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
                     Did you have ongoing pain at the time of the subject accident?
                 </div>
 
@@ -2653,10 +3025,19 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    What is your partner’s job title?
+                    What is your partner’s job title/industry?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="radio" name="relationshipJobTitleOrIndustry" class="uk-radio" checked.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry" value="title" />&nbsp;Title&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="relationshipJobTitleOrIndustry" class="uk-radio" checked.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry" value="industry" />&nbsp;Industry&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
                     <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" />
                 </div>
 
