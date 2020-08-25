@@ -1019,7 +1019,7 @@
                         
                         <div class="uk-margin-remove uk-width-1-4">
                             <label repeat.for="response of yesNoDontKnow">
-                                <input type="radio" name="treatmentSinceAccident-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].sinceAccident" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                                <input type="radio" name="treatmentSinceAccident-${i}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].sinceAccident" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
                             </label>
                         </div>
 
@@ -1048,13 +1048,13 @@
                             </div>
                             <div class="uk-margin-remove uk-width-1-2">
                                 <label>
-                                    <input type="radio" name="treatmentStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="dontKnow" change.delegate="changed('treatment-initial-changed')" />&nbsp;DK&nbsp;
+                                    <input type="radio" name="treatmentStartFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="dontKnow" change.delegate="changed('treatment-initial-changed')" />&nbsp;DK&nbsp;
                                 </label>
                                 <label>
-                                    <input type="radio" name="treatmentStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="number" change.delegate="changed('treatment-initial-changed')" />&nbsp;Number&nbsp;
+                                    <input type="radio" name="treatmentStartFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="number" change.delegate="changed('treatment-initial-changed')" />&nbsp;Number&nbsp;
                                 </label>
                                 <label>
-                                    <input type="radio" name="treatmentStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="range" change.delegate="changed('treatment-initial-changed')" />&nbsp;Range&nbsp;                                    
+                                    <input type="radio" name="treatmentStartFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit" value="range" change.delegate="changed('treatment-initial-changed')" />&nbsp;Range&nbsp;                                    
                                 </label>
                             </div>
                             
@@ -1073,10 +1073,10 @@
                                 <template if.bind="isAnswered($parent.responses.treatment.initial.providers[i].start.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.providers[i].start.frequency.unit) & signal:'treatment-initial-changed'">
                                     &nbsp;times per&nbsp;
                                     <label>
-                                        <input type="radio" name="treatmentStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.period" value="week" change.delegate="changed('treatment-initial-changed')" />&nbsp;week&nbsp;
+                                        <input type="radio" name="treatmentStartFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.period" value="week" change.delegate="changed('treatment-initial-changed')" />&nbsp;week&nbsp;
                                     </label>
                                     <label>
-                                        <input type="radio" name="treatmentStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.period" value="month" change.delegate="changed('treatment-initial-changed')" />&nbsp;month&nbsp;
+                                        <input type="radio" name="treatmentStartFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].start.frequency.period" value="month" change.delegate="changed('treatment-initial-changed')" />&nbsp;month&nbsp;
                                     </label>
                                 </template>
                             </div>
@@ -1088,7 +1088,7 @@
                             </div>
                             <div class="uk-margin-remove uk-width-1-4">
                                 <label repeat.for="response of yesNoDontKnow">
-                                    <input type="radio" name="treatmentCurrentAttending-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].current.attending" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                                    <input type="radio" name="treatmentCurrentAttending-${i}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].current.attending" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
                             </div>
 
@@ -1100,13 +1100,13 @@
                                 </div>
                                 <div class="uk-margin-remove uk-width-1-2">
                                     <label>
-                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="dontKnow" change.delegate="changed('treatment-initial-changed')" />&nbsp;DK&nbsp;
+                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="dontKnow" change.delegate="changed('treatment-initial-changed')" />&nbsp;DK&nbsp;
                                     </label>
                                     <label>
-                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="number" change.delegate="changed('treatment-initial-changed')" />&nbsp;Number&nbsp;
+                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="number" change.delegate="changed('treatment-initial-changed')" />&nbsp;Number&nbsp;
                                     </label>
                                     <label>
-                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="range" change.delegate="changed('treatment-initial-changed')" />&nbsp;Range&nbsp;                                    
+                                        <input type="radio" name="treatmentCurrentFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit" value="range" change.delegate="changed('treatment-initial-changed')" />&nbsp;Range&nbsp;                                    
                                     </label>
                                 </div>
                                 
@@ -1125,10 +1125,10 @@
                                     <template if.bind="isAnswered($parent.responses.treatment.initial.providers[i].current.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.providers[i].current.frequency.unit) & signal:'treatment-initial-changed'">
                                         &nbsp;times per&nbsp;
                                         <label>
-                                            <input type="radio" name="treatmentCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.period" value="week" change.delegate="changed('treatment-initial-changed')" />&nbsp;week&nbsp;
+                                            <input type="radio" name="treatmentCurrentFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.period" value="week" change.delegate="changed('treatment-initial-changed')" />&nbsp;week&nbsp;
                                         </label>
                                         <label>
-                                            <input type="radio" name="treatmentCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.period" value="month" change.delegate="changed('treatment-initial-changed')" />&nbsp;month&nbsp;
+                                            <input type="radio" name="treatmentCurrentFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.providers[i].current.frequency.period" value="month" change.delegate="changed('treatment-initial-changed')" />&nbsp;month&nbsp;
                                         </label>
                                     </template>
                                 </div>
@@ -1152,22 +1152,11 @@
                             <hr>
 
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
-                                Have you found this to be beneficial?
-                            </div>
-                            <div class="uk-margin-remove uk-width-1-4">
-                                <label repeat.for="response of yesNoDontKnow">
-                                    <input type="radio" name="treatmentBeneficial-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].beneficial" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
-                                </label>
-                            </div>
-
-                            <hr>
-
-                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
                                 Have funding/financial issues affected your ability to attend treatment?
                             </div>
                             <div class="uk-margin-remove uk-width-1-4">
                                 <label repeat.for="response of yesNoDontKnow">
-                                    <input type="radio" name="treatmentFundingIssues-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
+                                    <input type="radio" name="treatmentFundingIssues-${i}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
                             </div>
                         </template>
@@ -1182,7 +1171,7 @@
                         
                         <div class="uk-margin-remove uk-width-1-4">
                             <label repeat.for="response of yesNoDontKnow">
-                                <input type="radio" name="treatmentProgramSinceAccident-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].sinceAccident" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
+                                <input type="radio" name="treatmentProgramSinceAccident-${i}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].sinceAccident" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
                             </label>
                         </div>
 
@@ -1212,13 +1201,13 @@
                                 </div>
                                 <div class="uk-margin-remove uk-width-1-2">
                                     <label>
-                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="dontKnow" change.delegate="changed('treatment-program-changed')" />&nbsp;DK&nbsp;
+                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="dontKnow" change.delegate="changed('treatment-program-changed')" />&nbsp;DK&nbsp;
                                     </label>
                                     <label>
-                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="number" change.delegate="changed('treatment-program-changed')" />&nbsp;Number&nbsp;
+                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="number" change.delegate="changed('treatment-program-changed')" />&nbsp;Number&nbsp;
                                     </label>
                                     <label>
-                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="range" change.delegate="changed('treatment-program-changed')" />&nbsp;Range&nbsp;                                    
+                                        <input type="radio" name="treatmentProgramStartFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit" value="range" change.delegate="changed('treatment-program-changed')" />&nbsp;Range&nbsp;                                    
                                     </label>
                                 </div>
                                 
@@ -1231,16 +1220,16 @@
                                     </template>
                                     <template if.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit === 'range' & signal:'treatment-program-changed'">
                                         <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].start.frequency.rangeStart" />
-                                        &nbsp;to&nbsp;
+                                        to
                                         <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="$parent.responses.treatment.initial.programs[i].start.frequency.rangeEnd" />
                                     </template>
                                     <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].start.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.programs[i].start.frequency.unit) & signal:'treatment-program-changed'">
                                         &nbsp;times per&nbsp;
                                         <label>
-                                            <input type="radio" name="treatmentProgramStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.period" value="week" change.delegate="changed('treatment-program-changed')" />&nbsp;week&nbsp;
+                                            <input type="radio" name="treatmentProgramStartFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.period" value="week" change.delegate="changed('treatment-program-changed')" />&nbsp;week&nbsp;
                                         </label>
                                         <label>
-                                            <input type="radio" name="treatmentProgramStartFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.period" value="month" change.delegate="changed('treatment-program-changed')" />&nbsp;month&nbsp;
+                                            <input type="radio" name="treatmentProgramStartFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].start.frequency.period" value="month" change.delegate="changed('treatment-program-changed')" />&nbsp;month&nbsp;
                                         </label>
                                     </template>
                                 </div>
@@ -1252,7 +1241,7 @@
                                 </div>
                                 <div class="uk-margin-remove uk-width-1-4">
                                     <label repeat.for="response of yesNoDontKnow">
-                                        <input type="radio" name="treatmentProgramCurrentAttending-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].current.attending" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
+                                        <input type="radio" name="treatmentProgramCurrentAttending-${i}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].current.attending" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
                                     </label>
                                 </div>
     
@@ -1264,13 +1253,13 @@
                                     </div>
                                     <div class="uk-margin-remove uk-width-1-2">
                                         <label>
-                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="dontKnow" change.delegate="changed('treatment-program-changed')" />&nbsp;DK&nbsp;
+                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="dontKnow" change.delegate="changed('treatment-program-changed')" />&nbsp;DK&nbsp;
                                         </label>
                                         <label>
-                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="number" change.delegate="changed('treatment-program-changed')" />&nbsp;Number&nbsp;
+                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="number" change.delegate="changed('treatment-program-changed')" />&nbsp;Number&nbsp;
                                         </label>
                                         <label>
-                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="range" change.delegate="changed('treatment-program-changed')" />&nbsp;Range&nbsp;                                    
+                                            <input type="radio" name="treatmentProgramCurrentFrequencyUnit-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit" value="range" change.delegate="changed('treatment-program-changed')" />&nbsp;Range&nbsp;                                    
                                         </label>
                                     </div>
                                     
@@ -1289,10 +1278,10 @@
                                         <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].current.frequency.unit) && !isDontKnow($parent.responses.treatment.initial.programs[i].current.frequency.unit) & signal:'treatment-program-changed'">
                                             &nbsp;times per&nbsp;
                                             <label>
-                                                <input type="radio" name="treatmentProgramCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.period" value="week" change.delegate="changed('treatment-program-changed')" />&nbsp;week&nbsp;
+                                                <input type="radio" name="treatmentProgramCurrentFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.period" value="week" change.delegate="changed('treatment-program-changed')" />&nbsp;week&nbsp;
                                             </label>
                                             <label>
-                                                <input type="radio" name="treatmentProgramCurrentFrequencyPeriod-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.period" value="month" change.delegate="changed('treatment-program-changed')" />&nbsp;month&nbsp;
+                                                <input type="radio" name="treatmentProgramCurrentFrequencyPeriod-${i}" class="uk-radio" checked.bind="$parent.responses.treatment.initial.programs[i].current.frequency.period" value="month" change.delegate="changed('treatment-program-changed')" />&nbsp;month&nbsp;
                                             </label>
                                         </template>
                                     </div>
@@ -1317,22 +1306,11 @@
                             <hr>
 
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
-                                Have you found this to be beneficial?
-                            </div>
-                            <div class="uk-margin-remove uk-width-1-4">
-                                <label repeat.for="response of yesNoDontKnow">
-                                    <input type="radio" name="treatmentProgramBeneficial-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].beneficial" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
-                                </label>
-                            </div>
-
-                            <hr>
-
-                            <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
                                 Have funding/financial issues affected your ability to attend?
                             </div>
                             <div class="uk-margin-remove uk-width-1-4">
                                 <label repeat.for="response of yesNoDontKnow">
-                                    <input type="radio" name="treatmentProgramFundingIssues-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
+                                    <input type="radio" name="treatmentProgramFundingIssues-${i}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend" value.bind="response.value" change.delegate="changed('treatment-program-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
                             </div>
                         </template>

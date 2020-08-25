@@ -1298,6 +1298,15 @@ export class NotesOutput {
         return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isYes(item.past.response) && this.treatmentProgramsMap[item.value].isDriversRehab).some(item => item);
     }
 
+
+    isFrequencyAnswered(frequency) {
+        if (!frequency) { return false; }
+        return this.isDontKnow(frequency.unit) ||
+            (frequency.unit == 'number' && frequency.number && frequency.period) ||
+            (frequency.unit == 'range' && frequency.rangeStart && frequency.rangeEnd && frequency.period);
+    }
+
+
     any(items) {
         return items && items.some(item => item);
     }
