@@ -135,6 +135,18 @@ namespace PsychologicalServices.Data.FactoryClasses
 			get { return Create<AppointmentAttributeEntity>(); }
 		}
 
+		/// <summary>Creates and returns a new EntityQuery for the AppointmentProtocolResponse entity</summary>
+		public EntityQuery<AppointmentProtocolResponseEntity> AppointmentProtocolResponse
+		{
+			get { return Create<AppointmentProtocolResponseEntity>(); }
+		}
+
+		/// <summary>Creates and returns a new EntityQuery for the AppointmentProtocolResponseValue entity</summary>
+		public EntityQuery<AppointmentProtocolResponseValueEntity> AppointmentProtocolResponseValue
+		{
+			get { return Create<AppointmentProtocolResponseValueEntity>(); }
+		}
+
 		/// <summary>Creates and returns a new EntityQuery for the AppointmentSequence entity</summary>
 		public EntityQuery<AppointmentSequenceEntity> AppointmentSequence
 		{

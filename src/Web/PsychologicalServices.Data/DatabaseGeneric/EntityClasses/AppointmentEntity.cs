@@ -38,6 +38,7 @@ namespace PsychologicalServices.Data.EntityClasses
 		private UserEntity _psychologist;
 		private UserEntity _psychometrist;
 		private UserEntity _updateUser;
+		private AppointmentProtocolResponseEntity _appointmentProtocolResponse;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -68,6 +69,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string AppointmentAttributes = "AppointmentAttributes";
 			/// <summary>Member name InvoiceLineGroupAppointments</summary>
 			public static readonly string InvoiceLineGroupAppointments = "InvoiceLineGroupAppointments";
+			/// <summary>Member name AppointmentProtocolResponse</summary>
+			public static readonly string AppointmentProtocolResponse = "AppointmentProtocolResponse";
 		}
 		#endregion
 		
@@ -162,6 +165,11 @@ namespace PsychologicalServices.Data.EntityClasses
 				{
 					_updateUser.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
+				_appointmentProtocolResponse = (AppointmentProtocolResponseEntity)info.GetValue("_appointmentProtocolResponse", typeof(AppointmentProtocolResponseEntity));
+				if(_appointmentProtocolResponse!=null)
+				{
+					_appointmentProtocolResponse.AfterSave+=new EventHandler(OnEntityAfterSave);
+				}
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
@@ -237,6 +245,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupAppointments":
 					this.InvoiceLineGroupAppointments.Add((InvoiceLineGroupAppointmentEntity)entity);
 					break;
+				case "AppointmentProtocolResponse":
+					this.AppointmentProtocolResponse = (AppointmentProtocolResponseEntity)entity;
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -285,6 +296,9 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "InvoiceLineGroupAppointments":
 					toReturn.Add(Relations.InvoiceLineGroupAppointmentEntityUsingAppointmentId);
+					break;
+				case "AppointmentProtocolResponse":
+					toReturn.Add(Relations.AppointmentProtocolResponseEntityUsingAppointmentId);
 					break;
 				default:
 					break;				
@@ -347,6 +361,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupAppointments":
 					this.InvoiceLineGroupAppointments.Add((InvoiceLineGroupAppointmentEntity)relatedEntity);
 					break;
+				case "AppointmentProtocolResponse":
+					SetupSyncAppointmentProtocolResponse(relatedEntity);
+					break;
 				default:
 					break;
 			}
@@ -387,6 +404,9 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "InvoiceLineGroupAppointments":
 					this.PerformRelatedEntityRemoval(this.InvoiceLineGroupAppointments, relatedEntity, signalRelatedEntityManyToOne);
 					break;
+				case "AppointmentProtocolResponse":
+					DesetupSyncAppointmentProtocolResponse(false, true);
+					break;
 				default:
 					break;
 			}
@@ -397,6 +417,11 @@ namespace PsychologicalServices.Data.EntityClasses
 		protected override List<IEntity2> GetDependingRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
+			if(_appointmentProtocolResponse!=null)
+			{
+				toReturn.Add(_appointmentProtocolResponse);
+			}
+
 			return toReturn;
 		}
 		
@@ -434,6 +459,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			{
 				toReturn.Add(_updateUser);
 			}
+
+
 			return toReturn;
 		}
 		
@@ -464,6 +491,7 @@ namespace PsychologicalServices.Data.EntityClasses
 				info.AddValue("_psychologist", (!this.MarkedForDeletion?_psychologist:null));
 				info.AddValue("_psychometrist", (!this.MarkedForDeletion?_psychometrist:null));
 				info.AddValue("_updateUser", (!this.MarkedForDeletion?_updateUser:null));
+				info.AddValue("_appointmentProtocolResponse", (!this.MarkedForDeletion?_appointmentProtocolResponse:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -559,6 +587,15 @@ namespace PsychologicalServices.Data.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(UserFields.UserId, null, ComparisonOperator.Equal, this.UpdateUserId));
 			return bucket;
 		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'AppointmentProtocolResponse' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAppointmentProtocolResponse()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentProtocolResponseFields.AppointmentId, null, ComparisonOperator.Equal, this.AppointmentId));
+			return bucket;
+		}
 		
 
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
@@ -620,6 +657,7 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("UpdateUser", _updateUser);
 			toReturn.Add("AppointmentAttributes", _appointmentAttributes);
 			toReturn.Add("InvoiceLineGroupAppointments", _invoiceLineGroupAppointments);
+			toReturn.Add("AppointmentProtocolResponse", _appointmentProtocolResponse);
 			return toReturn;
 		}
 
@@ -861,6 +899,33 @@ namespace PsychologicalServices.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _appointmentProtocolResponse</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAppointmentProtocolResponse(bool signalRelatedEntity, bool resetFKFields)
+		{
+			DesetupSync(signalRelatedEntity, false, ref _appointmentProtocolResponse, new PropertyChangedEventHandler(OnAppointmentProtocolResponsePropertyChanged), "AppointmentProtocolResponse", "Appointment", PsychologicalServices.Data.RelationClasses.StaticAppointmentRelations.AppointmentProtocolResponseEntityUsingAppointmentIdStatic, false, new int[] { (int)AppointmentFieldIndex.AppointmentId });
+		}
+		
+		/// <summary> setups the sync logic for member _appointmentProtocolResponse</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAppointmentProtocolResponse(IEntityCore relatedEntity)
+		{
+			SetupSync(relatedEntity, ref _appointmentProtocolResponse, new PropertyChangedEventHandler( OnAppointmentProtocolResponsePropertyChanged ), "AppointmentProtocolResponse", "Appointment", PsychologicalServices.Data.RelationClasses.StaticAppointmentRelations.AppointmentProtocolResponseEntityUsingAppointmentIdStatic, false, new string[] {  }, new int[] { (int)AppointmentFieldIndex.AppointmentId }); 
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAppointmentProtocolResponsePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
 		/// <param name="validator">The validator object for this AppointmentEntity</param>
 		/// <param name="fields">Fields of this entity</param>
@@ -953,6 +1018,13 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathUpdateUser
 		{
 			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(UserEntityFactory))),	(IEntityRelation)GetRelationsForField("UpdateUser")[0], (int)PsychologicalServices.Data.EntityType.AppointmentEntity, (int)PsychologicalServices.Data.EntityType.UserEntity, 0, null, null, null, null, "UpdateUser", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AppointmentProtocolResponse' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAppointmentProtocolResponse
+		{
+			get { return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentProtocolResponseEntityFactory))), (IEntityRelation)GetRelationsForField("AppointmentProtocolResponse")[0], (int)PsychologicalServices.Data.EntityType.AppointmentEntity, (int)PsychologicalServices.Data.EntityType.AppointmentProtocolResponseEntity, 0, null, null, null, null, "AppointmentProtocolResponse", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 
@@ -1255,6 +1327,42 @@ namespace PsychologicalServices.Data.EntityClasses
 				else
 				{
 					SetSingleRelatedEntityNavigator(value, "", "UpdateUser", _updateUser, false); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets related entity of type 'AppointmentProtocolResponseEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned.<br/><br/>
+		/// </summary>
+		[Browsable(true)]
+		public virtual AppointmentProtocolResponseEntity AppointmentProtocolResponse
+		{
+			get { return _appointmentProtocolResponse; }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncAppointmentProtocolResponse(value);
+					CallSetRelatedEntityDuringDeserialization(value, "Appointment");
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_appointmentProtocolResponse !=null);
+						DesetupSyncAppointmentProtocolResponse(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("AppointmentProtocolResponse");
+						}
+					}
+					else
+					{
+						if(_appointmentProtocolResponse!=value)
+						{
+							((IEntity2)value).SetRelatedEntity(this, "Appointment");
+							SetupSyncAppointmentProtocolResponse(value);
+						}
+					}
 				}
 			}
 		}

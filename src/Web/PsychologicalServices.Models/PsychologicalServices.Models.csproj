@@ -84,6 +84,8 @@
     <Compile Include="Analysis\NotCredibleByYearSummary.cs" />
     <Compile Include="Analysis\ResearchConsentObtainedClaimantData.cs" />
     <Compile Include="Analysis\ResearchConsentObtainedClaimantDataSearchCriteria.cs" />
+    <Compile Include="Appointments\AppointmentProtocolResponse.cs" />
+    <Compile Include="Appointments\AppointmentProtocolResponseValue.cs" />
     <Compile Include="Arbitrations\ArbitrationStatus.cs" />
     <Compile Include="Assessments\AssessmentSearchResult.cs" />
     <Compile Include="Assessments\AssessmentTestingResults.cs" />

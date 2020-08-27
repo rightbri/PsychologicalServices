@@ -54,6 +54,8 @@ namespace PsychologicalServices.Data.HelperClasses
 			InitAddressTypeEntityInfos();
 			InitAppointmentEntityInfos();
 			InitAppointmentAttributeEntityInfos();
+			InitAppointmentProtocolResponseEntityInfos();
+			InitAppointmentProtocolResponseValueEntityInfos();
 			InitAppointmentSequenceEntityInfos();
 			InitAppointmentStatusEntityInfos();
 			InitAppointmentStatusInvoiceRateEntityInfos();
@@ -190,6 +192,45 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("AppointmentAttributeEntity", "AppointmentId", typeof(System.Int32), true, true, false, false,  (int)AppointmentAttributeFieldIndex.AppointmentId, 0, 0, 10);
 			this.AddElementFieldInfo("AppointmentAttributeEntity", "AttributeId", typeof(System.Int32), true, true, false, false,  (int)AppointmentAttributeFieldIndex.AttributeId, 0, 0, 10);
 			this.AddElementFieldInfo("AppointmentAttributeEntity", "Value", typeof(Nullable<System.Boolean>), false, false, false, true,  (int)AppointmentAttributeFieldIndex.Value, 0, 0, 0);
+		}
+		/// <summary>Inits AppointmentProtocolResponseEntity's FieldInfo objects</summary>
+		private void InitAppointmentProtocolResponseEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(AppointmentProtocolResponseFieldIndex), "AppointmentProtocolResponseEntity");
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "AppointmentId", typeof(System.Int32), true, true, false, false,  (int)AppointmentProtocolResponseFieldIndex.AppointmentId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "OnTimeArrivalAndNotificationId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.OnTimeArrivalAndNotificationId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "ClaimantArrivalNotificationId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.ClaimantArrivalNotificationId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "CovidFormsCompletedBeforeEnteringRoomId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.CovidFormsCompletedBeforeEnteringRoomId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "TestedClaimantsEnglishReadingLevelId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.TestedClaimantsEnglishReadingLevelId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "TommSimsScoreNotificationId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.TommSimsScoreNotificationId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "AskedWhichTestsShouldBeRemovedId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.AskedWhichTestsShouldBeRemovedId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "AdvisedOfUnexpectedDelaysId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.AdvisedOfUnexpectedDelaysId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "AfterAssessmentNotificationId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.AfterAssessmentNotificationId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "AllPapersHaveClaimantInitialsAndDateId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.AllPapersHaveClaimantInitialsAndDateId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "ScoringDoubleCheckedId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.ScoringDoubleCheckedId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "RelevantObservationsDocumentedId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.RelevantObservationsDocumentedId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "ErrorCheckedObservationsId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.ErrorCheckedObservationsId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "AllFormsCompletedId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.AllFormsCompletedId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "TimeAssessmentLabelCompletedId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.TimeAssessmentLabelCompletedId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "ScansUploadedNotificationId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.ScansUploadedNotificationId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "UploadedScanLegibilityVerifiedId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.UploadedScanLegibilityVerifiedId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "SpareSetReplenishmentRequestSentId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.SpareSetReplenishmentRequestSentId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "RespondedToQuestionsWithinRequiredTimeframeId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.RespondedToQuestionsWithinRequiredTimeframeId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "StapledItemsTogetherId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.StapledItemsTogetherId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "WillPersonallyDropOffPackageId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)AppointmentProtocolResponseFieldIndex.WillPersonallyDropOffPackageId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "Comments", typeof(System.String), false, false, false, true,  (int)AppointmentProtocolResponseFieldIndex.Comments, 1000, 0, 0);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "CreateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)AppointmentProtocolResponseFieldIndex.CreateDate, 0, 0, 0);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "CreateUserId", typeof(System.Int32), false, true, false, false,  (int)AppointmentProtocolResponseFieldIndex.CreateUserId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "UpdateDate", typeof(System.DateTimeOffset), false, false, false, false,  (int)AppointmentProtocolResponseFieldIndex.UpdateDate, 0, 0, 0);
+			this.AddElementFieldInfo("AppointmentProtocolResponseEntity", "UpdateUserId", typeof(System.Int32), false, true, false, false,  (int)AppointmentProtocolResponseFieldIndex.UpdateUserId, 0, 0, 10);
+		}
+		/// <summary>Inits AppointmentProtocolResponseValueEntity's FieldInfo objects</summary>
+		private void InitAppointmentProtocolResponseValueEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(AppointmentProtocolResponseValueFieldIndex), "AppointmentProtocolResponseValueEntity");
+			this.AddElementFieldInfo("AppointmentProtocolResponseValueEntity", "AppointmentProtocolResponseValueId", typeof(System.Int32), true, false, true, false,  (int)AppointmentProtocolResponseValueFieldIndex.AppointmentProtocolResponseValueId, 0, 0, 10);
+			this.AddElementFieldInfo("AppointmentProtocolResponseValueEntity", "Value", typeof(System.String), false, false, false, false,  (int)AppointmentProtocolResponseValueFieldIndex.Value, 50, 0, 0);
+			this.AddElementFieldInfo("AppointmentProtocolResponseValueEntity", "IsActive", typeof(System.Boolean), false, false, false, false,  (int)AppointmentProtocolResponseValueFieldIndex.IsActive, 0, 0, 0);
 		}
 		/// <summary>Inits AppointmentSequenceEntity's FieldInfo objects</summary>
 		private void InitAppointmentSequenceEntityInfos()

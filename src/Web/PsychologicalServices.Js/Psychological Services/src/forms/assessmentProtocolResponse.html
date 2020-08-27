@@ -1,0 +1,337 @@
+<template>
+    <require from="resources/value-converters/date-format"></require>
+	<require from="claimants/search-claimant"></require>
+	<require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+    
+    <div class="uk-container">
+        <div class="uk-margin-remove uk-width-auto">
+            <label class="uk-form-label">Claimant</label>
+            <div class="uk-form-controls">
+                <search-claimant claimant.bind="claimant" claimants.bind="claimants" selected.delegate="claimantSelected($event)"></search-claimant>
+            </div>
+        </div>
+
+        <table class="uk-table uk-table-divider" fixed-header if.bind="assessments && !assessment">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Assessment Type</th>
+                    <th>Referral Source</th>
+                    <th>Claimant</th>
+                    <th>Appointment Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="assessment of assessments">
+                    <td>
+                        <button type="button" class="uk-button uk-button-primary" click.delegate="select(assessment)">Select</button>
+                    </td>
+                    <td>${assessment.assessmentType}</td>
+                    <td>${assessment.referralSource}</td>
+                    <td>${assessment.claimant}</td>
+                    <td>${assessment.appointmentTime | dateFormat:config.longDateFormat}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="uk-margin-remove" if.bind="formVisible">
+            <button type="button" class="uk-button uk-button-primary" click.delegate="save()">Save</button>
+            &nbsp;
+            <button type="button" class="uk-button uk-button-default" click.delegate="reset(true)">Reset</button>
+        </div>
+    </div>
+
+    <div class="uk-position-fixed" style="top: 100px; right: 10px;" if.bind="formVisible">
+        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToBottom()">
+            <i class="fa fa-lg fa-chevron-down"></i>
+        </button>
+    </div>
+
+    <div class="uk-position-fixed" style="bottom: 10px; right: 10px;" if.bind="formVisible">
+        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="scrollToTop()">
+            <i class="fa fa-lg fa-chevron-up"></i>
+        </button>
+        <br>
+        <button type="button" class="uk-button uk-button-primary uk-button-small" click.delegate="save()">
+            <i class="fa fa-lg fa-save"></i>
+        </button>
+    </div>
+
+    <hr if.bind="formVisible">
+
+    <div id="formContent" class="uk-container" if.bind="formVisible">
+
+        <div class="uk-text-lead uk-text-center">
+            Assessment Protocol Reminder
+        </div>
+
+        <div class="uk-child-width-1-1" uk-grid>
+
+            <div class="uk-margin-remove uk-width-1-4">
+                Claimant Name
+            </div>
+    
+            <div class="uk-margin-remove uk-width-1-4">
+                ${claimant.firstName} ${claimant.lastName}
+            </div>
+
+            <div class="uk-margin-remove uk-width-1-2"></div>
+
+            <div class="uk-margin-remove uk-width-1-4">
+                Date of Birth
+            </div>
+    
+            <div class="uk-margin-remove uk-width-1-4">
+                ${claimant.dateOfBirth | dateFormat:"MMMM Do, YYYY"}
+            </div>
+
+            <div class="uk-margin-remove uk-width-1-2"></div>
+    
+            <div class="uk-margin-remove uk-width-1-4">
+                Appointment Date
+            </div>
+    
+            <div class="uk-margin-remove uk-width-1-4">
+                ${assessment.appointmentTime | dateFormat:config.longDateFormat}
+            </div>
+
+            <div class="uk-margin-remove uk-width-1-2"></div>
+
+            <hr>
+
+            <div class="uk-margin-remove uk-width-3-4">
+                1.	Did you show up at least 15 minutes before the assessment start time and within a few minutes of your arrival, did you notify everyone?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="onTimeArrivalAndNotification" class="uk-radio" checked.bind="$parent.responses.onTimeArrivalAndNotificationId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+
+            <div class="uk-margin-remove uk-width-3-4">
+                2.	Within a few minutes of the claimant’s arrival, did you notify everyone? If applicable, did you continue to check the waiting room until your claimant showed?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="claimantArrivalNotification" class="uk-radio" checked.bind="$parent.responses.claimantArrivalNotificationId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+
+            <div class="uk-margin-remove uk-width-3-4">
+                3.	Did you fully complete the COVID forms before the claimant arrived into the room?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="covidFormsCompletedBeforeEnteringRoom" class="uk-radio" checked.bind="$parent.responses.covidFormsCompletedBeforeEnteringRoomId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+
+            <div class="uk-margin-remove uk-width-3-4">
+                4.	Did you start your assessment by testing the claimant’s “English Reading Level”?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="testedClaimantsEnglishReadingLevel" class="uk-radio" checked.bind="$parent.responses.testedClaimantsEnglishReadingLevelId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+
+            <div class="uk-margin-remove uk-width-3-4">
+                5.	In a timely manner, did you message everyone with the TOMM/SIMS scores?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="tommSimsScoreNotification" class="uk-radio" checked.bind="$parent.responses.tommSimsScoreNotificationId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+
+            <div class="uk-margin-remove uk-width-3-4">
+                6.	Did you ask in writing what tests (if any) should be removed from the battery?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="askedWhichTestsShouldBeRemoved" class="uk-radio" checked.bind="$parent.responses.askedWhichTestsShouldBeRemovedId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+
+            <div class="uk-margin-remove uk-width-3-4">
+                7.	Did you advise everyone of any unexpected delays?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="advisedOfUnexpectedDelays" class="uk-radio" checked.bind="$parent.responses.advisedOfUnexpectedDelaysId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                8.	Shortly after the assessment was finished, did you message everyone to advise if complete or when and why the person chose to leave?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="afterAssessmentNotification" class="uk-radio" checked.bind="$parent.responses.afterAssessmentNotificationId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                9.	Do all papers/booklet pages have the claimant’s initials and date?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="allPapersHaveClaimantInitialsAndDate" class="uk-radio" checked.bind="$parent.responses.allPapersHaveClaimantInitialsAndDateId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                10.	Did you double check scoring?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="scoringDoubleChecked" class="uk-radio" checked.bind="$parent.responses.scoringDoubleCheckedId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                11.	Did you make sure you documented all relevant information on your Observations?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="relevantObservationsDocumented" class="uk-radio" checked.bind="$parent.responses.relevantObservationsDocumentedId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                12.	Have you read over your Observations for errors?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="errorCheckedObservations" class="uk-radio" checked.bind="$parent.responses.errorCheckedObservationsId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                13.	Are all forms COMPLETELY filled out (no questions left without an answer)?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="allFormsCompleted" class="uk-radio" checked.bind="$parent.responses.allFormsCompletedId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                14.	Is the Time Assessment Label filled out?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="timeAssessmentLabelCompleted" class="uk-radio" checked.bind="$parent.responses.timeAssessmentLabelCompletedId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                15.	Did you upload all scans into Tresorit and notify Dr. Watson, Claire and Michelle when it was done?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="scansUploadedNotification" class="uk-radio" checked.bind="$parent.responses.scansUploadedNotificationId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                16.	Did you check that the scans that are in Tresorit are clear/legible?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="uploadedScanLegibilityVerified" class="uk-radio" checked.bind="$parent.responses.uploadedScanLegibilityVerifiedId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                17.	If you used anything from your spare set, did you ask Claire for an extra copy?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNoNa">
+                    <input type="radio" name="spareSetReplenishmentRequestSent" class="uk-radio" checked.bind="$parent.responses.spareSetReplenishmentRequestSentId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                18.	Did you respond to any emails/messages about this file within an hour of getting the same?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="respondedToQuestionsWithinRequiredTimeframe" class="uk-radio" checked.bind="$parent.responses.respondedToQuestionsWithinRequiredTimeframeId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                19.	Did you staple everything back together?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="stapledItemsTogether" class="uk-radio" checked.bind="$parent.responses.stapledItemsTogetherId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-3-4">
+                20.	Are you going to personally drop off the package to Dr. Watson’s house after the assessment?
+            </div>
+            <div class="uk-margin-remove uk-width-1-4">
+                <label repeat.for="response of yesNo">
+                    <input type="radio" name="willPersonallyDropOffPackage" class="uk-radio" checked.bind="$parent.responses.willPersonallyDropOffPackageId" model.bind="response.value" />&nbsp;${response.description}&nbsp;
+                </label>
+            </div>
+
+            <hr>
+            
+            <div class="uk-margin-remove uk-width-1-1">
+                Comments
+            </div>
+            <div class="uk-margin-remove uk-width-1-1">
+                <textarea class="uk-textarea uk-form-small" value.bind="responses.comments"></textarea>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <br>
+    <br>
+    <a id="bottom" name="bottom"></a>
+</template>

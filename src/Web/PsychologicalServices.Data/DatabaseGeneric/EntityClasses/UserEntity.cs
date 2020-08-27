@@ -30,6 +30,8 @@ namespace PsychologicalServices.Data.EntityClasses
 	{
 		#region Class Member Declarations
 		private EntityCollection<AppointmentEntity> _psychometristAppointments;
+		private EntityCollection<AppointmentProtocolResponseEntity> _appointmentProtocolResponses;
+		private EntityCollection<AppointmentProtocolResponseEntity> _appointmentProtocolResponses1;
 		private EntityCollection<ArbitrationEntity> _psychologistArbitrations;
 		private EntityCollection<ConsultingAgreementEntity> _consultingAgreements;
 		private EntityCollection<GoseInterviewEntity> _goseInterviews;
@@ -67,6 +69,10 @@ namespace PsychologicalServices.Data.EntityClasses
 			public static readonly string Spinner = "Spinner";
 			/// <summary>Member name PsychometristAppointments</summary>
 			public static readonly string PsychometristAppointments = "PsychometristAppointments";
+			/// <summary>Member name AppointmentProtocolResponses</summary>
+			public static readonly string AppointmentProtocolResponses = "AppointmentProtocolResponses";
+			/// <summary>Member name AppointmentProtocolResponses1</summary>
+			public static readonly string AppointmentProtocolResponses1 = "AppointmentProtocolResponses1";
 			/// <summary>Member name PsychologistArbitrations</summary>
 			public static readonly string PsychologistArbitrations = "PsychologistArbitrations";
 			/// <summary>Member name ConsultingAgreements</summary>
@@ -153,6 +159,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				_psychometristAppointments = (EntityCollection<AppointmentEntity>)info.GetValue("_psychometristAppointments", typeof(EntityCollection<AppointmentEntity>));
+				_appointmentProtocolResponses = (EntityCollection<AppointmentProtocolResponseEntity>)info.GetValue("_appointmentProtocolResponses", typeof(EntityCollection<AppointmentProtocolResponseEntity>));
+				_appointmentProtocolResponses1 = (EntityCollection<AppointmentProtocolResponseEntity>)info.GetValue("_appointmentProtocolResponses1", typeof(EntityCollection<AppointmentProtocolResponseEntity>));
 				_psychologistArbitrations = (EntityCollection<ArbitrationEntity>)info.GetValue("_psychologistArbitrations", typeof(EntityCollection<ArbitrationEntity>));
 				_consultingAgreements = (EntityCollection<ConsultingAgreementEntity>)info.GetValue("_consultingAgreements", typeof(EntityCollection<ConsultingAgreementEntity>));
 				_goseInterviews = (EntityCollection<GoseInterviewEntity>)info.GetValue("_goseInterviews", typeof(EntityCollection<GoseInterviewEntity>));
@@ -230,6 +238,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "PsychometristAppointments":
 					this.PsychometristAppointments.Add((AppointmentEntity)entity);
 					break;
+				case "AppointmentProtocolResponses":
+					this.AppointmentProtocolResponses.Add((AppointmentProtocolResponseEntity)entity);
+					break;
+				case "AppointmentProtocolResponses1":
+					this.AppointmentProtocolResponses1.Add((AppointmentProtocolResponseEntity)entity);
+					break;
 				case "PsychologistArbitrations":
 					this.PsychologistArbitrations.Add((ArbitrationEntity)entity);
 					break;
@@ -305,6 +319,12 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "PsychometristAppointments":
 					toReturn.Add(Relations.AppointmentEntityUsingPsychometristId);
+					break;
+				case "AppointmentProtocolResponses":
+					toReturn.Add(Relations.AppointmentProtocolResponseEntityUsingCreateUserId);
+					break;
+				case "AppointmentProtocolResponses1":
+					toReturn.Add(Relations.AppointmentProtocolResponseEntityUsingUpdateUserId);
 					break;
 				case "PsychologistArbitrations":
 					toReturn.Add(Relations.ArbitrationEntityUsingPsychologistId);
@@ -388,6 +408,12 @@ namespace PsychologicalServices.Data.EntityClasses
 				case "PsychometristAppointments":
 					this.PsychometristAppointments.Add((AppointmentEntity)relatedEntity);
 					break;
+				case "AppointmentProtocolResponses":
+					this.AppointmentProtocolResponses.Add((AppointmentProtocolResponseEntity)relatedEntity);
+					break;
+				case "AppointmentProtocolResponses1":
+					this.AppointmentProtocolResponses1.Add((AppointmentProtocolResponseEntity)relatedEntity);
+					break;
 				case "PsychologistArbitrations":
 					this.PsychologistArbitrations.Add((ArbitrationEntity)relatedEntity);
 					break;
@@ -454,6 +480,12 @@ namespace PsychologicalServices.Data.EntityClasses
 					break;
 				case "PsychometristAppointments":
 					this.PerformRelatedEntityRemoval(this.PsychometristAppointments, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "AppointmentProtocolResponses":
+					this.PerformRelatedEntityRemoval(this.AppointmentProtocolResponses, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "AppointmentProtocolResponses1":
+					this.PerformRelatedEntityRemoval(this.AppointmentProtocolResponses1, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "PsychologistArbitrations":
 					this.PerformRelatedEntityRemoval(this.PsychologistArbitrations, relatedEntity, signalRelatedEntityManyToOne);
@@ -537,6 +569,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
 			toReturn.Add(this.PsychometristAppointments);
+			toReturn.Add(this.AppointmentProtocolResponses);
+			toReturn.Add(this.AppointmentProtocolResponses1);
 			toReturn.Add(this.PsychologistArbitrations);
 			toReturn.Add(this.ConsultingAgreements);
 			toReturn.Add(this.GoseInterviews);
@@ -563,6 +597,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
 				info.AddValue("_psychometristAppointments", ((_psychometristAppointments!=null) && (_psychometristAppointments.Count>0) && !this.MarkedForDeletion)?_psychometristAppointments:null);
+				info.AddValue("_appointmentProtocolResponses", ((_appointmentProtocolResponses!=null) && (_appointmentProtocolResponses.Count>0) && !this.MarkedForDeletion)?_appointmentProtocolResponses:null);
+				info.AddValue("_appointmentProtocolResponses1", ((_appointmentProtocolResponses1!=null) && (_appointmentProtocolResponses1.Count>0) && !this.MarkedForDeletion)?_appointmentProtocolResponses1:null);
 				info.AddValue("_psychologistArbitrations", ((_psychologistArbitrations!=null) && (_psychologistArbitrations.Count>0) && !this.MarkedForDeletion)?_psychologistArbitrations:null);
 				info.AddValue("_consultingAgreements", ((_consultingAgreements!=null) && (_consultingAgreements.Count>0) && !this.MarkedForDeletion)?_consultingAgreements:null);
 				info.AddValue("_goseInterviews", ((_goseInterviews!=null) && (_goseInterviews.Count>0) && !this.MarkedForDeletion)?_goseInterviews:null);
@@ -601,6 +637,24 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentFields.PsychometristId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'AppointmentProtocolResponse' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAppointmentProtocolResponses()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentProtocolResponseFields.CreateUserId, null, ComparisonOperator.Equal, this.UserId));
+			return bucket;
+		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'AppointmentProtocolResponse' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoAppointmentProtocolResponses1()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(AppointmentProtocolResponseFields.UpdateUserId, null, ComparisonOperator.Equal, this.UserId));
 			return bucket;
 		}
 
@@ -770,6 +824,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
 			collectionsQueue.Enqueue(this._psychometristAppointments);
+			collectionsQueue.Enqueue(this._appointmentProtocolResponses);
+			collectionsQueue.Enqueue(this._appointmentProtocolResponses1);
 			collectionsQueue.Enqueue(this._psychologistArbitrations);
 			collectionsQueue.Enqueue(this._consultingAgreements);
 			collectionsQueue.Enqueue(this._goseInterviews);
@@ -792,6 +848,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
 			this._psychometristAppointments = (EntityCollection<AppointmentEntity>) collectionsQueue.Dequeue();
+			this._appointmentProtocolResponses = (EntityCollection<AppointmentProtocolResponseEntity>) collectionsQueue.Dequeue();
+			this._appointmentProtocolResponses1 = (EntityCollection<AppointmentProtocolResponseEntity>) collectionsQueue.Dequeue();
 			this._psychologistArbitrations = (EntityCollection<ArbitrationEntity>) collectionsQueue.Dequeue();
 			this._consultingAgreements = (EntityCollection<ConsultingAgreementEntity>) collectionsQueue.Dequeue();
 			this._goseInterviews = (EntityCollection<GoseInterviewEntity>) collectionsQueue.Dequeue();
@@ -815,6 +873,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			bool toReturn = false;
 			toReturn |=(this._psychometristAppointments != null);
+			toReturn |=(this._appointmentProtocolResponses != null);
+			toReturn |=(this._appointmentProtocolResponses1 != null);
 			toReturn |=(this._psychologistArbitrations != null);
 			toReturn |=(this._consultingAgreements != null);
 			toReturn |=(this._goseInterviews != null);
@@ -839,6 +899,8 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentProtocolResponseEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentProtocolResponseEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<AppointmentProtocolResponseEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentProtocolResponseEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ArbitrationEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ArbitrationEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<ConsultingAgreementEntity>(EntityFactoryCache2.GetEntityFactory(typeof(ConsultingAgreementEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<GoseInterviewEntity>(EntityFactoryCache2.GetEntityFactory(typeof(GoseInterviewEntityFactory))) : null);
@@ -864,6 +926,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			toReturn.Add("Company", _company);
 			toReturn.Add("Spinner", _spinner);
 			toReturn.Add("PsychometristAppointments", _psychometristAppointments);
+			toReturn.Add("AppointmentProtocolResponses", _appointmentProtocolResponses);
+			toReturn.Add("AppointmentProtocolResponses1", _appointmentProtocolResponses1);
 			toReturn.Add("PsychologistArbitrations", _psychologistArbitrations);
 			toReturn.Add("ConsultingAgreements", _consultingAgreements);
 			toReturn.Add("GoseInterviews", _goseInterviews);
@@ -1037,6 +1101,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		public static IPrefetchPathElement2 PrefetchPathPsychometristAppointments
 		{
 			get	{ return new PrefetchPathElement2( new EntityCollection<AppointmentEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentEntityFactory))), (IEntityRelation)GetRelationsForField("PsychometristAppointments")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.AppointmentEntity, 0, null, null, null, null, "PsychometristAppointments", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AppointmentProtocolResponse' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAppointmentProtocolResponses
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<AppointmentProtocolResponseEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentProtocolResponseEntityFactory))), (IEntityRelation)GetRelationsForField("AppointmentProtocolResponses")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.AppointmentProtocolResponseEntity, 0, null, null, null, null, "AppointmentProtocolResponses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'AppointmentProtocolResponse' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathAppointmentProtocolResponses1
+		{
+			get	{ return new PrefetchPathElement2( new EntityCollection<AppointmentProtocolResponseEntity>(EntityFactoryCache2.GetEntityFactory(typeof(AppointmentProtocolResponseEntityFactory))), (IEntityRelation)GetRelationsForField("AppointmentProtocolResponses1")[0], (int)PsychologicalServices.Data.EntityType.UserEntity, (int)PsychologicalServices.Data.EntityType.AppointmentProtocolResponseEntity, 0, null, null, null, null, "AppointmentProtocolResponses1", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Arbitration' for this entity.</summary>
@@ -1277,6 +1355,20 @@ namespace PsychologicalServices.Data.EntityClasses
 		public virtual EntityCollection<AppointmentEntity> PsychometristAppointments
 		{
 			get { return GetOrCreateEntityCollection<AppointmentEntity, AppointmentEntityFactory>("Psychometrist", true, false, ref _psychometristAppointments);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentProtocolResponseEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(AppointmentProtocolResponseEntity))]
+		public virtual EntityCollection<AppointmentProtocolResponseEntity> AppointmentProtocolResponses
+		{
+			get { return GetOrCreateEntityCollection<AppointmentProtocolResponseEntity, AppointmentProtocolResponseEntityFactory>("CreateUser", true, false, ref _appointmentProtocolResponses);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentProtocolResponseEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(AppointmentProtocolResponseEntity))]
+		public virtual EntityCollection<AppointmentProtocolResponseEntity> AppointmentProtocolResponses1
+		{
+			get { return GetOrCreateEntityCollection<AppointmentProtocolResponseEntity, AppointmentProtocolResponseEntityFactory>("UpdateUser", true, false, ref _appointmentProtocolResponses1);	}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'ArbitrationEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

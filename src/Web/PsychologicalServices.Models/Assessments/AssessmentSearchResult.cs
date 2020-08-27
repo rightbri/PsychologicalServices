@@ -12,6 +12,8 @@ namespace PsychologicalServices.Models.Assessments
 
         public string Claimant { get; set; }
 
+        public int AppointmentId { get; set; }
+
         public DateTimeOffset AppointmentTime { get; set; }
     }
 }

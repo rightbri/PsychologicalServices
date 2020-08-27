@@ -76,6 +76,12 @@ namespace PsychologicalServices.Data.Linq
 				case PsychologicalServices.Data.EntityType.AppointmentAttributeEntity:
 					toReturn = this.AppointmentAttribute;
 					break;
+				case PsychologicalServices.Data.EntityType.AppointmentProtocolResponseEntity:
+					toReturn = this.AppointmentProtocolResponse;
+					break;
+				case PsychologicalServices.Data.EntityType.AppointmentProtocolResponseValueEntity:
+					toReturn = this.AppointmentProtocolResponseValue;
+					break;
 				case PsychologicalServices.Data.EntityType.AppointmentSequenceEntity:
 					toReturn = this.AppointmentSequence;
 					break;
@@ -357,6 +363,18 @@ namespace PsychologicalServices.Data.Linq
 		public DataSource2<AppointmentAttributeEntity> AppointmentAttribute
 		{
 			get { return new DataSource2<AppointmentAttributeEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting AppointmentProtocolResponseEntity instances in the database.</summary>
+		public DataSource2<AppointmentProtocolResponseEntity> AppointmentProtocolResponse
+		{
+			get { return new DataSource2<AppointmentProtocolResponseEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		
+		/// <summary>returns the datasource to use in a Linq query when targeting AppointmentProtocolResponseValueEntity instances in the database.</summary>
+		public DataSource2<AppointmentProtocolResponseValueEntity> AppointmentProtocolResponseValue
+		{
+			get { return new DataSource2<AppointmentProtocolResponseValueEntity>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		
 		/// <summary>returns the datasource to use in a Linq query when targeting AppointmentSequenceEntity instances in the database.</summary>

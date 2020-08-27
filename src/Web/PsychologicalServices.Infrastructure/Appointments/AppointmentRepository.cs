@@ -201,6 +201,22 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
                 );
 
+        private static readonly Func<IPathEdgeRootParser<AppointmentProtocolResponseEntity>, IPathEdgeRootParser<AppointmentProtocolResponseEntity>>
+            AppointmentProtocolResponsePath =
+                (appointmentProtocolResponsePath => appointmentProtocolResponsePath
+                    .Prefetch<UserEntity>(appointmentProtocolResponse => appointmentProtocolResponse.CreateUser)
+                    .Prefetch<UserEntity>(appointmentProtocolResponse => appointmentProtocolResponse.UpdateUser)
+                    .Prefetch<AppointmentEntity>(appointmentProtocolResponse => appointmentProtocolResponse.Appointment)
+                        .SubPath(appointmentPath => appointmentPath
+                            .Prefetch<UserEntity>(appointment => appointment.Psychometrist)
+                            .Prefetch<AppointmentStatusEntity>(appointment => appointment.AppointmentStatus)
+                            .Prefetch<AssessmentEntity>(appointment => appointment.Assessment)
+                                .SubPath(assessmentPath => assessmentPath
+                                    .Prefetch<ClaimantEntity>(assessment => assessment.Claimant)
+                                )
+                        )
+                );
+
         #endregion
 
         private Appointment GetAppointment(int id, Func<IPathEdgeRootParser<AppointmentEntity>, IPathEdgeRootParser<AppointmentEntity>> prefetchPath = null)
@@ -452,6 +468,55 @@ namespace PsychologicalServices.Infrastructure.Appointments
             }
         }
 
+        public AppointmentProtocolResponse GetAppointmentProtocolResponse(int appointmentId)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                var appointmentEntity = new AppointmentEntity
+                {
+                    AppointmentId = appointmentId,
+                };
+
+                var prefetch = new PrefetchPath2(EntityType.AppointmentEntity);
+
+                prefetch.Add(AppointmentEntity.PrefetchPathAppointmentProtocolResponse);
+
+                var appointmentExists = adapter.FetchEntity(appointmentEntity, prefetch);
+
+                if (!appointmentExists)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(appointmentId));
+                }
+
+                var entity = appointmentEntity.AppointmentProtocolResponse
+                    ?? new AppointmentProtocolResponseEntity
+                    {
+                        AppointmentId = appointmentId,
+                    };
+
+                return entity.ToAppointmentProtocolResponse();
+            }
+        }
+
+        public IEnumerable<AppointmentProtocolResponseValue> GetAppointmentProtocolResponseValues(bool? isActive = true)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var meta = new LinqMetaData(adapter);
+
+                return
+                    Execute<AppointmentProtocolResponseValueEntity>(
+                        (ILLBLGenProQuery)
+                        meta.AppointmentProtocolResponseValue
+                        .Where(appointmentProtocolResponseValue => isActive == null || appointmentProtocolResponseValue.IsActive == isActive.Value)
+                    )
+                    .Select(appointmentProtocolResponseValue => appointmentProtocolResponseValue.ToAppointmentProtocolResponseValue())
+                    .ToList();
+            }
+        }
+
         public int SaveAppointment(Appointment appointment)
         {
             using (var adapter = AdapterFactory.CreateAdapter())
@@ -599,6 +664,230 @@ namespace PsychologicalServices.Infrastructure.Appointments
                 adapter.SaveEntity(appointmentStatusEntity, false);
 
                 return appointmentStatusEntity.AppointmentStatusId;
+            }
+        }
+
+        public int SaveAppointmentProtocolResponse(AppointmentProtocolResponse appointmentProtocolResponse)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var uow = new UnitOfWork2();
+
+                var appointmentEntity = new AppointmentEntity
+                {
+                    AppointmentId = appointmentProtocolResponse.AppointmentId,
+                };
+
+                var prefetch = new PrefetchPath2(EntityType.AppointmentEntity);
+
+                prefetch.Add(AppointmentEntity.PrefetchPathAppointmentProtocolResponse);
+
+                var appointmentExists = adapter.FetchEntity(appointmentEntity, prefetch);
+                
+                if (!appointmentExists)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(appointmentProtocolResponse), $"Appointment {appointmentProtocolResponse.AppointmentId} does not exist.");
+                }
+
+                var entity = appointmentEntity.AppointmentProtocolResponse
+                    ?? new AppointmentProtocolResponseEntity
+                    {
+                        AppointmentId = appointmentProtocolResponse.AppointmentId,
+                        CreateDate = _date.UtcNow,
+                        CreateUserId = appointmentProtocolResponse.CreateUser.UserId,
+                    };
+
+                if (null == appointmentProtocolResponse.OnTimeArrivalAndNotificationId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.OnTimeArrivalAndNotificationId, null);
+                }
+                else
+                {
+                    entity.OnTimeArrivalAndNotificationId = appointmentProtocolResponse.OnTimeArrivalAndNotificationId;
+                }
+
+                if (null == appointmentProtocolResponse.ClaimantArrivalNotificationId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.ClaimantArrivalNotificationId, null);
+                }
+                else
+                {
+                    entity.ClaimantArrivalNotificationId = appointmentProtocolResponse.ClaimantArrivalNotificationId;
+                }
+
+                if (null == appointmentProtocolResponse.CovidFormsCompletedBeforeEnteringRoomId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.CovidFormsCompletedBeforeEnteringRoomId, null);
+                }
+                else
+                {
+                    entity.CovidFormsCompletedBeforeEnteringRoomId = appointmentProtocolResponse.CovidFormsCompletedBeforeEnteringRoomId;
+                }
+
+                if (null == appointmentProtocolResponse.TestedClaimantsEnglishReadingLevelId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.TestedClaimantsEnglishReadingLevelId, null);
+                }
+                else
+                {
+                    entity.TestedClaimantsEnglishReadingLevelId = appointmentProtocolResponse.TestedClaimantsEnglishReadingLevelId;
+                }
+
+                if (null == appointmentProtocolResponse.TommSimsScoreNotificationId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.TommSimsScoreNotificationId, null);
+                }
+                else
+                {
+                    entity.TommSimsScoreNotificationId = appointmentProtocolResponse.TommSimsScoreNotificationId;
+                }
+
+                if (null == appointmentProtocolResponse.AskedWhichTestsShouldBeRemovedId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.AskedWhichTestsShouldBeRemovedId, null);
+                }
+                else
+                {
+                    entity.AskedWhichTestsShouldBeRemovedId = appointmentProtocolResponse.AskedWhichTestsShouldBeRemovedId;
+                }
+
+                if (null == appointmentProtocolResponse.AdvisedOfUnexpectedDelaysId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.AdvisedOfUnexpectedDelaysId, null);
+                }
+                else
+                {
+                    entity.AdvisedOfUnexpectedDelaysId = appointmentProtocolResponse.AdvisedOfUnexpectedDelaysId;
+                }
+
+                if (null == appointmentProtocolResponse.AfterAssessmentNotificationId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.AfterAssessmentNotificationId, null);
+                }
+                else
+                {
+                    entity.AfterAssessmentNotificationId = appointmentProtocolResponse.AfterAssessmentNotificationId;
+                }
+
+                if (null == appointmentProtocolResponse.AllPapersHaveClaimantInitialsAndDateId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.AllPapersHaveClaimantInitialsAndDateId, null);
+                }
+                else
+                {
+                    entity.AllPapersHaveClaimantInitialsAndDateId = appointmentProtocolResponse.AllPapersHaveClaimantInitialsAndDateId;
+                }
+
+                if (null == appointmentProtocolResponse.ScoringDoubleCheckedId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.ScoringDoubleCheckedId, null);
+                }
+                else
+                {
+                    entity.ScoringDoubleCheckedId = appointmentProtocolResponse.ScoringDoubleCheckedId;
+                }
+
+                if (null == appointmentProtocolResponse.RelevantObservationsDocumentedId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.RelevantObservationsDocumentedId, null);
+                }
+                else
+                {
+                    entity.RelevantObservationsDocumentedId = appointmentProtocolResponse.RelevantObservationsDocumentedId;
+                }
+
+                if (null == appointmentProtocolResponse.ErrorCheckedObservationsId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.ErrorCheckedObservationsId, null);
+                }
+                else
+                {
+                    entity.ErrorCheckedObservationsId = appointmentProtocolResponse.ErrorCheckedObservationsId;
+                }
+
+                if (null == appointmentProtocolResponse.AllFormsCompletedId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.AllFormsCompletedId, null);
+                }
+                else
+                {
+                    entity.AllFormsCompletedId = appointmentProtocolResponse.AllFormsCompletedId;
+                }
+
+                if (null == appointmentProtocolResponse.TimeAssessmentLabelCompletedId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.TimeAssessmentLabelCompletedId, null);
+                }
+                else
+                {
+                    entity.TimeAssessmentLabelCompletedId = appointmentProtocolResponse.TimeAssessmentLabelCompletedId;
+                }
+
+                if (null == appointmentProtocolResponse.ScansUploadedNotificationId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.ScansUploadedNotificationId, null);
+                }
+                else
+                {
+                    entity.ScansUploadedNotificationId = appointmentProtocolResponse.ScansUploadedNotificationId;
+                }
+
+                if (null == appointmentProtocolResponse.UploadedScanLegibilityVerifiedId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.UploadedScanLegibilityVerifiedId, null);
+                }
+                else
+                {
+                    entity.UploadedScanLegibilityVerifiedId = appointmentProtocolResponse.UploadedScanLegibilityVerifiedId;
+                }
+
+                if (null == appointmentProtocolResponse.SpareSetReplenishmentRequestSentId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.SpareSetReplenishmentRequestSentId, null);
+                }
+                else
+                {
+                    entity.SpareSetReplenishmentRequestSentId = appointmentProtocolResponse.SpareSetReplenishmentRequestSentId;
+                }
+
+                if (null == appointmentProtocolResponse.RespondedToQuestionsWithinRequiredTimeframeId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.RespondedToQuestionsWithinRequiredTimeframeId, null);
+                }
+                else
+                {
+                    entity.RespondedToQuestionsWithinRequiredTimeframeId = appointmentProtocolResponse.RespondedToQuestionsWithinRequiredTimeframeId;
+                }
+
+                if (null == appointmentProtocolResponse.StapledItemsTogetherId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.StapledItemsTogetherId, null);
+                }
+                else
+                {
+                    entity.StapledItemsTogetherId = appointmentProtocolResponse.StapledItemsTogetherId;
+                }
+
+                if (null == appointmentProtocolResponse.WillPersonallyDropOffPackageId)
+                {
+                    entity.SetNewFieldValue((int)AppointmentProtocolResponseFieldIndex.WillPersonallyDropOffPackageId, null);
+                }
+                else
+                {
+                    entity.WillPersonallyDropOffPackageId = appointmentProtocolResponse.WillPersonallyDropOffPackageId;
+                }
+
+                entity.Comments = appointmentProtocolResponse.Comments;
+
+                entity.UpdateDate = _date.UtcNow;
+                
+                entity.UpdateUserId = appointmentProtocolResponse.UpdateUser.UserId;
+
+                uow.AddForSave(entity);
+
+                uow.Commit(adapter);
+
+                return entity.AppointmentId;
             }
         }
     }

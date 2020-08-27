@@ -98,6 +98,76 @@ namespace PsychologicalServices.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentProtocolResponse.</summary>
+	public enum AppointmentProtocolResponseFieldIndex
+	{
+		///<summary>AppointmentId. </summary>
+		AppointmentId,
+		///<summary>OnTimeArrivalAndNotificationId. </summary>
+		OnTimeArrivalAndNotificationId,
+		///<summary>ClaimantArrivalNotificationId. </summary>
+		ClaimantArrivalNotificationId,
+		///<summary>CovidFormsCompletedBeforeEnteringRoomId. </summary>
+		CovidFormsCompletedBeforeEnteringRoomId,
+		///<summary>TestedClaimantsEnglishReadingLevelId. </summary>
+		TestedClaimantsEnglishReadingLevelId,
+		///<summary>TommSimsScoreNotificationId. </summary>
+		TommSimsScoreNotificationId,
+		///<summary>AskedWhichTestsShouldBeRemovedId. </summary>
+		AskedWhichTestsShouldBeRemovedId,
+		///<summary>AdvisedOfUnexpectedDelaysId. </summary>
+		AdvisedOfUnexpectedDelaysId,
+		///<summary>AfterAssessmentNotificationId. </summary>
+		AfterAssessmentNotificationId,
+		///<summary>AllPapersHaveClaimantInitialsAndDateId. </summary>
+		AllPapersHaveClaimantInitialsAndDateId,
+		///<summary>ScoringDoubleCheckedId. </summary>
+		ScoringDoubleCheckedId,
+		///<summary>RelevantObservationsDocumentedId. </summary>
+		RelevantObservationsDocumentedId,
+		///<summary>ErrorCheckedObservationsId. </summary>
+		ErrorCheckedObservationsId,
+		///<summary>AllFormsCompletedId. </summary>
+		AllFormsCompletedId,
+		///<summary>TimeAssessmentLabelCompletedId. </summary>
+		TimeAssessmentLabelCompletedId,
+		///<summary>ScansUploadedNotificationId. </summary>
+		ScansUploadedNotificationId,
+		///<summary>UploadedScanLegibilityVerifiedId. </summary>
+		UploadedScanLegibilityVerifiedId,
+		///<summary>SpareSetReplenishmentRequestSentId. </summary>
+		SpareSetReplenishmentRequestSentId,
+		///<summary>RespondedToQuestionsWithinRequiredTimeframeId. </summary>
+		RespondedToQuestionsWithinRequiredTimeframeId,
+		///<summary>StapledItemsTogetherId. </summary>
+		StapledItemsTogetherId,
+		///<summary>WillPersonallyDropOffPackageId. </summary>
+		WillPersonallyDropOffPackageId,
+		///<summary>Comments. </summary>
+		Comments,
+		///<summary>CreateDate. </summary>
+		CreateDate,
+		///<summary>CreateUserId. </summary>
+		CreateUserId,
+		///<summary>UpdateDate. </summary>
+		UpdateDate,
+		///<summary>UpdateUserId. </summary>
+		UpdateUserId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentProtocolResponseValue.</summary>
+	public enum AppointmentProtocolResponseValueFieldIndex
+	{
+		///<summary>AppointmentProtocolResponseValueId. </summary>
+		AppointmentProtocolResponseValueId,
+		///<summary>Value. </summary>
+		Value,
+		///<summary>IsActive. </summary>
+		IsActive,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AppointmentSequence.</summary>
 	public enum AppointmentSequenceFieldIndex
 	{
@@ -1404,6 +1474,10 @@ namespace PsychologicalServices.Data
 		AppointmentEntity,
 		///<summary>AppointmentAttribute</summary>
 		AppointmentAttributeEntity,
+		///<summary>AppointmentProtocolResponse</summary>
+		AppointmentProtocolResponseEntity,
+		///<summary>AppointmentProtocolResponseValue</summary>
+		AppointmentProtocolResponseValueEntity,
 		///<summary>AppointmentSequence</summary>
 		AppointmentSequenceEntity,
 		///<summary>AppointmentStatus</summary>

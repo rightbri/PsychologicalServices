@@ -2,7 +2,6 @@
 using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PsychologicalServices.Models.Appointments
 {
@@ -54,6 +53,18 @@ namespace PsychologicalServices.Models.Appointments
             return appointmentStatus;
         }
 
+        public AppointmentProtocolResponse GetAppointmentProtocolResponse(int appointmentId)
+        {
+            var item = _appointmentRepository.GetAppointmentProtocolResponse(appointmentId);
+
+            if (null == item)
+            {
+                throw new ArgumentOutOfRangeException(nameof(appointmentId));
+            }
+
+            return item;
+        }
+
         public IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria)
         {
             var appointments = _appointmentRepository.GetAppointments(criteria);
@@ -65,6 +76,13 @@ namespace PsychologicalServices.Models.Appointments
             var appointmentStatuses = _appointmentRepository.GetAppointmentStatuses(isActive);
 
             return appointmentStatuses;
+        }
+
+        public IEnumerable<AppointmentProtocolResponseValue> GetAppointmentProtocolResponseValues(bool? isActive = true)
+        {
+            var items = _appointmentRepository.GetAppointmentProtocolResponseValues(isActive);
+
+            return items;
         }
 
         public SaveResult<Appointment> SaveAppointment(Appointment appointment)
@@ -111,6 +129,27 @@ namespace PsychologicalServices.Models.Appointments
             catch (Exception ex)
             {
                 _log.Error("SaveAppointmentStatus", ex);
+                result.IsError = true;
+                result.ErrorDetails = ex.Message;
+            }
+
+            return result;
+        }
+
+        public SaveResult<AppointmentProtocolResponse> SaveAppointmentProtocolResponse(AppointmentProtocolResponse appointmentProtocolResponse)
+        {
+            var result = new SaveResult<AppointmentProtocolResponse>();
+
+            try
+            {
+                var id = _appointmentRepository.SaveAppointmentProtocolResponse(appointmentProtocolResponse);
+
+                result.Item = _appointmentRepository.GetAppointmentProtocolResponse(id);
+                result.IsSaved = true;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("SaveAppointmentProtocolResponse", ex);
                 result.IsError = true;
                 result.ErrorDetails = ex.Message;
             }

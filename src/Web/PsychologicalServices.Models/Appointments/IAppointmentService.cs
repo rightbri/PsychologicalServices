@@ -1,7 +1,6 @@
 ﻿using PsychologicalServices.Models.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PsychologicalServices.Models.Appointments
 {
@@ -13,12 +12,18 @@ namespace PsychologicalServices.Models.Appointments
 
         AppointmentStatus GetAppointmentStatus(int id);
 
+        AppointmentProtocolResponse GetAppointmentProtocolResponse(int appointmentId);
+
         IEnumerable<Appointment> GetAppointments(AppointmentSearchCriteria criteria);
 
         IEnumerable<AppointmentStatus> GetAppointmentStatuses(bool? isActive = true);
 
+        IEnumerable<AppointmentProtocolResponseValue> GetAppointmentProtocolResponseValues(bool? isActive = true);
+
         SaveResult<Appointment> SaveAppointment(Appointment appointment);
 
         SaveResult<AppointmentStatus> SaveAppointmentStatus(AppointmentStatus appointmentStatus);
+
+        SaveResult<AppointmentProtocolResponse> SaveAppointmentProtocolResponse(AppointmentProtocolResponse appointmentProtocolResponse);
     }
 }

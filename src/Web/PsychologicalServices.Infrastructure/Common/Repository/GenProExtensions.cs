@@ -32,6 +32,53 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
 {
     public static class GenProExtensions
     {
+        public static AppointmentProtocolResponse ToAppointmentProtocolResponse(this AppointmentProtocolResponseEntity entity)
+        {
+            return entity != null
+                ? new AppointmentProtocolResponse
+                {
+                    AppointmentId = entity.AppointmentId,
+                    AdvisedOfUnexpectedDelaysId = entity.AdvisedOfUnexpectedDelaysId,
+                    AfterAssessmentNotificationId = entity.AfterAssessmentNotificationId,
+                    AllFormsCompletedId = entity.AllFormsCompletedId,
+                    AllPapersHaveClaimantInitialsAndDateId = entity.AllPapersHaveClaimantInitialsAndDateId,
+                    AskedWhichTestsShouldBeRemovedId = entity.AskedWhichTestsShouldBeRemovedId,
+                    ClaimantArrivalNotificationId = entity.ClaimantArrivalNotificationId,
+                    CovidFormsCompletedBeforeEnteringRoomId = entity.CovidFormsCompletedBeforeEnteringRoomId,
+                    ErrorCheckedObservationsId = entity.ErrorCheckedObservationsId,
+                    OnTimeArrivalAndNotificationId = entity.OnTimeArrivalAndNotificationId,
+                    RelevantObservationsDocumentedId = entity.RelevantObservationsDocumentedId,
+                    RespondedToQuestionsWithinRequiredTimeframeId = entity.RespondedToQuestionsWithinRequiredTimeframeId,
+                    ScansUploadedNotificationId = entity.ScansUploadedNotificationId,
+                    ScoringDoubleCheckedId = entity.ScoringDoubleCheckedId,
+                    SpareSetReplenishmentRequestSentId = entity.SpareSetReplenishmentRequestSentId,
+                    StapledItemsTogetherId = entity.StapledItemsTogetherId,
+                    TestedClaimantsEnglishReadingLevelId = entity.TestedClaimantsEnglishReadingLevelId,
+                    TimeAssessmentLabelCompletedId = entity.TimeAssessmentLabelCompletedId,
+                    TommSimsScoreNotificationId = entity.TommSimsScoreNotificationId,
+                    UploadedScanLegibilityVerifiedId = entity.UploadedScanLegibilityVerifiedId,
+                    WillPersonallyDropOffPackageId = entity.WillPersonallyDropOffPackageId,
+                    Comments = entity.Comments,
+                    CreateDate = entity.CreateDate,
+                    CreateUser = entity.CreateUser.ToUser(),
+                    UpdateDate = entity.UpdateDate,
+                    UpdateUser = entity.UpdateUser.ToUser(),
+                }
+                : null;
+        }
+
+        public static AppointmentProtocolResponseValue ToAppointmentProtocolResponseValue(this AppointmentProtocolResponseValueEntity entity)
+        {
+            return entity != null
+                ? new AppointmentProtocolResponseValue
+                {
+                    AppointmentProtocolResponseValueId = entity.AppointmentProtocolResponseValueId,
+                    Value = entity.Value,
+                    IsActive = entity.IsActive,
+                }
+                : null;
+        }
+
         public static Models.PhoneLogs.PhoneLog ToModel(this PhoneLogEntity entity)
         {
             return entity != null
@@ -889,6 +936,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     Claimant = appointment.Assessment.Claimant != null
                         ? $"{appointment.Assessment.Claimant.FirstName} {appointment.Assessment.Claimant.LastName}"
                         : "",
+                    AppointmentId = appointment.AppointmentId,
                     AppointmentTime = appointment.AppointmentTime,
                 }
                 : null;

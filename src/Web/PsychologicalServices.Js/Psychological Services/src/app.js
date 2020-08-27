@@ -119,7 +119,9 @@ export class App {
 			{ route: 'gose/interview', name: 'goseInterview', moduleId: 'gose/goseInterview', title: 'GOSE', nav: true },
 			{ route: 'phoneLogs', name: 'phoneLogs', moduleId: 'phoneLogs/phoneLogs', title: 'Phone Logs', nav: true, settings: { permissions: [p.SearchPhoneLog] } },
 			{ route: 'phoneLogs/:id', name: 'editPhoneLog', moduleId: 'phoneLogs/editPhoneLog', title: 'Edit Phone Log', nav: false, settings: { permissions: [p.EditPhoneLog] } },
-			{ route: 'phoneLogs/add', name: 'addPhoneLog', moduleId: 'phoneLogs/editPhoneLog', title: 'Add Phone Log', nav: false, settings: { permissions: [p.EditPhoneLog] } }
+			{ route: 'phoneLogs/add', name: 'addPhoneLog', moduleId: 'phoneLogs/editPhoneLog', title: 'Add Phone Log', nav: false, settings: { permissions: [p.EditPhoneLog] } },
+			{ route: 'forms/assessmentProtocol', name: 'assessmentProtocolResponse', moduleId: 'forms/assessmentProtocolResponse', title: 'Assessment Protocol Reminder', nav: true },
+			{ route: 'forms/assessmentProtocol/:id', href: '#', name: 'assessmentProtocolResponse', moduleId: 'forms/assessmentProtocolResponse', title: 'Assessment Protocol Reminder', nav: true }
 		]);
 	}
 
@@ -178,7 +180,8 @@ export class App {
 					{ "name": "Psychological testing results", "route": "/testingResults/psychological", "permissions": [] },
 					{ "name": "Notes", "route": "/testingResults/notes", "permissions": [p.ViewAssessmentNote] },
 					{ "name": "Notes Output", "route": "/testingResults/notesOutput", "permissions": [p.ViewAssessmentNote] },
-					{ "name": "GOS-E Interview", "route": "/gose/interview", "permissions": [p.ViewGoseInterview] }
+					{ "name": "GOS-E Interview", "route": "/gose/interview", "permissions": [p.ViewGoseInterview] },
+					{ "name": "Assessment Protocol", "route": "/forms/assessmentProtocol", "permissions": [p.ViewAppointmentProtocolResponse] }
 				]
 			},
 			{

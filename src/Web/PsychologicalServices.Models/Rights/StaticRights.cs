@@ -95,6 +95,9 @@ namespace PsychologicalServices.Models.Rights
         ViewPhoneLog,
         EditPhoneLog,
         SearchPhoneLog,
-        DeletePhoneLog
+        DeletePhoneLog,
+        ViewAppointmentProtocolResponse,
+        EditAppointmentProtocolResponse,
+        DeleteAppointmentProtocolResponse
     }
 }

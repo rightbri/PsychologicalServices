@@ -169,5 +169,7 @@
     <Build Include="dbo\Tables\GoseAccidentTimeframes.sql" />
     <Build Include="dbo\Tables\PhoneLogs.sql" />
     <Build Include="dbo\Stored Procedures\ReferralTypeData.sql" />
+    <Build Include="dbo\Tables\AppointmentProtocolResponseValues.sql" />
+    <Build Include="dbo\Tables\AppointmentProtocolResponses.sql" />
   </ItemGroup>
 </Project>

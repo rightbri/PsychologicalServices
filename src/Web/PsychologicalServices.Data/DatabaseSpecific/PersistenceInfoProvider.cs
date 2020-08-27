@@ -51,6 +51,8 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			InitAddressTypeEntityMappings();
 			InitAppointmentEntityMappings();
 			InitAppointmentAttributeEntityMappings();
+			InitAppointmentProtocolResponseEntityMappings();
+			InitAppointmentProtocolResponseValueEntityMappings();
 			InitAppointmentSequenceEntityMappings();
 			InitAppointmentStatusEntityMappings();
 			InitAppointmentStatusInvoiceRateEntityMappings();
@@ -189,6 +191,47 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("AppointmentAttributeEntity", "AppointmentId", "AppointmentId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("AppointmentAttributeEntity", "AttributeId", "AttributeId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 			this.AddElementFieldMapping("AppointmentAttributeEntity", "Value", "Value", true, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
+		}
+
+		/// <summary>Inits AppointmentProtocolResponseEntity's mappings</summary>
+		private void InitAppointmentProtocolResponseEntityMappings()
+		{
+			this.AddElementMapping("AppointmentProtocolResponseEntity", @"PsychologicalServices", @"dbo", "AppointmentProtocolResponses", 26, 0);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "AppointmentId", "AppointmentId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "OnTimeArrivalAndNotificationId", "OnTimeArrivalAndNotificationId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "ClaimantArrivalNotificationId", "ClaimantArrivalNotificationId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "CovidFormsCompletedBeforeEnteringRoomId", "CovidFormsCompletedBeforeEnteringRoomId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 3);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "TestedClaimantsEnglishReadingLevelId", "TestedClaimantsEnglishReadingLevelId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 4);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "TommSimsScoreNotificationId", "TommSimsScoreNotificationId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 5);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "AskedWhichTestsShouldBeRemovedId", "AskedWhichTestsShouldBeRemovedId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 6);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "AdvisedOfUnexpectedDelaysId", "AdvisedOfUnexpectedDelaysId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 7);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "AfterAssessmentNotificationId", "AfterAssessmentNotificationId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "AllPapersHaveClaimantInitialsAndDateId", "AllPapersHaveClaimantInitialsAndDateId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 9);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "ScoringDoubleCheckedId", "ScoringDoubleCheckedId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 10);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "RelevantObservationsDocumentedId", "RelevantObservationsDocumentedId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 11);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "ErrorCheckedObservationsId", "ErrorCheckedObservationsId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 12);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "AllFormsCompletedId", "AllFormsCompletedId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 13);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "TimeAssessmentLabelCompletedId", "TimeAssessmentLabelCompletedId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 14);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "ScansUploadedNotificationId", "ScansUploadedNotificationId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 15);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "UploadedScanLegibilityVerifiedId", "UploadedScanLegibilityVerifiedId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 16);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "SpareSetReplenishmentRequestSentId", "SpareSetReplenishmentRequestSentId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 17);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "RespondedToQuestionsWithinRequiredTimeframeId", "RespondedToQuestionsWithinRequiredTimeframeId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 18);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "StapledItemsTogetherId", "StapledItemsTogetherId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 19);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "WillPersonallyDropOffPackageId", "WillPersonallyDropOffPackageId", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 20);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "Comments", "Comments", true, "VarChar", 1000, 0, 0, false, "", null, typeof(System.String), 21);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "CreateDate", "CreateDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 22);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "CreateUserId", "CreateUserId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 23);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "UpdateDate", "UpdateDate", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 24);
+			this.AddElementFieldMapping("AppointmentProtocolResponseEntity", "UpdateUserId", "UpdateUserId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 25);
+		}
+
+		/// <summary>Inits AppointmentProtocolResponseValueEntity's mappings</summary>
+		private void InitAppointmentProtocolResponseValueEntityMappings()
+		{
+			this.AddElementMapping("AppointmentProtocolResponseValueEntity", @"PsychologicalServices", @"dbo", "AppointmentProtocolResponseValues", 3, 0);
+			this.AddElementFieldMapping("AppointmentProtocolResponseValueEntity", "AppointmentProtocolResponseValueId", "AppointmentProtocolResponseValueId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("AppointmentProtocolResponseValueEntity", "Value", "Value", false, "VarChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
+			this.AddElementFieldMapping("AppointmentProtocolResponseValueEntity", "IsActive", "IsActive", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
 		}
 
 		/// <summary>Inits AppointmentSequenceEntity's mappings</summary>

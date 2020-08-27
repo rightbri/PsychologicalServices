@@ -183,6 +183,161 @@ namespace PsychologicalServices.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AppointmentProtocolResponseEntity</summary>
+	public partial class AppointmentProtocolResponseFields
+	{
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.AppointmentId field instance</summary>
+		public static EntityField2 AppointmentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.AppointmentId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.OnTimeArrivalAndNotificationId field instance</summary>
+		public static EntityField2 OnTimeArrivalAndNotificationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.OnTimeArrivalAndNotificationId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.ClaimantArrivalNotificationId field instance</summary>
+		public static EntityField2 ClaimantArrivalNotificationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.ClaimantArrivalNotificationId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.CovidFormsCompletedBeforeEnteringRoomId field instance</summary>
+		public static EntityField2 CovidFormsCompletedBeforeEnteringRoomId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.CovidFormsCompletedBeforeEnteringRoomId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.TestedClaimantsEnglishReadingLevelId field instance</summary>
+		public static EntityField2 TestedClaimantsEnglishReadingLevelId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.TestedClaimantsEnglishReadingLevelId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.TommSimsScoreNotificationId field instance</summary>
+		public static EntityField2 TommSimsScoreNotificationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.TommSimsScoreNotificationId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.AskedWhichTestsShouldBeRemovedId field instance</summary>
+		public static EntityField2 AskedWhichTestsShouldBeRemovedId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.AskedWhichTestsShouldBeRemovedId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.AdvisedOfUnexpectedDelaysId field instance</summary>
+		public static EntityField2 AdvisedOfUnexpectedDelaysId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.AdvisedOfUnexpectedDelaysId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.AfterAssessmentNotificationId field instance</summary>
+		public static EntityField2 AfterAssessmentNotificationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.AfterAssessmentNotificationId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.AllPapersHaveClaimantInitialsAndDateId field instance</summary>
+		public static EntityField2 AllPapersHaveClaimantInitialsAndDateId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.AllPapersHaveClaimantInitialsAndDateId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.ScoringDoubleCheckedId field instance</summary>
+		public static EntityField2 ScoringDoubleCheckedId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.ScoringDoubleCheckedId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.RelevantObservationsDocumentedId field instance</summary>
+		public static EntityField2 RelevantObservationsDocumentedId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.RelevantObservationsDocumentedId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.ErrorCheckedObservationsId field instance</summary>
+		public static EntityField2 ErrorCheckedObservationsId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.ErrorCheckedObservationsId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.AllFormsCompletedId field instance</summary>
+		public static EntityField2 AllFormsCompletedId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.AllFormsCompletedId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.TimeAssessmentLabelCompletedId field instance</summary>
+		public static EntityField2 TimeAssessmentLabelCompletedId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.TimeAssessmentLabelCompletedId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.ScansUploadedNotificationId field instance</summary>
+		public static EntityField2 ScansUploadedNotificationId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.ScansUploadedNotificationId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.UploadedScanLegibilityVerifiedId field instance</summary>
+		public static EntityField2 UploadedScanLegibilityVerifiedId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.UploadedScanLegibilityVerifiedId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.SpareSetReplenishmentRequestSentId field instance</summary>
+		public static EntityField2 SpareSetReplenishmentRequestSentId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.SpareSetReplenishmentRequestSentId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.RespondedToQuestionsWithinRequiredTimeframeId field instance</summary>
+		public static EntityField2 RespondedToQuestionsWithinRequiredTimeframeId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.RespondedToQuestionsWithinRequiredTimeframeId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.StapledItemsTogetherId field instance</summary>
+		public static EntityField2 StapledItemsTogetherId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.StapledItemsTogetherId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.WillPersonallyDropOffPackageId field instance</summary>
+		public static EntityField2 WillPersonallyDropOffPackageId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.WillPersonallyDropOffPackageId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.Comments field instance</summary>
+		public static EntityField2 Comments
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.Comments);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.CreateDate field instance</summary>
+		public static EntityField2 CreateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.CreateDate);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.CreateUserId field instance</summary>
+		public static EntityField2 CreateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.CreateUserId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.UpdateDate field instance</summary>
+		public static EntityField2 UpdateDate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.UpdateDate);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseEntity.UpdateUserId field instance</summary>
+		public static EntityField2 UpdateUserId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseFieldIndex.UpdateUserId);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity AppointmentProtocolResponseValueEntity</summary>
+	public partial class AppointmentProtocolResponseValueFields
+	{
+		/// <summary>Creates a new AppointmentProtocolResponseValueEntity.AppointmentProtocolResponseValueId field instance</summary>
+		public static EntityField2 AppointmentProtocolResponseValueId
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseValueFieldIndex.AppointmentProtocolResponseValueId);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseValueEntity.Value field instance</summary>
+		public static EntityField2 Value
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseValueFieldIndex.Value);}
+		}
+		/// <summary>Creates a new AppointmentProtocolResponseValueEntity.IsActive field instance</summary>
+		public static EntityField2 IsActive
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(AppointmentProtocolResponseValueFieldIndex.IsActive);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity AppointmentSequenceEntity</summary>
 	public partial class AppointmentSequenceFields
 	{

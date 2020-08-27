@@ -215,6 +215,18 @@ export class DataRepository {
 	deleteAssessmentTestingResults(assessmentId, name) {
 		return this.deleteBasic(`${assessmentId}/${name}`, 'assessmenttestingresults');
 	}
+
+	getAppointmentProtocolResponse(appointmentId) {
+		return this.getBasic(`appointmentprotocolresponse/${appointmentId}`);
+	}
+
+	saveAppointmentProtocolResponse(response) {
+		return this.saveBasic(response, 'appointmentprotocolresponse');
+	}
+
+	getAppointmentProtocolResponseValues() {
+		return this.getManyBasic('appointmentprotocolresponsevalue', true);
+	}
 	
 	getGoseInterview(assessmentId) {
 		return this.getBasic(`goseinterview/${assessmentId}`);

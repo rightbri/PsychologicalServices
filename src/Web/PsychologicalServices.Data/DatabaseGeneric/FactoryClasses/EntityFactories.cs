@@ -198,6 +198,48 @@ namespace PsychologicalServices.Data.FactoryClasses
 		#endregion
 	}
 
+	/// <summary>Factory to create new, empty AppointmentProtocolResponseEntity objects.</summary>
+	[Serializable]
+	public partial class AppointmentProtocolResponseEntityFactory : EntityFactoryBase2<AppointmentProtocolResponseEntity> {
+		/// <summary>CTor</summary>
+		public AppointmentProtocolResponseEntityFactory() : base("AppointmentProtocolResponseEntity", PsychologicalServices.Data.EntityType.AppointmentProtocolResponseEntity, false) { }
+		
+		/// <summary>Creates a new AppointmentProtocolResponseEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AppointmentProtocolResponseEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentProtocolResponseUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
+	/// <summary>Factory to create new, empty AppointmentProtocolResponseValueEntity objects.</summary>
+	[Serializable]
+	public partial class AppointmentProtocolResponseValueEntityFactory : EntityFactoryBase2<AppointmentProtocolResponseValueEntity> {
+		/// <summary>CTor</summary>
+		public AppointmentProtocolResponseValueEntityFactory() : base("AppointmentProtocolResponseValueEntity", PsychologicalServices.Data.EntityType.AppointmentProtocolResponseValueEntity, false) { }
+		
+		/// <summary>Creates a new AppointmentProtocolResponseValueEntity instance but uses a special constructor which will set the Fields object of the new IEntity2 instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields2 object for the new IEntity2 to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields2 object) IEntity2 object</returns>
+		public override IEntity2 Create(IEntityFields2 fields) {
+			IEntity2 toReturn = new AppointmentProtocolResponseValueEntity(fields);
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentProtocolResponseValueUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		#region Included Code
+
+		#endregion
+	}
+
 	/// <summary>Factory to create new, empty AppointmentSequenceEntity objects.</summary>
 	[Serializable]
 	public partial class AppointmentSequenceEntityFactory : EntityFactoryBase2<AppointmentSequenceEntity> {
@@ -1804,6 +1846,12 @@ namespace PsychologicalServices.Data.FactoryClasses
 					break;
 				case PsychologicalServices.Data.EntityType.AppointmentAttributeEntity:
 					factoryToUse = new AppointmentAttributeEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AppointmentProtocolResponseEntity:
+					factoryToUse = new AppointmentProtocolResponseEntityFactory();
+					break;
+				case PsychologicalServices.Data.EntityType.AppointmentProtocolResponseValueEntity:
+					factoryToUse = new AppointmentProtocolResponseValueEntityFactory();
 					break;
 				case PsychologicalServices.Data.EntityType.AppointmentSequenceEntity:
 					factoryToUse = new AppointmentSequenceEntityFactory();

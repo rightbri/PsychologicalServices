@@ -181,6 +181,43 @@
           <Field Name="Value" Type="bool" IsOptional="true" FieldIndex="2" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="AppointmentProtocolResponse" ObjectID="57b82d38-5b3e-402b-a127-da0bbc945368">
+        <Fields>
+          <Field Name="AdvisedOfUnexpectedDelaysId" Type="int" IsOptional="true" Precision="10" FieldIndex="7" />
+          <Field Name="AfterAssessmentNotificationId" Type="int" IsOptional="true" Precision="10" FieldIndex="8" />
+          <Field Name="AllFormsCompletedId" Type="int" IsOptional="true" Precision="10" FieldIndex="13" />
+          <Field Name="AllPapersHaveClaimantInitialsAndDateId" Type="int" IsOptional="true" Precision="10" FieldIndex="9" />
+          <Field Name="AppointmentId" Type="int" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="AskedWhichTestsShouldBeRemovedId" Type="int" IsOptional="true" Precision="10" FieldIndex="6" />
+          <Field Name="ClaimantArrivalNotificationId" Type="int" IsOptional="true" Precision="10" FieldIndex="2" />
+          <Field Name="Comments" Type="string" IsOptional="true" MaxLength="1000" FieldIndex="21" />
+          <Field Name="CovidFormsCompletedBeforeEnteringRoomId" Type="int" IsOptional="true" Precision="10" FieldIndex="3" />
+          <Field Name="CreateDate" Type="datetimeoffset" FieldIndex="22" />
+          <Field Name="CreateUserId" Type="int" FieldIndex="23" />
+          <Field Name="ErrorCheckedObservationsId" Type="int" IsOptional="true" Precision="10" FieldIndex="12" />
+          <Field Name="OnTimeArrivalAndNotificationId" Type="int" IsOptional="true" Precision="10" FieldIndex="1" />
+          <Field Name="RelevantObservationsDocumentedId" Type="int" IsOptional="true" Precision="10" FieldIndex="11" />
+          <Field Name="RespondedToQuestionsWithinRequiredTimeframeId" Type="int" IsOptional="true" Precision="10" FieldIndex="18" />
+          <Field Name="ScansUploadedNotificationId" Type="int" IsOptional="true" Precision="10" FieldIndex="15" />
+          <Field Name="ScoringDoubleCheckedId" Type="int" IsOptional="true" Precision="10" FieldIndex="10" />
+          <Field Name="SpareSetReplenishmentRequestSentId" Type="int" IsOptional="true" Precision="10" FieldIndex="17" />
+          <Field Name="StapledItemsTogetherId" Type="int" IsOptional="true" Precision="10" FieldIndex="19" />
+          <Field Name="TestedClaimantsEnglishReadingLevelId" Type="int" IsOptional="true" Precision="10" FieldIndex="4" />
+          <Field Name="TimeAssessmentLabelCompletedId" Type="int" IsOptional="true" Precision="10" FieldIndex="14" />
+          <Field Name="TommSimsScoreNotificationId" Type="int" IsOptional="true" Precision="10" FieldIndex="5" />
+          <Field Name="UpdateDate" Type="datetimeoffset" FieldIndex="24" />
+          <Field Name="UpdateUserId" Type="int" FieldIndex="25" />
+          <Field Name="UploadedScanLegibilityVerifiedId" Type="int" IsOptional="true" Precision="10" FieldIndex="16" />
+          <Field Name="WillPersonallyDropOffPackageId" Type="int" IsOptional="true" Precision="10" FieldIndex="20" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="AppointmentProtocolResponseValue" ObjectID="dad39564-a42a-4053-9f6a-2a475a725292">
+        <Fields>
+          <Field Name="AppointmentProtocolResponseValueId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" FieldIndex="0" />
+          <Field Name="IsActive" Type="bool" FieldIndex="2" />
+          <Field Name="Value" Type="string" MaxLength="50" FieldIndex="1" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="AppointmentSequence" ObjectID="4a848ec3-870a-4092-97e6-4f3ff4aaad21">
         <Fields>
           <Field Name="AppointmentSequenceId" Type="int" IsReadOnly="true" IsPrimaryKey="true" FieldIndex="0" />
@@ -965,6 +1002,121 @@
       <NormalRelationship Name="AppointmentAttribute.Attribute-Attribute.AppointmentAttributes" Start=":AppointmentAttribute" End=":Attribute" StartNavigator="Attribute" EndNavigator="AppointmentAttributes" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="AttributeId" PkField="AttributeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.AdvisedOfUnexpectedDelays-AppointmentProtocolResponseValue.AppointmentProtocolResponses" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="AdvisedOfUnexpectedDelays" EndNavigator="AppointmentProtocolResponses" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AdvisedOfUnexpectedDelaysId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.AfterAssessmentNotification-AppointmentProtocolResponseValue.AppointmentProtocolResponses1" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="AfterAssessmentNotification" EndNavigator="AppointmentProtocolResponses1" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AfterAssessmentNotificationId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.AllFormsCompleted-AppointmentProtocolResponseValue.AppointmentProtocolResponses2" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="AllFormsCompleted" EndNavigator="AppointmentProtocolResponses2" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AllFormsCompletedId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.AllPapersHaveClaimantInitialsAndDate-AppointmentProtocolResponseValue.AppointmentProtocolResponses3" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="AllPapersHaveClaimantInitialsAndDate" EndNavigator="AppointmentProtocolResponses3" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AllPapersHaveClaimantInitialsAndDateId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.Appointment-Appointment.AppointmentProtocolResponse" Start=":AppointmentProtocolResponse" End=":Appointment" StartNavigator="Appointment" EndNavigator="AppointmentProtocolResponse" Type="1" StartIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AppointmentId" PkField="AppointmentId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.AskedWhichTestsShouldBeRemoved-AppointmentProtocolResponseValue.AppointmentProtocolResponses4" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="AskedWhichTestsShouldBeRemoved" EndNavigator="AppointmentProtocolResponses4" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AskedWhichTestsShouldBeRemovedId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.ClaimantArrivalNotification-AppointmentProtocolResponseValue.AppointmentProtocolResponses5" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="ClaimantArrivalNotification" EndNavigator="AppointmentProtocolResponses5" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ClaimantArrivalNotificationId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.CovidFormsCompletedBeforeEnteringRoom-AppointmentProtocolResponseValue.AppointmentProtocolResponses6" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="CovidFormsCompletedBeforeEnteringRoom" EndNavigator="AppointmentProtocolResponses6" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CovidFormsCompletedBeforeEnteringRoomId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.CreateUser-User.AppointmentProtocolResponses" Start=":AppointmentProtocolResponse" End=":User" StartNavigator="CreateUser" EndNavigator="AppointmentProtocolResponses" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CreateUserId" PkField="UserId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.ErrorCheckedObservations-AppointmentProtocolResponseValue.AppointmentProtocolResponses7" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="ErrorCheckedObservations" EndNavigator="AppointmentProtocolResponses7" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ErrorCheckedObservationsId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.OnTimeArrivalAndNotification-AppointmentProtocolResponseValue.AppointmentProtocolResponses8" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="OnTimeArrivalAndNotification" EndNavigator="AppointmentProtocolResponses8" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="OnTimeArrivalAndNotificationId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.RelevantObservationsDocumented-AppointmentProtocolResponseValue.AppointmentProtocolResponses9" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="RelevantObservationsDocumented" EndNavigator="AppointmentProtocolResponses9" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="RelevantObservationsDocumentedId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.RespondedToQuestionsWithinRequiredTimeframe-AppointmentProtocolResponseValue.AppointmentProtocolResponses10" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="RespondedToQuestionsWithinRequiredTimeframe" EndNavigator="AppointmentProtocolResponses10" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="RespondedToQuestionsWithinRequiredTimeframeId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.ScansUploadedNotification-AppointmentProtocolResponseValue.AppointmentProtocolResponses11" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="ScansUploadedNotification" EndNavigator="AppointmentProtocolResponses11" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ScansUploadedNotificationId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.ScoringDoubleChecked-AppointmentProtocolResponseValue.AppointmentProtocolResponses12" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="ScoringDoubleChecked" EndNavigator="AppointmentProtocolResponses12" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ScoringDoubleCheckedId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.SpareSetReplenishmentRequestSent-AppointmentProtocolResponseValue.AppointmentProtocolResponses13" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="SpareSetReplenishmentRequestSent" EndNavigator="AppointmentProtocolResponses13" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SpareSetReplenishmentRequestSentId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.StapledItemsTogether-AppointmentProtocolResponseValue.AppointmentProtocolResponses14" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="StapledItemsTogether" EndNavigator="AppointmentProtocolResponses14" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="StapledItemsTogetherId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.TestedClaimantsEnglishReadingLevel-AppointmentProtocolResponseValue.AppointmentProtocolResponses15" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="TestedClaimantsEnglishReadingLevel" EndNavigator="AppointmentProtocolResponses15" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="TestedClaimantsEnglishReadingLevelId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.TimeAssessmentLabelCompleted-AppointmentProtocolResponseValue.AppointmentProtocolResponses16" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="TimeAssessmentLabelCompleted" EndNavigator="AppointmentProtocolResponses16" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="TimeAssessmentLabelCompletedId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.TommSimsScoreNotification-AppointmentProtocolResponseValue.AppointmentProtocolResponses17" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="TommSimsScoreNotification" EndNavigator="AppointmentProtocolResponses17" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="TommSimsScoreNotificationId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.UpdateUser-User.AppointmentProtocolResponses1" Start=":AppointmentProtocolResponse" End=":User" StartNavigator="UpdateUser" EndNavigator="AppointmentProtocolResponses1" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="UpdateUserId" PkField="UserId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.UploadedScanLegibilityVerified-AppointmentProtocolResponseValue.AppointmentProtocolResponses18" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="UploadedScanLegibilityVerified" EndNavigator="AppointmentProtocolResponses18" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="UploadedScanLegibilityVerifiedId" PkField="AppointmentProtocolResponseValueId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="AppointmentProtocolResponse.WillPersonallyDropOffPackage-AppointmentProtocolResponseValue.AppointmentProtocolResponses19" Start=":AppointmentProtocolResponse" End=":AppointmentProtocolResponseValue" StartNavigator="WillPersonallyDropOffPackage" EndNavigator="AppointmentProtocolResponses19" Type="4" EndIsOptional="true">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="WillPersonallyDropOffPackageId" PkField="AppointmentProtocolResponseValueId" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="AppointmentStatusInvoiceRate.AppointmentSequence-AppointmentSequence.AppointmentStatusInvoiceRates" Start=":AppointmentStatusInvoiceRate" End=":AppointmentSequence" StartNavigator="AppointmentSequence" EndNavigator="AppointmentStatusInvoiceRates" Type="4">
@@ -1904,7 +2056,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-07-26T03:02:21.4095325Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-08-25T15:29:24.2483504Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -1939,6 +2091,45 @@
                     <Field Name="AppointmentId" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="AttributeId" Ordinal="2" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="Value" Ordinal="3" IsOptional="true" DbType="2" />
+                  </Fields>
+                </Table>
+                <Table Name="AppointmentProtocolResponses">
+                  <PkConstraintName Name="PK_AppointmentProtocolResponses_1" />
+                  <Fields>
+                    <Field Name="AppointmentId" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="OnTimeArrivalAndNotificationId" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="ClaimantArrivalNotificationId" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="CovidFormsCompletedBeforeEnteringRoomId" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="TestedClaimantsEnglishReadingLevelId" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="TommSimsScoreNotificationId" Ordinal="6" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="AskedWhichTestsShouldBeRemovedId" Ordinal="7" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="AdvisedOfUnexpectedDelaysId" Ordinal="8" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="AfterAssessmentNotificationId" Ordinal="9" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="AllPapersHaveClaimantInitialsAndDateId" Ordinal="10" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="ScoringDoubleCheckedId" Ordinal="11" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="RelevantObservationsDocumentedId" Ordinal="12" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="ErrorCheckedObservationsId" Ordinal="13" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="AllFormsCompletedId" Ordinal="14" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="TimeAssessmentLabelCompletedId" Ordinal="15" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="ScansUploadedNotificationId" Ordinal="16" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="UploadedScanLegibilityVerifiedId" Ordinal="17" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="SpareSetReplenishmentRequestSentId" Ordinal="18" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="RespondedToQuestionsWithinRequiredTimeframeId" Ordinal="19" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="StapledItemsTogetherId" Ordinal="20" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="WillPersonallyDropOffPackageId" Ordinal="21" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="Comments" Ordinal="22" IsOptional="true" DbType="24" Length="1000" />
+                    <Field Name="CreateDate" Ordinal="23" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
+                    <Field Name="CreateUserId" Ordinal="24" DbType="8" Precision="10" />
+                    <Field Name="UpdateDate" Ordinal="25" HasDefaultValue="true" DefaultValue="sysutcdatetime()" DbType="30" />
+                    <Field Name="UpdateUserId" Ordinal="26" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="AppointmentProtocolResponseValues">
+                  <PkConstraintName Name="PK_AppointmentProtocolResponseValues" />
+                  <Fields>
+                    <Field Name="AppointmentProtocolResponseValueId" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="Value" Ordinal="2" DbType="24" Length="50" />
+                    <Field Name="IsActive" Ordinal="3" HasDefaultValue="true" DefaultValue="(1)" DbType="2" />
                   </Fields>
                 </Table>
                 <Table Name="Appointments">
@@ -3136,6 +3327,121 @@
                 <FieldPair PkField="dbo:Attributes:AttributeId" FkField="dbo:AppointmentAttributes:AttributeId" />
               </FieldPairs>
             </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_AdvisedOfUnexpectedDelays">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:AdvisedOfUnexpectedDelaysId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_AfterAssessmentNotification">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:AfterAssessmentNotificationId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_AllFormsCompleted">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:AllFormsCompletedId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_AllPapersHaveClaimantInitialsAndDate">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:AllPapersHaveClaimantInitialsAndDateId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_Appointments">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Appointments:AppointmentId" FkField="dbo:AppointmentProtocolResponses:AppointmentId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_AskedWhichTestsShouldBeRemoved">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:AskedWhichTestsShouldBeRemovedId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_ClaimantArrivalNotification">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:ClaimantArrivalNotificationId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_CovidFormsCompletedBeforeEnteringRoom">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:CovidFormsCompletedBeforeEnteringRoomId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_CreateUser">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:AppointmentProtocolResponses:CreateUserId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_ErrorCheckedObservations">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:ErrorCheckedObservationsId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_OnTimeArrivalAndNotification">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:OnTimeArrivalAndNotificationId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_RelevantObservationsDocumented">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:RelevantObservationsDocumentedId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_RespondedToQuestionsWithinRequiredTimeframe">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:RespondedToQuestionsWithinRequiredTimeframeId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_ScansUploadedNotification">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:ScansUploadedNotificationId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_ScoringDoubleChecked">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:ScoringDoubleCheckedId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_SpareSetReplenishmentRequestSent">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:SpareSetReplenishmentRequestSentId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_StapledItemsTogether">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:StapledItemsTogetherId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_TestedClaimantsEnglishReadingLevel">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:TestedClaimantsEnglishReadingLevelId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_TimeAssessmentLabelCompleted">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:TimeAssessmentLabelCompletedId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_TommSimsScoreNotification">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:TommSimsScoreNotificationId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_UpdateUser">
+              <FieldPairs>
+                <FieldPair PkField="dbo:Users:UserId" FkField="dbo:AppointmentProtocolResponses:UpdateUserId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_UploadedScanLegibilityVerified">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:UploadedScanLegibilityVerifiedId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:AppointmentProtocolResponses:FK_AppointmentProtocolResponses_WillPersonallyDropOffPackage">
+              <FieldPairs>
+                <FieldPair PkField="dbo:AppointmentProtocolResponseValues:AppointmentProtocolResponseValueId" FkField="dbo:AppointmentProtocolResponses:WillPersonallyDropOffPackageId" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
             <ForeignKeyConstraint Name="dbo:Appointments:FK_Appointments_Addresses">
               <FieldPairs>
                 <FieldPair PkField="dbo:Addresses:AddressId" FkField="dbo:Appointments:LocationId" />
@@ -3890,6 +4196,43 @@
           <FieldMappings>
             <FieldMapping FieldName="AppointmentId" TargetFieldName="AppointmentId" />
             <FieldMapping FieldName="AttributeId" TargetFieldName="AttributeId" />
+            <FieldMapping FieldName="Value" TargetFieldName="Value" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":AppointmentProtocolResponse" TargetName="PsychologicalServices:dbo:AppointmentProtocolResponses">
+          <FieldMappings>
+            <FieldMapping FieldName="AdvisedOfUnexpectedDelaysId" TargetFieldName="AdvisedOfUnexpectedDelaysId" />
+            <FieldMapping FieldName="AfterAssessmentNotificationId" TargetFieldName="AfterAssessmentNotificationId" />
+            <FieldMapping FieldName="AllFormsCompletedId" TargetFieldName="AllFormsCompletedId" />
+            <FieldMapping FieldName="AllPapersHaveClaimantInitialsAndDateId" TargetFieldName="AllPapersHaveClaimantInitialsAndDateId" />
+            <FieldMapping FieldName="AppointmentId" TargetFieldName="AppointmentId" />
+            <FieldMapping FieldName="AskedWhichTestsShouldBeRemovedId" TargetFieldName="AskedWhichTestsShouldBeRemovedId" />
+            <FieldMapping FieldName="ClaimantArrivalNotificationId" TargetFieldName="ClaimantArrivalNotificationId" />
+            <FieldMapping FieldName="Comments" TargetFieldName="Comments" />
+            <FieldMapping FieldName="CovidFormsCompletedBeforeEnteringRoomId" TargetFieldName="CovidFormsCompletedBeforeEnteringRoomId" />
+            <FieldMapping FieldName="CreateDate" TargetFieldName="CreateDate" />
+            <FieldMapping FieldName="CreateUserId" TargetFieldName="CreateUserId" />
+            <FieldMapping FieldName="ErrorCheckedObservationsId" TargetFieldName="ErrorCheckedObservationsId" />
+            <FieldMapping FieldName="OnTimeArrivalAndNotificationId" TargetFieldName="OnTimeArrivalAndNotificationId" />
+            <FieldMapping FieldName="RelevantObservationsDocumentedId" TargetFieldName="RelevantObservationsDocumentedId" />
+            <FieldMapping FieldName="RespondedToQuestionsWithinRequiredTimeframeId" TargetFieldName="RespondedToQuestionsWithinRequiredTimeframeId" />
+            <FieldMapping FieldName="ScansUploadedNotificationId" TargetFieldName="ScansUploadedNotificationId" />
+            <FieldMapping FieldName="ScoringDoubleCheckedId" TargetFieldName="ScoringDoubleCheckedId" />
+            <FieldMapping FieldName="SpareSetReplenishmentRequestSentId" TargetFieldName="SpareSetReplenishmentRequestSentId" />
+            <FieldMapping FieldName="StapledItemsTogetherId" TargetFieldName="StapledItemsTogetherId" />
+            <FieldMapping FieldName="TestedClaimantsEnglishReadingLevelId" TargetFieldName="TestedClaimantsEnglishReadingLevelId" />
+            <FieldMapping FieldName="TimeAssessmentLabelCompletedId" TargetFieldName="TimeAssessmentLabelCompletedId" />
+            <FieldMapping FieldName="TommSimsScoreNotificationId" TargetFieldName="TommSimsScoreNotificationId" />
+            <FieldMapping FieldName="UpdateDate" TargetFieldName="UpdateDate" />
+            <FieldMapping FieldName="UpdateUserId" TargetFieldName="UpdateUserId" />
+            <FieldMapping FieldName="UploadedScanLegibilityVerifiedId" TargetFieldName="UploadedScanLegibilityVerifiedId" />
+            <FieldMapping FieldName="WillPersonallyDropOffPackageId" TargetFieldName="WillPersonallyDropOffPackageId" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":AppointmentProtocolResponseValue" TargetName="PsychologicalServices:dbo:AppointmentProtocolResponseValues">
+          <FieldMappings>
+            <FieldMapping FieldName="AppointmentProtocolResponseValueId" TargetFieldName="AppointmentProtocolResponseValueId" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="IsActive" TargetFieldName="IsActive" />
             <FieldMapping FieldName="Value" TargetFieldName="Value" />
           </FieldMappings>
         </EntityMapping>

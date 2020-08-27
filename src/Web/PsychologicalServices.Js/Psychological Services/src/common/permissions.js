@@ -88,5 +88,7 @@ export const Permissions = {
     "DeleteGoseInterview":"DeleteGoseInterview",
     "ViewPhoneLog":"ViewPhoneLog",
     "EditPhoneLog":"EditPhoneLog",
-    "SearchPhoneLog":"SearchPhoneLog"
+    "SearchPhoneLog":"SearchPhoneLog",
+    "ViewAppointmentProtocolResponse":"ViewAppointmentProtocolResponse",
+    "EditAppointmentProtocolResponse":"EditAppointmentProtocolResponse"
 }

@@ -25,8 +25,14 @@ namespace PsychologicalServices.Models.Appointments
 
         IEnumerable<AppointmentStatus> GetAppointmentStatuses(bool? isActive = true);
 
+        AppointmentProtocolResponse GetAppointmentProtocolResponse(int id);
+
+        IEnumerable<AppointmentProtocolResponseValue> GetAppointmentProtocolResponseValues(bool? isActive = true);
+
         int SaveAppointment(Appointment appointment);
 
         int SaveAppointmentStatus(AppointmentStatus appointmentStatus);
+
+        int SaveAppointmentProtocolResponse(AppointmentProtocolResponse appointmentProtocolResponse);
     }
 }
