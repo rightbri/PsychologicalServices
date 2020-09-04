@@ -3,6 +3,7 @@
     <require from="resources/value-converters/gender"></require>
     <require from="resources/value-converters/int"></require>
     <require from="resources/value-converters/number-text"></require>
+    <require from="resources/value-converters/number-text-if-less-than-ten"></require>
     <require from="resources/value-converters/lower"></require>
     <require from="resources/value-converters/proper"></require>
     <require from="resources/value-converters/date-format"></require>
@@ -291,7 +292,7 @@
                                                         ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}
                                                     </td>
                                                     <td class="uk-padding-remove-vertical">
-                                                        Have you been seen?
+                                                        ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].attendedQuestion}
                                                     </td>
                                                     <td class="uk-padding-remove-vertical">
                                                         ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].sinceAccident].output}
@@ -590,20 +591,20 @@
                             <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident.value !== null">
                                 &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining 
                                 <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween">
-                                    &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin} and ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax} 
+                                    &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin | numberTextIfLessThanTen} and ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax | numberTextIfLessThanTen} 
                                 </template>
                                 <template else>
-                                    &nbsp;${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident}
+                                    &nbsp;${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident | numberTextIfLessThanTen}
                                 </template>
                                 &nbsp;hours of sleep
                                 <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
-                                    <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent.value !== null">
+                                    <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent !== null || responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween">
                                         &nbsp;and advised that currently ${pronoun.subject} is obtaining 
                                         <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween">
-                                            &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMin} and ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMax}
+                                            &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMin | numberTextIfLessThanTen} and ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMax | numberTextIfLessThanTen}
                                         </template>
                                         <template else>
-                                            &nbsp;${responses.neuropsychological.physical.sleep.amountOfSleepCurrent}
+                                            &nbsp;${responses.neuropsychological.physical.sleep.amountOfSleepCurrent | numberTextIfLessThanTen}
                                         </template>
                                         &nbsp;hours of 
                                         <template if.bind="isYes(responses.neuropsychological.physical.sleep.brokenSleep)">
@@ -698,13 +699,6 @@
                             <template if.bind="dontKnowCriesEasily & signal:'emotional-issues-changed'">
                                 &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} does not know if ${pronoun.subject} cries easily.
                             </template>
-                        </template>
-            
-                        <template if.bind="isYes(responses.psychological.lettingFamilyDown)">
-                            &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} feels that ${pronoun.subject} is currently letting ${pronoun.possessiveAdjective} family down.
-                        </template>
-                        <template if.bind="isNo(responses.psychological.lettingFamilyDown)">
-                            &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not feel that ${pronoun.subject} is currently letting ${pronoun.possessiveAdjective} family down.
                         </template>
                     </p>
                 
@@ -1547,6 +1541,19 @@
                             &nbsp;${pronoun.subject | proper} also shared that ${pronoun.subject} is not less social than ${pronoun.subject} was prior to the accident.
                         </template>
                     </p>
+
+                    <!-- Travel Since Accident -->
+                    <template if.bind="isAnswered(responses.neuropsychological.currentState.travel.sinceAccident)">
+                        <p>
+                            When asked if ${pronoun.subject} had gone on vacation or traveled since the subject accident, ${gender.title} ${claimant.lastName} 
+                            <template if.bind="isNo(responses.neuropsychological.currentState.travel.sinceAccident)">
+                                &nbsp;denied the same.
+                            </template>
+                            <template if.bind="isYes(responses.neuropsychological.currentState.travel.sinceAccident)">
+                                &nbsp;shared that ${pronoun.subject} has traveled to ${responses.neuropsychological.currentState.travel.where} for ${responses.neuropsychological.currentState.travel.howLong.number | numberText | lower} ${responses.neuropsychological.currentState.travel.howLong.period}. 
+                            </template>
+                        </p>
+                    </template>
                 </div>
 
                 <hr>
@@ -1562,7 +1569,7 @@
                     <!-- Birth / Languages / Relationship / Familial Stress / Abusive Relationships -->
                     <p>
                         <template if.bind="responses.personalHistory.locationOfBirth">
-                            ${gender.title} ${claimant.lastName} was born on ${claimant.dateOfBirth | dateFormat:"MMMM Do, YYYY"} in ${responses.personalHistory.locationOfBirth & signal:'birth-location-changed'}. 
+                            ${gender.title} ${claimant.lastName} was born on ${claimant.dateOfBirth | dateFormat:"MMMM D, YYYY"} in ${responses.personalHistory.locationOfBirth & signal:'birth-location-changed'}. 
                         </template>
                         
                         <template if.bind="knownLanguages.length & signal:'languages-changed'">

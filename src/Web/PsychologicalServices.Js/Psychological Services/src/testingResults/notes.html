@@ -249,18 +249,20 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    If no, did you drive to the assessment?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="dayOfAssessmentDroveSelf-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.dayOfAssessment.droveSelf" value.bind="response.value" change.delegate="changed('travel-method-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
+                <template if.bind="isNo(responses.dayOfAssessment.wasDriven)">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        If no, did you drive to the assessment?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="dayOfAssessmentDroveSelf-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.dayOfAssessment.droveSelf" value.bind="response.value" change.delegate="changed('travel-method-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-1-2">
                     How long did it take you to get to the assessment today?
                 </div>
@@ -1363,18 +1365,6 @@
                 </template>
                 
                 <div class="uk-margin-remove uk-width-3-4">
-                    Do you feel that you are letting your family down?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="psychologicalLettingFamilyDown" class="uk-radio" checked.bind="responses.psychological.lettingFamilyDown" value.bind="response.value" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
                     Past thoughts of self-harm?
                 </div>
 
@@ -2424,7 +2414,7 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    Has your libido been affected by the accident?
+                    Has your libido been adversely affected by the accident?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
@@ -2846,6 +2836,53 @@
                 </template>
 
                 <hr>
+
+                <template if.bind="responses.version >= 23">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        Have you travelled/gone on vacation since the subject accident?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="travelledSinceAccident" class="uk-radio" checked.bind="$parent.responses.neuropsychological.currentState.travel.sinceAccident" value.bind="response.value" change.delegate="changed('travelled-since-accident-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <template if.bind="isYes(responses.neuropsychological.currentState.travel.sinceAccident) & signal:'travelled-since-accident-changed'">
+    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            If yes, where?
+                        </div>
+    
+                        <div class="uk-margin-remove uk-width-3-4">
+                            <input type="text" class="uk-input uk-form-small" value.bind="responses.neuropsychological.currentState.travel.where" />
+                        </div>
+    
+                        <hr>
+    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            How long?
+                        </div>
+    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.currentState.travel.howLong.number" />
+                        </div>
+    
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <label>
+                                <input type="radio" name="travelSinceAccidentPeriod" class="uk-radio" checked.bind="responses.neuropsychological.currentState.travel.howLong.period" value="days" />&nbsp;days&nbsp;
+                            </label>
+                            <label>
+                                <input type="radio" name="travelSinceAccidentPeriod" class="uk-radio" checked.bind="responses.neuropsychological.currentState.travel.howLong.period" value="weeks" />&nbsp;weeks&nbsp;
+                            </label>
+                        </div>
+    
+                        <hr>
+    
+                    </template>
+                </template>
             </div>
         </fieldset>
 
@@ -2978,48 +3015,51 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    If married or common law, how long have you been in this relationship?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" disabled.bind="!isMarriedOrCommonLaw & signal:'relationship-status-changed'" input.delegate="changed('marriage-length-changed')" />
-
-                    <label repeat.for="response of ageUnits">
-                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" disabled.bind="!isMarriedOrCommonLaw & signal:'relationship-status-changed'" change.delegate="changed('marriage-length-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    How old is your partner?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="1" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.partnerAge" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What is your partner’s job title/industry?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="radio" name="relationshipJobTitleOrIndustry" class="uk-radio" checked.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry" value="title" />&nbsp;Title&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="relationshipJobTitleOrIndustry" class="uk-radio" checked.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry" value="industry" />&nbsp;Industry&nbsp;
-                    </label>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" />
-                </div>
-
-                <hr>
+                <template if.bind="isMarriedOrCommonLaw">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        If married or common law, how long have you been in this relationship?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" input.delegate="changed('marriage-length-changed')" />
+    
+                        <label repeat.for="response of ageUnits">
+                            <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" change.delegate="changed('marriage-length-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        How old is your partner?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="number" min="1" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.partnerAge" />
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        What is your partner’s job title/industry?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="radio" name="relationshipJobTitleOrIndustry" class="uk-radio" checked.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry" value="title" />&nbsp;Title&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="relationshipJobTitleOrIndustry" class="uk-radio" checked.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry" value="industry" />&nbsp;Industry&nbsp;
+                        </label>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" />
+                    </div>
+    
+                    <hr>
+                </template>
+                
 
                 <div class="uk-margin-remove uk-width-1-2">
                     Are you currently in an abusive relationship?
@@ -3910,28 +3950,30 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4"></div>
+                <template if.bind="isYes(responses.personalHistory.medical.familyMedicalHistory)">
+                    <div class="uk-margin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <template repeat.for="i of medicalConditions.length">
-                        <label>
-                            <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.familyMedicalConditions" value.bind="medicalConditions[i].value" change.delegate="changed('family-medical-condition-changed')" >&nbsp;${medicalConditions[i].description}&nbsp;
-                        </label>
-                    </template>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    Other family medical condition:
-                </div>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.familyMedicalConditionOther" disabled.bind="!familyMedicalConditionOtherIsSelected & signal:'family-medical-condition-changed'" />
-                </div>
-
-                <br>
-
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <template repeat.for="i of medicalConditions.length">
+                            <label>
+                                <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.familyMedicalConditions" value.bind="medicalConditions[i].value" change.delegate="changed('family-medical-condition-changed')" >&nbsp;${medicalConditions[i].description}&nbsp;
+                            </label>
+                        </template>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        Other family medical condition:
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.familyMedicalConditionOther" disabled.bind="!familyMedicalConditionOtherIsSelected & signal:'family-medical-condition-changed'" />
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-1-4">
                     Have you ever used any of the following?
                 </div>
@@ -3948,7 +3990,7 @@
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <label repeat.for="i of abusedDrugs.length">
-                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.drugsUsed" value.bind="abusedDrugs[i].value" change.delegate="changed('drug-use-changed')">&nbsp;${abusedDrugs[i].description}&nbsp;
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.drugsUsed" value.bind="abusedDrugs[i].value" disabled.bind="!isYes($parent.responses.personalHistory.medical.everUsedDrugs)" change.delegate="changed('drug-use-changed')">&nbsp;${abusedDrugs[i].description}&nbsp;
                     </label>
                 </div>
 
@@ -4193,7 +4235,7 @@
         </fieldset>
         
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Legal History</legend>
+            <legend class="uk-legend">Criminal History</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
@@ -4454,7 +4496,7 @@
             </div>
         </fieldset>
 
-        <fieldset class="uk-fieldset">
+        <fieldset class="uk-fieldset" if.bind="assessment.medRehabs && assessment.medRehabs.length > 0">
             <legend class="uk-legend">If an OCF-18/TX plan is in dispute</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>

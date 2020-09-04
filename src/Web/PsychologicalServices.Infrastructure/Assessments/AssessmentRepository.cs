@@ -173,6 +173,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                                 .Prefetch<IssueInDisputeEntity>(assessmentReportIssueInDispute => assessmentReportIssueInDispute.IssueInDispute)
                             )
                     )
+                .Prefetch<AssessmentMedRehabEntity>(assessment => assessment.AssessmentMedRehabs)
                 .Prefetch<AppointmentEntity>(assessment => assessment.Appointments)
                 .Prefetch<AssessmentTestingResultEntity>(assessment => assessment.AssessmentTestingResults)
                     .FilterOn(testingResults => testingResults.Name == name)

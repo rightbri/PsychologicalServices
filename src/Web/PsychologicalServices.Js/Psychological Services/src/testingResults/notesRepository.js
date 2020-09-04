@@ -525,8 +525,8 @@ export class NotesRepository {
 
     getTreatmentPrograms() {
         let data = {
-            "painProgram": { "description": "Pain Program", "value": "painProgram", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
-            "driversRehab": { "description": "Driver's Rehab", "value": "driversRehab", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
+            "painProgram": { "description": "Pain Program", "value": "painProgram", "attendedQuestion": "Have you attended?", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
+            "driversRehab": { "description": "Driver's Rehab", "value": "driversRehab", "attendedQuestion": "Have you completed any?", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
         };
 
         return getPromise(data);
@@ -641,15 +641,16 @@ export class NotesRepository {
             "claimantAppropriateClothing": { "description": "3.	Was the claimant’s clothing appropriate for age/weather?", "value": "claimantAppropriateClothing" },
             "claimantAbleToWrite": { "description": "4.	Was the claimant able to use a pen/pencil to complete questionnaires/testing?", "value": "claimantAbleToWrite" },
             "claimantAnswersOrganized": { "description": "5.	Were the claimant’s answers well thought out/organized?", "value": "claimantAnswersOrganized" },
-            "claimantAbleToRemainSeated": { "description": "6.	Was the claimant able to remain seated during the interview without taking a break or getting up to stretch?", "value": "claimantAbleToRemainSeated" },
-            "neededToRepeatQuestionsOrAnswers": { "description": "7.	Did I have to repeat the questions or choices for answers?", "value": "neededToRepeatQuestionsOrAnswers" },
-            "claimantWordFindingOrStuttering": { "description": "8.	Did I notice any issues with word finding/stuttering? (N/A if translator)", "value": "claimantWordFindingOrStuttering", "isNaAllowed": true },
-            "claimantIssuesRecallingPreviousState": { "description": "9.	Did the claimant having any issues recalling their previous state? (i.e. Education/work/health)", "value": "claimantIssuesRecallingPreviousState" },
-            "claimantIssuesRecallingIncident": { "description": "10.	Did the claimant have any issues recalling the specific details of the incident?", "value": "claimantIssuesRecallingIncident" },
-            "claimantIssuesRecallingTreatment": { "description": "11.	Did the claimant have any issues recalling their post-incident treatment?", "value": "claimantIssuesRecallingTreatment" },
-            "claimantCriedWhenDiscussingIncident": { "description": "12.	During the interview did the claimant tear up when discussing the incident?", "value": "claimantCriedWhenDiscussingIncident" },
-            "claimantCriedWhenDiscussingLifeChanges": { "description": "13.	During the interview did the claimant tear up when discussing any changes in their life?", "value": "claimantCriedWhenDiscussingLifeChanges" },
-            "claimantIssuesWithExecutiveFunctioning": { "description": "14.	Were any issues with executive functioning noted during the interview?", "value": "claimantIssuesWithExecutiveFunctioning" }
+            "neededToRepeatQuestionsOrAnswers": { "description": "6.	Did I have to repeat the questions or choices for answers?", "value": "neededToRepeatQuestionsOrAnswers" },
+            "claimantWordFindingOrStuttering": { "description": "7.	Did I notice any issues with word finding/stuttering? (N/A if translator)", "value": "claimantWordFindingOrStuttering", "isNaAllowed": true },
+            "claimantIssuesRecallingPreviousState": { "description": "8.	Did the claimant having any issues recalling their previous state? (i.e. Education/work/health)", "value": "claimantIssuesRecallingPreviousState" },
+            "claimantIssuesRecallingIncident": { "description": "9.	Did the claimant have any issues recalling the specific details of the incident?", "value": "claimantIssuesRecallingIncident" },
+            "claimantIssuesRecallingTreatment": { "description": "10.	Did the claimant have any issues recalling their post-incident treatment?", "value": "claimantIssuesRecallingTreatment" },
+            "claimantCriedWhenDiscussingIncident": { "description": "11.	During the interview did the claimant tear up when discussing the incident?", "value": "claimantCriedWhenDiscussingIncident" },
+            "claimantCriedWhenDiscussingLifeChanges": { "description": "12.	During the interview did the claimant tear up when discussing any changes in their life?", "value": "claimantCriedWhenDiscussingLifeChanges" },
+            "claimantRequestedBreakDuringInterview": { "description": "13.	Did the claimant request a break during the interview?", "value": "claimantRequestedBreakDuringInterview" },
+            "claimantRemainedSeatedDuringInterview": { "description": "14.	Was the claimant able to remain seated during the interview without getting up to stretch?", "value": "claimantRemainedSeatedDuringInterview" },
+            "claimantIssuesWithExecutiveFunctioning": { "description": "15.	Were any issues with executive functioning noted during the interview?", "value": "claimantIssuesWithExecutiveFunctioning" }
         };
 
         return getPromise(data);
@@ -712,7 +713,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "22";
+    return "24";
 }
 
 function upgrade(responses, toVersion) {
@@ -1037,6 +1038,22 @@ function upgrade_21_to_22(responses) {
     return responses;
 }
 
+function upgrade_22_to_23(responses) {
+    let newResponses = getNewResponses();
+
+    responses.version = newResponses.version;
+
+    return responses;
+}
+
+function upgrade_23_to_24(responses) {
+    let newResponses = getNewResponses();
+
+    responses.version = newResponses.version;
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
@@ -1200,7 +1217,6 @@ function getNewResponses() {
             { "value": "claimantAppropriateClothing", "response": null },
             { "value": "claimantAbleToWrite", "response": null },
             { "value": "claimantAnswersOrganized", "response": null },
-            { "value": "claimantAbleToRemainSeated", "response": null },
             { "value": "neededToRepeatQuestionsOrAnswers", "response": null },
             { "value": "claimantWordFindingOrStuttering", "response": null },
             { "value": "claimantIssuesRecallingPreviousState", "response": null },
@@ -1208,6 +1224,8 @@ function getNewResponses() {
             { "value": "claimantIssuesRecallingTreatment", "response": null },
             { "value": "claimantCriedWhenDiscussingIncident", "response": null },
             { "value": "claimantCriedWhenDiscussingLifeChanges", "response": null },
+            { "value": "claimantRequestedBreakDuringInterview", "response": null },
+            { "value": "claimantRemainedSeatedDuringInterview", "response": null },
             { "value": "claimantIssuesWithExecutiveFunctioning", "response": null }
         ],
         "personalHistory": {
@@ -1700,6 +1718,14 @@ function getNewResponses() {
                     "",
                     ""
                 ],
+                "travel": {
+                    "sinceAccident": null,
+                    "where": null,
+                    "howLong": {
+                        "number": null,
+                        "period": null
+                    }
+                },
                 "moreSocialBeforeAccident": null
             }
         },
@@ -1707,7 +1733,6 @@ function getNewResponses() {
             "initial": {
                 "providers": [
                     { 
-                        "beneficial": null, 
                         "value": "physiotherapist",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1716,7 +1741,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "chiropractor",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1725,7 +1749,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "massageTherapist",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1734,7 +1757,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "acupuncturist",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1743,7 +1765,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "osteopathicProvider",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1752,7 +1773,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "naturopathicProvider",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1761,7 +1781,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "occupationalTherapist",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1770,7 +1789,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "rehabilitationWorker",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1779,7 +1797,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "supportWorker",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1788,7 +1805,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "speechLanguagePathologist",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1797,7 +1813,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "caseManager",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
@@ -1809,7 +1824,6 @@ function getNewResponses() {
                 "programs": [
                     {
                         "isPainProgram": true,
-                        "beneficial": null, 
                         "value": "painProgram",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null },
@@ -1817,7 +1831,6 @@ function getNewResponses() {
                         "financialIssuesAffectedAbilityToAttend": null
                     },
                     { 
-                        "beneficial": null, 
                         "value": "driversRehab",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },

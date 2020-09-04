@@ -144,6 +144,13 @@
 					<td>
 						<ul class="uk-list">
 							<li title="Claimant" if.bind="appointment.assessment.claimant">${appointment.assessment.claimant.firstName} ${appointment.assessment.claimant.lastName.charAt(0)}. - ${appointment.assessment.claimant.age} ${appointment.assessment.claimant.gender}</li>
+							<li title="Date of Loss" if.bind="appointment.assessment.claims.length">
+								<template repeat.for="claim of appointment.assessment.claims">
+									<template if.bind="claim.dateOfLoss">
+										DOL: ${claim.dateOfLoss | dateFormat:config.shortDateFormat}
+									</template>
+								</template> 
+							</li>
 						</ul>
 					</td>
 					<td>

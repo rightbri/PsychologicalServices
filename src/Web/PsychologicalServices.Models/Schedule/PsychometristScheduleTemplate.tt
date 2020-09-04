@@ -89,6 +89,14 @@
 						&nbsp;<#= appointment.Assessment.Claimant.Age #>
 						&nbsp;<#= appointment.Assessment.Claimant.Gender #>
 						<# } #>
+						<br>
+						<# foreach (var claim in appointment.Assessment.Claims) { #>
+							<# if (claim.DateOfLoss.HasValue) { 
+								var dateOfLoss = Model.TimezoneService.ConvertTime(claim.DateOfLoss.Value, timezone);
+							#>
+								DOL: <#= string.Format("{0:dd/MM/yyyy}", claim.DateOfLoss) #>
+							<# } #>
+						<# } #>
 					</p>
 				</td>
 				<td style="<#= bodyCellStyles #>">
