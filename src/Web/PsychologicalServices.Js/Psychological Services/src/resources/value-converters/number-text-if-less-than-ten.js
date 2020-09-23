@@ -9,6 +9,6 @@ export class NumberTextIfLessThanTenValueConverter {
 	}
 
 	toView(value) {
-		return value < 10 ? this.numberToWords.toWords(value) : value;
+		return value && value < 10 ? this.numberToWords.toWords(value) : value;
 	}
 }

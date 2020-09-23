@@ -26,6 +26,7 @@ export class Notes {
         this.assessments = null;
         this.assessment = null;
         this.responses = null;
+        this.reviewAnswers = false;
         
         this.pronouns = [];
         this.yesNo = [];
@@ -340,6 +341,17 @@ export class Notes {
         return a;
     }
 
+    isUnanswered(value) {
+        try {
+            return !!!value;
+        }
+        catch (err) {
+            //console.log(value);
+            console.log(err);
+            throw err;
+        }
+    }
+
     isAnswered(value) {
         try {
             return value !== undefined && value !== null && (!this.yesNoDontKnowMap.hasOwnProperty(value) || !this.yesNoDontKnowMap[value].isSkip);
@@ -640,7 +652,7 @@ export class Notes {
     }
 
     screenshot() {
-        let fileName = this.claimant.lastName + '_' + this.claimant.firstName + '_INTERVIEW_NOTES.png';
+        let fileName = this.claimant.lastName + ', ' + this.claimant.firstName + ' - Dr. Watson\'s Interview Notes.png';
 
         html2canvas(document.getElementById("notesContent")).then(canvas => {
             canvas.toBlob(function(blob) {

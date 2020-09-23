@@ -507,17 +507,17 @@ export class NotesRepository {
 
     getTreatmentProviders() {
         let data = {
-            "physiotherapist": { "description": "Physiotherapist", "value": "physiotherapist", "format": function(context) { return `Physiotherapist`; } },
-            "chiropractor": { "description": "Chiropractor", "value": "chiropractor", "format": function(context) { return `Chiropractor`; } },
-            "massageTherapist": { "description": "Massage Therapist", "value": "massageTherapist", "format": function(context) { return `Massage Therapist`; } },
-            "acupuncturist": { "description": "Acupuncturist", "value": "acupuncturist", "format": function(context) { return `Acupuncturist`; } },
-            "osteopathicProvider": { "description": "Osteopathic Provider", "value": "osteopathicProvider", "format": function(context) { return `Osteopathic Provider`; } },
-            "naturopathicProvider": { "description": "Naturopathic Provider", "value": "naturopathicProvider", "format": function(context) { return `Naturopathic Provider`; } },
-            "occupationalTherapist": { "description": "Occupational Therapist", "value": "occupationalTherapist", "format": function(context) { return `Occupational Therapist`; } },
-            "rehabilitationWorker": { "description": "Rehabilitation Worker", "value": "rehabilitationWorker", "format": function(context) { return `Rehabilitation Worker`; } },
-            "supportWorker": { "description": "Support Worker", "value": "supportWorker", "format": function(context) { return `Support Worker`; } },
-            "speechLanguagePathologist": { "description": "Speech Language Pathologist", "value": "speechLanguagePathologist", "format": function(context) { return `Speech Language Pathologist`; } },
-            "caseManager": { "description": "Case Manager", "value": "caseManager", "format": function(context) { return `Case Manager`; } }
+            "physiotherapist": { "description": "Physiotherapist", "value": "physiotherapist", "indefiniteArticle": "a", "format": function(context) { return `Physiotherapist`; } },
+            "chiropractor": { "description": "Chiropractor", "value": "chiropractor", "indefiniteArticle": "a", "format": function(context) { return `Chiropractor`; } },
+            "massageTherapist": { "description": "Massage Therapist", "value": "massageTherapist", "indefiniteArticle": "a", "format": function(context) { return `Massage Therapist`; } },
+            "acupuncturist": { "description": "Acupuncturist", "value": "acupuncturist", "indefiniteArticle": "an", "format": function(context) { return `Acupuncturist`; } },
+            "osteopathicProvider": { "description": "Osteopathic Provider", "value": "osteopathicProvider", "indefiniteArticle": "an", "format": function(context) { return `Osteopathic Provider`; } },
+            "naturopathicProvider": { "description": "Naturopathic Provider", "value": "naturopathicProvider", "indefiniteArticle": "a", "format": function(context) { return `Naturopathic Provider`; } },
+            "occupationalTherapist": { "description": "Occupational Therapist", "value": "occupationalTherapist", "indefiniteArticle": "an", "format": function(context) { return `Occupational Therapist`; } },
+            "rehabilitationWorker": { "description": "Rehabilitation Worker", "value": "rehabilitationWorker", "indefiniteArticle": "a", "format": function(context) { return `Rehabilitation Worker`; } },
+            "supportWorker": { "description": "Support Worker", "value": "supportWorker", "indefiniteArticle": "a", "format": function(context) { return `Support Worker`; } },
+            "speechLanguagePathologist": { "description": "Speech Language Pathologist", "value": "speechLanguagePathologist", "indefiniteArticle": "a", "format": function(context) { return `Speech Language Pathologist`; } },
+            "caseManager": { "description": "Case Manager", "value": "caseManager", "indefiniteArticle": "a", "format": function(context) { return `Case Manager`; } }
         };
 
         return getPromise(data);
@@ -525,8 +525,8 @@ export class NotesRepository {
 
     getTreatmentPrograms() {
         let data = {
-            "painProgram": { "description": "Pain Program", "value": "painProgram", "attendedQuestion": "Have you attended?", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
-            "driversRehab": { "description": "Driver's Rehab", "value": "driversRehab", "attendedQuestion": "Have you completed any?", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
+            "painProgram": { "description": "Pain Program", "value": "painProgram", "attendedQuestion": "Have you attended?", "indefiniteArticle": "a", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
+            "driversRehab": { "description": "Driver's Rehab", "value": "driversRehab", "attendedQuestion": "Have you completed any?", "indefiniteArticle": "a", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
         };
 
         return getPromise(data);
@@ -564,7 +564,7 @@ export class NotesRepository {
 
     getMedicalConditions() {
         let data = {
-            "alchoholAbuse": { "description": "Alchohol Abuse", "value": "alchoholAbuse", "format": function(context) { return `Alchohol Abuse`; } },
+            "alchoholAbuse": { "description": "Alcohol Abuse", "value": "alchoholAbuse", "format": function(context) { return `Alcohol Abuse`; } },
             "cancer": { "description": "Cancer", "value": "cancer", "format": function(context) { return `Cancer`; } },
             "cholesterol": { "description": "Cholesterol", "value": "cholesterol", "format": function(context) { return `Cholesterol`; } },
             "diabetes": { "description": "Diabetes", "value": "diabetes", "format": function(context) { return `Diabetes`; } },
@@ -581,7 +581,7 @@ export class NotesRepository {
 
     getAbusedDrugs() {
         let data = {
-            "alchohol": { "description": "Alchohol", "value": "alchohol", "format": function(context) { return `Alchohol`; } },
+            "alchohol": { "description": "Alcohol", "value": "alchohol", "format": function(context) { return `Alcohol`; } },
             "tobacco": { "description": "Tobacco", "value": "tobacco", "format": function(context) { return `Tobacco`; } },
             "thc": { "description": "THC", "value": "thc", "format": function(context) { return `THC`; } },
             "streetDrugs": { "description": "Street drugs", "value": "streetDrugs", "format": function(context) { return `Street drugs`; } },

@@ -9,6 +9,6 @@ export class NumberTextValueConverter {
 	}
 
 	toView(value) {
-		return this.numberToWords.toWords(value);
+		return value ? this.numberToWords.toWords(value) : value;
 	}
 }

@@ -9,6 +9,6 @@ export class NumberTextOrdinalValueConverter {
 	}
 
 	toView(value) {
-		return this.numberToWords.toWordsOrdinal(value);
+		return value ? this.numberToWords.toWordsOrdinal(value) : value;
 	}
 }

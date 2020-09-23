@@ -102,3 +102,8 @@
 		display: none;
 	}
 }
+
+
+.review .unanswered {
+	color: #f0506e;
+}
