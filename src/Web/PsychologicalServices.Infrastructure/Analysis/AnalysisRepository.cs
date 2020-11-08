@@ -339,5 +339,32 @@ namespace PsychologicalServices.Infrastructure.Analysis
                     .ToList();
             }
         }
+
+        public IEnumerable<AppointmentProtocolResponseData> GetAppointmentProtocolResponseData(AppointmentProtocolResponseDataSearchCriteria criteria)
+        {
+            using (var adapter = AdapterFactory.CreateAdapter())
+            {
+                var table = RetrievalProcedures.AppointmentProtocolResponseData(criteria.CompanyId, criteria.Months, (DataAccessAdapter)adapter);
+
+                return table
+                    .AsEnumerable()
+                    .Select(row =>
+                        new AppointmentProtocolResponseData
+                        {
+                            PsychometristId = Convert.ToInt32(row["PsychometristId"]),
+                            PsychometristFirstName = Convert.ToString(row["PsychometristFirstName"]),
+                            PsychometristLastName = Convert.ToString(row["PsychometristLastName"]),
+                            AppointmentId = Convert.ToInt32(row["AppointmentId"]),
+                            AssessmentId = Convert.ToInt32(row["AssessmentId"]),
+                            AppointmentTime = DateTimeOffset.Parse(Convert.ToString(row["AppointmentTime"])),
+                            ClaimantId = Convert.ToInt32(row["ClaimantId"]),
+                            ClaimantFirstName = Convert.ToString(row["ClaimantFirstName"]),
+                            ClaimantLastName = Convert.ToString(row["ClaimantLastName"]),
+                            Question = Convert.ToString(row["Question"]),
+                            Response = row["Response"] != DBNull.Value ? Convert.ToInt32(row["Response"]) : (int?)null,
+                        })
+                    .ToList();
+            }
+        }
     }
 }

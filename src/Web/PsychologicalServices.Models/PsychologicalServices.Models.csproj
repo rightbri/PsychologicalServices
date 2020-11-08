@@ -59,7 +59,9 @@
     <Compile Include="Addresses\IAddressRepository.cs" />
     <Compile Include="Addresses\IAddressValidator.cs" />
     <Compile Include="Analysis\AnalysisService.cs" />
+    <Compile Include="Analysis\AppointmentProtocolResponseData.cs" />
     <Compile Include="Analysis\ArbitrationData.cs" />
+    <Compile Include="Analysis\AppointmentProtocolResponseDataSearchCriteria.cs" />
     <Compile Include="Analysis\ReferralTypeDataSearchCriteria.cs" />
     <Compile Include="Analysis\AssessmentTypeCount.cs" />
     <Compile Include="Analysis\AssessmentTypeCountSearchCriteria.cs" />

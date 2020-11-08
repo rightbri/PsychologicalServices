@@ -1939,6 +1939,12 @@
     <InheritanceHierarchies />
   </EntityModel>
   <SPCallDefinitions>
+    <SPCallDefinition Name="AppointmentProtocolResponseData" ObjectID="71edc150-7b36-428f-9a6c-a1b13253f6c3">
+      <Parameters>
+        <Parameter Name="CompanyId" Type="int" Precision="10" />
+        <Parameter Name="Months" Type="int" IsOptional="true" Precision="10" />
+      </Parameters>
+    </SPCallDefinition>
     <SPCallDefinition Name="ArbitrationsData" ObjectID="3ef20a38-eb23-49f1-ae1a-d774cf5cd0e2">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" FieldIndex="0" />
@@ -2056,7 +2062,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-08-25T15:29:24.2483504Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-10-11T17:20:07.0456887Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2956,6 +2962,29 @@
                 </Table>
               </Tables>
               <StoredProcedures>
+                <StoredProcedure Name="AppointmentProtocolResponseData" NumberOfResultsets="1">
+                  <Parameters>
+                    <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                    <Parameter Name="@months" Direction="1" Ordinal="2" DbType="8" Precision="10" />
+                  </Parameters>
+                  <Resultsets>
+                    <Resultset Name="Resultset1">
+                      <Fields>
+                        <Field Name="PsychometristId" Ordinal="1" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="PsychometristFirstName" Ordinal="2" IsOptional="true" DbType="12" Length="50" />
+                        <Field Name="PsychometristLastName" Ordinal="3" IsOptional="true" DbType="12" Length="50" />
+                        <Field Name="AppointmentId" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="AssessmentId" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="AppointmentTime" Ordinal="6" IsOptional="true" DbType="30" />
+                        <Field Name="ClaimantId" Ordinal="7" IsOptional="true" DbType="8" Precision="10" />
+                        <Field Name="ClaimantFirstName" Ordinal="8" IsOptional="true" DbType="12" Length="50" />
+                        <Field Name="ClaimantLastName" Ordinal="9" IsOptional="true" DbType="12" Length="50" />
+                        <Field Name="Question" Ordinal="10" IsOptional="true" DbType="24" Length="50" />
+                        <Field Name="Response" Ordinal="11" IsOptional="true" DbType="8" Precision="10" />
+                      </Fields>
+                    </Resultset>
+                  </Resultsets>
+                </StoredProcedure>
                 <StoredProcedure Name="ArbitrationsData" NumberOfResultsets="1">
                   <Parameters>
                     <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
@@ -4963,6 +4992,12 @@
       </EntityMappings>
       <TypedViewMappings />
       <SPCallMappings>
+        <SPCallMapping SPCallName=":AppointmentProtocolResponseData" TargetName="PsychologicalServices:dbo:AppointmentProtocolResponseData">
+          <FieldMappings>
+            <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
+            <FieldMapping FieldName="Months" TargetFieldName="@months" />
+          </FieldMappings>
+        </SPCallMapping>
         <SPCallMapping SPCallName=":ArbitrationsData" TargetName="PsychologicalServices:dbo:ArbitrationsData">
           <FieldMappings>
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />

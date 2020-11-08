@@ -97,5 +97,12 @@ namespace PsychologicalServices.Models.Analysis
 
             return data;
         }
+
+        public IEnumerable<AppointmentProtocolResponseData> GetAppointmentProtocolResponseData(AppointmentProtocolResponseDataSearchCriteria criteria)
+        {
+            var data = _analysisRepository.GetAppointmentProtocolResponseData(criteria);
+
+            return data;
+        }
     }
 }

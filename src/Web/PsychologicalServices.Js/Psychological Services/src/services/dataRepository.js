@@ -316,6 +316,10 @@ export class DataRepository {
 		return this.searchBasic(criteria, 'completiondata');
 	}
 
+	searchAppointmentProtocolResponseData(criteria) {
+		return this.searchBasic(criteria, 'appointmentprotocolresponsedata');
+	}
+
 	searchArbitrationData(criteria) {
 		return this.searchBasic(criteria, 'arbitrationdata');
 	}

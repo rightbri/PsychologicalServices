@@ -19,6 +19,54 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 	{
 
 
+		/// <summary>Calls stored procedure 'AppointmentProtocolResponseData'.<br/><br/></summary>
+		/// <param name="companyId">Input parameter. </param>
+		/// <param name="months">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable AppointmentProtocolResponseData(System.Int32 companyId, Nullable<System.Int32> months)
+		{
+			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
+			{
+				return AppointmentProtocolResponseData(companyId, months, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Calls stored procedure 'AppointmentProtocolResponseData'.<br/><br/></summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter. </param>
+		/// <param name="months">Input parameter. </param>
+		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
+		public static DataTable AppointmentProtocolResponseData(System.Int32 companyId, Nullable<System.Int32> months, IDataAccessCore dataAccessProvider)
+		{
+			using(StoredProcedureCall call = CreateAppointmentProtocolResponseDataCall(dataAccessProvider, companyId, months))
+			{
+				DataTable toReturn = call.FillDataTable();
+				return toReturn;
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'AppointmentProtocolResponseData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetAppointmentProtocolResponseDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> months)
+		{
+			using(var dataAccessProvider = new DataAccessAdapter())
+			{
+				return GetAppointmentProtocolResponseDataCallAsQuery(companyId, months, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'AppointmentProtocolResponseData'.</summary>
+		/// <param name="companyId">Input parameter of stored procedure</param>
+		/// <param name="months">Input parameter of stored procedure</param>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetAppointmentProtocolResponseDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> months, IDataAccessCore dataAccessProvider)
+		{
+			return CreateAppointmentProtocolResponseDataCall(dataAccessProvider, companyId, months).ToRetrievalQuery();
+		}
+
 		/// <summary>Calls stored procedure 'ArbitrationsData'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="months">Input parameter. </param>
@@ -741,6 +789,18 @@ needsToBeSentToReferralSource).ToRetrievalQuery();
 		public static IRetrievalQuery GetResearchConsentObtainedClaimantDataCallAsQuery(System.Int32 companyId, IDataAccessCore dataAccessProvider)
 		{
 			return CreateResearchConsentObtainedClaimantDataCall(dataAccessProvider, companyId).ToRetrievalQuery();
+		}
+
+		/// <summary>Creates the call object for the call 'AppointmentProtocolResponseData' to stored procedure 'AppointmentProtocolResponseData'.</summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="companyId">Input parameter</param>
+		/// <param name="months">Input parameter</param>
+		/// <returns>Ready to use StoredProcedureCall object</returns>
+		private static StoredProcedureCall CreateAppointmentProtocolResponseDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.Int32> months)
+		{
+			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[AppointmentProtocolResponseData]", "AppointmentProtocolResponseData")
+							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
+							.AddParameter("@months", "Int", 0, ParameterDirection.Input, true, 10, 0, months);
 		}
 
 		/// <summary>Creates the call object for the call 'ArbitrationsData' to stored procedure 'ArbitrationsData'.</summary>

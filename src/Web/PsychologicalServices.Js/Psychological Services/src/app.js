@@ -87,6 +87,7 @@ export class App {
 			{ route: 'contacts', name: 'contacts', moduleId: 'contacts/contacts', title: 'Contacts', nav: true, settings: { permissions: [p.SearchContact] } },
 			{ route: 'contacts/:id', name: 'editContact', moduleId: 'contacts/editContact', title: 'Edit Contact', nav: false, settings: { permissions: [p.EditContact] } },
 			{ route: 'contacts/add', name: 'addContact', moduleId: 'contacts/editContact', title: 'Add Contact', nav: false, settings: { permissions: [p.EditContact] } },
+			{ route: 'analysis/appointment-protocol-response-statistics', name: 'appointmentProtocolResponseStatistics', moduleId: 'analysis/appointmentProtocolResponseStatistics', title: 'Appointment Protocol Response Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/booking-statistics', name: 'bookingStatistics', moduleId: 'analysis/bookingStatistics', title: 'Booking Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/cancellation-statistics', name: 'cancellationStatistics', moduleId: 'analysis/cancellationStatistics', title: 'Cancellation Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
 			{ route: 'analysis/completion-statistics', name: 'completionStatistics', moduleId: 'analysis/completionStatistics', title: 'Completion Statistics', nav: true, settings: { permissions: [p.ViewReport] } },
@@ -219,6 +220,7 @@ export class App {
 			{
 				"name": "Analysis",
 				"items": [
+					{ "name": "Appointment Protocol Statistics", "route": "/analysis/appointment-protocol-response-statistics", "permissions": [p.ViewReport] },
 					{ "name": "Arbitration Statistics", "route": "/analysis/arbitration-statistics", "permissions": [p.ViewReport] },
 					{ "name": "Assessment Type Counts", "route": "/analysis/assessment-type-counts", "permissions": [p.ViewReport] },
 					{ "name": "Referral Type Statistics", "route": "/analysis/referral-type-statistics", "permissions": [p.ViewReport] },

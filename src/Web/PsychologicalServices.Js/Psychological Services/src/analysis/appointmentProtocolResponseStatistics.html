@@ -1,0 +1,121 @@
+<template>
+    <require from="resources/value-converters/date-format"></require>
+    <require from="resources/value-converters/numeric"></require>
+    <require from="resources/value-converters/sort-array"></require>
+    <require from="common/fixed-header"></require>
+	<require from="content/css/fixed-header.css"></require>
+
+<div class="uk-container">
+
+    <fielset class="uk-fieldset">
+        <legend class="uk-legend">Appointment Protocol Response Statistics</legend>
+
+        <form class="uk-form-stacked">
+            
+            <div class="uk-margin">
+                <label class="uk-form-label" for="months">Past X Months (not counting the current month) (YTD if blank)</label>
+                <div class="uk-form-controls">
+                    <input type="number" min="0" class="uk-input" value.bind="searchMonths" />
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <button type="button" class="uk-button uk-button-primary" click.delegate="search()">
+                        search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </fielset>
+
+</div>
+
+<hr>
+
+<div if.bind="appointmentProtocolResponseData">
+
+    <ul uk-tab="swiping: false">
+        <li>
+            <a href="#" click.delegate="showTab(0)">By Psychometrist</a>
+        </li>
+    </ul>
+
+    <ul class="uk-switcher">
+        <li>
+            <div class="uk-overflow-auto" if.bind="visibleTab === 0">
+                <table class="uk-table uk-table-divider uk-table-small uk-table-striped" fixed-header>
+                    <thead>
+                        <tr>
+                            <th>Psychometrist</th>
+                            <th>Question</th>
+                            <th>#</th>
+                            <th>%</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template repeat.for="psychometrist of appointmentProtocolResponsesByPsychometrist | sortArray:[{ property: 'psychometristId', direction: 'asc' }]">
+                            <template repeat.for="question of psychometrist.questions | sortArray:[{ property: 'order', direction: 'asc' }]">
+                                <tr>
+                                    <td class="uk-table-shrink">
+                                        <span if.bind="$first">
+                                            ${psychometrist.firstName}&nbsp;${psychometrist.lastName}
+                                        </span>
+                                    </td>
+                                    <td class="uk-text-truncate" title="${questionsMap[question.id].description}">
+                                        ${questionsMap[question.id].description}
+                                    </td>
+                                    <td class="uk-wdith-small">
+                                        ${question.numberYes | numeric:'0,0'} / ${question.numberTotal | numeric:'0,0'}
+                                    </td>
+                                    <td class="uk-width-small">
+                                        ${question.percentYes | numeric:'0.00%'}
+                                    </td>
+                                    <td class="uk-width-small">
+                                        <button type="button" class="uk-button uk-button-small uk-button-default" click.delegate="toggleDetails(question)">
+                                            Details
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <table class="uk-table uk-table-small uk-table-striped" if.bind="question.detailsVisible">
+                                            <thead>
+                                                <tr>
+                                                    <th>Appointment Date</th>
+                                                    <th>Claimant</th>
+                                                    <th>Response</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template repeat.for="response of question.responses | sortArray:[{ property: 'appointmentTime', direction: 'asc' }]">
+                                                    <tr>
+                                                        <td>
+                                                            ${response.appointmentTime | dateFormat:config.longDateFormat}
+                                                        </td>
+                                                        <td>
+                                                            ${response.claimantFirstName}&nbsp;${response.claimantLastName}
+                                                        </td>
+                                                        <td>
+                                                            ${response.responseText}
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+    
+</div>
+
+</template>

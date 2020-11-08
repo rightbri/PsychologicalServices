@@ -22,5 +22,7 @@ namespace PsychologicalServices.Models.Analysis
         IEnumerable<NonAbCompletionData> GetNonAbCompletionData(NonAbCompletionDataSearchCriteria criteria);
 
         IEnumerable<ResearchConsentObtainedClaimantData> GetResearchConsentObtainedClaimantData(ResearchConsentObtainedClaimantDataSearchCriteria criteria);
+
+        IEnumerable<AppointmentProtocolResponseData> GetAppointmentProtocolResponseData(AppointmentProtocolResponseDataSearchCriteria criteria);
     }
 }

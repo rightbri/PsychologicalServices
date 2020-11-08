@@ -249,6 +249,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AppointmentProtocolResponseController.cs" />
     <Compile Include="Controllers\AppointmentProtocolResponseValueController.cs" />
+    <Compile Include="Controllers\AppointmentProtocolResponseDataController.cs" />
     <Compile Include="Controllers\ReferralTypeDataController.cs" />
     <Compile Include="Controllers\GoseWorkRestrictionLevelController.cs" />
     <Compile Include="Controllers\GoseSocialAndLeisureRestrictionExtentController.cs" />

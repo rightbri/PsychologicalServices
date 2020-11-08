@@ -211,7 +211,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AppointmentProtocolResponseEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentProtocolResponseUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -232,7 +231,6 @@ namespace PsychologicalServices.Data.FactoryClasses
 			IEntity2 toReturn = new AppointmentProtocolResponseValueEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAppointmentProtocolResponseValueUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
