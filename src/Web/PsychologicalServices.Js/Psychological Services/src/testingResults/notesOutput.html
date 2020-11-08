@@ -214,6 +214,7 @@
                                                     </td>
                                                 </tr>
                                                 <template if.bind="isYes($parent.responses.treatment.initial.providers[i].sinceAccident)">
+                                                    <!--
                                                     <tr if.bind="$parent.responses.treatment.initial.providers[i].start.month || $parent.responses.treatment.initial.providers[i].start.year">
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">When did this start?</td>
@@ -241,6 +242,7 @@
                                                             </template>
                                                         </td>
                                                     </tr>
+                                                    -->
                                                     <tr if.bind="isAnswered($parent.responses.treatment.initial.providers[i].current.attending)">
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">Still attending?</td>
@@ -248,6 +250,7 @@
                                                             ${yesNoDontKnowMap[$parent.responses.treatment.initial.providers[i].current.attending].output}
                                                         </td>
                                                     </tr>
+                                                    <!--
                                                     <tr if.bind="isNo($parent.responses.treatment.initial.providers[i].current.attending) && ($parent.responses.treatment.initial.providers[i].stop.month || $parent.responses.treatment.initial.providers[i].stop.year)">
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">When did you stop?</td>
@@ -275,6 +278,7 @@
                                                             </template>
                                                         </td>
                                                     </tr>
+                                                    -->
                                                     <tr if.bind="isAnswered($parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend)">
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">Funding affected ability to attend?</td>
@@ -292,13 +296,14 @@
                                                         ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}
                                                     </td>
                                                     <td class="uk-padding-remove-vertical">
-                                                        ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].attendedQuestion}
+                                                        ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].attendedQuestionOutput}
                                                     </td>
                                                     <td class="uk-padding-remove-vertical">
                                                         ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].sinceAccident].output}
                                                     </td>
                                                 </tr>
                                                 <template if.bind="isYes($parent.responses.treatment.initial.programs[i].sinceAccident)">
+                                                    <!--
                                                     <tr if.bind="$parent.responses.treatment.initial.providers[i].start.month || $parent.responses.treatment.initial.providers[i].start.year">
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">When did this start?</td>
@@ -326,6 +331,7 @@
                                                             </template>
                                                         </td>
                                                     </tr>
+                                                    -->
                                                     <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].current.attending)">
                                                         <tr>
                                                             <td class="uk-padding-remove-vertical"></td>
@@ -335,7 +341,7 @@
                                                             </td>
                                                         </tr>
                                                     </template>
-                                                    
+                                                    <!--
                                                     <tr if.bind="(!$parent.responses.treatment.initial.programs[i].current || isNo($parent.responses.treatment.initial.programs[i].current.attending)) && ($parent.responses.treatment.initial.programs[i].stop.month || $parent.responses.treatment.initial.programs[i].stop.year)">
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">When did you stop?</td>
@@ -363,6 +369,7 @@
                                                             </template>
                                                         </td>
                                                     </tr>
+                                                    -->
                                                     <tr if.bind="isAnswered($parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend)">
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">Funding affected ability to attend?</td>
@@ -994,6 +1001,28 @@
                         </template>
                     </p>
                 
+                    <!-- Driver's License -->
+                    <p>
+                        <template if.bind="isAnswered(responses.psychological.travel.driverLicense.haveLicense)">
+                            Upon inquiry ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does 
+                            <template if.bind="isNo(responses.psychological.travel.driverLicense.haveLicense)">
+                                &nbsp;not
+                            </template>
+                            &nbsp;have a driver's licence.
+                        </template>
+                        <template if.bind="isYes(responses.psychological.travel.driverLicense.haveLicense) && isAnswered(responses.psychological.travel.driverLicense.isSuspended)">
+                            &nbsp;${pronoun.subject | proper} went on to report that ${pronoun.possessiveAdjective} licence is
+                            <template if.bind="isNo(responses.psychological.travel.driverLicense.isSuspended)">
+                                &nbsp;not
+                            </template>
+                            &nbsp;currently
+                            <template if.bind="isYes(responses.psychological.travel.driverLicense.isSuspended) && isAnswered(responses.psychological.travel.driverLicense.suspensionType)">
+                                &nbsp;${responses.psychological.travel.driverLicense.suspensionType}
+                            </template>
+                            &nbsp;suspended.
+                        </template>
+                    </p>
+
                     <!-- Travel -->
                     <p>
                         <template if.bind="isAnswered(responses.psychological.travel.abilityToTravel)">
@@ -1204,15 +1233,6 @@
                             </template>
                         </template>
                         
-                        <template if.bind="isAnswered(responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently)">
-                            <template if.bind="isYes(responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently)">
-                                &nbsp;${pronoun.subject | proper} also related that ${pronoun.subject} frequently loses track of what ${pronoun.subject} was planning to say. 
-                            </template>
-                            <template else>
-                                &nbsp;${pronoun.subject | proper} additionally denied that ${pronoun.subject} will frequently lose track of what ${pronoun.subject} was planning to say. 
-                            </template>
-                        </template>
-            
                         <template if.bind="isAnswered(responses.neuropsychological.memory.aids.useAids)">
                             <template if.bind="isYes(responses.neuropsychological.memory.aids.useAids)">
                                 &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that 
@@ -1532,13 +1552,6 @@
                     <p>
                         <template if.bind="anyPreAccidentRecreationalActivities & signal:'pre-accident-recreational-activities-changed'">
                             In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} enjoyed ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString & signal:'pre-accident-recreational-activities-changed'}. 
-                        </template>
-                
-                        <template if.bind="isYes(responses.neuropsychological.currentState.moreSocialBeforeAccident)">
-                            &nbsp;${pronoun.subject | proper} also shared that prior to the accident ${pronoun.subject} was more social than ${pronoun.subject} is currently.
-                        </template>
-                        <template if.bind="isNo(responses.neuropsychological.currentState.moreSocialBeforeAccident)">
-                            &nbsp;${pronoun.subject | proper} also shared that ${pronoun.subject} is not less social than ${pronoun.subject} was prior to the accident.
                         </template>
                     </p>
 

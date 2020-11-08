@@ -364,11 +364,17 @@ export class Notes {
     }
 
     isYes(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isYes;
+        return value !== undefined && 
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isYes;
     }
 
     isNo(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isNo;
+        return value !== undefined &&
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isNo;
     }
 
     isDontKnow(value) {
@@ -379,7 +385,10 @@ export class Notes {
     }
 
     isSkip(value) {
-        return value !== undefined && value !== null && this.yesNoDontKnowMap[value].isSkip;
+        return value !== undefined &&
+            value !== null &&
+            this.yesNoDontKnowMap.hasOwnProperty(value) &&
+            this.yesNoDontKnowMap[value].isSkip;
     }
     
     notSkip(item) {

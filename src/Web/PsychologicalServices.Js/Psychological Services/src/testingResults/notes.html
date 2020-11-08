@@ -738,30 +738,30 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.wentToHospital) ? 'unanswered' : '' & signal:'accident-details-went-to-hospital-changed'">
+                    <span class.one-time="isUnanswered(responses.accidentDetails.wentToHospital) ? 'unanswered' : '' & signal:'accident-details-hospital-stay-changed'">
                         Did you go to the hospital?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentWentToHospital" class="uk-radio" checked.bind="$parent.responses.accidentDetails.wentToHospital" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="accidentWentToHospital" class="uk-radio" checked.bind="$parent.responses.accidentDetails.wentToHospital" value.bind="response.value" change.delegate="changed('accident-details-hospital-stay-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.hospitalStayLength.hours) && isUnanswered(responses.accidentDetails.hospitalStayLength.days) && isUnanswered(responses.accidentDetails.hospitalStayLength.weeks) && isUnanswered(responses.accidentDetails.hospitalStayLength.months) ? 'unanswered' : '' & signal:'accident-details-hospital-stay-length-changed'">
+                    <span class.one-time="isYes(responses.accidentDetails.wentToHospital) && isUnanswered(responses.accidentDetails.hospitalStayLength.hours) && isUnanswered(responses.accidentDetails.hospitalStayLength.days) && isUnanswered(responses.accidentDetails.hospitalStayLength.weeks) && isUnanswered(responses.accidentDetails.hospitalStayLength.months) ? 'unanswered' : '' & signal:'accident-details-hospital-stay-changed'">
                         How long were you in the hospital?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-3-1">
-                    <input type="text" name="accidentHospitalStayLengthHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.hours" input.delegate="changed('accident-details-hospital-stay-length-changed') & debounce:500" />&nbsp;Hours&nbsp;
-                    <input type="text" name="accidentHospitalStayLengthDays" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.days" input.delegate="changed('accident-details-hospital-stay-length-changed') & debounce:500" />&nbsp;Days&nbsp;
-                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.weeks" input.delegate="changed('accident-details-hospital-stay-length-changed') & debounce:500" />&nbsp;Weeks&nbsp;
-                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.months" input.delegate="changed('accident-details-hospital-stay-length-changed') & debounce:500" />&nbsp;Months&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.hours" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Hours&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthDays" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.days" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Days&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.weeks" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Weeks&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.months" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Months&nbsp;
                 </div>
 
                 <hr>
@@ -987,67 +987,67 @@
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.startedCounselling) ? 'unanswered' : '' & signal:'accident-details-started-counselling-changed'">
+                    <span class.one-time="isUnanswered(responses.accidentDetails.startedCounselling) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
                         Have you started Counselling yet?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentStartedCounselling" class="uk-radio" checked.bind="$parent.responses.accidentDetails.startedCounselling" value.bind="response.value" change.delegate="changed('accident-details-started-counselling-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="accidentStartedCounselling" class="uk-radio" checked.bind="$parent.responses.accidentDetails.startedCounselling" value.bind="response.value" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.startedCounsellingMonth) || isUnanswered(responses.accidentDetails.startedCounsellingYear) ? 'unanswered' : '' & signal:'accident-details-started-counselling-when-changed'">
+                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.startedCounsellingYear) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
                         When did you start counselling?
                     </span>
                 </div>
     
                 <div class="uk-margin-remove uk-width-1-2">
-                    &nbsp;Month&nbsp;<input type="text" name="accidentStartedCounsellingMonth" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingMonth" input.delegate="changed('accident-details-started-counselling-when-changed') & debounce:500" />
-                    &nbsp;Year&nbsp;<input type="text" name="accidentStartedCounsellingYear" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingYear" input.delegate="changed('accident-details-started-counselling-when-changed') & debounce:500" />
+                    &nbsp;Month&nbsp;<input type="text" name="accidentStartedCounsellingMonth" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingMonth" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
+                    &nbsp;Year&nbsp;<input type="text" name="accidentStartedCounsellingYear" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingYear" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
                 </div>
 
                 <hr>
                 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.counsellingHowOften) ? 'unanswered' : '' & signal:'accident-details-counselling-how-often-changed'">
+                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.counsellingHowOften) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
                         How often are you currently having counselling?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" name="accidentCounsellingHowOften" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingHowOften" input.delegate="changed('accident-details-counselling-how-often-changed') & debounce:500" />
+                    <input type="text" name="accidentCounsellingHowOften" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingHowOften" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
                 </div>
 
                 <hr>
                              
                 <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.counsellingMethod) || (counsellingMethodIsOther && isUnanswered(responses.accidentDetails.counsellingMethodOther)) ? 'unanswered' : '' & signal:'counselling-method-changed'">
+                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.counsellingMethod) || (counsellingMethodIsOther && isUnanswered(responses.accidentDetails.counsellingMethodOther)) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
                         Is this treatment done over the phone or in person?
                     </span>
                 </div>
     
                 <div class="uk-margin-remove uk-width-3-4">
                     <label>
-                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="overThePhone" change.delegate="changed('counselling-method-changed')" />&nbsp;Over the phone&nbsp;
+                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="overThePhone" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;Over the phone&nbsp;
                     </label>
                     <label>
-                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="inPerson" change.delegate="changed('counselling-method-changed')" />&nbsp;In person&nbsp;
+                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="inPerson" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;In person&nbsp;
                     </label>
                     <label>
-                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="other" change.delegate="changed('counselling-method-changed')" />&nbsp;Other&nbsp;
+                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="other" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;Other&nbsp;
                     </label>
-                    &nbsp;<input type="text" name="accidentCounsellingMethodOther" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingMethodOther" disabled.bind="!counsellingMethodIsOther & signal:'counselling-method-changed'" input.delegate="changed('counselling-method-changed') & debounce:500" />
+                    &nbsp;<input type="text" name="accidentCounsellingMethodOther" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingMethodOther" disabled.bind="!counsellingMethodIsOther & signal:'accident-details-counselling-changed'" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.isTheCounsellingBeneficial) ? 'unanswered' : '' & signal:'counselling-is-beneficial-changed'">
+                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.isTheCounsellingBeneficial) ? 'unanswered' : '' & signal:'counselling-is-beneficial-changed'">
                         Do you find that the counselling is beneficial?
                     </span>
                 </div>
@@ -1136,11 +1136,11 @@
                         </div>
 
                         <template if.bind="isYes($parent.responses.treatment.initial.providers[i].sinceAccident) & signal:'treatment-initial-changed'">
-                            
+<!--                            
                             <hr>
 
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
-                                <span class.one-time="isUnanswered($parent.responses.treatment.initial.providers[i].start.month) || isUnanswered($parent.responses.treatment.initial.providers[i].start.year) ? 'unanswered' : '' & signal:'treatment-start-changed'">
+                                <span class.one-time="isUnanswered($parent.responses.treatment.initial.providers[i].start.year) ? 'unanswered' : '' & signal:'treatment-start-changed'">
                                     Approximately when did this treatment start?
                                 </span>
                             </div>
@@ -1198,7 +1198,7 @@
                             </div>
                             
                             <hr>
-
+-->
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
                                 <span class.one-time="isUnanswered($parent.responses.treatment.initial.providers[i].current.attending) ? 'unanswered' : '' & signal:'treatment-initial-changed'">
                                     Are you still attending treatment?
@@ -1211,7 +1211,7 @@
                             </div>
 
                             <hr>
-
+<!--
                             <template if.bind="isYes($parent.responses.treatment.initial.providers[i].current.attending)">
                                 <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
                                     <span class.one-time="isUnanswered($parent.responses.treatment.initial.providers[i].current.frequency.unit) ? 'unanswered' : '' & signal:'treatment-initial-changed'">
@@ -1272,7 +1272,7 @@
                             </template>
 
                             <hr>
-
+-->
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
                                 <span class.one-time="isUnanswered($parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend) ? 'unanswered' : '' & signal:'treatment-initial-changed'">
                                     Have funding/financial issues affected your ability to attend treatment?
@@ -1289,8 +1289,10 @@
                     </template>
                     <template repeat.for="i of responses.treatment.initial.programs.length">
                         <div class="uk-margin-remove uk-width-3-4">
-                            Since the accident have you attended ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].indefiniteArticle} 
-                            ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}?
+                            <span class.one-time="isUnanswered($parent.responses.treatment.initial.programs[i].sinceAccident) ? 'unanswered' : '' & signal:'treatment-program-changed'">
+                                Since the accident ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].attendedQuestion} ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].indefiniteArticle} 
+                                ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}?
+                            </span>
                         </div>
                         
                         <div class="uk-margin-remove uk-width-1-4">
@@ -1300,21 +1302,23 @@
                         </div>
 
                         <template if.bind="isYes($parent.responses.treatment.initial.programs[i].sinceAccident) & signal:'treatment-program-changed'">
-                            
+<!--
                             <hr>
 
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
-                                Approximately when did this program start?
+                                <span class.one-time="isUnanswered($parent.responses.treatment.initial.programs[i].start.month) || isUnanswered($parent.responses.treatment.initial.programs[i].start.year) ? 'unanswered' : '' & signal:'treatment-start-changed'">
+                                    Approximately when did this program start?
+                                </span>
                             </div>
                             <div class="uk-margin-remove uk-width-1-2">
                                 &nbsp;Month&nbsp;
-                                <select id="treatmentProgramStartMonth" class="uk-select uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].start.month">
+                                <select id="treatmentProgramStartMonth" class="uk-select uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].start.month" change.delegate="changed('treatment-start-changed')">
                                     <option></option>
                                     <option repeat.for="month of months" model.bind="month">
                                         ${month}
                                     </option>
                                 </select>
-                                &nbsp;Year&nbsp;<input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].start.year" />
+                                &nbsp;Year&nbsp;<input type="text" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.treatment.initial.programs[i].start.year" input.delegate="changed('treatment-start-changed') & debounce:500" />
                             </div>
 
                             <hr>
@@ -1359,7 +1363,7 @@
                                 </div>
                                 
                                 <hr>
-    
+-->
                                 <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
                                     Are you still attending treatment?
                                 </div>
@@ -1370,7 +1374,7 @@
                                 </div>
     
                                 <hr>
-    
+<!--
                                 <template if.bind="isYes($parent.responses.treatment.initial.programs[i].current.attending)">
                                     <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-1-2">
                                         How often?
@@ -1428,7 +1432,7 @@
                             </template>
 
                             <hr>
-
+-->
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
                                 Have funding/financial issues affected your ability to attend?
                             </div>
@@ -1523,7 +1527,7 @@
                 <div class="uk-margin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.psychological.selfHarm.planToAct.response) ? 'unanswered' : '' & signal:'plan-to-act-on-self-harm-thoughts-changed'">
+                    <span class.one-time="isYes(responses.psychological.selfHarm.currentThoughts.response) && isUnanswered(responses.psychological.selfHarm.planToAct.response) ? 'unanswered' : '' & signal:'plan-to-act-on-self-harm-thoughts-changed'">
                         Do you have a plan to act on these thoughts?
                     </span>
                 </div>
@@ -1539,7 +1543,7 @@
                 <div class="uk-margin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.psychological.selfHarm.toldDoctor.response) ? 'unanswered' : '' & signal:'current-thoughts-of-self-harm-told-doctor-changed'">
+                    <span class.one-time="isYes(responses.psychological.selfHarm.currentThoughts.response) && isUnanswered(responses.psychological.selfHarm.toldDoctor.response) ? 'unanswered' : '' & signal:'current-thoughts-of-self-harm-told-doctor-changed'">
                         Have you told your doctor?
                     </span>
                 </div>
@@ -1836,7 +1840,7 @@
                 <div class="uk-marin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.psychological.hallucinationsAuditory) ? 'unanswered' : '' & signal:'hallucinations-changed'">
+                    <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsAuditory) ? 'unanswered' : '' & signal:'hallucinations-changed'">
                         Are the hallucinations auditory?
                     </span>
                 </div>
@@ -1852,7 +1856,7 @@
                 <div class="uk-marin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.psychological.hallucinationsVisual) ? 'unanswered' : '' & signal:'hallucinations-changed'">
+                    <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsVisual) ? 'unanswered' : '' & signal:'hallucinations-changed'">
                         Are the hallucinations visual in nature?
                     </span>
                 </div>
@@ -1868,7 +1872,7 @@
                 <div class="uk-marin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.psychological.hallucinationsCommand) ? 'unanswered' : '' & signal:'hallucinations-changed'">
+                    <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsCommand) ? 'unanswered' : '' & signal:'hallucinations-changed'">
                         Do the hallucinations tell/command you to do something?
                     </span>
                 </div>
@@ -1958,6 +1962,68 @@
             <legend class="uk-legend">Traveling</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <span class.one-time="isUnanswered(responses.psychological.travel.driverLicense.haveLicense) ? 'unanswered' : '' & signal:'driver-license-changed'">
+                        Do you currently have a driver's licence?
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoNa">
+                        <input type="radio" name="haveDriverLicense" class="uk-radio" checked.bind="responses.psychological.travel.driverLicense.haveLicense" value.bind="response.value" change.delegate="changed('driver-license-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <span class.one-time="isYes(responses.psychological.travel.driverLicense.haveLicense) && isUnanswered(responses.psychological.travel.driverLicense.isSuspended) ? 'unanswered' : '' & signal:'driver-license-changed'">
+                        Is your driver's licence currently suspended?
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="driverLicenseSuspended" class="uk-radio" checked.bind="responses.psychological.travel.driverLicense.isSuspended" value.bind="response.value" disabled.bind="!isYes(responses.psychological.travel.driverLicense.haveLicense)" change.delegate="changed('driver-license-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <span class.one-time="isYes(responses.psychological.travel.driverLicense.isSuspended) && isUnanswered(responses.psychological.travel.driverLicense.suspensionType) ? 'unanswered' : '' & signal:'driver-license-changed'">
+                        If yes:
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label>
+                        <input type="radio" name="driversLicenseSuspensionType" class="uk-radio" checked.bind="responses.psychological.travel.driverLicense.suspensionType" value="medically" disabled.bind="!isYes(responses.psychological.travel.driverLicense.isSuspended)" change.delegate="changed('driver-license-changed')" />&nbsp;Medically suspended?&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="driversLicenseSuspensionType" class="uk-radio" checked.bind="responses.psychological.travel.driverLicense.suspensionType" value="legally" disabled.bind="!isYes(responses.psychological.travel.driverLicense.isSuspended)" change.delegate="changed('driver-license-changed')" />&nbsp;Legally suspended?&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="driversLicenseSuspensionType" class="uk-radio" checked.bind="responses.psychological.travel.driverLicense.suspensionType" value="skip" disabled.bind="!isYes(responses.psychological.travel.driverLicense.isSuspended)" change.delegate="changed('driver-license-changed')" />&nbsp;Skip&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <span class.one-time="responses.psychological.travel.driverLicense.suspensionType === 'medically' && isUnanswered(responses.psychological.travel.driverLicense.medicallySuspendedDueToAccident) ? 'unanswered' : '' & signal:'driver-license-changed'">
+                        If medical was the medical suspension as a result of the accident?
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="driverLicenseMedicallySuspendedDueToAccident" class="uk-radio" checked.bind="responses.psychological.travel.driverLicense.medicallySuspendedDueToAccident" value.bind="response.value" disabled.bind="responses.psychological.travel.driverLicense.suspensionType !== 'medically'" change.delegate="changed('driver-license-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.psychological.travel.abilityToTravel) ? 'unanswered' : '' & signal:'travel-changed'">
@@ -2217,20 +2283,6 @@
                 <hr>
     
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently) ? 'unanswered' : '' & signal:'lose-track-of-what-you-wanted-to-say-changed'">
-                        Do you lose track of what you wanted to say <u>frequently</u>?
-                    </span>
-                </div>
-    
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="memoryWorkingLoseTrackOfWhatYouWantedToSayFrequently" class="uk-radio" checked.bind="responses.neuropsychological.memory.working.loseTrackOfWhatYouWantedToSayFrequently" value.bind="response.value" change.delegate="changed('lose-track-of-what-you-wanted-to-say-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-    
-                <hr>
-    
-                <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.neuropsychological.memory.aids.useAids) ? 'unanswered' : '' & signal:'use-memory-aids-changed'">
                         Do you use any of the following as aids to help you remember?
                     </span>
@@ -2478,7 +2530,7 @@
                 <div class="uk-margin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.attention.hadToReduceScreenBrightness) ? 'unanswered' : '' & signal:'had-to-reduce-screen-brightness-changed'">
+                    <span class.one-time="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens) && isUnanswered(responses.neuropsychological.attention.hadToReduceScreenBrightness) ? 'unanswered' : '' & signal:'had-to-reduce-screen-brightness-changed'">
                         Have you had to reduce the brightness of the screen?
                     </span>
                 </div>
@@ -2541,7 +2593,7 @@
                     <div class="uk-margin-remove uk-width-1-4"></div>
                     
                     <div class="uk-margin-remove uk-width-1-2">
-                        <span class.one-time="isUnanswered($parent.responses.neuropsychological.executive.inappropriateSocialBehaviors[i].response) ? 'unanswered' : '' & signal:'inappropriate-social-behavior-changed'">
+                        <span class.one-time="isYes(responses.neuropsychological.executive.inappropriateSocialBehavior) && isUnanswered($parent.responses.neuropsychological.executive.inappropriateSocialBehaviors[i].response) ? 'unanswered' : '' & signal:'inappropriate-social-behavior-changed'">
                             ${inappropriateSocialBehaviors[$parent.responses.neuropsychological.executive.inappropriateSocialBehaviors[i].value].description}
                         </span>
                     </div>
@@ -2913,28 +2965,28 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident) ? 'unanswered' : '' & signal:'experienced-migraines-before-accident-changed'">
+                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident) ? 'unanswered' : '' & signal:'migraines-changed'">
                         Did you experience migraines before the accident?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="experienceMigrainesPriorToAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident" value.bind="response.value" change.delegate="changed('experienced-migraines-before-accident-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="experienceMigrainesPriorToAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident" value.bind="response.value" change.delegate="changed('migraines-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident) ? 'unanswered' : '' & signal:'migraines-worsened-since-accident-changed'">
+                    <span class.one-time="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident) && isUnanswered(responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident) ? 'unanswered' : '' & signal:'migraines-changed'">
                         Have your migraines worsened since the accident?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="changesInMigrainesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)" change.delegate="changed('migraines-worsened-since-accident-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="changesInMigrainesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInMigrainesSinceAccident" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.physical.headaches.experienceMigrainesPriorToAccident)" change.delegate="changed('migraines-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -3099,7 +3151,7 @@
                         <div class="uk-margin-remove uk-width-1-6"></div>
 
                         <div class="uk-margin-remove uk-width-5-6">
-                            <span class.one-time="isUnanswered(responses.neuropsychological.currentState.caregivingCasInvolved) ? 'unanswered' : '' & signal:'caregiving-cas-involved-changed'">
+                            <span class.one-time="!$parent.responses.neuropsychological.currentState.tasks[i].isNA && isUnanswered(responses.neuropsychological.currentState.caregivingCasInvolved) ? 'unanswered' : '' & signal:'caregiving-cas-involved-changed'">
                                 Has CAS been involved?
                             </span>&nbsp;
                             <label repeat.for="response of yesNo">
@@ -3391,7 +3443,7 @@
                     </div>
     
                     <div class="uk-margin-remove uk-width-1-4">
-                        <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" input.delegate="changed('partner-job-changed') & debounce:500" />
+                        <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.partnerJobTitle" disabled.bind="isUnanswered(responses.personalHistory.relationship.partnerJobTitleOrIndustry)" input.delegate="changed('partner-job-changed') & debounce:500" />
                     </div>
     
                     <hr>
@@ -3399,42 +3451,42 @@
                 
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.relationship.isAbusive) ? 'unanswered' : '' & signal:'relationship-abusive-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.relationship.isAbusive) ? 'unanswered' : '' & signal:'relationship-changed'">
                         Are you currently in an abusive relationship?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="relationshipIsAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.isAbusive" value.bind="response.value" change.delegate="changed('relationship-abusive-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="relationshipIsAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.isAbusive" value.bind="response.value" change.delegate="changed('relationship-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.relationship.previousRelationshipAbusive) ? 'unanswered' : '' & signal:'previous-relationship-abusive-changed'">
+                    <span class.one-time="isNo(responses.personalHistory.relationship.isAbusive) && isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship) && isUnanswered(responses.personalHistory.relationship.previousRelationshipAbusive) ? 'unanswered' : '' & signal:'relationship-changed'">
                         Have any of your previous relationships been abusive?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" disabled.bind="!isNo(responses.personalHistory.relationship.isAbusive)" change.delegate="changed('previous-relationship-abusive-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" disabled.bind="!isNo(responses.personalHistory.relationship.isAbusive)" change.delegate="changed('relationship-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.relationship.hadPriorSeriousRelationship) ? 'unanswered' : '' & signal:'previous-serious-relationship-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.relationship.hadPriorSeriousRelationship) ? 'unanswered' : '' & signal:'relationship-changed'">
                         Have you previously been in a serious relationship?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="hadPriorSeriousRelationship" class="uk-radio" checked.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship" value.bind="response.value" change.delegate="changed('previous-serious-relationship-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="hadPriorSeriousRelationship" class="uk-radio" checked.bind="responses.personalHistory.relationship.hadPriorSeriousRelationship" value.bind="response.value" change.delegate="changed('relationship-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -3445,29 +3497,29 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.value) || isUnanswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.unit) ? 'unanswered' : '' & signal:'prior-serious-relationship-length-changed'">
+                    <span class.one-time="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship) && (isUnanswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.value) || isUnanswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.unit)) ? 'unanswered' : '' & signal:'previous-serious-relationship-changed'">
                         How long did that relationship last?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.value" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" input.delegate="changed('prior-serious-relationship-length-changed')" />
+                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.value" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" input.delegate="changed('previous-serious-relationship-changed')" />
 
                     <label repeat.for="response of ageUnits">
-                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.unit" value.bind="response.value" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" change.delegate="changed('prior-serious-relationship-length-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.priorSeriousRelationshipLength.unit" value.bind="response.value" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" change.delegate="changed('previous-serious-relationship-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded) ? 'unanswered' : '' & signal:'prior-serious-relationship-ended-reason-changed'">
+                    <span class.one-time="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship) && isUnanswered(responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded) ? 'unanswered' : '' & signal:'previous-serious-relationship-changed'">
                         What was the reason that relationship ended?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" input.delegate="changed('prior-serious-relationship-ended-reason-changed') & debounce:500" />
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded" disabled.bind="!isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)" input.delegate="changed('previous-serious-relationship-changed') & debounce:500" />
                 </div>
 
                 <hr>
@@ -3750,9 +3802,7 @@
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="!responses.personalHistory.brothers.skip && isUnanswered(responses.personalHistory.brothers.howMany) ? 'unanswered' : '' & signal:'sibling-count-changed'">
-                        How many brothers do you have?
-                    </span>
+                    How many brothers do you have?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
@@ -3766,7 +3816,7 @@
                 </div>
 
                 <hr>
-
+<!--
                 <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.brothers.skip && responses.personalHistory.brothers.howMany">
                     What are their ages?
                 </div>
@@ -3797,11 +3847,9 @@
 
                     <hr if.bind="responses.personalHistory.brothers.howMany">
                 </template>
-                
+-->
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="!responses.personalHistory.sisters.skip && isUnanswered(responses.personalHistory.sisters.howMany) ? 'unanswered' : '' & signal:'sibling-count-changed'">
-                        How many sisters do you have?
-                    </span>
+                    How many sisters do you have?
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
@@ -3815,7 +3863,7 @@
                 </div>
 
                 <hr>
-
+<!--
                 <div class="uk-margin-remove uk-width-1-4" if.bind="!responses.personalHistory.sisters.skip && responses.personalHistory.sisters.howMany">
                     What are their ages?
                 </div>
@@ -3846,7 +3894,7 @@
                     
                     <hr if.bind="responses.personalHistory.sisters.howMany">    
                 </template>
-                
+-->
                 <div class="uk-margin-remove uk-width-1-2" if.bind="siblingCount > 0 & signal:'sibling-count-changed'">
                     If you have siblings are you the
                 </div>
@@ -3874,7 +3922,7 @@
                     <tbody>
                         <tr repeat.for="i of responses.personalHistory.neurologicalOrPsychiatricDiseases.length">
                             <td class="uk-padding-remove">
-                                <span class.one-time="isUnanswered($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].self) || isUnanswered($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family) || (isYes($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family) && isUnanswered($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].familyMember)) ? 'unanswered' : '' & signal:'neurological-psychiatric-disease-changed'">
+                                <span class.one-time="isUnanswered($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].self) || isUnanswered($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family) ? 'unanswered' : '' & signal:'neurological-psychiatric-disease-changed'">
                                     ${neurologicalAndPsychiatricDiseasesMap[$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].value].description}
                                 </span>
                             </td>
@@ -4108,7 +4156,7 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.occupation.start.month) || isUnanswered(responses.personalHistory.occupation.start.year) ? 'unanswered' : '' & signal:'occupation-start-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.occupation.start.month) && isUnanswered(responses.personalHistory.occupation.start.year) ? 'unanswered' : '' & signal:'occupation-start-changed'">
                         When did you start working at this job?
                     </span>
                 </div>
@@ -4122,7 +4170,7 @@
                 </div>
 
                 <hr>
-
+<!--
                 <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="!responses.personalHistory.occupation.end.na && (isUnanswered(responses.personalHistory.occupation.end.month) || isUnanswered(responses.personalHistory.occupation.end.year)) ? 'unanswered' : '' & signal:'occupation-end-changed'">
                         If applicable, when did you stop working at this job?
@@ -4144,7 +4192,7 @@
                 </div>
 
                 <hr>
-
+-->
                 <div class="uk-margin-remove uk-width-1-2">
                     <span class.one-time="isUnanswered(responses.personalHistory.occupation.jobTitle) ? 'unanswered' : '' & signal:'job-title-changed'">
                         What was your job title?
@@ -4194,40 +4242,40 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.occupation.returnToWork.attempted) ? 'unanswered' : '' & signal:'return-to-work-attempted-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.occupation.returnToWork.attempted) ? 'unanswered' : '' & signal:'return-to-work-changed'">
                         Have you attempted a return to work?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="occupationReturnToWorkAttempted" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.attempted" value.bind="response.value" change.delegate="changed('return-to-work-attempted-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="occupationReturnToWorkAttempted" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.attempted" value.bind="response.value" change.delegate="changed('return-to-work-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.occupation.returnToWork.when) ? 'unanswered' : '' & signal:'return-to-work-when-changed'">
+                    <span class.one-time="isYes(responses.personalHistory.occupation.returnToWork.attempted) && isUnanswered(responses.personalHistory.occupation.returnToWork.when) ? 'unanswered' : '' & signal:'return-to-work-changed'">
                         When?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="occupationReturnToWorkWhen" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.when" input.delegate="changed('return-to-work-when-changed') & debounce:500" />
+                    <input type="text" name="occupationReturnToWorkWhen" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.when" input.delegate="changed('return-to-work-changed') & debounce:500" />
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.occupation.returnToWork.successful) ? 'unanswered' : '' & signal:'return-to-work-successful-changed'">
+                    <span class.one-time="isYes(responses.personalHistory.occupation.returnToWork.attempted) && isUnanswered(responses.personalHistory.occupation.returnToWork.successful) ? 'unanswered' : '' & signal:'return-to-work-changed'">
                         If applicable, were you successful with your return to work?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoPartially">
-                        <input type="radio" name="occupationReturnToWorkSuccessful" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.successful" value.bind="response.value" change.delegate="changed('return-to-work-successful-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="occupationReturnToWorkSuccessful" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.successful" value.bind="response.value" change.delegate="changed('return-to-work-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -4454,42 +4502,42 @@
                 <div class="uk-margin-remove uk-width-1-1">Currently:</div>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.medical.currently.alchoholConsumptionIncreased) ? 'unanswered' : '' & signal:'drug-use-changed'">
+                    <span class.one-time="everUsedAlchohol && isUnanswered(responses.personalHistory.medical.currently.alchoholConsumptionIncreased) ? 'unanswered' : '' & signal:'drug-use-changed'">
                         Has your consumption of Alcohol increased since the accident?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoNa">
-                        <input type="radio" name="medicalAlchoholConsumptionIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.alchoholConsumptionIncreased" value.bind="response.value" disabled.bind="!everUsedAlchohol & signal:'drug-use-changed'" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="medicalAlchoholConsumptionIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.alchoholConsumptionIncreased" value.bind="response.value" disabled.bind="!everUsedAlchohol & signal:'drug-use-changed'" change.delegate="changed('drug-use-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
                 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.medical.currently.tobaccoUseIncreased) ? 'unanswered' : '' & signal:'drug-use-changed'">
+                    <span class.one-time="everUsedTobacco && isUnanswered(responses.personalHistory.medical.currently.tobaccoUseIncreased) ? 'unanswered' : '' & signal:'drug-use-changed'">
                         Has your Tobacco use increased since the accident?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoNa">
-                        <input type="radio" name="medicalTobaccoUseIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.tobaccoUseIncreased" value.bind="response.value" disabled.bind="!everUsedTobacco & signal:'drug-use-changed'" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="medicalTobaccoUseIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.tobaccoUseIncreased" value.bind="response.value" disabled.bind="!everUsedTobacco & signal:'drug-use-changed'" change.delegate="changed('drug-use-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
                 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.medical.currently.thcUseIncreased) ? 'unanswered' : '' & signal:'drug-use-changed'">
+                    <span class.one-time="everUsedThc && isUnanswered(responses.personalHistory.medical.currently.thcUseIncreased) ? 'unanswered' : '' & signal:'drug-use-changed'">
                         Has your use of THC increased since the accident?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoNa">
-                        <input type="radio" name="medicalThcUseIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.thcUseIncreased" value.bind="response.value" disabled.bind="!everUsedThc & signal:'drug-use-changed'" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="medicalThcUseIncreased" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.currently.thcUseIncreased" value.bind="response.value" disabled.bind="!everUsedThc & signal:'drug-use-changed'" change.delegate="changed('drug-use-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -4730,19 +4778,19 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.legal.everCharged.response) ? 'unanswered' : '' & signal:'ever-charged-changed'">
-                        Have you ever been charged?
+                    <span class.one-time="isUnanswered(responses.personalHistory.legal.everConvicted.response) ? 'unanswered' : '' & signal:'ever-convicted-changed'">
+                        Have you ever been convicted?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="legalEverCharged" class="uk-radio" checked.bind="$parent.responses.personalHistory.legal.everCharged.response" value.bind="response.value" change.delegate="changed('ever-charged-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="legalEverConvicted" class="uk-radio" checked.bind="$parent.responses.personalHistory.legal.everConvicted.response" value.bind="response.value" change.delegate="changed('ever-convicted-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    For?&nbsp;<input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.legal.everCharged.details" />
+                    For?&nbsp;<input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.legal.everConvicted.details" />
                 </div>
 
                 <hr>
@@ -4840,7 +4888,7 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.hadMentalHealthTesting) ? 'unanswered' : '' & signal:'had-mental-health-counselling-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.hadMentalHealthCounselling) ? 'unanswered' : '' & signal:'had-mental-health-counselling-changed'">
                         Before the accident, did you have any mental health counselling with a psychologist, psychiatrist, SW/counsellor or your Family Doctor?
                     </span>
                 </div>
@@ -4996,6 +5044,18 @@
                 <hr>
                 
                 <div class="uk-margin-remove uk-width-1-4">
+                    <span class.one-time="isUnanswered(responses.personalHistory.covid19.affectOnYou) ? 'unanswered' : '' & signal:'psychological-covid19-affect-changed'">
+                        How have the events of Covid-19 affected you?
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <textarea class="uk-textarea uk-form-small" value.bind="responses.personalHistory.covid19.affectOnYou" rows="2" input.delegate="changed('psychological-covid19-affect-changed') & debounce:500"></textarea>
+                </div>
+                
+                <hr>
+                
+                <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="isUnanswered(responses.personalHistory.psychological.additionalInformation) ? 'unanswered' : '' & signal:'psychological-additional-information-changed'">
                         Anything you wish to add?
                     </span>
@@ -5055,6 +5115,9 @@
                     </label>
                     <label>
                         <input type="radio" name="ocfCompleterTreatmentSessionFormat" class="uk-radio" checked.bind="responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat" value="phone" change.delegate="changed('treatment-session-format-changed')" />&nbsp;Phone&nbsp;
+                    </label>
+                    <label>
+                        <input type="radio" name="ocfCompleterTreatmentSessionFormat" class="uk-radio" checked.bind="responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat" value="skip" change.delegate="changed('treatment-session-format-changed')" />&nbsp;Skip&nbsp;
                     </label>
                 </div>
 

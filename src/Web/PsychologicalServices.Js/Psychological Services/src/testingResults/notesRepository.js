@@ -517,7 +517,8 @@ export class NotesRepository {
             "rehabilitationWorker": { "description": "Rehabilitation Worker", "value": "rehabilitationWorker", "indefiniteArticle": "a", "format": function(context) { return `Rehabilitation Worker`; } },
             "supportWorker": { "description": "Support Worker", "value": "supportWorker", "indefiniteArticle": "a", "format": function(context) { return `Support Worker`; } },
             "speechLanguagePathologist": { "description": "Speech Language Pathologist", "value": "speechLanguagePathologist", "indefiniteArticle": "a", "format": function(context) { return `Speech Language Pathologist`; } },
-            "caseManager": { "description": "Case Manager", "value": "caseManager", "indefiniteArticle": "a", "format": function(context) { return `Case Manager`; } }
+            "caseManager": { "description": "Case Manager", "value": "caseManager", "indefiniteArticle": "a", "format": function(context) { return `Case Manager`; } },
+            "neuroOptometrist": { "description": "Neuro-Optometrist", "value": "neuroOptometrist", "indefiniteArticle": "a", "format": function(context) { return `Neuro-Optometrist`; } }
         };
 
         return getPromise(data);
@@ -525,8 +526,10 @@ export class NotesRepository {
 
     getTreatmentPrograms() {
         let data = {
-            "painProgram": { "description": "Pain Program", "value": "painProgram", "attendedQuestion": "Have you attended?", "indefiniteArticle": "a", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
-            "driversRehab": { "description": "Driver's Rehab", "value": "driversRehab", "attendedQuestion": "Have you completed any?", "indefiniteArticle": "a", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true }
+            "painProgram": { "description": "Pain Program", "value": "painProgram", "attendedQuestion": "have you attended", "attendedQuestionOutput": "Have you attended?", "indefiniteArticle": "a", "format": function(context) { return `Pain Program`; }, "isPainProgram": true },
+            "driversRehab": { "description": "Driver's Rehab", "value": "driversRehab", "attendedQuestion": "have you completed any", "attendedQuestionOutput": "Have you completed any?", "indefiniteArticle": "", "format": function(context) { return `Driver's Rehab`; }, "isDriversRehab": true },
+            "visualTherapy": { "description": "Visual therapy", "value": "visualTherapy", "attendedQuestion": "have you received any", "attendedQuestionOutput": "Have you received any?", "indefiniteArticle": "", "format": function(context) { return `Visual Therapy`; } },
+            "vestibularTreatment": { "description": "Vestibular treatment", "value": "vestibularTreatment", "attendedQuestion": "have you received any", "attendedQuestionOutput": "Have you received any?", "indefiniteArticle": "", "format": function(context) { return `Vestibular therapy`; } }
         };
 
         return getPromise(data);
@@ -713,7 +716,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "24";
+    return "26";
 }
 
 function upgrade(responses, toVersion) {
@@ -1047,6 +1050,22 @@ function upgrade_22_to_23(responses) {
 }
 
 function upgrade_23_to_24(responses) {
+    let newResponses = getNewResponses();
+
+    responses.version = newResponses.version;
+
+    return responses;
+}
+
+function upgrade_24_to_25(responses) {
+    let newResponses = getNewResponses();
+
+    responses.version = newResponses.version;
+
+    return responses;
+}
+
+function upgrade_25_to_26(responses) {
     let newResponses = getNewResponses();
 
     responses.version = newResponses.version;
@@ -1418,7 +1437,7 @@ function getNewResponses() {
                     "response": null,
                     "details": ""
                 },
-                "everCharged": {
+                "everConvicted": {
                     "response": null,
                     "details": ""
                 },
@@ -1432,7 +1451,8 @@ function getNewResponses() {
                 "onMoodMedicationAtTimeOfAccident": null,
                 "hospitalizedDueToPsychologicalConcerns": null,
                 "hadMentalHealthTesting": null,
-                "hadMentalHealthCounselling": null
+                "hadMentalHealthCounselling": null,
+                "additionalInformation": ""
             },
             "diagnosis": "",
             "prognosis": null,
@@ -1448,7 +1468,9 @@ function getNewResponses() {
                 "cognitively": null,
                 "mentally": null
             },
-            "additionalInformation": ""
+            "covid19": {
+                "affectOnYou": null
+            }
         },
         "psychological": {
             "emotional": [
@@ -1524,6 +1546,12 @@ function getNewResponses() {
                 { "self": null, "family": null, "value": "" }
             ],
             "travel": {
+                "driverLicense": {
+                    "haveLicense": null,
+                    "isSuspended": null,
+                    "suspensionType": null,
+                    "medicallySuspendedDueToAccident": null
+                },
                 "abilityToTravel": null,
                 "travelIssues": [],
                 "ableToDrive": null,
@@ -1552,8 +1580,7 @@ function getNewResponses() {
                     "additionalWhereaboutsObjects": [""]
                 },
                 "working": {
-                    "walkIntoRoomAndForgetWhyFrequently": null,
-                    "loseTrackOfWhatYouWantedToSayFrequently": null
+                    "walkIntoRoomAndForgetWhyFrequently": null
                 },
                 "aids": {
                     "useAids": null,
@@ -1725,8 +1752,7 @@ function getNewResponses() {
                         "number": null,
                         "period": null
                     }
-                },
-                "moreSocialBeforeAccident": null
+                }
             }
         },
         "treatment": {
@@ -1819,6 +1845,14 @@ function getNewResponses() {
                         "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
                         "stop": { "month": null, "year": null },
                         "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "value": "neuroOptometrist",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
                     }
                 ],
                 "programs": [
@@ -1832,6 +1866,22 @@ function getNewResponses() {
                     },
                     { 
                         "value": "driversRehab",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "value": "visualTherapy",
+                        "sinceAccident": null, 
+                        "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
+                        "stop": { "month": null, "year": null },
+                        "financialIssuesAffectedAbilityToAttend": null
+                    },
+                    { 
+                        "value": "vestibularTreatment",
                         "sinceAccident": null, 
                         "start": { "month": null, "year": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
                         "current": { "attending": null, "frequency": { "unit": null, "number": null, "rangeStart": null, "rangeEnd": null, "period": null } },
