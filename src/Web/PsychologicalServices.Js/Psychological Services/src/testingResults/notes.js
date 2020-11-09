@@ -72,6 +72,10 @@ export class Notes {
         this.prognosis = [];
         this.reminderChecklistItems = [];
         this.observations = [];
+        this.headacheDescriptions = [];
+        this.headacheReliefActivities = [];
+        this.headacheFrequencies = [];
+        this.hobbies = [];
 
         this.self = this;
 
@@ -229,6 +233,18 @@ export class Notes {
                     this.notesRepository.getObservations().then(data => {
                         this.observations = this.asArray(data);
                         this.observationsMap = data;
+                    }),
+                    this.notesRepository.getHeadacheDescriptions().then(data => {
+                        this.headacheDescriptions = this.asArray(data);
+                    }),
+                    this.notesRepository.getHeadacheReliefActivities().then(data => {
+                        this.headacheReliefActivities = this.asArray(data);
+                    }),
+                    this.notesRepository.getHeadacheFrequencies().then(data => {
+                        this.headacheFrequencies = this.asArray(data);
+                    }),
+                    this.notesRepository.getHobbies().then(data => {
+                        this.hobbies = this.asArray(data);
                     })
                 ]);
             });

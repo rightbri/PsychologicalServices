@@ -76,6 +76,10 @@ export class NotesOutput {
         this.prognosis = [];
         this.reminderChecklistItems = [];
         this.observations = [];
+        this.headacheDescriptions = [];
+        this.headacheReliefActivities = [];
+        this.headacheFrequencies = [];
+        this.hobbies = [];
 
         this.self = this;
 
@@ -106,6 +110,12 @@ export class NotesOutput {
         this.getAgeTextForCurrentContext = function(age) {
             return this.getAgeTextForContext(age, this);
         }.bind(this);
+
+        this.getRecreationalActivityDescriptionForCurrentContext = function(activity) {
+            return this.getRecreationalActivityDescriptionForContext(activity, this);
+        }.bind(this);
+
+        this.getHeadacheDescriptionForCurrentContext
     }
 
     activate() {
@@ -250,6 +260,22 @@ export class NotesOutput {
                     this.notesRepository.getObservations().then(data => {
                         this.observations = this.asArray(data);
                         this.observationsMap = data;
+                    }),
+                    this.notesRepository.getHeadacheDescriptions().then(data => {
+                        this.headacheDescriptions = this.asArray(data);
+                        this.headacheDescriptionsMap = data;
+                    }),
+                    this.notesRepository.getHeadacheReliefActivities().then(data => {
+                        this.headacheReliefActivities = this.asArray(data);
+                        this.headacheReliefActivitiesMap = data;
+                    }),
+                    this.notesRepository.getHeadacheFrequencies().then(data => {
+                        this.headacheFrequencies = this.asArray(data);
+                        this.headacheFrequenciesMap = data;
+                    }),
+                    this.notesRepository.getHobbies().then(data => {
+                        this.hobbies = this.asArray(data);
+                        this.hobbiesMap = data;
                     })
                 ]);
             });
@@ -1298,7 +1324,6 @@ export class NotesOutput {
         return this.getTreatmentProgramsForResponses(item => item.past !== null && this.isYes(item.past.response) && this.treatmentProgramsMap[item.value].isDriversRehab).some(item => item);
     }
 
-
     isFrequencyAnswered(frequency) {
         if (!frequency) { return false; }
         return this.isDontKnow(frequency.unit) ||
@@ -1352,6 +1377,24 @@ export class NotesOutput {
         let issues = this.responses.neuropsychological.physical.other.issues.filter(x => x && x.length > 0);
 
         return issues && issues.length > 0;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.headaches.headacheDescription')
+    get selectedHeadacheDescriptions() {
+        if (!this.responses || !this.responses.neuropsychological.physical.headaches.headacheDescription) { return []; }
+
+        let data = this.responses.neuropsychological.physical.headaches.headacheDescription.map(item => this.headacheDescriptionsMap[item]);
+
+        return data;
+    }
+
+    @computedFrom('responses.neuropsychological.physical.headaches.headacheReliefActivities')
+    get selectedHeadacheReliefActivities() {
+        if (!this.responses || !this.responses.neuropsychological.physical.headaches.headacheReliefActivities) { return []; }
+
+        let data = this.responses.neuropsychological.physical.headaches.headacheReliefActivities.map(item => this.headacheReliefActivitiesMap[item]);
+
+        return data;
     }
 
     @computedFrom(
@@ -1430,6 +1473,10 @@ export class NotesOutput {
 
     getAgeTextForContext(age, context) {
         return age && age.value && age.unit ? (context.getNumberText(age.value) + " " + age.unit) : "";
+    }
+
+    getRecreationalActivityDescriptionForContext(activity, context) {
+        return activity && this.hobbiesMap[activity] ? this.hobbiesMap[activity].format(context) : activity;
     }
 
     getItemValue(item) {

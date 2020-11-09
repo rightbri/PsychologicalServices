@@ -677,6 +677,70 @@ export class NotesRepository {
 
         return getPromise(data);
     }
+
+    getHeadacheDescriptions() {
+        let data = {
+            "dullAche": { "description": "Dull Ache", "value": "dullAche", "format": function(context) { return `a dull ache`; } },
+            "piercing": { "description": "Piercing", "value": "piercing", "format": function(context) { return `piercing`; } },
+            "pounding": { "description": "Pounding", "value": "pounding", "format": function(context) { return `pounding`; } },
+            "pulsing": { "description": "Pulsing", "value": "pulsing", "format": function(context) { return `pulsing`; } },
+            "squeezing": { "description": "Squeezing", "value": "squeezing", "format": function(context) { return `squeezing`; } },
+            "throbbing": { "description": "Throbbing", "value": "throbbing", "format": function(context) { return `throbbing`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getHeadacheReliefActivities() {
+        let data = {
+            "medication": { "description": "Medication", "value": "medication", "format": function(context) { return `medication`; } },
+            "rest": { "description": "Rest", "value": "rest", "format": function(context) { return `rest`; } },
+            "darkness": { "description": "Darkness", "value": "darkness", "format": function(context) { return `darkness`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getHeadacheFrequencies() {
+        let data = {
+            "daily": { "description": "Daily", "value": "daily", "format": function(context) { return `occur daily`; } },
+            "weekly": { "description": "Weekly", "value": "weekly", "format": function(context) { return `occur weekly`; } },
+            "monthly": { "description": "Monthly", "value": "monthly", "format": function(context) { return `occur monthly`; } },
+            "constantly": { "description": "Constantly", "value": "constantly", "format": function(context) { return `are constant`; } },
+            "frequently": { "description": "Frequently", "value": "frequently", "format": function(context) { return `occur frequently`; } },
+            "sometimes": { "description": "Sometimes", "value": "sometimes", "format": function(context) { return `occur sometimes`; } },
+            "rarely": { "description": "Rarely", "value": "rarely", "format": function(context) { return `occur rarely`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getHobbies() {
+        let data = {
+            "artsCrafts": { "description": "Arts & Crafts", "value": "artsCrafts", "format": function(context) { return `arts & crafts`; } },
+            "computer": { "description": "Computer/Tablet", "value": "computer", "format": function(context) { return `spending time on the computer/tablet`; } },
+            "cooking": { "description": "Cooking", "value": "cooking", "format": function(context) { return `cooking`; } },
+            "entertaining": { "description": "Entertaining/Hosting", "value": "entertaining", "format": function(context) { return `hosting/entertaining`; } },
+            "gamePlaying": { "description": "Playing games", "value": "gamePlaying", "format": function(context) { return `playing games`; } },
+            "gardening": { "description": "Gardening", "value": "gardening", "format": function(context) { return `gardening`; } },
+            "outdoors": { "description": "Outdoor activities", "value": "outdoors", "format": function(context) { return `outdoor activities`; } },
+            "musicListening": { "description": "Listening to music", "value": "musicListening", "format": function(context) { return `listening to music`; } },
+            "musicPlaying": { "description": "Playing music", "value": "musicPlaying", "format": function(context) { return `playing music`; } },
+            "reading": { "description": "Reading", "value": "reading", "format": function(context) { return `reading`; } },
+            "motorcycleRiding": { "description": "Riding motorcycles", "value": "motorcycleRiding", "format": function(context) { return `riding motorcycles`; } },
+            "running": { "description": "Running", "value": "running", "format": function(context) { return `running`; } },
+            "shopping": { "description": "Shopping", "value": "shopping", "format": function(context) { return `shopping`; } },
+            "socialMedia": { "description": "Social media", "value": "socialMedia", "format": function(context) { return `social media`; } },
+            "friends": { "description": "Spending time with friends", "value": "friends", "format": function(context) { return `spending time with friends`; } },
+            "family": { "description": "Spending time with family", "value": "family", "format": function(context) { return `spending time with family`; } },
+            "swimming": { "description": "Swimming", "value": "swimming", "format": function(context) { return `swimming`; } },
+            "watchingTv": { "description": "Watching TV", "value": "watchingTv", "format": function(context) { return `watching television`; } },
+            "workingOut": { "description": "Working out", "value": "workingOut", "format": function(context) { return `working out`; } },
+            "yoga": { "description": "Yoga", "value": "yoga", "format": function(context) { return `doing yoga`; } }
+        };
+
+        return getPromise(data);
+    }
 }
 
 function getPromise(data) {
@@ -716,7 +780,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "26";
+    return "27";
 }
 
 function upgrade(responses, toVersion) {
@@ -735,11 +799,23 @@ function upgrade(responses, toVersion) {
 function upgradeIfApplicable(responses, fromVersion, toVersion) {
     let functionName = "upgrade_" + fromVersion + "_to_" + toVersion;
 
-    if (isFunction(eval(functionName))) {
-        return eval(functionName)(responses);
+    let isFunction = false;
+
+    try {
+        isFunction = isFunction(eval(functionName));
+    }
+    catch (err) {
+        console.log(err);
     }
 
-    return responses;
+    if (isFunction) {
+        return eval(functionName)(responses);
+    }
+    else {
+        responses.version = toVersion;
+
+        return responses;
+    }
 }
 
 function upgrade_8_to_9(responses) {
@@ -1029,46 +1105,6 @@ function upgrade_20_to_21(responses) {
     }
 
     responses.version = "21";
-
-    return responses;
-}
-
-function upgrade_21_to_22(responses) {
-    let newResponses = getNewResponses();
-
-    responses.version = newResponses.version;
-
-    return responses;
-}
-
-function upgrade_22_to_23(responses) {
-    let newResponses = getNewResponses();
-
-    responses.version = newResponses.version;
-
-    return responses;
-}
-
-function upgrade_23_to_24(responses) {
-    let newResponses = getNewResponses();
-
-    responses.version = newResponses.version;
-
-    return responses;
-}
-
-function upgrade_24_to_25(responses) {
-    let newResponses = getNewResponses();
-
-    responses.version = newResponses.version;
-
-    return responses;
-}
-
-function upgrade_25_to_26(responses) {
-    let newResponses = getNewResponses();
-
-    responses.version = newResponses.version;
 
     return responses;
 }
@@ -1693,6 +1729,13 @@ function getNewResponses() {
                 },
                 "headaches": {
                     "experienceHeadachesCurrent": null,
+                    "skipHeadacheDescription": false,
+                    "headacheDescription": [],
+                    "skipHeadacheReliefActivities": false,
+                    "headacheReliefActivities": [],
+                    "skipHeadacheFrequency": false,
+                    "headacheFrequency": null,
+                    "headachesFluctuateWithActivityLevel": null,
                     "experienceHeadachesPriorToAccident": null,
                     "changesInHeadachesSinceAccident": null,
                     "experienceMigrainesCurrent": null,
@@ -1740,11 +1783,7 @@ function getNewResponses() {
                     { "ability": null, "issues": [], "isNA": false, "value": "vacation" }
                 ],
                 "caregivingCasInvolved": null,
-                "preAccidentRecreationalActivities": [
-                    "",
-                    "",
-                    ""
-                ],
+                "preAccidentRecreationalActivities": [],
                 "travel": {
                     "sinceAccident": null,
                     "where": null,

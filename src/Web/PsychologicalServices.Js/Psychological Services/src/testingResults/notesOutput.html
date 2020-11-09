@@ -435,6 +435,29 @@
                             When asked about headaches, ${gender.title} ${claimant.lastName} 
                             <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
                                 &nbsp;shared that currently ${pronoun.subject} experiences the same.
+
+                                <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheDescription && responses.neuropsychological.physical.headaches.headacheDescription.length">
+                                    &nbsp;${gender.title} ${claimant.lastName} went on to describe ${pronoun.possessiveAdjective} headaches as: ${selectedHeadacheDescriptions | arrayToString:{"format":getItemValueForCurrentContext}}.
+                                </template>
+                                <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheReliefActivities && responses.neuropsychological.physical.headaches.headacheReliefActivities.length">
+                                    &nbsp;When asked how ${pronoun.subject} tries to obtain relief ${pronoun.subject} responded with: ${selectedHeadacheReliefActivities | arrayToString:{"format":getItemValueForCurrentContext}}.
+                                </template>
+                                <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency)">
+                                    &nbsp;Upon inquiry, ${pronoun.subject} indicated the headaches ${headacheFrequenciesMap[responses.neuropsychological.physical.headaches.headacheFrequency].format(self)}.
+                                </template>
+                                <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
+                                    &nbsp;${gender.title} ${claimant.lastName} advised that 
+                                    <templatet if.bind="isDontKnow(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
+                                        &nbsp;${pronoun.subject} does not know if ${pronoun.possessiveAdjective} headaches
+                                    </templatet> 
+                                    <template if.bind="isYes(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
+                                        &nbsp;${pronoun.possessiveAdjective} headaches
+                                    </template>
+                                    <template if.bind="isNo(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
+                                        &nbsp;${pronoun.possessiveAdjective} headaches do not
+                                    </template>
+                                    &nbsp;fluctuate with ${pronoun.possessiveAdjective} activity level.
+                                </template>
                             </template>
                             <template else>
                                 &nbsp;denied currently experiencing the same.
@@ -1550,8 +1573,13 @@
 
                     <!-- Social Activities -->
                     <p>
-                        <template if.bind="anyPreAccidentRecreationalActivities & signal:'pre-accident-recreational-activities-changed'">
-                            In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} enjoyed ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString & signal:'pre-accident-recreational-activities-changed'}. 
+                        <template if.bind="anyPreAccidentRecreationalActivities">
+                            <template if.bind="responses.version >= 27">
+                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} was involved with: ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString:{"format":getRecreationalActivityDescriptionForCurrentContext,"delimiter":"; "}}.
+                            </template>
+                            <template else>
+                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} enjoyed ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString}.
+                            </template>
                         </template>
                     </p>
 

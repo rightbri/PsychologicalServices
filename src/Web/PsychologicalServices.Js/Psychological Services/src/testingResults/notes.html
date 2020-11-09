@@ -80,7 +80,7 @@
 
     <div id="notesContent" class="uk-container ${reviewAnswers ? 'review' : '' & signal:'review-changed'}" if.bind="formVisible">
 
-        <!-- DONE -->
+        <!-- Identification -->
         <fieldset class="uk-fieldset" if.bind="claimant & signal:'claimant-changed'">
             <legend class="uk-legend">Identification</legend>
 
@@ -248,7 +248,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Day of Assessment -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Day of Assessment</legend>
 
@@ -353,7 +353,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Motor Vehicle Accident Details -->
         <fieldset class="uk-fieldset" if.bind="isMvaInterview & signal:'interview-type-changed'">
             <legend class="uk-legend">Motor Vehicle Accident Details</legend>
 
@@ -705,7 +705,7 @@
             </div>
         </fieldset>
 
-        <!-- TODO: highlight for review -->
+        <!-- Information -->
         <fieldset class="uk-fieldset" if.bind="isLtdInterview & signal:'interview-type-changed'">
             <legend class="uk-legend">Information</legend>
 
@@ -717,7 +717,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Details of initial treatment -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Details of initial treatment</legend>
 
@@ -980,7 +980,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Treatment Details -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Treatment Details</legend>
 
@@ -1450,7 +1450,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Present Issue -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Present Issue</legend>
 
@@ -1470,7 +1470,7 @@
             </div>            
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Present Psychological Status -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Present Psychological Status</legend>
 
@@ -1957,7 +1957,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Traveling -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Traveling</legend>
 
@@ -2173,7 +2173,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Present Neuropsychological Status -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Present Neuropsychological Status</legend>
 
@@ -2385,7 +2385,7 @@
             
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Language -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Language</legend>
 
@@ -2410,7 +2410,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Attention -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Attention</legend>
 
@@ -2545,7 +2545,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Executive -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Executive</legend>
 
@@ -2609,7 +2609,7 @@
             </div>
         </fieldset>
         
-        <!-- DONE -->
+        <!-- Visual Spatial -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Visual Spatial</legend>
 
@@ -2649,7 +2649,7 @@
             </div>
         </fieldset>
         
-        <!-- DONE -->
+        <!-- Physical -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Physical</legend>
 
@@ -2909,19 +2909,87 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent) ? 'unanswered' : '' & signal:'experience-headaches-changed'">
+                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent) ? 'unanswered' : '' & signal:'headaches-changed'">
                         Do you currently experience headaches?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="experienceHeadachesCurrent" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.experienceHeadachesCurrent" value.bind="response.value" change.delegate="changed('experience-headaches-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="experienceHeadachesCurrent" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.experienceHeadachesCurrent" value.bind="response.value" change.delegate="changed('headaches-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
+                <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheDescription && responses.neuropsychological.physical.headaches.headacheDescription.length === 0 ? 'unanswered' : '' & signal:'headaches-changed'">
+                            How would you describe your headaches?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="i of headacheDescriptions.length">
+                            <input type="checkbox" class="uk-checkbox" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheDescription" value.bind="headacheDescriptions[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheDescription" change.delegate="changed('headaches-changed')">&nbsp;${headacheDescriptions[i].description}&nbsp;
+                        </label>
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheDescription" value="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheReliefActivities && responses.neuropsychological.physical.headaches.headacheReliefActivities.length === 0 ? 'unanswered' : '' & signal:'headaches-changed'">
+                            What do you use to relieve these headaches?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="i of headacheReliefActivities.length">
+                            <input type="checkbox" class="uk-checkbox" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheReliefActivities" value.bind="headacheReliefActivities[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheReliefActivities" change.delegate="changed('headaches-changed')">&nbsp;${headacheReliefActivities[i].description}&nbsp;
+                        </label>
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheReliefActivities" value="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequency) ? 'unanswered' : '' & signal:'headaches-changed'">
+                            How often do you experience headaches?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="i of headacheFrequencies.length">
+                            <input type="radio" name="headacheFrequency" class="uk-radio" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheFrequency" value.bind="headacheFrequencies[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')">&nbsp;${headacheFrequencies[i].description}&nbsp;
+                        </label>
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" value="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel) ? 'unanswered' : '' & signal:'headaches-changed'">
+                            Do the headaches fluctuate with your activity level?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="headachesFluctuate" class="uk-radio" checked.bind="$parent.responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel" value.bind="response.value" change.delegate="changed('headaches-changed')">&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+
+                </template>
+                
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident) ? 'unanswered' : '' & signal:'experienced-headaches-prior-changed'">
                         Did you experience headaches prior to the accident?
@@ -3026,6 +3094,7 @@
 
                 <hr>
 
+            <template if.bind="responses.createdAtVersion < 27">
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.neuropsychological.physical.other.anyIssues) ? 'unanswered' : '' & signal:'anything-else-bothering-you-changed'">
                         Anything else bothering you?
@@ -3059,6 +3128,7 @@
                 </template>
 
                 <hr>
+            </template>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.neuropsychological.physical.pain.experiencePainPriorToAccident) ? 'unanswered' : '' & signal:'experience-pain-prior-to-accident-changed'">
@@ -3108,7 +3178,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Current State (as of the last two weeks) -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Current State (as of the last two weeks)</legend>
 
@@ -3181,23 +3251,38 @@
                     What social/recreational activities were you involved with before the accident?
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPreAccidentRecreationalActivity()">
-                        Add
-                    </button>
-                </div>
+                <template if.bind="responses.createdAtVersion >= 27">                    
+                    <template repeat.for="i of hobbies.length">
+                        <div class="uk-margin-remove uk-width-1-2" if.bind="$even"></div>
 
-                <template repeat.for="i of responses.neuropsychological.currentState.preAccidentRecreationalActivities.length">
-                    <div class="uk-margin-remove-vertical uk-width-1-4">
-                        <label class="uk-form-label">
-                            <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.currentState.preAccidentRecreationalActivities[i]" input.delegate="changed('pre-accident-recreational-activities-changed') & debounce:500" />
-                        </label>
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label>
+                                <input type="checkbox" class="uk-checkbox" checked.bind="$parent.responses.neuropsychological.currentState.preAccidentRecreationalActivities" value.bind="hobbies[i].value" change.delegate="changed('pre-accident-recreational-activities-changed')">&nbsp;${hobbies[i].description}&nbsp;
+                            </label>
+                        </div>
+    
+                        <hr if.bind="$odd">
+                    </template>
+                </template>
+                <template else>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPreAccidentRecreationalActivity()">
+                            Add
+                        </button>
                     </div>
+    
+                    <template repeat.for="i of responses.neuropsychological.currentState.preAccidentRecreationalActivities.length">
+                        <div class="uk-margin-remove-vertical uk-width-1-4">
+                            <label class="uk-form-label">
+                                <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.currentState.preAccidentRecreationalActivities[i]" input.delegate="changed('pre-accident-recreational-activities-changed') & debounce:500" />
+                            </label>
+                        </div>
+                    </template>
+
+                    <hr>
                 </template>
 
-                <hr>
-
-                <template if.bind="responses.version >= 23">
+                <template if.bind="responses.createdAtVersion >= 23">
                     <div class="uk-margin-remove uk-width-3-4">
                         <span class.one-time="isUnanswered(responses.neuropsychological.currentState.travel.sinceAccident) ? 'unanswered' : '' & signal:'traveled-since-accident-changed'">
                             Have you travelled/gone on vacation since the subject accident?
@@ -3252,7 +3337,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Personal History -->
         <fieldset id="personalHistory" class="uk-fieldset">
             <legend class="uk-legend">Personal History</legend>
 
@@ -3526,6 +3611,7 @@
             </div>
         </fieldset>
 
+        <!-- Information about your family -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Information about your family</legend>
 
@@ -4025,7 +4111,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Education -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Education</legend>
 
@@ -4121,7 +4207,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Occupation -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Occupation</legend>
 
@@ -4357,7 +4443,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Current Financial State -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Current Financial State</legend>
 
@@ -4417,7 +4503,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Medical History -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Medical History</legend>
 
@@ -4753,7 +4839,7 @@
             </div>
         </fieldset>
         
-        <!-- DONE -->
+        <!-- Criminal History -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Criminal History</legend>
 
@@ -4811,7 +4897,7 @@
             </div>
         </fieldset>
     
-        <!-- DONE -->
+        <!-- Psychological History -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Psychological History</legend>
 
@@ -5069,7 +5155,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- If an OCF-18/TX plan is in dispute -->
         <fieldset class="uk-fieldset" if.bind="assessment.medRehabs && assessment.medRehabs.length > 0">
             <legend class="uk-legend">If an OCF-18/TX plan is in dispute</legend>
 
@@ -5137,7 +5223,7 @@
             </div>
         </fieldset>
 
-        <!-- DONE -->
+        <!-- Dr. Watson's Reminder Checklist -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Dr. Watson's Reminder Checklist</legend>
 
@@ -5162,7 +5248,7 @@
             </div>
         </fieldset>
         
-        <!-- DONE -->
+        <!-- Observations of Dr. Watson -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Observations of Dr. Watson</legend>
 
