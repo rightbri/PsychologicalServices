@@ -2055,20 +2055,6 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.psychological.travel.ableToDrive) ? 'unanswered' : '' & signal:'able-to-drive-changed'">
-                        Are you able to drive when you have to?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="ableToDrive" class="uk-radio" checked.bind="responses.psychological.travel.ableToDrive" value.bind="response.value" change.delegate="changed('able-to-drive-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-                
                 <div class="uk-margin-remove uk-width-1-2">
                     Would you describe yourself as a?
                 </div>
@@ -2114,7 +2100,21 @@
                 </div>
 
                 <hr>
-                
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <span class.one-time="isUnanswered(responses.psychological.travel.ableToDrive) ? 'unanswered' : '' & signal:'able-to-drive-changed'">
+                        Are you able to drive when you have to?
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="ableToDrive" class="uk-radio" checked.bind="responses.psychological.travel.ableToDrive" value.bind="response.value" change.delegate="changed('able-to-drive-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <hr>
+
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.psychological.travel.usePhantomBrake) ? 'unanswered' : '' & signal:'travel-changed'">
                         Do you use a phantom brake when traveling as a passenger?
@@ -3221,11 +3221,11 @@
                         <div class="uk-margin-remove uk-width-1-6"></div>
 
                         <div class="uk-margin-remove uk-width-5-6">
-                            <span class.one-time="!$parent.responses.neuropsychological.currentState.tasks[i].isNA && isUnanswered(responses.neuropsychological.currentState.caregivingCasInvolved) ? 'unanswered' : '' & signal:'caregiving-cas-involved-changed'">
+                            <span class.one-time="!$parent.responses.neuropsychological.currentState.tasks[i].isNA && $parent.responses.neuropsychological.currentState.tasks[i].ability !== 'able' && $parent.responses.neuropsychological.currentState.tasks[i].ability !== 'skip' && isUnanswered(responses.neuropsychological.currentState.caregivingCasInvolved) ? 'unanswered' : '' & signal:'current-state-task-changed'">
                                 Has CAS been involved?
                             </span>&nbsp;
                             <label repeat.for="response of yesNo">
-                                <input type="radio" name="caregivingCasInvolved" class="uk-radio" checked.bind="responses.neuropsychological.currentState.caregivingCasInvolved" value.bind="response.value" disabled.bind="!isCaregivingAbilityAnswered & signal:'current-state-task-changed'" change.delegate="changed('caregiving-cas-involved-changed')" />&nbsp;${response.description}&nbsp;
+                                <input type="radio" name="caregivingCasInvolved" class="uk-radio" checked.bind="responses.neuropsychological.currentState.caregivingCasInvolved" value.bind="response.value" disabled.bind="!isCaregivingAbilityAnswered & signal:'current-state-task-changed'" change.delegate="changed('current-state-task-changed')" />&nbsp;${response.description}&nbsp;
                             </label>
                         </div>
 

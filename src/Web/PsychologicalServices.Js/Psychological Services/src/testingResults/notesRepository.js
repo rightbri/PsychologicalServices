@@ -704,6 +704,7 @@ export class NotesRepository {
     getHeadacheFrequencies() {
         let data = {
             "daily": { "description": "Daily", "value": "daily", "format": function(context) { return `occur daily`; } },
+            "severalTimesAWeek": { "description": "Several time a week", "value": "severalTimesAWeek", "format": function(context) { return `occur several times a week`; } },
             "weekly": { "description": "Weekly", "value": "weekly", "format": function(context) { return `occur weekly`; } },
             "monthly": { "description": "Monthly", "value": "monthly", "format": function(context) { return `occur monthly`; } },
             "constantly": { "description": "Constantly", "value": "constantly", "format": function(context) { return `are constant`; } },
@@ -720,11 +721,12 @@ export class NotesRepository {
             "artsCrafts": { "description": "Arts & Crafts", "value": "artsCrafts", "format": function(context) { return `arts & crafts`; } },
             "computer": { "description": "Computer/Tablet", "value": "computer", "format": function(context) { return `spending time on the computer/tablet`; } },
             "cooking": { "description": "Cooking", "value": "cooking", "format": function(context) { return `cooking`; } },
+            "cycling": { "description": "Cycling", "value": "cycling", "format": function(context) { return `cycling`; } },
             "entertaining": { "description": "Entertaining/Hosting", "value": "entertaining", "format": function(context) { return `hosting/entertaining`; } },
-            "gamePlaying": { "description": "Playing games", "value": "gamePlaying", "format": function(context) { return `playing games`; } },
             "gardening": { "description": "Gardening", "value": "gardening", "format": function(context) { return `gardening`; } },
             "outdoors": { "description": "Outdoor activities", "value": "outdoors", "format": function(context) { return `outdoor activities`; } },
             "musicListening": { "description": "Listening to music", "value": "musicListening", "format": function(context) { return `listening to music`; } },
+            "gamePlaying": { "description": "Playing games", "value": "gamePlaying", "format": function(context) { return `playing games`; } },
             "musicPlaying": { "description": "Playing music", "value": "musicPlaying", "format": function(context) { return `playing music`; } },
             "reading": { "description": "Reading", "value": "reading", "format": function(context) { return `reading`; } },
             "motorcycleRiding": { "description": "Riding motorcycles", "value": "motorcycleRiding", "format": function(context) { return `riding motorcycles`; } },
