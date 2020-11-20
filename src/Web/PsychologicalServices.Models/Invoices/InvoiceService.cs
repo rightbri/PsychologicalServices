@@ -203,6 +203,11 @@ namespace PsychologicalServices.Models.Invoices
 
                     invoice.Total = total;
 
+                    if (invoice.InvoiceStatus.SaveDocument)
+                    {
+                        invoice.InvoiceDate = _date.UtcNow;
+                    }
+
                     var id = _invoiceRepository.SaveInvoice(invoice);
 
                     result.Item = _invoiceRepository.GetInvoice(id);

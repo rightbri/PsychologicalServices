@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PsychologicalServices.Models.Common.Utility;
+using PsychologicalServices.Models.Common.Validation;
 using PsychologicalServices.Models.Invoices;
 using System;
 using System.Collections.Generic;
@@ -342,6 +343,43 @@ namespace PsychologicalServices.Models.Test.Invoices
 
             Assert.AreEqual(false, result.Success);
             Assert.IsTrue(result.Errors.Any(error => error.Type == errorType));
+        }
+
+        [TestMethod]
+        public void When_Invoice_Status_Indicates_A_New_Invoice_Document_Should_Be_Saved_Then_InvoiceDate_Is_Updated()
+        {
+            var now = DateTime.UtcNow;
+            var total = 100;
+            
+            var invoice = new Invoice
+            {
+                InvoiceId = 1,
+                InvoiceStatus = new InvoiceStatus
+                {
+                    SaveDocument = true,
+                },
+            };
+
+            var service = GetService(
+                (dateMock, appointmentRepositoryMock, assessmentRepositoryMock, claimRepositoryMock, referralRepositoryMock, invoiceRepositoryMock, invoiceValidatorMock, invoiceConfigurationValidatorMock, logMock, invoiceSenderMock, invoiceSendModelFactoryMock, invoiceGeneratorMock) =>
+                {
+                    dateMock.SetupGet(d => d.UtcNow).Returns(now);
+
+                    var validationResultMock = new Mock<IValidationResult>();
+                    validationResultMock.Setup(vr => vr.IsValid).Returns(true);
+
+                    invoiceValidatorMock.Setup(iv => iv.Validate(It.IsAny<Invoice>())).Returns(validationResultMock.Object);
+
+                    invoiceGeneratorMock.Setup(ig => ig.GetInvoiceTotal(It.IsAny<Invoice>())).Returns(total);
+
+                    invoiceRepositoryMock.Setup(ir => ir.SaveInvoice(It.IsAny<Invoice>())).Returns(invoice.InvoiceId);
+
+                    invoiceRepositoryMock.Setup(ir => ir.GetInvoice(It.Is<int>(i => i == invoice.InvoiceId))).Returns(invoice);
+                });
+
+            var result = service.SaveInvoice(invoice);
+
+            Assert.AreEqual(now, result.Item.InvoiceDate);
         }
 
         private InvoiceDocument GetInvoiceDocument()
