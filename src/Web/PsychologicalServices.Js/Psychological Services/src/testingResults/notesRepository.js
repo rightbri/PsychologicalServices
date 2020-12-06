@@ -430,20 +430,20 @@ export class NotesRepository {
         if (version && /\d+/.test(version) && parseInt(version, 10) >= 18) {
             let data = {
                 "sleep": { "description": "Sleeping/Resting", "value": "sleep" },
-                "groom": { "description": "Grooming  (Bathing, brushing teeth, shaving) ", "value": "groom" },
-                "dressing": { "description": "Dressing (pick your clothes, dressing/undressing yourself etc)", "value": "dressing" },
+                "groom": { "description": "Grooming  (Bathing, brushing teeth, shaving, etc.) ", "value": "groom" },
+                "dressing": { "description": "Dressing (Pick your clothes, dressing/undressing yourself, etc.)", "value": "dressing" },
                 "prepareBreakfast": { "description": "Prepare Breakfast/Lunch", "value": "prepareBreakfast" },
                 "eatBreakfast": { "description": "Eat Breakfast/Lunch", "value": "eatBreakfast" },
                 "travelToWork": { "description": "Travel to and from work/school", "value": "travelToWork" },
                 "takeCareOfChildren": { "description": "Take care of the children/spending time with them", "value": "takeCareOfChildren" },
                 "attendWork": { "description": "Work/Attend school", "value": "attendWork" },
-                "runErrands": { "description": "Run errands (banking/groceries) etc.", "value": "runErrands" },
+                "runErrands": { "description": "Run errands (Banking, groceries, etc.)", "value": "runErrands" },
                 "prepareDinner": { "description": "Prepare Dinner/Clean up after dinner", "value": "prepareDinner" },
                 "eatDinner": { "description": "Eat Dinner", "value": "eatDinner" },
-                "indoorChores": { "description": "Indoor Household chores (dishes, laundry) ", "value": "indoorChores" },
-                "outdoorChores": { "description": "Outdoor Chores (Gardening/Snow removal)", "value": "outdoorChores" },
-                "petCare": { "description": "Taking care of any pets/animals", "value": "petCare" },
-                "exercise": { "description": "Exercise/Work out/Be active", "value": "exercise" },
+                "indoorChores": { "description": "Indoor Household chores (Dishes, laundry, etc.) ", "value": "indoorChores" },
+                "outdoorChores": { "description": "Outdoor Chores (Gardening, snow removal, etc.)", "value": "outdoorChores" },
+                "petCare": { "description": "Taking care of any pets or animals", "value": "petCare" },
+                "exercise": { "description": "Exercise or go to the gym, or be active", "value": "exercise" },
                 "read": { "description": "Reading", "value": "read" },
                 "watchTv": { "description": "Watching television/movies ", "value": "watchTv" },
                 "useInternet": { "description": "Use Internet/Send and get Emails/Text Messages", "value": "useInternet" },
@@ -586,7 +586,7 @@ export class NotesRepository {
         let data = {
             "alchohol": { "description": "Alcohol", "value": "alchohol", "format": function(context) { return `Alcohol`; } },
             "tobacco": { "description": "Tobacco", "value": "tobacco", "format": function(context) { return `Tobacco`; } },
-            "thc": { "description": "THC", "value": "thc", "format": function(context) { return `THC`; } },
+            "thc": { "description": "THC/CBD without a prescription", "value": "thc", "format": function(context) { return `THC`; } },
             "streetDrugs": { "description": "Street drugs", "value": "streetDrugs", "format": function(context) { return `Street drugs`; } },
             "prescriptionMeds": { "description": "Prescription medication that was not prescribed to you", "value": "prescriptionMeds", "format": function(context) { return `Prescription medication that was not prescribed to you`; } }
         };
@@ -782,7 +782,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "27";
+    return "28";
 }
 
 function upgrade(responses, toVersion) {
@@ -1201,6 +1201,7 @@ function getNewResponses() {
             "assessedByAmbulancePersonnel": null,
             "wentToHospital": null,
             "hospitalStayLength": {
+                "dontKnow": false,
                 "hours": "",
                 "days": "",
                 "weeks": "",
@@ -1288,6 +1289,7 @@ function getNewResponses() {
         "personalHistory": {
             "locationOfBirth": null,
             "arrivalInCanadaType": null,
+            "skipArrivalInCanada": null,
             "arrivalInCanadaYear": null,
             "arrivalInCanadaAge": null,
             "languages": [""],
@@ -1347,7 +1349,9 @@ function getNewResponses() {
             "relationship": {
                 "status": null,
                 "marriageLength": { "value": null, "unit": null },
+                "dontKnowMarriageLength": false,
                 "partnerAge": null,
+                "dontKnowPartnerAge": false,
                 "partnerJobTitleOrIndustry": null,
                 "partnerJobTitle": null,
                 "isAbusive": null,
@@ -1375,6 +1379,7 @@ function getNewResponses() {
                 "lastCompletedGrade": "",
                 "areaOfStudy": "",
                 "selfRating": null,
+                "dontKnowSelfRating": false,
                 "everHeldBack": null,
                 "everFailedACourse": null,
                 "bestSubject": "",
@@ -1710,6 +1715,7 @@ function getNewResponses() {
                     "problemsSleepingPriorToAccident": null,
                     "betterSleepPriorToAccident": null,
                     "skipAmountOfSleepBeforeAccident": false,
+                    "dontKnowAmountOfSleepBeforeAccident": false,
                     "amountOfSleepBeforeAccident": null,
                     "amountOfSleepBeforeAccidentBetween": false,
                     "amountOfSleepBeforeAccidentBetweenMin": null,

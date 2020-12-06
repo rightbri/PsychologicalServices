@@ -618,6 +618,9 @@
                             </template>
                         </template>
                         <template else>
+                            <template if.bind="responses.neuropsychological.physical.sleep.dontKnowAmountOfSleepBeforeAccident">
+                                &nbsp;${pronoun.subject | proper} disclosed that ${pronoun.subject} did not know how much sleep ${pronoun.subject} was obtaining prior to the accident.
+                            </template>
                             <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident.value !== null">
                                 &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining 
                                 <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween">
@@ -1626,7 +1629,7 @@
                         <template if.bind="isAnswered(responses.personalHistory.relationship.status)">
                             &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} is ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
                             <template if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-                                <template if.bind="responses.personalHistory.relationship.marriageLength.value">
+                                <template if.bind="responses.personalHistory.relationship.marriageLength.value && !responses.personalHistory.relationship.dontKnowMarriageLength">
                                     &nbsp;for ${getAgeTextForCurrentContext(responses.personalHistory.relationship.marriageLength) & signal:'marriage-length-changed'} now
                                 </template>
                                 <template if.bind="relationshipStatusesMap[responses.personalHistory.relationship.status].isMarried & signal:'relationship-status-changed'">
@@ -1636,7 +1639,7 @@
                                     &nbsp;with
                                 </template>
                                  &nbsp;${pronoun.possessiveAdjective} 
-                                 <template if.bind="responses.personalHistory.relationship.partnerAge">
+                                 <template if.bind="responses.personalHistory.relationship.partnerAge && !responses.personalHistory.relationship.dontKnowPartnerAge">
                                     &nbsp;${responses.personalHistory.relationship.partnerAge}-year-old partner
                                  </template>
                                  <template else>
@@ -1650,6 +1653,12 @@
                                     <template if.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry === 'industry'">
                                     &nbsp;in the ${responses.personalHistory.relationship.partnerJobTitle} industry
                                     </template>
+                                 </template>
+                                 <template if.bind="responses.personalHistory.relationship.dontKnowPartnerAge">
+                                    &nbsp;${gender.title} ${claimant.lastName} advised ${pronoun.subject} did not know the current age of ${pronoun.possessiveAdjective} partner.
+                                 </template>
+                                 <template if.bind="">
+                                    &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} did not know how long ${pronoun.subject} had been in ${pronoun.possessiveAdjective} current relationship.
                                  </template>
                             </template>
                             . 
@@ -1729,7 +1738,7 @@
                         <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
                             &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada}.
                         </template>
-                        <template if.bind="responses.personalHistory.arrivalInCanadaType">
+                        <template if.bind="responses.personalHistory.arrivalInCanadaType && !responses.personalHistory.skipArrivalInCanada">
                             &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada 
                             <template if.bind="responses.personalHistory.arrivalInCanadaType === 'year'">
                                 &nbsp;in ${responses.personalHistory.arrivalInCanadaYear}
@@ -1989,7 +1998,7 @@
                             </template>
                         </template>
                         -->
-                        <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
+                        <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anyDontKnowNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis || anyDontKnowFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
                             When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
                             
                             <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
@@ -2003,6 +2012,15 @@
                                     &nbsp;${pronoun.subject}
                                 </template>
                                 &nbsp;denied ever being diagnosed with any ${unselectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
+                            <template if.bind="anyDontKnowNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                    &nbsp;${pronoun.subject | proper}
+                                </template>
+                                <template else>
+                                    &nbsp;${pronoun.subject}
+                                </template>
+                                &nbsp;advised that ${pronoun.subject} did not know whether ${pronoun.subject} had ever been diagnosed with ${dontKnowNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
                             </template>
                             <template if.bind="anySelectedFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">                                
                                 <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
@@ -2025,6 +2043,9 @@
                                     &nbsp;${pronoun.subject}
                                 </template>
                                 &nbsp;then denied having any family history of ${unselectedFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'neurological-psychiatric-disease-changed'}.
+                            </template>
+                            <template if.bind="anyDontKnowFamilyNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
+                                &nbsp;${pronoun.subject | proper} then disclosed that ${pronoun.subject} did not know whether members of ${pronoun.possessiveAdjective} family have been diagnosed with ${dontKnowFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
                             </template>
                         </template>
                     </p>

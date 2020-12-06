@@ -756,12 +756,15 @@
                         How long were you in the hospital?
                     </span>
                 </div>
-
-                <div class="uk-margin-remove uk-width-3-1">
-                    <input type="text" name="accidentHospitalStayLengthHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.hours" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Hours&nbsp;
-                    <input type="text" name="accidentHospitalStayLengthDays" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.days" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Days&nbsp;
-                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.weeks" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Weeks&nbsp;
-                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.months" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Months&nbsp;
+                
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.accidentDetails.hospitalStayLength.dontKnow" value="true" change.delegate="changed('accident-details-hospital-stay-changed')" />&nbsp;Don't Know&nbsp;
+                    </label>
+                    <input type="text" name="accidentHospitalStayLengthHours" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.hours" disabled.bind="responses.accidentDetails.hospitalStayLength.dontKnow" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Hours&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthDays" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.days" disabled.bind="responses.accidentDetails.hospitalStayLength.dontKnow" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Days&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.weeks" disabled.bind="responses.accidentDetails.hospitalStayLength.dontKnow" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Weeks&nbsp;
+                    <input type="text" name="accidentHospitalStayLengthWeeks" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.hospitalStayLength.months" disabled.bind="responses.accidentDetails.hospitalStayLength.dontKnow" input.delegate="changed('accident-details-hospital-stay-changed') & debounce:500" />&nbsp;Months&nbsp;
                 </div>
 
                 <hr>
@@ -2530,14 +2533,14 @@
                 <div class="uk-margin-remove uk-width-1-4"></div>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens) && isUnanswered(responses.neuropsychological.attention.hadToReduceScreenBrightness) ? 'unanswered' : '' & signal:'had-to-reduce-screen-brightness-changed'">
+                    <span class.one-time="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens) && isUnanswered(responses.neuropsychological.attention.hadToReduceScreenBrightness) ? 'unanswered' : '' & signal:'issues-using-devices-with-screens-changed'">
                         Have you had to reduce the brightness of the screen?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="hadToReduceScreenBrightness" class="uk-radio" checked.bind="responses.neuropsychological.attention.hadToReduceScreenBrightness" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)" change.delegate="changed('had-to-reduce-screen-brightness-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="hadToReduceScreenBrightness" class="uk-radio" checked.bind="responses.neuropsychological.attention.hadToReduceScreenBrightness" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens)" change.delegate="changed('issues-using-devices-with-screens-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -2792,21 +2795,24 @@
                     <label>
                         <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident" value.bind="true" />&nbsp;Skip&nbsp;
                     </label>
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.sleep.dontKnowAmountOfSleepBeforeAccident" value="true" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident" />&nbsp;Don't Know&nbsp;
+                    </label>
                 </div>
                 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" step="1" min="0" name="amountOfSleepBeforeAccident" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
+                    <input type="number" step="1" min="0" name="amountOfSleepBeforeAccident" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || responses.neuropsychological.physical.sleep.dontKnowAmountOfSleepBeforeAccident || responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label>
-                        <input type="checkbox" name="amountOfSleepBeforeAccidentBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident" />&nbsp;Between&nbsp;
+                        <input type="checkbox" name="amountOfSleepBeforeAccidentBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || responses.neuropsychological.physical.sleep.dontKnowAmountOfSleepBeforeAccident" />&nbsp;Between&nbsp;
                     </label>                    
-                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepBeforeAccidentBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || !responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
+                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepBeforeAccidentBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || responses.neuropsychological.physical.sleep.dontKnowAmountOfSleepBeforeAccident || !responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
                     <label>
                         &nbsp;and&nbsp;
                     </label>
-                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepBeforeAccidentBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || !responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
+                    &nbsp;<input type="number" step="1" min="0" name="amountOfSleepBeforeAccidentBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax" disabled.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident || responses.neuropsychological.physical.sleep.dontKnowAmountOfSleepBeforeAccident || !responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween" />
                 </div>
 
                 <hr>
@@ -3355,13 +3361,14 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="responses.personalHistory.arrivalInCanadaType && isUnanswered(responses.personalHistory.arrivalInCanadaType) ? 'unanswered' : '' & signal:'accident-role-changed'">
                         If applicable, when did you come to Canada?
                     </span>
                 </div>
 
                 <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
+                    <div class="uk-margin-remove uk-width-1-4"></div>
                     <div class="uk-margin-remove uk-width-1-2">
                         <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.timeOfArrivalInCanada" input.delegate="changed('arrival-time-changed') & debounce:500" />
                     </div>
@@ -3369,15 +3376,20 @@
                 <template else>
                     <div class="uk-margin-remove uk-width-1-4">
                         <label>
-                            <input type="radio" name="arrivalInCanadaOption" class="uk-radio" checked.bind="responses.personalHistory.arrivalInCanadaType" value="year" change.delegate="changed('arrival-time-changed')" />&nbsp;Year&nbsp;
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.skipArrivalInCanada" value="true" change.delegate="changed('arrival-time-changed')" />&nbsp;Skip&nbsp;
                         </label>
-                        <input type="number" min="1900" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.arrivalInCanadaYear" disabled.bind="responses.personalHistory.arrivalInCanadaType !== 'year'" />
                     </div>
                     <div class="uk-margin-remove uk-width-1-4">
                         <label>
-                            <input type="radio" name="arrivalInCanadaOption" class="uk-radio" checked.bind="responses.personalHistory.arrivalInCanadaType" value="age" change.delegate="changed('arrival-time-changed')" />&nbsp;Age (in years)&nbsp;
+                            <input type="radio" name="arrivalInCanadaOption" class="uk-radio" checked.bind="responses.personalHistory.arrivalInCanadaType" value="year" change.delegate="changed('arrival-time-changed')" disabled.bind="responses.personalHistory.skipArrivalInCanada" />&nbsp;Year&nbsp;
                         </label>
-                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.arrivalInCanadaAge" disabled.bind="responses.personalHistory.arrivalInCanadaType !== 'age'" />
+                        <input type="number" min="1900" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.arrivalInCanadaYear" disabled.bind="responses.personalHistory.arrivalInCanadaType !== 'year' || responses.personalHistory.skipArrivalInCanada" />
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="radio" name="arrivalInCanadaOption" class="uk-radio" checked.bind="responses.personalHistory.arrivalInCanadaType" value="age" change.delegate="changed('arrival-time-changed')" disabled.bind="responses.personalHistory.skipArrivalInCanada" />&nbsp;Age (in years)&nbsp;
+                        </label>
+                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.arrivalInCanadaAge" disabled.bind="responses.personalHistory.arrivalInCanadaType !== 'age' || responses.personalHistory.skipArrivalInCanada" />
                     </div>
                 </template>
                 
@@ -3491,11 +3503,17 @@
                     </div>
     
                     <div class="uk-margin-remove uk-width-1-2">
-                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" input.delegate="changed('marriage-length-changed')" />
+                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.marriageLength.value" disabled.bind="responses.personalHistory.relationship.dontKnowMarriageLength" input.delegate="changed('marriage-length-changed')" />
     
                         <label repeat.for="response of ageUnits">
-                            <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" change.delegate="changed('marriage-length-changed')" />&nbsp;${response.description}&nbsp;
+                            <input type="radio" name="marriage-length-unit" class="uk-radio" checked.bind="responses.personalHistory.relationship.marriageLength.unit" value.bind="response.value" change.delegate="changed('marriage-length-changed')" disabled.bind="responses.personalHistory.relationship.dontKnowMarriageLength" />&nbsp;${response.description}&nbsp;
                         </label>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.relationship.dontKnowMarriageLength" value="true" change.delegate="changed('marriage-length-changed')" />&nbsp;Don't Know&nbsp;
+                        </label>    
                     </div>
     
                     <hr>
@@ -3506,8 +3524,14 @@
                         </span>
                     </div>
     
-                    <div class="uk-margin-remove uk-width-1-2">
-                        <input type="number" min="1" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.partnerAge" input.delegate="changed('partner-age-changed') & debounce:500" />
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="number" min="1" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.relationship.partnerAge" disabled.bind="responses.personalHistory.relationship.dontKnowPartnerAge" input.delegate="changed('partner-age-changed') & debounce:500" />
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.relationship.dontKnowPartnerAge" value="true" change.delegate="changed('partner-age-changed')" />&nbsp;Don't Know&nbsp;
+                        </label>    
                     </div>
     
                     <hr>
@@ -4013,12 +4037,12 @@
                                 </span>
                             </td>
                             <td class="uk-padding-remove">
-                                <label repeat.for="response of yesNo">
+                                <label repeat.for="response of yesNoDontKnow">
                                     <input type="radio" name="self-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].self" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
                             </td>
                             <td class="uk-padding-remove">
-                                <label repeat.for="response of yesNo">
+                                <label repeat.for="response of yesNoDontKnow">
                                     <input type="radio" name="family-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
                             </td>
@@ -4142,15 +4166,21 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.education.selfRating) ? 'unanswered' : '' & signal:'education-self-rating-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.education.selfRating) && !responses.personalHistory.education.dontKnowSelfRating ? 'unanswered' : '' & signal:'education-self-rating-changed'">
                         What kind of student were you?
                     </span>
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of studentSelfRatings">
-                        <input type="radio" name="educationStudentSelfRating" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.selfRating" value.bind="response.value" changed.delegate="changed('education-self-rating-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="educationStudentSelfRating" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.selfRating" value.bind="response.value" changed.delegate="changed('education-self-rating-changed')" disabled.bind="responses.personalHistory.education.dontKnowSelfRating" />&nbsp;${response.description}&nbsp;
                     </label>
+                </div>
+    
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.education.dontKnowSelfRating" value="true" change.delegate="changed('education-self-rating-changed')" />&nbsp;Don't Know&nbsp;
+                    </label>    
                 </div>
 
                 <hr>

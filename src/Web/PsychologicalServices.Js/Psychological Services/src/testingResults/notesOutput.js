@@ -592,6 +592,11 @@ export class NotesOutput {
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get dontKnowNeurologicalOrPsychiatricDiagnosis() {
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.self !== null && this.isDontKnow(item.self));
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get anySelectedNeurologicalOrPsychiatricDiagnosis() {
         return this.selectedNeurologicalOrPsychiatricDiagnosis.some(item => item);
     }
@@ -599,6 +604,11 @@ export class NotesOutput {
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get anyUnselectedNeurologicalOrPsychiatricDiagnosis() {
         return this.unselectedNeurologicalOrPsychiatricDiagnosis.some(item => item);
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get anyDontKnowNeurologicalOrPsychiatricDiagnosis() {
+        return this.dontKnowNeurologicalOrPsychiatricDiagnosis.some(item => item);
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
@@ -623,6 +633,11 @@ export class NotesOutput {
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get dontKnowFamilyNeurologicalOrPsychiatricDiagnosis() {
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isDontKnow(item.family));
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get anySelectedFamilyNeurologicalOrPsychiatricDiagnosis() {
         return this.selectedFamilyNeurologicalOrPsychiatricDiagnosis.some(item => item);
     }
@@ -630,6 +645,11 @@ export class NotesOutput {
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis() {
         return this.unselectedFamilyNeurologicalOrPsychiatricDiagnosis.some(item => item);
+    }
+
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get anyDontKnowFamilyNeurologicalOrPsychiatricDiagnosis() {
+        return this.dontKnowFamilyNeurologicalOrPsychiatricDiagnosis.some(item => item);
     }
 
     getEmotionalIssuesForResponses(criteria) {
