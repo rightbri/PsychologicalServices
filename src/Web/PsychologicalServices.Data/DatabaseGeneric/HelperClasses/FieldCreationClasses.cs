@@ -1296,6 +1296,11 @@ namespace PsychologicalServices.Data.HelperClasses
 		{
 			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.AccountingEmail);}
 		}
+		/// <summary>Creates a new CompanyEntity.TaxRate field instance</summary>
+		public static EntityField2 TaxRate
+		{
+			get { return (EntityField2)EntityFieldFactory.Create(CompanyFieldIndex.TaxRate);}
+		}
 	}
 
 	/// <summary>Field Creation Class for entity CompanyAttributeEntity</summary>

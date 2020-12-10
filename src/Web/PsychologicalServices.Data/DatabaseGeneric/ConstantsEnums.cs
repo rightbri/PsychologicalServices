@@ -657,6 +657,8 @@ namespace PsychologicalServices.Data
 		InvoiceCounter,
 		///<summary>AccountingEmail. </summary>
 		AccountingEmail,
+		///<summary>TaxRate. </summary>
+		TaxRate,
 		/// <summary></summary>
 		AmountOfFields
 	}

@@ -488,6 +488,7 @@
           <Field Name="Phone" Type="string" IsOptional="true" MaxLength="50" FieldIndex="4" />
           <Field Name="ReplyToEmail" Type="string" IsOptional="true" MaxLength="100" FieldIndex="16" />
           <Field Name="TaxId" Type="string" IsOptional="true" MaxLength="50" FieldIndex="7" />
+          <Field Name="TaxRate" Type="decimal" IsOptional="true" Precision="10" Scale="4" FieldIndex="20" />
           <Field Name="Timezone" Type="string" MaxLength="50" FieldIndex="15" />
         </Fields>
       </EntityDefinition>
@@ -2464,6 +2465,7 @@
                     <Field Name="NewAssessmentAssessmentTypeId" Ordinal="18" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="InvoiceCounter" Ordinal="19" HasDefaultValue="true" DefaultValue="(0)" DbType="8" Precision="10" />
                     <Field Name="AccountingEmail" Ordinal="20" IsOptional="true" DbType="12" Length="100" />
+                    <Field Name="TaxRate" Ordinal="21" IsOptional="true" DbType="5" Precision="10" Scale="4" />
                   </Fields>
                 </Table>
                 <Table Name="CompanyAttributes">
@@ -4576,6 +4578,7 @@
             <FieldMapping FieldName="Phone" TargetFieldName="Phone" />
             <FieldMapping FieldName="ReplyToEmail" TargetFieldName="ReplyToEmail" />
             <FieldMapping FieldName="TaxId" TargetFieldName="TaxId" />
+            <FieldMapping FieldName="TaxRate" TargetFieldName="TaxRate" />
             <FieldMapping FieldName="Timezone" TargetFieldName="Timezone" />
           </FieldMappings>
         </EntityMapping>
