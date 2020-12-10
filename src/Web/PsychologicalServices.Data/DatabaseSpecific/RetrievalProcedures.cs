@@ -211,6 +211,66 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			return CreateCancellationDataCall(dataAccessProvider, companyId, months).ToRetrievalQuery();
 		}
 
+		/// <summary>Calls stored procedure 'ClaimantSearch'.<br/><br/></summary>
+		/// <param name="firstName">Input parameter. </param>
+		/// <param name="lastName">Input parameter. </param>
+		/// <param name="name">Input parameter. </param>
+		/// <param name="dateOfBirth">Input parameter. </param>
+		/// <param name="resultCount">Input parameter. </param>
+		/// <returns>Filled DataSet with resultset(s) of stored procedure</returns>
+		public static DataSet ClaimantSearch(System.String firstName, System.String lastName, System.String name, Nullable<System.DateTimeOffset> dateOfBirth, Nullable<System.Int32> resultCount)
+		{
+			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
+			{
+				return ClaimantSearch(firstName, lastName, name, dateOfBirth, resultCount, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Calls stored procedure 'ClaimantSearch'.<br/><br/></summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="firstName">Input parameter. </param>
+		/// <param name="lastName">Input parameter. </param>
+		/// <param name="name">Input parameter. </param>
+		/// <param name="dateOfBirth">Input parameter. </param>
+		/// <param name="resultCount">Input parameter. </param>
+		/// <returns>Filled DataSet with resultset(s) of stored procedure</returns>
+		public static DataSet ClaimantSearch(System.String firstName, System.String lastName, System.String name, Nullable<System.DateTimeOffset> dateOfBirth, Nullable<System.Int32> resultCount, IDataAccessCore dataAccessProvider)
+		{
+			using(StoredProcedureCall call = CreateClaimantSearchCall(dataAccessProvider, firstName, lastName, name, dateOfBirth, resultCount))
+			{
+				DataSet toReturn = call.FillDataSet();
+				return toReturn;
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'ClaimantSearch'.</summary>
+		/// <param name="firstName">Input parameter of stored procedure</param>
+		/// <param name="lastName">Input parameter of stored procedure</param>
+		/// <param name="name">Input parameter of stored procedure</param>
+		/// <param name="dateOfBirth">Input parameter of stored procedure</param>
+		/// <param name="resultCount">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetClaimantSearchCallAsQuery(System.String firstName, System.String lastName, System.String name, Nullable<System.DateTimeOffset> dateOfBirth, Nullable<System.Int32> resultCount)
+		{
+			using(var dataAccessProvider = new DataAccessAdapter())
+			{
+				return GetClaimantSearchCallAsQuery(firstName, lastName, name, dateOfBirth, resultCount, dataAccessProvider);
+			}
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'ClaimantSearch'.</summary>
+		/// <param name="firstName">Input parameter of stored procedure</param>
+		/// <param name="lastName">Input parameter of stored procedure</param>
+		/// <param name="name">Input parameter of stored procedure</param>
+		/// <param name="dateOfBirth">Input parameter of stored procedure</param>
+		/// <param name="resultCount">Input parameter of stored procedure</param>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetClaimantSearchCallAsQuery(System.String firstName, System.String lastName, System.String name, Nullable<System.DateTimeOffset> dateOfBirth, Nullable<System.Int32> resultCount, IDataAccessCore dataAccessProvider)
+		{
+			return CreateClaimantSearchCall(dataAccessProvider, firstName, lastName, name, dateOfBirth, resultCount).ToRetrievalQuery();
+		}
+
 		/// <summary>Calls stored procedure 'CompletionData'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
 		/// <param name="months">Input parameter. </param>
@@ -837,6 +897,24 @@ needsToBeSentToReferralSource).ToRetrievalQuery();
 			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[CancellationData]", "CancellationData")
 							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
 							.AddParameter("@months", "Int", 0, ParameterDirection.Input, true, 10, 0, months);
+		}
+
+		/// <summary>Creates the call object for the call 'ClaimantSearch' to stored procedure 'ClaimantSearch'.</summary>
+		/// <param name="dataAccessProvider">The data access provider.</param>
+		/// <param name="firstName">Input parameter</param>
+		/// <param name="lastName">Input parameter</param>
+		/// <param name="name">Input parameter</param>
+		/// <param name="dateOfBirth">Input parameter</param>
+		/// <param name="resultCount">Input parameter</param>
+		/// <returns>Ready to use StoredProcedureCall object</returns>
+		private static StoredProcedureCall CreateClaimantSearchCall(IDataAccessCore dataAccessProvider, System.String firstName, System.String lastName, System.String name, Nullable<System.DateTimeOffset> dateOfBirth, Nullable<System.Int32> resultCount)
+		{
+			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[ClaimantSearch]", "ClaimantSearch")
+							.AddParameter("@firstName", "NVarChar", 50, ParameterDirection.Input, true, 0, 0, firstName)
+							.AddParameter("@lastName", "NVarChar", 50, ParameterDirection.Input, true, 0, 0, lastName)
+							.AddParameter("@name", "NVarChar", 50, ParameterDirection.Input, true, 0, 0, name)
+							.AddParameter("@dateOfBirth", "DateTimeOffset", 0, ParameterDirection.Input, true, 0, 0, dateOfBirth)
+							.AddParameter("@resultCount", "Int", 0, ParameterDirection.Input, true, 10, 0, resultCount);
 		}
 
 		/// <summary>Creates the call object for the call 'CompletionData' to stored procedure 'CompletionData'.</summary>

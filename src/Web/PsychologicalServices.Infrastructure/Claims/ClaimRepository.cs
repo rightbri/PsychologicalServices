@@ -1,4 +1,5 @@
 ﻿using PsychologicalServices.Data;
+using PsychologicalServices.Data.DatabaseSpecific;
 using PsychologicalServices.Data.EntityClasses;
 using PsychologicalServices.Data.Linq;
 using PsychologicalServices.Infrastructure.Common.Repository;
@@ -7,6 +8,7 @@ using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace PsychologicalServices.Infrastructure.Claims
@@ -106,62 +108,82 @@ namespace PsychologicalServices.Infrastructure.Claims
 
         public IEnumerable<Claimant> SearchClaimants(string name)
         {
+            var count = 20;
+
             using (var adapter = AdapterFactory.CreateAdapter())
             {
-                var meta = new LinqMetaData(adapter);
+                var dataset = RetrievalProcedures.ClaimantSearch(
+                    null,
+                    null,
+                    name,
+                    null,
+                    count,
+                    (DataAccessAdapter)adapter
+                );
 
-                return Execute<ClaimantEntity>(
-                    (ILLBLGenProQuery)
-                    meta.Claimant
-                    .WithPath(ClaimantWithClaimPath)
-                    .Where(claimant => claimant.LastName.Contains(name) || claimant.FirstName.Contains(name))
-                    .Take(20)
-                )
-                .Select(claimant => claimant.ToClaimantWithClaims())
-                .ToList();
+                var claimants = ToClaimants(dataset);
+
+                return claimants;
             }
         }
         
         public IEnumerable<Claimant> SearchClaimants(ClaimantSearchParameters parameters)
         {
+            if (parameters == null)
+                return Enumerable.Empty<Claimant>();
+
             using (var adapter = AdapterFactory.CreateAdapter())
             {
-                var meta = new LinqMetaData(adapter);
+                var count = 20;
 
-                var claimants = meta.Claimant.AsQueryable();
+                var dataset = RetrievalProcedures.ClaimantSearch(
+                    !string.IsNullOrWhiteSpace(parameters.FirstName) ? $"%{parameters.FirstName}%" : null,
+                    !string.IsNullOrWhiteSpace(parameters.LastName) ? $"%{parameters.LastName}%" : null,
+                    !string.IsNullOrWhiteSpace(parameters.Name) ? $"%{parameters.Name}%" : null,
+                    parameters.DateOfBirth,
+                    count,
+                    (DataAccessAdapter)adapter
+                );
 
-                if (null != parameters)
-                {
-                    if (!string.IsNullOrWhiteSpace(parameters.FirstName))
-                    {
-                        claimants = claimants.Where(claimant => claimant.FirstName.Contains(parameters.FirstName));
-                    }
+                var claimants = ToClaimants(dataset);
 
-                    if (!string.IsNullOrWhiteSpace(parameters.LastName))
-                    {
-                        claimants = claimants.Where(claimant => claimant.LastName.Contains(parameters.LastName));
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(parameters.Name))
-                    {
-                        claimants = claimants.Where(claimant => claimant.LastName.Contains(parameters.Name) || claimant.FirstName.Contains(parameters.Name));
-                    }
-
-                    if (parameters.DateOfBirth.HasValue)
-                    {
-                        claimants = claimants.Where(claimant => claimant.DateOfBirth == parameters.DateOfBirth);
-                    }
-                }
-
-                return Execute<ClaimantEntity>(
-                    (ILLBLGenProQuery)
-                    claimants
-                    .WithPath(ClaimantWithClaimPath)
-                    .Take(20)
-                )
-                .Select(claimant => claimant.ToClaimantWithClaims())
-                .ToList();
+                return claimants;
             }
+        }
+
+        private IEnumerable<Claimant> ToClaimants(DataSet dataset)
+        {
+            var claims = dataset.Tables[1]
+                    .AsEnumerable()
+                    .Select(row =>
+                        new Claim
+                        {
+                            ClaimId = Convert.ToInt32(row["ClaimId"]),
+                            ClaimantId = Convert.ToInt32(row["ClaimantId"]),
+                            ClaimNumber = Convert.ToString(row["ClaimNumber"]),
+                            InsuranceCompany = Convert.ToString(row["InsuranceCompany"]),
+                            Lawyer = Convert.ToString(row["Lawyer"]),
+                            DateOfLoss = row["DateOfLoss"] == DBNull.Value ? (DateTimeOffset?)null : (DateTimeOffset?)row["DateOfLoss"],
+                        })
+                    .ToList();
+
+            var claimants = dataset.Tables[0]
+                .AsEnumerable()
+                .Select(row =>
+                    new Claimant
+                    {
+                        ClaimantId = Convert.ToInt32(row["ClaimantId"]),
+                        FirstName = Convert.ToString(row["FirstName"]),
+                        LastName = Convert.ToString(row["LastName"]),
+                        Gender = Convert.ToString(row["Gender"]),
+                        DateOfBirth = (DateTimeOffset)row["DateOfBirth"],
+                        IsActive = Convert.ToBoolean(row["IsActive"]),
+                        Claims = claims.Where(c => c.ClaimantId == Convert.ToInt32(row["ClaimantId"])).ToList()
+                    }
+                )
+                .ToList();
+
+            return claimants;
         }
 
         public IEnumerable<IssueInDispute> GetReferralTypeIssuesInDispute(int referralTypeId)

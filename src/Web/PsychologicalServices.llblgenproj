@@ -1963,6 +1963,15 @@
         <Parameter Name="Months" Type="int" IsOptional="true" FieldIndex="1" />
       </Parameters>
     </SPCallDefinition>
+    <SPCallDefinition Name="ClaimantSearch" ObjectID="dd47c279-d406-4f67-ac48-55f13f172775">
+      <Parameters>
+        <Parameter Name="DateOfBirth" Type="datetimeoffset" IsOptional="true" />
+        <Parameter Name="FirstName" Type="string" IsOptional="true" MaxLength="50" />
+        <Parameter Name="LastName" Type="string" IsOptional="true" MaxLength="50" />
+        <Parameter Name="Name" Type="string" IsOptional="true" MaxLength="50" />
+        <Parameter Name="ResultCount" Type="int" IsOptional="true" Precision="10" />
+      </Parameters>
+    </SPCallDefinition>
     <SPCallDefinition Name="CompletionData" ObjectID="a5bfad61-1038-41c2-b32c-0548407bb3f3">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" FieldIndex="0" />
@@ -2062,7 +2071,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-10-11T17:20:07.0456887Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-12-06T21:01:22.9627637Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -2970,16 +2979,16 @@
                   <Resultsets>
                     <Resultset Name="Resultset1">
                       <Fields>
-                        <Field Name="PsychometristId" Ordinal="1" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="PsychometristFirstName" Ordinal="2" IsOptional="true" DbType="12" Length="50" />
-                        <Field Name="PsychometristLastName" Ordinal="3" IsOptional="true" DbType="12" Length="50" />
-                        <Field Name="AppointmentId" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="AssessmentId" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="AppointmentTime" Ordinal="6" IsOptional="true" DbType="30" />
-                        <Field Name="ClaimantId" Ordinal="7" IsOptional="true" DbType="8" Precision="10" />
-                        <Field Name="ClaimantFirstName" Ordinal="8" IsOptional="true" DbType="12" Length="50" />
-                        <Field Name="ClaimantLastName" Ordinal="9" IsOptional="true" DbType="12" Length="50" />
-                        <Field Name="Question" Ordinal="10" IsOptional="true" DbType="24" Length="50" />
+                        <Field Name="PsychometristId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="PsychometristFirstName" Ordinal="2" DbType="12" Length="100" />
+                        <Field Name="PsychometristLastName" Ordinal="3" DbType="12" Length="100" />
+                        <Field Name="AppointmentId" Ordinal="4" DbType="8" Precision="10" />
+                        <Field Name="AssessmentId" Ordinal="5" DbType="8" Precision="10" />
+                        <Field Name="AppointmentTime" Ordinal="6" DbType="30" />
+                        <Field Name="ClaimantId" Ordinal="7" DbType="8" Precision="10" />
+                        <Field Name="ClaimantFirstName" Ordinal="8" DbType="12" Length="50" />
+                        <Field Name="ClaimantLastName" Ordinal="9" DbType="12" Length="50" />
+                        <Field Name="Question" Ordinal="10" IsOptional="true" DbType="12" Length="128" />
                         <Field Name="Response" Ordinal="11" IsOptional="true" DbType="8" Precision="10" />
                       </Fields>
                     </Resultset>
@@ -3043,6 +3052,38 @@
                         <Field Name="BillableCount" Ordinal="8" DbType="8" Precision="10" />
                         <Field Name="CanceledCount" Ordinal="9" DbType="8" Precision="10" />
                         <Field Name="LateCanceledCount" Ordinal="10" DbType="8" Precision="10" />
+                      </Fields>
+                    </Resultset>
+                  </Resultsets>
+                </StoredProcedure>
+                <StoredProcedure Name="ClaimantSearch" NumberOfResultsets="2">
+                  <Parameters>
+                    <Parameter Name="@firstName" Direction="1" Ordinal="1" DbType="12" Length="50" />
+                    <Parameter Name="@lastName" Direction="1" Ordinal="2" DbType="12" Length="50" />
+                    <Parameter Name="@name" Direction="1" Ordinal="3" DbType="12" Length="50" />
+                    <Parameter Name="@dateOfBirth" Direction="1" Ordinal="4" DbType="30" />
+                    <Parameter Name="@resultCount" Direction="1" Ordinal="5" DbType="8" Precision="10" />
+                  </Parameters>
+                  <Resultsets>
+                    <Resultset Name="Resultset1">
+                      <Fields>
+                        <Field Name="ClaimantId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="FirstName" Ordinal="2" DbType="12" Length="50" />
+                        <Field Name="LastName" Ordinal="3" DbType="12" Length="50" />
+                        <Field Name="IsActive" Ordinal="4" DbType="2" />
+                        <Field Name="Gender" Ordinal="5" DbType="10" Length="1" />
+                        <Field Name="DateOfBirth" Ordinal="6" DbType="30" />
+                        <Field Name="Order" Ordinal="7" IsOptional="true" DbType="8" Precision="10" />
+                      </Fields>
+                    </Resultset>
+                    <Resultset Name="Resultset2">
+                      <Fields>
+                        <Field Name="ClaimId" Ordinal="1" DbType="8" Precision="10" />
+                        <Field Name="ClaimantId" Ordinal="2" DbType="8" Precision="10" />
+                        <Field Name="DateOfLoss" Ordinal="3" IsOptional="true" DbType="30" />
+                        <Field Name="ClaimNumber" Ordinal="4" IsOptional="true" DbType="12" Length="50" />
+                        <Field Name="Lawyer" Ordinal="5" IsOptional="true" DbType="12" Length="50" />
+                        <Field Name="InsuranceCompany" Ordinal="6" IsOptional="true" DbType="12" Length="50" />
                       </Fields>
                     </Resultset>
                   </Resultsets>
@@ -5014,6 +5055,15 @@
           <FieldMappings>
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
             <FieldMapping FieldName="Months" TargetFieldName="@months" />
+          </FieldMappings>
+        </SPCallMapping>
+        <SPCallMapping SPCallName=":ClaimantSearch" TargetName="PsychologicalServices:dbo:ClaimantSearch">
+          <FieldMappings>
+            <FieldMapping FieldName="DateOfBirth" TargetFieldName="@dateOfBirth" />
+            <FieldMapping FieldName="FirstName" TargetFieldName="@firstName" />
+            <FieldMapping FieldName="LastName" TargetFieldName="@lastName" />
+            <FieldMapping FieldName="Name" TargetFieldName="@name" />
+            <FieldMapping FieldName="ResultCount" TargetFieldName="@resultCount" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":CompletionData" TargetName="PsychologicalServices:dbo:CompletionData">

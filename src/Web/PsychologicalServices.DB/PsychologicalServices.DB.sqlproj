@@ -172,5 +172,6 @@
     <Build Include="dbo\Tables\AppointmentProtocolResponseValues.sql" />
     <Build Include="dbo\Tables\AppointmentProtocolResponses.sql" />
     <Build Include="dbo\Stored Procedures\AppointmentProtocolResponseData.sql" />
+    <Build Include="dbo\Stored Procedures\ClaimantSearch.sql" />
   </ItemGroup>
 </Project>
