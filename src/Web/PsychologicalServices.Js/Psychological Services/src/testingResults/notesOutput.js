@@ -409,6 +409,80 @@ export class NotesOutput {
         return issuesSorted;
     }
 
+    observationResponse(id) {
+        let observation = this.responses.observations.find(o => o.value === id);
+
+        if (observation) {
+            return observation.response;
+        }
+
+        return null;
+    }
+
+    @computedFrom('responses.observations')
+    get observationsRecallingAllYes() {
+        if (!this.responses) { return false; }
+
+        let responses = [
+            this.observationResponse('claimantIssuesRecallingPreviousState'),
+            this.observationResponse('claimantIssuesRecallingIncident'),
+            this.observationResponse('claimantIssuesRecallingTreatment')
+        ];
+
+        let allYes = responses.every(x => this.isYes(x));
+        return allYes;
+    }
+
+    @computedFrom('responses.observations')
+    get observationsRecallingAllNo() {
+        if (!this.responses) { return false; }
+
+        let responses = [
+            this.observationResponse('claimantIssuesRecallingPreviousState'),
+            this.observationResponse('claimantIssuesRecallingIncident'),
+            this.observationResponse('claimantIssuesRecallingTreatment')
+        ];
+
+        let allNo = responses.every(x => this.isNo(x));
+        return allNo;
+    }
+
+    @computedFrom('responses.observations')
+    get test() {
+        if (!this.responses) { return ""; }
+
+        let responses = [
+            { "response": this.observationResponse('claimantIssuesRecallingPreviousState'), "description": `${this.pronoun.possessiveAdjective} previous state` },
+            { "response": this.observationResponse('claimantIssuesRecallingIncident'), "description": "specific details about the index accident" },
+            { "response": this.observationResponse('claimantIssuesRecallingTreatment'), "description": `${this.pronoun.possessiveAdjective} post-accident treatment` }
+        ];
+
+        let anyYes = responses.some(x => this.isYes(x.response));
+        let anyNo = responses.some(x => this.isNo(x.response));
+
+        if (anyYes && anyNo) {
+            let no = responses.filter(x => this.isNo(x.response)).map(x => x.description).join(' or ');
+            let yes = responses.filter(x => this.isYes(x.response)).map(x => x.description).join(' and ');
+
+            let value = ` did not appear to have any issues recalling ${no}, but reported issues recalling ${yes}.`;
+            return value;
+        }
+        else if (anyYes && !anyNo) {
+            let yes = responses.filter(x => this.isYes(x.response)).map(x => x.description).join(' and ');
+
+            let value = ` reported issues recalling ${yes}.`;
+            return value;
+        }
+        else if (anyNo && !anyYes) {
+            let no = responses.filter(x => this.isNo(x.response)).map(x => x.description).join(' or ');
+            
+            let value = ` did not appear to have any issues recalling ${no}.`;
+            return value;
+        }
+
+        return ``;
+    }
+
     @computedFrom('assessment')
     get assessmentDate() {
         let appointmentTimes = this.assessment !== null && this.assessment.appointments !== null ? this.assessment.appointments.map(appointment => appointment.appointmentTime).sort((a, b) => a - b) : [];

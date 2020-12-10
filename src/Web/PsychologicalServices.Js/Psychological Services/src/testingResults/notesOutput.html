@@ -54,6 +54,7 @@
 
     <div class="uk-container" if.bind="formVisible">
 
+        <!-- Identification -->
         <fieldset class="uk-fieldset" if.bind="claimant & signal:'claimant-changed'">
             <legend class="uk-legend">Identification</legend>
 
@@ -106,6 +107,7 @@
             </div>
         </fieldset>
 
+        <!-- Motor Vehicle Accident Details -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Motor Vehicle Accident Details</legend>
 
@@ -391,6 +393,7 @@
             </div>            
         </fieldset>
 
+        <!-- Physical -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Physical</legend>
 
@@ -709,6 +712,7 @@
             </div>
         </fieldset>
 
+        <!-- P -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">P</legend>
 
@@ -1217,6 +1221,7 @@
             </div>
         </fieldset>
 
+        <!-- NP -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">NP</legend>
 
@@ -1524,6 +1529,7 @@
             </div>
         </fieldset>
     
+        <!-- Current State -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Current State (as of the last two weeks)</legend>
 
@@ -1611,6 +1617,7 @@
             </div>
         </fieldset>
 
+        <!-- Personal History -->
         <fieldset id="personalHistory" class="uk-fieldset">
             <legend class="uk-legend">Personal History</legend>
 
@@ -1698,7 +1705,7 @@
                                     &nbsp;for a period of ${getAgeTextForCurrentContext(responses.personalHistory.relationship.priorSeriousRelationshipLength) & signal:'prior-serious-relationship-length-changed'}
                                 </template>
                                 <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded)">
-                                    , adding that this ended due to ${responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded}.
+                                    , adding that this ended due to <strong>${responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded}</strong>.
                                 </template>
                             </template>
                             <template else>
@@ -1762,6 +1769,7 @@
             </div>
         </fieldset>
 
+        <!-- Information about your family -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Information about your family</legend>
 
@@ -1795,10 +1803,10 @@
                                     &nbsp;${pronoun.possessiveAdjective} father is no longer alive
                                     <template if.bind="!responses.personalHistory.father.yearOfDeath.skip">
                                         <template if.bind="responses.personalHistory.father.yearOfDeath.dontKnow">
-                                            , adding that ${pronoun.subject} does not know when he died.
+                                            , adding that ${pronoun.subject} does not know when ${pronoun.subject} died.
                                         </template>
                                         <template else>
-                                            , adding that he died
+                                            , adding that ${pronoun.subject} died
                                             <template if.bind="responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'">
                                                 &nbsp;in ${responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'}    
                                             </template>
@@ -2056,6 +2064,120 @@
                             </template>
                         </template>
                     </p>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <!-- Observations of Dr. Watson -->
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Observations of Dr. Watson</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+
+                    <p>
+                        <template if.bind="isYes(observationResponse('claimantFriendly'))">
+                            ${gender.title} ${claimant.lastName} exhibited a friendly and pleasant air.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantFriendly'))">
+                            ${gender.title} ${claimant.lastName} did not exhibit a friendly and pleasant air.
+                        </template>
+
+                        <template if.bind="isYes(observationResponse('claimantBathedRecently'))">
+                            &nbsp;When ${pronoun.subject} arrived on the day of the assessment, ${pronoun.subject} appeared to have bathed recently.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantBathedRecently'))">
+                            &nbsp;When ${pronoun.subject} arrived on the day of the assessment, ${pronoun.subject} did not appear to have bathed recently.
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantAppropriateClothing'))">
+                            &nbsp;${pronoun.subject | proper} was seen wearing clothing that was appropriate for ${pronoun.possessiveAdjective} age and the weather conditions of the day.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantAppropriateClothing'))">
+                            &nbsp;The clothing that ${pronoun.subject} was wearing was not fully was appropriate for ${pronoun.possessiveAdjective} age/weather conditions of the day.
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantAbleToWrite'))">
+                            &nbsp;${pronoun.subject | proper} was observed using a writing utensil to complete the questionnaires and testing.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantAbleToWrite'))">
+                            &nbsp;${pronoun.subject | proper} did not use a writing utensil to complete the questionnaires and testing.
+                        </template>
+                        
+                    </p>
+
+                    <p>
+                        <template if.bind="isYes(observationResponse('claimantAnswersOrganized'))">
+                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions were well thought out and organized.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantAnswersOrganized'))">
+                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions did not appear to be well thought out or organized.
+                        </template>
+
+                        <template if.bind="isNo(observationResponse('neededToRepeatQuestionsOrAnswers'))">
+                            &nbsp;This assessor did not have to repeat questions to him.
+                        </template>
+                        <template if.bind="isYes(observationResponse('neededToRepeatQuestionsOrAnswers'))">
+                            &nbsp;This assessor repeated questions.
+                        </template>
+
+                        <template if.bind="isNo(observationResponse('claimantWordFindingOrStuttering'))">
+                            &nbsp;This assessor did not notice any issues with word finding or stuttering.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantWordFindingOrStuttering'))">
+                            &nbsp;At times, this assessor noticed with word finding or stuttering.
+                        </template>
+
+                        <template if.bind="observationsRecallingAllYes || observationsRecallingAllNo">
+                            <template if.bind="observationsRecallingAllYes"><!-- if.bind="isYes(observationResponse('claimantIssuesRecallingPreviousState')) && isYes(observationResponse('claimantIssuesRecallingIncident')) && isYes(observationResponse('claimantIssuesRecallingTreatment'))"> -->
+                                &nbsp;${pronoun.subject | proper} reported issues recalling ${pronoun.possessiveAdjective} previous state, specific details about the index accident, and ${pronoun.possessiveAdjective} post-accident treatment.
+                            </template>
+                            <template if.bind="observationsRecallingAllNo"><!--if.bind="isNo(observationResponse('claimantIssuesRecallingPreviousState')) && isNo(observationResponse('claimantIssuesRecallingIncident')) && isNo(observationResponse('claimantIssuesRecallingTreatment'))">-->
+                                &nbsp;${pronoun.subject | proper} did not appear to have any issues recalling ${pronoun.possessiveAdjective} previous state, specific details about the index accident, or information about ${pronoun.possessiveAdjective} post-accident treatment.
+                            </template>
+                        </template>
+                        <template else>
+                            &nbsp;${pronoun.subject | proper} ${test}
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident and the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident but did not tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} did not tear up when discussing the accident but did tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantCriedWhenDiscussingIncident')) && isNo(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} did not tear up when discussing the accident or any changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantRequestedBreakDuringInterview')) && isYes(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} requested a break during the interview, but when talking to this assessor, ${gender.title} ${claimant.lastName} was able to remain seated during the interview without getting up to stretch.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantRequestedBreakDuringInterview')) && isNo(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} requested a break during the interview and was also observed to be stretching.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantRequestedBreakDuringInterview')) && isYes(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} did not request a break during the interview, and ${pronoun.subject} remained seated during the interview without getting up to stretch.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantRequestedBreakDuringInterview')) && isNo(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} did not request a break during the interview, but was observed stretching.
+                        </template>
+
+                        <template if.bind="isNo(observationResponse('claimantIssuesWithExecutiveFunctioning'))">
+                            &nbsp;This assessor did not notice any issues with executive functioning during the interview.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantIssuesWithExecutiveFunctioning'))">
+                            &nbsp;<strong>This assessor noticed issues with executive functioning during the interview which included:</strong>
+                        </template>
+                        
+                    </p>
+
                 </div>
 
                 <hr>
