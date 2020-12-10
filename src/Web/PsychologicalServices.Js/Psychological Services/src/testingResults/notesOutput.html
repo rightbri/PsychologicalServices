@@ -696,6 +696,13 @@
                             </template>
                         </template>
                     </p>
+
+                    <!-- Present issue -->
+                    <p>
+                        <template if.bind="isAnswered(responses.accidentDetails.whatIsTroublingYou)">
+                            Upon inquiry, ${gender.title} ${claimant.lastName} identified ${pronoun.possessiveAdjective} biggest issues at the present time as ${pronoun.possessiveAdjective}: <strong>${responses.accidentDetails.whatIsTroublingYou}</strong>
+                        </template>
+                    </p>
                 </div>
 
                 <hr>

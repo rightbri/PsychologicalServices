@@ -851,19 +851,21 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.brainImagingInvestigationFindingsNormal) ? 'unanswered' : '' & signal:'accident-details-brain-imaging-investigation-findings-normal-changed'">
-                        Were the findings normal?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentBrainImagingInvestigationFindingsNormal" class="uk-radio" checked.bind="$parent.responses.accidentDetails.brainImagingInvestigationFindingsNormal" value.bind="response.value" change.delegate="changed('accident-details-brain-imaging-investigation-findings-normal-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
+                <template if.bind="isYes(responses.accidentDetails.hadBrainImagingInvestigations)">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isYes(responses.accidentDetails.hadBrainImagingInvestigations) && isUnanswered(responses.accidentDetails.brainImagingInvestigationFindingsNormal) ? 'unanswered' : '' & signal:'accident-details-brain-imaging-investigation-findings-normal-changed'">
+                            Were the findings normal?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentBrainImagingInvestigationFindingsNormal" class="uk-radio" checked.bind="$parent.responses.accidentDetails.brainImagingInvestigationFindingsNormal" value.bind="response.value" change.delegate="changed('accident-details-brain-imaging-investigation-findings-normal-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.accidentDetails.examinations.psychological.completed) ? 'unanswered' : '' & signal:'accident-details-psychological-exam-completed-changed'">
@@ -879,26 +881,28 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPsychologicalCompletion()">Add</button>
-                </div>
-                <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
-                <div class="uk-margin-remove uk-width-1-4">When?</div>
-                <div class="uk-margin-remove uk-width-1-4"></div>
-                
-                <template repeat.for="i of responses.accidentDetails.examinations.psychological.completions.length">
-                    <div class="uk-margin-remove uk-width-1-4"></div>    
+                <template if.bind="isYes(responses.accidentDetails.examinations.psychological.completed)">
                     <div class="uk-margin-remove uk-width-1-4">
-                        <input type="text" name="accidentPsychologicalExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychological.completions[i].withWhom" />
+                        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPsychologicalCompletion()">Add</button>
                     </div>
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <input type="text" name="accidentPsychologicalExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychological.completions[i].when" />
-                    </div>
-                    <div class="uk-margin-remove uk-width-1-4"></div>    
-
-                    <hr>
+                    <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
+                    <div class="uk-margin-remove uk-width-1-4">When?</div>
+                    <div class="uk-margin-remove uk-width-1-4"></div>
+                    
+                    <template repeat.for="i of responses.accidentDetails.examinations.psychological.completions.length">
+                        <div class="uk-margin-remove uk-width-1-4"></div>    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="accidentPsychologicalExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychological.completions[i].withWhom" />
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="accidentPsychologicalExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychological.completions[i].when" />
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-4"></div>    
+    
+                        <hr>
+                    </template>
                 </template>
-
+                
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.accidentDetails.examinations.psychiatric.completed) ? 'unanswered' : '' & signal:'accident-details-psychiatric-exam-completed-changed'">
                         Have you ever completed a Psychiatry examination before?
@@ -913,26 +917,28 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPsychiatricCompletion()">Add</button>
-                </div>
-                <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
-                <div class="uk-margin-remove uk-width-1-4">When?</div>
-                <div class="uk-margin-remove uk-width-1-4"></div>
-                
-                <template repeat.for="i of responses.accidentDetails.examinations.psychiatric.completions.length">
-                    <div class="uk-margin-remove uk-width-1-4"> </div>    
+                <template if.bind="isYes(responses.accidentDetails.examinations.psychiatric.completed)">
                     <div class="uk-margin-remove uk-width-1-4">
-                        <input type="text" name="accidentPsychiatryExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychiatric.completions[i].withWhom" />
+                        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addPsychiatricCompletion()">Add</button>
                     </div>
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <input type="text" name="accidentPsychiatryExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychiatric.completions[i].when" />
-                    </div>
-                    <div class="uk-margin-remove uk-width-1-4"></div>    
-
-                    <hr>
+                    <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
+                    <div class="uk-margin-remove uk-width-1-4">When?</div>
+                    <div class="uk-margin-remove uk-width-1-4"></div>
+                    
+                    <template repeat.for="i of responses.accidentDetails.examinations.psychiatric.completions.length">
+                        <div class="uk-margin-remove uk-width-1-4"> </div>    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="accidentPsychiatryExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychiatric.completions[i].withWhom" />
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="accidentPsychiatryExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.psychiatric.completions[i].when" />
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-4"></div>    
+    
+                        <hr>
+                    </template>
                 </template>
-
+                
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.accidentDetails.examinations.npNc.completed) ? 'unanswered' : '' & signal:'accident-details-npnc-exam-completed-changed'">
                         Have you ever completed a NP/NC examination before?
@@ -947,24 +953,26 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addNpNcCompletion()">Add</button>
-                </div>
-                <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
-                <div class="uk-margin-remove uk-width-1-4">When?</div>
-                <div class="uk-margin-remove uk-width-1-4"></div>
-                
-                <template repeat.for="i of responses.accidentDetails.examinations.npNc.completions.length">
-                    <div class="uk-margin-remove uk-width-1-4"></div>    
+                <template if.bind="isYes(responses.accidentDetails.examinations.npNc.completed)">
                     <div class="uk-margin-remove uk-width-1-4">
-                        <input type="text" name="accidentNP/NCExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.npNc.completions[i].withWhom" />
+                        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addNpNcCompletion()">Add</button>
                     </div>
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <input type="text" name="accidentNP/NCExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.npNc.completions[i].when" />
-                    </div>
-                    <div class="uk-margin-remove uk-width-1-4"></div>    
-
-                    <hr>
+                    <div class="uk-margin-remove uk-width-1-4">With Whom?</div>
+                    <div class="uk-margin-remove uk-width-1-4">When?</div>
+                    <div class="uk-margin-remove uk-width-1-4"></div>
+                    
+                    <template repeat.for="i of responses.accidentDetails.examinations.npNc.completions.length">
+                        <div class="uk-margin-remove uk-width-1-4"></div>    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="accidentNP/NCExamWith-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.npNc.completions[i].withWhom" />
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="accidentNP/NCExamWhen-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.accidentDetails.examinations.npNc.completions[i].when" />
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-4"></div>    
+    
+                        <hr>
+                    </template>
                 </template>
 
                 <div class="uk-margin-remove uk-width-3-4">
@@ -1003,66 +1011,68 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.startedCounsellingYear) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
-                        When did you start counselling?
-                    </span>
-                </div>
+                <template if.bind="isYes(responses.accidentDetails.startedCounselling)">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.startedCounsellingYear) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
+                            When did you start counselling?
+                        </span>
+                    </div>
+        
+                    <div class="uk-margin-remove uk-width-1-2">
+                        &nbsp;Month&nbsp;<input type="text" name="accidentStartedCounsellingMonth" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingMonth" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
+                        &nbsp;Year&nbsp;<input type="text" name="accidentStartedCounsellingYear" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingYear" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
+                    </div>
     
-                <div class="uk-margin-remove uk-width-1-2">
-                    &nbsp;Month&nbsp;<input type="text" name="accidentStartedCounsellingMonth" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingMonth" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
-                    &nbsp;Year&nbsp;<input type="text" name="accidentStartedCounsellingYear" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.startedCounsellingYear" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
-                </div>
-
-                <hr>
+                    <hr>
+                    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.counsellingHowOften) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
+                            How often are you currently having counselling?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <input type="text" name="accidentCounsellingHowOften" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingHowOften" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
+                    </div>
+    
+                    <hr>
+                                 
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.counsellingMethod) || (counsellingMethodIsOther && isUnanswered(responses.accidentDetails.counsellingMethodOther)) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
+                            Is this treatment done over the phone or in person?
+                        </span>
+                    </div>
+        
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <label>
+                            <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="overThePhone" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;Over the phone&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="inPerson" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;In person&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="other" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;Other&nbsp;
+                        </label>
+                        &nbsp;<input type="text" name="accidentCounsellingMethodOther" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingMethodOther" disabled.bind="!counsellingMethodIsOther & signal:'accident-details-counselling-changed'" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.isTheCounsellingBeneficial) ? 'unanswered' : '' & signal:'counselling-is-beneficial-changed'">
+                            Do you find that the counselling is beneficial?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentIsTheCounsellingBeneficial" class="uk-radio" checked.bind="$parent.responses.accidentDetails.isTheCounsellingBeneficial" value.bind="response.value" change.delegate="changed('counselling-is-beneficial-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
                 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.counsellingHowOften) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
-                        How often are you currently having counselling?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <input type="text" name="accidentCounsellingHowOften" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingHowOften" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
-                </div>
-
-                <hr>
-                             
-                <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.counsellingMethod) || (counsellingMethodIsOther && isUnanswered(responses.accidentDetails.counsellingMethodOther)) ? 'unanswered' : '' & signal:'accident-details-counselling-changed'">
-                        Is this treatment done over the phone or in person?
-                    </span>
-                </div>
-    
-                <div class="uk-margin-remove uk-width-3-4">
-                    <label>
-                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="overThePhone" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;Over the phone&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="inPerson" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;In person&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentCounsellingMethod" class="uk-radio" checked.bind="responses.accidentDetails.counsellingMethod" value="other" change.delegate="changed('accident-details-counselling-changed')" />&nbsp;Other&nbsp;
-                    </label>
-                    &nbsp;<input type="text" name="accidentCounsellingMethodOther" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.accidentDetails.counsellingMethodOther" disabled.bind="!counsellingMethodIsOther & signal:'accident-details-counselling-changed'" input.delegate="changed('accident-details-counselling-changed') & debounce:500" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isYes(responses.accidentDetails.startedCounselling) && isUnanswered(responses.accidentDetails.isTheCounsellingBeneficial) ? 'unanswered' : '' & signal:'counselling-is-beneficial-changed'">
-                        Do you find that the counselling is beneficial?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentIsTheCounsellingBeneficial" class="uk-radio" checked.bind="$parent.responses.accidentDetails.isTheCounsellingBeneficial" value.bind="response.value" change.delegate="changed('counselling-is-beneficial-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
                 <template if.bind="responses.createdAtVersion < 22">
                     <div class="uk-margin-remove uk-width-1-4"></div>
                     <div class="uk-margin-remove uk-width-1-4">In the past?</div>
@@ -1840,54 +1850,56 @@
 
                 <hr>
 
-                <div class="uk-marin-remove uk-width-1-4"></div>
+                <template if.bind="isYes(responses.psychological.hallucinations)">
+                    <div class="uk-marin-remove uk-width-1-4"></div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsAuditory) ? 'unanswered' : '' & signal:'hallucinations-changed'">
-                        Are the hallucinations auditory?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="hallucinationsAuditory" class="uk-radio" checked.bind="responses.psychological.hallucinationsAuditory" value.bind="response.value" disabled.bind="!isYes(responses.psychological.hallucinations)" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-marin-remove uk-width-1-4"></div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsVisual) ? 'unanswered' : '' & signal:'hallucinations-changed'">
-                        Are the hallucinations visual in nature?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="hallucinationsVisual" class="uk-radio" checked.bind="responses.psychological.hallucinationsVisual" value.bind="response.value" disabled.bind="!isYes(responses.psychological.hallucinations)" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-marin-remove uk-width-1-4"></div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsCommand) ? 'unanswered' : '' & signal:'hallucinations-changed'">
-                        Do the hallucinations tell/command you to do something?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="hallucinationsCommand" class="uk-radio" checked.bind="responses.psychological.hallucinationsCommand" value.bind="response.value" disabled.bind="!isYes(responses.psychological.hallucinations)" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsAuditory) ? 'unanswered' : '' & signal:'hallucinations-changed'">
+                            Are the hallucinations auditory?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="hallucinationsAuditory" class="uk-radio" checked.bind="responses.psychological.hallucinationsAuditory" value.bind="response.value" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-marin-remove uk-width-1-4"></div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsVisual) ? 'unanswered' : '' & signal:'hallucinations-changed'">
+                            Are the hallucinations visual in nature?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="hallucinationsVisual" class="uk-radio" checked.bind="responses.psychological.hallucinationsVisual" value.bind="response.value" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-marin-remove uk-width-1-4"></div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isYes(responses.psychological.hallucinations) && isUnanswered(responses.psychological.hallucinationsCommand) ? 'unanswered' : '' & signal:'hallucinations-changed'">
+                            Do the hallucinations tell/command you to do something?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="hallucinationsCommand" class="uk-radio" checked.bind="responses.psychological.hallucinationsCommand" value.bind="response.value" change.delegate="changed('hallucinations-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.psychological.feelSurveilled) ? 'unanswered' : '' & signal:'feel-surveilled-changed'">
                         Do you feel that you are being watched/surveilled?
@@ -4054,84 +4066,98 @@
                 </table>
                 
                 <div class="uk-margin-remove uk-width-1-2">
-                    How many sons do you have?
+                    Do you have any children?
                 </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.sons.howMany" disabled.bind="responses.personalHistory.children.sons.skip" input.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.sons.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />&nbsp;Skip
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
-                    What are their ages?
-                </div>
-
-                <template if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
-                    <template repeat.for="i of responses.personalHistory.children.sons.ages.length">
-                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
-
-                        <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
-                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.sons.ages[i].value" input.delegate="changed('child-count-changed')" />
-        
-                            <label repeat.for="response of ageUnits">
-                                <input type="radio" name="sons-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.sons.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
-                            </label>
-                        </div>    
-                    </template>
-                    <hr>
-                </template>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    How many daughters do you have?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.daughters.howMany" disabled.bind="responses.personalHistory.children.daughters.skip" input.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.daughters.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />&nbsp;Skip
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="haveAnyChildren" class="uk-radio" checked.bind="responses.personalHistory.children.any" value.bind="response.value" change.delegate="changed('children-any-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2" if.bind="!responses.personalHistory.children.daughters.skip && responses.personalHistory.children.daughters.howMany">
-                    What are their ages?
-                </div>
-
-                <template if.bind="!responses.personalHistory.children.daughters.skip && responses.personalHistory.children.daughters.howMany">
-                    <template repeat.for="i of responses.personalHistory.children.daughters.ages.length">
-                        <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
-
-                        <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
-                            <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.daughters.ages[i].value" input.delegate="changed('child-count-changed')" />
-        
-                            <label repeat.for="response of ageUnits">
-                                <input type="radio" name="daughters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.daughters.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
-                            </label>
-                        </div>
-                    </template>                    
+                <template if.bind="responses.personalHistory.children.any">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        How many sons do you have?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.sons.howMany" disabled.bind="responses.personalHistory.children.sons.skip" input.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.sons.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.sons.howMany, responses.personalHistory.children.sons.ages)" />&nbsp;Skip
+                        </label>
+                    </div>
+    
                     <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
+                        What are their ages?
+                    </div>
+    
+                    <template if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
+                        <template repeat.for="i of responses.personalHistory.children.sons.ages.length">
+                            <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+    
+                            <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
+                                <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.sons.ages[i].value" input.delegate="changed('child-count-changed')" />
+            
+                                <label repeat.for="response of ageUnits">
+                                    <input type="radio" name="sons-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.sons.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </div>    
+                        </template>
+                        <hr>
+                    </template>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        How many daughters do you have?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="number" min="0" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.daughters.howMany" disabled.bind="responses.personalHistory.children.daughters.skip" input.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.children.daughters.skip" value.bind="true" change.delegate="childrenCountChanged(responses.personalHistory.children.daughters.howMany, responses.personalHistory.children.daughters.ages)" />&nbsp;Skip
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="!responses.personalHistory.children.daughters.skip && responses.personalHistory.children.daughters.howMany">
+                        What are their ages?
+                    </div>
+    
+                    <template if.bind="!responses.personalHistory.children.daughters.skip && responses.personalHistory.children.daughters.howMany">
+                        <template repeat.for="i of responses.personalHistory.children.daughters.ages.length">
+                            <div class="uk-margin-remove uk-width-1-2" if.bind="!$first"></div>
+    
+                            <div class="uk-margin-remove uk-margin-small-right uk-width-1-2">
+                                <input type="number" class="uk-input uk-form-small uk-form-width-small" value.bind="$parent.responses.personalHistory.children.daughters.ages[i].value" input.delegate="changed('child-count-changed')" />
+            
+                                <label repeat.for="response of ageUnits">
+                                    <input type="radio" name="daughters-${$parent.$index}-age-unit" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.children.daughters.ages[i].unit" value.bind="response.value" change.delegate="changed('child-count-changed')" />&nbsp;${response.description}&nbsp;
+                                </label>
+                            </div>
+                        </template>                    
+                        <hr>
+                    </template>
+                    
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
+                        How many of your children reside with you?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
+                        <input type="number" min="0" max.bind="childCount & signal:'child-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.howManyLiveWithYou" />
+                    </div>
+    
+                    <hr if.bind="childCount > 0 & signal:'child-count-changed'">
                 </template>
-                
-                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
-                    How many of your children reside with you?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2" if.bind="childCount > 0 & signal:'child-count-changed'">
-                    <input type="number" min="0" max.bind="childCount & signal:'child-count-changed'" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.children.howManyLiveWithYou" />
-                </div>
-
-                <hr if.bind="childCount > 0 & signal:'child-count-changed'">
             </div>
         </fieldset>
 
@@ -4371,32 +4397,34 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isYes(responses.personalHistory.occupation.returnToWork.attempted) && isUnanswered(responses.personalHistory.occupation.returnToWork.when) ? 'unanswered' : '' & signal:'return-to-work-changed'">
-                        When?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="occupationReturnToWorkWhen" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.when" input.delegate="changed('return-to-work-changed') & debounce:500" />
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isYes(responses.personalHistory.occupation.returnToWork.attempted) && isUnanswered(responses.personalHistory.occupation.returnToWork.successful) ? 'unanswered' : '' & signal:'return-to-work-changed'">
-                        If applicable, were you successful with your return to work?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoPartially">
-                        <input type="radio" name="occupationReturnToWorkSuccessful" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.successful" value.bind="response.value" change.delegate="changed('return-to-work-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
+                <template if.bind="isYes(responses.personalHistory.occupation.returnToWork.attempted)">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isYes(responses.personalHistory.occupation.returnToWork.attempted) && isUnanswered(responses.personalHistory.occupation.returnToWork.when) ? 'unanswered' : '' & signal:'return-to-work-changed'">
+                            When?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="occupationReturnToWorkWhen" class="uk-input uk-form-small" value.bind="responses.personalHistory.occupation.returnToWork.when" input.delegate="changed('return-to-work-changed') & debounce:500" />
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isYes(responses.personalHistory.occupation.returnToWork.attempted) && isUnanswered(responses.personalHistory.occupation.returnToWork.successful) ? 'unanswered' : '' & signal:'return-to-work-changed'">
+                            If applicable, were you successful with your return to work?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoPartially">
+                            <input type="radio" name="occupationReturnToWorkSuccessful" class="uk-radio" checked.bind="$parent.responses.personalHistory.occupation.returnToWork.successful" value.bind="response.value" change.delegate="changed('return-to-work-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-1-2">
                     <span class.one-time="isUnanswered(responses.personalHistory.occupation.returnToWork.modifiedDutiesOrHours) ? 'unanswered' : '' & signal:'return-to-work-modified-duties-changed'">
                         If applicable, provide information about any modified duties and/or hours that are currently in place?
@@ -4521,15 +4549,17 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    If yes, what is the amount of the debt?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="financialStateAmountOfDebt" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.financial.amountOfDebt" />
-                </div>
-
-                <hr>
+                <template if.bind="isYes(responses.personalHistory.financial.haveDebt)">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        If yes, what is the amount of the debt?
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="financialStateAmountOfDebt" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.financial.amountOfDebt" />
+                    </div>
+    
+                    <hr>
+                </template>
             </div>
         </fieldset>
 
@@ -4946,77 +4976,79 @@
                 </div>
 
                 <hr>
+                
+                <template if.bind="isYes(responses.personalHistory.psychological.anyHistory)">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.psychological.takenMoodMedication) ? 'unanswered' : '' & signal:'taken-medication-for-mood-changed'">
+                            In the past have you taken any medication for your mood?
+                        </span>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.takenMoodMedication) ? 'unanswered' : '' & signal:'taken-medication-for-mood-changed'">
-                        In the past have you taken any medication for your mood?
-                    </span>
-                </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="psychologicalTakenMoodMedication" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.takenMoodMedication" value.bind="response.value" change.delegate="change('taken-medication-for-mood-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="psychologicalTakenMoodMedication" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.takenMoodMedication" value.bind="response.value" change.delegate="change('taken-medication-for-mood-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
+                    <hr>
 
-                <hr>
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident) ? 'unanswered' : '' & signal:'on-medication-at-time-of-accident-changed'">
+                            Were you on this medication at the time of the accident?
+                        </span>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident) ? 'unanswered' : '' & signal:'on-medication-at-time-of-accident-changed'">
-                        Were you on this medication at the time of the accident?
-                    </span>
-                </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="psychologicalOnMoodMedicationAtTimeOfAccident" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident" value.bind="response.value" change.delegate="changed('on-medication-at-time-of-accident-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="psychologicalOnMoodMedicationAtTimeOfAccident" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident" value.bind="response.value" change.delegate="changed('on-medication-at-time-of-accident-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
+                    <hr>
 
-                <hr>
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns) ? 'unanswered' : '' & signal:'hospitalized-due-to-psychological-concerns-changed'">
+                            Have you ever been hospitalized due to psychological concerns?
+                        </span>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns) ? 'unanswered' : '' & signal:'hospitalized-due-to-psychological-concerns-changed'">
-                        Have you ever been hospitalized due to psychological concerns?
-                    </span>
-                </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="psychologicalHospitalizedDueToPsychologicalConcerns" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns" value.bind="response.value" change.delegate="changed('hospitalized-due-to-psychological-concerns-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="psychologicalHospitalizedDueToPsychologicalConcerns" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns" value.bind="response.value" change.delegate="changed('hospitalized-due-to-psychological-concerns-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
+                    <hr>
 
-                <hr>
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.psychological.hadMentalHealthTesting) ? 'unanswered' : '' & signal:'had-mental-health-testing-changed'">
+                            Before the accident, had you ever had any mental health assessments or psychological testing?
+                        </span>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.hadMentalHealthTesting) ? 'unanswered' : '' & signal:'had-mental-health-testing-changed'">
-                        Before the accident, had you ever had any mental health assessments or psychological testing?
-                    </span>
-                </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="psychologicalHadMentalHealthTesting" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hadMentalHealthTesting" value.bind="response.value" change.delegate="changed('had-mental-health-testing-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="psychologicalHadMentalHealthTesting" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hadMentalHealthTesting" value.bind="response.value" change.delegate="changed('had-mental-health-testing-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
+                    <hr>
 
-                <hr>
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.psychological.hadMentalHealthCounselling) ? 'unanswered' : '' & signal:'had-mental-health-counselling-changed'">
+                            Before the accident, did you have any mental health counselling with a psychologist, psychiatrist, SW/counsellor or your Family Doctor?
+                        </span>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.hadMentalHealthCounselling) ? 'unanswered' : '' & signal:'had-mental-health-counselling-changed'">
-                        Before the accident, did you have any mental health counselling with a psychologist, psychiatrist, SW/counsellor or your Family Doctor?
-                    </span>
-                </div>
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="psychologicalHadMentalHealthCounselling" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hadMentalHealthCounselling" value.bind="response.value" change.delegate="changed('had-mental-health-counselling-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="psychologicalHadMentalHealthCounselling" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.hadMentalHealthCounselling" value.bind="response.value" change.delegate="changed('had-mental-health-counselling-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-1-4">
                     DIAGNOSES:
                 </div>

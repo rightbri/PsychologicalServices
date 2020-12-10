@@ -782,7 +782,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "28";
+    return "29";
 }
 
 function upgrade(responses, toVersion) {
@@ -1361,6 +1361,7 @@ function getNewResponses() {
                 "priorSeriousRelationshipReasonEnded": null
             },
             "children": {
+                "any": null,
                 "sons": {
                     "skip": true,
                     "skipAges": false,
