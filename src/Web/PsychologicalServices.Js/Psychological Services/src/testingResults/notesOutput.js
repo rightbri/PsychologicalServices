@@ -115,7 +115,6 @@ export class NotesOutput {
             return this.getRecreationalActivityDescriptionForContext(activity, this);
         }.bind(this);
 
-        this.getHeadacheDescriptionForCurrentContext
     }
 
     activate() {
@@ -276,6 +275,15 @@ export class NotesOutput {
                     this.notesRepository.getHobbies().then(data => {
                         this.hobbies = this.asArray(data);
                         this.hobbiesMap = data;
+                    }),
+                    this.notesRepository.getAccidentCategories().then(data => {
+                        this.accidentCategoriesMap = data;
+                    }),
+                    this.notesRepository.getTreatmentSessionFormats().then(data => {
+                        this.treatmentSessionFormatsMap = data;
+                    }),
+                    this.notesRepository.getCounsellingMethods().then(data => {
+                        this.counsellingMethodsMap = data;
                     })
                 ]);
             });
@@ -516,6 +524,166 @@ export class NotesOutput {
         return claims.length > 0 ? claims[0] : "";
     }
 
+    @computedFrom('responses.accidentDetails.timeOfAccident.timeType')
+    get timeOfAccidentIsSpecific() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.timeOfAccident) { return false; }
+
+        return this.responses.accidentDetails.timeOfAccident.timeType === "specific";
+    }
+
+    @computedFrom('responses.accidentDetails.timeOfAccident.timeType')
+    get timeOfAccidentIsGeneral() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.timeOfAccident) { return false; }
+
+        return this.responses.accidentDetails.timeOfAccident.timeType === "general";
+    }
+
+    @computedFrom('responses.accidentDetails.hitHeadOn')
+    get hitHeadOnIsOther() {
+        if (this.responses === null || this.responses.accidentDetails === null) { return false; }
+
+        return this.responses.accidentDetails.hitHeadOn === "other";
+    }
+
+    @computedFrom('responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat')
+    get treatmentSessionFormatIsOther() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.ocfCompleter || !this.responses.accidentDetails.ocfCompleter.treatmentSessions) { return false; }
+
+        return this.responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat === "other";
+    }
+
+    @computedFrom('responses.accidentDetails.counsellingMethod')
+    get counsellingMethodIsOther() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.counsellingMethod) { return false; }
+
+        return this.responses.accidentDetails.counsellingMethod === "other";
+    }
+
+    @computedFrom(
+        'responses.accidentDetails.hospitalStayLength.hours',
+        'responses.accidentDetails.hospitalStayLength.days',
+        'responses.accidentDetails.hospitalStayLength.weeks',
+        'responses.accidentDetails.hospitalStayLength.months'
+    )
+    get hospitalStayLength() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.hospitalStayLength) { return []; }
+
+        let values = [
+            { "value": this.responses.accidentDetails.hospitalStayLength.months, "description": function(x) { return x == 1 ? "month" : "months"; } },
+            { "value": this.responses.accidentDetails.hospitalStayLength.weeks, "description": function(x) { return x == 1 ? "week" : "weeks"; } },
+            { "value": this.responses.accidentDetails.hospitalStayLength.days, "description": function(x) { return x == 1 ? "day" : "days"; } },
+            { "value": this.responses.accidentDetails.hospitalStayLength.hours, "description": function(x) { return x == 1 ? "hour" : "hours"; } }
+        ];
+
+        let filteredValues = values.filter(v => v.value);
+
+        let results = filteredValues.map(v => (this.isNumeric(v.value) ? this.numberToWords.toWords(v.value) : v.value) + " " + v.description(v.value));
+
+        return results;
+    }
+
+    @computedFrom(
+        'responses.accidentDetails.lossOfConsciousness.length.seconds',
+        'responses.accidentDetails.lossOfConsciousness.length.minutes',
+        'responses.accidentDetails.lossOfConsciousness.length.hours',
+        'responses.accidentDetails.lossOfConsciousness.length.days',
+        'responses.accidentDetails.lossOfConsciousness.length.weeks'
+    )
+    get lossOfConsciousnessLength() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.lossOfConsciousness) { return []; }
+
+        let values = [
+            { "value": this.responses.accidentDetails.lossOfConsciousness.length.weeks, "description": function(x) { return x == 1 ? "week" : "weeks"; } },
+            { "value": this.responses.accidentDetails.lossOfConsciousness.length.days, "description": function(x) { return x == 1 ? "day" : "days"; } },
+            { "value": this.responses.accidentDetails.lossOfConsciousness.length.hours, "description": function(x) { return x == 1 ? "hour" : "hours"; } },
+            { "value": this.responses.accidentDetails.lossOfConsciousness.length.minutes, "description": function(x) { return x == 1 ? "minute" : "minutes"; } },
+            { "value": this.responses.accidentDetails.lossOfConsciousness.length.seconds, "description": function(x) { return x == 1 ? "second" : "seconds"; } }
+        ];
+
+        let filteredValues = values.filter(v => v.value);
+
+        let results = filteredValues.map(v => (this.isNumeric(v.value) ? this.numberToWords.toWords(v.value) : v.value) + " " + v.description(v.value));
+
+        return results;
+    }
+
+    @computedFrom(
+        'responses.accidentDetails.postTraumaticAmnesia.length.seconds',
+        'responses.accidentDetails.postTraumaticAmnesia.length.minutes',
+        'responses.accidentDetails.postTraumaticAmnesia.length.hours',
+        'responses.accidentDetails.postTraumaticAmnesia.length.days',
+        'responses.accidentDetails.postTraumaticAmnesia.length.weeks'
+    )
+    get postTraumaticAmnesiaLength() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.postTraumaticAmnesia) { return []; }
+
+        let values = [
+            { "value": this.responses.accidentDetails.postTraumaticAmnesia.length.weeks, "description": function(x) { return x == 1 ? "week" : "weeks"; } },
+            { "value": this.responses.accidentDetails.postTraumaticAmnesia.length.days, "description": function(x) { return x == 1 ? "day" : "days"; } },
+            { "value": this.responses.accidentDetails.postTraumaticAmnesia.length.hours, "description": function(x) { return x == 1 ? "hour" : "hours"; } },
+            { "value": this.responses.accidentDetails.postTraumaticAmnesia.length.minutes, "description": function(x) { return x == 1 ? "minute" : "minutes"; } },
+            { "value": this.responses.accidentDetails.postTraumaticAmnesia.length.seconds, "description": function(x) { return x == 1 ? "second" : "seconds"; } }
+        ];
+
+        let filteredValues = values.filter(v => v.value);
+
+        let results = filteredValues.map(v => (this.isNumeric(v.value) ? this.numberToWords.toWords(v.value) : v.value) + " " + v.description(v.value));
+
+        return results;
+    }
+
+    @computedFrom('examinations.psychological.completions')
+    get psychologicalCompletions() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.examinations || !this.responses.accidentDetails.examinations.psychological || !this.responses.accidentDetails.examinations.psychological.completions) { return []; }
+
+        let data = this.responses.accidentDetails.examinations.psychological.completions.filter(x => x.withWhom || x.when).map(x => `${x.withWhom} ${x.when}`.trim());
+
+        return data;
+    }
+
+    @computedFrom('examinations.psychiatric.completions')
+    get psychiatricCompletions() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.examinations || !this.responses.accidentDetails.examinations.psychiatric || !this.responses.accidentDetails.examinations.psychiatric.completions) { return []; }
+
+        let data = this.responses.accidentDetails.examinations.psychiatric.completions.filter(x => x.withWhom || x.when).map(x => `${x.withWhom} ${x.when}`.trim());
+
+        return data;
+    }
+
+    @computedFrom('examinations.npNc.completions')
+    get npNcCompletions() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.examinations || !this.responses.accidentDetails.examinations.npNc || !this.responses.accidentDetails.examinations.npNc.completions) { return []; }
+
+        let data = this.responses.accidentDetails.examinations.npNc.completions.filter(x => x.withWhom || x.when).map(x => `${x.withWhom} ${x.when}`.trim());
+
+        return data;
+    }
+
+    @computedFrom('examinations.psychological.completions')
+    get anyPsychologicalCompletions() {
+        let data = this.psychologicalCompletions;
+
+        return data.some(x => x);
+    }
+
+    @computedFrom('examinations.psychiatric.completions')
+    get anyPsychiatricCompletions() {
+        let data = this.psychiatricCompletions;
+
+        return data.some(x => x);
+    }
+
+    @computedFrom('examinations.npNc.completions')
+    get anyNpNcCompletions() {
+        let data = this.npNcCompletions;
+
+        return data.some(x => x);
+    }
+
+    isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
     distinct(arr) {
         let aMap = {};
 
@@ -524,6 +692,92 @@ export class NotesOutput {
             aMap[element] = count;
             return count === 1;
         });
+    }
+
+    getInjuriesAndSymptomsForResponses(criteria) {
+        if (!this.responses || !this.responses.accidentDetails || !this.responses.accidentDetails.injuriesAndSymptoms) { return []; }
+
+        let data = this.responses.accidentDetails.injuriesAndSymptoms
+            .filter(item => item.response != null && criteria(item))
+            .map(item => this.initialInjuriesAndSymptomsMap[item.value]);
+
+        return data;
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get yesFractures() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isFractures);
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get fracturesDetail() {
+        let fractures = this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isFractures);
+
+        if (fractures.length === 1) {
+            let details = this.responses.accidentDetails.injuriesAndSymptoms.filter(x => x.value === fractures[0].value).map(x => x.details);
+
+            return details.length === 1 ? details[0] : "";
+        }
+
+        return "";
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get noFractures() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isNo(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isFractures);
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get yesLacerations() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get noLacerations() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isNo(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get dontKnowLacerations() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isDontKnow(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get selectedInjuriesAndSymptoms() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && !this.initialInjuriesAndSymptomsMap[item.value].isSeparateOutput);
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get unselectedInjuriesAndSymptoms() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isNo(item.response) && !this.initialInjuriesAndSymptomsMap[item.value].isSeparateOutput);
+    }
+
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get dontKnowInjuriesAndSymptoms() {
+        return this.getInjuriesAndSymptomsForResponses(item => this.isDontKnow(item.response) && !this.initialInjuriesAndSymptomsMap[item.value].isSeparateOutput);
+    }
+    
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get anySelectedInjuriesAndSymptoms() {
+        return this.selectedInjuriesAndSymptoms.some(item => item);
+    }
+    
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get anyUnselectedInjuriesAndSymptoms() {
+        return this.unselectedInjuriesAndSymptoms.some(item => item);
+    }
+    
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get anyDontKnowInjuriesAndSymptoms() {
+        return this.dontKnowInjuriesAndSymptoms.some(item => item);
+    }
+
+    @computedFrom('responses.accidentDetails.otherInjuriesAndSymptoms')
+    get anyOtherInjuriesAndSymptoms() {
+        if (!this.responses || !this.responses.accidentDetails || !this.responses.accidentDetails.otherInjuriesAndSymptoms) { return false; }
+
+        return this.responses.accidentDetails.otherInjuriesAndSymptoms.length &&
+            this.responses.accidentDetails.otherInjuriesAndSymptoms.some(x => x && x.length > 0);
     }
 
     @computedFrom(
@@ -1466,7 +1720,7 @@ export class NotesOutput {
 
     @computedFrom('responses.neuropsychological.physical.other.issues')
     get anyOtherPhysicalIssues() {
-        if (!this.responses) { return false; }
+        if (!this.responses || !this.responses.neuropsychological || !this.responses.neuropsychological.physical || !this.responses.neuropsychological.physical.other || !this.responses.neuropsychological.physical.other.issues) { return false; }
 
         let issues = this.responses.neuropsychological.physical.other.issues.filter(x => x && x.length > 0);
 

@@ -25,7 +25,7 @@ export class AuthContext {
 				
 				let signedIn = self.auth2.isSignedIn.get();
 				
-				console.log('signedIn?: ' + signedIn);
+				console.debug('signedIn?: ' + signedIn);
 				
 				if (signedIn) {
 					var profile = user.getBasicProfile();

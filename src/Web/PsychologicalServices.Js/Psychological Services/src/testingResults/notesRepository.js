@@ -62,7 +62,7 @@ export class NotesRepository {
             {
                 "gender": "U",
                 "subject": "they",
-                "object": "their",
+                "object": "them",
                 "possessiveAdjective": "their",
                 "possessivePronoun": "theirs"
             }
@@ -118,7 +118,7 @@ export class NotesRepository {
         let data = [
             { "abbreviation": "M", "description": "Male", "title": "Mr." },
             { "abbreviation": "F", "description": "Female", "title": "Ms." },
-            { "abbreviation": "U", "description": "Unkonwn", "title": "Mr." }
+            { "abbreviation": "U", "description": "Unkonwn", "title": "Mx." }
         ];
 
         return getPromise(data);
@@ -537,17 +537,17 @@ export class NotesRepository {
 
     getInitialInjuriesAndSymptoms() {
         let data = {
-            "fractures": { "description": "Fractures", "value": "fractures", "format": function(context) { return `Fractures` } },
-            "sti": { "description": "STI", "value": "sti", "format": function(context) { return `STI` } },
-            "back": { "description": "Back", "value": "back", "format": function(context) { return `Back` } },
-            "neck": { "description": "Neck", "value": "neck", "format": function(context) { return `Neck` } },
-            "shoulder": { "description": "Shoulder", "value": "shoulder", "format": function(context) { return `Shoulder` } },
-            "lacerations": { "description": "Lacerations", "value": "lacerations", "format": function(context) { return `Lacerations` } },
-            "headaches": { "description": "Headaches", "value": "headaches", "format": function(context) { return `Headaches` } },
-            "dizziness": { "description": "Dizziness", "value": "dizziness", "format": function(context) { return `Dizziness` } },
-            "nausea": { "description": "Nausea", "value": "nausea", "format": function(context) { return `Nausea` } },
-            "vomiting": { "description": "Vomiting", "value": "vomiting", "format": function(context) { return `Vomiting` } },
-            "tinnitus": { "description": "Tinnitus", "value": "tinnitus", "format": function(context) { return `Tinnitus` } },
+            "fractures": { "description": "Fractures", "value": "fractures", "format": function(context) { return `Fractures` }, "enterDetailsForYes": true, "detailsQuestion": "Where?", "isFractures": true, "isSeparateOutput": true },
+            "sti": { "description": "STI", "value": "sti", "format": function(context) { return `soft tissue injuries` } },
+            "back": { "description": "Back pain", "value": "back", "format": function(context) { return `back pain` } },
+            "neck": { "description": "Neck pain", "value": "neck", "format": function(context) { return `neck pain` } },
+            "shoulder": { "description": "Shoulder pain", "value": "shoulder", "format": function(context) { return `shoulder pain` } },
+            "lacerations": { "description": "Lacerations", "value": "lacerations", "format": function(context) { return `Lacerations` }, "isLacerations": true, "isSeparateOutput": true },
+            "headaches": { "description": "Headache", "value": "headaches", "format": function(context) { return `a headache` } },
+            "dizziness": { "description": "Dizziness", "value": "dizziness", "format": function(context) { return `dizziness` } },
+            "nausea": { "description": "Nausea", "value": "nausea", "format": function(context) { return `nausea` } },
+            "vomiting": { "description": "Vomiting", "value": "vomiting", "format": function(context) { return `vomiting` } },
+            "tinnitus": { "description": "Tinnitus", "value": "tinnitus", "format": function(context) { return `tinnitus` } },
             "skip": { "description": "", "value": "skip" }
         };
 
@@ -653,7 +653,9 @@ export class NotesRepository {
             "claimantCriedWhenDiscussingLifeChanges": { "description": "12.	During the interview did the claimant tear up when discussing any changes in their life?", "value": "claimantCriedWhenDiscussingLifeChanges" },
             "claimantRequestedBreakDuringInterview": { "description": "13.	Did the claimant request a break during the interview?", "value": "claimantRequestedBreakDuringInterview" },
             "claimantRemainedSeatedDuringInterview": { "description": "14.	Was the claimant able to remain seated during the interview without getting up to stretch?", "value": "claimantRemainedSeatedDuringInterview" },
-            "claimantIssuesWithExecutiveFunctioning": { "description": "15.	Were any issues with executive functioning noted during the interview?", "value": "claimantIssuesWithExecutiveFunctioning" }
+            "claimantIssuesWithExecutiveFunctioning": { "description": "15.	Were any issues with executive functioning noted during the interview?", "value": "claimantIssuesWithExecutiveFunctioning" },
+            "claimantAcceptedOfferForDebrief": { "description": "16.    Did they accept the offer for a debrief?", "value": "claimantAcceptedOfferForDebrief" },
+            "claimantDeclinedToAnswerAnyQuestions": { "description": "17.   Did they decline to answer any questions?", "value": "claimantDeclinedToAnswerAnyQuestions" }
         };
 
         return getPromise(data);
@@ -743,6 +745,43 @@ export class NotesRepository {
 
         return getPromise(data);
     }
+
+    getAccidentCategories() {
+        let data = {
+            "singleVehicleAccident": { "description": "Single Vehicle Accident", "value": "singleVehicleAccident", "format": function(context) { return `single vehicle accident`; } },
+            "twoVehicleAccident": { "description": "Two Vehicle Accident", "value": "twoVehicleAccident", "format": function(context) { return `two vehicle accident`; } },
+            "multipleVehicleAccident": { "description": "Multiple Vehicle Accident", "value": "multipleVehicleAccident", "format": function(context) { return `multiple vehicle accident`; } },
+            "rearEndAccident": { "description": "Rear-end Accident", "value": "rearEndAccident", "format": function(context) { return `rear-end accident`; } },
+            "tBoneCollision": { "description": "T-Bone Collision", "value": "tBoneCollision", "format": function(context) { return `T-bone collision`; } },
+            "sideSwipe": { "description": "Side swipe", "value": "sideSwipe", "format": function(context) { return `side swipe accident`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getTreatmentSessionFormats() {
+        let data = {
+            "phone": { "description": "Over the Phone", "value": "phone", "format": function(context) { return `over the phone`; } },
+            "inPerson": { "description": "In Person", "value": "inPerson", "format": function(context) { return `in person`; } },
+            "virtual": { "description": "Virtually", "value": "virtual", "format": function(context) { return `virtually`; } },
+            "other": { "description": "Other", "value": "other", "format": function(context) { return `other`; } },
+            "skip": { "description": "Skip", "value": "skip", "format": function(context) { return `skip`; }, "isSkip": true }
+        };
+
+        return getPromise(data);
+    }
+
+    getCounsellingMethods() {
+        let data = {
+            "phone": { "description": "Over the Phone", "value": "phone", "format": function(context) { return `over the phone`; } },
+            "inPerson": { "description": "In Person", "value": "inPerson", "format": function(context) { return `in person`; } },
+            "virtual": { "description": "Virtually", "value": "virtual", "format": function(context) { return `virtually`; } },
+            "other": { "description": "Other", "value": "other", "format": function(context) { return `other`; } },
+            "skip": { "description": "Skip", "value": "skip", "format": function(context) { return `skip`; }, "isSkip": true }
+        };
+
+        return getPromise(data);
+    }
 }
 
 function getPromise(data) {
@@ -782,7 +821,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "29";
+    return "32";
 }
 
 function upgrade(responses, toVersion) {
@@ -1138,6 +1177,8 @@ function getNewResponses() {
                 "hours": ""
             },
             "priorNightSleepDescription": "",
+            "priorNightSleepWasGood": null,
+            "priorNightSleepNotGoodIsTypical": null,
             "medications": [
                 { "name": "", "purpose": "", "whenStarted": "" }
             ],
@@ -1145,6 +1186,14 @@ function getNewResponses() {
         },
         "accidentDetails": {
             "dateOfAccident": null,
+            "timeOfAccident": {
+                "dontKnow": false,
+                "timeType": null,
+                "generalValue": null,
+                "generalModifier": null,
+                "specificValue": null,
+                "specificAmPm": null
+            },
             "role": null,
             "category": null,
             "secondaryImpact": null,
@@ -1171,6 +1220,7 @@ function getNewResponses() {
             ],
             "otherInjuriesAndSymptoms": [""],
             "hadSurgeriesForInjuries": null,
+            "surgeryDetails": "",
             "wasDazed": null,
             "lossOfConsciousness": {
                 "experienced": null,
@@ -1195,6 +1245,7 @@ function getNewResponses() {
                     "weeks": ""
                 }
             },
+            "fullIntactMemoryBeforeAndAfter": null,
             "lastMemoryBeforeImpact": "",
             "firstMemoryAfterImpact": "",
             "feltCouldHaveDied": null,
@@ -1207,6 +1258,8 @@ function getNewResponses() {
                 "weeks": "",
                 "months": ""
             },
+            "diagnosedWithConcussion": null,
+            "givenConcussionProtocol": null,
             "haveFamilyDoctor": null,
             "familyDoctorName": "",
             "familyDoctorHowLong": "",
@@ -1241,6 +1294,7 @@ function getNewResponses() {
             "startedCounselling": null,
             "startedCounsellingMonth": "",
             "startedCounsellingYear": "",
+            "stillAttendingCounselling": null,
             "counsellingHowOften": "",
             "counsellingMethod": "",
             "counsellingMethodOther": "",
@@ -1252,6 +1306,7 @@ function getNewResponses() {
                 "treatmentSessions": {
                     "hadSessions": null,
                     "sessionFormat": null,
+                    "sessionFormatOther": "",
                     "where": ""
                 }
             }
@@ -1284,7 +1339,9 @@ function getNewResponses() {
             { "value": "claimantCriedWhenDiscussingLifeChanges", "response": null },
             { "value": "claimantRequestedBreakDuringInterview", "response": null },
             { "value": "claimantRemainedSeatedDuringInterview", "response": null },
-            { "value": "claimantIssuesWithExecutiveFunctioning", "response": null }
+            { "value": "claimantIssuesWithExecutiveFunctioning", "response": null },
+            { "value": "claimantAcceptedOfferForDebrief", "response": null },
+            { "value": "claimantDeclinedToAnswerAnyQuestions", "response": null }
         ],
         "personalHistory": {
             "locationOfBirth": null,

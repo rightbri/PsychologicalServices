@@ -245,6 +245,13 @@ export class Notes {
                     }),
                     this.notesRepository.getHobbies().then(data => {
                         this.hobbies = this.asArray(data);
+                    }),
+                    this.notesRepository.getTreatmentSessionFormats().then(data => {
+                        this.treatmentSessionFormats = this.asArray(data);
+                        this.treatmentSessionFormatsMap = data;
+                    }),
+                    this.notesRepository.getCounsellingMethods().then(data => {
+                        this.counsellingMethods = this.asArray(data);
                     })
                 ]);
             });
@@ -452,6 +459,20 @@ export class Notes {
         return claims.length > 0 ? claims[0] : "";
     }
 
+    @computedFrom('responses.accidentDetails.timeOfAccident.timeType')
+    get timeOfAccidentIsSpecific() {
+        if (!this.responses || !this.responses.accidentDetails || !this.responses.accidentDetails.timeOfAccident) { return false; }
+
+        return this.responses.accidentDetails.timeOfAccident.timeType === "specific";
+    }
+
+    @computedFrom('responses.accidentDetails.timeOfAccident.timeType')
+    get timeOfAccidentIsGeneral() {
+        if (!this.responses || !this.responses.accidentDetails || !this.responses.accidentDetails.timeOfAccident) { return false; }
+
+        return this.responses.accidentDetails.timeOfAccident.timeType === "general";
+    }
+
     distinct(arr) {
         let aMap = {};
 
@@ -481,6 +502,13 @@ export class Notes {
         if (this.responses === null || this.responses.accidentDetails === null) { return false; }
 
         return this.responses.accidentDetails.counsellingMethod === "other";
+    }
+
+    @computedFrom('responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat')
+    get treatmentSessionFormatIsOther() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.ocfCompleter || !this.responses.accidentDetails.ocfCompleter.treatmentSessions) { return false; }
+
+        return this.responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat === "other";
     }
 
     @computedFrom('responses.interviewType')
@@ -583,6 +611,14 @@ export class Notes {
         if (this.responses === null) { return false; }
         
         return this.responses.personalHistory.medical.drugsUsed.some(item => item === "thc");
+    }
+
+    get sustainedFractures() {
+        if (this.responses === null) { return false; }
+
+        let fracturesYes = this.responses.accidentDetails.injuriesAndSymptoms.some(item => item.value === "fractures" && this.isYes(item.response));
+
+        return fracturesYes;
     }
 
     any(items) {
