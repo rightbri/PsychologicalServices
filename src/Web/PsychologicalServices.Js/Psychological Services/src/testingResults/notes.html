@@ -582,23 +582,11 @@
 
                 <!-- TODO: highlight for review -->
                 <div class="uk-margin-remove uk-width-3-4">
-                    <label>
-                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="airbag" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;Airbag&nbsp;
+                    <label repeat.for="response of hitHeadOnObjects">
+                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value.bind="response.value" checked.bind="$parent.responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;${response.description}&nbsp;
                     </label>
                     <label>
-                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="headRest" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;Head rest&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="steeringWheel" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;Steering wheel&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="window" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;Window&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value="other" checked.bind="responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;Other&nbsp;
-                    </label>
-                    <label>
-                        <input type="text" name="idVerificationMethodOther" class="uk-input uk-form-small" value.bind="responses.accidentDetails.hitHeadOnOther" disabled.bind="!isYes(responses.accidentDetails.hitHead) || !hitHeadOnIsOther & signal:'accident-hit-head-changed'" />
+                        <input type="text" class="uk-input uk-form-small" value.bind="responses.accidentDetails.hitHeadOnOther" disabled.bind="!isYes(responses.accidentDetails.hitHead) || !hitHeadOnIsOther & signal:'accident-hit-head-changed'" />
                     </label>
                 </div>
 

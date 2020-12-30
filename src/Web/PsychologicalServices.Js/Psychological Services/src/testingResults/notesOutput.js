@@ -284,6 +284,9 @@ export class NotesOutput {
                     }),
                     this.notesRepository.getCounsellingMethods().then(data => {
                         this.counsellingMethodsMap = data;
+                    }),
+                    this.notesRepository.getHitHeadOnObjects().then(data => {
+                        this.hitHeadOnObjectsMap = data;
                     })
                 ]);
             });
@@ -778,6 +781,11 @@ export class NotesOutput {
 
         return this.responses.accidentDetails.otherInjuriesAndSymptoms.length &&
             this.responses.accidentDetails.otherInjuriesAndSymptoms.some(x => x && x.length > 0);
+    }
+    
+    @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
+    get singleUnselectedInjuriesAndSymptom() {
+        return this.unselectedInjuriesAndSymptoms.length === 1;
     }
 
     @computedFrom(

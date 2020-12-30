@@ -199,26 +199,8 @@
                         <template if.bind="isNo(responses.accidentDetails.thrownInsideVehicle)">
                             &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was not thrown around inside the vehicle upon impact.
                         </template>
-
-
-                        <template if.bind="isDontKnow(responses.accidentDetails.hitHead)">
-                            &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} head hit anything.
-                        </template>
-                        <template if.bind="isYes(responses.accidentDetails.hitHead)">
-                            &nbsp;${pronoun.subject | proper} then indicated that ${pronoun.subject} suffered a head impact, adding that ${pronoun.possessiveAdjective} head hit the 
-                            <template if.bind="hitHeadOnIsOther">
-                                <strong>
-                                    &nbsp;OTHER: ${responses.accidentDetails.hitHeadOnOther}
-                                </strong>
-                            </template>
-                            <template else>
-                                &nbsp;${responses.accidentDetails.hitHeadOn}
-                            </template>
-                        </template>
-                        <template if.bind="isNo(responses.accidentDetails.hitHead)">
-                            &nbsp;${pronoun.subject | proper} denied hitting ${pronoun.possessiveAdjective} head on anything.
-                        </template>
                         
+
                         <template if.bind="responses.accidentDetails.additionalAccidentDetails">
                             <strong>
                                 &nbsp;Additional details: ${responses.accidentDetails.additionalAccidentDetails}
@@ -227,9 +209,32 @@
                     </p>
 
                     <p>
+                        <template if.bind="isDontKnow(responses.accidentDetails.hitHead)">
+                            ${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} head hit anything.
+                        </template>
+                        <template if.bind="isYes(responses.accidentDetails.hitHead)">
+                            ${pronoun.subject | proper} then indicated that ${pronoun.subject} suffered a head impact, adding that ${pronoun.possessiveAdjective} head hit the 
+                            <template if.bind="hitHeadOnIsOther">
+                                <strong>
+                                    &nbsp;OTHER: ${responses.accidentDetails.hitHeadOnOther}
+                                </strong>
+                            </template>
+                            <template else>
+                                &nbsp;${hitHeadOnObjectsMap[responses.accidentDetails.hitHeadOn].format(self)}
+                            </template>
+                            .
+                        </template>
+                        <template if.bind="isNo(responses.accidentDetails.hitHead)">
+                            ${pronoun.subject | proper} denied hitting ${pronoun.possessiveAdjective} head on anything.
+                        </template>
+                    </p>
+
+                    <p>
                         <template if.bind="yesFractures">
                             When asked about ${pronoun.possessiveAdjective} injuries ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} sustained fractures.
-                            <strong>${fracturesDetail}</strong>.
+                            <template if.bind="fracturesDetail">
+                                &nbsp;<strong>${fracturesDetail}</strong>.
+                            </template>
                         </template>
                         <template else>
                             <template if.bind="noFractures">
@@ -256,8 +261,11 @@
                             ${selectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "}}.
                         </template>
                         <template if.bind="anyUnselectedInjuriesAndSymptoms">
-                            &nbsp;${pronoun.subject | proper} specifically denied having any of the following:
-                            ${unselectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
+                            &nbsp;${pronoun.subject | proper} specifically denied experiencing
+                            <template if.bind="!singleUnselectedInjuriesAndSymptom">
+                                &nbsp;any of the following:
+                            </template>
+                            &nbsp;${unselectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
                         </template>
                         <template if.bind="anyDontKnowInjuriesAndSymptoms">
                             &nbsp;When asked ${pronoun.subject} expressed that ${pronoun.subject} does not know if ${pronoun.subject} sustained any of the following:
@@ -270,7 +278,9 @@
                         
                         <template if.bind="isYes(responses.accidentDetails.hadSurgeriesForInjuries)">
                             &nbsp;${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} had surgeries as a result of ${pronoun.possessiveAdjective} injuries.
-                            &nbsp;<strong>${responses.accidentDetails.surgeryDetails}</strong>
+                            <template if.bind="responses.accidentDetails.surgeryDetails">
+                                &nbsp;<strong>${responses.accidentDetails.surgeryDetails}</strong>.
+                            </template>
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.hadSurgeriesForInjuries)">
@@ -279,15 +289,15 @@
                         </template>
 
                         <template if.bind="isYes(responses.accidentDetails.feltCouldHaveDied)">
-                            Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
+                            &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.feltCouldHaveDied)">
-                                Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} did not feel that ${pronoun.subject} could have died.
+                                &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} did not feel that ${pronoun.subject} could have died.
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.accidentDetails.feltCouldHaveDied)">
-                                    Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} does not know if at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
+                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} does not know if at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
                                 </template>
                             </template>
                         </template>
@@ -445,11 +455,11 @@
                         <template if.bind="isYes(responses.accidentDetails.haveFamilyDoctor)">
                             ${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} has a family doctor
                             <template if.bind="responses.accidentDetails.familyDoctorName">
-                                &nbsp;, who was identified as Dr. <strong>${responses.accidentDetails.familyDoctorName}</strong>
+                                , who was identified as Dr. <strong>${responses.accidentDetails.familyDoctorName}</strong>
                             </template>
                             .
                             <template if.bind="responses.accidentDetails.familyDoctorHowLong">
-                                &nbsp;${gender.title} ${claimant.lastName} then added that this has been ${pronoun.possessiveAdjective} family doctor for <strong>${responses.accidentDetails.familyDoctorHowLong | numberTextIfLessThanTen}</strong> years.
+                                &nbsp;${gender.title} ${claimant.lastName} then added that this has been ${pronoun.possessiveAdjective} family doctor for <strong>${responses.accidentDetails.familyDoctorHowLong}</strong>.
                             </template>
 
                             <template if.bind="isYes(responses.accidentDetails.sawFamilyDoctorSinceAccident)">
@@ -884,11 +894,11 @@
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.examinations.npNc.completed)">
-                                    When ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} had completed a prior neuropsychological or neurocognitive assessment, ${pronoun.subject} advised that ${pronoun.subject} did not.
+                                    &nbsp;When ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} had completed a prior neuropsychological or neurocognitive assessment, ${pronoun.subject} advised that ${pronoun.subject} had not.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.examinations.npNc.completed)">
-                                        When ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} had completed a prior neuropsychological or neurocognitive assessment, ${pronoun.subject} advised that ${pronoun.subject} did not know if ${pronoun.subject} had.
+                                        &nbsp;When ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} had completed a prior neuropsychological or neurocognitive assessment, ${pronoun.subject} advised that ${pronoun.subject} did not know if ${pronoun.subject} had.
                                     </template>
                                 </template>
                             </template>
@@ -943,17 +953,17 @@
                             <template if.bind="isYes(responses.accidentDetails.startedCounselling)">
                                 <template if.bind="responses.accidentDetails.startedCounsellingMonth || responses.accidentDetails.startedCounsellingYear">
                                     ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has started counselling in
-                                    &nbsp;
                                     <strong>
                                         <template if.bind="responses.accidentDetails.startedCounsellingMonth">
                                             ${responses.accidentDetails.startedCounsellingMonth}
                                             <template if.bind="responses.accidentDetails.startedCounsellingYear">
                                                 &nbsp;${responses.accidentDetails.startedCounsellingYear}
                                             </template>
+                                            .
                                         </template>
                                         <template else>
                                             <template if.bind="responses.accidentDetails.startedCounsellingYear">
-                                                ${responses.accidentDetails.startedCounsellingYear}
+                                                ${responses.accidentDetails.startedCounsellingYear}.
                                             </template>
                                         </template>
                                     </strong>
@@ -971,7 +981,7 @@
                                         </template>
         
                                         <template if.bind="isAnswered(responses.accidentDetails.counsellingMethod)">
-                                            ${pronoun.subject | proper} noted that this treatment is being completed
+                                            &nbsp;${pronoun.subject | proper} noted that this treatment is being completed
                                             <template if.bind="counsellingMethodIsOther">
                                                 <template if.bind="responses.accidentDetails.counsellingMethodOther">
                                                     &nbsp;<strong>${responses.accidentDetails.counsellingMethodOther}</strong>

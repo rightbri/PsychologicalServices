@@ -782,6 +782,18 @@ export class NotesRepository {
 
         return getPromise(data);
     }
+
+    getHitHeadOnObjects() {
+        let data = {
+            "airbag": { "description": "Airbag", "value": "airbag", "format": function(context) { return `airbag`; } },
+            "headRest": { "description": "Headrest", "value": "headRest", "format": function(context) { return `headrest`; } },
+            "steeringWheel": { "description": "Steering wheel", "value": "steeringWheel", "format": function(context) { return `steering wheel`; } },
+            "window": { "description": "Window", "value": "window", "format": function(context) { return `window`; } },
+            "other": { "description": "Other", "value": "other", "format": function(context) { return `other`; }, "isOther": true }
+        };
+
+        return getPromise(data);
+    }
 }
 
 function getPromise(data) {

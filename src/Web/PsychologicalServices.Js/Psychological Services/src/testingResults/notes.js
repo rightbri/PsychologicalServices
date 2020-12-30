@@ -76,6 +76,9 @@ export class Notes {
         this.headacheReliefActivities = [];
         this.headacheFrequencies = [];
         this.hobbies = [];
+        this.treatmentSessionFormats = [];
+        this.counsellingMethods = [];
+        this.hitHeadOnObjects = [];
 
         this.self = this;
 
@@ -248,10 +251,12 @@ export class Notes {
                     }),
                     this.notesRepository.getTreatmentSessionFormats().then(data => {
                         this.treatmentSessionFormats = this.asArray(data);
-                        this.treatmentSessionFormatsMap = data;
                     }),
                     this.notesRepository.getCounsellingMethods().then(data => {
                         this.counsellingMethods = this.asArray(data);
+                    }),
+                    this.notesRepository.getHitHeadOnObjects().then(data => {
+                        this.hitHeadOnObjects = this.asArray(data);
                     })
                 ]);
             });
