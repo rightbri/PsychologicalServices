@@ -138,48 +138,47 @@
                     </span>
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="idPreferredPronoun" class="uk-input uk-form-small" value.bind="responses.identification.preferredPronoun" input.delegate="changed('preferred-pronoun-changed') & debounce:500" />
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label repeat.for="response of pronouns">
+                        <input type="radio" name="idPreferredPronoun" class="uk-radio" value.bind="response.value" checked.bind="responses.identification.preferredPronoun" />&nbsp;${response.description}&nbsp;
+                    </label>
                 </div>
 
                 <hr>
-
+                
                 <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.identification.verificationMethod.method) ? 'unanswered' : '' & signal:'id-method-changed'">
-                        ID Verified with:
+                    <span class.one-time="isUnanswered(responses.identification.verifiedWithId) ? 'unanswered' : '' & signal:'identification-verified-changed'">
+                        Was identity able to be verified with ID?
                     </span>
                 </div>
-        
-                <div class="uk-margin-remove uk-width-3-4">
-                    
-                    <label>
-                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="healthCard" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Health card&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="driversLicense" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Driver's Licence&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="passport" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Passport&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="idVerificationMethod" class="uk-radio" value="other" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;Other&nbsp;
-                    </label>                    
-                    <label>
-                        <input type="text" name="idVerificationMethodOther" class="uk-input uk-form-small" value.bind="responses.identification.verificationMethod.otherMethod" disabled.bind="!idMethodIsOther & signal:'id-method-changed'" />
-                    </label>
 
+                <div class="uk-margin-remove uk-width-3-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="identificationVerifiedWithId" class="uk-radio" checked.bind="$parent.responses.identification.verifiedWithId" value.bind="response.value" change.delegate="changed('identification-verified-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
                 </div>
 
                 <hr>
 
+                <template if.bind="isYes(responses.identification.verifiedWithId)">
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <span class.one-time="isUnanswered(responses.identification.verificationMethod.method) ? 'unanswered' : '' & signal:'id-method-changed'">
+                            ID Verified with:
+                        </span>
+                    </div>
+            
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <label repeat.for="response of identificationVerificationMethods">
+                            <input type="radio" name="idVerificationMethod" class="uk-radio" value.bind="response.value" checked.bind="responses.identification.verificationMethod.method" change.delegate="changed('id-method-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                        <label>
+                            <input type="text" name="idVerificationMethodOther" class="uk-input uk-form-small" value.bind="responses.identification.verificationMethod.otherMethod" disabled.bind="!idMethodIsOther & signal:'id-method-changed'" />
+                        </label>
+                    </div>
+    
+                    <hr>    
+                </template>
+                
                 <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="isUnanswered(responses.identification.assistance.wearsGlasses) ? 'unanswered' : '' & signal:'assistance-wears-glasses-changed'">
                         Wears glasses:
@@ -300,13 +299,13 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.dayOfAssessment.priorNightSleepWasGood) ? 'unanswered' : '' & signal:'prior-night-sleep-changed'">
                         Would you say your sleep the night prior to the assessment was good?
                     </span>
                 </div>
 
-                <div class="uk-margin-remove uk-width-1-2">
+                <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoDontKnow">
                         <input type="radio" name="dayOfAssessmentPriorNightSleepWasGood-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.dayOfAssessment.priorNightSleepWasGood" value.bind="response.value" change.delegate="changed('prior-night-sleep-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
@@ -330,35 +329,9 @@
                     <hr>    
                 </template>
                 
-                <!-- TODO: highlight for review -->
-                <div class="uk-margin-remove">
-                    <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addDayOfAssessmentMedication()">Add</button>
-                </div>
-                <div class="uk-margin-remove uk-width-1-3">Name of Medication</div>
-                <div class="uk-margin-remove uk-width-1-3">What does this treat?</div>
-                <div class="uk-margin-remove uk-width-1-3">When did you start using/taking this?</div>
-                <hr>
-
-                <template repeat.for="i of responses.dayOfAssessment.medications.length">
-                    
-                    <div class="uk-margin-remove uk-width-1-3">
-                        <input type="text" name="dayOfAssessmentMedicationName-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.medications[i].name" />
-                    </div>
-
-                    <div class="uk-margin-remove uk-width-1-3">
-                        <input type="text" name="dayOfAssessmentMedicationPurpose-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.medications[i].purpose" />
-                    </div>
-    
-                    <div class="uk-margin-remove uk-width-1-3">
-                        <input type="text" name="dayOfAssessmentMedicationWhenStarted-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.medications[i].whenStarted" />
-                    </div>
-
-                    <hr>
-                </template>
-
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.dayOfAssessment.takenMedicationBeforeAssessment) ? 'unanswered' : '' & signal:'taken-medication-changed'">
-                        In the past 24/48 hours before the assessment, have you taken you regularly prescribed medication?
+                        Have you in the past 24/48 hours before the assessment used any medication?
                     </span>
                 </div>
 
@@ -368,6 +341,35 @@
                     </label>
                 </div>
 
+                <hr>
+
+                <template if.bind="isYes(responses.dayOfAssessment.takenMedicationBeforeAssessment)">
+                    <!-- TODO: highlight for review -->
+                    <div class="uk-margin-remove">
+                        <button type="button" class="uk-button uk-button-default uk-button-small" click.delegate="addDayOfAssessmentMedication()">Add</button>
+                    </div>
+                    <div class="uk-margin-remove uk-width-1-3 uk-padding-small uk-padding-remove-vertical">Name of Medication</div>
+                    <div class="uk-margin-remove uk-width-1-3 uk-padding-small uk-padding-remove-vertical">Using this medication at the time of the accident?</div>
+                    <div class="uk-margin-remove uk-width-1-3 uk-padding-small uk-padding-remove-vertical"></div>
+                    <hr>
+
+                    <template repeat.for="i of responses.dayOfAssessment.medications.length">
+                        <div class="uk-margin-remove uk-width-1-3 uk-padding-small uk-padding-remove-vertical">
+                            <input type="text" name="dayOfAssessmentMedicationName-${$parent.$index}" class="uk-input uk-form-small" value.bind="responses.dayOfAssessment.medications[i].name" />
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-3 uk-padding-small uk-padding-remove-vertical">
+                            <label repeat.for="response of yesNo">
+                                <input type="radio" name="timeOfAccidentTakenMedications-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.dayOfAssessment.medications[i].usedAtTimeOfAccident" value.bind="response.value" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+                        <div class="uk-margin-remove uk-width-1-3 uk-padding-small uk-padding-remove-vertical">
+                            <button type="button" class="uk-button uk-button-link" click.delegate="removeDayOfAssessmentMedication(responses.dayOfAssessment.medications[i])" title="Remove medication" uk-tooltip>
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        <hr>
+                    </template>
+                </template>
             </div>
         </fieldset>
 
@@ -5371,17 +5373,34 @@
                 
                 <hr>
                 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.additionalInformation) ? 'unanswered' : '' & signal:'psychological-additional-information-changed'">
-                        Anything you wish to add?
+                <div class="uk-margin-remove uk-width-3-4">
+                    <span class.one-time="isUnanswered(responses.personalHistory.psychological.anythingToAdd) ? 'unanswered' : '' & signal:'psychological-additional-information-changed'">
+                        Is there anything you wish you add or do you feel that there is something we did not cover that is important?
                     </span>
                 </div>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <textarea class="uk-textarea uk-form-small" value.bind="responses.personalHistory.psychological.additionalInformation" rows="2" input.delegate="changed('psychological-additional-information-changed') & debounce:500"></textarea>
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNoDontKnow">
+                        <input type="radio" name="psychologicalHistoryAnythingToAdd" class="uk-radio" checked.bind="$parent.responses.personalHistory.psychological.anythingToAdd" value.bind="response.value" change.delegate="changed('psychological-additional-information-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
                 </div>
-                
+
                 <hr>
+
+                <template if.bind="isYes(responses.personalHistory.psychological.anythingToAdd)">
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <span class.one-time="isUnanswered(responses.personalHistory.psychological.additionalInformation) ? 'unanswered' : '' & signal:'psychological-additional-information-changed'">
+                            Additional Information:
+                        </span>
+                    </div>
+
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <textarea class="uk-textarea uk-form-small" value.bind="responses.personalHistory.psychological.additionalInformation" rows="2" input.delegate="changed('psychological-additional-information-changed') & debounce:500"></textarea>
+                    </div>
+                    
+                    <hr>
+                </template>
+
             </div>
         </fieldset>
 

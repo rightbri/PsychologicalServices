@@ -128,7 +128,10 @@ export class NotesOutput {
                 this.searchCompanyId = user.company.companyId;
 
                 return Promise.all([
-                    this.notesRepository.getPronouns().then(data => this.pronouns = data),
+                    this.notesRepository.getPronouns().then(data => {
+                        this.pronouns = this.asArray(data);
+                        this.pronounsMap = data;
+                    }),
                     this.notesRepository.getYesNo().then(data => {
                         this.yesNo = this.asArray(data);
                         this.yesNoMap = data;
@@ -287,6 +290,9 @@ export class NotesOutput {
                     }),
                     this.notesRepository.getHitHeadOnObjects().then(data => {
                         this.hitHeadOnObjectsMap = data;
+                    }),
+                    this.notesRepository.getIdentificationVerificationMethods().then(data => {
+                        this.identificationVerificationMethodsMap = data;
                     })
                 ]);
             });
@@ -561,6 +567,13 @@ export class NotesOutput {
 
         return this.responses.accidentDetails.counsellingMethod === "other";
     }
+    
+    @computedFrom('responses.identification.verificationMethod.method')
+    get idMethodIsOther() {
+        if (this.responses === null || this.responses.identification === null) { return false; }
+        
+        return this.responses.identification.verificationMethod.method === "other";
+    }
 
     @computedFrom(
         'responses.accidentDetails.hospitalStayLength.hours',
@@ -786,6 +799,67 @@ export class NotesOutput {
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
     get singleUnselectedInjuriesAndSymptom() {
         return this.unselectedInjuriesAndSymptoms.length === 1;
+    }
+
+    @computedFrom(
+        'responses.personalHistory.psychological.takenMoodMedication',
+        'responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident',
+        'responses.personalHistory.psychological.hadMentalHealthTesting',
+        'responses.personalHistory.psychological.hadMentalHealthCounselling',
+        'responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns'
+    )
+    get yesPsychologicalHistory() {
+        if (!this.responses || !this.responses.personalHistory || !this.responses.personalHistory.psychological || !this.responses.personalHistory.psychological.takenMoodMedication) { return []; }
+        
+        let data = [
+            { "value": this.isYes(this.responses.personalHistory.psychological.takenMoodMedication) && this.isYes(this.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident), "description": function(context) { return `had used medication for ${context.pronoun.possessiveAdjective} mood (which ${context.pronoun.subject} was using at the time of the accident)`; } },
+            { "value": this.isYes(this.responses.personalHistory.psychological.takenMoodMedication) && this.isNo(this.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident), "description": function(context) { return `had used medication for ${context.pronoun.possessiveAdjective} mood (which ${context.pronoun.subject} was not using at the time of the accident)`; } },
+            { "value": this.isYes(this.responses.personalHistory.psychological.hadMentalHealthTesting), "description": function(context) { return `completed a mental health assessment`; } },
+            { "value": this.isYes(this.responses.personalHistory.psychological.hadMentalHealthCounselling), "description": function(context) { return `was seen for counselling`; } },
+            { "value": this.isYes(this.responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns), "description": function(context) { return `had been hospitalized due to psychological concerns`; } }
+        ];
+        
+        return data.filter(x => x.value).map(x => x.description(this));
+    }
+
+    @computedFrom(
+        'responses.personalHistory.psychological.takenMoodMedication',
+        'responses.personalHistory.psychological.hadMentalHealthTesting',
+        'responses.personalHistory.psychological.hadMentalHealthCounselling',
+        'responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns'
+    )
+    get noPsychologicalHistory() {
+        if (!this.responses || !this.responses.personalHistory || !this.responses.personalHistory.psychological || !this.responses.personalHistory.psychological.takenMoodMedication) { return []; }
+        
+        let data = [
+            { "value": this.isNo(this.responses.personalHistory.psychological.takenMoodMedication), "description": function(context) { return `had been using medication for ${context.pronoun.possessiveAdjective} mood prior to the accident`; } },
+            { "value": this.isNo(this.responses.personalHistory.psychological.hadMentalHealthTesting), "description": function(context) { return `had completed any mental health assessments`; } },
+            { "value": this.isNo(this.responses.personalHistory.psychological.hadMentalHealthCounselling), "description": function(context) { return `had been seen for any counselling`; } },
+            { "value": this.isNo(this.responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns), "description": function(context) { return `had been hospitalized due to psychological concerns`; } }
+        ];
+        
+        return data.filter(x => x.value).map(x => x.description(this));
+    }
+
+    @computedFrom(
+        'responses.personalHistory.psychological.takenMoodMedication',
+        'responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident',
+        'responses.personalHistory.psychological.hadMentalHealthTesting',
+        'responses.personalHistory.psychological.hadMentalHealthCounselling',
+        'responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns'
+    )
+    get anyYesPsychologicalHistory() {
+        return this.yesPsychologicalHistory.some(item => item);
+    }
+    
+    @computedFrom(
+        'responses.personalHistory.psychological.takenMoodMedication',
+        'responses.personalHistory.psychological.hadMentalHealthTesting',
+        'responses.personalHistory.psychological.hadMentalHealthCounselling',
+        'responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns'
+    )
+    get anyNoPsychologicalHistory() {
+        return this.noPsychologicalHistory.some(item => item);
     }
 
     @computedFrom(

@@ -44,29 +44,48 @@ export class NotesRepository {
     }
 
     getPronouns() {
-        let data = [
-            {
+        let data = {
+            "M": {
                 "gender": "M",
+                "value": "M",
+                "description": "Male",
+                "format": function(context) { return `male`; },
                 "subject": "he",
                 "object": "him",
                 "possessiveAdjective": "his",
                 "possessivePronoun": "his"
             },
-            {
+            "F": {
                 "gender": "F",
+                "value": "F",
+                "description": "Female",
+                "format": function(context) { return `female`; },
                 "subject": "she",
                 "object": "her",
                 "possessiveAdjective": "her",
                 "possessivePronoun": "hers"
             },
-            {
+            "N": {
+                "gender": "N",
+                "value": "N",
+                "description": "Neutral",
+                "format": function(context) { return `neutral`; },
+                "subject": "they",
+                "object": "them",
+                "possessiveAdjective": "their",
+                "possessivePronoun": "theirs"
+            },
+            "U": {
                 "gender": "U",
+                "value": "U",
+                "description": "Unknown",
+                "format": function(context) { return `unknown`; },
                 "subject": "they",
                 "object": "them",
                 "possessiveAdjective": "their",
                 "possessivePronoun": "theirs"
             }
-        ];
+        };
 
         return getPromise(data);
     }
@@ -608,11 +627,11 @@ export class NotesRepository {
 
     getPrognosis() {
         let data = {
-            "good": { "description": "Good", "value": "good", "format": function(context) { return `Good`; } },
-            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `Fair`; } },
-            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `Poor`; } },
-            "chronic": { "description": "Chronic", "value": "chronic", "format": function(context) { return `Chronic`; } },
-            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `Plateaued`; } },
+            "good": { "description": "Good", "value": "good", "format": function(context) { return `${context.pronoun.subject} has a good prognosis`; } },
+            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `${context.pronoun.subject} has a fair prognosis`; } },
+            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `${context.pronoun.subject} has a poor prognosis`; } },
+            "chronic": { "description": "Chronic", "value": "chronic", "format": function(context) { return `${context.pronoun.possessiveAdjective} condition is chronic`; } },
+            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.possessiveAdjective} recovery has plateaued`; } },
             "dontKnow": { "description": "DK", "value": "dontKnow", "format": function(context) { return `Don't know`; } }
         };
 
@@ -794,6 +813,18 @@ export class NotesRepository {
 
         return getPromise(data);
     }
+
+    getIdentificationVerificationMethods() {
+        let data = {
+            "driversLicense": { "description": "Driver's Licence", "value": "driversLicense", "format": function(context) { return `driver’s licence`; } },
+            "healthCard": { "description": "Health card", "value": "healthCard", "format": function(context) { return `health card`; } },
+            "passport": { "description": "Passport", "value": "passport", "format": function(context) { return `passport`; } },
+            "photocard": { "description": "Photocard", "value": "photocard", "format": function(context) { return `photocard`; } },
+            "other": { "description": "Other", "value": "other", "format": function(context) { return `other`; } }
+        };
+
+        return getPromise(data);
+    }
 }
 
 function getPromise(data) {
@@ -833,7 +864,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "32";
+    return "34";
 }
 
 function upgrade(responses, toVersion) {
@@ -1170,6 +1201,7 @@ function getNewResponses() {
         "ltdInformation": null,
         "identification": {
             "preferredPronoun": null,
+            "verifiedWithId": null,
             "verificationMethod": {
                 "method": null,
                 "otherMethod": ""
@@ -1192,7 +1224,7 @@ function getNewResponses() {
             "priorNightSleepWasGood": null,
             "priorNightSleepNotGoodIsTypical": null,
             "medications": [
-                { "name": "", "purpose": "", "whenStarted": "" }
+                { "name": "", "purpose": "", "whenStarted": "", "usedAtTimeOfAccident": null }
             ],
             "takenMedicationBeforeAssessment": null
         },
@@ -1565,6 +1597,7 @@ function getNewResponses() {
                 "hospitalizedDueToPsychologicalConcerns": null,
                 "hadMentalHealthTesting": null,
                 "hadMentalHealthCounselling": null,
+                "anythingToAdd": null,
                 "additionalInformation": ""
             },
             "diagnosis": "",

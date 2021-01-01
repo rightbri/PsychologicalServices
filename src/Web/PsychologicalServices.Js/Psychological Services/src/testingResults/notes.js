@@ -79,6 +79,7 @@ export class Notes {
         this.treatmentSessionFormats = [];
         this.counsellingMethods = [];
         this.hitHeadOnObjects = [];
+        this.identificationVerificationMethods = [];
 
         this.self = this;
 
@@ -104,7 +105,7 @@ export class Notes {
                 this.searchCompanyId = user.company.companyId;
 
                 return Promise.all([
-                    this.notesRepository.getPronouns().then(data => this.pronouns = data),
+                    this.notesRepository.getPronouns().then(data => this.pronouns = this.asArray(data)),
                     this.notesRepository.getYesNo().then(data => {
                         this.yesNo = this.asArray(data);
                         this.yesNoMap = data;
@@ -257,6 +258,9 @@ export class Notes {
                     }),
                     this.notesRepository.getHitHeadOnObjects().then(data => {
                         this.hitHeadOnObjects = this.asArray(data);
+                    }),
+                    this.notesRepository.getIdentificationVerificationMethods().then(data => {
+                        this.identificationVerificationMethods = this.asArray(data);
                     })
                 ]);
             });
@@ -678,8 +682,14 @@ export class Notes {
     }
 
     addDayOfAssessmentMedication() {
-        this.responses.dayOfAssessment.medications.push({ "name": "", "purpose": "", "whenStarted": "" });
+        this.responses.dayOfAssessment.medications.push({ "name": "", "purpose": "", "whenStarted": "", "usedAtTimeOfAccident": "" });
     }
+
+    removeDayOfAssessmentMedication(medication) {
+		if (confirm("Remove medication\nAre you sure?")) {
+			this.responses.dayOfAssessment.medications.splice(this.responses.dayOfAssessment.medications.indexOf(medication), 1);
+		}		
+	}
 
     addOtherAccidentInjurySymptom() {
         this.responses.accidentDetails.otherInjuriesAndSymptoms.push("");

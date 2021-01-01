@@ -104,6 +104,147 @@
                     ${issuesInDispute | sortArray:{"property":"name","direction":"asc"} | arrayToString}
                 </div>
 
+                <hr>
+
+                <div class="report-text uk-card uk-card-body uk-card-default">
+
+                    <p>
+                        ${gender.title} ${claimant.lastName} was asked which pronoun ${pronoun.subject} prefers this assessor to use.
+                        &nbsp;${pronoun.subject | proper} chose the ${pronounsMap[responses.identification.preferredPronoun].format(self)} pronoun.
+                    </p>
+    
+                    <p>
+                        <template if.bind="isYes(responses.identification.verifiedWithId)">
+                            ${pronoun.possessiveAdjective | proper} identity was verified
+                            <template if.bind="isAnswered(responses.identification.verificationMethod.method)">
+                                &nbsp;with ${pronoun.possessiveAdjective}
+                                <template if.bind="idMethodIsOther">
+                                    &nbsp;<strong>${responses.identification.verificationMethod.otherMethod}</strong>
+                                </template>
+                                <template else>
+                                    &nbsp;${identificationVerificationMethodsMap[responses.identification.verificationMethod.method].format(self)}
+                                </template>
+                            </template>
+                            .
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.identification.verifiedWithId)">
+                                ${gender.title} ${claimant.lastName} identity was not able to be verified as ${pronoun.subject} reported not bringing any ID with ${pronoun.object}.
+                            </template>
+                        </template>
+                    </p>
+
+                    <p>
+                        <template if.bind="isYes(responses.dayOfAssessment.wasDriven)">
+                            ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} had been driven to the assessment.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.dayOfAssessment.wasDriven)">
+                                <template if.bind="isYes(responses.dayOfAssessment.droveSelf)">
+                                    ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} had driven to the assessment.
+                                </template>
+                            </template>
+                        </template>
+
+                        <template if.bind="responses.dayOfAssessment.travelTime.hours || responses.dayOfAssessment.travelTime.minutes">
+                            &nbsp;${pronoun.subject | proper} then noted that it had taken ${pronoun.object}
+                            <template if.bind="responses.dayOfAssessment.travelTime.hours">
+                                &nbsp;<strong>${responses.dayOfAssessment.travelTime.hours}</strong> hours
+                                <template if.bind="responses.dayOfAssessment.travelTime.minutes">
+                                    &nbsp;and <strong>${responses.dayOfAssessment.travelTime.minutes}</strong> minutes
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="responses.dayOfAssessment.travelTime.minutes">
+                                    &nbsp;<strong>${responses.dayOfAssessment.travelTime.minutes}</strong> minutes
+                                </template>
+                            </template>
+                            &nbsp;to get to the assessment facility.
+                        </template>
+                        
+                        <template if.bind="isYes(responses.identification.assistance.wearsGlasses)">
+                            &nbsp;${pronoun.subject | proper} was observed to wear glasses during the interview.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.identification.assistance.wearsGlasses)">
+                                &nbsp;${pronoun.subject | proper} was not observed to wear glasses during the interview.
+                            </template>
+                        </template>
+                        
+
+                        <template if.bind="isYes(responses.identification.assistance.usesDevices)">
+                            &nbsp;${pronoun.subject | proper} was seen to be using the following assistive devices: <strong>${responses.identification.assistance.devices}</strong>.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.identification.assistance.usesDevices)">
+                                <template if.bind="isYes(responses.identification.assistance.wearsGlasses)">
+                                    &nbsp;${pronoun.subject | proper} was not seen using any other assistive devices.
+                                </template>
+                                <template else>
+                                    &nbsp;${pronoun.subject | proper} was not seen using any assistive devices.
+                                </template>
+                            </template>
+                        </template>
+                    </p>
+
+                    <p>
+                        <template if.bind="isYes(responses.dayOfAssessment.priorNightSleepWasGood)">
+                            Upon inquiry, ${gender.title} ${claimant.lastName} described ${pronoun.possessiveAdjective} sleep the night prior to the assessment as good.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.dayOfAssessment.priorNightSleepWasGood)">
+                                Upon inquiry, ${gender.title} ${claimant.lastName} described ${pronoun.possessiveAdjective} sleep the night prior to the assessment as not being good.
+
+                                <template if.bind="isYes(responses.dayOfAssessment.priorNightSleepNotGoodIsTypical)">
+                                    &nbsp;${pronoun.subject | proper} then added that this was typical.
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="isDontKnow(responses.dayOfAssessment.priorNightSleepWasGood)">
+                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} sleep the night before the assessment was good.
+                                </template>
+                            </template>
+                        </template>
+
+                        <template if.bind="isYes(responses.dayOfAssessment.takenMedicationBeforeAssessment)">
+                            When asked about any medication or substances ${pronoun.subject} had taken in the last 48 hours ${pronoun.subject} noted that ${pronoun.subject} had used the following:
+                            
+                            <template repeat.for="medication of responses.dayOfAssessment.medications">
+                                <template if.bind="$last && !$first">
+                                    &nbsp;and
+                                </template>
+                                &nbsp;<strong>${medication.name}</strong>
+                                <template if.bind="isYes(medication.usedAtTimeOfAccident) || isNo(medication.usedAtTimeOfAccident)">
+                                    &nbsp;(which ${pronoun.subject} was
+                                    <template if.bind="isNo(medication.usedAtTimeOfAccident)">
+                                        &nbsp;not
+                                    </template>
+                                    &nbsp;using at the time of the accident)
+                                    <template if.bind="responses.dayOfAssessment.medications.length > 2 && $index < responses.dayOfAssessment.medications.length - 2">,</template>
+                                </template>
+                            </template>
+                            .
+                            <!--
+                            BOLD (which ${pronoun.subject} was/was not using at the time of the accident); 
+                            BOLD (which ${pronoun.subject} was/was not using at the time of the accident, 
+                            BOLD (which ${pronoun.subject} was/was not using at the time of the accident), 
+                            and BOLD (which ${pronoun.subject} was/was not using at the time of the accident)
+                            -->
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.dayOfAssessment.takenMedicationBeforeAssessment)">
+                                &nbsp;When asked about any medication or substances ${pronoun.subject} had taken in the last 48 hours ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not currently use anything.
+                            </template>
+                        </template>
+                    </p>
+                    <!--
+                        ${gender.title} ${claimant.lastName}
+                        ${pronoun.possessiveAdjective}
+                        ${pronoun.subject}
+                        ${pronoun.subject | proper}
+                        -->
+                </div>
+                <hr>
             </div>
         </fieldset>
 
@@ -1033,28 +1174,40 @@
 
                     </p>
                     
-                        <!--
-                        
-                        ${gender.title} ${claimant.lastName}
-                        ${pronoun.possessiveAdjective}
-                        ${pronoun.subject}
-                        ${pronoun.subject | proper}
+                    <p>
+                        <template if.bind="isYes(responses.personalHistory.psychological.anyHistory)">
+                            Upon inquiry, ${gender.title} ${claimant.lastName} acknowledged having a pre-accident psychological history.
 
-                        <template if.bind="isYes()">
+                            <template if.bind="anyYesPsychologicalHistory">
+                                &nbsp;${pronoun.subject | proper} detailed that before the accident ${pronoun.subject} ${yesPsychologicalHistory | arrayToString}.
+                            </template>
 
+                            <template if.bind="anyNoPsychologicalHistory">
+                                &nbsp;${pronoun.subject | proper} specifically denied that ${pronoun.subject} ${noPsychologicalHistory | arrayToString:{"connector":"or that " + pronoun.subject}}.
+                            </template>
                         </template>
                         <template else>
-                            <template if.bind="isNo()">
-
-                            </template>
-                            <template else>
-                                <template if.bind="isDontKnow()">
-
-                                </template>
+                            <template if.bind="isNo(responses.personalHistory.psychological.anyHistory)">
+                                Upon inquiry, ${gender.title} ${claimant.lastName} denied having any pre-accident psychological history.
                             </template>
                         </template>
- 
-                        -->
+                    </p>
+
+                    <p>
+                        <template if.bind="responses.personalHistory.diagnosis">
+                            ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} has been diagnosed with
+                            <strong>${responses.personalHistory.diagnosis}</strong>.
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.psychological.prognosis)">
+                            <template if.bind="isDontKnow(responses.personalHistory.psychological.prognosis)">
+                                &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know what ${pronoun.possessiveAdjective} prognosis is.
+                            </template>
+                            <template else>
+                                &nbsp;${pronoun.subject | proper} has been told that <strong>${prognosisMap[responses.personalHistory.psychological.prognosis].format(self)}</strong>.
+                            </template>
+                        </template>
+                    </p>
 
                 </div>
                 <hr>
@@ -1898,6 +2051,13 @@
                             When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} emotional state with the passage of time, ${gender.title} ${claimant.lastName} shared that 
                             ${moodChangeTypesMap[responses.neuropsychological.physical.changes.changeInMood].format(self)}.
                         </template>  
+                    </p>
+
+                    <!-- Covid19 effect -->
+                    <p>
+                        <template if.bind="responses.personalHistory.covid19.affectOnYou">
+                            ${gender.title} ${claimant.lastName} was asked how the world events of COVID-19 have affected ${pronoun.object}, and ${pronoun.subject} noted <strong>${responses.personalHistory.covid19.affectOnYou}</strong>.
+                        </template>
                     </p>
                 </div>
 
@@ -2764,6 +2924,20 @@
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
 
                     <p>
+                        ${gender.title} ${claimant.lastName} was clearly instructed to complete all testing in an accurate and honest manner both verbally and in writing. 
+                        ${pronoun.subject | proper} was also instructed that if ${pronoun.subject} had any questions, or did not understand a question or test item, ${pronoun.subject} should ask, and this assessor would take the time to provide an answer/clarification when and where applicable and appropriate.
+                    </p>
+
+                    <p>
+                        ${gender.title} ${claimant.lastName} was advised that accommodations could be made during the assessment if ${pronoun.subject} needed the same. 
+                        For example, ${pronoun.subject} could take breaks as required, ${pronoun.subject} could ask for a translator or a reader (if required), ${pronoun.subject} could use the back supports that are available, or if ${pronoun.subject} is light sensitive then ${pronoun.subject} could request a table lamp (rather than overhead fluorescent lighting).
+                    </p>
+
+                    <p>
+                        ${pronoun.subject | proper} was also asked to contact this assessor if ${pronoun.subject} recalled any information that ${pronoun.subject} did not share with this assessor during the assessment, but as of the date of the writing of this report ${pronoun.subject} has not been in contact with this assessor.
+                    </p>
+
+                    <p>
                         <template if.bind="isYes(observationResponse('claimantFriendly'))">
                             ${gender.title} ${claimant.lastName} exhibited a friendly and pleasant air.
                         </template>
@@ -2864,6 +3038,20 @@
                     </p>
 
                     <p>
+                        <template if.bind="(isYes(responses.personalHistory.psychological.anythingToAdd) || responses.createdAtVersion < 33) && responses.personalHistory.psychological.additionalInformation">
+                            At the end of the interview ${gender.title} ${claimant.lastName} was asked if there was anything ${pronoun.subject} wished to add or if there was anything that ${pronoun.subject} and I did not cover during the interview. 
+                            ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} wanted to add <strong>${responses.personalHistory.psychological.additionalInformation}</strong>.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.psychological.anythingToAdd)">
+                                At the end of the interview ${gender.title} ${claimant.lastName} was asked if there was anything ${pronoun.subject} wished to add or if there was anything that ${pronoun.subject} and I did not cover during the interview. 
+                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} did not have anything else to share with this assessor.
+                            </template>
+                        </template>
+
+                    </p>
+
+                    <p>
                         <template if.bind="isYes(observationResponse('claimantAcceptedOfferForDebrief'))">
                             Knowing that the information discussed during the interview can stimulate a negative emotional response, ${gender.title} ${claimant.lastName} was offered an opportunity to debrief, which ${pronoun.subject} accepted.
                         </template>
@@ -2878,6 +3066,7 @@
                             &nbsp;At no point did ${pronoun.subject} decline to answer any questions posed by the assessor.
                         </template>
                     </p>
+
                 </div>
 
                 <hr>
