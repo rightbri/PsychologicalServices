@@ -1904,6 +1904,100 @@
 
                 <hr>
 
+                <template if.bind="isYes(responses.psychological.panicAttacksCurrent)">
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <span class.one-time="!responses.psychological.skipPanicAttackFrequency && isUnanswered(responses.psychological.panicAttackFrequency) && !responses.psychological.panicAttackFrequencyBetween ? 'unanswered' : '' & signal:'panic-attacks-changed'">
+                            How often do you currently experience panic attacks?
+                        </span>
+                    </div>
+
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.psychological.skipPanicAttackFrequency" value.bind="true" change.delegate="changed('panic-attacks-changed')" />&nbsp;Skip&nbsp;
+                        </label>
+                    </div>
+                    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="number" step="1" min="0" name="panicAttackFrequencyExact" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.psychological.panicAttackFrequencyExact" disabled.bind="responses.psychological.skipPanicAttackFrequency || responses.psychological.panicAttackFrequencyBetween" input.delegate="changed('panic-attacks-changed') & debounce:500" />
+                    </div>
+                    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label>
+                            <input type="checkbox" name="panicAttackFrequencyBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.psychological.panicAttackFrequencyBetween" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('panic-attacks-changed')" />&nbsp;Between&nbsp;
+                        </label>
+                        &nbsp;<input type="number" step="1" min="0" name="panicAttackFrequencyBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.psychological.panicAttackFrequencyBetweenMin" disabled.bind="responses.psychological.skipPanicAttackFrequency || !responses.psychological.panicAttackFrequencyBetween" input.delegate="changed('panic-attacks-changed') & debounce:500" />
+                        <label>
+                            &nbsp;and&nbsp;
+                        </label>
+                        &nbsp;<input type="number" step="1" min="0" name="panicAttackFrequencyBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.psychological.panicAttackFrequencyBetweenMax" disabled.bind="responses.psychological.skipPanicAttackFrequency || !responses.psychological.panicAttackFrequencyBetween" input.delegate="changed('panic-attacks-changed') & debounce:500" />
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2"></div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="i of panicAttackFrequencies.length">
+                            <input type="radio" name="panicAttackFrequency" class="uk-radio" checked.bind="$parent.responses.psychological.panicAttackFrequency" value.bind="panicAttackFrequencies[i].value" disabled.bind="responses.psychological.skipPanicAttackFrequency" change.delegate="changed('panic-attacks-changed')">&nbsp;${panicAttackFrequencies[i].description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.psychological.panicAttackClearTrigger) ? 'unanswered' : '' & signal:'panic-attacks-changed'">
+                            Do you have a clear trigger for your attacks?
+                        </span>
+                    </div>
+
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="panicAttacksClearTrigger" class="uk-radio" checked.bind="responses.psychological.panicAttackClearTrigger" value.bind="response.value" change.delegate="changed('panic-attacks-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+
+                    <hr>
+
+                    <template if.bind="isYes(responses.psychological.panicAttackClearTrigger)">
+
+                        <div class="uk-margin-remove uk-width-1-1">
+                            Do your triggers include:
+                        </div>
+    
+                        <div class="uk-margin-remove uk-width-1-4"></div>
+
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <span class.one-time="isUnanswered(responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident) ? 'unanswered' : '' & signal:'panic-attacks-changed'">
+                                Discussing the accident?
+                            </span>
+                        </div>
+    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="panicAttackTriggersIncludeDiscussingTheAccident" class="uk-radio" checked.bind="responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident" value.bind="response.value" change.delegate="changed('panic-attacks-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+    
+                        <hr>
+    
+                        <div class="uk-margin-remove uk-width-1-4"></div>
+
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <span class.one-time="isUnanswered(responses.psychological.panicAttackTriggersIncludeBeingInOrAroundVehicles) ? 'unanswered' : '' & signal:'panic-attacks-changed'">
+                                Being in or around vehicles?
+                            </span>
+                        </div>
+    
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="panicAttackTriggersIncludeBeingInOrAroundVehicles" class="uk-radio" checked.bind="responses.psychological.panicAttackTriggersIncludeBeingInOrAroundVehicles" value.bind="response.value" change.delegate="changed('panic-attacks-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+
+                        <hr>
+                    </template>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.psychological.panicAttacksPrior) ? 'unanswered' : '' & signal:'panic-attacks-prior-changed'">
                         Did you experience panic attacks before the accident?
@@ -3145,21 +3239,57 @@
     
                     <hr>
 
-                    <div class="uk-margin-remove uk-width-1-2">
+                    <div class="uk-margin-remove uk-width-1-4">
                         <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequency) ? 'unanswered' : '' & signal:'headaches-changed'">
                             How often do you experience headaches?
                         </span>
                     </div>
-    
-                    <div class="uk-margin-remove uk-width-1-2">
-                        <label repeat.for="i of headacheFrequencies.length">
-                            <input type="radio" name="headacheFrequency" class="uk-radio" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheFrequency" value.bind="headacheFrequencies[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')">&nbsp;${headacheFrequencies[i].description}&nbsp;
-                        </label>
-                        <label>
-                            <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" value="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
-                        </label>
-                    </div>
-    
+
+                    <template if.bind="responses.createdAtVersion < 35">
+                        <div class="uk-margin-remove uk-width-1-4"></div>
+
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <label repeat.for="i of headacheFrequencies.length">
+                                <input type="radio" name="headacheFrequency" class="uk-radio" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheFrequency" value.bind="headacheFrequencies[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')">&nbsp;${headacheFrequencies[i].description}&nbsp;
+                            </label>
+                            <label>
+                                <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" value="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
+                            </label>
+                        </div>
+                    </template>
+                    <template else>
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label>
+                                <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" value.bind="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
+                            </label>
+                        </div>
+                        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="number" step="1" min="0" name="headacheFrequencyExact" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyExact" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
+                        </div>
+                        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label>
+                                <input type="checkbox" name="headacheFrequencyBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetween" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')" />&nbsp;Between&nbsp;
+                            </label>
+                            &nbsp;<input type="number" step="1" min="0" name="headacheFrequencyBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || !responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
+                            <label>
+                                &nbsp;and&nbsp;
+                            </label>
+                            &nbsp;<input type="number" step="1" min="0" name="headacheFrequencyBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || !responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
+                        </div>
+
+                        <hr>
+
+                        <div class="uk-margin-remove uk-width-1-2"></div>
+
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <label repeat.for="i of headacheFrequencies2.length">
+                                <input type="radio" name="headacheFrequency" class="uk-radio" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheFrequency" value.bind="headacheFrequencies2[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')">&nbsp;${headacheFrequencies2[i].description}&nbsp;
+                            </label>
+                        </div>
+                    </template>
+
                     <hr>
 
                     <div class="uk-margin-remove uk-width-1-2">
@@ -3261,7 +3391,7 @@
                 </div>
 
                 <hr>
-                <!--
+                
                 <div class="uk-margin-remove uk-width-1-2">
                     Where do you currently experience pain?
                 </div>
@@ -3281,42 +3411,42 @@
                 </template>
 
                 <hr>
-                -->
-            <template if.bind="responses.createdAtVersion < 27">
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.other.anyIssues) ? 'unanswered' : '' & signal:'anything-else-bothering-you-changed'">
-                        Anything else bothering you?
-                    </span>
-                </div>
+                
+                <template if.bind="responses.createdAtVersion < 27">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.neuropsychological.physical.other.anyIssues) ? 'unanswered' : '' & signal:'anything-else-bothering-you-changed'">
+                            Anything else bothering you?
+                        </span>
+                    </div>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="anyOtherPhysicalIssues" class="uk-radio" checked.bind="responses.neuropsychological.physical.other.anyIssues" value.bind="response.value" change.delegate="changed('anything-else-bothering-you-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    What else is bothering you?
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <button type="button" class="uk-button uk-button-default uk-button-small" disabled.bind="!isYes(responses.neuropsychological.physical.other.anyIssues)" click.delegate="addOtherPhysicalIssue()">
-                        Add
-                    </button>
-                </div>
-
-                <template repeat.for="i of responses.neuropsychological.physical.other.issues.length">
-                    <div class="uk-margin-remove-vertical uk-width-1-4">
-                        <label class="uk-form-label">
-                            <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.physical.other.issues[i]" disabled.bind="!isYes(responses.neuropsychological.physical.other.anyIssues)" />
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="anyOtherPhysicalIssues" class="uk-radio" checked.bind="responses.neuropsychological.physical.other.anyIssues" value.bind="response.value" change.delegate="changed('anything-else-bothering-you-changed')" />&nbsp;${response.description}&nbsp;
                         </label>
                     </div>
-                </template>
 
-                <hr>
-            </template>
+                    <hr>
+
+                    <div class="uk-margin-remove uk-width-1-2">
+                        What else is bothering you?
+                    </div>
+
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <button type="button" class="uk-button uk-button-default uk-button-small" disabled.bind="!isYes(responses.neuropsychological.physical.other.anyIssues)" click.delegate="addOtherPhysicalIssue()">
+                            Add
+                        </button>
+                    </div>
+
+                    <template repeat.for="i of responses.neuropsychological.physical.other.issues.length">
+                        <div class="uk-margin-remove-vertical uk-width-1-4">
+                            <label class="uk-form-label">
+                                <input type="text" class="uk-input uk-form-small uk-form-width-medium" value.bind="$parent.responses.neuropsychological.physical.other.issues[i]" disabled.bind="!isYes(responses.neuropsychological.physical.other.anyIssues)" />
+                            </label>
+                        </div>
+                    </template>
+
+                    <hr>
+                </template>
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.neuropsychological.physical.pain.experiencePainPriorToAccident) ? 'unanswered' : '' & signal:'experience-pain-prior-to-accident-changed'">

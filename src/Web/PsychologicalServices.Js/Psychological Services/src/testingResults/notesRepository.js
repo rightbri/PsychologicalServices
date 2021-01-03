@@ -737,6 +737,17 @@ export class NotesRepository {
         return getPromise(data);
     }
 
+    getHeadacheFrequencies2() {
+        let data = {
+            "day": { "description": "per day", "value": "day", "format": function(context) { return `per day`; } },
+            "week": { "description": "per week", "value": "week", "format": function(context) { return `per week`; } },
+            "month": { "description": "per month", "value": "month", "format": function(context) { return `per month`; } },
+            "year": { "description": "per year", "value": "year", "format": function(context) { return `per year`; } }
+        };
+
+        return getPromise(data);
+    }
+
     getHobbies() {
         let data = {
             "artsCrafts": { "description": "Arts & Crafts", "value": "artsCrafts", "format": function(context) { return `arts & crafts`; } },
@@ -821,6 +832,17 @@ export class NotesRepository {
             "passport": { "description": "Passport", "value": "passport", "format": function(context) { return `passport`; } },
             "photocard": { "description": "Photocard", "value": "photocard", "format": function(context) { return `photocard`; } },
             "other": { "description": "Other", "value": "other", "format": function(context) { return `other`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getPanicAttackFrequencies() {
+        let data = {
+            "day": { "description": "per day", "value": "day", "format": function(context) { return `per day`; } },
+            "week": { "description": "per week", "value": "week", "format": function(context) { return `per week`; } },
+            "month": { "description": "per month", "value": "month", "format": function(context) { return `per month`; } },
+            "year": { "description": "per year", "value": "year", "format": function(context) { return `per year`; } }
         };
 
         return getPromise(data);
@@ -1667,6 +1689,15 @@ function getNewResponses() {
                 { "response": null, "value": "finances" }
             ],
             "panicAttacksCurrent": null,
+            "skipPanicAttackFrequency": false,
+            "panicAttackFrequency": null,
+            "panicAttackFrequencyExact": null,
+            "panicAttackFrequencyBetween": null,
+            "panicAttackFrequencyBetweenMin": null,
+            "panicAttackFrequencyBetweenMax": null,
+            "panicAttackClearTrigger": null,
+            "panicAttackTriggersIncludeDiscussingTheAccident": null,
+            "panicAttackTriggersIncludeBeingInOrAroundVehicles": null,
             "panicAttacksPrior": null,
             "heightenedStartleResponse": null,
             "flashbacksAfter": null,
@@ -1846,6 +1877,10 @@ function getNewResponses() {
                     "headacheReliefActivities": [],
                     "skipHeadacheFrequency": false,
                     "headacheFrequency": null,
+                    "headacheFrequencyExact": null,
+                    "headacheFrequencyBetween": null,
+                    "headacheFrequencyBetweenMin": null,
+                    "headacheFrequencyBetweenMax": null,
                     "headachesFluctuateWithActivityLevel": null,
                     "experienceHeadachesPriorToAccident": null,
                     "changesInHeadachesSinceAccident": null,

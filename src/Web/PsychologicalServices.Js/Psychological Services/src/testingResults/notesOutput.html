@@ -110,7 +110,7 @@
 
                     <p>
                         ${gender.title} ${claimant.lastName} was asked which pronoun ${pronoun.subject} prefers this assessor to use.
-                        &nbsp;${pronoun.subject | proper} chose the ${pronounsMap[responses.identification.preferredPronoun].format(self)} pronoun.
+                        &nbsp;${pronoun.subject | proper} chose the ${pronounsMap[responses.identification.preferredPronoun].format(self)} pronouns.
                     </p>
     
                     <p>
@@ -171,7 +171,6 @@
                             </template>
                         </template>
                         
-
                         <template if.bind="isYes(responses.identification.assistance.usesDevices)">
                             &nbsp;${pronoun.subject | proper} was seen to be using the following assistive devices: <strong>${responses.identification.assistance.devices}</strong>.
                         </template>
@@ -224,12 +223,6 @@
                                 </template>
                             </template>
                             .
-                            <!--
-                            BOLD (which ${pronoun.subject} was/was not using at the time of the accident); 
-                            BOLD (which ${pronoun.subject} was/was not using at the time of the accident, 
-                            BOLD (which ${pronoun.subject} was/was not using at the time of the accident), 
-                            and BOLD (which ${pronoun.subject} was/was not using at the time of the accident)
-                            -->
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.dayOfAssessment.takenMedicationBeforeAssessment)">
@@ -237,12 +230,152 @@
                             </template>
                         </template>
                     </p>
-                    <!--
-                        ${gender.title} ${claimant.lastName}
-                        ${pronoun.possessiveAdjective}
-                        ${pronoun.subject}
-                        ${pronoun.subject | proper}
-                        -->
+
+                    <p>
+                        ${gender.title} ${claimant.lastName} was clearly instructed to complete all testing in an accurate and honest manner both verbally and in writing. 
+                        ${pronoun.subject | proper} was also instructed that if ${pronoun.subject} had any questions, or did not understand a question or test item, ${pronoun.subject} should ask, and this assessor would take the time to provide an answer/clarification when and where applicable and appropriate.
+                    </p>
+
+                    <p>
+                        ${gender.title} ${claimant.lastName} was advised that accommodations could be made during the assessment if ${pronoun.subject} needed the same. 
+                        For example, ${pronoun.subject} could take breaks as required, ${pronoun.subject} could ask for a translator or a reader (if required), ${pronoun.subject} could use the back supports that are available, or if ${pronoun.subject} is light sensitive then ${pronoun.subject} could request a table lamp (rather than overhead fluorescent lighting).
+                    </p>
+
+                    <p>
+                        <template if.bind="(isYes(responses.personalHistory.psychological.anythingToAdd) || responses.createdAtVersion < 33) && responses.personalHistory.psychological.additionalInformation">
+                            At the end of the interview ${gender.title} ${claimant.lastName} was asked if there was anything ${pronoun.subject} wished to add or if there was anything that ${pronoun.subject} and I did not cover during the interview. 
+                            ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} wanted to add <strong>${responses.personalHistory.psychological.additionalInformation}</strong>.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.psychological.anythingToAdd)">
+                                At the end of the interview ${gender.title} ${claimant.lastName} was asked if there was anything ${pronoun.subject} wished to add or if there was anything that ${pronoun.subject} and I did not cover during the interview. 
+                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} did not have anything else to share with this assessor.
+                            </template>
+                        </template>
+
+                        &nbsp;${pronoun.subject | proper} was also asked to contact this assessor if ${pronoun.subject} recalled any information that ${pronoun.subject} did not share with this assessor during the assessment, but as of the date of the writing of this report ${pronoun.subject} has not been in contact with this assessor.
+                    </p>
+                    
+                    <p>
+                        <template if.bind="isYes(observationResponse('claimantFriendly'))">
+                            ${gender.title} ${claimant.lastName} exhibited a friendly and pleasant air.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantFriendly'))">
+                            ${gender.title} ${claimant.lastName} did not exhibit a friendly and pleasant air.
+                        </template>
+
+                        <template if.bind="isYes(observationResponse('claimantBathedRecently'))">
+                            &nbsp;When ${pronoun.subject} arrived on the day of the assessment, ${pronoun.subject} appeared to have bathed recently.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantBathedRecently'))">
+                            &nbsp;When ${pronoun.subject} arrived on the day of the assessment, ${pronoun.subject} did not appear to have bathed recently.
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantAppropriateClothing'))">
+                            &nbsp;${pronoun.subject | proper} was seen wearing clothing that was appropriate for ${pronoun.possessiveAdjective} age and the weather conditions of the day.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantAppropriateClothing'))">
+                            &nbsp;The clothing that ${pronoun.subject} was wearing was not fully was appropriate for ${pronoun.possessiveAdjective} age/weather conditions of the day.
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantAbleToWrite'))">
+                            &nbsp;${pronoun.subject | proper} was observed using a writing utensil to complete the questionnaires and testing.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantAbleToWrite'))">
+                            &nbsp;${pronoun.subject | proper} did not use a writing utensil to complete the questionnaires and testing.
+                        </template>
+                    </p>
+
+                    <p>
+                        <template if.bind="isYes(observationResponse('claimantAnswersOrganized'))">
+                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions were well thought out and organized.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantAnswersOrganized'))">
+                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions did not appear to be well thought out or organized.
+                        </template>
+
+                        <template if.bind="isNo(observationResponse('neededToRepeatQuestionsOrAnswers'))">
+                            &nbsp;This assessor did not have to repeat questions to ${pronoun.object}.
+                        </template>
+                        <template if.bind="isYes(observationResponse('neededToRepeatQuestionsOrAnswers'))">
+                            &nbsp;This assessor repeated questions.
+                        </template>
+
+                        <template if.bind="isNo(observationResponse('claimantWordFindingOrStuttering'))">
+                            &nbsp;This assessor did not notice any issues with word finding or stuttering.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantWordFindingOrStuttering'))">
+                            &nbsp;At times, this assessor noticed with word finding or stuttering.
+                        </template>
+
+                        <template if.bind="observationsRecallingAllYes || observationsRecallingAllNo">
+                            <template if.bind="observationsRecallingAllYes">
+                                &nbsp;${pronoun.subject | proper} reported issues recalling ${pronoun.possessiveAdjective} previous state, specific details about the index accident, and ${pronoun.possessiveAdjective} post-accident treatment.
+                            </template>
+                            <template if.bind="observationsRecallingAllNo">
+                                &nbsp;${pronoun.subject | proper} did not appear to have any issues recalling ${pronoun.possessiveAdjective} previous state, specific details about the index accident, or information about ${pronoun.possessiveAdjective} post-accident treatment.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident and the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident but did not tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} did not tear up when discussing the accident but did tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantCriedWhenDiscussingIncident')) && isNo(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
+                            &nbsp;${pronoun.subject | proper} did not tear up when discussing the accident or any changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                        </template>
+                        
+                        <template if.bind="isYes(observationResponse('claimantRequestedBreakDuringInterview')) && isYes(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} requested a break during the interview, but when talking to this assessor, ${gender.title} ${claimant.lastName} was able to remain seated during the interview without getting up to stretch.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantRequestedBreakDuringInterview')) && isNo(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} requested a break during the interview and was also observed to be stretching.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantRequestedBreakDuringInterview')) && isYes(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} did not request a break during the interview, and ${pronoun.subject} remained seated during the interview without getting up to stretch.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantRequestedBreakDuringInterview')) && isNo(observationResponse('claimantRemainedSeatedDuringInterview'))">
+                            &nbsp;${gender.title} ${claimant.lastName} did not request a break during the interview, but was observed stretching.
+                        </template>
+
+                        <template if.bind="isNo(observationResponse('claimantIssuesWithExecutiveFunctioning'))">
+                            &nbsp;This assessor did not notice any issues with executive functioning during the interview.
+                        </template>
+                        <template if.bind="isYes(observationResponse('claimantIssuesWithExecutiveFunctioning'))">
+                            &nbsp;<strong>This assessor noticed issues with executive functioning during the interview which included:</strong>
+                        </template>
+                    </p>
+
+                    <p>
+                        <template if.bind="isYes(observationResponse('claimantAcceptedOfferForDebrief'))">
+                            Knowing that the information discussed during the interview can stimulate a negative emotional response, ${gender.title} ${claimant.lastName} was offered an opportunity to debrief, which ${pronoun.subject} accepted.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantAcceptedOfferForDebrief'))">
+                            Knowing that the information discussed during the interview can stimulate a negative emotional response, ${gender.title} ${claimant.lastName} was offered an opportunity to debrief, which ${pronoun.subject} declined.
+                        </template>
+
+                        <template if.bind="isYes(observationResponse('claimantDeclinedToAnswerAnyQuestions'))">
+                            &nbsp;During the interview, ${pronoun.subject} declined to answer some questions as posed by this assessor.
+                        </template>
+                        <template if.bind="isNo(observationResponse('claimantDeclinedToAnswerAnyQuestions'))">
+                            &nbsp;At no point did ${pronoun.subject} decline to answer any questions posed by the assessor.
+                        </template>
+                    </p>
+
+                    <p>
+                        At the end of the assessment, ${pronoun.subject} was asked to complete a post-assessment questionnaire. 
+                        On the same, ${pronoun.subject} confirmed that ${pronoun.subject} shared all relevant information with this assessor during the interview, that ${pronoun.subject} was given the opportunity to ask any questions, and that this assessor and the psychometrist treated ${pronoun.object} in a courteous, professional and respectful manner. 
+                    </p>
+
+                    <p>
+                        This assessor would welcome the opportunity to complete a collateral interview with someone who knew ${gender.title} ${claimant.lastName} prior to the accident and can share information with this assessor regarding the changes that have occurred since the subject accident. 
+                        At a later date, if a collateral interview is done, an addendum can be completed.
+                    </p>
                 </div>
                 <hr>
             </div>
@@ -637,7 +770,6 @@
                                 ${gender.title} ${claimant.lastName} advised that currently ${pronoun.subject} does not have a family doctor.
                             </template>
                         </template>
-
                     </p>
 
                     <p>
@@ -1226,7 +1358,7 @@
                         <template if.bind="isAnswered(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
                             <template if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
                                 ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences ongoing pain.
-                                <!--
+                                
                                 When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences pain
                                 <template if.bind="responses.neuropsychological.physical.pain.currentPainAreas.length">
                                     &nbsp;in the following area
@@ -1234,7 +1366,6 @@
                                     : <strong>${responses.neuropsychological.physical.pain.currentPainAreas | arrayToString & signal:'current-pain-changed'}</strong>
                                 </template>
                                 .
-                                -->
                             </template>
                             <template else>
                                 &nbsp;${pronoun.subject | proper} denied having any physical pain at the current time.
@@ -1271,8 +1402,27 @@
                                 <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheReliefActivities && responses.neuropsychological.physical.headaches.headacheReliefActivities.length">
                                     &nbsp;When asked how ${pronoun.subject} tries to obtain relief ${pronoun.subject} responded with: ${selectedHeadacheReliefActivities | arrayToString:{"format":getItemValueForCurrentContext}}.
                                 </template>
-                                <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency)">
-                                    &nbsp;Upon inquiry, ${pronoun.subject} indicated the headaches ${headacheFrequenciesMap[responses.neuropsychological.physical.headaches.headacheFrequency].format(self)}.
+                                <template if.bind="responses.createdAtVersion < 35">
+                                    <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency)">
+                                        &nbsp;Upon inquiry, ${pronoun.subject} indicated the headaches ${headacheFrequenciesMap[responses.neuropsychological.physical.headaches.headacheFrequency].format(self)}.
+                                    </template>
+                                </template>
+                                <template else>
+                                    <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && (isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency) || responses.neuropsychological.physical.headaches.headacheFrequencyBetween)">
+                                        &nbsp;Upon inquiry, ${pronoun.subject} indicated the headaches occur 
+                                        <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetween">
+                                            &nbsp;between ${responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin | numberTextIfLessThanTen} and ${responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax | numberTextIfLessThanTen} times
+                                        </template>
+                                        <template else>
+                                            <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyExact === '1'">
+                                                &nbsp;once
+                                            </template>
+                                            <template else>
+                                                &nbsp;${responses.neuropsychological.physical.headaches.headacheFrequencyExact | numberTextIfLessThanTen} times
+                                            </template>
+                                        </template>
+                                        &nbsp;${headacheFrequencies2Map[responses.neuropsychological.physical.headaches.headacheFrequency].format(self)}.
+                                    </template>
                                 </template>
                                 <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
                                     &nbsp;${gender.title} ${claimant.lastName} advised that 
@@ -1781,6 +1931,68 @@
                                 &nbsp;not
                             </template>
                             &nbsp;experienced panic attacks.
+
+                            <template if.bind="isYes(responses.psychological.panicAttacksCurrent)">
+                                <template if.bind="!responses.psychological.skipPanicAttackFrequency && (isAnswered(responses.psychological.panicAttackFrequency) || responses.psychological.panicAttackFrequencyBetween)">
+                                    &nbsp;When asked, ${pronoun.subject} shared that ${pronoun.possessiveAdjective} panic attacks currently occur 
+                                    <template if.bind="responses.psychological.panicAttackFrequencyBetween">
+                                        &nbsp;between ${responses.psychological.panicAttackFrequencyBetweenMin | numberTextIfLessThanTen} and ${responses.psychological.panicAttackFrequencyBetweenMax | numberTextIfLessThanTen} times
+                                    </template>
+                                    <template else>
+                                        <template if.bind="responses.psychological.panicAttackFrequencyExact === '1'">
+                                            &nbsp;once
+                                        </template>
+                                        <template else>
+                                            &nbsp;${responses.psychological.panicAttackFrequencyExact | numberTextIfLessThanTen} times
+                                        </template>
+                                    </template>
+                                    &nbsp;${panicAttackFrequenciesMap[responses.psychological.panicAttackFrequency].format(self)}.
+                                </template>
+
+                                <template if.bind="isYes(responses.psychological.panicAttackClearTrigger)">
+                                    &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} feels that there is a clear trigger to ${pronoun.possessiveAdjective} panic attacks.  
+
+                                    <template if.bind="isYes(responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident)">
+                                        &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} feels that discussing the accident is a trigger for ${pronoun.object}.
+                                    </template>
+                                    <template else>
+                                        <template if.bind="isNo(responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident)">
+                                            &nbsp;${pronoun.subject | proper} added that discussing the accident is not a trigger for ${pronoun.object}.
+                                        </template>
+                                        <template else>
+                                            <template if.bind="isDontKnow(responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident)">
+                                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} does not know if dicussing the accident is a trigger for ${pronoun.object}.
+                                            </template>
+                                        </template>
+                                    </template>
+
+                                    <template if.bind="isYes(responses.psychological.panicAttackTriggersIncludeBeingInOrAroundVehicles)">
+                                        &nbsp;${pronoun.subject | proper} then noted that being in or around vehicles is a trigger for ${pronoun.possessiveAdjective} panic attacks.
+                                    </template>
+                                    <template else>
+                                        <template if.bind="isNo(responses.psychological.panicAttackTriggersIncludeBeingInOrAroundVehicles)">
+                                            &nbsp;${pronoun.subject | proper} then noted that being in or around vehicles is a not trigger for ${pronoun.possessiveAdjective} panic attacks.
+                                        </template>
+                                        <template else>
+                                            <template if.bind="isDontKnow(responses.psychological.panicAttackTriggersIncludeBeingInOrAroundVehicles)">
+                                                &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} does not know if being in or around vehicles is a trigger for ${pronoun.possessiveAdjective} panic attacks.
+                                            </template>
+                                        </template>
+                                    </template>
+
+                                </template>
+                                <template else>
+                                    <template if.bind="isNo(responses.psychological.panicAttackClearTrigger)">
+                                        &nbsp;${pronoun.subject | proper} advised that there is not a clear trigger for his panic attacks.
+                                    </template>
+                                    <template else>
+                                        <template if.bind="isDontKnow(responses.psychological.panicAttackClearTrigger)">
+                                            &nbsp;${pronoun.subject | proper} advised that he does not know if there is a clear trigger to his panic attacks.
+                                        </template>
+                                    </template>
+                                </template>
+
+                            </template>
                         </template>
                 
                         <template if.bind="isAnswered(responses.psychological.panicAttacksPrior)">
@@ -2909,164 +3121,6 @@
                             </template>
                         </template>
                     </p>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
-
-        <!-- Observations of Dr. Watson -->
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Observations of Dr. Watson</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-
-                    <p>
-                        ${gender.title} ${claimant.lastName} was clearly instructed to complete all testing in an accurate and honest manner both verbally and in writing. 
-                        ${pronoun.subject | proper} was also instructed that if ${pronoun.subject} had any questions, or did not understand a question or test item, ${pronoun.subject} should ask, and this assessor would take the time to provide an answer/clarification when and where applicable and appropriate.
-                    </p>
-
-                    <p>
-                        ${gender.title} ${claimant.lastName} was advised that accommodations could be made during the assessment if ${pronoun.subject} needed the same. 
-                        For example, ${pronoun.subject} could take breaks as required, ${pronoun.subject} could ask for a translator or a reader (if required), ${pronoun.subject} could use the back supports that are available, or if ${pronoun.subject} is light sensitive then ${pronoun.subject} could request a table lamp (rather than overhead fluorescent lighting).
-                    </p>
-
-                    <p>
-                        ${pronoun.subject | proper} was also asked to contact this assessor if ${pronoun.subject} recalled any information that ${pronoun.subject} did not share with this assessor during the assessment, but as of the date of the writing of this report ${pronoun.subject} has not been in contact with this assessor.
-                    </p>
-
-                    <p>
-                        <template if.bind="isYes(observationResponse('claimantFriendly'))">
-                            ${gender.title} ${claimant.lastName} exhibited a friendly and pleasant air.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantFriendly'))">
-                            ${gender.title} ${claimant.lastName} did not exhibit a friendly and pleasant air.
-                        </template>
-
-                        <template if.bind="isYes(observationResponse('claimantBathedRecently'))">
-                            &nbsp;When ${pronoun.subject} arrived on the day of the assessment, ${pronoun.subject} appeared to have bathed recently.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantBathedRecently'))">
-                            &nbsp;When ${pronoun.subject} arrived on the day of the assessment, ${pronoun.subject} did not appear to have bathed recently.
-                        </template>
-                        
-                        <template if.bind="isYes(observationResponse('claimantAppropriateClothing'))">
-                            &nbsp;${pronoun.subject | proper} was seen wearing clothing that was appropriate for ${pronoun.possessiveAdjective} age and the weather conditions of the day.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantAppropriateClothing'))">
-                            &nbsp;The clothing that ${pronoun.subject} was wearing was not fully was appropriate for ${pronoun.possessiveAdjective} age/weather conditions of the day.
-                        </template>
-                        
-                        <template if.bind="isYes(observationResponse('claimantAbleToWrite'))">
-                            &nbsp;${pronoun.subject | proper} was observed using a writing utensil to complete the questionnaires and testing.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantAbleToWrite'))">
-                            &nbsp;${pronoun.subject | proper} did not use a writing utensil to complete the questionnaires and testing.
-                        </template>
-                        
-                    </p>
-
-                    <p>
-                        <template if.bind="isYes(observationResponse('claimantAnswersOrganized'))">
-                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions were well thought out and organized.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantAnswersOrganized'))">
-                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions did not appear to be well thought out or organized.
-                        </template>
-
-                        <template if.bind="isNo(observationResponse('neededToRepeatQuestionsOrAnswers'))">
-                            &nbsp;This assessor did not have to repeat questions to ${pronoun.object}.
-                        </template>
-                        <template if.bind="isYes(observationResponse('neededToRepeatQuestionsOrAnswers'))">
-                            &nbsp;This assessor repeated questions.
-                        </template>
-
-                        <template if.bind="isNo(observationResponse('claimantWordFindingOrStuttering'))">
-                            &nbsp;This assessor did not notice any issues with word finding or stuttering.
-                        </template>
-                        <template if.bind="isYes(observationResponse('claimantWordFindingOrStuttering'))">
-                            &nbsp;At times, this assessor noticed with word finding or stuttering.
-                        </template>
-
-                        <template if.bind="observationsRecallingAllYes || observationsRecallingAllNo">
-                            <template if.bind="observationsRecallingAllYes"><!-- if.bind="isYes(observationResponse('claimantIssuesRecallingPreviousState')) && isYes(observationResponse('claimantIssuesRecallingIncident')) && isYes(observationResponse('claimantIssuesRecallingTreatment'))"> -->
-                                &nbsp;${pronoun.subject | proper} reported issues recalling ${pronoun.possessiveAdjective} previous state, specific details about the index accident, and ${pronoun.possessiveAdjective} post-accident treatment.
-                            </template>
-                            <template if.bind="observationsRecallingAllNo"><!--if.bind="isNo(observationResponse('claimantIssuesRecallingPreviousState')) && isNo(observationResponse('claimantIssuesRecallingIncident')) && isNo(observationResponse('claimantIssuesRecallingTreatment'))">-->
-                                &nbsp;${pronoun.subject | proper} did not appear to have any issues recalling ${pronoun.possessiveAdjective} previous state, specific details about the index accident, or information about ${pronoun.possessiveAdjective} post-accident treatment.
-                            </template>
-                        </template>
-                        <template else>
-                            &nbsp;${pronoun.subject | proper} ${test}
-                        </template>
-                        
-                        <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
-                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident and the changes in ${pronoun.possessiveAdjective} life since the subject accident.
-                        </template>
-                        <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
-                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident but did not tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
-                            &nbsp;${pronoun.subject | proper} did not tear up when discussing the accident but did tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantCriedWhenDiscussingIncident')) && isNo(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
-                            &nbsp;${pronoun.subject | proper} did not tear up when discussing the accident or any changes in ${pronoun.possessiveAdjective} life since the subject accident.
-                        </template>
-                        
-                        <template if.bind="isYes(observationResponse('claimantRequestedBreakDuringInterview')) && isYes(observationResponse('claimantRemainedSeatedDuringInterview'))">
-                            &nbsp;${gender.title} ${claimant.lastName} requested a break during the interview, but when talking to this assessor, ${gender.title} ${claimant.lastName} was able to remain seated during the interview without getting up to stretch.
-                        </template>
-                        <template if.bind="isYes(observationResponse('claimantRequestedBreakDuringInterview')) && isNo(observationResponse('claimantRemainedSeatedDuringInterview'))">
-                            &nbsp;${gender.title} ${claimant.lastName} requested a break during the interview and was also observed to be stretching.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantRequestedBreakDuringInterview')) && isYes(observationResponse('claimantRemainedSeatedDuringInterview'))">
-                            &nbsp;${gender.title} ${claimant.lastName} did not request a break during the interview, and ${pronoun.subject} remained seated during the interview without getting up to stretch.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantRequestedBreakDuringInterview')) && isNo(observationResponse('claimantRemainedSeatedDuringInterview'))">
-                            &nbsp;${gender.title} ${claimant.lastName} did not request a break during the interview, but was observed stretching.
-                        </template>
-
-                        <template if.bind="isNo(observationResponse('claimantIssuesWithExecutiveFunctioning'))">
-                            &nbsp;This assessor did not notice any issues with executive functioning during the interview.
-                        </template>
-                        <template if.bind="isYes(observationResponse('claimantIssuesWithExecutiveFunctioning'))">
-                            &nbsp;<strong>This assessor noticed issues with executive functioning during the interview which included:</strong>
-                        </template>
-                        
-                    </p>
-
-                    <p>
-                        <template if.bind="(isYes(responses.personalHistory.psychological.anythingToAdd) || responses.createdAtVersion < 33) && responses.personalHistory.psychological.additionalInformation">
-                            At the end of the interview ${gender.title} ${claimant.lastName} was asked if there was anything ${pronoun.subject} wished to add or if there was anything that ${pronoun.subject} and I did not cover during the interview. 
-                            ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} wanted to add <strong>${responses.personalHistory.psychological.additionalInformation}</strong>.
-                        </template>
-                        <template else>
-                            <template if.bind="isNo(responses.personalHistory.psychological.anythingToAdd)">
-                                At the end of the interview ${gender.title} ${claimant.lastName} was asked if there was anything ${pronoun.subject} wished to add or if there was anything that ${pronoun.subject} and I did not cover during the interview. 
-                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} did not have anything else to share with this assessor.
-                            </template>
-                        </template>
-
-                    </p>
-
-                    <p>
-                        <template if.bind="isYes(observationResponse('claimantAcceptedOfferForDebrief'))">
-                            Knowing that the information discussed during the interview can stimulate a negative emotional response, ${gender.title} ${claimant.lastName} was offered an opportunity to debrief, which ${pronoun.subject} accepted.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantAcceptedOfferForDebrief'))">
-                            Knowing that the information discussed during the interview can stimulate a negative emotional response, ${gender.title} ${claimant.lastName} was offered an opportunity to debrief, which ${pronoun.subject} declined.
-                        </template>
-
-                        <template if.bind="isYes(observationResponse('claimantDeclinedToAnswerAnyQuestions'))">
-                            &nbsp;During the interview, ${pronoun.subject} declined to answer some questions as posed by this assessor.
-                        </template>
-                        <template if.bind="isNo(observationResponse('claimantDeclinedToAnswerAnyQuestions'))">
-                            &nbsp;At no point did ${pronoun.subject} decline to answer any questions posed by the assessor.
-                        </template>
-                    </p>
-
                 </div>
 
                 <hr>

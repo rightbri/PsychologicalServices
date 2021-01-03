@@ -247,6 +247,9 @@ export class Notes {
                     this.notesRepository.getHeadacheFrequencies().then(data => {
                         this.headacheFrequencies = this.asArray(data);
                     }),
+                    this.notesRepository.getHeadacheFrequencies2().then(data => {
+                        this.headacheFrequencies2 = this.asArray(data);
+                    }),
                     this.notesRepository.getHobbies().then(data => {
                         this.hobbies = this.asArray(data);
                     }),
@@ -261,6 +264,9 @@ export class Notes {
                     }),
                     this.notesRepository.getIdentificationVerificationMethods().then(data => {
                         this.identificationVerificationMethods = this.asArray(data);
+                    }),
+                    this.notesRepository.getPanicAttackFrequencies().then(data => {
+                        this.panicAttackFrequencies = this.asArray(data);
                     })
                 ]);
             });
