@@ -172,8 +172,8 @@ export class NotesRepository {
 
     getAgeUnits() {
         let data = {
-            "years": { "description": "Years", "value": "years" },
-            "months": { "description": "Months", "value": "months" }
+            "years": { "description": "Years", "value": "years", "format": function(context) { return `year`; } },
+            "months": { "description": "Months", "value": "months", "format": function(context) { return `month`; } }
         };
 
         return getPromise(data);
@@ -886,7 +886,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "34";
+    return "35";
 }
 
 function upgrade(responses, toVersion) {
@@ -1433,7 +1433,9 @@ function getNewResponses() {
                 "causeOfDeath": { "value": null, "skip": false, "dontKnow": false },
                 "yearOfDeath": { "value": null, "skip": false, "dontKnow": false },
                 "educationLevel": { "value": null, "skip": false, "dontKnow": false },
-                "employmentAreas": { "value": null, "skip": false, "dontKnow": false }
+                "employmentAreas": { "value": null, "skip": false, "dontKnow": false },
+                "isRetired": null,
+                "isDisabled": null
             },
             "mother": {
                 "skip": null,
@@ -1443,9 +1445,13 @@ function getNewResponses() {
                 "causeOfDeath": { "value": null, "skip": false, "dontKnow": false },
                 "yearOfDeath": { "value": null, "skip": false, "dontKnow": false },
                 "educationLevel": { "value": null, "skip": false, "dontKnow": false },
-                "employmentAreas": { "value": null, "skip": false, "dontKnow": false }
+                "employmentAreas": { "value": null, "skip": false, "dontKnow": false },
+                "isRetired": null,
+                "isDisabled": null
             },
             "didParentsSeparateOrDivorce": null,
+            "skipAgeWhenParentsSeparated": null,
+            "ageWhenParentsSeparated": { "value": null, "unit": null },
             "brothers": {
                 "skip": true,
                 "skipAges": false,
@@ -1453,6 +1459,30 @@ function getNewResponses() {
                 "ages": []
             },
             "sisters": {
+                "skip": true,
+                "skipAges": false,
+                "howMany": 0,
+                "ages": []
+            },
+            "halfBrothers": {
+                "skip": true,
+                "skipAges": false,
+                "howMany": 0,
+                "ages": []
+            },
+            "halfSisters": {
+                "skip": true,
+                "skipAges": false,
+                "howMany": 0,
+                "ages": []
+            },
+            "stepBrothers": {
+                "skip": true,
+                "skipAges": false,
+                "howMany": 0,
+                "ages": []
+            },
+            "stepSisters": {
                 "skip": true,
                 "skipAges": false,
                 "howMany": 0,
@@ -1492,6 +1522,18 @@ function getNewResponses() {
                     "ages": []
                 },
                 "daughters": {
+                    "skip": true,
+                    "skipAges": false,
+                    "howMany": 0,
+                    "ages": []
+                },
+                "stepSons": {
+                    "skip": true,
+                    "skipAges": false,
+                    "howMany": 0,
+                    "ages": []
+                },
+                "stepDaughters": {
                     "skip": true,
                     "skipAges": false,
                     "howMany": 0,
