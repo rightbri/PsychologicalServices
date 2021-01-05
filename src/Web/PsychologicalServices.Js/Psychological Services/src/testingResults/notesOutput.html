@@ -206,7 +206,7 @@
                         </template>
 
                         <template if.bind="isYes(responses.dayOfAssessment.takenMedicationBeforeAssessment)">
-                            When asked about any medication or substances ${pronoun.subject} had taken in the last 48 hours ${pronoun.subject} noted that ${pronoun.subject} had used the following:
+                            &nbsp;When asked about any medication or substances ${pronoun.subject} had taken in the last 48 hours ${pronoun.subject} noted that ${pronoun.subject} had used the following:
                             
                             <template repeat.for="medication of responses.dayOfAssessment.medications">
                                 <template if.bind="$last && !$first">
@@ -1325,6 +1325,19 @@
                         </template>
                     </p>
 
+                </div>
+                <hr>
+            </div>
+        </fieldset>
+
+        <!-- Understanding of Diagnosis and Prognosis -->
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Understanding of Diagnosis and Prognosis</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1 uk-grid">
+
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+
                     <p>
                         <template if.bind="responses.personalHistory.diagnosis">
                             ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} has been diagnosed with
@@ -1340,12 +1353,11 @@
                             </template>
                         </template>
                     </p>
-
                 </div>
                 <hr>
             </div>
         </fieldset>
-        
+
         <!-- Physical -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Physical</legend>
@@ -1577,14 +1589,14 @@
                         </template>
 
                         <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
-                            &nbsp;${pronoun.subject | proper} 
                             <template if.bind="isYes(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
-                                &nbsp;described 
+                                &nbsp;${pronoun.subject | proper} described the quality of ${pronoun.possessiveAdjective} sleep prior to the accident as being better.
                             </template>
                             <template else>
-                                &nbsp;did not describe 
+                                <template if.bind="isNo(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
+                                    &nbsp;${pronoun.subject | proper} indicated that the quality of the sleep ${pronoun.subject} obtained prior to the accident was not better than the quality of sleep ${pronoun.subject} is currently obtaining.
+                                </template>
                             </template>
-                            &nbsp;the quality of ${pronoun.possessiveAdjective} sleep prior to the accident as being better.
                         </template>
                         
                         <template if.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident">
@@ -2851,233 +2863,214 @@
                         ${gender.title} ${claimant.lastName} was asked to provide information about ${pronoun.possessiveAdjective} family. 
                         &nbsp;${pronoun.subject | proper} shared the following:
                         <br>
-                        <table class="uk-table uk-table-small uk-table-middle uk-table-divider" style="font-family: arial; font-size: 11pt; font-weight: normal; border-width: 1px;">
+
+                        <table class="uk-table uk-table-small uk-table-divider chart" style="font-family: arial; font-size: 11pt; font-weight: normal; border-width: 1px;">
                             <tbody>
                                 <!-- Father -->
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap">
                                         Father
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         
                                     </td>
                                 </tr>
                                 <tr if.bind="isYes(responses.personalHistory.father.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Age
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.father.age.value}
                                     </td>
                                 </tr>
                                 <tr if.bind="isNo(responses.personalHistory.father.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Age at time of death
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.father.age.value}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Educational background
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <strong>
                                             ${responses.personalHistory.father.educationLevel.value}
                                         </strong>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Employment background
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <strong>
                                             ${responses.personalHistory.father.employmentAreas.value}
                                         </strong>
                                     </td>
                                 </tr>
                                 <tr if.bind="isYes(responses.personalHistory.father.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Currently retired?
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <template if.bind="isAnswered(responses.personalHistory.father.isRetired)">
                                             ${yesNoDontKnowMap[responses.personalHistory.father.isRetired].description}
                                         </template>
                                     </td>
                                 </tr>
                                 <tr if.bind="isYes(responses.personalHistory.father.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Currently disabled?
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <template if.bind="isAnswered(responses.personalHistory.father.isDisabled)">
                                             ${yesNoDontKnowMap[responses.personalHistory.father.isDisabled].description}
                                         </template>
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
                                 <!-- Mother -->
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap">
                                         Mother
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         
                                     </td>
                                 </tr>
                                 <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Age
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.mother.age.value}
                                     </td>
                                 </tr>
                                 <tr if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Age at time of death
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.mother.age.value}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Educational background
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <strong>
                                             ${responses.personalHistory.mother.educationLevel.value}
                                         </strong>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Employment background
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <strong>
                                             ${responses.personalHistory.mother.employmentAreas.value}
                                         </strong>
                                     </td>
                                 </tr>
                                 <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Currently retired?
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <template if.bind="isAnswered(responses.personalHistory.mother.isRetired)">
                                             ${yesNoDontKnowMap[responses.personalHistory.mother.isRetired].description}
                                         </template>
                                     </td>
                                 </tr>
                                 <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Currently disabled?
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         <template if.bind="isAnswered(responses.personalHistory.mother.isDisabled)">
                                             ${yesNoDontKnowMap[responses.personalHistory.mother.isDisabled].description}
                                         </template>
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                
                                 <!-- Siblings -->
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap">
                                         Siblings
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                     
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Brothers
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.brothers.howMany}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Sisters
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.sisters.howMany}
                                     </td>
                                 </tr>
                                 <tr if.bind="responses.personalHistory.halfBrothers.howMany > 0">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Half Brothers
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.halfBrothers.howMany}
                                     </td>
                                 </tr>
                                 <tr if.bind="responses.personalHistory.halfSisters.howMany > 0">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Half Sisters
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.halfSisters.howMany}
                                     </td>
                                 </tr>
                                 <tr if.bind="responses.personalHistory.stepBrothers.howMany > 0">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Step Brothers
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.stepBrothers.howMany}
                                     </td>
                                 </tr>
                                 <tr if.bind="responses.personalHistory.stepSisters.howMany > 0">
-                                    <td style="border-style: solid; border-width: 1px; text-align: right;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                         Step Sisters
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${responses.personalHistory.stepSisters.howMany}
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap"></td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center"></td>
-                                </tr>
-
-                                <tr>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap">
                                         Birth order
                                     </td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                         ${birthPositionText}
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap"></td>
-                                    <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center"></td>
-                                </tr>
-
                                 <template if.bind="isYes(responses.personalHistory.children.any)">
                                     <tr>
-                                        <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap">
                                             Child/Children
                                         </td>
-                                        <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
     
                                         </td>
                                     </tr>
@@ -3085,20 +3078,20 @@
                                     <template if.bind="responses.personalHistory.children.sons.howMany">
                                         <template if.bind="responses.personalHistory.children.sons.skipAges">
                                             <tr>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
             
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.sons.howMany} son(s)
                                                 </td>
                                             </tr>
                                         </template>
                                         <template else>
                                             <tr repeat.for="i of responses.personalHistory.children.sons.ages.length">
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
             
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.sons.ages[i].value} ${ageUnitsMap[responses.personalHistory.children.sons.ages[i].unit].format(self)}-old son
                                                 </td>
                                             </tr>
@@ -3108,20 +3101,20 @@
                                     <template if.bind="responses.personalHistory.children.daughters.howMany">
                                         <template if.bind="responses.personalHistory.children.daughters.skipAges">
                                             <tr>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
             
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.daughters.howMany} daughter(s)
                                                 </td>
                                             </tr>
                                         </template>
                                         <template else>
                                             <tr repeat.for="i of responses.personalHistory.children.daughters.ages.length">
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
             
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.daughters.ages[i].value} ${ageUnitsMap[responses.personalHistory.children.daughters.ages[i].unit].format(self)}-old daughter
                                                 </td>
                                             </tr>
@@ -3131,20 +3124,20 @@
                                     <template if.bind="responses.personalHistory.children.stepSons.howMany">
                                         <template if.bind="responses.personalHistory.children.stepSons.skipAges">
                                             <tr>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
             
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.stepSons.howMany} step-son(s)
                                                 </td>
                                             </tr>
                                         </template>
                                         <template else>
                                             <tr repeat.for="i of responses.personalHistory.children.stepSons.ages.length">
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
             
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.stepSons.ages[i].value} ${ageUnitsMap[responses.personalHistory.children.stepSons.ages[i].unit].format(self)}-old step-son
                                                 </td>
                                             </tr>
@@ -3154,36 +3147,37 @@
                                     <template if.bind="responses.personalHistory.children.stepDaughters.howMany">
                                         <template if.bind="responses.personalHistory.children.stepDaughters.skipAges">
                                             <tr>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
 
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.stepDaughters.howMany} step-daughter(s)
                                                 </td>
                                             </tr>
                                         </template>
                                         <template else>
                                             <tr repeat.for="i of responses.personalHistory.children.stepDaughters.ages.length">
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap">
             
                                                 </td>
-                                                <td style="border-style: solid; border-width: 1px;" class="uk-text-nowrap uk-text-center">
+                                                <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                                     ${responses.personalHistory.children.stepDaughters.ages[i].value} ${ageUnitsMap[responses.personalHistory.children.stepDaughters.ages[i].unit].format(self)}-old step-daughter
                                                 </td>
                                             </tr>
                                         </template>
                                     </template>
-                                    
-
                                 </template>
                                 
                             </tbody>
                         </table>
 
                         <template if.bind="responses.personalHistory.children.howManyLiveWithYou && responses.personalHistory.children.howManyLiveWithYou > 0">
-                            ${gender.title} ${claimant.lastName} then shared that ${responses.personalHistory.children.howManyLiveWithYou} of the children currently reside with ${pronoun.object}.
+                            ${gender.title} ${claimant.lastName} then shared that ${responses.personalHistory.children.howManyLiveWithYou | numberTextIfLessThanTen} of the children currently reside with ${pronoun.object}.
                         </template>
 
+                    </p>
+
+                    <p>
                         <!--
                         <template if.bind="!responses.personalHistory.father.skip">
                             <template if.bind="!isSkip(responses.personalHistory.father.isAlive)">
@@ -3420,7 +3414,7 @@
                         </template>
                         -->
                         <template if.bind="(anySelectedNeurologicalOrPsychiatricDiagnosis || anyUnselectedNeurologicalOrPsychiatricDiagnosis || anyDontKnowNeurologicalOrPsychiatricDiagnosis || anySelectedFamilyNeurologicalOrPsychiatricDiagnosis || anyUnselectedFamilyNeurologicalOrPsychiatricDiagnosis || anyDontKnowFamilyNeurologicalOrPsychiatricDiagnosis) & signal:'neurological-psychiatric-disease-changed'">
-                            &nbsp;When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
+                            When ${gender.title} ${claimant.lastName} was asked about any personal or familial history, 
                             
                             <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
                                 &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally has been diagnosed with ${selectedNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
