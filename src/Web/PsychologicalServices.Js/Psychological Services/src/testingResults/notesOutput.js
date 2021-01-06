@@ -727,7 +727,11 @@ export class NotesOutput {
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
     get yesFractures() {
-        return this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isFractures);
+        let data = this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isFractures);
+
+        let any = data.some(x => x);
+
+        return any;
     }
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
@@ -745,17 +749,29 @@ export class NotesOutput {
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
     get noFractures() {
-        return this.getInjuriesAndSymptomsForResponses(item => this.isNo(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isFractures);
+        let data = this.getInjuriesAndSymptomsForResponses(item => this.isNo(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isFractures);
+
+        let any = data.some(x => x);
+
+        return any;
     }
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
     get yesLacerations() {
-        return this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+        let data = this.getInjuriesAndSymptomsForResponses(item => this.isYes(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+
+        let any = data.some(x => x);
+
+        return any;
     }
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
     get noLacerations() {
-        return this.getInjuriesAndSymptomsForResponses(item => this.isNo(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+        let data = this.getInjuriesAndSymptomsForResponses(item => this.isNo(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+
+        let any = data.some(x => x);
+
+        return any;
     }
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
