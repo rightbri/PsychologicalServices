@@ -9,7 +9,7 @@ export class DataRepository {
                 'address2': 'PO Box 52565 Turtle Creek',
                 'city': 'Mississauga',
                 'province': 'Ontario',
-                'postalCode': 'L5J 1J6'
+                'postalCode': 'L5J 1J0'
             },
             email: 'doctormarkwatson@gmail.com',
             linkedInAddress: 'https://ca.linkedin.com/in/markwatsonpsychologicalservice'

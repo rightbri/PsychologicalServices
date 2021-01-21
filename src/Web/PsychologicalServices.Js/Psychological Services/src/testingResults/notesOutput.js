@@ -552,6 +552,18 @@ export class NotesOutput {
         return this.responses.accidentDetails.timeOfAccident.timeType === "general";
     }
 
+    @computedFrom('responses.accidentDetails.timeOfAccident.specificValue')
+    get timeOfAccidentSpecific() {
+        if (this.responses === null || !this.responses.accidentDetails || !this.responses.accidentDetails.timeOfAccident) { return false; }
+
+        if (/^\d{1,2}$/.test(this.responses.accidentDetails.timeOfAccident.specificValue))
+        {
+            return this.responses.accidentDetails.timeOfAccident.specificValue + ":00";
+        }
+
+        return this.responses.accidentDetails.timeOfAccident.specificValue;
+    }
+
     @computedFrom('responses.accidentDetails.hitHeadOn')
     get hitHeadOnIsOther() {
         if (this.responses === null || this.responses.accidentDetails === null) { return false; }

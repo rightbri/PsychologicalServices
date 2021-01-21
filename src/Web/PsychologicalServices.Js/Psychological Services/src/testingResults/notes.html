@@ -784,7 +784,7 @@
 
                 <hr>
 
-                <template if.bind="(isYes(responses.accidentDetails.lossOfConsciousness.experienced) || isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)) && isNo(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
+                <template if.bind="isNo(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
                     <div class="uk-margin-remove uk-width-1-2">
                         <span class.one-time="isUnanswered(responses.accidentDetails.lastMemoryBeforeImpact) ? 'unanswered' : '' & signal:'accident-details-memory-changed'">
                             What is your last memory before impact?
@@ -3048,7 +3048,7 @@
                 </div>
 
                 <hr>
-
+                <!--
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident) ? 'unanswered' : '' & signal:'slept-better-prior-to-accident-changed'">
                         Would you describe your sleep as being BETTER prior to the accident?
@@ -3062,6 +3062,7 @@
                 </div>
 
                 <hr>
+                -->
 
                 <div class="uk-margin-remove uk-width-1-4">
                     How much sleep were you obtaining before the accident?
@@ -3723,48 +3724,66 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.growingUp.abuse.physical) ? 'unanswered' : '' & signal:'growing-up-abuse-changed'">
-                        Were you the victim of any physical abuse when growing up?
-                    </span>
-                </div>
+                <template if.bind="responses.createdAtVersion >= 36">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.growingUp.abuse.any) ? 'unanswered' : '' & signal:'growing-up-abuse-changed'">
+                            Were you the victim of any abuse when growing up?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="anyAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.any" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>    
+                </template>
 
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="physicalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.physical" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.growingUp.abuse.sexual) ? 'unanswered' : '' & signal:'growing-up-abuse-changed'">
-                        Were you the victim of any sexual abuse when growing up?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="sexualAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.sexual" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.growingUp.abuse.mental) ? 'unanswered' : '' & signal:'growing-up-abuse-changed'">
-                        Were you the victim of any mental abuse when growing up?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="mentalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.mental" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
+                <template if.bind="responses.createdAtVersion < 36 || isYes(responses.personalHistory.growingUp.abuse.any)">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.growingUp.abuse.physical) ? 'unanswered' : '' & signal:'growing-up-abuse-changed'">
+                            Were you the victim of any physical abuse when growing up?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="physicalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.physical" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.growingUp.abuse.sexual) ? 'unanswered' : '' & signal:'growing-up-abuse-changed'">
+                            Were you the victim of any sexual abuse when growing up?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="sexualAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.sexual" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.growingUp.abuse.mental) ? 'unanswered' : '' & signal:'growing-up-abuse-changed'">
+                            Were you the victim of any mental abuse when growing up?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="mentalAbuseVictim" class="uk-radio" checked.bind="responses.personalHistory.growingUp.abuse.mental" value.bind="response.value" change.delegate="changed('growing-up-abuse-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div class="uk-margin-remove uk-width-1-2">
                     <span class.one-time="isUnanswered(responses.personalHistory.growingUp.developmentalMilestoneIssues) ? 'unanswered' : '' & signal:'developmental-milestone-issues'">
                         Are you aware of any issues hitting developmental milestones?
@@ -4122,8 +4141,14 @@
                     <hr>
                 </template>
                 
-                <div class="uk-margin-remove uk-width-1-1">
+                <div class="uk-margin-remove uk-width-1-2">
                     About your mother:
+                </div>
+                
+                <div class="uk-margin-remove uk-width-1-2">
+                    <label>
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.mother.skip" value.bind="true" change.delegate="changed('mother-changed')" />&nbsp;Skip
+                    </label>
                 </div>
 
                 <!-- Mothers age -->
@@ -4692,7 +4717,7 @@
                 </div>
 
                 <hr>
-                
+                <!--
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.personalHistory.education.everFailedACourse) ? 'unanswered' : '' & signal:'education-ever-failed-course-changed'">
                         Did you ever fail a course?
@@ -4706,7 +4731,7 @@
                 </div>
 
                 <hr>
-
+                -->
                 <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="isUnanswered(responses.personalHistory.education.bestSubject) ? 'unanswered' : '' & signal:'education-best-subject-changed'">
                         What was your best subject?
@@ -4750,7 +4775,7 @@
                 </div>
 
                 <hr>
-
+<!--
                 <div class="uk-margin-remove uk-width-3-4">
                     <span class.one-time="isUnanswered(responses.personalHistory.occupation.wereYouWorkingAtTheTimeOfTHeAccident) ? 'unanswered' : '' & signal:'were-working-at-time-of-accident-changed'">
                         Were you working? (compared to seasonal work or being laid off)
@@ -4780,7 +4805,7 @@
                 </div>
 
                 <hr>
-<!--
+
                 <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="!responses.personalHistory.occupation.end.na && (isUnanswered(responses.personalHistory.occupation.end.month) || isUnanswered(responses.personalHistory.occupation.end.year)) ? 'unanswered' : '' & signal:'occupation-end-changed'">
                         If applicable, when did you stop working at this job?
@@ -4814,7 +4839,7 @@
                 </div>
 
                 <hr>
-
+<!--
                 <div class="uk-margin-remove uk-width-1-3">
                     <span class.one-time="isUnanswered(responses.personalHistory.occupation.essentialDuties) ? 'unanswered' : '' & signal:'essential-duties-changed'">
                         What were the essential duties of your position?
@@ -4848,7 +4873,7 @@
                 <div class="uk-margin-remove uk-width-1-4">
                     <input type="text" name="occupationPreAccidentIncome" class="uk-input uk-form-small uk-form-width-small" value.bind="responses.personalHistory.occupation.preAccidentIncome" input.delegate="changed('preaccident-income-changed') & debounce:500" />
                 </div>
-
+            -->
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
@@ -4864,7 +4889,7 @@
                 </div>
 
                 <hr>
-
+<!--
                 <template if.bind="isYes(responses.personalHistory.occupation.returnToWork.attempted)">
                     <div class="uk-margin-remove uk-width-3-4">
                         <span class.one-time="isYes(responses.personalHistory.occupation.returnToWork.attempted) && isUnanswered(responses.personalHistory.occupation.returnToWork.when) ? 'unanswered' : '' & signal:'return-to-work-changed'">
@@ -4966,6 +4991,7 @@
                 </div>
 
                 <hr>
+            -->
             </div>
         </fieldset>
 

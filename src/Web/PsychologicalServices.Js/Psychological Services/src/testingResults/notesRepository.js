@@ -886,7 +886,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "35";
+    return "36";
 }
 
 function upgrade(responses, toVersion) {
@@ -1418,6 +1418,7 @@ function getNewResponses() {
             "languages": [""],
             "growingUp": {
                 "abuse": {
+                    "any": null,
                     "physical": null,
                     "sexual": null,
                     "mental": null

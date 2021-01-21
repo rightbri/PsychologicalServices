@@ -244,7 +244,7 @@
                     <p>
                         <template if.bind="(isYes(responses.personalHistory.psychological.anythingToAdd) || responses.createdAtVersion < 33) && responses.personalHistory.psychological.additionalInformation">
                             At the end of the interview ${gender.title} ${claimant.lastName} was asked if there was anything ${pronoun.subject} wished to add or if there was anything that ${pronoun.subject} and I did not cover during the interview. 
-                            ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} wanted to add <strong>${responses.personalHistory.psychological.additionalInformation}</strong>.
+                            ${gender.title} ${claimant.lastName} replied that ${pronoun.subject} wanted to add <strong>${responses.personalHistory.psychological.additionalInformation}</strong>.
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.personalHistory.psychological.anythingToAdd)">
@@ -288,10 +288,10 @@
 
                     <p>
                         <template if.bind="isYes(observationResponse('claimantAnswersOrganized'))">
-                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions were well thought out and organized.
+                            During the interview ${gender.title} ${claimant.lastName}’s answers to the questions were well thought out and organized.
                         </template>
                         <template if.bind="isNo(observationResponse('claimantAnswersOrganized'))">
-                            &nbsp;During the interview ${gender.title} ${claimant.lastName}’s answers to the questions did not appear to be well thought out or organized.
+                            During the interview ${gender.title} ${claimant.lastName}’s answers to the questions did not appear to be well thought out or organized.
                         </template>
 
                         <template if.bind="isNo(observationResponse('neededToRepeatQuestionsOrAnswers'))">
@@ -397,7 +397,7 @@
                         </template>
                         <template else>
                             <template if.bind="timeOfAccidentIsSpecific">
-                                &nbsp;${pronoun.subject | proper} reported that around ${responses.accidentDetails.timeOfAccident.specificValue} ${responses.accidentDetails.timeOfAccident.specificAmPm} on ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a 
+                                &nbsp;${pronoun.subject | proper} reported that around ${timeOfAccidentSpecific} ${responses.accidentDetails.timeOfAccident.specificAmPm} on ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a 
                                 <template if.bind="isAnswered(responses.accidentDetails.category)">
                                     &nbsp;${accidentCategoriesMap[responses.accidentDetails.category].format(self)}.
                                 </template>
@@ -607,7 +607,7 @@
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.accidentDetails.lossOfConsciousness.experienced)">
-                                    &nbsp;Upon inquiry, ${pronoun.subject} indicated that ${pronoun.subject} does not know if ${pronoun.subject} sustained any loss of consciousness.
+                                    &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know if ${pronoun.subject} lost consciousness.
                                 </template>
                             </template>
                         </template>
@@ -637,7 +637,7 @@
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
-                                &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not has full and intact memory from after the accident.
+                                &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not have full and intact memory from after the accident.
                                 <template if.bind="isYes(responses.accidentDetails.lossOfConsciousness.experienced) || isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)">
                                     <template if.bind="responses.accidentDetails.lastMemoryBeforeImpact">
                                         &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} last memory before the impact was of <strong>${responses.accidentDetails.lastMemoryBeforeImpact}</strong>
@@ -715,7 +715,7 @@
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.wentToHospital)">
-                                &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} did not attended a hospital.
+                                &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} did not attend a hospital.
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.accidentDetails.wentToHospital)">
@@ -774,7 +774,7 @@
 
                     <p>
                         <template if.bind="isYes(responses.accidentDetails.hadBrainImagingInvestigations)">
-                            When asked about additional treatments or investigations, ${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} had brain imaging investigations, 
+                            When asked about additional treatments or investigations, ${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} had brain imaging investigations done, 
                             <template if.bind="isYes(responses.accidentDetails.brainImagingInvestigationFindingsNormal)">
                                 &nbsp;adding that the findings were normal.
                             </template>
@@ -1412,7 +1412,7 @@
                                     &nbsp;${gender.title} ${claimant.lastName} went on to describe ${pronoun.possessiveAdjective} headaches as: ${selectedHeadacheDescriptions | arrayToString:{"format":getItemValueForCurrentContext}}.
                                 </template>
                                 <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheReliefActivities && responses.neuropsychological.physical.headaches.headacheReliefActivities.length">
-                                    &nbsp;When asked how ${pronoun.subject} tries to obtain relief ${pronoun.subject} responded with: ${selectedHeadacheReliefActivities | arrayToString:{"format":getItemValueForCurrentContext}}.
+                                    &nbsp;When asked how ${pronoun.subject} tries to obtain relief, ${pronoun.subject} responded with: ${selectedHeadacheReliefActivities | arrayToString:{"format":getItemValueForCurrentContext}}.
                                 </template>
                                 <template if.bind="responses.createdAtVersion < 35">
                                     <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency)">
@@ -1587,7 +1587,7 @@
                             </template>
                             &nbsp;issues sleeping.
                         </template>
-
+                        <!--
                         <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
                             <template if.bind="isYes(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
                                 &nbsp;${pronoun.subject | proper} described the quality of ${pronoun.possessiveAdjective} sleep prior to the accident as being better.
@@ -1598,7 +1598,7 @@
                                 </template>
                             </template>
                         </template>
-                        
+                        -->
                         <template if.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident">
                             <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
                                 &nbsp;${pronoun.subject | proper} advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
@@ -1995,11 +1995,11 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isNo(responses.psychological.panicAttackClearTrigger)">
-                                        &nbsp;${pronoun.subject | proper} advised that there is not a clear trigger for his panic attacks.
+                                        &nbsp;${pronoun.subject | proper} advised that there is not a clear trigger for ${pronoun.possessiveAdjective} panic attacks.
                                     </template>
                                     <template else>
                                         <template if.bind="isDontKnow(responses.psychological.panicAttackClearTrigger)">
-                                            &nbsp;${pronoun.subject | proper} advised that he does not know if there is a clear trigger to his panic attacks.
+                                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} does not know if there is a clear trigger to ${pronoun.possessiveAdjective} panic attacks.
                                         </template>
                                     </template>
                                 </template>
@@ -2102,7 +2102,7 @@
                     <!-- Driver's Licence -->
                     <p>
                         <template if.bind="isAnswered(responses.psychological.travel.driverLicense.haveLicense)">
-                            Upon inquiry ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does 
+                            Upon inquiry, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does 
                             <template if.bind="isNo(responses.psychological.travel.driverLicense.haveLicense)">
                                 &nbsp;not
                             </template>
@@ -2429,7 +2429,7 @@
                             When asked about ${pronoun.possessiveAdjective} linguistic functioning, ${gender.title} ${claimant.lastName} 
                             <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
                                 &nbsp;reported that at the present time ${pronoun.subject} experiences:
-                                &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","lastConnector":false} & signal:'language-issue-changed'}.
+                                &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'language-issue-changed'}.
                             </template>
                             <template if.bind="anyUnselectedLanguageIssues & signal:'language-issue-changed'">
                                 <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
@@ -2606,7 +2606,7 @@
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
     
                     <p if.bind="anyCurrentStateTaskResponses & signal:'current-state-task-changed'">
-                        When asked about ${pronoun.possessiveAdjective} ability to be involved in current regular activities ${gender.title} ${claimant.lastName} shared the following: 
+                        When asked about ${pronoun.possessiveAdjective} ability to be involved in current regular activities, ${gender.title} ${claimant.lastName} shared the following: 
                     </p>
             
                     <table class="uk-table uk-table-divider uk-table-small chart" if.bind="anyCurrentStateTaskResponses & signal:'current-state-task-changed'">
@@ -2790,27 +2790,32 @@
                             ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} was raised in ${getItemValueForCurrentContext(getMatch(socioeconomicStatuses, responses.personalHistory.growingUp.socioeconomicClass))}.
                         </template>
     
-                        <template if.bind="yesAbuseTypes.length || noAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                            <template if.bind="noAbuseGrowingUp & signal:'growing-up-abuse-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
-                            </template>
-                            <template else>
-                                &nbsp;When asked about any abuse when ${pronoun.subject} was growing up, 
-                                <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                                    &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
+                        <template if.bind="isNo(responses.personalHistory.growingUp.abuse.any)">
+                            &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
+                        </template>
+                        <template else>
+                            <template if.bind="yesAbuseTypes.length || noAbuseTypes.length">
+                                <template if.bind="noAbuseGrowingUp">
+                                    &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
                                 </template>
-                                <template if.bind="noAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                                    <template if.bind="yesAbuseTypes.length & signal:'growing-up-abuse-changed'">
-                                        &nbsp;${pronoun.subject | proper}
+                                <template else>
+                                    &nbsp;When asked about any abuse when ${pronoun.subject} was growing up, 
+                                    <template if.bind="yesAbuseTypes.length">
+                                        &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
                                     </template>
-                                    <template else>
-                                        &nbsp;${pronoun.subject} 
+                                    <template if.bind="noAbuseTypes.length">
+                                        <template if.bind="yesAbuseTypes.length">
+                                            &nbsp;${pronoun.subject | proper}
+                                        </template>
+                                        <template else>
+                                            &nbsp;${pronoun.subject} 
+                                        </template>
+                                        &nbsp;denied experiencing any ${noAbuseTypes | arrayToString:{"format":getItemValue,"connector":"or"} & signal:'growing-up-abuse-changed'} abuse.
                                     </template>
-                                    &nbsp;denied experiencing any ${noAbuseTypes | arrayToString:{"format":getItemValue,"connector":"or"} & signal:'growing-up-abuse-changed'} abuse.
                                 </template>
                             </template>
                         </template>
-    
+
                         <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
                             &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
                         </template>
@@ -2867,137 +2872,151 @@
                         <table class="uk-table uk-table-small uk-table-divider chart" style="font-family: arial; font-size: 11pt; font-weight: normal; border-width: 1px;">
                             <tbody>
                                 <!-- Father -->
-                                <tr>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap">
-                                        Father
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        
-                                    </td>
-                                </tr>
-                                <tr if.bind="isYes(responses.personalHistory.father.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Age
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        ${responses.personalHistory.father.age.value}
-                                    </td>
-                                </tr>
-                                <tr if.bind="isNo(responses.personalHistory.father.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Age at time of death
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        ${responses.personalHistory.father.age.value}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Educational background
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <strong>
-                                            ${responses.personalHistory.father.educationLevel.value}
-                                        </strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Employment background
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <strong>
-                                            ${responses.personalHistory.father.employmentAreas.value}
-                                        </strong>
-                                    </td>
-                                </tr>
-                                <tr if.bind="isYes(responses.personalHistory.father.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Currently retired?
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <template if.bind="isAnswered(responses.personalHistory.father.isRetired)">
+                                <template if.bind="!responses.personalHistory.father.skip">
+                                    <tr>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap">
+                                            Father
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isYes(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.age.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Age
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            ${responses.personalHistory.father.age.value}
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isNo(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.age.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Age at time of death
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            ${responses.personalHistory.father.age.value}
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isNo(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.causeOfDeath.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Cause of death
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            ${responses.personalHistory.father.causeOfDeath.value}
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isAnswered(responses.personalHistory.father.educationLevel.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Educational background
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            <strong>
+                                                ${responses.personalHistory.father.educationLevel.value}
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isAnswered(responses.personalHistory.father.employmentAreas.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Employment background
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            <strong>
+                                                ${responses.personalHistory.father.employmentAreas.value}
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isYes(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.isRetired)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Currently retired?
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             ${yesNoDontKnowMap[responses.personalHistory.father.isRetired].description}
-                                        </template>
-                                    </td>
-                                </tr>
-                                <tr if.bind="isYes(responses.personalHistory.father.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Currently disabled?
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <template if.bind="isAnswered(responses.personalHistory.father.isDisabled)">
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isYes(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.isDisabled)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Currently disabled?
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             ${yesNoDontKnowMap[responses.personalHistory.father.isDisabled].description}
-                                        </template>
-                                    </td>
-                                </tr>
-
+                                        </td>
+                                    </tr>
+                                </template>
+                                
                                 <!-- Mother -->
-                                <tr>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap">
-                                        Mother
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        
-                                    </td>
-                                </tr>
-                                <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Age
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        ${responses.personalHistory.mother.age.value}
-                                    </td>
-                                </tr>
-                                <tr if.bind="isNo(responses.personalHistory.mother.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Age at time of death
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        ${responses.personalHistory.mother.age.value}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Educational background
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <strong>
-                                            ${responses.personalHistory.mother.educationLevel.value}
-                                        </strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Employment background
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <strong>
-                                            ${responses.personalHistory.mother.employmentAreas.value}
-                                        </strong>
-                                    </td>
-                                </tr>
-                                <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Currently retired?
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <template if.bind="isAnswered(responses.personalHistory.mother.isRetired)">
+                                <template if.bind="!responses.personalHistory.mother.skip">
+                                    <tr>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap">
+                                            Mother
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Age
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            ${responses.personalHistory.mother.age.value}
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isNo(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.age.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Age at time of death
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            ${responses.personalHistory.mother.age.value}
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isNo(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.causeOfDeath.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Cause of death
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            <strong>
+                                                ${responses.personalHistory.mother.causeOfDeath.value}
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isAnswered(responses.personalHistory.mother.educationLevel.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Educational background
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            <strong>
+                                                ${responses.personalHistory.mother.educationLevel.value}
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isAnswered(responses.personalHistory.mother.employmentAreas.value)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Employment background
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
+                                            <strong>
+                                                ${responses.personalHistory.mother.employmentAreas.value}
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isYes(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.isRetired)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Currently retired?
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             ${yesNoDontKnowMap[responses.personalHistory.mother.isRetired].description}
-                                        </template>
-                                    </td>
-                                </tr>
-                                <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
-                                        Currently disabled?
-                                    </td>
-                                    <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                        <template if.bind="isAnswered(responses.personalHistory.mother.isDisabled)">
+                                        </td>
+                                    </tr>
+                                    <tr if.bind="isYes(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.isDisabled)">
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
+                                            Currently disabled?
+                                        </td>
+                                        <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             ${yesNoDontKnowMap[responses.personalHistory.mother.isDisabled].description}
-                                        </template>
-                                    </td>
-                                </tr>
-
+                                        </td>
+                                    </tr>
+                                </template>
+                                
                                 <!-- Siblings -->
                                 <tr>
                                     <td class="uk-padding-remove-vertical uk-text-nowrap">
