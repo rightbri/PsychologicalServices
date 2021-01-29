@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppointmentRepositoryTests.cs" />
+    <Compile Include="Invoices\ConsultingInvoiceSendModelTests.cs" />
     <Compile Include="Invoices\InvoiceRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

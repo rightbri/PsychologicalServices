@@ -95,7 +95,7 @@ namespace PsychologicalServices.Infrastructure.Analysis
         {
             using (var adapter = AdapterFactory.CreateAdapter())
             {
-                var table = RetrievalProcedures.CompletionData(criteria.CompanyId, criteria.Months, (DataAccessAdapter)adapter);
+                var table = RetrievalProcedures.CompletionData(criteria.CompanyId, criteria.StartAppointmentTime, criteria.EndAppointmentTime, (DataAccessAdapter)adapter);
 
                 return table
                     .AsEnumerable()

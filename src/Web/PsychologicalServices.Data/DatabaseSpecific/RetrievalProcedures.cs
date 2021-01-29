@@ -273,24 +273,26 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 
 		/// <summary>Calls stored procedure 'CompletionData'.<br/><br/></summary>
 		/// <param name="companyId">Input parameter. </param>
-		/// <param name="months">Input parameter. </param>
+		/// <param name="startDateSearch">Input parameter. </param>
+		/// <param name="endDateSearch">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable CompletionData(System.Int32 companyId, Nullable<System.Int32> months)
+		public static DataTable CompletionData(System.Int32 companyId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch)
 		{
 			using(DataAccessAdapter dataAccessProvider = new DataAccessAdapter())
 			{
-				return CompletionData(companyId, months, dataAccessProvider);
+				return CompletionData(companyId, startDateSearch, endDateSearch, dataAccessProvider);
 			}
 		}
 
 		/// <summary>Calls stored procedure 'CompletionData'.<br/><br/></summary>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <param name="companyId">Input parameter. </param>
-		/// <param name="months">Input parameter. </param>
+		/// <param name="startDateSearch">Input parameter. </param>
+		/// <param name="endDateSearch">Input parameter. </param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
-		public static DataTable CompletionData(System.Int32 companyId, Nullable<System.Int32> months, IDataAccessCore dataAccessProvider)
+		public static DataTable CompletionData(System.Int32 companyId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch, IDataAccessCore dataAccessProvider)
 		{
-			using(StoredProcedureCall call = CreateCompletionDataCall(dataAccessProvider, companyId, months))
+			using(StoredProcedureCall call = CreateCompletionDataCall(dataAccessProvider, companyId, startDateSearch, endDateSearch))
 			{
 				DataTable toReturn = call.FillDataTable();
 				return toReturn;
@@ -299,24 +301,26 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 
 		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'CompletionData'.</summary>
 		/// <param name="companyId">Input parameter of stored procedure</param>
-		/// <param name="months">Input parameter of stored procedure</param>
+		/// <param name="startDateSearch">Input parameter of stored procedure</param>
+		/// <param name="endDateSearch">Input parameter of stored procedure</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetCompletionDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> months)
+		public static IRetrievalQuery GetCompletionDataCallAsQuery(System.Int32 companyId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch)
 		{
 			using(var dataAccessProvider = new DataAccessAdapter())
 			{
-				return GetCompletionDataCallAsQuery(companyId, months, dataAccessProvider);
+				return GetCompletionDataCallAsQuery(companyId, startDateSearch, endDateSearch, dataAccessProvider);
 			}
 		}
 
 		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'CompletionData'.</summary>
 		/// <param name="companyId">Input parameter of stored procedure</param>
-		/// <param name="months">Input parameter of stored procedure</param>
+		/// <param name="startDateSearch">Input parameter of stored procedure</param>
+		/// <param name="endDateSearch">Input parameter of stored procedure</param>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
-		public static IRetrievalQuery GetCompletionDataCallAsQuery(System.Int32 companyId, Nullable<System.Int32> months, IDataAccessCore dataAccessProvider)
+		public static IRetrievalQuery GetCompletionDataCallAsQuery(System.Int32 companyId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch, IDataAccessCore dataAccessProvider)
 		{
-			return CreateCompletionDataCall(dataAccessProvider, companyId, months).ToRetrievalQuery();
+			return CreateCompletionDataCall(dataAccessProvider, companyId, startDateSearch, endDateSearch).ToRetrievalQuery();
 		}
 
 		/// <summary>Calls stored procedure 'CredibilityData'.<br/><br/></summary>
@@ -920,13 +924,15 @@ needsToBeSentToReferralSource).ToRetrievalQuery();
 		/// <summary>Creates the call object for the call 'CompletionData' to stored procedure 'CompletionData'.</summary>
 		/// <param name="dataAccessProvider">The data access provider.</param>
 		/// <param name="companyId">Input parameter</param>
-		/// <param name="months">Input parameter</param>
+		/// <param name="startDateSearch">Input parameter</param>
+		/// <param name="endDateSearch">Input parameter</param>
 		/// <returns>Ready to use StoredProcedureCall object</returns>
-		private static StoredProcedureCall CreateCompletionDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.Int32> months)
+		private static StoredProcedureCall CreateCompletionDataCall(IDataAccessCore dataAccessProvider, System.Int32 companyId, Nullable<System.DateTimeOffset> startDateSearch, Nullable<System.DateTimeOffset> endDateSearch)
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[PsychologicalServices].[dbo].[CompletionData]", "CompletionData")
 							.AddParameter("@companyId", "Int", 0, ParameterDirection.Input, true, 10, 0, companyId)
-							.AddParameter("@months", "Int", 0, ParameterDirection.Input, true, 10, 0, months);
+							.AddParameter("@startDateSearch", "DateTimeOffset", 0, ParameterDirection.Input, true, 0, 0, startDateSearch)
+							.AddParameter("@endDateSearch", "DateTimeOffset", 0, ParameterDirection.Input, true, 0, 0, endDateSearch);
 		}
 
 		/// <summary>Creates the call object for the call 'CredibilityData' to stored procedure 'CredibilityData'.</summary>

@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[CompletionData]
 	-- Add the parameters for the stored procedure here
 	@companyId INT,
-	@months INT = NULL
+	@startDateSearch DATETIMEOFFSET,
+	@endDateSearch DATETIMEOFFSET
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -21,7 +22,8 @@ BEGIN
 			@completeStatusId INT = 7,
 			@femaleValue NCHAR(1) = 'F',
 			@localCompanyId INT = @companyId,
-			@localMonths INT = @months
+			@localStartDateSearch DATETIMEOFFSET = @startDateSearch,
+			@localEndDateSearch DATETIMEOFFSET = @endDateSearch
 
     SELECT 
 	AssessmentId
@@ -83,17 +85,11 @@ BEGIN
 		) c ON ass.AssessmentId = c.AssessmentId
 		WHERE
 		app.AppointmentTime < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 0)
-		AND (
-			@localMonths IS NULL
-			OR app.AppointmentTime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) - @localMonths, 0)
-		)
-		AND (
-			@localMonths IS NOT NULL
-			OR app.AppointmentTime >= DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0)
-		)
 		AND ass.CompanyId = @localCompanyId
 		AND t.ShowOnSchedule = 1
 		AND app.AppointmentStatusId IN( @incompleteStatusId , @completeStatusId )
+		AND (@localStartDateSearch IS NULL OR app.AppointmentTime >= @localStartDateSearch) 
+		AND (@localEndDateSearch IS NULL OR app.AppointmentTime < @localEndDateSearch) 
 	) a
 	WHERE
 	RowNum = 1

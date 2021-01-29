@@ -11,7 +11,9 @@ export class CompletionStatistics {
         this.config = config;
         this.context = context;
 
-        this.searchMonths = null;
+        this.startAppointmentTime = null;
+        this.endAppointmentTime = null;
+
         this.visibleTab = 0;
     }
 
@@ -22,7 +24,8 @@ export class CompletionStatistics {
     search() {
         this.dataRepository.searchCompletionData({
             'companyId': this.user.company.companyId,
-            'months': this.searchMonths
+            'startAppointmentTime': this.startAppointmentTime,
+            'endAppointmentTime': this.endAppointmentTime
         }).then(data => {
             this.completionData = data;
 

@@ -4,6 +4,8 @@
     <require from="resources/value-converters/sort-array"></require>
     <require from="common/fixed-header"></require>
 	<require from="content/css/fixed-header.css"></require>
+	<require from="common/date-picker"></require>
+	<require from="flatpickr/flatpickr.css"></require>
 
 <div class="uk-container">
 
@@ -13,10 +15,17 @@
         <form class="uk-form-stacked">
             
             <div class="uk-margin">
-                <label class="uk-form-label" for="months">Past X Months (not counting the current month) (YTD if blank)</label>
-                <div class="uk-form-controls">
-                    <input type="number" min="0" class="uk-input" value.bind="searchMonths" />
-                </div>
+				<label class="uk-form-label" for="startAppointmentTime">Begin Appointment Date</label>
+				<div class="uk-form-controls">
+					<input id="startAppointmentTime" type="text" class="uk-input" value.bind="startAppointmentTime" date-picker.bind="config.datepickerOptions" />
+				</div>
+			</div>
+
+            <div class="uk-margin">
+				<label class="uk-form-label" for="endAppointmentTime">End Appointment Date</label>
+				<div class="uk-form-controls">
+					<input id="endAppointmentTime" type="text" class="uk-input" value.bind="endAppointmentTime" date-picker.bind="config.datepickerOptions" />
+				</div>
             </div>
 
             <div class="uk-margin">
@@ -84,7 +93,7 @@
                             <td>${reader.percentIncomplete | numeric:'0.00%'}</td>
                             <td>${reader.percentComplete | numeric:'0.00%'}</td>
                         </tr>
-                
+
                         <tr repeat.for="translator of translatorSummary | sortArray:[{ property: 'hasTranslator', direction: 'desc' }]">
                             <td rowspan="2" if.bind="$first">Translator</td>
                             <td>${translator.hasTranslator | boolean}</td>
@@ -94,7 +103,7 @@
                             <td>${translator.percentIncomplete | numeric:'0.00%'}</td>
                             <td>${translator.percentComplete | numeric:'0.00%'}</td>
                         </tr>
-        
+
                         <tr repeat.for="psychiatrist of psychiatristSummary | sortArray:[{ property: 'hasPsychiatrist', direction: 'desc' }]">
                             <td rowspan="2" if.bind="$first">Psychiatrist</td>
                             <td>${psychiatrist.hasPsychiatrist | boolean}</td>

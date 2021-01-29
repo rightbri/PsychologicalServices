@@ -1976,7 +1976,8 @@
     <SPCallDefinition Name="CompletionData" ObjectID="a5bfad61-1038-41c2-b32c-0548407bb3f3">
       <Parameters>
         <Parameter Name="CompanyId" Type="int" FieldIndex="0" />
-        <Parameter Name="Months" Type="int" IsOptional="true" FieldIndex="1" />
+        <Parameter Name="EndDateSearch" Type="datetimeoffset" IsOptional="true" FieldIndex="2" />
+        <Parameter Name="StartDateSearch" Type="datetimeoffset" IsOptional="true" FieldIndex="1" />
       </Parameters>
     </SPCallDefinition>
     <SPCallDefinition Name="CredibilityData" ObjectID="48272b04-d23d-4638-84ea-d9ae74cb7dd7">
@@ -2072,7 +2073,7 @@
       <Catalogs>
         <Catalog Name="PsychologicalServices">
           <Schemas>
-            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2020-12-06T21:01:22.9627637Z">
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2021-01-24T21:16:56.3713558Z">
               <Tables>
                 <Table Name="AddressAddressTypes">
                   <PkConstraintName Name="PK_AddressAddressTypes" />
@@ -3093,7 +3094,8 @@
                 <StoredProcedure Name="CompletionData" NumberOfResultsets="1">
                   <Parameters>
                     <Parameter Name="@companyId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
-                    <Parameter Name="@months" Direction="1" Ordinal="2" DbType="8" Precision="10" />
+                    <Parameter Name="@startDateSearch" Direction="1" Ordinal="2" DbType="30" />
+                    <Parameter Name="@endDateSearch" Direction="1" Ordinal="3" DbType="30" />
                   </Parameters>
                   <Resultsets>
                     <Resultset Name="Resultset1">
@@ -5072,7 +5074,8 @@
         <SPCallMapping SPCallName=":CompletionData" TargetName="PsychologicalServices:dbo:CompletionData">
           <FieldMappings>
             <FieldMapping FieldName="CompanyId" TargetFieldName="@companyId" />
-            <FieldMapping FieldName="Months" TargetFieldName="@months" />
+            <FieldMapping FieldName="EndDateSearch" TargetFieldName="@endDateSearch" />
+            <FieldMapping FieldName="StartDateSearch" TargetFieldName="@startDateSearch" />
           </FieldMappings>
         </SPCallMapping>
         <SPCallMapping SPCallName=":CredibilityData" TargetName="PsychologicalServices:dbo:CredibilityData">
