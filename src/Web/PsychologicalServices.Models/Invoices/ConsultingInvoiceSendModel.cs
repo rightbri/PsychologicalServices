@@ -97,7 +97,7 @@ namespace PsychologicalServices.Models.Invoices
 
             if (!string.IsNullOrWhiteSpace(consultingAgreement.ConsultingEmailAddress))
             {
-                cc += consultingAgreement.ConsultingEmailAddress;
+                cc += "," + consultingAgreement.ConsultingEmailAddress;
             }
 
             CourtesyCopyEmail = cc;
