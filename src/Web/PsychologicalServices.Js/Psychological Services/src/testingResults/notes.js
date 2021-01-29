@@ -576,6 +576,16 @@ export class Notes {
                 : 0) : 0;
     }
 
+    @computedFrom('responses.personalHistory.children.sons.ages')
+    get anySonsAgeIncomplete() {
+        if (!this.responses || !this.responses.personalHistory.children.sons.ages) { return false; }
+        
+        let any = this.responses.personalHistory.children.sons.ages.some(age => this.isUnanswered(age.value) || this.isUnanswered(age.unit));
+
+        return any;
+    }
+
+
     @computedFrom('responses.personalHistory.relationship.status')
     get isMarriedOrCommonLaw() {
         if (!this.responses || !this.responses.personalHistory.relationship || !this.responses.personalHistory.relationship.status || !this.relationshipStatusesMap.hasOwnProperty(this.responses.personalHistory.relationship.status)) { return false; }

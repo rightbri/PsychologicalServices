@@ -108,9 +108,9 @@
 
                 <div class="report-text uk-card uk-card-body uk-card-default">
 
-                    <p>
+                    <p if.bind="responses.identification.preferredPronoun">
                         ${gender.title} ${claimant.lastName} was asked which pronoun ${pronoun.subject} prefers this assessor to use.
-                        &nbsp;${pronoun.subject | proper} chose the ${pronounsMap[responses.identification.preferredPronoun].format(self)} pronouns.
+                        &nbsp;${pronoun.subject | proper} chose ${pronounsMap[responses.identification.preferredPronoun].subject}/${pronounsMap[responses.identification.preferredPronoun].object}.
                     </p>
     
                     <p>
@@ -380,7 +380,7 @@
                 <hr>
             </div>
         </fieldset>
-
+        
         <!-- Motor Vehicle Accident Details -->
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Motor Vehicle Accident Details</legend>
@@ -388,275 +388,284 @@
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
                 <div class="report-text uk-card uk-card-body uk-card-default">
-                    <!-- Motor Vehicle Accident Details -->
-                    <p>
-                        ${gender.title} ${claimant.lastName} was asked to provide this assessor with information about ${pronoun.possessiveAdjective} accident. 
+                    <template if.bind="isLtdInterview">
+                        <template if.bind="responses.ltdInformation">
+                            <p>
+                                <strong>${responses.ltdInformation}</strong>
+                            </p>
+                        </template>
+                    </template>
+                    <template else>
+                        <!-- Motor Vehicle Accident Details -->
+                        <p>
+                            ${gender.title} ${claimant.lastName} was asked to provide this assessor with information about ${pronoun.possessiveAdjective} accident. 
 
-                        <template if.bind="responses.accidentDetails.timeOfAccident.dontKnow">
-                            &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know what time the accident happened.
-                        </template>
-                        <template else>
-                            <template if.bind="timeOfAccidentIsSpecific">
-                                &nbsp;${pronoun.subject | proper} reported that around ${timeOfAccidentSpecific} ${responses.accidentDetails.timeOfAccident.specificAmPm} on ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a 
-                                <template if.bind="isAnswered(responses.accidentDetails.category)">
-                                    &nbsp;${accidentCategoriesMap[responses.accidentDetails.category].format(self)}.
-                                </template>
-                                <template else>
-                                    &nbsp;motor vehicle accident.
-                                </template>
-                            </template>
-                            <template if.bind="timeOfAccidentIsGeneral">
-                                &nbsp;${pronoun.subject | proper} reported that in the 
-                                <template if.bind="isAnswered(responses.accidentDetails.timeOfAccident.generalModifier)">
-                                    &nbsp;${responses.accidentDetails.timeOfAccident.generalModifier}
-                                </template>
-                                &nbsp;${responses.accidentDetails.timeOfAccident.generalValue} of ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a
-                                <template if.bind="isAnswered(responses.accidentDetails.category)">
-                                    &nbsp;${accidentCategoriesMap[responses.accidentDetails.category].format(self)}.
-                                </template>
-                                <template else>
-                                    &nbsp;motor vehicle accident.
-                                </template>
-                            </template>
-                        </template>
-                        
-                        
-                        <template if.bind="responses.accidentDetails.role === 'driver'">
-                            &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was the driver of the vehicle.
-                        </template>
-                        <template if.bind="responses.accidentDetails.role === 'passenger'">
-                            &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was a passenger in the vehicle.
-                        </template>
-                        <template if.bind="responses.accidentDetails.role === 'pedestrian'">
-                            &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was a pedestrian.
-                        </template>
-                        
-                        <template if.bind="isDontKnow(responses.accidentDetails.secondaryImpact)">
-                            &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if a secondary collision occurred.
-                        </template>
-                        <template if.bind="isYes(responses.accidentDetails.secondaryImpact)">
-                            &nbsp;${pronoun.subject | proper} indicated that a secondary collision occurred.
-                        </template>
-                        <template if.bind="isNo(responses.accidentDetails.secondaryImpact)">
-                            &nbsp;${pronoun.subject | proper} indicated that a secondary collision did not occur.
-                        </template>
-                        
-
-                        <template if.bind="isDontKnow(responses.accidentDetails.vehicleRolled)">
-                            &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} does not know if the vehicle ${pronoun.subject} was in rolled.
-                        </template>
-                        <template if.bind="isYes(responses.accidentDetails.vehicleRolled)">
-                            &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in rolled.
-                        </template>
-                        <template if.bind="isNo(responses.accidentDetails.vehicleRolled)">
-                            &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in did not roll.
-                        </template>
-
-
-                        <template if.bind="isDontKnow(responses.accidentDetails.airbagsDeployed)">
-                            &nbsp;${gender.title} ${claimant.lastName} stated that ${pronoun.subject} does not know if the airbags deployed.
-                        </template>
-                        <template if.bind="isYes(responses.accidentDetails.airbagsDeployed)">
-                            &nbsp;${gender.title} ${claimant.lastName} stated that the airbags deployed.
-                        </template>
-                        <template if.bind="isNo(responses.accidentDetails.airbagsDeployed)">
-                            &nbsp;${gender.title} ${claimant.lastName} stated that the airbags did not deploy.
-                        </template>
-
-
-                        <template if.bind="isDontKnow(responses.accidentDetails.thrownInsideVehicle)">
-                            &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} does not know if ${pronoun.subject} was thrown around inside the vehicle upon impact.
-                        </template>
-                        <template if.bind="isYes(responses.accidentDetails.thrownInsideVehicle)">
-                            &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was thrown around inside the vehicle upon impact.
-                        </template>
-                        <template if.bind="isNo(responses.accidentDetails.thrownInsideVehicle)">
-                            &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was not thrown around inside the vehicle upon impact.
-                        </template>
-                        
-
-                        <template if.bind="responses.accidentDetails.additionalAccidentDetails">
-                            <strong>
-                                &nbsp;Additional details: ${responses.accidentDetails.additionalAccidentDetails}
-                            </strong>
-                        </template>
-                    </p>
-
-                    <p>
-                        <template if.bind="isDontKnow(responses.accidentDetails.hitHead)">
-                            ${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} head hit anything.
-                        </template>
-                        <template if.bind="isYes(responses.accidentDetails.hitHead)">
-                            ${pronoun.subject | proper} then indicated that ${pronoun.subject} suffered a head impact, adding that ${pronoun.possessiveAdjective} head hit the 
-                            <template if.bind="hitHeadOnIsOther">
-                                <strong>
-                                    &nbsp;OTHER: ${responses.accidentDetails.hitHeadOnOther}
-                                </strong>
+                            <template if.bind="responses.accidentDetails.timeOfAccident.dontKnow">
+                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know what time the accident happened.
                             </template>
                             <template else>
-                                &nbsp;${hitHeadOnObjectsMap[responses.accidentDetails.hitHeadOn].format(self)}
-                            </template>
-                            .
-                        </template>
-                        <template if.bind="isNo(responses.accidentDetails.hitHead)">
-                            ${pronoun.subject | proper} denied hitting ${pronoun.possessiveAdjective} head on anything.
-                        </template>
-                    </p>
-
-                    <p>
-                        <template if.bind="yesFractures">
-                            When asked about ${pronoun.possessiveAdjective} injuries ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} sustained fractures.
-                            <template if.bind="fracturesDetail">
-                                &nbsp;<strong>${fracturesDetail}</strong>.
-                            </template>
-                        </template>
-                        <template else>
-                            <template if.bind="noFractures">
-                                When asked about ${pronoun.possessiveAdjective} injuries ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} did not sustain any fractures.
-                            </template>
-                        </template>
-
-                        <template if.bind="yesLacerations">
-                            &nbsp;${pronoun.subject | proper} then acknowledged that ${pronoun.subject} had lacerations that required suturing.
-                        </template>
-                        <template else>
-                            <template if.bind="noLacerations">
-                                &nbsp;${pronoun.subject | proper} then denied that ${pronoun.subject} had any lacerations that required suturing.
-                            </template>
-                            <template else>
-                                <template if.bind="dontKnowLacerations">
-                                    &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} does not know if ${pronoun.subject} had any lacerations that required suturing.
-                                </template>
-                            </template>
-                        </template>
-                        
-                        <template if.bind="anySelectedInjuriesAndSymptoms">
-                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} experienced:
-                            ${selectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "}}.
-                        </template>
-                        <template if.bind="anyUnselectedInjuriesAndSymptoms">
-                            &nbsp;${pronoun.subject | proper} specifically denied experiencing
-                            <template if.bind="!singleUnselectedInjuriesAndSymptom">
-                                &nbsp;any of the following:
-                            </template>
-                            &nbsp;${unselectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
-                        </template>
-                        <template if.bind="anyDontKnowInjuriesAndSymptoms">
-                            &nbsp;When asked ${pronoun.subject} expressed that ${pronoun.subject} does not know if ${pronoun.subject} sustained any of the following:
-                            ${dontKnowInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
-                        </template>                    
-
-                        <template if.bind="anyOtherInjuriesAndSymptoms">
-                            &nbsp;${pronoun.subject | proper} also advised that ${pronoun.subject} <strong>${responses.accidentDetails.otherInjuriesAndSymptoms | arrayToString}</strong>.
-                        </template>
-                        
-                        <template if.bind="isYes(responses.accidentDetails.hadSurgeriesForInjuries)">
-                            &nbsp;${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} had surgeries as a result of ${pronoun.possessiveAdjective} injuries.
-                            <template if.bind="responses.accidentDetails.surgeryDetails">
-                                &nbsp;<strong>${responses.accidentDetails.surgeryDetails}</strong>.
-                            </template>
-                        </template>
-                        <template else>
-                            <template if.bind="isNo(responses.accidentDetails.hadSurgeriesForInjuries)">
-                                &nbsp;${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} did not have any surgeries as a result of ${pronoun.possessiveAdjective} injuries.
-                            </template>
-                        </template>
-
-                        <template if.bind="isYes(responses.accidentDetails.feltCouldHaveDied)">
-                            &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
-                        </template>
-                        <template else>
-                            <template if.bind="isNo(responses.accidentDetails.feltCouldHaveDied)">
-                                &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} did not feel that ${pronoun.subject} could have died.
-                            </template>
-                            <template else>
-                                <template if.bind="isDontKnow(responses.accidentDetails.feltCouldHaveDied)">
-                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} does not know if at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
-                                </template>
-                            </template>
-                        </template>
-                    </p>
-
-                    <p>
-                        <template if.bind="isYes(responses.accidentDetails.wasDazed)">
-                            ${gender.title} ${claimant.lastName} advised that after the accident ${pronoun.subject} felt dazed.
-                        </template>
-                        <template else>
-                            <template if.bind="isNo(responses.accidentDetails.wasDazed)">
-                                ${gender.title} ${claimant.lastName} advised that after the accident ${pronoun.subject} did not feel dazed.
-                            </template>
-                            <template else>
-                                <template if.bind="isDontKnow(responses.accidentDetails.wasDazed)">
-                                    ${gender.title} ${claimant.lastName} advised ${pronoun.subject} does not know if ${pronoun.subject} felt dazed after the accident.
-                                </template>
-                            </template>
-                        </template>
-
-                        <template if.bind="isYes(responses.accidentDetails.lossOfConsciousness.experienced)">
-                            &nbsp;Upon inquiry, ${pronoun.subject} indicated that ${pronoun.subject} sustained a loss of consciousness
-                            <template if.bind="responses.accidentDetails.lossOfConsciousness.length.dontKnow">
-                                , but noted that ${pronoun.subject} does not know the duration of the same.
-                            </template>
-                            <template else>
-                                &nbsp;that lasted for <strong>${lossOfConsciousnessLength | arrayToString}</strong>.
-                            </template>
-                        </template>
-                        <template else>
-                            <template if.bind="isNo(responses.accidentDetails.lossOfConsciousness.experienced)">
-                                &nbsp;Upon inquiry, ${pronoun.subject} indicated that ${pronoun.subject} did not sustain any loss of consciousness.
-                            </template>
-                            <template else>
-                                <template if.bind="isDontKnow(responses.accidentDetails.lossOfConsciousness.experienced)">
-                                    &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know if ${pronoun.subject} lost consciousness.
-                                </template>
-                            </template>
-                        </template>
-
-                        <template if.bind="isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)">
-                            &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} experienced Post-Traumatic Amnesia
-                            <template if.bind="responses.accidentDetails.postTraumaticAmnesia.length.dontKnow">
-                                , but noted that ${pronoun.subject} does not know the duration of the same.
-                            </template>
-                            <template else>
-                                &nbsp;that lasted for <strong>${postTraumaticAmnesiaLength | arrayToString}</strong>.
-                            </template>
-                        </template>
-                        <template else>
-                            <template if.bind="isNo(responses.accidentDetails.postTraumaticAmnesia.experienced)">
-                                &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} did not experience any Post-Traumatic Amnesia.
-                            </template>
-                            <template else>
-                                <template if.bind="isDontKnow(responses.accidentDetails.postTraumaticAmnesia.experienced)">
-                                    &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} does not know if ${pronoun.subject} experienced any Post-Traumatic Amnesia.
-                                </template>
-                            </template>
-                        </template>
-                        
-                        <template if.bind="isYes(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
-                            &nbsp;${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} has full and intact memory from before and after the accident.
-                        </template>
-                        <template else>
-                            <template if.bind="isNo(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
-                                &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not have full and intact memory from after the accident.
-                                <template if.bind="isYes(responses.accidentDetails.lossOfConsciousness.experienced) || isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)">
-                                    <template if.bind="responses.accidentDetails.lastMemoryBeforeImpact">
-                                        &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} last memory before the impact was of <strong>${responses.accidentDetails.lastMemoryBeforeImpact}</strong>
-                                        <template if.bind="responses.accidentDetails.firstMemoryAfterImpact">
-                                            &nbsp;while ${pronoun.possessiveAdjective} first memory after the impact was of <strong>${responses.accidentDetails.firstMemoryAfterImpact}</strong>
-                                        </template>
-                                        .
+                                <template if.bind="timeOfAccidentIsSpecific">
+                                    &nbsp;${pronoun.subject | proper} reported that around ${timeOfAccidentSpecific} ${responses.accidentDetails.timeOfAccident.specificAmPm} on ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a 
+                                    <template if.bind="isAnswered(responses.accidentDetails.category)">
+                                        &nbsp;${accidentCategoriesMap[responses.accidentDetails.category].format(self)}.
                                     </template>
                                     <template else>
-                                        <template if.bind="responses.accidentDetails.firstMemoryAfterImpact">
-                                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} first memory after the impact was of <strong>${responses.accidentDetails.firstMemoryAfterImpact}</strong>.
-                                        </template>
+                                        &nbsp;motor vehicle accident.
+                                    </template>
+                                </template>
+                                <template if.bind="timeOfAccidentIsGeneral">
+                                    &nbsp;${pronoun.subject | proper} reported that in the 
+                                    <template if.bind="isAnswered(responses.accidentDetails.timeOfAccident.generalModifier)">
+                                        &nbsp;${responses.accidentDetails.timeOfAccident.generalModifier}
+                                    </template>
+                                    &nbsp;${responses.accidentDetails.timeOfAccident.generalValue} of ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a
+                                    <template if.bind="isAnswered(responses.accidentDetails.category)">
+                                        &nbsp;${accidentCategoriesMap[responses.accidentDetails.category].format(self)}.
+                                    </template>
+                                    <template else>
+                                        &nbsp;motor vehicle accident.
                                     </template>
                                 </template>
                             </template>
                             
-                        </template>
-                        
-                    </p>
+                            
+                            <template if.bind="responses.accidentDetails.role === 'driver'">
+                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was the driver of the vehicle.
+                            </template>
+                            <template if.bind="responses.accidentDetails.role === 'passenger'">
+                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was a passenger in the vehicle.
+                            </template>
+                            <template if.bind="responses.accidentDetails.role === 'pedestrian'">
+                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was a pedestrian.
+                            </template>
+                            
+                            <template if.bind="isDontKnow(responses.accidentDetails.secondaryImpact)">
+                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if a secondary collision occurred.
+                            </template>
+                            <template if.bind="isYes(responses.accidentDetails.secondaryImpact)">
+                                &nbsp;${pronoun.subject | proper} indicated that a secondary collision occurred.
+                            </template>
+                            <template if.bind="isNo(responses.accidentDetails.secondaryImpact)">
+                                &nbsp;${pronoun.subject | proper} indicated that a secondary collision did not occur.
+                            </template>
+                            
+
+                            <template if.bind="isDontKnow(responses.accidentDetails.vehicleRolled)">
+                                &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} does not know if the vehicle ${pronoun.subject} was in rolled.
+                            </template>
+                            <template if.bind="isYes(responses.accidentDetails.vehicleRolled)">
+                                &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in rolled.
+                            </template>
+                            <template if.bind="isNo(responses.accidentDetails.vehicleRolled)">
+                                &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in did not roll.
+                            </template>
+
+
+                            <template if.bind="isDontKnow(responses.accidentDetails.airbagsDeployed)">
+                                &nbsp;${gender.title} ${claimant.lastName} stated that ${pronoun.subject} does not know if the airbags deployed.
+                            </template>
+                            <template if.bind="isYes(responses.accidentDetails.airbagsDeployed)">
+                                &nbsp;${gender.title} ${claimant.lastName} stated that the airbags deployed.
+                            </template>
+                            <template if.bind="isNo(responses.accidentDetails.airbagsDeployed)">
+                                &nbsp;${gender.title} ${claimant.lastName} stated that the airbags did not deploy.
+                            </template>
+
+
+                            <template if.bind="isDontKnow(responses.accidentDetails.thrownInsideVehicle)">
+                                &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} does not know if ${pronoun.subject} was thrown around inside the vehicle upon impact.
+                            </template>
+                            <template if.bind="isYes(responses.accidentDetails.thrownInsideVehicle)">
+                                &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was thrown around inside the vehicle upon impact.
+                            </template>
+                            <template if.bind="isNo(responses.accidentDetails.thrownInsideVehicle)">
+                                &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was not thrown around inside the vehicle upon impact.
+                            </template>
+                            
+
+                            <template if.bind="responses.accidentDetails.additionalAccidentDetails">
+                                <strong>
+                                    &nbsp;Additional details: ${responses.accidentDetails.additionalAccidentDetails}
+                                </strong>
+                            </template>
+                        </p>
+
+                        <p>
+                            <template if.bind="isDontKnow(responses.accidentDetails.hitHead)">
+                                ${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} head hit anything.
+                            </template>
+                            <template if.bind="isYes(responses.accidentDetails.hitHead)">
+                                ${pronoun.subject | proper} then indicated that ${pronoun.subject} suffered a head impact, adding that ${pronoun.possessiveAdjective} head hit the 
+                                <template if.bind="hitHeadOnIsOther">
+                                    <strong>
+                                        &nbsp;OTHER: ${responses.accidentDetails.hitHeadOnOther}
+                                    </strong>
+                                </template>
+                                <template else>
+                                    &nbsp;${hitHeadOnObjectsMap[responses.accidentDetails.hitHeadOn].format(self)}
+                                </template>
+                                .
+                            </template>
+                            <template if.bind="isNo(responses.accidentDetails.hitHead)">
+                                ${pronoun.subject | proper} denied hitting ${pronoun.possessiveAdjective} head on anything.
+                            </template>
+                        </p>
+
+                        <p>
+                            <template if.bind="yesFractures">
+                                When asked about ${pronoun.possessiveAdjective} injuries ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} sustained fractures.
+                                <template if.bind="fracturesDetail">
+                                    &nbsp;<strong>${fracturesDetail}</strong>.
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="noFractures">
+                                    When asked about ${pronoun.possessiveAdjective} injuries ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} did not sustain any fractures.
+                                </template>
+                            </template>
+
+                            <template if.bind="yesLacerations">
+                                &nbsp;${pronoun.subject | proper} then acknowledged that ${pronoun.subject} had lacerations that required suturing.
+                            </template>
+                            <template else>
+                                <template if.bind="noLacerations">
+                                    &nbsp;${pronoun.subject | proper} then denied that ${pronoun.subject} had any lacerations that required suturing.
+                                </template>
+                                <template else>
+                                    <template if.bind="dontKnowLacerations">
+                                        &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} does not know if ${pronoun.subject} had any lacerations that required suturing.
+                                    </template>
+                                </template>
+                            </template>
+                            
+                            <template if.bind="anySelectedInjuriesAndSymptoms">
+                                &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} experienced:
+                                ${selectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "}}.
+                            </template>
+                            <template if.bind="anyUnselectedInjuriesAndSymptoms">
+                                &nbsp;${pronoun.subject | proper} specifically denied experiencing
+                                <template if.bind="!singleUnselectedInjuriesAndSymptom">
+                                    &nbsp;any of the following:
+                                </template>
+                                &nbsp;${unselectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
+                            </template>
+                            <template if.bind="anyDontKnowInjuriesAndSymptoms">
+                                &nbsp;When asked ${pronoun.subject} expressed that ${pronoun.subject} does not know if ${pronoun.subject} sustained any of the following:
+                                ${dontKnowInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
+                            </template>                    
+
+                            <template if.bind="anyOtherInjuriesAndSymptoms">
+                                &nbsp;${pronoun.subject | proper} also advised that ${pronoun.subject} <strong>${responses.accidentDetails.otherInjuriesAndSymptoms | arrayToString}</strong>.
+                            </template>
+                            
+                            <template if.bind="isYes(responses.accidentDetails.hadSurgeriesForInjuries)">
+                                &nbsp;${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} had surgeries as a result of ${pronoun.possessiveAdjective} injuries.
+                                <template if.bind="responses.accidentDetails.surgeryDetails">
+                                    &nbsp;<strong>${responses.accidentDetails.surgeryDetails}</strong>.
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.accidentDetails.hadSurgeriesForInjuries)">
+                                    &nbsp;${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} did not have any surgeries as a result of ${pronoun.possessiveAdjective} injuries.
+                                </template>
+                            </template>
+
+                            <template if.bind="isYes(responses.accidentDetails.feltCouldHaveDied)">
+                                &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.accidentDetails.feltCouldHaveDied)">
+                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that at the time of the accident ${pronoun.subject} did not feel that ${pronoun.subject} could have died.
+                                </template>
+                                <template else>
+                                    <template if.bind="isDontKnow(responses.accidentDetails.feltCouldHaveDied)">
+                                        &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} does not know if at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
+                                    </template>
+                                </template>
+                            </template>
+                        </p>
+
+                        <p>
+                            <template if.bind="isYes(responses.accidentDetails.wasDazed)">
+                                ${gender.title} ${claimant.lastName} advised that after the accident ${pronoun.subject} felt dazed.
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.accidentDetails.wasDazed)">
+                                    ${gender.title} ${claimant.lastName} advised that after the accident ${pronoun.subject} did not feel dazed.
+                                </template>
+                                <template else>
+                                    <template if.bind="isDontKnow(responses.accidentDetails.wasDazed)">
+                                        ${gender.title} ${claimant.lastName} advised ${pronoun.subject} does not know if ${pronoun.subject} felt dazed after the accident.
+                                    </template>
+                                </template>
+                            </template>
+
+                            <template if.bind="isYes(responses.accidentDetails.lossOfConsciousness.experienced)">
+                                &nbsp;Upon inquiry, ${pronoun.subject} indicated that ${pronoun.subject} sustained a loss of consciousness
+                                <template if.bind="responses.accidentDetails.lossOfConsciousness.length.dontKnow">
+                                    , but noted that ${pronoun.subject} does not know the duration of the same.
+                                </template>
+                                <template else>
+                                    &nbsp;that lasted for <strong>${lossOfConsciousnessLength | arrayToString}</strong>.
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.accidentDetails.lossOfConsciousness.experienced)">
+                                    &nbsp;Upon inquiry, ${pronoun.subject} indicated that ${pronoun.subject} did not sustain any loss of consciousness.
+                                </template>
+                                <template else>
+                                    <template if.bind="isDontKnow(responses.accidentDetails.lossOfConsciousness.experienced)">
+                                        &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know if ${pronoun.subject} lost consciousness.
+                                    </template>
+                                </template>
+                            </template>
+
+                            <template if.bind="isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)">
+                                &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} experienced Post-Traumatic Amnesia
+                                <template if.bind="responses.accidentDetails.postTraumaticAmnesia.length.dontKnow">
+                                    , but noted that ${pronoun.subject} does not know the duration of the same.
+                                </template>
+                                <template else>
+                                    &nbsp;that lasted for <strong>${postTraumaticAmnesiaLength | arrayToString}</strong>.
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.accidentDetails.postTraumaticAmnesia.experienced)">
+                                    &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} did not experience any Post-Traumatic Amnesia.
+                                </template>
+                                <template else>
+                                    <template if.bind="isDontKnow(responses.accidentDetails.postTraumaticAmnesia.experienced)">
+                                        &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} does not know if ${pronoun.subject} experienced any Post-Traumatic Amnesia.
+                                    </template>
+                                </template>
+                            </template>
+                            
+                            <template if.bind="isYes(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
+                                &nbsp;${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} has full and intact memory from before and after the accident.
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
+                                    &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not have full and intact memory from after the accident.
+                                    <template if.bind="isYes(responses.accidentDetails.lossOfConsciousness.experienced) || isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)">
+                                        <template if.bind="responses.accidentDetails.lastMemoryBeforeImpact">
+                                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} last memory before the impact was of <strong>${responses.accidentDetails.lastMemoryBeforeImpact}</strong>
+                                            <template if.bind="responses.accidentDetails.firstMemoryAfterImpact">
+                                                &nbsp;while ${pronoun.possessiveAdjective} first memory after the impact was of <strong>${responses.accidentDetails.firstMemoryAfterImpact}</strong>
+                                            </template>
+                                            .
+                                        </template>
+                                        <template else>
+                                            <template if.bind="responses.accidentDetails.firstMemoryAfterImpact">
+                                                &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} first memory after the impact was of <strong>${responses.accidentDetails.firstMemoryAfterImpact}</strong>.
+                                            </template>
+                                        </template>
+                                    </template>
+                                </template>
+                                
+                            </template>
+                            
+                        </p>
+                    </template>
 
                     <!-- Details of Initial Treatment -->
                     <p>
@@ -697,7 +706,7 @@
                                     </template>
                                 </template>
                             </template>
-                             
+                            
                             <template if.bind="isYes(responses.accidentDetails.givenConcussionProtocol)">
                                 &nbsp;${pronoun.subject | proper} then confirmed ${pronoun.subject} was given concussion protocol instructions.
                             </template>
@@ -869,7 +878,7 @@
                                     &nbsp;went on to deny seeing any of the following: 
                                     ${unselectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"} & signal:'treatment-initial-changed'}.
                                 </template>
-    
+
                                 <template if.bind="(unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
                                     <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
                                         &nbsp;${pronoun.subject | proper}
@@ -889,7 +898,7 @@
                                     </template>
                                     .
                                 </template>
-    
+
                                 <template if.bind="(selectedPainProgram || selectedDriversRehabProgram) & signal:'treatment-initial-changed'">
                                     <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
                                         &nbsp;${pronoun.subject | proper}
@@ -906,7 +915,7 @@
                                     </template>
                                     .
                                 </template>
-    
+
                                 <template if.bind="anySelectedBeneficialTreatments & signal:'treatment-initial-changed'">
                                     <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
                                         &nbsp;${gender.title} ${claimant.lastName}
@@ -914,7 +923,7 @@
                                     &nbsp;shared that ${pronoun.subject} has found the following to be beneficial: 
                                     ${selectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'treatment-initial-changed'}.
                                 </template>
-    
+
                                 <template if.bind="anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
                                     &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} did not find the following beneficial: 
                                     ${unselectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"} & signal:'treatment-initial-changed'}.

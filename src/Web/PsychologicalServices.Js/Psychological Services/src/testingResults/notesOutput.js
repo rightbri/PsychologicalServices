@@ -727,6 +727,13 @@ export class NotesOutput {
         });
     }
 
+    @computedFrom('responses.interviewType')
+    get isLtdInterview() {
+        if (this.responses == null) { return false; }
+
+        return this.responses.interviewType === "ltd";
+    }
+
     getInjuriesAndSymptomsForResponses(criteria) {
         if (!this.responses || !this.responses.accidentDetails || !this.responses.accidentDetails.injuriesAndSymptoms) { return []; }
 
@@ -788,7 +795,11 @@ export class NotesOutput {
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')
     get dontKnowLacerations() {
-        return this.getInjuriesAndSymptomsForResponses(item => this.isDontKnow(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+        let data = this.getInjuriesAndSymptomsForResponses(item => this.isDontKnow(item.response) && this.initialInjuriesAndSymptomsMap[item.value].isLacerations);
+
+        let any = data.some(x => x);
+
+        return any;
     }
 
     @computedFrom('responses.accidentDetails.injuriesAndSymptoms')

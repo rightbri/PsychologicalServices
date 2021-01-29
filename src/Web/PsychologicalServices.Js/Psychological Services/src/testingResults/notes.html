@@ -1451,7 +1451,7 @@
                             </template>
 
                             <hr>
--->
+
                             <div class="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom uk-padding-remove-right uk-width-3-4">
                                 <span class.one-time="isUnanswered($parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend) ? 'unanswered' : '' & signal:'treatment-initial-changed'">
                                     Have funding/financial issues affected your ability to attend treatment?
@@ -1462,6 +1462,7 @@
                                     <input type="radio" name="treatmentFundingIssues-${i}" class="uk-radio" checked.bind="$parent.$parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend" value.bind="response.value" change.delegate="changed('treatment-initial-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
                             </div>
+-->
                         </template>
                         
                         <hr>
@@ -3905,20 +3906,6 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isNo(responses.personalHistory.relationship.isAbusive) && isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship) && isUnanswered(responses.personalHistory.relationship.previousRelationshipAbusive) ? 'unanswered' : '' & signal:'relationship-changed'">
-                        Have any of your previous relationships been abusive?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-2">
-                    <label repeat.for="response of yesNo">
-                        <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" disabled.bind="!isNo(responses.personalHistory.relationship.isAbusive)" change.delegate="changed('relationship-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-2">
                     <span class.one-time="isUnanswered(responses.personalHistory.relationship.hadPriorSeriousRelationship) ? 'unanswered' : '' & signal:'relationship-changed'">
                         Have you previously been in a serious relationship?
                     </span>
@@ -3932,6 +3919,22 @@
 
                 <hr>
 
+                <template if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <span class.one-time="isUnanswered(responses.personalHistory.relationship.previousRelationshipAbusive) ? 'unanswered' : '' & signal:'relationship-changed'">
+                            Have any of your previous relationships been abusive?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-2">
+                        <label repeat.for="response of yesNo">
+                            <input type="radio" name="previousRelationshipAbusive" class="uk-radio" checked.bind="responses.personalHistory.relationship.previousRelationshipAbusive" value.bind="response.value" change.delegate="changed('relationship-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
                 <div>
                     If you have previously been in a prior serious relationship;
                 </div>
@@ -4588,7 +4591,9 @@
                     <hr>
     
                     <div class="uk-margin-remove uk-width-1-2" if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
-                        What are their ages?
+                        <span class.one-time="anySonsAgeIncomplete ? 'unanswered' : '' & signal:'child-count-changed'">
+                            What are their ages?
+                        </span>
                     </div>
     
                     <template if.bind="!responses.personalHistory.children.sons.skip && responses.personalHistory.children.sons.howMany">
