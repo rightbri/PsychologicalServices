@@ -1,6 +1,14 @@
 
 export class DataRepository {
 
+	getSiteName() {
+		var name = "Mark S. Watson Psychology Professional Corporation";
+
+		var promise = new Promise((resolve, reject) => resolve(name));
+
+		return promise;
+	}
+
 	getContactInfo() {
 		//maybe fetch from api in the future
 		var contactInfo = {
