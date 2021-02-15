@@ -108,11 +108,6 @@
 
                 <div class="report-text uk-card uk-card-body uk-card-default">
 
-                    <p if.bind="responses.identification.preferredPronoun">
-                        ${gender.title} ${claimant.lastName} was asked which pronoun ${pronoun.subject} prefers this assessor to use.
-                        &nbsp;${pronoun.subject | proper} chose ${pronounsMap[responses.identification.preferredPronoun].subject}/${pronounsMap[responses.identification.preferredPronoun].object}.
-                    </p>
-    
                     <p>
                         <template if.bind="isYes(responses.identification.verifiedWithId)">
                             ${pronoun.possessiveAdjective | proper} identity was verified
@@ -2350,16 +2345,15 @@
                         
                         <template if.bind="isAnswered(responses.neuropsychological.memory.aids.useAids)">
                             <template if.bind="isYes(responses.neuropsychological.memory.aids.useAids)">
-                                &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that 
                                 <template if.bind="anyNonFamilyMemoryAidsUsed & signal:'memory-aids-used-changed'">
-                                    &nbsp;currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${selectedMemoryAids | arrayToString:{"format":getItemValueForCurrentContext} & signal:'memory-aids-used-changed'}
+                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${selectedMemoryAids | arrayToString:{"format":getItemValueForCurrentContext} & signal:'memory-aids-used-changed'}
                                     <template if.bind="responses.neuropsychological.memory.aids.familyUsed">
                                         , adding that ${pronoun.possessiveAdjective} family also helps ${pronoun.object} to remember things
                                     </template>
                                     .
                                 </template>
                                 <template if.bind="!anyNonFamilyMemoryAidsUsed && responses.neuropsychological.memory.aids.familyUsed & signal:'memory-aids-used-changed'">
-                                    &nbsp;${pronoun.possessiveAdjective} family helps ${pronoun.object} to remember things.
+                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that ${pronoun.possessiveAdjective} family helps ${pronoun.object} to remember things.
                                 </template>
                             </template>
                             <template else>

@@ -133,20 +133,6 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.identification.preferredPronoun) ? 'unanswered' : '' & signal:'preferred-pronoun-changed'">
-                        Preferred Pronoun
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <label repeat.for="response of pronouns">
-                        <input type="radio" name="idPreferredPronoun" class="uk-radio" value.bind="response.value" checked.bind="responses.identification.preferredPronoun" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-                
-                <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="isUnanswered(responses.identification.verifiedWithId) ? 'unanswered' : '' & signal:'identification-verified-changed'">
                         Was identity able to be verified with ID?
                     </span>
@@ -2563,25 +2549,29 @@
                 <hr>
     
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.memory.aids.useAids) ? 'unanswered' : '' & signal:'use-memory-aids-changed'">
+                    <span class.one-time="isUnanswered(responses.neuropsychological.memory.aids.useAids) ? 'unanswered' : '' & signal:'memory-aids-changed'">
                         Do you use any of the following as aids to help you remember?
                     </span>
                 </div>
                 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="memoryAidsUse" class="uk-radio" checked.bind="responses.neuropsychological.memory.aids.useAids" value.bind="response.value" change.delegate="changed('use-memory-aids-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="memoryAidsUse" class="uk-radio" checked.bind="responses.neuropsychological.memory.aids.useAids" value.bind="response.value" change.delegate="changed('memory-aids-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
     
                 <div class="uk-margin-remove uk-margin-left uk-width-1-1 uk-grid-small uk-child-width-auto uk-grid">
                     <label repeat.for="i of memoryAids.length">
-                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.neuropsychological.memory.aids.aidsUsed" value.bind="memoryAids[i].value" change.delegate="changed('memory-aids-used-changed')" disabled.bind="!isYes(responses.neuropsychological.memory.aids.useAids)"> ${memoryAids[i].description}
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.neuropsychological.memory.aids.aidsUsed" value.bind="memoryAids[i].value" change.delegate="changed('memory-aids-changed')" disabled.bind="!isYes(responses.neuropsychological.memory.aids.useAids)"> <span class.one-time="isYes($parent.responses.neuropsychological.memory.aids.useAids) && $parent.responses.neuropsychological.memory.aids.aidsUsed.length === 0 && isUnanswered($parent.responses.neuropsychological.memory.aids.familyUsed) ? 'unanswered' : '' & signal:'memory-aids-changed'">
+                            ${memoryAids[i].description}
+                        </span>
                     </label>
     
                     <!-- Use family -->
                     <label>
-                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.neuropsychological.memory.aids.familyUsed" value.bind="true" change.delegate="changed('memory-aids-used-changed')" disabled.bind="!isYes(responses.neuropsychological.memory.aids.useAids)"> Family
+                        <input class="uk-checkbox" type="checkbox" checked.bind="responses.neuropsychological.memory.aids.familyUsed" value.bind="true" change.delegate="changed('memory-aids-changed')" disabled.bind="!isYes(responses.neuropsychological.memory.aids.useAids)"> <span class.one-time="isYes(responses.neuropsychological.memory.aids.useAids) && responses.neuropsychological.memory.aids.aidsUsed.length === 0 && isUnanswered(responses.neuropsychological.memory.aids.familyUsed) ? 'unanswered' : '' & signal:'memory-aids-changed'">
+                            Family
+                        </span>
                     </label>
                 </div>
     
@@ -3311,28 +3301,28 @@
                 </template>
                 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident) ? 'unanswered' : '' & signal:'experienced-headaches-prior-changed'">
+                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident) ? 'unanswered' : '' & signal:'headaches-changed'">
                         Did you experience headaches prior to the accident?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="experienceHeadachesPriorToAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident" value.bind="response.value" change.delegate="changed('experienced-headaches-prior-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="experienceHeadachesPriorToAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident" value.bind="response.value" change.delegate="changed('headaches-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
                 <hr>
 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident) ? 'unanswered' : '' & signal:'headaches-worsened-since-accident-changed'">
+                    <span class.one-time="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent) && isUnanswered(responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident) ? 'unanswered' : '' & signal:'headaches-changed'">
                         Have your headaches worsened since the accident?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNo">
-                        <input type="radio" name="changesInHeadachesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)" change.delegate="changed('headaches-worsened-since-accident-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="changesInHeadachesSinceAccident" class="uk-radio" checked.bind="responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident" value.bind="response.value" disabled.bind="!isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)" change.delegate="changed('headaches-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
