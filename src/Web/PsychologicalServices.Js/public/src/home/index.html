@@ -78,6 +78,44 @@
           <img src="src/content/images/markwatson.jpg" width="250px" height="350px" alt="Photo of Dr. Mark Watson" />
       </div>
 
+      <div class="uk-width-1-1">
+        <h4 class="uk-heading-line"><span>Contact</span></h4>
+		
+        <div uk-grid>
+
+          <div class="uk-width-1-3@s">
+            <p>
+              <span class="uk-text-bold">
+                <i class="fa fa-building-o"></i>
+                Office
+              </span>
+              <br>${contactInfo.address.address1}
+              <br>${contactInfo.address.address2}
+              <br>${contactInfo.address.city}, ${contactInfo.address.province}
+              <br>${contactInfo.address.postalCode}
+            </p>
+          </div>
+    
+          <div class="uk-width-1-3@s">
+            <span class="uk-text-bold">
+              <i class="fa fa-at"></i>
+              Email
+            </span>
+            <br><a href="mailto:${contactInfo.email}">${contactInfo.email}</a>
+          </div>
+    
+          <div class="uk-width-1-3@s">
+            <span class="uk-text-bold">
+              <i class="fa fa-user-o"></i>
+              Network
+            </span>
+            <br>
+            <a href.bind="contactInfo.linkedInAddress" target="_blank">
+              <i class="fa fa-2x fa-linkedin-square"></i>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>

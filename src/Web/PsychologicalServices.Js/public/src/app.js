@@ -10,9 +10,11 @@ export class App {
 	this.year = new Date().getFullYear();
   }
 
-  attached() {
-	this.dataRepository.getSiteName().then(data => this.siteName = data);
-	this.dataRepository.getContactInfo().then(data => this.contactInfo = data);
+  activate() {
+	return Promise.all([
+		this.dataRepository.getSiteName().then(data => this.siteName = data),
+		this.dataRepository.getContactInfo().then(data => this.contactInfo = data)
+	]);
   }
 
   configureRouter(config, router) {
@@ -27,9 +29,7 @@ export class App {
 			{ route: ['', 'home'], name: 'home', moduleId: 'home/index', title: 'Home', nav: true },
 			{ route: 'services', name: 'services', moduleId: 'services/services', title: 'Services', nav: true },
 			{ route: 'faq', name: 'faq', moduleId: 'faq/faq', title: 'FAQ', nav: true },
-			//{ route: 'seminars', name: 'seminars', moduleId: 'seminars/seminars', title: 'Seminars', nav: true },
 			{ route: 'assessments', name: 'assessments', moduleId: 'assessments/assessments', title: 'About Assessments', nav: true },
-			{ route: 'contact', name: 'contact', moduleId: 'contact/contact', title: 'Contact', nav: true },
 			{ route: 'links', name: 'links', moduleId: 'links/links', title: 'Links', nav: true }
 		]);
 		
