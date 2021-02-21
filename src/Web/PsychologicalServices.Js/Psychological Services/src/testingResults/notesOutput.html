@@ -109,6 +109,12 @@
                 <div class="report-text uk-card uk-card-body uk-card-default">
 
                     <p>
+                        <template if.bind="isAnswered(responses.identification.assistance.personnel)">
+                            ${gender.title} ${claimant.lastName} was interviewed with the assistance of a ${responses.identification.assistance.personnel}.
+                        </template>
+                    </p>
+
+                    <p>
                         <template if.bind="isYes(responses.identification.verifiedWithId)">
                             ${pronoun.possessiveAdjective | proper} identity was verified
                             <template if.bind="isAnswered(responses.identification.verificationMethod.method)">
@@ -434,50 +440,53 @@
                                 &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was a pedestrian.
                             </template>
                             
-                            <template if.bind="isDontKnow(responses.accidentDetails.secondaryImpact)">
-                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if a secondary collision occurred.
+
+                            <template if.bind="responses.accidentDetails.role !== 'pedestrian'">
+                                <template if.bind="isDontKnow(responses.accidentDetails.secondaryImpact)">
+                                    &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if a secondary collision occurred.
+                                </template>
+                                <template if.bind="isYes(responses.accidentDetails.secondaryImpact)">
+                                    &nbsp;${pronoun.subject | proper} indicated that a secondary collision occurred.
+                                </template>
+                                <template if.bind="isNo(responses.accidentDetails.secondaryImpact)">
+                                    &nbsp;${pronoun.subject | proper} indicated that a secondary collision did not occur.
+                                </template>
+                                
+    
+                                <template if.bind="isDontKnow(responses.accidentDetails.vehicleRolled)">
+                                    &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} does not know if the vehicle ${pronoun.subject} was in rolled.
+                                </template>
+                                <template if.bind="isYes(responses.accidentDetails.vehicleRolled)">
+                                    &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in rolled.
+                                </template>
+                                <template if.bind="isNo(responses.accidentDetails.vehicleRolled)">
+                                    &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in did not roll.
+                                </template>
+    
+    
+                                <template if.bind="isDontKnow(responses.accidentDetails.airbagsDeployed)">
+                                    &nbsp;${gender.title} ${claimant.lastName} stated that ${pronoun.subject} does not know if the airbags deployed.
+                                </template>
+                                <template if.bind="isYes(responses.accidentDetails.airbagsDeployed)">
+                                    &nbsp;${gender.title} ${claimant.lastName} stated that the airbags deployed.
+                                </template>
+                                <template if.bind="isNo(responses.accidentDetails.airbagsDeployed)">
+                                    &nbsp;${gender.title} ${claimant.lastName} stated that the airbags did not deploy.
+                                </template>
+    
+    
+                                <template if.bind="isDontKnow(responses.accidentDetails.thrownInsideVehicle)">
+                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} does not know if ${pronoun.subject} was thrown around inside the vehicle upon impact.
+                                </template>
+                                <template if.bind="isYes(responses.accidentDetails.thrownInsideVehicle)">
+                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was thrown around inside the vehicle upon impact.
+                                </template>
+                                <template if.bind="isNo(responses.accidentDetails.thrownInsideVehicle)">
+                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was not thrown around inside the vehicle upon impact.
+                                </template>
                             </template>
-                            <template if.bind="isYes(responses.accidentDetails.secondaryImpact)">
-                                &nbsp;${pronoun.subject | proper} indicated that a secondary collision occurred.
-                            </template>
-                            <template if.bind="isNo(responses.accidentDetails.secondaryImpact)">
-                                &nbsp;${pronoun.subject | proper} indicated that a secondary collision did not occur.
-                            </template>
+
                             
-
-                            <template if.bind="isDontKnow(responses.accidentDetails.vehicleRolled)">
-                                &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} does not know if the vehicle ${pronoun.subject} was in rolled.
-                            </template>
-                            <template if.bind="isYes(responses.accidentDetails.vehicleRolled)">
-                                &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in rolled.
-                            </template>
-                            <template if.bind="isNo(responses.accidentDetails.vehicleRolled)">
-                                &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in did not roll.
-                            </template>
-
-
-                            <template if.bind="isDontKnow(responses.accidentDetails.airbagsDeployed)">
-                                &nbsp;${gender.title} ${claimant.lastName} stated that ${pronoun.subject} does not know if the airbags deployed.
-                            </template>
-                            <template if.bind="isYes(responses.accidentDetails.airbagsDeployed)">
-                                &nbsp;${gender.title} ${claimant.lastName} stated that the airbags deployed.
-                            </template>
-                            <template if.bind="isNo(responses.accidentDetails.airbagsDeployed)">
-                                &nbsp;${gender.title} ${claimant.lastName} stated that the airbags did not deploy.
-                            </template>
-
-
-                            <template if.bind="isDontKnow(responses.accidentDetails.thrownInsideVehicle)">
-                                &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} does not know if ${pronoun.subject} was thrown around inside the vehicle upon impact.
-                            </template>
-                            <template if.bind="isYes(responses.accidentDetails.thrownInsideVehicle)">
-                                &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was thrown around inside the vehicle upon impact.
-                            </template>
-                            <template if.bind="isNo(responses.accidentDetails.thrownInsideVehicle)">
-                                &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was not thrown around inside the vehicle upon impact.
-                            </template>
-                            
-
                             <template if.bind="responses.accidentDetails.additionalAccidentDetails">
                                 <strong>
                                     &nbsp;Additional details: ${responses.accidentDetails.additionalAccidentDetails}
@@ -847,7 +856,7 @@
                         </template>
                         
                     </p>
-                        
+
                     <p>
                         <template if.bind="responses.createdAtVersion < 22">
                             <template if.bind="anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram || selectedPainProgram || selectedDriversRehabProgram || anySelectedBeneficialTreatments || anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
@@ -926,200 +935,198 @@
                             </template>
                         </template>
                         <template else>
-                            <template if.bind="anySelectedTreatmentProvidersOrPrograms">
-                                <table class="uk-table uk-table-small chart">
-                                    <thead>
-                                        <tr>
-                                            <th class="uk-padding-remove-vertical uk-table-shrink">Treatment Provider / Program</th>
-                                            <th class="uk-padding-remove-vertical uk-table-shrink"></th>
-                                            <th class="uk-padding-remove-vertical uk-table-shrink"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <template repeat.for="i of responses.treatment.initial.providers.length">
-                                            <template if.bind="isAnswered($parent.responses.treatment.initial.providers[i].sinceAccident)">
-                                                <tr>
+                            <table class="uk-table uk-table-small chart">
+                                <thead>
+                                    <tr>
+                                        <th class="uk-padding-remove-vertical uk-table-shrink">Treatment Provider / Program</th>
+                                        <th class="uk-padding-remove-vertical uk-table-shrink"></th>
+                                        <th class="uk-padding-remove-vertical uk-table-shrink"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template repeat.for="i of responses.treatment.initial.providers.length">
+                                        <template if.bind="isAnswered($parent.responses.treatment.initial.providers[i].sinceAccident)">
+                                            <tr>
+                                                <td class="uk-padding-remove-vertical">
+                                                    ${treatmentProvidersMap[$parent.responses.treatment.initial.providers[i].value].description}
+                                                </td>
+                                                <td class="uk-padding-remove-vertical">
+                                                    Have you been seen?
+                                                </td>
+                                                <td class="uk-padding-remove-vertical">
+                                                    ${yesNoDontKnowMap[$parent.responses.treatment.initial.providers[i].sinceAccident].output}
+                                                </td>
+                                            </tr>
+                                            <template if.bind="isYes($parent.responses.treatment.initial.providers[i].sinceAccident)">
+                                                <!--
+                                                <tr if.bind="$parent.responses.treatment.initial.providers[i].start.month || $parent.responses.treatment.initial.providers[i].start.year">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">When did this start?</td>
                                                     <td class="uk-padding-remove-vertical">
-                                                        ${treatmentProvidersMap[$parent.responses.treatment.initial.providers[i].value].description}
-                                                    </td>
-                                                    <td class="uk-padding-remove-vertical">
-                                                        Have you been seen?
-                                                    </td>
-                                                    <td class="uk-padding-remove-vertical">
-                                                        ${yesNoDontKnowMap[$parent.responses.treatment.initial.providers[i].sinceAccident].output}
+                                                        ${$parent.responses.treatment.initial.providers[i].start.month} ${$parent.responses.treatment.initial.providers[i].start.year}
                                                     </td>
                                                 </tr>
-                                                <template if.bind="isYes($parent.responses.treatment.initial.providers[i].sinceAccident)">
-                                                    <!--
-                                                    <tr if.bind="$parent.responses.treatment.initial.providers[i].start.month || $parent.responses.treatment.initial.providers[i].start.year">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">When did this start?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            ${$parent.responses.treatment.initial.providers[i].start.month} ${$parent.responses.treatment.initial.providers[i].start.year}
-                                                        </td>
-                                                    </tr>
-                                                    <tr if.bind="isFrequencyAnswered($parent.responses.treatment.initial.providers[i].start.frequency)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">How often were you attending at the beginning?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            <template if.bind="isDontKnow($parent.responses.treatment.initial.providers[i].start.frequency.unit)">
-                                                                Don't know
+                                                <tr if.bind="isFrequencyAnswered($parent.responses.treatment.initial.providers[i].start.frequency)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">How often were you attending at the beginning?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        <template if.bind="isDontKnow($parent.responses.treatment.initial.providers[i].start.frequency.unit)">
+                                                            Don't know
+                                                        </template>
+                                                        <template else>
+                                                            <template if.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit == 'number'">
+                                                                ${$parent.responses.treatment.initial.providers[i].start.frequency.number}
                                                             </template>
-                                                            <template else>
-                                                                <template if.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit == 'number'">
-                                                                    ${$parent.responses.treatment.initial.providers[i].start.frequency.number}
-                                                                </template>
-                                                                <template if.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit == 'range'">
-                                                                    ${$parent.responses.treatment.initial.providers[i].start.frequency.rangeStart} 
-                                                                    to
-                                                                    ${$parent.responses.treatment.initial.providers[i].start.frequency.rangeEnd}
-                                                                </template>
-                                                                &nbsp;times per ${$parent.responses.treatment.initial.providers[i].start.frequency.period}
+                                                            <template if.bind="$parent.responses.treatment.initial.providers[i].start.frequency.unit == 'range'">
+                                                                ${$parent.responses.treatment.initial.providers[i].start.frequency.rangeStart} 
+                                                                to
+                                                                ${$parent.responses.treatment.initial.providers[i].start.frequency.rangeEnd}
                                                             </template>
-                                                        </td>
-                                                    </tr>
-                                                    -->
-                                                    <tr if.bind="isAnswered($parent.responses.treatment.initial.providers[i].current.attending)">
+                                                            &nbsp;times per ${$parent.responses.treatment.initial.providers[i].start.frequency.period}
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                                -->
+                                                <tr if.bind="isAnswered($parent.responses.treatment.initial.providers[i].current.attending)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">Still attending?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        ${yesNoDontKnowMap[$parent.responses.treatment.initial.providers[i].current.attending].output}
+                                                    </td>
+                                                </tr>
+                                                <!--
+                                                <tr if.bind="isNo($parent.responses.treatment.initial.providers[i].current.attending) && ($parent.responses.treatment.initial.providers[i].stop.month || $parent.responses.treatment.initial.providers[i].stop.year)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">When did you stop?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        ${$parent.responses.treatment.initial.providers[i].stop.month} ${$parent.responses.treatment.initial.providers[i].stop.year}
+                                                    </td>
+                                                </tr>
+                                                <tr if.bind="isYes($parent.responses.treatment.initial.providers[i].current.attending) && isFrequencyAnswered($parent.responses.treatment.initial.providers[i].current.frequency)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">How often?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        <template if.bind="isDontKnow($parent.responses.treatment.initial.providers[i].current.frequency.unit)">
+                                                            Don't know
+                                                        </template>
+                                                        <template else>
+                                                            <template if.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit == 'number'">
+                                                                ${$parent.responses.treatment.initial.providers[i].current.frequency.number}
+                                                            </template>
+                                                            <template if.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit == 'range'">
+                                                                ${$parent.responses.treatment.initial.providers[i].current.frequency.rangeStart} 
+                                                                to
+                                                                ${$parent.responses.treatment.initial.providers[i].current.frequency.rangeEnd}
+                                                            </template>
+                                                            &nbsp;times per ${$parent.responses.treatment.initial.providers[i].current.frequency.period}
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                                -->
+                                                <tr if.bind="isAnswered($parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">Funding affected ability to attend?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        ${yesNoDontKnowMap[$parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend].output}
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </template>
+                                    </template>
+                                    <template repeat.for="i of responses.treatment.initial.programs.length">
+                                        <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].sinceAccident)">
+                                            <tr>
+                                                <td class="uk-padding-remove-vertical">
+                                                    ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}
+                                                </td>
+                                                <td class="uk-padding-remove-vertical">
+                                                    ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].attendedQuestionOutput}
+                                                </td>
+                                                <td class="uk-padding-remove-vertical">
+                                                    ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].sinceAccident].output}
+                                                </td>
+                                            </tr>
+                                            <template if.bind="isYes($parent.responses.treatment.initial.programs[i].sinceAccident)">
+                                                <!--
+                                                <tr if.bind="$parent.responses.treatment.initial.providers[i].start.month || $parent.responses.treatment.initial.providers[i].start.year">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">When did this start?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        ${$parent.responses.treatment.initial.programs[i].start.month} ${$parent.responses.treatment.initial.programs[i].start.year}
+                                                    </td>
+                                                </tr>
+                                                <tr if.bind="isFrequencyAnswered($parent.responses.treatment.initial.programs[i].start.frequency)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">How often were you attending at the beginning?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        <template if.bind="isDontKnow($parent.responses.treatment.initial.programs[i].start.frequency.unit)">
+                                                            Don't know
+                                                        </template>
+                                                        <template else>
+                                                            <template if.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit == 'number'">
+                                                                ${$parent.responses.treatment.initial.programs[i].start.frequency.number}
+                                                            </template>
+                                                            <template if.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit == 'range'">
+                                                                ${$parent.responses.treatment.initial.programs[i].start.frequency.rangeStart} 
+                                                                to
+                                                                ${$parent.responses.treatment.initial.programs[i].start.frequency.rangeEnd}
+                                                            </template>
+                                                            &nbsp;times per ${$parent.responses.treatment.initial.programs[i].start.frequency.period}
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                                -->
+                                                <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].current.attending)">
+                                                    <tr>
                                                         <td class="uk-padding-remove-vertical"></td>
                                                         <td class="uk-padding-remove-vertical">Still attending?</td>
                                                         <td class="uk-padding-remove-vertical">
-                                                            ${yesNoDontKnowMap[$parent.responses.treatment.initial.providers[i].current.attending].output}
-                                                        </td>
-                                                    </tr>
-                                                    <!--
-                                                    <tr if.bind="isNo($parent.responses.treatment.initial.providers[i].current.attending) && ($parent.responses.treatment.initial.providers[i].stop.month || $parent.responses.treatment.initial.providers[i].stop.year)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">When did you stop?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            ${$parent.responses.treatment.initial.providers[i].stop.month} ${$parent.responses.treatment.initial.providers[i].stop.year}
-                                                        </td>
-                                                    </tr>
-                                                    <tr if.bind="isYes($parent.responses.treatment.initial.providers[i].current.attending) && isFrequencyAnswered($parent.responses.treatment.initial.providers[i].current.frequency)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">How often?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            <template if.bind="isDontKnow($parent.responses.treatment.initial.providers[i].current.frequency.unit)">
-                                                                Don't know
-                                                            </template>
-                                                            <template else>
-                                                                <template if.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit == 'number'">
-                                                                    ${$parent.responses.treatment.initial.providers[i].current.frequency.number}
-                                                                </template>
-                                                                <template if.bind="$parent.responses.treatment.initial.providers[i].current.frequency.unit == 'range'">
-                                                                    ${$parent.responses.treatment.initial.providers[i].current.frequency.rangeStart} 
-                                                                    to
-                                                                    ${$parent.responses.treatment.initial.providers[i].current.frequency.rangeEnd}
-                                                                </template>
-                                                                &nbsp;times per ${$parent.responses.treatment.initial.providers[i].current.frequency.period}
-                                                            </template>
-                                                        </td>
-                                                    </tr>
-                                                    -->
-                                                    <tr if.bind="isAnswered($parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">Funding affected ability to attend?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            ${yesNoDontKnowMap[$parent.responses.treatment.initial.providers[i].financialIssuesAffectedAbilityToAttend].output}
+                                                            ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].current.attending].output}
                                                         </td>
                                                     </tr>
                                                 </template>
-                                            </template>
-                                        </template>
-                                        <template repeat.for="i of responses.treatment.initial.programs.length">
-                                            <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].sinceAccident)">
-                                                <tr>
+                                                <!--
+                                                <tr if.bind="(!$parent.responses.treatment.initial.programs[i].current || isNo($parent.responses.treatment.initial.programs[i].current.attending)) && ($parent.responses.treatment.initial.programs[i].stop.month || $parent.responses.treatment.initial.programs[i].stop.year)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">When did you stop?</td>
                                                     <td class="uk-padding-remove-vertical">
-                                                        ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].description}
-                                                    </td>
-                                                    <td class="uk-padding-remove-vertical">
-                                                        ${treatmentProgramsMap[$parent.responses.treatment.initial.programs[i].value].attendedQuestionOutput}
-                                                    </td>
-                                                    <td class="uk-padding-remove-vertical">
-                                                        ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].sinceAccident].output}
+                                                        ${$parent.responses.treatment.initial.programs[i].stop.month} ${$parent.responses.treatment.initial.programs[i].stop.year}
                                                     </td>
                                                 </tr>
-                                                <template if.bind="isYes($parent.responses.treatment.initial.programs[i].sinceAccident)">
-                                                    <!--
-                                                    <tr if.bind="$parent.responses.treatment.initial.providers[i].start.month || $parent.responses.treatment.initial.providers[i].start.year">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">When did this start?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            ${$parent.responses.treatment.initial.programs[i].start.month} ${$parent.responses.treatment.initial.programs[i].start.year}
-                                                        </td>
-                                                    </tr>
-                                                    <tr if.bind="isFrequencyAnswered($parent.responses.treatment.initial.programs[i].start.frequency)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">How often were you attending at the beginning?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            <template if.bind="isDontKnow($parent.responses.treatment.initial.programs[i].start.frequency.unit)">
-                                                                Don't know
+                                                <tr if.bind="isYes($parent.responses.treatment.initial.programs[i].current.attending) && isFrequencyAnswered($parent.responses.treatment.initial.programs[i].current.frequency)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">How often?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        <template if.bind="isDontKnow($parent.responses.treatment.initial.programs[i].current.frequency.unit)">
+                                                            Don't know
+                                                        </template>
+                                                        <template else>
+                                                            <template if.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit == 'number'">
+                                                                ${$parent.responses.treatment.initial.programs[i].current.frequency.number}
                                                             </template>
-                                                            <template else>
-                                                                <template if.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit == 'number'">
-                                                                    ${$parent.responses.treatment.initial.programs[i].start.frequency.number}
-                                                                </template>
-                                                                <template if.bind="$parent.responses.treatment.initial.programs[i].start.frequency.unit == 'range'">
-                                                                    ${$parent.responses.treatment.initial.programs[i].start.frequency.rangeStart} 
-                                                                    to
-                                                                    ${$parent.responses.treatment.initial.programs[i].start.frequency.rangeEnd}
-                                                                </template>
-                                                                &nbsp;times per ${$parent.responses.treatment.initial.programs[i].start.frequency.period}
+                                                            <template if.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit == 'range'">
+                                                                ${$parent.responses.treatment.initial.programs[i].current.frequency.rangeStart} 
+                                                                to
+                                                                ${$parent.responses.treatment.initial.programs[i].current.frequency.rangeEnd}
                                                             </template>
-                                                        </td>
-                                                    </tr>
-                                                    -->
-                                                    <template if.bind="isAnswered($parent.responses.treatment.initial.programs[i].current.attending)">
-                                                        <tr>
-                                                            <td class="uk-padding-remove-vertical"></td>
-                                                            <td class="uk-padding-remove-vertical">Still attending?</td>
-                                                            <td class="uk-padding-remove-vertical">
-                                                                ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].current.attending].output}
-                                                            </td>
-                                                        </tr>
-                                                    </template>
-                                                    <!--
-                                                    <tr if.bind="(!$parent.responses.treatment.initial.programs[i].current || isNo($parent.responses.treatment.initial.programs[i].current.attending)) && ($parent.responses.treatment.initial.programs[i].stop.month || $parent.responses.treatment.initial.programs[i].stop.year)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">When did you stop?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            ${$parent.responses.treatment.initial.programs[i].stop.month} ${$parent.responses.treatment.initial.programs[i].stop.year}
-                                                        </td>
-                                                    </tr>
-                                                    <tr if.bind="isYes($parent.responses.treatment.initial.programs[i].current.attending) && isFrequencyAnswered($parent.responses.treatment.initial.programs[i].current.frequency)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">How often?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            <template if.bind="isDontKnow($parent.responses.treatment.initial.programs[i].current.frequency.unit)">
-                                                                Don't know
-                                                            </template>
-                                                            <template else>
-                                                                <template if.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit == 'number'">
-                                                                    ${$parent.responses.treatment.initial.programs[i].current.frequency.number}
-                                                                </template>
-                                                                <template if.bind="$parent.responses.treatment.initial.programs[i].current.frequency.unit == 'range'">
-                                                                    ${$parent.responses.treatment.initial.programs[i].current.frequency.rangeStart} 
-                                                                    to
-                                                                    ${$parent.responses.treatment.initial.programs[i].current.frequency.rangeEnd}
-                                                                </template>
-                                                                &nbsp;times per ${$parent.responses.treatment.initial.programs[i].current.frequency.period}
-                                                            </template>
-                                                        </td>
-                                                    </tr>
-                                                    -->
-                                                    <tr if.bind="isAnswered($parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend)">
-                                                        <td class="uk-padding-remove-vertical"></td>
-                                                        <td class="uk-padding-remove-vertical">Funding affected ability to attend?</td>
-                                                        <td class="uk-padding-remove-vertical">
-                                                            ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend].output}
-                                                        </td>
-                                                    </tr>
-                                                </template>
-
+                                                            &nbsp;times per ${$parent.responses.treatment.initial.programs[i].current.frequency.period}
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                                -->
+                                                <tr if.bind="isAnswered($parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend)">
+                                                    <td class="uk-padding-remove-vertical"></td>
+                                                    <td class="uk-padding-remove-vertical">Funding affected ability to attend?</td>
+                                                    <td class="uk-padding-remove-vertical">
+                                                        ${yesNoDontKnowMap[$parent.responses.treatment.initial.programs[i].financialIssuesAffectedAbilityToAttend].output}
+                                                    </td>
+                                                </tr>
                                             </template>
+
                                         </template>
-                                    </tbody>
-                                </table>
-                            </template>
+                                    </template>
+                                </tbody>
+                            </table>
                         </template>
                     </p>
                 </div>
@@ -1158,7 +1165,9 @@
                             </template>
 
                         </template>
-                        
+                    </p>
+
+                    <p>
                         <template if.bind="isAnswered(responses.accidentDetails.examinations.npNc.completed)">
 
                             <template if.bind="isYes(responses.accidentDetails.examinations.npNc.completed)">
@@ -1181,7 +1190,9 @@
                             </template>
  
                         </template>
-                        
+                    </p>
+
+                    <p>
                         <template if.bind="isAnswered(responses.accidentDetails.examinations.psychiatric.completed)">
                             <template if.bind="isYes(responses.accidentDetails.examinations.psychiatric.completed)">
                                 &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has been seen by a psychiatrist.
@@ -2836,6 +2847,81 @@
                             </template>
                             <template if.bind="responses.personalHistory.arrivalInCanadaType === 'age'">
                                 &nbsp;when ${pronoun.subject} was ${responses.personalHistory.arrivalInCanadaAge} years old
+                            </template>
+                            .
+                        </template>
+                    </p>
+
+                    <!-- Education -->
+                    <p>
+                        <template if.bind="isAnswered(responses.personalHistory.education.completedHighSchool)">
+                            ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} 
+                            <template if.bind="isYes(responses.personalHistory.education.completedHighSchool)">
+                                &nbsp;completed high school.
+
+                                <template if.bind="isAnswered(responses.personalHistory.education.attendedPostSecondaryEducation)">
+                                    <template if.bind="isNo(responses.personalHistory.education.attendedPostSecondaryEducation)">
+                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} did not attend post-secondary education.
+                                    </template>
+                                    <template if.bind="isYes(responses.personalHistory.education.attendedPostSecondaryEducation)">
+                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} attended 
+                                        <template if.bind="responses.personalHistory.education.yearsOfPostSecondaryEducation == 1">one year</template>
+                                        <template else>
+                                            <template if.bind="responses.personalHistory.education.yearsOfPostSecondaryEducation > 1">
+                                                ${responses.personalHistory.education.yearsOfPostSecondaryEducation | numberTextIfLessThanTen}
+                                            </template>
+                                            <template else>
+                                                <strong>
+                                                    ${responses.personalHistory.education.yearsOfPostSecondaryEducation}
+                                                </strong>
+                                            </template>
+                                            &nbsp;years 
+                                        </template>
+                                        &nbsp;of post-secondary education
+                                        <template if.bind="responses.personalHistory.education.areaOfStudy">
+                                            , and studied <strong>${responses.personalHistory.education.areaOfStudy}</strong>
+                                        </template>
+                                        .
+                                    </template>
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.personalHistory.education.completedHighSchool)">
+                                    &nbsp;did not complete high school. 
+                                    <template if.bind="responses.personalHistory.education.lastCompletedGrade">
+                                        &nbsp;${pronoun.subject | proper} advised that the last grade ${pronoun.subject} completed was grade ${responses.personalHistory.education.lastCompletedGrade}.
+                                    </template>
+                                </template>
+                                <template if.bind="isDontKnow(responses.personalHistory.education.completedHighSchool)">
+                                    &nbsp;does not know if ${pronoun.subject} completed high school.
+                                </template>
+                            </template>
+                        </template>
+
+                        <template if.bind="!responses.personalHistory.education.dontKnowSelfRating && isAnswered(responses.personalHistory.education.selfRating)">
+                            &nbsp;${gender.title} ${claimant.lastName} described ${pronoun.object}self as ${studentSelfRatingsMap[responses.personalHistory.education.selfRating].format(self)} student.
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.education.everHeldBack)">
+                            <template if.bind="isYes(responses.personalHistory.education.everHeldBack)">
+                                &nbsp;${pronoun.subject | proper} acknowledged that ${pronoun.subject} was held back/repeated a grade.
+                            </template>
+                            <template if.bind="isNo(responses.personalHistory.education.everHeldBack)">
+                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} was ever held back or repeated a grade.
+                            </template>
+                        </template>
+
+                        <template if.bind="responses.personalHistory.education.bestSubject || responses.personalHistory.education.worstSubject">
+                            <template if.bind="responses.personalHistory.education.bestSubject">
+                                &nbsp;${gender.title} ${claimant.lastName} identified ${pronoun.possessiveAdjective} best subject as <strong>${responses.personalHistory.education.bestSubject}</strong>
+                                <template if.bind="responses.personalHistory.education.worstSubject">
+                                    &nbsp;and ${pronoun.possessiveAdjective} worst subject as <strong>${responses.personalHistory.education.worstSubject}</strong>
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="responses.personalHistory.education.worstSubject">
+                                    &nbsp;${gender.title} ${claimant.lastName} identified ${pronoun.possessiveAdjective} worst subject as <strong>${responses.personalHistory.education.worstSubject}</strong>
+                                </template>
                             </template>
                             .
                         </template>

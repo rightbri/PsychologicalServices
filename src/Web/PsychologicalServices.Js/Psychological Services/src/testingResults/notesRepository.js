@@ -234,7 +234,7 @@ export class NotesRepository {
         let data = {
             "future": { "description": "Future", "format": function(context) { return `future`; } },
             "recovery": { "description": "Recovery", "format": function(context) { return `recovery`; } },
-            "finances": { "description": "Finances", "format": function(context) { return `finances`; }, "isFinances": true }
+            "finances": { "description": "Finances", "format": function(context) { return `finances`; }, "isFinances": true, "disabled": true }
         };
 
         return getPromise(data);
@@ -575,10 +575,10 @@ export class NotesRepository {
 
     getStudentSelfRatings() {
         let data = {
-            "good": { "description": "Good", "value": "good", "format": function(context) { return `Good`; } },
-            "average": { "description": "Average", "value": "average", "format": function(context) { return `Average`; } },
-            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `Poor`; } },
-            "excellent": { "description": "Excellent", "value": "excellent", "format": function(context) { return `Excellent`; } }
+            "good": { "description": "Good", "value": "good", "format": function(context) { return `a good`; } },
+            "average": { "description": "Average", "value": "average", "format": function(context) { return `an average`; } },
+            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `a poor`; } },
+            "excellent": { "description": "Excellent", "value": "excellent", "format": function(context) { return `an excellent`; } }
         };
 
         return getPromise(data);
@@ -886,7 +886,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "36";
+    return "38";
 }
 
 function upgrade(responses, toVersion) {
@@ -1543,7 +1543,10 @@ function getNewResponses() {
                 "howManyLiveWithYou": null
             },
             "education": {
+                "completedHighSchool": null,
                 "lastCompletedGrade": "",
+                "attendedPostSecondaryEducation": null,
+                "yearsOfPostSecondaryEducation": null,
                 "areaOfStudy": "",
                 "selfRating": null,
                 "dontKnowSelfRating": false,
@@ -1728,8 +1731,8 @@ function getNewResponses() {
             },
             "worry": [
                 { "response": null, "value": "future" },
-                { "response": null, "value": "recovery" },
-                { "response": null, "value": "finances" }
+                { "response": null, "value": "recovery" }//,
+                //{ "response": null, "value": "finances" }
             ],
             "panicAttacksCurrent": null,
             "skipPanicAttackFrequency": false,

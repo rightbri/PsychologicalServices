@@ -550,15 +550,31 @@ export class Notes {
 
     @computedFrom(
         'responses.personalHistory.brothers.howMany',
-        'responses.personalHistory.sisters.howMany'
+        'responses.personalHistory.sisters.howMany',
+        'responses.personalHistory.halfBrothers.howMany',
+        'responses.personalHistory.halfSisters.howMany',
+        'responses.personalHistory.stepBrothers.howMany',
+        'responses.personalHistory.stepSisters.howMany'
     )
     get siblingCount() {
         return this.responses ? (
-            this.responses.personalHistory.brothers.howMany !== null
+            this.responses.personalHistory.brothers && this.responses.personalHistory.brothers.howMany !== null
                 ? parseInt(this.responses.personalHistory.brothers.howMany, 10)
                 : 0) +
-            (this.responses.personalHistory.sisters.howMany !== null
+            (this.responses.personalHistory.sisters && this.responses.personalHistory.sisters.howMany !== null
                 ? parseInt(this.responses.personalHistory.sisters.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.halfBrothers && this.responses.personalHistory.halfBrothers.howMany !== null
+                ? parseInt(this.responses.personalHistory.halfBrothers.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.halfSisters && this.responses.personalHistory.halfSisters.howMany !== null
+                ? parseInt(this.responses.personalHistory.halfSisters.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.stepBrothers && this.responses.personalHistory.stepBrothers.howMany !== null
+                ? parseInt(this.responses.personalHistory.stepBrothers.howMany, 10)
+                : 0) +
+            (this.responses.personalHistory.stepSisters && this.responses.personalHistory.stepSisters.howMany !== null
+                ? parseInt(this.responses.personalHistory.stepSisters.howMany, 10)
                 : 0) : 0 ;
     }
 

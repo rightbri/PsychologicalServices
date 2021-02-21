@@ -468,131 +468,134 @@
 
                 <hr>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.category) ? 'unanswered' : '' & signal:'accident-category-changed'">
-                        Would you describe the accident as a:
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <label>
-                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="singleVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Single Vehicle Accident&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="twoVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Two Vehicle Accident&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="multipleVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Multiple Vehicle Accident&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="rearEndAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Rear-end Accident&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="tBoneCollision" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;T-Bone Collision&nbsp;
-                    </label>
-                    <label>
-                        <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="sideSwipe" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Side swipe&nbsp;
-                    </label>
-
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.secondaryImpact) ? 'unanswered' : '' & signal:'accident-details-changed'">
-                        Was there a secondary impact?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentSecondaryImpact-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.secondaryImpact" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.airbagsDeployed) ? 'unanswered' : '' & signal:'accident-details-changed'">
-                        Did any airbags in your vehicle deploy?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentAirbagsDeployed-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.airbagsDeployed" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.vehicleRolled) ? 'unanswered' : '' & signal:'accident-details-changed'">
-                        Did the vehicle you were in roll?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentVehicleRolled-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.vehicleRolled" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.additionalAccidentDetails) ? 'unanswered' : '' & signal:'additional-accident-details-changed'">
-                        Additional details
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <textarea class="uk-textarea uk-form-small" value.bind="responses.accidentDetails.additionalAccidentDetails" input.delegate="changed('additional-accident-details-changed') & debounce:500"></textarea>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.hitHead) ? 'unanswered' : '' & signal:'accident-details-changed'">
-                        Did you hit your head on anything?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentHitHead-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.hitHead" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-1-4"></div>
-
-                <!-- TODO: highlight for review -->
-                <div class="uk-margin-remove uk-width-3-4">
-                    <label repeat.for="response of hitHeadOnObjects">
-                        <input type="radio" name="accidentHitHeadOn" class="uk-radio" value.bind="response.value" checked.bind="$parent.responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;${response.description}&nbsp;
-                    </label>
-                    <label>
-                        <input type="text" class="uk-input uk-form-small" value.bind="responses.accidentDetails.hitHeadOnOther" disabled.bind="!isYes(responses.accidentDetails.hitHead) || !hitHeadOnIsOther & signal:'accident-hit-head-changed'" />
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.accidentDetails.thrownInsideVehicle) ? 'unanswered' : '' & signal:'accident-details-changed'">
-                        Were you thrown around inside the vehicle upon impact?
-                    </span>
-                </div>
-
-                <div class="uk-margin-remove uk-width-1-4">
-                    <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="accidentThrownInside-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.thrownInsideVehicle" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
-                    </label>
-                </div>
-
-                <hr>
+                <template if.bind="responses.accidentDetails.role !== 'pedestrian'">
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <span class.one-time="isUnanswered(responses.accidentDetails.category) ? 'unanswered' : '' & signal:'accident-category-changed'">
+                            Would you describe the accident as a:
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <label>
+                            <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="singleVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Single Vehicle Accident&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="twoVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Two Vehicle Accident&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="multipleVehicleAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Multiple Vehicle Accident&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="rearEndAccident" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Rear-end Accident&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="tBoneCollision" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;T-Bone Collision&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" name="accidentDetailsCategory" class="uk-radio" value="sideSwipe" checked.bind="responses.accidentDetails.category" change.delegate="changed('accident-category-changed')" />&nbsp;Side swipe&nbsp;
+                        </label>
+    
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.accidentDetails.secondaryImpact) ? 'unanswered' : '' & signal:'accident-details-changed'">
+                            Was there a secondary impact?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentSecondaryImpact-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.secondaryImpact" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.accidentDetails.airbagsDeployed) ? 'unanswered' : '' & signal:'accident-details-changed'">
+                            Did any airbags in your vehicle deploy?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentAirbagsDeployed-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.airbagsDeployed" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.accidentDetails.vehicleRolled) ? 'unanswered' : '' & signal:'accident-details-changed'">
+                            Did the vehicle you were in roll?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentVehicleRolled-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.vehicleRolled" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <span class.one-time="isUnanswered(responses.accidentDetails.additionalAccidentDetails) ? 'unanswered' : '' & signal:'additional-accident-details-changed'">
+                            Additional details
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <textarea class="uk-textarea uk-form-small" value.bind="responses.accidentDetails.additionalAccidentDetails" input.delegate="changed('additional-accident-details-changed') & debounce:500"></textarea>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.accidentDetails.hitHead) ? 'unanswered' : '' & signal:'accident-details-changed'">
+                            Did you hit your head on anything?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentHitHead-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.hitHead" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-1-4"></div>
+    
+                    <!-- TODO: highlight for review -->
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <label repeat.for="response of hitHeadOnObjects">
+                            <input type="radio" name="accidentHitHeadOn" class="uk-radio" value.bind="response.value" checked.bind="$parent.responses.accidentDetails.hitHeadOn" change.delegate="changed('accident-hit-head-changed')" disabled.bind="!isYes(responses.accidentDetails.hitHead)" />&nbsp;${response.description}&nbsp;
+                        </label>
+                        <label>
+                            <input type="text" class="uk-input uk-form-small" value.bind="responses.accidentDetails.hitHeadOnOther" disabled.bind="!isYes(responses.accidentDetails.hitHead) || !hitHeadOnIsOther & signal:'accident-hit-head-changed'" />
+                        </label>
+                    </div>
+    
+                    <hr>
+    
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.accidentDetails.thrownInsideVehicle) ? 'unanswered' : '' & signal:'accident-details-changed'">
+                            Were you thrown around inside the vehicle upon impact?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="accidentThrownInside-${$parent.$index}" class="uk-radio" checked.bind="$parent.responses.accidentDetails.thrownInsideVehicle" value.bind="response.value" change.delegate="changed('accident-details-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
+                </template>
+                
 
                 <div class="uk-margin-remove uk-width-1-1">
                     Initial Injuries/Symptoms:
@@ -1860,21 +1863,23 @@
                 </div>
 
                 <template repeat.for="i of responses.psychological.worry.length">
-                    <div class="uk-margin-remove uk-width-1-4"></div>
+                    <template if.bind="!worries[$parent.responses.psychological.worry[i].value].disabled">
+                        <div class="uk-margin-remove uk-width-1-4"></div>
                     
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <span class.one-time="isUnanswered($parent.responses.psychological.worry[i].response) ? 'unanswered' : '' & signal:'worry-changed'">
-                            ${worries[$parent.responses.psychological.worry[i].value].description}
-                        </span>
-                    </div>
-
-                    <div class="uk-margin-remove uk-width-1-2">
-                        <label repeat.for="response of yesNo">
-                            <input type="radio" name="worry-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.psychological.worry[i].response" value.bind="response.value" change.delegate="changed('worry-changed')" />&nbsp;${response.description}&nbsp;
-                        </label>
-                    </div>
-
-                    <hr>
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <span class.one-time="isUnanswered($parent.responses.psychological.worry[i].response) ? 'unanswered' : '' & signal:'worry-changed'">
+                                ${worries[$parent.responses.psychological.worry[i].value].description}
+                            </span>
+                        </div>
+    
+                        <div class="uk-margin-remove uk-width-1-2">
+                            <label repeat.for="response of yesNo">
+                                <input type="radio" name="worry-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.psychological.worry[i].response" value.bind="response.value" change.delegate="changed('worry-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+    
+                        <hr>
+                    </template>
                 </template>
 
                 <div class="uk-margin-remove uk-width-3-4">
@@ -3231,13 +3236,13 @@
     
                     <hr>
 
-                    <div class="uk-margin-remove uk-width-1-4">
-                        <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequency) ? 'unanswered' : '' & signal:'headaches-changed'">
-                            How often do you experience headaches?
-                        </span>
-                    </div>
-
                     <template if.bind="responses.createdAtVersion < 35">
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequency) ? 'unanswered' : '' & signal:'headaches-changed'">
+                                How often do you experience headaches?
+                            </span>
+                        </div>
+    
                         <div class="uk-margin-remove uk-width-1-4"></div>
 
                         <div class="uk-margin-remove uk-width-1-2">
@@ -3250,6 +3255,12 @@
                         </div>
                     </template>
                     <template else>
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && (isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequency) || (!responses.neuropsychological.physical.headaches.headacheFrequencyBetween && isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyExact)) || (responses.neuropsychological.physical.headaches.headacheFrequencyBetween && (isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin) || isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax)))) ? 'unanswered' : '' & signal:'headaches-changed'">
+                                How often do you experience headaches?
+                            </span>
+                        </div>
+    
                         <div class="uk-margin-remove uk-width-1-4">
                             <label>
                                 <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" value.bind="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
@@ -4655,59 +4666,131 @@
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.education.lastCompletedGrade) ? 'unanswered' : '' & signal:'last-grade-completed-changed'">
-                        What was the last grade you completed?
-                    </span>
-                </div>
+                <template if.bind="responses.createdAtVersion < 38">
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.personalHistory.education.lastCompletedGrade) ? 'unanswered' : '' & signal:'education-changed'">
+                            What was the last grade you completed?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="educationLastGradeCompleted" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.lastCompletedGrade" change.delegate="changed('education-changed')" />
+                    </div>
+    
+                    <hr>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="educationLastGradeCompleted" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.lastCompletedGrade" change.delegate="changed('last-grade-completed-changed')" />
-                </div>
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.personalHistory.education.areaOfStudy) ? 'unanswered' : '' & signal:'education-changed'">
+                            What did you study?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <input type="text" name="educationAreaOfStudy" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.areaOfStudy" input.delegate="changed('education-changed') & debounce:500" />
+                    </div>
+    
+                    <hr>
+                </template>
+                <template else>
 
-                <hr>
+                    <div class="uk-margin-remove uk-width-3-4">
+                        <span class.one-time="isUnanswered(responses.personalHistory.education.completedHighSchool) ? 'unanswered' : '' & signal:'education-changed'">
+                            Did you complete high school?
+                        </span>
+                    </div>
+    
+                    <div class="uk-margin-remove uk-width-1-4">
+                        <label repeat.for="response of yesNoDontKnow">
+                            <input type="radio" name="educationCompletedHighSchool" class="uk-radio" checked.bind="responses.personalHistory.education.completedHighSchool" value.bind="response.value" change.delegate="changed('education-changed')" />&nbsp;${response.description}&nbsp;
+                        </label>
+                    </div>
+    
+                    <hr>
 
-                <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.education.areaOfStudy) ? 'unanswered' : '' & signal:'what-did-you-study-changed'">
-                        What did you study?
-                    </span>
-                </div>
+                    <template if.bind="isYes(responses.personalHistory.education.completedHighSchool)">
+                        <div class="uk-margin-remove uk-width-3-4">
+                            <span class.one-time="isUnanswered(responses.personalHistory.education.attendedPostSecondaryEducation) ? 'unanswered' : '' & signal:'education-changed'">
+                                Did you attend post-secondary education?
+                            </span>
+                        </div>
+        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <label repeat.for="response of yesNoDontKnow">
+                                <input type="radio" name="educationAttendedPostSecondaryEducation" class="uk-radio" checked.bind="responses.personalHistory.education.attendedPostSecondaryEducation" value.bind="response.value" change.delegate="changed('education-changed')" />&nbsp;${response.description}&nbsp;
+                            </label>
+                        </div>
+        
+                        <hr>
 
-                <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="educationAreaOfStudy" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.areaOfStudy" input.delegate="changed('what-did-you-study-changed') & debounce:500" />
-                </div>
+                        <div class="uk-margin-remove uk-width-3-4">
+                            <span class.one-time="isUnanswered(responses.personalHistory.education.yearsOfPostSecondaryEducation) ? 'unanswered' : '' & signal:'education-changed'">
+                                How many years of post-secondary education do you have?
+                            </span>
+                        </div>
+        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="number" step="1" min="0" name="educationYearsOfPostSecondaryEducation" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.personalHistory.education.yearsOfPostSecondaryEducation"  input.delegate="changed('education-changed') & debounce:500" />
+                        </div>
+        
+                        <hr>
 
-                <hr>
+                        <div class="uk-margin-remove uk-width-3-4">
+                            <span class.one-time="isUnanswered(responses.personalHistory.education.areaOfStudy) ? 'unanswered' : '' & signal:'education-changed'">
+                                What did you study?
+                            </span>
+                        </div>
+        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="educationAreaOfStudy" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.areaOfStudy" input.delegate="changed('education-changed') & debounce:500" />
+                        </div>
+        
+                        <hr>
+                    </template>
+                    <template if.bind="isNo(responses.personalHistory.education.completedHighSchool) || isDontKnow(responses.personalHistory.education.completedHighSchool)">
+                        <div class="uk-margin-remove uk-width-3-4">
+                            <span class.one-time="isUnanswered(responses.personalHistory.education.lastCompletedGrade) ? 'unanswered' : '' & signal:'education-changed'">
+                                What was the last grade you completed?
+                            </span>
+                        </div>
+        
+                        <div class="uk-margin-remove uk-width-1-4">
+                            <input type="text" name="educationLastGradeCompleted" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.lastCompletedGrade" change.delegate="changed('education-changed')" />
+                        </div>
+        
+                        <hr>    
+                    </template>
+
+                </template>
 
                 <div class="uk-margin-remove uk-width-1-2">
-                    <span class.one-time="isUnanswered(responses.personalHistory.education.selfRating) && !responses.personalHistory.education.dontKnowSelfRating ? 'unanswered' : '' & signal:'education-self-rating-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.education.selfRating) && !responses.personalHistory.education.dontKnowSelfRating ? 'unanswered' : '' & signal:'education-changed'">
                         What kind of student were you?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of studentSelfRatings">
-                        <input type="radio" name="educationStudentSelfRating" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.selfRating" value.bind="response.value" changed.delegate="changed('education-self-rating-changed')" disabled.bind="responses.personalHistory.education.dontKnowSelfRating" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="educationStudentSelfRating" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.selfRating" value.bind="response.value" changed.delegate="changed('education-changed')" disabled.bind="responses.personalHistory.education.dontKnowSelfRating" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
     
                 <div class="uk-margin-remove uk-width-1-4">
                     <label>
-                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.education.dontKnowSelfRating" value="true" change.delegate="changed('education-self-rating-changed')" />&nbsp;Don't Know&nbsp;
+                        <input type="checkbox" class="uk-checkbox" checked.bind="responses.personalHistory.education.dontKnowSelfRating" value="true" change.delegate="changed('education-changed')" />&nbsp;Don't Know&nbsp;
                     </label>    
                 </div>
 
                 <hr>
                 
                 <div class="uk-margin-remove uk-width-3-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.education.everHeldBack) ? 'unanswered' : '' & signal:'education-ever-held-back-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.education.everHeldBack) ? 'unanswered' : '' & signal:'education-changed'">
                         Were you ever held back a grade or did you ever repeat a grade?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
                     <label repeat.for="response of yesNoDontKnow">
-                        <input type="radio" name="educationEverHeldBack" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.everHeldBack" value.bind="response.value" change.delegate="changed('education-ever-held-back-changed')" />&nbsp;${response.description}&nbsp;
+                        <input type="radio" name="educationEverHeldBack" class="uk-radio" checked.bind="$parent.responses.personalHistory.education.everHeldBack" value.bind="response.value" change.delegate="changed('education-changed')" />&nbsp;${response.description}&nbsp;
                     </label>
                 </div>
 
@@ -4728,23 +4811,23 @@
                 <hr>
                 -->
                 <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.education.bestSubject) ? 'unanswered' : '' & signal:'education-best-subject-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.education.bestSubject) ? 'unanswered' : '' & signal:'education-changed'">
                         What was your best subject?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="educationBestSubject" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.bestSubject" input.delegate="changed('education-best-subject-changed') & debounce:500" />
+                    <input type="text" name="educationBestSubject" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.bestSubject" input.delegate="changed('education-changed') & debounce:500" />
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <span class.one-time="isUnanswered(responses.personalHistory.education.worstSubject) ? 'unanswered' : '' & signal:'education-worst-subject-changed'">
+                    <span class.one-time="isUnanswered(responses.personalHistory.education.worstSubject) ? 'unanswered' : '' & signal:'education-changed'">
                         Your worst?
                     </span>
                 </div>
 
                 <div class="uk-margin-remove uk-width-1-4">
-                    <input type="text" name="educationWorstSubject" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.worstSubject" input.delegate="changed('education-worst-subject-changed') & debounce:500" />
+                    <input type="text" name="educationWorstSubject" class="uk-input uk-form-small" value.bind="responses.personalHistory.education.worstSubject" input.delegate="changed('education-changed') & debounce:500" />
                 </div>
 
                 <hr>
