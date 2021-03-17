@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr repeat.for="claimantData of researchConsentObtainedClaimantData | sortArray:[{ property: 'referralSource', direction: 'asc' },{ property: 'appointmentTime', direction: 'asc' }]">
+            <tr repeat.for="claimantData of researchConsentObtainedClaimantData | sortArray:[{ property: 'appointmentTime', direction: 'desc' },{ property: 'appointmentTime', direction: 'asc' }]">
                 <td>${claimantData.referralSource}</td>
                 <td>${claimantData.appointmentTime | dateFormat:config.longDateFormat}</td>
                 <td>${claimantData.appointmentTime | dateFormat:config.shortTimeFormat}</td>
