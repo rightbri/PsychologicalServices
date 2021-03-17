@@ -85,7 +85,7 @@ namespace PsychologicalServices.Models.Invoices
             var hasCompanyEmail = hasPsychologistEmail && null != consultingAgreement.Company && !string.IsNullOrWhiteSpace(consultingAgreement.Company.Email);
             if (!hasCompanyEmail)
             {
-                _errors.Add("The related raw test data has no company email");
+                _errors.Add("The consulting agreement has no company email");
                 return;
             }
             
