@@ -1435,20 +1435,25 @@
                                     </template>
                                 </template>
                                 <template else>
-                                    <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && (isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency) || responses.neuropsychological.physical.headaches.headacheFrequencyBetween)">
-                                        &nbsp;Upon inquiry, ${pronoun.subject} indicated the headaches occur 
-                                        <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetween">
-                                            &nbsp;between ${responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin | numberTextIfLessThanTen} and ${responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax | numberTextIfLessThanTen} times
+                                    <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && (responses.neuropsychological.physical.headaches.headacheFrequencyConstant || isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency) || responses.neuropsychological.physical.headaches.headacheFrequencyBetween)">
+                                        <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyConstant">
+                                            &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} experiences constant headaches. 
                                         </template>
                                         <template else>
-                                            <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyExact === '1'">
-                                                &nbsp;once
+                                            &nbsp;Upon inquiry, ${pronoun.subject} indicated the headaches occur 
+                                            <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetween">
+                                                &nbsp;between ${responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin | numberTextIfLessThanTen} and ${responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax | numberTextIfLessThanTen} times
                                             </template>
                                             <template else>
-                                                &nbsp;${responses.neuropsychological.physical.headaches.headacheFrequencyExact | numberTextIfLessThanTen} times
+                                                <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyExact === '1'">
+                                                    &nbsp;once
+                                                </template>
+                                                <template else>
+                                                    &nbsp;${responses.neuropsychological.physical.headaches.headacheFrequencyExact | numberTextIfLessThanTen} times
+                                                </template>
                                             </template>
+                                            &nbsp;${headacheFrequencies2Map[responses.neuropsychological.physical.headaches.headacheFrequency].format(self)}.
                                         </template>
-                                        &nbsp;${headacheFrequencies2Map[responses.neuropsychological.physical.headaches.headacheFrequency].format(self)}.
                                     </template>
                                 </template>
                                 <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">

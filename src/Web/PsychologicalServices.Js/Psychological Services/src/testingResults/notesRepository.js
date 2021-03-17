@@ -1922,6 +1922,7 @@ function getNewResponses() {
                     "skipHeadacheReliefActivities": false,
                     "headacheReliefActivities": [],
                     "skipHeadacheFrequency": false,
+                    "headacheFrequencyConstant": null,
                     "headacheFrequency": null,
                     "headacheFrequencyExact": null,
                     "headacheFrequencyBetween": null,

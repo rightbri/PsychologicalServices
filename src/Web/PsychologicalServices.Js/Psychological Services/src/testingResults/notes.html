@@ -3265,21 +3265,24 @@
                             <label>
                                 <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" value.bind="true" change.delegate="changed('headaches-changed')" />&nbsp;Skip&nbsp;
                             </label>
+                            <label>
+                                <input type="checkbox" class="uk-checkbox" checked.bind="responses.neuropsychological.physical.headaches.headacheFrequencyConstant" value.bind="true" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')" />&nbsp;Constantly&nbsp;
+                            </label>
                         </div>
                         
                         <div class="uk-margin-remove uk-width-1-4">
-                            <input type="number" step="1" min="0" name="headacheFrequencyExact" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyExact" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
+                            <input type="number" step="1" min="0" name="headacheFrequencyExact" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyExact" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || responses.neuropsychological.physical.headaches.headacheFrequencyConstant || responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
                         </div>
                         
                         <div class="uk-margin-remove uk-width-1-4">
                             <label>
-                                <input type="checkbox" name="headacheFrequencyBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetween" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')" />&nbsp;Between&nbsp;
+                                <input type="checkbox" name="headacheFrequencyBetween" class="uk-checkbox" value.bind="true" checked.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetween" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || responses.neuropsychological.physical.headaches.headacheFrequencyConstant" change.delegate="changed('headaches-changed')" />&nbsp;Between&nbsp;
                             </label>
-                            &nbsp;<input type="number" step="1" min="0" name="headacheFrequencyBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || !responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
+                            &nbsp;<input type="number" step="1" min="0" name="headacheFrequencyBetweenMin" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || responses.neuropsychological.physical.headaches.headacheFrequencyConstant || !responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
                             <label>
                                 &nbsp;and&nbsp;
                             </label>
-                            &nbsp;<input type="number" step="1" min="0" name="headacheFrequencyBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || !responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
+                            &nbsp;<input type="number" step="1" min="0" name="headacheFrequencyBetweenMax" class="uk-input uk-form-small uk-form-width-xsmall" value.bind="responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || responses.neuropsychological.physical.headaches.headacheFrequencyConstant || !responses.neuropsychological.physical.headaches.headacheFrequencyBetween" input.delegate="changed('headaches-changed') & debounce:500" />
                         </div>
 
                         <hr>
@@ -3288,7 +3291,7 @@
 
                         <div class="uk-margin-remove uk-width-1-2">
                             <label repeat.for="i of headacheFrequencies2.length">
-                                <input type="radio" name="headacheFrequency" class="uk-radio" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheFrequency" value.bind="headacheFrequencies2[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency" change.delegate="changed('headaches-changed')">&nbsp;${headacheFrequencies2[i].description}&nbsp;
+                                <input type="radio" name="headacheFrequency" class="uk-radio" checked.bind="$parent.responses.neuropsychological.physical.headaches.headacheFrequency" value.bind="headacheFrequencies2[i].value" disabled.bind="responses.neuropsychological.physical.headaches.skipHeadacheFrequency || responses.neuropsychological.physical.headaches.headacheFrequencyConstant" change.delegate="changed('headaches-changed')">&nbsp;${headacheFrequencies2[i].description}&nbsp;
                             </label>
                         </div>
                     </template>
