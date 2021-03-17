@@ -14,9 +14,10 @@ export class Psychological {
             claimant: null,
             gender: null,
             pronoun: null,
-            isCredible: false,
-            overallCredibility: null,
+            //isCredible: false,
+            //overallCredibility: null,
             psychologicalTests: [],
+            /*
             accidentFearQuestionnaire: {
                 aggregateResult: null
             },
@@ -50,22 +51,30 @@ export class Psychological {
                 aggregateResultForAnxiety: null,
                 aggregateResultForDepression: null
             },
+            */
             painIssues: {
                 visualScale: {
-                    currentRating: null,
                     currentNumber: null,
                     badDayNumber: null,
-                    goodDayNumber: null,
-                    comparedToChronicRating: null
+                    goodDayNumber: null
                 },
                 disabilityIndex: {
                     perceivedDisability: null,
-                    dysfunctionRatings: []
+                    dysfunctionRatings: [
+                        { "value": "recreationalActivities", "rating": null },
+                        { "value": "socialActivities", "rating": null },
+                        { "value": "sexualBehaviors", "rating": null, "declinedToAnswer": false },
+                        { "value": "occupationalPursuits", "rating": null },
+                        { "value": "homeResponsibilities", "rating": null },
+                        { "value": "selfCareTasks", "rating": null },
+                        { "value": "lifeSupportActivities", "rating": null }
+                    ]
                 }
             },
             painPatientProfile: {
                 credibilityIssues: null
             },
+            /*
             personalityAssessmentInventory: {
                 credibilityIssues: null,
                 aggregateResultForPain: null,
@@ -78,48 +87,39 @@ export class Psychological {
                 aggregateResultForAnxiety: null,
                 aggregateResultForDepression: null
             },
+            */
             neurocognitiveTests: [],
+            /*
             concussionSymptoms: {
                 perceivedDisability: null,
                 currentSymptoms: [],
                 additionalSymptoms: []
             }
+            */
         };
 
-        this.pronouns = [
-            {
-                "gender": "M",
-                "subject": "he",
-                "object": "him",
-                "possessiveAdjective": "his",
-                "possessivePronoun": "his"
-            },
-            {
-                "gender": "F",
-                "subject": "she",
-                "object": "her",
-                "possessiveAdjective": "her",
-                "possessivePronoun": "hers"
-            }
-        ];
-
-        this.painScaleMin = 1;
+        this.painScaleMin = 0;
         this.painScaleMax = 10;
+        this.dysfunctionScaleMin = 1;
+        this.dysfunctionScaleMax = 10;
+        this.pronouns = [];
         this.yesNo = [];
         this.genders = [];
+        /*
         this.credibilities = [];
         this.psychologicalTests = [];
         this.neurocognitiveTests = [];
         this.aggregateResultRatings = [];
+        */
         this.painRatings = [];
         this.painScale = [];
         this.painDisabilityRanges = [];
+        /*
         this.comparisonRatings = [];
+        */
         this.areasOfDysfunction = [];
+        this.dysfunctionScale = [];
         this.dysfunctionRatings = [];
-        this.concussionDisabilityRatings = [];
-        this.concussionSymptoms = [];
-
         this.cognitiveAssessment = {
             effortLevel: null,
             tests: []
@@ -127,15 +127,8 @@ export class Psychological {
         this.cognitiveAssessmentEffortLevels = [];
         this.cognitiveAssessmentTestResultRatings = [];
         this.cognitiveAssessmentTestCategories = [];
-
-        this.minnesotaMultiphasicInventoryReactions = [];
-        this.minnesotaMultiphasicInventoryTrends = [];
-        this.minnesotaMultiphasicInventoryExaggerationConcerns = [];
-
-        this.becksRatings = [];
-        this.hamiltonDepressionRatings = [];
-        this.hamiltonAnxietyRatings = [];
-        this.accidentFearQuestionnaireRatings = [];
+        
+        this.self = this;
     }
 
     isRated(test) {
@@ -158,30 +151,6 @@ export class Psychological {
         this.results.pronoun = pronoun.length > 0 ? pronoun[0] : null;
     }
 
-    addAdditionalConcussionSymptom() {
-        this.results.concussionSymptoms.additionalSymptoms.push('');
-        this.concussionAdditionalSymptomChange();
-    }
-
-    removeAdditionalConcussionSymptom(symptom) {
-        if (confirm('Remove symptom\nAre you sure?')) {
-            this.results.concussionSymptoms.additionalSymptoms.splice(this.results.concussionSymptoms.additionalSymptoms.indexOf(symptom), 1);
-            this.concussionAdditionalSymptomChange();
-        }
-    }
-
-    concussionAdditionalSymptomChange() {
-        this.signaler.signal('concussion-additional-symptoms-updated');
-    }
-
-    getConcussionSymptomText(concussionSymptom) {
-        return concussionSymptom.description;
-    }
-
-    concussionSymptomChange(symptom) {
-        this.signaler.signal('concussion-symptoms-updated');
-    }
-
     activate() {
 		return this.getData();
     }
@@ -192,35 +161,18 @@ export class Psychological {
                 this.user = user;
         
                 return Promise.all([
+                    this.getPronouns().then(data => this.pronouns = data),
                     this.getYesNo().then(data => this.yesNo = data),
                     this.getGenders().then(data => this.genders = data),
-                    this.getCredibilities().then(data => this.credibilities = data),
-                    this.getPsychologicalTests().then(data => {
-                        this.psychologicalTests = data;
-
-                        this.updatePerformedPsychologicalTests();
-                    }),
-                    this.getAggregateResultRatings().then(data => this.aggregateResultRatings = data),
+                    //this.getCredibilities().then(data => this.credibilities = data),
+                    //this.getAggregateResultRatings().then(data => this.aggregateResultRatings = data),
                     this.getPainRatings().then(data => this.painRatings = data),
                     this.getPainScale().then(data => this.painScale = data),
                     this.getPainDisabilityRanges().then(data => this.painDisabilityRanges = data),
-                    this.getComparisonRatings().then(data => this.comparisonRatings = data),
-                    this.getAreasOfDysfunction().then(data => {
-                        this.areasOfDysfunction = data;
-
-                        this.results.painIssues.disabilityIndex.dysfunctionRatings =
-                            data.map(function(area) {
-                                return { "area": area, "rating": null }
-                            });
-                    }),
+                    this.getAreasOfDysfunction().then(data => this.areasOfDysfunction = data),
+                    this.getDysfunctionScale().then(data => this.dysfunctionScale = data),
                     this.getDysfunctionRatings().then(data => this.dysfunctionRatings = data),
-                    this.getNeurocognitiveTests().then(data => {
-                        this.neurocognitiveTests = data;
-                        
-                        this.updatePerformedNeurocognitiveTests();
-                    }),
-                    this.getConcussionDisabilityRatings().then(data => this.concussionDisabilityRatings = data),
-                    this.getConcussionSymptoms().then(data => this.concussionSymptoms = data),
+                    //this.getComparisonRatings().then(data => this.comparisonRatings = data),
                     this.getCognitiveAssessmentEffortLevels().then(data => this.cognitiveAssessmentEffortLevels = data),
                     this.getCognitiveAssessmentTestResultRatings().then(data => this.cognitiveAssessmentTestResultRatings = data),
                     this.getCognitiveAssessmentTestCategories().then(data => {
@@ -230,18 +182,66 @@ export class Psychological {
                             data.map(function(category) {
                                 return { "category": category.description, "rating": null }
                             });
-                    }),
-
-                    this.getMinnesotaMultiphasicPersonalityInventoryReactions().then(data => this.minnesotaMultiphasicInventoryReactions = data),
-                    this.getMinnesotaMultiphasicPersonalityInventoryTrends().then(data => this.minnesotaMultiphasicInventoryTrends = data),
-                    this.getMinnesotaMultiphasicPersonalityInventoryExaggerationConcerns().then(data => this.minnesotaMultiphasicInventoryExaggerationConcerns = data),
-
-                    this.getBecksRatings().then(data => this.becksRatings = data),
-                    this.getHamiltonDepressionRatings().then(data => this.hamiltonDepressionRatings = data),
-                    this.getHamiltonAnxietyRatings().then(data => this.hamiltonAnxietyRatings = data),
-                    this.getAccidentFearQuestionnaireRatings().then(data => this.accidentFearQuestionnaireRatings = data)
+                    })
                 ]);
             });
+    }
+
+    asArray(map) {
+        let a = [];
+
+        for (let key in map) {
+            a.push(map[key]);
+        }
+
+        return a;
+    }
+
+    getPronouns() {
+        let data = {
+            "M": {
+                "gender": "M",
+                "value": "M",
+                "description": "Male",
+                "format": function(context) { return `male`; },
+                "subject": "he",
+                "object": "him",
+                "possessiveAdjective": "his",
+                "possessivePronoun": "his"
+            },
+            "F": {
+                "gender": "F",
+                "value": "F",
+                "description": "Female",
+                "format": function(context) { return `female`; },
+                "subject": "she",
+                "object": "her",
+                "possessiveAdjective": "her",
+                "possessivePronoun": "hers"
+            },
+            "N": {
+                "gender": "N",
+                "value": "N",
+                "description": "Neutral",
+                "format": function(context) { return `neutral`; },
+                "subject": "they",
+                "object": "them",
+                "possessiveAdjective": "their",
+                "possessivePronoun": "theirs"
+            },
+            "U": {
+                "gender": "U",
+                "value": "U",
+                "description": "Unknown",
+                "format": function(context) { return `unknown`; },
+                "subject": "they",
+                "object": "them",
+                "possessiveAdjective": "their",
+                "possessivePronoun": "theirs"
+            }
+        };
+
+        return getPromise(data);
     }
 
     getYesNo() {
@@ -254,9 +254,10 @@ export class Psychological {
     }
 
     getGenders() {
-        var data = [
+        let data = [
             { "abbreviation": "M", "description": "Male", "title": "Mr." },
-            { "abbreviation": "F", "description": "Female", "title": "Ms." }
+            { "abbreviation": "F", "description": "Female", "title": "Ms." },
+            { "abbreviation": "U", "description": "Unkonwn", "title": "Mx." }
         ];
 
         return getPromise(data);
@@ -272,114 +273,6 @@ export class Psychological {
         return getPromise(data);
     }
 
-    getPsychologicalTests() {
-        var data = [
-            { "id": 1, "name": "Accident Fear Questionnaire (AFQ)" },
-            { "id": 2, "name": "Beck Anxiety Inventory (BAI)" },
-            { "id": 3, "name": "Beck Depression Inventory – 2nd Edition (BDI-II)" },
-            { "id": 4, "name": "Beck Scale of Suicidal Ideation (BSSI)" },
-            { "id": 5, "name": "Hamilton Rating Scale for Anxiety" },
-            { "id": 6, "name": "Hamilton Rating Scale for Depression" },
-            { "id": 7, "name": "Illness Behaviour Questionnaire (IBQ)" },
-            { "id": 8, "name": "Minnesota Multiphasic Personality Inventory – 2 – RF (MMPI-2RF)" },
-            { "id": 9, "name": "Pain Disability Index" },
-            { "id": 10, "name": "Pain Patient Profile (P3)" },
-            { "id": 11, "name": "Personality Assessment Inventory (PAI)" },
-            { "id": 12, "name": "Trauma Symptom Inventory – 2–A (TSI-2-A)" },
-            { "id": 13, "name": "Visual Analogue Pain Scale" }
-        ];
-
-        return getPromise(data);
-    }
-
-    getPerformedPsychologicalTests() {
-        var self = this;
-
-        var data = {
-            "accidentFearQuestionnaire": isPerformed(1),
-            "beckAnxietyInventory": isPerformed(2),
-            "beckDepressionInventory": isPerformed(3),
-            "beckScaleOfSuicidalIdeation": isPerformed(4),
-            "hamiltonRatingScaleForAnxiety": isPerformed(5),
-            "hamiltonRatingScaleForDepression": isPerformed(6),
-            "illnessBehaviourQuestionnaire": isPerformed(7),
-            "minnesotaMultiphasicPersonalityInventory": isPerformed(8),
-            "painDisabilityIndex": isPerformed(9),
-            "painPatientProfile": isPerformed(10),
-            "personalityAssessmentInventory": isPerformed(11),
-            "traumaSymptomInventory": isPerformed(12),
-            "visualAnaloguePainScale": isPerformed(13)
-        };
-
-        function isPerformed(testId) {
-            return self.results.psychologicalTests.some(t => t.id == testId);
-        }
-
-        return data;
-    }
-
-    updatePerformedPsychologicalTests() {
-        this.results.performedPsychologicalTests = this.getPerformedPsychologicalTests();
-    }
-
-    getNeurocognitiveTests() {
-        var data = [
-            { "id": 1, "name": "Boston Naming Test" },
-            { "id": 2, "name": "California Verbal Learning Test – 3rd Edition" },
-            { "id": 3, "name": "Controlled Oral Word Association Test" },
-            { "id": 4, "name": "Finger Tapping Test" },
-            { "id": 5, "name": "Judgment of Line Orientation Test" },
-            { "id": 6, "name": "Rey Complex Figure Test" },
-            { "id": 7, "name": "Rivermead Post-Concussion Symptoms Questionnaire" },
-            { "id": 8, "name": "Ruff 2 & 7 Selective Attention Test" },
-            { "id": 9, "name": "Ruff Figural Fluency Test" },
-            { "id": 10, "name": "Short Category Test" },
-            { "id": 11, "name": "Stroop Color Word Test" },
-            { "id": 12, "name": "Test of Memory Malingering (TOMM)" },
-            { "id": 13, "name": "Trail Making Tests – Parts A and B" },
-            { "id": 14, "name": "Wechsler Abbreviated Scale of Intelligence – 2" },
-            { "id": 15, "name": "Wechsler Adult Intelligence Scales – 4th Edition (Processing Speed Index and Working Memory Index)" },
-            { "id": 16, "name": "Wechsler Memory Scale – 4th Edition (Logical Memory)" },
-            { "id": 17, "name": "Wide Range Achievement Test – 4th Edition" }
-        ];
-
-        return getPromise(data);
-    }
-
-    getPerformedNeurocognitiveTests() {
-        var self = this;
-
-        var data = {
-            "bostonNamingTest": isPerformed(1),
-            "californiaVerbalLearningTest": isPerformed(2),
-            "controlledOralWordAssociationTest": isPerformed(3),
-            "fingerTappingTest": isPerformed(4),
-            "judgementOfLineOrientationTest": isPerformed(5),
-            "reyComplexFigureTest": isPerformed(6),
-            "rivermeadPostConcussionSymptomsQuestionnaire": isPerformed(7),
-            "ruffSelectiveAttentionTest": isPerformed(8),
-            "ruffFiguralFluencyTest": isPerformed(9),
-            "shortCategoryTest": isPerformed(10),
-            "stroopColorWordTest": isPerformed(11),
-            "testOfMemoryMalingering": isPerformed(12),
-            "trailMakingTests": isPerformed(13),
-            "wechslerAbbreviatedScaleOfIntelligence": isPerformed(14),
-            "wechslerAdultIntelligenceScales": isPerformed(15),
-            "wechslerMemoryScale": isPerformed(16),
-            "wideRangeAchievementTest": isPerformed(17)
-        };
-
-        function isPerformed(testId) {
-            return self.results.neurocognitiveTests.some(t => t.id == testId);
-        }
-
-        return data;
-    }
-
-    updatePerformedNeurocognitiveTests() {
-        this.results.performedNeurocognitiveTests = this.getPerformedNeurocognitiveTests();
-    }
-
     getAggregateResultRatings() {
         var data = [
             { "id": 1, "description": "high average" },
@@ -392,10 +285,26 @@ export class Psychological {
     }
 
     getPainRatings() {
+        var ratings = {
+            "extremelyHigh": { "value": "extremelyHigh", "description": "Extremely High (10)", "format": function(context) { return `an extremely high`; } },
+            "aboveAverage": { "value": "aboveAverage", "description": "Above Average (8-9)", "format": function(context) { return `an above average`; } },
+            "average": { "value": "average", "description": "Average (4-7)", "format": function(context) { return `an average`; } },
+            "belowAverage": { "value": "belowAverage", "description": "Below Average (2-3)", "format": function(context) { return `a below average`; } },
+            "extremelyLow": { "value": "extremelyLow", "description": "Extremely Low (0-1)", "format": function(context) { return `an extremely low`; } }
+        };
+
         var data = [
-            { "id": 1, "description": "above average", "templatePrefix": "an " },
-            { "id": 2, "description": "average", "templatePrefix": "an " },
-            { "id": 3, "description": "below average", "templatePrefix": "a " }
+            ratings["extremelyLow"],
+            ratings["extremelyLow"],
+            ratings["belowAverage"],
+            ratings["belowAverage"],
+            ratings["average"],
+            ratings["average"],
+            ratings["average"],
+            ratings["average"],
+            ratings["aboveAverage"],
+            ratings["aboveAverage"],
+            ratings["extremelyHigh"]
         ];
 
         return getPromise(data);
@@ -429,15 +338,21 @@ export class Psychological {
     }
 
     getAreasOfDysfunction() {
-        var data = [
-            { "id": 1, "description": "Recreational activities" },
-            { "id": 2, "description": "Self-care tasks" },
-            { "id": 3, "description": "Social activities" },
-            { "id": 4, "description": "Life support activities" },
-            { "id": 5, "description": "Sexual behaviors" },
-            { "id": 6, "description": "Occupational pursuits" },
-            { "id": 7, "description": "Family/home responsibilities" }
-        ];
+        var data = {
+            "recreationalActivities": { "value": "recreationalActivities", "description": "Recreational activities" },
+            "socialActivities": { "value": "socialActivities", "description": "Social activities" },
+            "sexualBehaviors": { "value": "sexualBehaviors", "description": "Sexual behaviors", "canDeclineToAnswer": true },
+            "occupationalPursuits": { "value": "occupationalPursuits", "description": "Occupational pursuits" },
+            "homeResponsibilities": { "value": "homeResponsibilities", "description": "Family/home responsibilities" },
+            "selfCareTasks": { "value": "selfCareTasks", "description": "Self-care tasks" },
+            "lifeSupportActivities": { "value": "lifeSupportActivities", "description": "Life support activities" }
+        };
+
+        return getPromise(data);
+    }
+
+    getDysfunctionScale() {
+        var data = getSequentialNumberArray(this.dysfunctionScaleMin, this.dysfunctionScaleMax);
 
         return getPromise(data);
     }
@@ -598,89 +513,6 @@ export class Psychological {
             { "description": "questionable" },
             { "description": "less than ideal" },
             { "description": "invalid" }
-        ];
-
-        return getPromise(data);
-    }
-
-    getBecksRatings() {
-        var data = [
-            { "description": "Normal" },
-            { "description": "Mild" },
-            { "description": "Moderate" },
-            { "description": "Severe" }
-        ];
-
-        return getPromise(data);
-    }
-    
-    getHamiltonDepressionRatings() {
-        var data = [
-            { "description": "Normal" },
-            { "description": "Mild" },
-            { "description": "Moderate" },
-            { "description": "Severe" },
-            { "description": "Very Severe" }
-        ];
-
-        return getPromise(data);
-    }
-
-    getHamiltonAnxietyRatings() {
-        var data = [
-            { "description": "Normal" },
-            { "description": "Mild" },
-            { "description": "Moderate" },
-            { "description": "High Moderate" },
-            { "description": "Severe" },
-            { "description": "Very Severe" }
-        ];
-
-        return getPromise(data);
-    }
-
-    getMinnesotaMultiphasicPersonalityInventoryReactions() {
-        var data = [
-            { "option": "Understood?", "output": { true: "understood the items of the test", false: "did not understand the items of the test" } },
-            { "option": "Was attentive?", "output": { true: "attended to the items of the test", false: "did not attend to the items of the test" } },
-            { "option": "Was distracted or confused?", "output": { true: "was distracted or confused while completing the form", false: "was not distracted or confused while completing the form" } },
-            { "option": "Responded in a consistent manner?", "output": { true: "responded to the items in a consistent manner throughout the test", false: "did not respond to the items in a consistent manner throughout the test" } }
-        ];
-
-        return getPromise(data);
-    }
-
-    getMinnesotaMultiphasicPersonalityInventoryTrends() {
-        var data = [
-            { "description": "Defensiveness" },
-            { "description": "Positive Impression Management" },
-            { "description": "Negative Impression Management" }
-        ];
-
-        return getPromise(data);
-    }
-
-    getMinnesotaMultiphasicPersonalityInventoryExaggerationConcerns() {
-        var data = [
-            { "description": "Cognitive complaints" },
-            { "description": "Somatic complaints" },
-            { "description": "General Psychopathology" }
-        ];
-
-        return getPromise(data);
-    }
-
-    getMinnesotaMultiphasicPersonalityInventoryReactionOutput(item) {
-        return item.output[true];
-    }
-    
-    getAccidentFearQuestionnaireRatings() {
-        var data = [
-            { "description": "Below average" },
-            { "description": "Low average" },
-            { "description": "Average" },
-            { "description": "High average" },
-            { "description": "Above average" }
         ];
 
         return getPromise(data);

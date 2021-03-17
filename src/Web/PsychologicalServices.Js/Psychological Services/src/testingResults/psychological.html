@@ -22,6 +22,98 @@
                     ${results.claimant.firstName} ${results.claimant.lastName}
                 </p>
             </div>
+
+            <fieldset class="uk-fieldset">
+                <legend class="uk-legend">Psychological Tests</legend>
+
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>Visual Analogue Pain Scales</span></h5>
+
+                    <table class="uk-table uk-table-small">
+                        <tbody>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="currentPainNumber">Current Pain Number</label>
+                                </td>
+                                <td class="">
+                                    <select id="currentPainNumber" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.painIssues.visualScale.currentNumber">
+                                        <option></option>
+                                        <option repeat.for="i of painScale" model.bind="i">${i}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="uk-form-label" for="badDayPainNumber">Bad Day Pain Number</label>
+                                </td>
+                                <td>
+                                    <select id="badDayPainNumber" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.painIssues.visualScale.badDayNumber">
+                                        <option></option>
+                                        <option repeat.for="i of painScale" model.bind="i">${i}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="uk-form-label" for="goodDayPainNumber">Good Day Pain Number</label>
+                                </td>
+                                <td>
+                                    <select id="goodDayPainNumber" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.painIssues.visualScale.goodDayNumber">
+                                        <option></option>
+                                        <option repeat.for="i of painScale" model.bind="i">${i}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>Pain Disability Index</span></h5>
+        <!--
+                    <div class="uk-margin-small">
+                        <label class="uk-form-label" for="comparedToChronicRating">Self Perceived Disability</label>
+                        <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.disabilityIndex.perceivedDisability">
+                            <option></option>
+                            <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
+                        </select>
+                    </div>
+        -->
+                    <div class="uk-margin-small">
+                        <div class="uk-form-label">Areas of Dysfunction</div>
+
+                        <table class="uk-table uk-table-small">
+                            <tbody>
+                                <template repeat.for="dysfunctionRating of results.painIssues.disabilityIndex.dysfunctionRatings">
+                                    <tr>
+                                        <td class="uk-width-medium">
+                                            <label class="uk-form-label" for="dysfunction-${$index}">${areasOfDysfunction[dysfunctionRating.value].description}</label>
+                                        </td>
+                                        <td class="uk-width-small">
+                                            <select id="dysfunction-${$index}" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="dysfunctionRating.rating" disabled.bind="dysfunctionRating.declinedToAnswer">
+                                                <option></option>
+                                                <option repeat.for="i of dysfunctionScale" model.bind="i">${i}</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <template if.bind="areasOfDysfunction[dysfunctionRating.value].canDeclineToAnswer">
+                                                <label>
+                                                    <input type="checkbox" name="dysfunction-${$index}" class="uk-checkbox" checked.bind="dysfunctionRating.declinedToAnswer" value.bind="true" />&nbsp;Declined to answer&nbsp;
+                                                </label>
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                </div>
+
+            </fieldset>
+
+
+
 <!--
             <div class="uk-margin-small">
                 <label class="uk-form-label">
@@ -220,31 +312,6 @@
 
                 </div>
 
-                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.painDisabilityIndex">
-                    <h5 class="uk-heading-line"><span>Pain Disability Index</span></h5>
-        
-                    <div class="uk-margin-small">
-                        <label class="uk-form-label" for="comparedToChronicRating">Self Perceived Disability</label>
-                        <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.disabilityIndex.perceivedDisability">
-                            <option></option>
-                            <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
-                        </select>
-                    </div>
-    
-                    <div class="uk-margin-small">
-                        <div class="uk-form-label">Areas of Dysfunction</div>
-                        <div class="uk-form-controls uk-child-width-1-2" uk-grid>
-                            <div repeat.for="dysfunctionRating of results.painIssues.disabilityIndex.dysfunctionRatings">
-                                <label class="uk-form-label" for="dysfunction-${$index}">${dysfunctionRating.area.description}</label>
-                                <select id="dysfunction-${$index}" class="uk-select uk-form-small uk-form-width-small" value.bind="dysfunctionRating.rating">
-                                    <option></option>
-                                    <option repeat.for="rating of dysfunctionRatings" model.bind="rating">${rating.description}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-    
-                </div>
 
                 <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.painPatientProfile">
                     <h5 class="uk-heading-line"><span>Pain Patient Profile (P3)</span></h5>
@@ -331,55 +398,7 @@
                     </div>
                     
                 </div>
-
-                <div class="uk-section uk-section-xsmall" if.bind="results.performedPsychologicalTests.visualAnaloguePainScale">
-                    <h5 class="uk-heading-line"><span>Visual Analogue Pain Scales</span></h5>
-    
-                    <div class="uk-child-width-1-2" uk-grid>
-                        <div class="uk-margin-small">
-                            <label class="uk-form-label" for="currentPainRating">Current Pain Rating</label>
-                            <select id="currentPainRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.currentRating">
-                                <option></option>
-                                <option repeat.for="rating of painRatings" model.bind="rating">${rating.description}</option>
-                            </select>
-                        </div>
-            
-                        <div class="uk-margin-small">
-                            <label class="uk-form-label" for="currentPainNumber">Current Pain Number</label>
-                            <select id="currentPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.currentNumber">
-                                <option></option>
-                                <option repeat.for="i of painScale" model.bind="i">${i}</option>
-                            </select>
-                        </div>
-            
-                        <div class="uk-margin-small">
-                            <label class="uk-form-label" for="badDayPainNumber">Bad Day Pain Number</label>
-                            <select id="badDayPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.badDayNumber">
-                                <option></option>
-                                <option repeat.for="i of painScale" model.bind="i">${i}</option>
-                            </select>
-                        </div>
-            
-                        <div class="uk-margin-small">
-                            <label class="uk-form-label" for="goodDayPainNumber">Good Day Pain Number</label>
-                            <select id="goodDayPainNumber" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.goodDayNumber">
-                                <option></option>
-                                <option repeat.for="i of painScale" model.bind="i">${i}</option>
-                            </select>
-                        </div>
-            
-                        <div class="uk-margin-small">
-                            <label class="uk-form-label" for="comparedToChronicRating">Compared to Chronic Rating</label>
-                            <select id="comparedToChronicRating" class="uk-select uk-form-small uk-form-width-small" value.bind="results.painIssues.visualScale.comparedToChronicRating">
-                                <option></option>
-                                <option repeat.for="rating of comparisonRatings" model.bind="rating">${rating.description}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-            </fieldset>
+           
             
 
             <fieldset class="uk-fieldset">
@@ -440,6 +459,36 @@
         </form>
 
     </div>
+
+    <div class="uk-container" if.bind="results.claimant" style="font-family: arial; font-size: 11pt; font-weight: normal;">
+        <h5 class="uk-heading-line"><span>Psychological Assessment Summary</span></h5>
+
+        <p>
+            In this present evaluation, the results for pain severity, as measured by Visual Analogue Pain Scales (which does not have any validity measures), 
+            show a current pain rating to be in ${painRatings[results.painIssues.visualScale.currentNumber].format(self)} band (${results.painIssues.visualScale.currentNumber}/${painScaleMax}); 
+            with respect to chronic pain patient norms, and that the pain can increase to a 
+            ${results.painIssues.visualScale.badDayNumber}/${painScaleMax} on a “bad” day, and only goes to a ${results.painIssues.visualScale.goodDayNumber}/${painScaleMax} on a “good” day. 
+        </p>
+<!--
+        <p>
+            ${results.gender.title} ${results.claimant.lastName}'s aggregate result for the Pain Disability Index (PDI) shows that ${results.pronoun.subject} rated in 
+            an above average range for level of self-perceived disability as a result of ${results.pronoun.possessiveAdjective} pain symptomatology, 
+            with respect to chronic pain patient norms. 
+
+            In particular, ${results.pronoun.subject} ascribed an above average degree of dysfunction for ${results.pronoun.possessiveAdjective} recreational activities, for ${results.pronoun.possessiveAdjective} social activities, for ${results.pronoun.possessiveAdjective} sexual behaviours, for ${results.pronoun.possessiveAdjective} occupational pursuits, and for ${results.pronoun.possessiveAdjective} family/home responsibilities; and ascribed an average level of dysfunction for his self-care tasks and for his life support activities, for his sexual behaviours, for his occupational pursuits, and for his family/home responsibilities.  
+        </p>
+        <p>
+           
+            In particular, ${results.pronoun.subject} ascribed {an above average} degree of dysfunction 
+            for ${results.pronoun.possessiveAdjective} {recreational activities}; 
+            and ascribed an average level of dysfunction for ${results.pronoun.possessiveAdjective} 
+            ${results.painIssues.disabilityIndex.dysfunctionRatings | filter:"rating.description":"average" | arrayToString} 
+            {self-care tasks, social activities, life support activities, sexual behaviours, occupational pursuits, and family/home responsibilities}
+            .
+        </p>
+    -->
+    </div>
+
 <!--
     <div class="uk-container" style="font-family: arial, sans-serif; font-size: 11pt;">
 
@@ -483,26 +532,6 @@
     </div>
 
     <div class="uk-container" style="font-family: arial, sans-serif; font-size: 11pt;">
-
-        <p>
-            In this present evaluation, the results for pain severity, as measured by Visual Analogue Pain Scales
-            <span if.bind="!results.isCredible"> (which does not have any validity measures)</span>, 
-            show a current pain rating to be in ${results.painIssues.visualScale.currentRating.templatePrefix} ${results.painIssues.visualScale.currentRating.description} band (${results.painIssues.visualScale.currentNumber}/${painScaleMax}); 
-            with respect to chronic pain patient norms, and that the pain can increase to a 
-            ${results.painIssues.visualScale.badDayNumber}/${painScaleMax} on a “bad” day, and only goes to a ${results.painIssues.visualScale.goodDayNumber}/${painScaleMax} on a “good” day.  
-            These findings indicate that a level of pain severity and associated symptomatology 
-            is being reported that is ${results.painIssues.visualScale.comparedToChronicRating.description} what is experienced by individuals who are suffering from chronic pain.
-        </p>
-
-        <p>
-            In this present evaluation, ${results.pronoun.possessiveAdjective} aggregate result for the Pain Disability Index (PDI) shows that ${results.pronoun.subject} 
-            rated in ${results.painIssues.disabilityIndex.perceivedDisability.templatePrefix} ${results.painIssues.disabilityIndex.perceivedDisability.description} for level of self-perceived disability as a result of ${results.pronoun.possessiveAdjective} pain symptomatology, 
-            with respect to chronic pain patient norms.  In particular, ${results.pronoun.subject} ascribed an above average degree of dysfunction 
-            for ${results.pronoun.possessiveAdjective} {recreational activities}; and ascribed an average level of dysfunction for ${results.pronoun.possessiveAdjective} 
-            ${results.painIssues.disabilityIndex.dysfunctionRatings | filter:"rating.description":"average" | arrayToString} {self-care tasks, 
-            social activities, life support activities, sexual behaviours, occupational pursuits, and family/home responsibilities}.
-        </p>
-        
 
         <h5 if.bind="results.performedNeurocognitiveTests.rivermeadPostConcussionSymptomsQuestionnaire" class="uk-heading-line"><span>Concussion Symptoms</span></h5>
         <p if.bind="results.performedNeurocognitiveTests.rivermeadPostConcussionSymptomsQuestionnaire">
@@ -571,7 +600,6 @@
     <div class="uk-container" if.bind="results.claimant">
         <h5 class="uk-heading-line"><span>Cognitive Assessment Summary</span></h5>
 
-
         <table class="uk-table uk-table-small uk-table-middle uk-table-divider" style="font-family: arial; font-size: 11pt; font-weight: normal; border-width: 1px;">
             <thead>
                 <tr>
@@ -594,7 +622,6 @@
                 </tr>
             </tbody>
         </table>
-
 
         <p style="font-family: arial; font-size: 11pt; font-weight: normal;">
             In summary, against an overlay of ${cognitiveAssessment.effortLevel.description} effort, here are ${results.gender.title} ${results.claimant.lastName}'s results:
