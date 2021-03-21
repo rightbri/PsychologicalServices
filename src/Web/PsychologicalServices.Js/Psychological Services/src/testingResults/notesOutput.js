@@ -469,42 +469,6 @@ export class NotesOutput {
         return allNo;
     }
 
-    @computedFrom('responses.observations')
-    get test() {
-        if (!this.responses) { return ""; }
-
-        let responses = [
-            { "response": this.observationResponse('claimantIssuesRecallingPreviousState'), "description": `${this.pronoun.possessiveAdjective} previous state` },
-            { "response": this.observationResponse('claimantIssuesRecallingIncident'), "description": "specific details about the index accident" },
-            { "response": this.observationResponse('claimantIssuesRecallingTreatment'), "description": `${this.pronoun.possessiveAdjective} post-accident treatment` }
-        ];
-
-        let anyYes = responses.some(x => this.isYes(x.response));
-        let anyNo = responses.some(x => this.isNo(x.response));
-
-        if (anyYes && anyNo) {
-            let no = responses.filter(x => this.isNo(x.response)).map(x => x.description).join(' or ');
-            let yes = responses.filter(x => this.isYes(x.response)).map(x => x.description).join(' and ');
-
-            let value = ` did not appear to have any issues recalling ${no}, but reported issues recalling ${yes}.`;
-            return value;
-        }
-        else if (anyYes && !anyNo) {
-            let yes = responses.filter(x => this.isYes(x.response)).map(x => x.description).join(' and ');
-
-            let value = ` reported issues recalling ${yes}.`;
-            return value;
-        }
-        else if (anyNo && !anyYes) {
-            let no = responses.filter(x => this.isNo(x.response)).map(x => x.description).join(' or ');
-            
-            let value = ` did not appear to have any issues recalling ${no}.`;
-            return value;
-        }
-
-        return ``;
-    }
-
     @computedFrom('assessment')
     get assessmentDate() {
         let appointmentTimes = this.assessment !== null && this.assessment.appointments !== null ? this.assessment.appointments.map(appointment => appointment.appointmentTime).sort((a, b) => a - b) : [];
@@ -1924,6 +1888,197 @@ export class NotesOutput {
                 return `${positionOrdinal} of ${siblingCountText} children`;
             }
         }
+    }
+
+    @computedFrom('responses.personalHistory.medical.familyMedicalConditions')
+    get anySelectedFamilyMedicalConditions() {
+        if (!this.responses || !this.responses.personalHistory.medical.familyMedicalConditions) { return false; }
+
+        return this.responses.personalHistory.medical.familyMedicalConditions.length > 0;
+    }
+
+    @computedFrom('responses.personalHistory.medical.familyMedicalConditions')
+    get selectedFamilyMedicalConditions() {
+        if (!this.responses || !this.responses.personalHistory.medical.familyMedicalConditions) { return []; }
+
+        let data = this.responses.personalHistory.medical.familyMedicalConditions.map(item => {
+            let familyMedicalCondition = !this.medicalConditionsMap[item].isOther ? this.medicalConditionsMap[item].format(this) : (this.responses.personalHistory.medical.familyMedicalConditionOther || "");
+
+            return familyMedicalCondition;
+        });
+
+        return data;
+    }
+
+    @computedFrom('responses.personalHistory.medical.drugsUsed')
+    get drugsUsed() {
+        if (!this.responses || !this.responses.personalHistory.medical.drugsUsed) { return []; }
+
+        let data = this.responses.personalHistory.medical.drugsUsed.map(item => this.abusedDrugsMap[item]);
+
+        return data;
+    }
+
+    @computedFrom('responses.personalHistory.medical.drugsUsed')
+    get drugsNotUsed() {
+        if (!this.responses || !this.responses.personalHistory.medical.drugsUsed) { return []; }
+        
+        let data = this.abusedDrugs.filter(item => {
+            return !this.responses.personalHistory.medical.drugsUsed.some(x => item.value === x);
+        });
+
+        return data;
+    }
+
+    @computedFrom('responses.personalHistory.medical.drugsUsed')
+    get anyDrugsUsed() {
+        if (!this.responses || !this.responses.personalHistory.medical.drugsUsed) { return false; }
+
+        return this.responses.personalHistory.medical.drugsUsed.length > 0;
+    }
+
+    @computedFrom(
+        'responses.personalHistory.medical.everUsedDrugs',
+        'responses.personalHistory.medical.drugsUsed'
+    )
+    get anyDrugsNotUsed() {
+        if (!this.responses || !this.responses.personalHistory.medical.drugsUsed) { return false; }
+
+        return this.isYes(this.responses.personalHistory.medical.everUsedDrugs) &&
+            this.responses.personalHistory.medical.drugsUsed.length < this.abusedDrugs.length;
+    }
+
+    @computedFrom(
+        'responses.personalHistory.medical.currently.alchoholConsumptionIncreased',
+        'responses.personalHistory.medical.currently.tobaccoUseIncreased',
+        'responses.personalHistory.medical.currently.thcUseIncreased'
+    )
+    get increasedUsageDrugs() {
+        if (!this.responses || !this.responses.personalHistory.medical.currently) { return []; }
+
+        let data = [
+            { "value": "alchohol", "increased": this.isYes(this.responses.personalHistory.medical.currently.alchoholConsumptionIncreased) },
+            { "value": "tobacco", "increased": this.isYes(this.responses.personalHistory.medical.currently.tobaccoUseIncreased) },
+            { "value": "THC", "increased": this.isYes(this.responses.personalHistory.medical.currently.thcUseIncreased) }
+        ];
+
+        return data.filter(item => item.increased).map(item => item.value);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.medical.currently.alchoholConsumptionIncreased',
+        'responses.personalHistory.medical.currently.tobaccoUseIncreased',
+        'responses.personalHistory.medical.currently.thcUseIncreased'
+    )
+    get notIncreasedUsageDrugs() {
+        if (!this.responses || !this.responses.personalHistory.medical.currently) { return []; }
+
+        let data = [
+            { "value": "alchohol", "didNotIncrease": this.isNo(this.responses.personalHistory.medical.currently.alchoholConsumptionIncreased) },
+            { "value": "tobacco", "didNotIncrease": this.isNo(this.responses.personalHistory.medical.currently.tobaccoUseIncreased) },
+            { "value": "THC", "didNotIncrease": this.isNo(this.responses.personalHistory.medical.currently.thcUseIncreased) }
+        ];
+
+        return data.filter(item => item.didNotIncrease).map(item => item.value);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.medical.currently.alchoholConsumptionIncreased',
+        'responses.personalHistory.medical.currently.tobaccoUseIncreased',
+        'responses.personalHistory.medical.currently.thcUseIncreased'
+    )
+    get anyIncreasedUsageDrugs() {
+        let data = this.increasedUsageDrugs;
+
+        return data.some(item => item);
+    }
+
+    @computedFrom(
+        'responses.personalHistory.medical.currently.alchoholConsumptionIncreased',
+        'responses.personalHistory.medical.currently.tobaccoUseIncreased',
+        'responses.personalHistory.medical.currently.thcUseIncreased'
+    )
+    get anyNotIncreasedUsageDrugs() {
+        let data = this.notIncreasedUsageDrugs;
+
+        return data.some(item => item);
+    }
+
+    @computedFrom('responses.personalHistory.medical.beforeAccident.medicalConditions')
+    get preAccidentMedicalConditions() {
+        if (!this.responses || !this.responses.personalHistory.medical.beforeAccident.medicalConditions) { return []; }
+
+        let otherItem = { "description": "Other", "value": "other", "format": function(context) { return context.responses.personalHistory.medical.beforeAccident.medicalConditionOther; }, "isOther": true };
+
+        let data = this.responses.personalHistory.medical.beforeAccident.medicalConditions.map(item => {
+            return this.medicalConditionsMap[item].isOther ? otherItem : this.medicalConditionsMap[item];
+        });
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.personalHistory.medical.beforeAccident.surgeries.response',
+        'responses.personalHistory.medical.beforeAccident.injuries.response',
+        'responses.personalHistory.medical.beforeAccident.illnesses.response',
+        'responses.personalHistory.medical.beforeAccident.mvas.response',
+        'responses.personalHistory.medical.beforeAccident.headInjuries.response',
+        'responses.personalHistory.medical.sinceAccident.medicalDiagnosis.response',
+        'responses.personalHistory.medical.sinceAccident.surgeries.response',
+        'responses.personalHistory.medical.sinceAccident.injuries.response',
+        'responses.personalHistory.medical.sinceAccident.illnesses.response',
+        'responses.personalHistory.medical.sinceAccident.mvas.response',
+        'responses.personalHistory.medical.sinceAccident.headInjuries.response'
+    )
+    get anyYesPreOrPostAccidentMedicalDiagnosisSurgeriesIllnessesInjuriesAccidents() {
+        if (!this.responses || !this.responses.personalHistory.medical.beforeAccident) { return []; }
+
+        let data =
+            this.isYes(this.responses.personalHistory.medical.beforeAccident.surgeries.response) ||
+            this.isYes(this.responses.personalHistory.medical.beforeAccident.injuries.response) ||
+            this.isYes(this.responses.personalHistory.medical.beforeAccident.illnesses.response) ||
+            this.isYes(this.responses.personalHistory.medical.beforeAccident.mvas.response) ||
+            this.isYes(this.responses.personalHistory.medical.beforeAccident.headInjuries.response) ||
+            this.isYes(this.responses.personalHistory.medical.sinceAccident.medicalDiagnosis.response) ||
+            this.isYes(this.responses.personalHistory.medical.sinceAccident.surgeries.response) ||
+            this.isYes(this.responses.personalHistory.medical.sinceAccident.injuries.response) ||
+            this.isYes(this.responses.personalHistory.medical.sinceAccident.illnesses.response) ||
+            this.isYes(this.responses.personalHistory.medical.sinceAccident.mvas.response) ||
+            this.isYes(this.responses.personalHistory.medical.sinceAccident.headInjuries.response);
+
+        return data;
+    }
+
+    @computedFrom(
+        'responses.personalHistory.medical.beforeAccident.surgeries.response',
+        'responses.personalHistory.medical.beforeAccident.injuries.response',
+        'responses.personalHistory.medical.beforeAccident.illnesses.response',
+        'responses.personalHistory.medical.beforeAccident.mvas.response',
+        'responses.personalHistory.medical.beforeAccident.headInjuries.response',
+        'responses.personalHistory.medical.sinceAccident.medicalDiagnosis.response',
+        'responses.personalHistory.medical.sinceAccident.surgeries.response',
+        'responses.personalHistory.medical.sinceAccident.injuries.response',
+        'responses.personalHistory.medical.sinceAccident.illnesses.response',
+        'responses.personalHistory.medical.sinceAccident.mvas.response',
+        'responses.personalHistory.medical.sinceAccident.headInjuries.response'
+    )
+    get anyNoPreOrPostAccidentMedicalDiagnosisSurgeriesIllnessesInjuriesAccidents() {
+        if (!this.responses || !this.responses.personalHistory.medical.beforeAccident) { return []; }
+
+        let data =
+            this.isNo(this.responses.personalHistory.medical.beforeAccident.surgeries.response) ||
+            this.isNo(this.responses.personalHistory.medical.beforeAccident.injuries.response) ||
+            this.isNo(this.responses.personalHistory.medical.beforeAccident.illnesses.response) ||
+            this.isNo(this.responses.personalHistory.medical.beforeAccident.mvas.response) ||
+            this.isNo(this.responses.personalHistory.medical.beforeAccident.headInjuries.response) ||
+            this.isNo(this.responses.personalHistory.medical.sinceAccident.medicalDiagnosis.response) ||
+            this.isNo(this.responses.personalHistory.medical.sinceAccident.surgeries.response) ||
+            this.isNo(this.responses.personalHistory.medical.sinceAccident.injuries.response) ||
+            this.isNo(this.responses.personalHistory.medical.sinceAccident.illnesses.response) ||
+            this.isNo(this.responses.personalHistory.medical.sinceAccident.mvas.response) ||
+            this.isNo(this.responses.personalHistory.medical.sinceAccident.headInjuries.response);
+
+        return data;
     }
 
     getItemValueForContext(item, context) {

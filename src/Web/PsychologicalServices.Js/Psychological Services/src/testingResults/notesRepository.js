@@ -586,16 +586,16 @@ export class NotesRepository {
 
     getMedicalConditions() {
         let data = {
-            "alchoholAbuse": { "description": "Alcohol Abuse", "value": "alchoholAbuse", "format": function(context) { return `Alcohol Abuse`; } },
-            "cancer": { "description": "Cancer", "value": "cancer", "format": function(context) { return `Cancer`; } },
-            "cholesterol": { "description": "Cholesterol", "value": "cholesterol", "format": function(context) { return `Cholesterol`; } },
-            "diabetes": { "description": "Diabetes", "value": "diabetes", "format": function(context) { return `Diabetes`; } },
-            "fibromyalgia": { "description": "Fibromyalgia", "value": "fibromyalgia", "format": function(context) { return `Fibromyalgia`; } },
-            "heartDisease": { "description": "Heart Disease", "value": "heartDisease", "format": function(context) { return `Heart Disease`; } },
-            "hypertension": { "description": "Hypertension", "value": "hypertension", "format": function(context) { return `Hypertension`; } },
-            "stroke": { "description": "Stroke", "value": "stroke", "format": function(context) { return `Stroke`; } },
-            "thyroidDisorder": { "description": "Thyroid Disorder", "value": "thyroidDisorder", "format": function(context) { return `Thyroid Disorder`; } },
-            "other": { "description": "Other", "value": "other", "format": function(context) { return `Other`; } }
+            "alchoholAbuse": { "description": "Alcohol Abuse", "value": "alchoholAbuse", "format": function(context) { return `alcohol abuse`; } },
+            "cancer": { "description": "Cancer", "value": "cancer", "format": function(context) { return `cancer`; } },
+            "cholesterol": { "description": "Cholesterol", "value": "cholesterol", "format": function(context) { return `cholesterol`; } },
+            "diabetes": { "description": "Diabetes", "value": "diabetes", "format": function(context) { return `diabetes`; } },
+            "fibromyalgia": { "description": "Fibromyalgia", "value": "fibromyalgia", "format": function(context) { return `fibromyalgia`; } },
+            "heartDisease": { "description": "Heart Disease", "value": "heartDisease", "format": function(context) { return `heart Disease`; } },
+            "hypertension": { "description": "Hypertension", "value": "hypertension", "format": function(context) { return `hypertension`; } },
+            "stroke": { "description": "Stroke", "value": "stroke", "format": function(context) { return `stroke`; } },
+            "thyroidDisorder": { "description": "Thyroid Disorder", "value": "thyroidDisorder", "format": function(context) { return `thyroid disorder`; } },
+            "other": { "description": "Other", "value": "other", "format": function(context) { return `other`; }, "isOther": true }
         };
 
         return getPromise(data);
@@ -603,11 +603,11 @@ export class NotesRepository {
 
     getAbusedDrugs() {
         let data = {
-            "alchohol": { "description": "Alcohol", "value": "alchohol", "format": function(context) { return `Alcohol`; } },
-            "tobacco": { "description": "Tobacco", "value": "tobacco", "format": function(context) { return `Tobacco`; } },
+            "alchohol": { "description": "Alcohol", "value": "alchohol", "format": function(context) { return `alcohol`; } },
+            "tobacco": { "description": "Tobacco", "value": "tobacco", "format": function(context) { return `tobacco`; } },
             "thc": { "description": "THC/CBD without a prescription", "value": "thc", "format": function(context) { return `THC`; } },
-            "streetDrugs": { "description": "Street drugs", "value": "streetDrugs", "format": function(context) { return `Street drugs`; } },
-            "prescriptionMeds": { "description": "Prescription medication that was not prescribed to you", "value": "prescriptionMeds", "format": function(context) { return `Prescription medication that was not prescribed to you`; } }
+            "streetDrugs": { "description": "Street drugs", "value": "streetDrugs", "format": function(context) { return `street drugs`; } },
+            "prescriptionMeds": { "description": "Prescription medication that was not prescribed to you", "value": "prescriptionMeds", "format": function(context) { return `prescription medication that were not prescribed to ${context.pronoun.object}`; } }
         };
 
         return getPromise(data);
@@ -615,11 +615,11 @@ export class NotesRepository {
 
     getPhysicalStates() {
         let data = {
-            "excellent": { "description": "Excellent", "value": "excellent", "format": function(context) { return `Excellent`; } },
-            "good": { "description": "Good", "value": "good", "format": function(context) { return `Good`; } },
-            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `Fair`; } },
-            "stable": { "description": "Stable", "value": "stable", "format": function(context) { return `Stable`; } },
-            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `Poor`; } }
+            "excellent": { "description": "Excellent", "value": "excellent", "format": function(context) { return `excellent`; } },
+            "good": { "description": "Good", "value": "good", "format": function(context) { return `good`; } },
+            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `fair`; } },
+            "stable": { "description": "Stable", "value": "stable", "format": function(context) { return `stable`; } },
+            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `poor`; } }
         };
 
         return getPromise(data);
@@ -886,7 +886,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "38";
+    return "40";
 }
 
 function upgrade(responses, toVersion) {
@@ -905,16 +905,16 @@ function upgrade(responses, toVersion) {
 function upgradeIfApplicable(responses, fromVersion, toVersion) {
     let functionName = "upgrade_" + fromVersion + "_to_" + toVersion;
 
-    let isFunction = false;
+    let isFunc = false;
 
     try {
-        isFunction = isFunction(eval(functionName));
+        isFunc = isFunction(eval(functionName));
     }
     catch (err) {
         console.log(err);
     }
 
-    if (isFunction) {
+    if (isFunc) {
         return eval(functionName)(responses);
     }
     else {
@@ -1211,6 +1211,32 @@ function upgrade_20_to_21(responses) {
     }
 
     responses.version = "21";
+
+    return responses;
+}
+
+function upgrade_39_to_40(responses) {
+    let newResponses = getNewResponses();
+
+    if (!responses.personalHistory.medical.sinceAccident.hasOwnProperty('injuries')) {
+        responses.personalHistory.medical.sinceAccident.injuries = {
+            "response": null,
+            "details": ""
+        };
+    }
+
+    if (!responses.personalHistory.medical.sinceAccident.hasOwnProperty('illnesses')) {
+        responses.personalHistory.medical.sinceAccident.illnesses = {
+            "response": null,
+            "details": ""
+        };
+    }
+
+    if (!responses.personalHistory.medical.beforeAccident.hasOwnProperty('medicalConditionOther')) {
+        responses.personalHistory.medical.beforeAccident.medicalConditionOther = "";
+    }
+
+    responses.version = "40";
 
     return responses;
 }
@@ -1604,6 +1630,7 @@ function getNewResponses() {
                 "beforeAccident": {
                     "medicalConditionsDiagnosed": null,
                     "medicalConditions": [],
+                    "medicalConditionOther": "",
                     "surgeries": {
                         "response": null,
                         "details": ""
@@ -1632,6 +1659,14 @@ function getNewResponses() {
                         "details": ""
                     },
                     "surgeries": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "injuries": {
+                        "response": null,
+                        "details": ""
+                    },
+                    "illnesses": {
                         "response": null,
                         "details": ""
                     },

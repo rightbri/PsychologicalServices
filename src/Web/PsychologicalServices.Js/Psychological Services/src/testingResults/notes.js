@@ -654,6 +654,14 @@ export class Notes {
         return this.responses.personalHistory.medical.drugsUsed.some(item => item === "thc");
     }
 
+    @computedFrom('responses.personalHistory.medical.beforeAccident.medicalConditions')
+    get medicalConditionOtherIsSelected() {
+        if (this.responses === null) { return false; }
+        
+        return this.responses.personalHistory.medical.beforeAccident.medicalConditions.some(item => item === "other");
+    }
+
+
     get sustainedFractures() {
         if (this.responses === null) { return false; }
 

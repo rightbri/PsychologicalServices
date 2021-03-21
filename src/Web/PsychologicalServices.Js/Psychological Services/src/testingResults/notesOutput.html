@@ -1720,9 +1720,524 @@
             </div>
         </fieldset>
 
-        <!-- P -->
+        <!-- Medical History -->
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">P</legend>
+            <legend class="uk-legend">Medical History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <!-- Substance Abuse -->
+                    <p>
+                        <template if.bind="isYes(responses.personalHistory.medical.everUsedDrugs) || isNo(responses.personalHistory.medical.everUsedDrugs)">
+                            When asked if ${pronoun.subject} had ever used alcohol, tobacco, THC, street drugs, or medication that was not prescribed to her, ${gender.title} ${claimant.lastName}
+                            <template if.bind="isYes(responses.personalHistory.medical.everUsedDrugs)">
+                                <template if.bind="anyDrugsUsed">
+                                    &nbsp;acknowledged using ${drugsUsed | arrayToString:{"format":getItemValueForCurrentContext}}
+                                </template>
+                                <template if.bind="anyDrugsNotUsed">
+                                    <template if.bind="anyDrugsUsed">
+                                        &nbsp;but
+                                    </template>
+                                    &nbsp;denied using ${drugsNotUsed | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"}}
+                                </template>
+                                . 
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.personalHistory.medical.everUsedDrugs)">
+                                    &nbsp;denied using any of the same.
+                                </template>
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isYes(responses.personalHistory.medical.everTreatedForSubstanceAbuse)">
+                            &nbsp;${pronoun.subject | proper} acknowledged a history of treatment for substance abuse issues.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.medical.everTreatedForSubstanceAbuse)">
+                                &nbsp;${pronoun.subject | proper} denied any history of treatment for substance abuse issues.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="anyIncreasedUsageDrugs && !anyNotIncreasedUsageDrugs">
+                            &nbsp;${pronoun.subject | proper} expressed that since the accident ${pronoun.possessiveAdjective} use of ${increasedUsageDrugs | arrayToString} has increased.
+                        </template>
+                        <template if.bind="anyIncreasedUsageDrugs && anyNotIncreasedUsageDrugs">
+                            &nbsp;${pronoun.subject | proper} expressed that since the accident ${pronoun.possessiveAdjective} use of ${increasedUsageDrugs | arrayToString} has increased but ${pronoun.possessiveAdjective} use of ${notIncreasedUsageDrugs | arrayToString} has not increased.
+                        </template>
+                        <template if.bind="!anyIncreasedUsageDrugs && anyNotIncreasedUsageDrugs">
+                            &nbsp;${pronoun.subject | proper} expressed that since the accident ${pronoun.possessiveAdjective} use of ${notIncreasedUsageDrugs | arrayToString} has not increased.
+                        </template>
+                    </p>
+
+                    <!-- Medical Conditions -->
+                    <p>
+                        <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.medicalConditionsDiagnosed)">
+                            Regarding ${pronoun.possessiveAdjective} personal medical history, ${gender.title} ${claimant.lastName} shared that before the accident ${pronoun.subject} was diagnosed with <strong>${preAccidentMedicalConditions | arrayToString:{"format":getItemValueForCurrentContext}}</strong>.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.medical.beforeAccident.medicalConditionsDiagnosed)">
+                                When asked about ${pronoun.possessiveAdjective} personal medical history, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} did not have any medical conditions diagnosed before the accident.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="anyYesPreOrPostAccidentMedicalDiagnosisSurgeriesIllnessesInjuriesAccidents">
+                            &nbsp;${pronoun.subject | proper} then shared that 
+                            
+                            <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.surgeries.response)">
+                                <br>
+                                <strong>Pre-accident surgeries ${responses.personalHistory.medical.beforeAccident.surgeries.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.injuries.response)">
+                                <br>
+                                <strong>Pre-accident injuries ${responses.personalHistory.medical.beforeAccident.injuries.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.illnesses.response)">
+                                <br>
+                                <strong>Pre-accident illnesses ${responses.personalHistory.medical.beforeAccident.illnesses.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.mvas.response)">
+                                <br>
+                                <strong>Pre-accident MVAs ${responses.personalHistory.medical.beforeAccident.mvas.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.headInjuries.response)">
+                                <br>
+                                <strong>Pre-accident head injuries ${responses.personalHistory.medical.beforeAccident.headInjuries.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.sinceAccident.medicalDiagnosis.response)">
+                                <br>
+                                <strong>Post-accident medical diagnosis ${responses.personalHistory.medical.sinceAccident.medicalDiagnosis.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.sinceAccident.surgeries.response)">
+                                <br>
+                                <strong>Post-accident surgeries ${responses.personalHistory.medical.sinceAccident.surgeries.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.sinceAccident.injuries.response)">
+                                <br>
+                                <strong>Post-accident injuries ${responses.personalHistory.medical.sinceAccident.injuries.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.sinceAccident.illnesses.response)">
+                                <br>
+                                <strong>Post-accident illnesses ${responses.personalHistory.medical.sinceAccident.illnesses.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.sinceAccident.mvas.response)">
+                                <br>
+                                <strong>Post-accident MVAs ${responses.personalHistory.medical.sinceAccident.mvas.details}</strong>
+                            </template>
+                            <template if.bind="isYes(responses.personalHistory.medical.sinceAccident.headInjuries.response)">
+                                <br>
+                                <strong>Post-accident head injuries ${responses.personalHistory.medical.sinceAccident.headInjuries.details}</strong>
+                            </template>
+                            
+                        </template>
+
+                        <template if.bind="anyNoPreOrPostAccidentMedicalDiagnosisSurgeriesIllnessesInjuriesAccidents">
+                            <br>
+                            ${pronoun.subject | proper} denied having any 
+                            <template if.bind="anyYesPreOrPostAccidentMedicalDiagnosisSurgeriesIllnessesInjuriesAccidents">
+                                &nbsp;other
+                            </template>
+                             &nbsp;pre- or post-accident illnesses, injuries, surgeries, motor vehicle accidents, or traumatic brain injuries.
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.medical.beforeAccident.priorState)">
+                            &nbsp;Upon inquiry ${pronoun.subject} described ${pronoun.possessiveAdjective} health in the year before the accident as ${physicalStatesMap[responses.personalHistory.medical.beforeAccident.priorState].format(self)}.
+                        </template>
+                    </p>
+
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <!-- Personal History -->
+        <fieldset id="personalHistory" class="uk-fieldset">
+            <legend class="uk-legend">Personal History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <!-- Birth / Languages / Relationship / Familial Stress / Abusive Relationships -->
+                    <p>
+                        <template if.bind="responses.personalHistory.locationOfBirth">
+                            ${gender.title} ${claimant.lastName} was born on ${claimant.dateOfBirth | dateFormat:"MMMM D, YYYY"} in ${responses.personalHistory.locationOfBirth & signal:'birth-location-changed'}. 
+                        </template>
+                        
+                        <template if.bind="knownLanguages.length & signal:'languages-changed'">
+                            &nbsp;${pronoun.subject | proper} is a ${claimant.dateOfBirth | age}-year-old ${claimant.gender | gender | lower} who identified
+                            <template if.bind="knownLanguages.length === 1 & signal:'languages-changed'">
+                                &nbsp;${knownLanguages | arrayToString & signal:'languages-changed'} as ${pronoun.possessiveAdjective} first language.
+                            </template>
+                            <template else>
+                                &nbsp;${pronoun.possessiveAdjective} known languages as ${knownLanguages | arrayToString & signal:'languages-changed'}.
+                            </template>    
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.relationship.status)">
+                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} is ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
+                            <template if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
+                                <template if.bind="responses.personalHistory.relationship.marriageLength.value && !responses.personalHistory.relationship.dontKnowMarriageLength">
+                                    &nbsp;for ${getAgeTextForCurrentContext(responses.personalHistory.relationship.marriageLength) & signal:'marriage-length-changed'} now
+                                </template>
+                                <template if.bind="relationshipStatusesMap[responses.personalHistory.relationship.status].isMarried & signal:'relationship-status-changed'">
+                                    &nbsp;to
+                                </template>
+                                <template else>
+                                    &nbsp;with
+                                </template>
+                                 &nbsp;${pronoun.possessiveAdjective} 
+                                 <template if.bind="responses.personalHistory.relationship.partnerAge && !responses.personalHistory.relationship.dontKnowPartnerAge">
+                                    &nbsp;${responses.personalHistory.relationship.partnerAge}-year-old partner
+                                 </template>
+                                 <template else>
+                                    &nbsp;partner
+                                 </template>
+                                 <template if.bind="responses.personalHistory.relationship.partnerJobTitle">
+                                    &nbsp;who has experience working 
+                                    <template if.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry === 'title'">
+                                    &nbsp;as a <strong>${responses.personalHistory.relationship.partnerJobTitle}</strong>
+                                    </template>
+                                    <template if.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry === 'industry'">
+                                    &nbsp;in the <strong>${responses.personalHistory.relationship.partnerJobTitle}</strong> industry
+                                    </template>
+                                    .
+                                 </template>
+                                 <template if.bind="responses.personalHistory.relationship.dontKnowPartnerAge">
+                                    &nbsp;${gender.title} ${claimant.lastName} advised ${pronoun.subject} did not know the current age of ${pronoun.possessiveAdjective} partner.
+                                 </template>
+                                 <template if.bind="responses.personalHistory.relationship.dontKnowMarriageLength">
+                                    &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} did not know how long ${pronoun.subject} had been in ${pronoun.possessiveAdjective} current relationship.
+                                 </template>
+                            </template>
+                            . 
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.relationship.isAbusive)">
+                            &nbsp;${gender.title} ${claimant.lastName} 
+                            <template if.bind="isYes(responses.personalHistory.relationship.isAbusive)">
+                                &nbsp;disclosed that ${pronoun.subject} is
+                            </template>
+                            <template else>
+                                &nbsp;confirmed that ${pronoun.subject} is not
+                            </template>
+                            &nbsp;currently in an abusive relationship
+                            <template if.bind="isAnswered(responses.personalHistory.relationship.previousRelationshipAbusive)">
+                                <template if.bind="isYes(responses.personalHistory.relationship.previousRelationshipAbusive)">
+                                    , but acknowledged that in the past ${pronoun.subject} was in an abusive relationship
+                                </template>
+                                <template else>
+                                    , nor has ${pronoun.subject} been in an abusive relationship in the past
+                                </template>
+                            </template>
+                            . 
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                            <template if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
+                                &nbsp;When asked about any previous serious relationships, ${pronoun.subject} shared that ${pronoun.subject} was in a relationship
+                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.value)">
+                                    &nbsp;for a period of ${getAgeTextForCurrentContext(responses.personalHistory.relationship.priorSeriousRelationshipLength) & signal:'prior-serious-relationship-length-changed'}
+                                </template>
+                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded)">
+                                    , adding that this ended due to <strong>${responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded}</strong>.
+                                </template>
+                            </template>
+                            <template else>
+                                &nbsp;${gender.title} ${claimant.lastName} denied having any prior serious relationships.
+                            </template>
+                        </template>
+
+                    </p>
+                    
+                    <!-- Growing up -->
+                    <p>
+                        <template if.bind="responses.personalHistory.growingUp.socioeconomicClass">
+                            ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} was raised in ${getItemValueForCurrentContext(getMatch(socioeconomicStatuses, responses.personalHistory.growingUp.socioeconomicClass))}.
+                        </template>
+    
+                        <template if.bind="isNo(responses.personalHistory.growingUp.abuse.any)">
+                            &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
+                        </template>
+                        <template else>
+                            <template if.bind="yesAbuseTypes.length || noAbuseTypes.length">
+                                <template if.bind="noAbuseGrowingUp">
+                                    &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
+                                </template>
+                                <template else>
+                                    &nbsp;When asked about any abuse when ${pronoun.subject} was growing up, 
+                                    <template if.bind="yesAbuseTypes.length">
+                                        &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
+                                    </template>
+                                    <template if.bind="noAbuseTypes.length">
+                                        <template if.bind="yesAbuseTypes.length">
+                                            &nbsp;${pronoun.subject | proper}
+                                        </template>
+                                        <template else>
+                                            &nbsp;${pronoun.subject} 
+                                        </template>
+                                        &nbsp;denied experiencing any ${noAbuseTypes | arrayToString:{"format":getItemValue,"connector":"or"} & signal:'growing-up-abuse-changed'} abuse.
+                                    </template>
+                                </template>
+                            </template>
+                        </template>
+
+                        <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
+                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
+                        </template>
+                        <template if.bind="isNo(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
+                            &nbsp;To the best of ${pronoun.possessiveAdjective} knowledge, ${gender.title} ${claimant.lastName} believes that ${pronoun.subject} hit all developmental milestones (i.e. walking/talking/toilet training) as expected.
+                        </template>
+    
+                        <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
+                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada}.
+                        </template>
+                        <template if.bind="responses.personalHistory.arrivalInCanadaType && !responses.personalHistory.skipArrivalInCanada">
+                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada 
+                            <template if.bind="responses.personalHistory.arrivalInCanadaType === 'year'">
+                                &nbsp;in ${responses.personalHistory.arrivalInCanadaYear}
+                            </template>
+                            <template if.bind="responses.personalHistory.arrivalInCanadaType === 'age'">
+                                &nbsp;when ${pronoun.subject} was ${responses.personalHistory.arrivalInCanadaAge} years old
+                            </template>
+                            .
+                        </template>
+                    </p>
+
+                    <p>
+                        <template if.bind="isYes(responses.personalHistory.medical.familyMedicalHistory)">
+                            ${gender.title} ${claimant.lastName} acknowledged having a familial medical history
+                            <template if.bind="anySelectedFamilyMedicalConditions">
+                                &nbsp;which includes: <strong>${selectedFamilyMedicalConditions | arrayToString}</strong>
+                            </template>
+                            .
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.medical.familyMedicalHistory)">
+                                ${gender.title} ${claimant.lastName} denied having any familial medical history.
+                            </template>
+                            <template else>
+                                <template if.bind="isDontKnow(responses.personalHistory.medical.familyMedicalHistory)">
+                                    ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not know if ${pronoun.subject} has any familial medical history.
+                                </template>
+                            </template>
+                        </template>
+                    </p>
+
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <!-- Education and Work History -->
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Education and Work History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                     
+                    <!-- Education -->
+                    <p>
+                        <template if.bind="isAnswered(responses.personalHistory.education.completedHighSchool)">
+                            ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} 
+                            <template if.bind="isYes(responses.personalHistory.education.completedHighSchool)">
+                                &nbsp;completed high school.
+
+                                <template if.bind="isAnswered(responses.personalHistory.education.attendedPostSecondaryEducation)">
+                                    <template if.bind="isNo(responses.personalHistory.education.attendedPostSecondaryEducation)">
+                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} did not attend post-secondary education.
+                                    </template>
+                                    <template if.bind="isYes(responses.personalHistory.education.attendedPostSecondaryEducation)">
+                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} attended 
+                                        <template if.bind="responses.personalHistory.education.yearsOfPostSecondaryEducation == 1">&nbsp;one year</template>
+                                        <template else>
+                                            <template if.bind="responses.personalHistory.education.yearsOfPostSecondaryEducation > 1">
+                                                &nbsp;${responses.personalHistory.education.yearsOfPostSecondaryEducation | numberTextIfLessThanTen}
+                                            </template>
+                                            <template else>
+                                                <strong>
+                                                    ${responses.personalHistory.education.yearsOfPostSecondaryEducation}
+                                                </strong>
+                                            </template>
+                                            &nbsp;years 
+                                        </template>
+                                        &nbsp;of post-secondary education
+                                        <template if.bind="responses.personalHistory.education.areaOfStudy">
+                                            , and studied <strong>${responses.personalHistory.education.areaOfStudy}</strong>
+                                        </template>
+                                        .
+                                    </template>
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.personalHistory.education.completedHighSchool)">
+                                    &nbsp;did not complete high school. 
+                                    <template if.bind="responses.personalHistory.education.lastCompletedGrade">
+                                        &nbsp;${pronoun.subject | proper} advised that the last grade ${pronoun.subject} completed was grade ${responses.personalHistory.education.lastCompletedGrade}.
+                                    </template>
+                                </template>
+                                <template if.bind="isDontKnow(responses.personalHistory.education.completedHighSchool)">
+                                    &nbsp;does not know if ${pronoun.subject} completed high school.
+                                </template>
+                            </template>
+                        </template>
+
+                        <template if.bind="!responses.personalHistory.education.dontKnowSelfRating && isAnswered(responses.personalHistory.education.selfRating)">
+                            &nbsp;${gender.title} ${claimant.lastName} described ${pronoun.object}self as ${studentSelfRatingsMap[responses.personalHistory.education.selfRating].format(self)} student.
+                        </template>
+
+                        <template if.bind="isAnswered(responses.personalHistory.education.everHeldBack)">
+                            <template if.bind="isYes(responses.personalHistory.education.everHeldBack)">
+                                &nbsp;${pronoun.subject | proper} acknowledged that ${pronoun.subject} was held back/repeated a grade.
+                            </template>
+                            <template if.bind="isNo(responses.personalHistory.education.everHeldBack)">
+                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} was ever held back or repeated a grade.
+                            </template>
+                        </template>
+
+                        <template if.bind="responses.personalHistory.education.bestSubject || responses.personalHistory.education.worstSubject">
+                            <template if.bind="responses.personalHistory.education.bestSubject">
+                                &nbsp;${gender.title} ${claimant.lastName} identified ${pronoun.possessiveAdjective} best subject as <strong>${responses.personalHistory.education.bestSubject}</strong>
+                                <template if.bind="responses.personalHistory.education.worstSubject">
+                                    &nbsp;and ${pronoun.possessiveAdjective} worst subject as <strong>${responses.personalHistory.education.worstSubject}</strong>
+                                </template>
+                            </template>
+                            <template else>
+                                <template if.bind="responses.personalHistory.education.worstSubject">
+                                    &nbsp;${gender.title} ${claimant.lastName} identified ${pronoun.possessiveAdjective} worst subject as <strong>${responses.personalHistory.education.worstSubject}</strong>
+                                </template>
+                            </template>
+                            .
+                        </template>
+                    </p>
+
+                    <!-- Employment -->
+                    <p>
+                        <template if.bind="isYes(responses.personalHistory.occupation.employedAtTheTimeOfTHeAccident)">
+                            At the time of the accident, ${gender.title} ${claimant.lastName} was employed and working.
+                        </template>
+                        <template if.bind="isNo(responses.personalHistory.occupation.employedAtTheTimeOfTHeAccident)">
+                            At the time of the accident, ${gender.title} ${claimant.lastName} was not employed and working.
+                        </template>
+
+                        <template if.bind="responses.personalHistory.occupation.jobTitle">
+                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} was <strong>${responses.personalHistory.occupation.jobTitle}</strong>.
+                        </template>
+                        
+                        <template if.bind="isYes(responses.personalHistory.occupation.returnToWork.attempted)">
+                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} has attempted to return to work.
+                        </template>
+                        <template if.bind="isNo(responses.personalHistory.occupation.returnToWork.attempted)">
+                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} has not attempted to return to work.
+                        </template>
+                    </p>
+
+                    <!-- Financial Situation -->
+                    <p>
+                        <template if.bind="isAnswered(responses.personalHistory.financial.experiencingFinancialStress)">
+                            When asked about ${pronoun.possessiveAdjective} financial situation ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} 
+                            <template if.bind="isYes(responses.personalHistory.financial.experiencingFinancialStress)">
+                                &nbsp;is
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.personalHistory.financial.experiencingFinancialStress)">
+                                    &nbsp;is not
+                                </template>
+                                <template else>
+                                    <template if.bind="isDontKnow(responses.personalHistory.financial.experiencingFinancialStress)">
+                                        &nbsp;does not know if ${pronoun.subject} is
+                                    </template>
+                                </template>
+                            </template>
+                            &nbsp;experiencing financial stress.
+                        </template>
+                        
+                        <template if.bind="isYes(responses.personalHistory.financial.tightFinancially)">
+                            &nbsp;${pronoun.subject | proper} then described ${pronoun.possessiveAdjective} finances as being tighter.
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.financial.tightFinancially)">
+                                &nbsp;${pronoun.subject | proper} advised that ${pronoun.possessiveAdjective} finances are not tighter.
+                            </template>
+                            <template else>
+                                <template if.bind="isDontKnow(responses.personalHistory.financial.tightFinancially)">
+                                    &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} finances are tighter.
+                                </template>
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isYes(responses.personalHistory.financial.haveDebt)">
+                            &nbsp;${gender.title} ${claimant.lastName} further noted that ${pronoun.subject} has debt.
+                            <template if.bind="responses.personalHistory.financial.amountOfDebt">
+                                &nbsp;When asked the amount of ${pronoun.possessiveAdjective} debt ${pronoun.subject} indicated that ${pronoun.subject} has <strong>${responses.personalHistory.financial.amountOfDebt}</strong> of debt.
+                            </template>
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.financial.haveDebt)">
+                                &nbsp;${gender.title} ${claimant.lastName} then noted that ${pronoun.subject} does not have any debt.
+                            </template>
+                            <template else>
+                                <template if.bind="isDontKnow(responses.personalHistory.financial.haveDebt)">
+                                    &nbsp;${gender.title} ${claimant.lastName} further noted that ${pronoun.subject} does not know if ${pronoun.subject} has any debt.
+                                </template>
+                            </template>
+                        </template>
+                    </p>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <!-- Criminal History -->
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Criminal History</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+                    <p>
+                        <template if.bind="isAnswered(responses.personalHistory.legal.everArrested.response)">
+                            When asked about any criminal history, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has 
+                            <template if.bind="isYes(responses.personalHistory.legal.everArrested.response)">
+                                &nbsp;previously been arrested.
+                            </template>
+                            <template if.bind="isNo(responses.personalHistory.legal.everArrested.response)">
+                                &nbsp;never been arrested.
+                            </template>
+                        </template>
+                        
+                        <template if.bind="isAnswered(responses.personalHistory.legal.everConvicted.response)">
+                            
+                            <template if.bind="isYes(responses.personalHistory.legal.everConvicted.response)">
+                                &nbsp;${pronoun.subject | proper} then confirmed that ${pronoun.subject} has been convicted
+                                <template if.bind="responses.personalHistory.legal.everConvicted.details">
+                                    &nbsp;of <strong>${responses.personalHistory.legal.everConvicted.details}</strong>
+                                </template>
+                                .
+                            </template>
+                            <template if.bind="isNo(responses.personalHistory.legal.everConvicted.response)">
+                                &nbsp;${pronoun.subject | proper} then expressed that ${pronoun.subject} has never been convicted of any crime
+                                <template if.bind="isAnswered(responses.personalHistory.legal.bondableIssues.response)">
+                                    <template if.bind="isYes(responses.personalHistory.legal.bondableIssues.response)">
+                                        , but noted that ${pronoun.subject} is not currently bondable
+                                    </template>
+                                    <template if.bind="isNo(responses.personalHistory.legal.bondableIssues.response)">
+                                        &nbsp;and confirmed that ${pronoun.subject} is bondable
+                                    </template>
+                                </template>
+                                .
+                            </template>
+                        </template>
+                    </p>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <!-- Emotional Function -->
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Emotional Function</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
 
@@ -2308,10 +2823,98 @@
                 <hr>
             </div>
         </fieldset>
-
-        <!-- NP -->
+    
+        <!-- Self-Perceived Disability -->
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">NP</legend>
+            <legend class="uk-legend">Self-Perceived Disability</legend>
+
+            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
+
+                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
+    
+                    <p if.bind="anyCurrentStateTaskResponses & signal:'current-state-task-changed'">
+                        When asked about ${pronoun.possessiveAdjective} ability to be involved in current regular activities, ${gender.title} ${claimant.lastName} shared the following: 
+                    </p>
+            
+                    <table class="uk-table uk-table-divider uk-table-small chart" if.bind="anyCurrentStateTaskResponses & signal:'current-state-task-changed'">
+                        <thead>
+                            <tr>
+                                <th class="uk-padding-remove-vertical">
+                                    Specific Task
+                                </th>
+                                <th class="uk-padding-remove-vertical">
+                                    Is ${pronoun.subject} able, partially able, or unable to do the same?
+                                </th>
+                                <th class="uk-padding-remove-vertical">
+                                    ${pronoun.possessiveAdjective | proper} ability to do said task is currently affected by ${pronoun.possessiveAdjective}: 
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template repeat.for="task of responses.neuropsychological.currentState.tasks | filter:isNotSkipAbilityWithContext & signal:'current-state-task-changed'">
+                                <tr>
+                                    <td class="uk-padding-remove-vertical">${currentStateTasksMap[task.value].description}</td>
+                                    <template if.bind="task.isNA">
+                                        <td colspan="2" class="uk-padding-remove-vertical" style="text-align:center;">Not applicable</td>
+                                    </template>
+                                    <template else>
+                                        <td class="uk-padding-remove-vertical" style="text-align:center;">
+                                            ${currentStateAbilitiesMap[task.ability].format(self)}
+                                            <template if.bind="task.isCaregiving && isCaregivingAbilityAnswered && isAnswered(responses.neuropsychological.currentState.caregivingCasInvolved) & signal:'current-state-task-changed'">
+                                                *
+                                            </template>
+                                        </td>
+                                        <td class="uk-padding-remove-vertical" style="text-align:center;">
+                                            ${currentStateIssuesSorted(task.issues) | arrayToString:{"format":currentStateIssueTextWithContext} & signal:'current-state-task-changed'}
+                                        </td>
+                                    </template>
+                                </tr>
+                                <tr if.bind="task.isCaregiving && isCaregivingAbilityAnswered && isAnswered(responses.neuropsychological.currentState.caregivingCasInvolved) & signal:'current-state-task-changed'">
+                                    <td colspan="3" class="uk-padding-remove-vertical">
+                                        *Upon inquiry, ${gender.title} ${claimant.lastName} advised that the Children’s Aid Society has 
+                                        <template if.bind="isNo(responses.neuropsychological.currentState.caregivingCasInvolved)">
+                                            &nbsp;not
+                                        </template>
+                                        &nbsp;been involved. 
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+
+                    <!-- Social Activities -->
+                    <p>
+                        <template if.bind="anyPreAccidentRecreationalActivities">
+                            <template if.bind="responses.version >= 27">
+                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} was involved with: ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString:{"format":getRecreationalActivityDescriptionForCurrentContext,"delimiter":"; "}}.
+                            </template>
+                            <template else>
+                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} enjoyed ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString}.
+                            </template>
+                        </template>
+                    </p>
+
+                    <!-- Travel Since Accident -->
+                    <template if.bind="isAnswered(responses.neuropsychological.currentState.travel.sinceAccident)">
+                        <p>
+                            When asked if ${pronoun.subject} had gone on vacation or traveled since the subject accident, ${gender.title} ${claimant.lastName} 
+                            <template if.bind="isNo(responses.neuropsychological.currentState.travel.sinceAccident)">
+                                &nbsp;denied the same.
+                            </template>
+                            <template if.bind="isYes(responses.neuropsychological.currentState.travel.sinceAccident)">
+                                &nbsp;shared that ${pronoun.subject} has traveled to <strong>${responses.neuropsychological.currentState.travel.where} for ${responses.neuropsychological.currentState.travel.howLong.number | numberText | lower} ${responses.neuropsychological.currentState.travel.howLong.period}</strong>. 
+                            </template>
+                        </p>
+                    </template>
+                </div>
+
+                <hr>
+            </div>
+        </fieldset>
+
+        <!-- Cognitive Report -->
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Cognitive Report</legend>
 
             <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
                 
@@ -2609,327 +3212,6 @@
                             When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} cognition with the passage of time, ${gender.title} ${claimant.lastName} shared that 
                             ${cognitiveChangeTypesMap[responses.neuropsychological.physical.changes.changeInCognition].format(self)}.
                         </template> 
-                    </p>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
-    
-        <!-- Current State -->
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Current State (as of the last two weeks)</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-    
-                    <p if.bind="anyCurrentStateTaskResponses & signal:'current-state-task-changed'">
-                        When asked about ${pronoun.possessiveAdjective} ability to be involved in current regular activities, ${gender.title} ${claimant.lastName} shared the following: 
-                    </p>
-            
-                    <table class="uk-table uk-table-divider uk-table-small chart" if.bind="anyCurrentStateTaskResponses & signal:'current-state-task-changed'">
-                        <thead>
-                            <tr>
-                                <th class="uk-padding-remove-vertical">
-                                    Specific Task
-                                </th>
-                                <th class="uk-padding-remove-vertical">
-                                    Is ${pronoun.subject} able, partially able, or unable to do the same?
-                                </th>
-                                <th class="uk-padding-remove-vertical">
-                                    ${pronoun.possessiveAdjective | proper} ability to do said task is currently affected by ${pronoun.possessiveAdjective}: 
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template repeat.for="task of responses.neuropsychological.currentState.tasks | filter:isNotSkipAbilityWithContext & signal:'current-state-task-changed'">
-                                <tr>
-                                    <td class="uk-padding-remove-vertical">${currentStateTasksMap[task.value].description}</td>
-                                    <template if.bind="task.isNA">
-                                        <td colspan="2" class="uk-padding-remove-vertical" style="text-align:center;">Not applicable</td>
-                                    </template>
-                                    <template else>
-                                        <td class="uk-padding-remove-vertical" style="text-align:center;">
-                                            ${currentStateAbilitiesMap[task.ability].format(self)}
-                                            <template if.bind="task.isCaregiving && isCaregivingAbilityAnswered && isAnswered(responses.neuropsychological.currentState.caregivingCasInvolved) & signal:'current-state-task-changed'">
-                                                *
-                                            </template>
-                                        </td>
-                                        <td class="uk-padding-remove-vertical" style="text-align:center;">
-                                            ${currentStateIssuesSorted(task.issues) | arrayToString:{"format":currentStateIssueTextWithContext} & signal:'current-state-task-changed'}
-                                        </td>
-                                    </template>
-                                </tr>
-                                <tr if.bind="task.isCaregiving && isCaregivingAbilityAnswered && isAnswered(responses.neuropsychological.currentState.caregivingCasInvolved) & signal:'current-state-task-changed'">
-                                    <td colspan="3" class="uk-padding-remove-vertical">
-                                        *Upon inquiry, ${gender.title} ${claimant.lastName} advised that the Children’s Aid Society has 
-                                        <template if.bind="isNo(responses.neuropsychological.currentState.caregivingCasInvolved)">
-                                            &nbsp;not
-                                        </template>
-                                        &nbsp;been involved. 
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-
-                    <!-- Social Activities -->
-                    <p>
-                        <template if.bind="anyPreAccidentRecreationalActivities">
-                            <template if.bind="responses.version >= 27">
-                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} was involved with: ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString:{"format":getRecreationalActivityDescriptionForCurrentContext,"delimiter":"; "}}.
-                            </template>
-                            <template else>
-                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} enjoyed ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString}.
-                            </template>
-                        </template>
-                    </p>
-
-                    <!-- Travel Since Accident -->
-                    <template if.bind="isAnswered(responses.neuropsychological.currentState.travel.sinceAccident)">
-                        <p>
-                            When asked if ${pronoun.subject} had gone on vacation or traveled since the subject accident, ${gender.title} ${claimant.lastName} 
-                            <template if.bind="isNo(responses.neuropsychological.currentState.travel.sinceAccident)">
-                                &nbsp;denied the same.
-                            </template>
-                            <template if.bind="isYes(responses.neuropsychological.currentState.travel.sinceAccident)">
-                                &nbsp;shared that ${pronoun.subject} has traveled to <strong>${responses.neuropsychological.currentState.travel.where} for ${responses.neuropsychological.currentState.travel.howLong.number | numberText | lower} ${responses.neuropsychological.currentState.travel.howLong.period}</strong>. 
-                            </template>
-                        </p>
-                    </template>
-                </div>
-
-                <hr>
-            </div>
-        </fieldset>
-
-        <!-- Personal History -->
-        <fieldset id="personalHistory" class="uk-fieldset">
-            <legend class="uk-legend">Personal History</legend>
-
-            <div class="uk-grid-collapse uk-child-width-1-1" uk-grid>
-
-                <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
-                    <!-- Birth / Languages / Relationship / Familial Stress / Abusive Relationships -->
-                    <p>
-                        <template if.bind="responses.personalHistory.locationOfBirth">
-                            ${gender.title} ${claimant.lastName} was born on ${claimant.dateOfBirth | dateFormat:"MMMM D, YYYY"} in ${responses.personalHistory.locationOfBirth & signal:'birth-location-changed'}. 
-                        </template>
-                        
-                        <template if.bind="knownLanguages.length & signal:'languages-changed'">
-                            &nbsp;${pronoun.subject | proper} is a ${claimant.dateOfBirth | age}-year-old ${claimant.gender | gender | lower} who identified
-                            <template if.bind="knownLanguages.length === 1 & signal:'languages-changed'">
-                                &nbsp;${knownLanguages | arrayToString & signal:'languages-changed'} as ${pronoun.possessiveAdjective} first language.
-                            </template>
-                            <template else>
-                                &nbsp;${pronoun.possessiveAdjective} known languages as ${knownLanguages | arrayToString & signal:'languages-changed'}.
-                            </template>    
-                        </template>
-
-                        <template if.bind="isAnswered(responses.personalHistory.relationship.status)">
-                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} is ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
-                            <template if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
-                                <template if.bind="responses.personalHistory.relationship.marriageLength.value && !responses.personalHistory.relationship.dontKnowMarriageLength">
-                                    &nbsp;for ${getAgeTextForCurrentContext(responses.personalHistory.relationship.marriageLength) & signal:'marriage-length-changed'} now
-                                </template>
-                                <template if.bind="relationshipStatusesMap[responses.personalHistory.relationship.status].isMarried & signal:'relationship-status-changed'">
-                                    &nbsp;to
-                                </template>
-                                <template else>
-                                    &nbsp;with
-                                </template>
-                                 &nbsp;${pronoun.possessiveAdjective} 
-                                 <template if.bind="responses.personalHistory.relationship.partnerAge && !responses.personalHistory.relationship.dontKnowPartnerAge">
-                                    &nbsp;${responses.personalHistory.relationship.partnerAge}-year-old partner
-                                 </template>
-                                 <template else>
-                                    &nbsp;partner
-                                 </template>
-                                 <template if.bind="responses.personalHistory.relationship.partnerJobTitle">
-                                    &nbsp;who has experience working 
-                                    <template if.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry === 'title'">
-                                    &nbsp;as a <strong>${responses.personalHistory.relationship.partnerJobTitle}</strong>
-                                    </template>
-                                    <template if.bind="responses.personalHistory.relationship.partnerJobTitleOrIndustry === 'industry'">
-                                    &nbsp;in the <strong>${responses.personalHistory.relationship.partnerJobTitle}</strong> industry
-                                    </template>
-                                    .
-                                 </template>
-                                 <template if.bind="responses.personalHistory.relationship.dontKnowPartnerAge">
-                                    &nbsp;${gender.title} ${claimant.lastName} advised ${pronoun.subject} did not know the current age of ${pronoun.possessiveAdjective} partner.
-                                 </template>
-                                 <template if.bind="responses.personalHistory.relationship.dontKnowMarriageLength">
-                                    &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} did not know how long ${pronoun.subject} had been in ${pronoun.possessiveAdjective} current relationship.
-                                 </template>
-                            </template>
-                            . 
-                        </template>
-
-                        <template if.bind="isAnswered(responses.personalHistory.relationship.isAbusive)">
-                            &nbsp;${gender.title} ${claimant.lastName} 
-                            <template if.bind="isYes(responses.personalHistory.relationship.isAbusive)">
-                                &nbsp;disclosed that ${pronoun.subject} is
-                            </template>
-                            <template else>
-                                &nbsp;confirmed that ${pronoun.subject} is not
-                            </template>
-                            &nbsp;currently in an abusive relationship
-                            <template if.bind="isAnswered(responses.personalHistory.relationship.previousRelationshipAbusive)">
-                                <template if.bind="isYes(responses.personalHistory.relationship.previousRelationshipAbusive)">
-                                    , but acknowledged that in the past ${pronoun.subject} was in an abusive relationship
-                                </template>
-                                <template else>
-                                    , nor has ${pronoun.subject} been in an abusive relationship in the past
-                                </template>
-                            </template>
-                            . 
-                        </template>
-
-                        <template if.bind="isAnswered(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                            <template if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                                &nbsp;When asked about any previous serious relationships, ${pronoun.subject} shared that ${pronoun.subject} was in a relationship
-                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.value)">
-                                    &nbsp;for a period of ${getAgeTextForCurrentContext(responses.personalHistory.relationship.priorSeriousRelationshipLength) & signal:'prior-serious-relationship-length-changed'}
-                                </template>
-                                <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded)">
-                                    , adding that this ended due to <strong>${responses.personalHistory.relationship.priorSeriousRelationshipReasonEnded}</strong>.
-                                </template>
-                            </template>
-                            <template else>
-                                &nbsp;${gender.title} ${claimant.lastName} denied having any prior serious relationships.
-                            </template>
-                        </template>
-
-                    </p>
-                    
-                    <!-- Growing up -->
-                    <p>
-                        <template if.bind="responses.personalHistory.growingUp.socioeconomicClass">
-                            ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} was raised in ${getItemValueForCurrentContext(getMatch(socioeconomicStatuses, responses.personalHistory.growingUp.socioeconomicClass))}.
-                        </template>
-    
-                        <template if.bind="isNo(responses.personalHistory.growingUp.abuse.any)">
-                            &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
-                        </template>
-                        <template else>
-                            <template if.bind="yesAbuseTypes.length || noAbuseTypes.length">
-                                <template if.bind="noAbuseGrowingUp">
-                                    &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
-                                </template>
-                                <template else>
-                                    &nbsp;When asked about any abuse when ${pronoun.subject} was growing up, 
-                                    <template if.bind="yesAbuseTypes.length">
-                                        &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
-                                    </template>
-                                    <template if.bind="noAbuseTypes.length">
-                                        <template if.bind="yesAbuseTypes.length">
-                                            &nbsp;${pronoun.subject | proper}
-                                        </template>
-                                        <template else>
-                                            &nbsp;${pronoun.subject} 
-                                        </template>
-                                        &nbsp;denied experiencing any ${noAbuseTypes | arrayToString:{"format":getItemValue,"connector":"or"} & signal:'growing-up-abuse-changed'} abuse.
-                                    </template>
-                                </template>
-                            </template>
-                        </template>
-
-                        <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
-                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
-                        </template>
-                        <template if.bind="isNo(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
-                            &nbsp;To the best of ${pronoun.possessiveAdjective} knowledge, ${gender.title} ${claimant.lastName} believes that ${pronoun.subject} hit all developmental milestones (i.e. walking/talking/toilet training) as expected.
-                        </template>
-    
-                        <template if.bind="responses.personalHistory.timeOfArrivalInCanada">
-                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada in ${responses.personalHistory.timeOfArrivalInCanada}.
-                        </template>
-                        <template if.bind="responses.personalHistory.arrivalInCanadaType && !responses.personalHistory.skipArrivalInCanada">
-                            &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} came to Canada 
-                            <template if.bind="responses.personalHistory.arrivalInCanadaType === 'year'">
-                                &nbsp;in ${responses.personalHistory.arrivalInCanadaYear}
-                            </template>
-                            <template if.bind="responses.personalHistory.arrivalInCanadaType === 'age'">
-                                &nbsp;when ${pronoun.subject} was ${responses.personalHistory.arrivalInCanadaAge} years old
-                            </template>
-                            .
-                        </template>
-                    </p>
-
-                    <!-- Education -->
-                    <p>
-                        <template if.bind="isAnswered(responses.personalHistory.education.completedHighSchool)">
-                            ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} 
-                            <template if.bind="isYes(responses.personalHistory.education.completedHighSchool)">
-                                &nbsp;completed high school.
-
-                                <template if.bind="isAnswered(responses.personalHistory.education.attendedPostSecondaryEducation)">
-                                    <template if.bind="isNo(responses.personalHistory.education.attendedPostSecondaryEducation)">
-                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} did not attend post-secondary education.
-                                    </template>
-                                    <template if.bind="isYes(responses.personalHistory.education.attendedPostSecondaryEducation)">
-                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} attended 
-                                        <template if.bind="responses.personalHistory.education.yearsOfPostSecondaryEducation == 1">one year</template>
-                                        <template else>
-                                            <template if.bind="responses.personalHistory.education.yearsOfPostSecondaryEducation > 1">
-                                                ${responses.personalHistory.education.yearsOfPostSecondaryEducation | numberTextIfLessThanTen}
-                                            </template>
-                                            <template else>
-                                                <strong>
-                                                    ${responses.personalHistory.education.yearsOfPostSecondaryEducation}
-                                                </strong>
-                                            </template>
-                                            &nbsp;years 
-                                        </template>
-                                        &nbsp;of post-secondary education
-                                        <template if.bind="responses.personalHistory.education.areaOfStudy">
-                                            , and studied <strong>${responses.personalHistory.education.areaOfStudy}</strong>
-                                        </template>
-                                        .
-                                    </template>
-                                </template>
-                            </template>
-                            <template else>
-                                <template if.bind="isNo(responses.personalHistory.education.completedHighSchool)">
-                                    &nbsp;did not complete high school. 
-                                    <template if.bind="responses.personalHistory.education.lastCompletedGrade">
-                                        &nbsp;${pronoun.subject | proper} advised that the last grade ${pronoun.subject} completed was grade ${responses.personalHistory.education.lastCompletedGrade}.
-                                    </template>
-                                </template>
-                                <template if.bind="isDontKnow(responses.personalHistory.education.completedHighSchool)">
-                                    &nbsp;does not know if ${pronoun.subject} completed high school.
-                                </template>
-                            </template>
-                        </template>
-
-                        <template if.bind="!responses.personalHistory.education.dontKnowSelfRating && isAnswered(responses.personalHistory.education.selfRating)">
-                            &nbsp;${gender.title} ${claimant.lastName} described ${pronoun.object}self as ${studentSelfRatingsMap[responses.personalHistory.education.selfRating].format(self)} student.
-                        </template>
-
-                        <template if.bind="isAnswered(responses.personalHistory.education.everHeldBack)">
-                            <template if.bind="isYes(responses.personalHistory.education.everHeldBack)">
-                                &nbsp;${pronoun.subject | proper} acknowledged that ${pronoun.subject} was held back/repeated a grade.
-                            </template>
-                            <template if.bind="isNo(responses.personalHistory.education.everHeldBack)">
-                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} was ever held back or repeated a grade.
-                            </template>
-                        </template>
-
-                        <template if.bind="responses.personalHistory.education.bestSubject || responses.personalHistory.education.worstSubject">
-                            <template if.bind="responses.personalHistory.education.bestSubject">
-                                &nbsp;${gender.title} ${claimant.lastName} identified ${pronoun.possessiveAdjective} best subject as <strong>${responses.personalHistory.education.bestSubject}</strong>
-                                <template if.bind="responses.personalHistory.education.worstSubject">
-                                    &nbsp;and ${pronoun.possessiveAdjective} worst subject as <strong>${responses.personalHistory.education.worstSubject}</strong>
-                                </template>
-                            </template>
-                            <template else>
-                                <template if.bind="responses.personalHistory.education.worstSubject">
-                                    &nbsp;${gender.title} ${claimant.lastName} identified ${pronoun.possessiveAdjective} worst subject as <strong>${responses.personalHistory.education.worstSubject}</strong>
-                                </template>
-                            </template>
-                            .
-                        </template>
                     </p>
                 </div>
 
@@ -3576,7 +3858,75 @@
                                 &nbsp;${pronoun.subject | proper} then disclosed that ${pronoun.subject} did not know whether members of ${pronoun.possessiveAdjective} family have been diagnosed with ${dontKnowFamilyNeurologicalOrPsychiatricDiagnosis | arrayToString:{"format":getItemValueForCurrentContext} & signal:'neurological-psychiatric-disease-changed'}.
                             </template>
                         </template>
+
                     </p>
+
+                    <p>
+                        <!-- Family Medical History -->
+                        <template if.bind="isYes(responses.personalHistory.medical.familyMedicalHistory)">
+                            ${gender.title} ${claimant.lastName} acknowledged having a familial medical history
+                            <template if.bind="anySelectedFamilyMedicalConditions">
+                                &nbsp;which includes: <strong>${selectedFamilyMedicalConditions | arrayToString:{"format":getItemValueForCurrentContext}}</strong>
+                            </template>
+                        </template>
+                        <template else>
+                            <template if.bind="isNo(responses.personalHistory.medical.familyMedicalHistory)">
+                                ${gender.title} ${claimant.lastName} denied having any familial medical history.
+                            </template>
+                            <template else>
+                                <template if.bind="isDontKnow(responses.personalHistory.medical.familyMedicalHistory)">
+                                    ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not know if ${pronoun.subject} has any familial medical history.
+                                </template>
+                            </template>
+                        </template>
+                    </p>
+
+                    <p>
+                        <template if.bind="isAnswered(responses.personalHistory.medical.everUsedDrugs)">
+                            When asked if ${pronoun.subject} had ever used alcohol, tobacco, THC, street drugs, or medication that was not prescribed to ${pronoun.object}, ${gender.title} ${claimant.lastName}
+                            <template if.bind="isYes(responses.personalHistory.medical.everUsedDrugs)">
+                                <template if.bind="!anyDrugsNotUsed">
+                                    &nbsp;acknowledged using ${drugsUsed | arrayToString:{"format":getItemValueForCurrentContext}}
+                                </template>
+                                <template if.bind="anyDrugsNotUsed">
+                                    <template if.bind="anyDrugsUsed">
+                                        &nbsp;but
+                                    </template>
+                                    &nbsp;denied using ${drugsNotUsed | arrayToString:{"format":getItemValueForCurrentContext}}
+                                </template>
+                                .
+                            </template>
+                            <template else>
+                                <template if.bind="isNo(responses.personalHistory.medical.everUsedDrugs)">
+                                    &nbsp;denied using any of the same.
+                                </template>
+                            </template>
+                        </template>
+                        
+<!--
+                        ${gender.title} ${claimant.lastName}
+                        
+                        &nbsp;${pronoun.subject | proper}
+                        
+                        ${pronoun.subject}
+
+                        ${pronoun.object}
+                        
+                        ${pronoun.possessiveAdjective}
+
+
+She acknowledged a history of treatment for substance abuse issues. 
+
+She denied any history of treatment for substance abuse issues. 
+
+She expressed that since the accident her use of … has increased. 
+She expressed that since the accident her use of … has not increased. 
+
+She expressed that since the accident her use of … has increased but her use of …..has not increased. 
+-->
+                    </p>
+
+
                 </div>
 
                 <hr>

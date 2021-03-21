@@ -5286,8 +5286,18 @@
 
                 <div class="uk-margin-remove uk-width-3-4">
                     <label repeat.for="i of medicalConditions.length">
-                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.medicalConditions" value.bind="medicalConditions[i].value">&nbsp;${medicalConditions[i].description}&nbsp;
+                        <input class="uk-checkbox" type="checkbox" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.medicalConditions" value.bind="medicalConditions[i].value" change.delegate="changed('medical-conditions-before-accident-changed')" >&nbsp;${medicalConditions[i].description}&nbsp;
                     </label>
+                </div>
+
+                <hr>
+    
+                <div class="uk-margin-remove uk-width-1-4">
+                    Other medical condition:
+                </div>
+
+                <div class="uk-margin-remove uk-width-3-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.beforeAccident.medicalConditionOther" disabled.bind="!medicalConditionOtherIsSelected & signal:'medical-conditions-before-accident-changed'" />
                 </div>
 
                 <hr>
@@ -5392,6 +5402,9 @@
                     <label repeat.for="response of physicalStates">
                         <input class="uk-radio" type="radio" name="medicalPhysicalState" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.priorState" value.bind="response.value" change.delegate="changed('state-before-accident-changed')">&nbsp;${response.description}&nbsp;
                     </label>
+                    <label>
+                        <input class="uk-radio" type="radio" name="medicalPhysicalState" checked.bind="$parent.responses.personalHistory.medical.beforeAccident.priorState" value="skip" change.delegate="changed('state-before-accident-changed')">&nbsp;Skip&nbsp;
+                    </label>
                 </div>
 
                 <hr>
@@ -5402,7 +5415,7 @@
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <span class.one-time="isUnanswered(responses.personalHistory.medical.sinceAccident.medicalDiagnosis.response) ? 'unanswered' : '' & signal:'medical-diagnosis-since-accident-changed'">
-                        Have you had any medical conditions diagnosed?
+                        Have you had any medical conditions diagnosed since the accident?
                     </span>
                 </div>
 
@@ -5420,7 +5433,7 @@
 
                 <div class="uk-margin-remove uk-width-1-2">
                     <span class.one-time="isUnanswered(responses.personalHistory.medical.sinceAccident.surgeries.response) ? 'unanswered' : '' & signal:'surgeries-since-accident-changed'">
-                        Have you had any surgeries?
+                        Have you had any subsequent surgeries?
                     </span>
                 </div>
 
@@ -5437,8 +5450,44 @@
                 <hr>
 
                 <div class="uk-margin-remove uk-width-1-2">
+                    <span class.one-time="isUnanswered(responses.personalHistory.medical.sinceAccident.injuries.response) ? 'unanswered' : '' & signal:'injuries-since-accident-changed'">
+                        Have you had any subsequent injuries?
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPostAccidentAnyInjuries" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.sinceAccident.injuries.response" value.bind="response.value" change.delegate="changed('injuries-since-accident-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.sinceAccident.injuries.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
+                    <span class.one-time="isUnanswered(responses.personalHistory.medical.sinceAccident.illnesses.response) ? 'unanswered' : '' & signal:'other-illness-since-accident-changed'">
+                        Have you had any subsequent illnesses?
+                    </span>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <label repeat.for="response of yesNo">
+                        <input type="radio" name="medicalPostAccidentAnyIllnesses" class="uk-radio" checked.bind="$parent.responses.personalHistory.medical.sinceAccident.illnesses.response" value.bind="response.value" change.delegate="changed('other-illness-since-accident-changed')" />&nbsp;${response.description}&nbsp;
+                    </label>
+                </div>
+
+                <div class="uk-margin-remove uk-width-1-4">
+                    <input type="text" class="uk-input uk-form-small" value.bind="responses.personalHistory.medical.sinceAccident.illnesses.details" />
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-remove uk-width-1-2">
                     <span class.one-time="isUnanswered(responses.personalHistory.medical.sinceAccident.mvas.response) ? 'unanswered' : '' & signal:'mvas-since-accident-changed'">
-                        Have you had any further motor vehicle accidents?
+                        Have you had any subsequent MVAs?
                     </span>
                 </div>
 
