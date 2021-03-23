@@ -886,7 +886,7 @@ function getResponses(responsesData) {
 }
 
 function getCurrentVersion() {
-    return "40";
+    return "41";
 }
 
 function upgrade(responses, toVersion) {
@@ -1241,6 +1241,20 @@ function upgrade_39_to_40(responses) {
     return responses;
 }
 
+function upgrade_40_to_41(responses) {
+    let newResponses = getNewResponses();
+
+    for (let i = 0; i < responses.personalHistory.neurologicalOrPsychiatricDiseases.length; i++) {
+        if (!responses.personalHistory.neurologicalOrPsychiatricDiseases[i].hasOwnProperty('selfNotes')) {
+            responses.personalHistory.neurologicalOrPsychiatricDiseases[i].selfNotes = null;
+        }
+    }
+
+    responses.version = "41";
+
+    return responses;
+}
+
 function getNewResponses() {
     return {
         "version": getCurrentVersion(),
@@ -1517,14 +1531,14 @@ function getNewResponses() {
             },
             "birthPosition": 0,
             "neurologicalOrPsychiatricDiseases": [
-                { "self": null, "family": null, "familyMember": null, "value": "adhd" },
-                { "self": null, "family": null, "familyMember": null, "value": "dementia" },
-                { "self": null, "family": null, "familyMember": null, "value": "bipolar" },
-                { "self": null, "family": null, "familyMember": null, "value": "schizophrenia" },
-                { "self": null, "family": null, "familyMember": null, "value": "depression" },
-                { "self": null, "family": null, "familyMember": null, "value": "anxiety" },
-                { "self": null, "family": null, "familyMember": null, "value": "epilepsy" },
-                { "self": null, "family": null, "familyMember": null, "value": "learningDisorder" }
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "adhd" },
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "dementia" },
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "bipolar" },
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "schizophrenia" },
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "depression" },
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "anxiety" },
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "epilepsy" },
+                { "self": null, "selfNotes": null, "family": null, "familyMember": null, "value": "learningDisorder" }
             ],
             "relationship": {
                 "status": null,

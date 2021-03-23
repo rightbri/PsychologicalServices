@@ -95,10 +95,6 @@ export class NotesOutput {
             return this.getItemValueForContextPast(item, this);
         }.bind(this);
 
-        this.getFamilyNeurologicalOrPsychiatricDiseasesTextForCurrentContext = function(item) {
-            return this.getFamilyNeurologicalOrPsychiatricDiseasesTextForContext(item, this);
-        }.bind(this);
-        
         this.isNotSkipAbilityWithContext = function(task) {
             return this.isNotSkipAbility(task, this);
         }.bind(this);
@@ -1019,8 +1015,7 @@ export class NotesOutput {
         if (!this.responses) { return []; }
 
         let data = this.responses.personalHistory.neurologicalOrPsychiatricDiseases
-            .filter(item => criteria(item))
-            .map(item => this.neurologicalAndPsychiatricDiseasesMap[item.value]);
+            .filter(item => criteria(item));
 
         return data;
     }
@@ -1032,12 +1027,14 @@ export class NotesOutput {
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get unselectedNeurologicalOrPsychiatricDiagnosis() {
-        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.self !== null && this.isNo(item.self));
+        let data = this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.self !== null && this.isNo(item.self)).map(item => this.neurologicalAndPsychiatricDiseasesMap[item.value]);
+
+        return data;
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get dontKnowNeurologicalOrPsychiatricDiagnosis() {
-        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.self !== null && this.isDontKnow(item.self));
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.self !== null && this.isDontKnow(item.self)).map(item => this.neurologicalAndPsychiatricDiseasesMap[item.value]);
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
@@ -1057,28 +1054,21 @@ export class NotesOutput {
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get selectedFamilyNeurologicalOrPsychiatricDiagnosis() {
-        if (!this.responses) { return []; }
+        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isYes(item.family));
+    }
 
-        let data = this.responses.personalHistory.neurologicalOrPsychiatricDiseases
-            .filter(item => item.family !== null && this.isYes(item.family))
-            .map(item => {
-                return {
-                    "value": this.neurologicalAndPsychiatricDiseasesMap[item.value],
-                    "data": item
-                };
-            });
+    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
+    get unselectedFamilyNeurologicalOrPsychiatricDiagnosis() {
+        let data = this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isNo(item.family)).map(item => this.neurologicalAndPsychiatricDiseasesMap[item.value]);
 
         return data;
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
-    get unselectedFamilyNeurologicalOrPsychiatricDiagnosis() {
-        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isNo(item.family));
-    }
-
-    @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
     get dontKnowFamilyNeurologicalOrPsychiatricDiagnosis() {
-        return this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isDontKnow(item.family));
+        let data = this.getNeurologicalOrPsychiatricDiagnosisForResponses(item => item.family !== null && this.isDontKnow(item.family)).map(item => this.neurologicalAndPsychiatricDiseasesMap[item.value]);
+
+        return data;
     }
 
     @computedFrom('this.responses.personalHistory.neurologicalOrPsychiatricDiseases')
@@ -1901,11 +1891,12 @@ export class NotesOutput {
     get selectedFamilyMedicalConditions() {
         if (!this.responses || !this.responses.personalHistory.medical.familyMedicalConditions) { return []; }
 
-        let data = this.responses.personalHistory.medical.familyMedicalConditions.map(item => {
+        let data = this.responses.personalHistory.medical.familyMedicalConditions;
+        /*.map(item => {
             let familyMedicalCondition = !this.medicalConditionsMap[item].isOther ? this.medicalConditionsMap[item].format(this) : (this.responses.personalHistory.medical.familyMedicalConditionOther || "");
 
             return familyMedicalCondition;
-        });
+        });*/
 
         return data;
     }
@@ -1957,7 +1948,7 @@ export class NotesOutput {
         if (!this.responses || !this.responses.personalHistory.medical.currently) { return []; }
 
         let data = [
-            { "value": "alchohol", "increased": this.isYes(this.responses.personalHistory.medical.currently.alchoholConsumptionIncreased) },
+            { "value": "alcohol", "increased": this.isYes(this.responses.personalHistory.medical.currently.alchoholConsumptionIncreased) },
             { "value": "tobacco", "increased": this.isYes(this.responses.personalHistory.medical.currently.tobaccoUseIncreased) },
             { "value": "THC", "increased": this.isYes(this.responses.personalHistory.medical.currently.thcUseIncreased) }
         ];
@@ -1974,7 +1965,7 @@ export class NotesOutput {
         if (!this.responses || !this.responses.personalHistory.medical.currently) { return []; }
 
         let data = [
-            { "value": "alchohol", "didNotIncrease": this.isNo(this.responses.personalHistory.medical.currently.alchoholConsumptionIncreased) },
+            { "value": "alcohol", "didNotIncrease": this.isNo(this.responses.personalHistory.medical.currently.alchoholConsumptionIncreased) },
             { "value": "tobacco", "didNotIncrease": this.isNo(this.responses.personalHistory.medical.currently.tobaccoUseIncreased) },
             { "value": "THC", "didNotIncrease": this.isNo(this.responses.personalHistory.medical.currently.thcUseIncreased) }
         ];
@@ -2101,19 +2092,6 @@ export class NotesOutput {
                     : isFunction(item.value)
                         ? item.value(context)
                         : item.value;
-        }
-        return "";
-    }
-
-    getFamilyNeurologicalOrPsychiatricDiseasesTextForContext(item, context) {
-        if (item) {
-            let text = this.getItemValueForContext(item.value, context);
-
-            if (item.data.familyMember) {
-                text += ` (${item.data.familyMember})`;
-            }
-            
-            return text;
         }
         return "";
     }

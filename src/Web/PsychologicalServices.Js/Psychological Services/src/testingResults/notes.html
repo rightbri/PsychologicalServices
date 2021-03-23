@@ -4536,9 +4536,10 @@
                     <thead>
                         <tr>
                             <th class="uk-padding-remove">Diagnosis</th>
-                            <th class="uk-padding-remove">You</th>
+                            <th class="uk-padding-remove">Self</th>
+                            <th class="uk-padding-remove">Self Notes</th>
                             <th class="uk-padding-remove">Your family</th>
-                            <th class="uk-padding-remove">Who</th>
+                            <th class="uk-padding-remove">Family Notes</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -4554,12 +4555,15 @@
                                 </label>
                             </td>
                             <td class="uk-padding-remove">
+                                <input type="text" name="self-neurological-or-psychiatric-disease-notes-${$parent.$index}" class="uk-input uk-form-small" value.bind="$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].selfNotes" disabled.bind="!isYes($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].self)" input.delegate="changed('neurological-psychiatric-disease-changed') & debounce:500" />    
+                            </td>
+                            <td class="uk-padding-remove">
                                 <label repeat.for="response of yesNoDontKnow">
                                     <input type="radio" name="family-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-radio" checked.bind="$parent.$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family" value.bind="response.value" change.delegate="changed('neurological-psychiatric-disease-changed')" />&nbsp;${response.description}&nbsp;
                                 </label>
                             </td>
                             <td class="uk-padding-remove">
-                                <input type="text" name="family-member-neurological-or-psychiatric-disease-${$parent.$index}" class="uk-input uk-form-small" value.bind="$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].familyMember" input.delegate="changed('neurological-psychiatric-disease-changed') & debounce:500" />    
+                                <input type="text" name="family-member-neurological-or-psychiatric-disease-notes-${$parent.$index}" class="uk-input uk-form-small" value.bind="$parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].familyMember" disabled.bind="!isYes($parent.responses.personalHistory.neurologicalOrPsychiatricDiseases[i].family)" input.delegate="changed('neurological-psychiatric-disease-changed') & debounce:500" />    
                             </td>
                         </tr>
                     </tbody>
@@ -5184,7 +5188,7 @@
                 
                 <div class="uk-margin-remove uk-width-1-4">
                     <span class.one-time="isUnanswered(responses.personalHistory.medical.everUsedDrugs) ? 'unanswered' : '' & signal:'ever-used-drugs-changed'">
-                        Have you ever used any of the following?
+                        In the year prior to the accident did you use any of the following?
                     </span>
                 </div>
 
