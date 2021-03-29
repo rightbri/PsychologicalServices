@@ -14,44 +14,6 @@ export class Psychological {
             claimant: null,
             gender: null,
             pronoun: null,
-            //isCredible: false,
-            //overallCredibility: null,
-            psychologicalTests: [],
-            /*
-            accidentFearQuestionnaire: {
-                aggregateResult: null
-            },
-            beckAnxietyInventory: {
-                aggregateResult: null
-            },
-            beckDepressionInventory: {
-                aggregateResult: null
-            },
-            beckScaleOfSuicidalIdeation: {
-                thoughtsOfSelfHarm: null
-            },
-            hamiltonRatingScaleForAnxiety: {
-                aggregateResult: null
-            },
-            hamiltonRatingScaleForDepression: {
-                aggregateResult: null
-            },
-            illnessBehaviorQuestionnaire: {
-                //may be like the rivermead
-            },
-            minnesotaMultiphasicPersonalityInventory: {
-                reactions: [],
-                credibilityIssues: null,
-                credibility: null,
-                exaggeration: null,
-                trends: [],
-                exaggerationConcerns: [],
-                
-                aggregateResultForPain: null,
-                aggregateResultForAnxiety: null,
-                aggregateResultForDepression: null
-            },
-            */
             painIssues: {
                 visualScale: {
                     currentNumber: null,
@@ -63,39 +25,28 @@ export class Psychological {
                     dysfunctionRatings: [
                         { "value": "recreationalActivities", "rating": null },
                         { "value": "socialActivities", "rating": null },
-                        { "value": "sexualBehaviors", "rating": null, "declinedToAnswer": false },
+                        { "value": "sexualBehaviours", "rating": null, "declinedToAnswer": false },
                         { "value": "occupationalPursuits", "rating": null },
                         { "value": "homeResponsibilities", "rating": null },
                         { "value": "selfCareTasks", "rating": null },
                         { "value": "lifeSupportActivities", "rating": null }
                     ]
+                },
+                catastrophizingScale: {
+                    isValid: null,
+                    rumination: 0,
+                    helplessness: 0,
+                    magnification: 0,
+                    totalScore: 0
+                },
+                bbhi: {
+                    isValid: null,
+                    somatic: null,
+                    pain: null,
+                    functional: null
                 }
             },
-            painPatientProfile: {
-                credibilityIssues: null
-            },
-            /*
-            personalityAssessmentInventory: {
-                credibilityIssues: null,
-                aggregateResultForPain: null,
-                aggregateResultForAnxiety: null,
-                aggregateResultForDepression: null
-            },
-            traumaSymptomInventory: {
-                credibilityIssues: null,
-                aggregateResultForPain: null,
-                aggregateResultForAnxiety: null,
-                aggregateResultForDepression: null
-            },
-            */
-            neurocognitiveTests: [],
-            /*
-            concussionSymptoms: {
-                perceivedDisability: null,
-                currentSymptoms: [],
-                additionalSymptoms: []
-            }
-            */
+            neurocognitiveTests: []
         };
 
         this.painScaleMin = 0;
@@ -105,21 +56,18 @@ export class Psychological {
         this.pronouns = [];
         this.yesNo = [];
         this.genders = [];
-        /*
-        this.credibilities = [];
-        this.psychologicalTests = [];
-        this.neurocognitiveTests = [];
-        this.aggregateResultRatings = [];
-        */
+        
         this.painRatings = [];
         this.painScale = [];
-        this.painDisabilityRanges = [];
-        /*
-        this.comparisonRatings = [];
-        */
         this.areasOfDysfunction = [];
         this.dysfunctionScale = [];
         this.dysfunctionRatings = [];
+        this.dysfunctionRatingChangedCount = 0;
+        
+        this.painCatastrophizingScaleElevatedMinValue = 17;
+
+        this.bbhiScaleRatings = [];
+        
         this.cognitiveAssessment = {
             effortLevel: null,
             tests: []
@@ -146,13 +94,17 @@ export class Psychological {
     }
 
     genderChanged(gender) {
-        var pronoun = this.pronouns.filter(p => p.gender === gender.abbreviation);
-
-        this.results.pronoun = pronoun.length > 0 ? pronoun[0] : null;
+        let pronoun = this.pronouns.hasOwnProperty(gender.abbreviation) ? this.pronouns[gender.abbreviation] : null;
+        
+        this.results.pronoun = pronoun;
     }
 
     activate() {
 		return this.getData();
+    }
+
+    changed(signalName) {
+        this.signaler.signal(signalName);
     }
 
     getData() {
@@ -164,15 +116,15 @@ export class Psychological {
                     this.getPronouns().then(data => this.pronouns = data),
                     this.getYesNo().then(data => this.yesNo = data),
                     this.getGenders().then(data => this.genders = data),
-                    //this.getCredibilities().then(data => this.credibilities = data),
-                    //this.getAggregateResultRatings().then(data => this.aggregateResultRatings = data),
                     this.getPainRatings().then(data => this.painRatings = data),
                     this.getPainScale().then(data => this.painScale = data),
-                    this.getPainDisabilityRanges().then(data => this.painDisabilityRanges = data),
-                    this.getAreasOfDysfunction().then(data => this.areasOfDysfunction = data),
-                    this.getDysfunctionScale().then(data => this.dysfunctionScale = data),
                     this.getDysfunctionRatings().then(data => this.dysfunctionRatings = data),
-                    //this.getComparisonRatings().then(data => this.comparisonRatings = data),
+                    this.getDysfunctionScale().then(data => this.dysfunctionScale = data),
+                    this.getAreasOfDysfunction().then(data => this.areasOfDysfunction = data),
+                    this.getBbhiScaleRatings().then(data => {
+                        this.bbhiScaleRatings = this.asArray(data);
+                        this.bbhiScaleRatingsMap = data;
+                    }),
                     this.getCognitiveAssessmentEffortLevels().then(data => this.cognitiveAssessmentEffortLevels = data),
                     this.getCognitiveAssessmentTestResultRatings().then(data => this.cognitiveAssessmentTestResultRatings = data),
                     this.getCognitiveAssessmentTestCategories().then(data => {
@@ -263,27 +215,6 @@ export class Psychological {
         return getPromise(data);
     }
 
-    getCredibilities() {
-        var data = [
-            { "id": 1, "description": "credible", "isCredible": true },
-            { "id": 2, "description": "not credible", "isCredible": false },
-            { "id": 3, "description": "questionable", "isCredible": false }
-        ];
-
-        return getPromise(data);
-    }
-
-    getAggregateResultRatings() {
-        var data = [
-            { "id": 1, "description": "high average" },
-            { "id": 2, "description": "moderate" },
-            { "id": 3, "description": "average" },
-            { "id": 4, "description": "below average" }
-        ];
-
-        return getPromise(data);
-    }
-
     getPainRatings() {
         var ratings = {
             "extremelyHigh": { "value": "extremelyHigh", "description": "Extremely High (10)", "format": function(context) { return `an extremely high`; } },
@@ -293,6 +224,13 @@ export class Psychological {
             "extremelyLow": { "value": "extremelyLow", "description": "Extremely Low (0-1)", "format": function(context) { return `an extremely low`; } }
         };
 
+        /*
+            Extremely Low (0-1)
+            Below average (2-3)
+            Average (4-7)
+            Above average (8-9)
+            Extremely high (10)
+        */
         var data = [
             ratings["extremelyLow"],
             ratings["extremelyLow"],
@@ -316,36 +254,15 @@ export class Psychological {
         return getPromise(data);
     }
 
-    getPainDisabilityRanges() {
-        var data = [
-            { "id": 1, "description": "above average range", "templatePrefix": "an " },
-            { "id": 2, "description": "average range", "templatePrefix": "an " },
-            { "id": 3, "description": "below average range", "templatePrefix": "a " },
-            { "id": 4, "description": "extremely low range", "templatePrefix": "an " }
-        ];
-
-        return getPromise(data);
-    }
-
-    getComparisonRatings() {
-        var data = [
-            { "id": 1, "description": "less than" },
-            { "id": 2, "description": "equal to" },
-            { "id": 3, "description": "greater than" }
-        ];
-
-        return getPromise(data);
-    }
-
     getAreasOfDysfunction() {
         var data = {
-            "recreationalActivities": { "value": "recreationalActivities", "description": "Recreational activities" },
-            "socialActivities": { "value": "socialActivities", "description": "Social activities" },
-            "sexualBehaviors": { "value": "sexualBehaviors", "description": "Sexual behaviors", "canDeclineToAnswer": true },
-            "occupationalPursuits": { "value": "occupationalPursuits", "description": "Occupational pursuits" },
-            "homeResponsibilities": { "value": "homeResponsibilities", "description": "Family/home responsibilities" },
-            "selfCareTasks": { "value": "selfCareTasks", "description": "Self-care tasks" },
-            "lifeSupportActivities": { "value": "lifeSupportActivities", "description": "Life support activities" }
+            "recreationalActivities": { "value": "recreationalActivities", "description": "Recreational activities", "format": function(context) { return `recreational activities`; } },
+            "socialActivities": { "value": "socialActivities", "description": "Social activities", "format": function(context) { return `social activities`; } },
+            "sexualBehaviours": { "value": "sexualBehaviours", "description": "Sexual behaviours", "canDeclineToAnswer": true, "format": function(context) { return `sexual behaviours`; } },
+            "occupationalPursuits": { "value": "occupationalPursuits", "description": "Occupational pursuits", "format": function(context) { return `occupational pursuits`; } },
+            "homeResponsibilities": { "value": "homeResponsibilities", "description": "Family/home responsibilities", "format": function(context) { return `family/home responsibilities`; } },
+            "selfCareTasks": { "value": "selfCareTasks", "description": "Self-care tasks", "format": function(context) { return `self-care tasks`; } },
+            "lifeSupportActivities": { "value": "lifeSupportActivities", "description": "Life support activities", "format": function(context) { return `life support activities`; } }
         };
 
         return getPromise(data);
@@ -358,44 +275,47 @@ export class Psychological {
     }
 
     getDysfunctionRatings() {
+        var ratings = {
+            "extremelyHigh": { "value": "extremelyHigh", "description": "Extremely High (10)", "format": function(context) { return `an extremely high`; } },
+            "aboveAverage": { "value": "aboveAverage", "description": "Above Average (8-9)", "format": function(context) { return `an above average`; } },
+            "average": { "value": "average", "description": "Average (4-7)", "format": function(context) { return `an average`; } },
+            "belowAverage": { "value": "belowAverage", "description": "Below Average (2-3)", "format": function(context) { return `a below average`; } },
+            "extremelyLow": { "value": "extremelyLow", "description": "Extremely Low (0-1)", "format": function(context) { return `an extremely low`; } }
+        };
+
+        /*
+            Extremely Low (0-1)
+            Below average (2-3)
+            Average (4-7)
+            Above average (8-9)
+            Extremely high (10)
+        */
         var data = [
-            { "id": 1, "description": "above average" },
-            { "id": 2, "description": "average" },
-            { "id": 3, "description": "below average" }
+            ratings["extremelyLow"],
+            ratings["extremelyLow"],
+            ratings["belowAverage"],
+            ratings["belowAverage"],
+            ratings["average"],
+            ratings["average"],
+            ratings["average"],
+            ratings["average"],
+            ratings["aboveAverage"],
+            ratings["aboveAverage"],
+            ratings["extremelyHigh"]
         ];
 
         return getPromise(data);
     }
 
-    getConcussionDisabilityRatings() {
-        var data = [
-            { "id": 1, "description": "above average range", "templatePrefix": "an " },
-            { "id": 2, "description": "average range", "templatePrefix": "an "  },
-            { "id": 3, "description": "below average range", "templatePrefix": "a "  }
-        ];
-
-        return getPromise(data);
-    }
-
-    getConcussionSymptoms() {
-        var data = [
-            { "id": 1, "description": "headache", "order": 1 },
-            { "id": 2, "description": "dizziness", "order": 2 },
-            { "id": 3, "description": "nausea", "order": 3 },
-            { "id": 4, "description": "noise sensitivity", "order": 4 },
-            { "id": 5, "description": "disturbed sleep", "order": 5 },
-            { "id": 6, "description": "fatigue", "order": 6 },
-            { "id": 7, "description": "irritability", "order": 7 },
-            { "id": 8, "description": "depressive issues", "order": 8 },
-            { "id": 9, "description": "frustration", "order": 9 },
-            { "id": 10, "description": "memory difficulties", "order": 10 },
-            { "id": 11, "description": "concentration difficulties", "order": 11 },
-            { "id": 12, "description": "slowed information processing", "order": 12 },
-            { "id": 13, "description": "blurred vision", "order": 13 },
-            { "id": 14, "description": "light sensitivity", "order": 14 },
-            { "id": 15, "description": "double vision", "order": 15 },
-            { "id": 16, "description": "restlessness", "order": 16 }
-        ];
+    getBbhiScaleRatings() {
+        let data = {
+            "low": { "value": "low", "description": "Low", "format": function(context) { return `low`; } },
+            "average": { "value": "average", "description": "Average", "format": function(context) { return `average`; } },
+            "moderateHigh": { "value": "moderateHigh", "description": "Moderate High", "format": function(context) { return `moderate high`; } },
+            "high": { "value": "high", "description": "High", "format": function(context) { return `high`; } },
+            "veryHigh": { "value": "veryHigh", "description": "Very High", "format": function(context) { return `very high`; } },
+            "extremelyHigh": { "value": "extremelyHigh", "description": "Extremely High", "format": function(context) { return `extremely high`; } }
+        };
 
         return getPromise(data);
     }
@@ -522,6 +442,153 @@ export class Psychological {
         test.rating = null;
         this.cognitiveAssessmentTestResultRatingChange();
     }
+
+    dysfunctionRatingChanged() {
+        this.dysfunctionRatingChangedCount += 1;
+        this.signaler.signal('psychological-assessment-dysfunction-rating-changed');
+    }
+
+    @computedFrom('results.painIssues.disabilityIndex.dysfunctionRatings', 'dysfunctionRatingChangedCount')
+    get disabilityRatingOverall() {
+        /*
+            Extremely Low (0-7)
+            Below average (8-14)
+            Average (15-49)
+            Above average (50-62)
+            Extremely highly (63-70)
+        */
+
+        let ranges = [
+            { "min": 0, "max": 7, "value": "extremelyLow", "description": "Extremely Low (0-7)", "format": function(context) { return `an extremely low`; } },
+            { "min": 8, "max": 14, "value": "belowAverage", "description": "Below Average (8-14)", "format": function(context) { return `a below average`; } },
+            { "min": 15, "max": 49, "value": "average", "description": "Average (15-49)", "format": function(context) { return `an average`; } },
+            { "min": 50, "max": 62, "value": "aboveAverage", "description": "Above Average (50-62)", "format": function(context) { return `an above average`; } },
+            { "min": 63, "max": 70, "value": "extremelyHigh", "description": "Extremely High (63-70)", "format": function(context) { return `an extremely high`; } }
+        ];
+
+        let rating = this.disabilityRatingTotal;
+
+        let range = ranges.filter(x => rating >= x.min && rating <= x.max);
+
+        let result = range.some(x => x) ? range[0] : ranges[0];
+
+        return result;
+    }
+
+    @computedFrom('results.painIssues.disabilityIndex.dysfunctionRatings', 'dysfunctionRatingChangedCount')
+    get disabilityRatingTotal() {
+        let total = this.results.painIssues.disabilityIndex.dysfunctionRatings.filter(x => !x.declinedToAnswer).map(x => x.rating ? parseInt(x.rating, 10) : 0).reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+        );
+
+        return total;
+    }
+
+    @computedFrom('results.painIssues.disabilityIndex.dysfunctionRatings', 'dysfunctionRatingChangedCount')
+    get declinedToAnswerSexualBehaviors() {
+        let rating = this.results.painIssues.disabilityIndex.dysfunctionRatings.filter(x => x.value === "sexualBehaviours");
+
+        let declined = rating.length && rating[0].declinedToAnswer;
+
+        return declined;
+    }
+
+    @computedFrom('results.painIssues.disabilityIndex.dysfunctionRatings', 'dysfunctionRatingChangedCount')
+    get disabilityRatingGroups() {
+        let groupings = [
+            { "min": 0, "max": 1, "value": "extremelyLow", "description": "Extremely Low (0-1)", "format": function(context) { return `an extremely low`; }, "areasOfDysfunction": [] },
+            { "min": 2, "max": 3, "value": "belowAverage", "description": "Below Average (2-3)", "format": function(context) { return `a below average`; }, "areasOfDysfunction": [] },
+            { "min": 4, "max": 7, "value": "average", "description": "Average (4-7)", "format": function(context) { return `an average`; }, "areasOfDysfunction": [] },
+            { "min": 8, "max": 9, "value": "aboveAverage", "description": "Above Average (8-9)", "format": function(context) { return `an above average`; }, "areasOfDysfunction": [] },
+            { "min": 10, "max": 10, "value": "extremelyHigh", "description": "Extremely High (10)", "format": function(context) { return `an extremely high`; }, "areasOfDysfunction": [] }
+        ];
+
+        let dysfunctionRatings = this.results.painIssues.disabilityIndex.dysfunctionRatings.filter(x => !x.declinedToAnswer);
+
+        for (let i = 0; i < dysfunctionRatings.length; i++) {
+            let dysfunctionRating = dysfunctionRatings[i];
+            let grouping = groupings.filter(x =>
+                isInt(dysfunctionRating.rating) &&
+                parseInt(dysfunctionRating.rating) >= x.min &&
+                parseInt(dysfunctionRating.rating) <= x.max
+            );
+
+            if (grouping.some(x => x)) {
+                grouping[0].areasOfDysfunction.push(dysfunctionRating.value);
+            }
+        }
+
+        let results = groupings.filter(x => x.areasOfDysfunction.length > 0);
+
+        return results;
+    }
+
+    @computedFrom(
+        'results.painIssues.catastrophizingScale.rumination',
+        'results.painIssues.catastrophizingScale.helplessness',
+        'results.painIssues.catastrophizingScale.magnification'
+    )
+    get catastrophizingScaleItems() {
+        let data = [
+            { "description": "rumination", "percentile": this.results.painIssues.catastrophizingScale.rumination },
+            { "description": "helplessness", "percentile": this.results.painIssues.catastrophizingScale.helplessness },
+            { "description": "magnification", "percentile": this.results.painIssues.catastrophizingScale.magnification }
+        ];
+
+        console.log("isValid type: " + typeof(this.results.painIssues.catastrophizingScale.isValid));
+        return data;
+    }
+
+    @computedFrom(
+        'results.painIssues.catastrophizingScale.rumination',
+        'results.painIssues.catastrophizingScale.helplessness',
+        'results.painIssues.catastrophizingScale.magnification'
+    )
+    get elevatedCatastrophizingScaleItems() {
+        let data = this.catastrophizingScaleItems.filter(x => isInt(x.percentile) && parseInt(x.percentile) >= this.painCatastrophizingScaleElevatedMinValue);
+
+        return data;
+    }
+
+    @computedFrom(
+        'results.painIssues.catastrophizingScale.rumination',
+        'results.painIssues.catastrophizingScale.helplessness',
+        'results.painIssues.catastrophizingScale.magnification'
+    )
+    get anyElevatedCatastrophizingScaleItems() {
+        return this.elevatedCatastrophizingScaleItems.some(x => x);
+    }
+
+    @computedFrom(
+        'results.painIssues.catastrophizingScale.rumination',
+        'results.painIssues.catastrophizingScale.helplessness',
+        'results.painIssues.catastrophizingScale.magnification'
+    )
+    get notElevatedCatastrophizingScaleItems() {
+        let data = this.catastrophizingScaleItems.filter(x => isInt(x.percentile) && parseInt(x.percentile) < this.painCatastrophizingScaleElevatedMinValue);
+
+        return data;
+    }
+
+    @computedFrom(
+        'results.painIssues.catastrophizingScale.rumination',
+        'results.painIssues.catastrophizingScale.helplessness',
+        'results.painIssues.catastrophizingScale.magnification'
+    )
+    get anyNotElevatedCatastrophizingScaleItems() {
+        return this.notElevatedCatastrophizingScaleItems.some(x => x);
+    }
+
+    @computedFrom('results.painIssues.catastrophizingScale.totalScore')
+    get isCatastrophizingScaleTotalScoreElevated() {
+        return isInt(this.results.painIssues.catastrophizingScale.totalScore) && parseInt(this.results.painIssues.catastrophizingScale.totalScore) >= this.painCatastrophizingScaleElevatedMinValue;
+    }
+
+    @computedFrom('results.painIssues.catastrophizingScale.totalScore')
+    get isCatastrophizingScaleTotalScoreNotElevated() {
+        return isInt(this.results.painIssues.catastrophizingScale.totalScore) && parseInt(this.results.painIssues.catastrophizingScale.totalScore) < this.painCatastrophizingScaleElevatedMinValue;
+    }
 }
 
 function getPromise(data) {
@@ -538,4 +605,10 @@ function getSequentialNumberArray(start, end) {
     }
 
     return a;
+}
+
+function isInt(value) {
+    return !isNaN(value) && 
+           parseInt(Number(value)) == value && 
+           !isNaN(parseInt(value, 10));
 }
