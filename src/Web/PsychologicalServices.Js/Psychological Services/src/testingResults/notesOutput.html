@@ -1729,7 +1729,7 @@
                     <!-- Substance Abuse -->
                     <p>
                         <template if.bind="isYes(responses.personalHistory.medical.everUsedDrugs) || isNo(responses.personalHistory.medical.everUsedDrugs)">
-                            When asked if in the year prior to the accident ${pronoun.subject} had ever used alcohol, tobacco, THC, street drugs, or medication that was not prescribed to her, ${gender.title} ${claimant.lastName}
+                            When asked if in the year prior to the accident ${pronoun.subject} had ever used alcohol, tobacco, THC, street drugs, or medication that was not prescribed to ${pronoun.possessiveAdjective}, ${gender.title} ${claimant.lastName}
                             <template if.bind="isYes(responses.personalHistory.medical.everUsedDrugs)">
                                 <template if.bind="anyDrugsUsed">
                                     &nbsp;acknowledged using ${drugsUsed | arrayToString:{"format":getItemValueForCurrentContext}}
@@ -1772,7 +1772,20 @@
                     <!-- Medical Conditions -->
                     <p>
                         <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.medicalConditionsDiagnosed)">
-                            Regarding ${pronoun.possessiveAdjective} personal medical history, ${gender.title} ${claimant.lastName} shared that before the accident ${pronoun.subject} was diagnosed with <strong>${preAccidentMedicalConditions | arrayToString:{"format":getItemValueForCurrentContext}}</strong>.
+                            Regarding ${pronoun.possessiveAdjective} personal medical history, ${gender.title} ${claimant.lastName} shared that before the accident ${pronoun.subject} was diagnosed with 
+                            
+
+                            <template repeat.for="condition of responses.personalHistory.medical.beforeAccident.medicalConditions">
+                                <template if.bind="!$last && !$first">,</template>
+                                <template if.bind="$last && !$first">&nbsp;and</template>
+                                <template if.bind="medicalConditionsMap[condition.value].isOther">
+                                    &nbsp;<strong>${responses.personalHistory.medical.beforeAccident.medicalConditionOther}</strong>
+                                </template>
+                                <template else>
+                                    &nbsp;${medicalConditionsMap[condition.value].format(self)}
+                                </template>
+                            </template>
+                            .
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.personalHistory.medical.beforeAccident.medicalConditionsDiagnosed)">
@@ -2034,48 +2047,83 @@
                                             
                                         </td>
                                     </tr>
-                                    <tr if.bind="isYes(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.age.value)">
+                                    <tr if.bind="isYes(responses.personalHistory.father.isAlive) && !responses.personalHistory.father.age.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Age
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${responses.personalHistory.father.age.value}
+                                            <template if.bind="responses.personalHistory.father.age.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
+                                                    ${responses.personalHistory.father.age.value}
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isNo(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.age.value)">
+                                    <tr if.bind="isNo(responses.personalHistory.father.isAlive) && !responses.personalHistory.father.age.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Age at time of death
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${responses.personalHistory.father.age.value}
+                                            <template if.bind="responses.personalHistory.father.age.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
+                                                    ${responses.personalHistory.father.age.value}
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isNo(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.causeOfDeath.value)">
+                                    <tr if.bind="isNo(responses.personalHistory.father.isAlive) && !responses.personalHistory.father.causeOfDeath.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Cause of death
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${responses.personalHistory.father.causeOfDeath.value}
+                                            <template if.bind="responses.personalHistory.father.causeOfDeath.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.father.causeOfDeath.value)">
+                                                    ${responses.personalHistory.father.causeOfDeath.value}
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isAnswered(responses.personalHistory.father.educationLevel.value)">
+                                    <tr if.bind="!responses.personalHistory.father.educationLevel.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Educational background
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            <strong>
-                                                ${responses.personalHistory.father.educationLevel.value}
-                                            </strong>
+                                            <template if.bind="responses.personalHistory.father.educationLevel.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.father.educationLevel.value)">
+                                                    <strong>
+                                                        ${responses.personalHistory.father.educationLevel.value}
+                                                    </strong>
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isAnswered(responses.personalHistory.father.employmentAreas.value)">
+                                    <tr if.bind="!responses.personalHistory.father.employmentAreas.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Employment background
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            <strong>
-                                                ${responses.personalHistory.father.employmentAreas.value}
-                                            </strong>
+                                            <template if.bind="responses.personalHistory.father.employmentAreas.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.father.employmentAreas.value)">
+                                                    <strong>
+                                                        ${responses.personalHistory.father.employmentAreas.value}
+                                                    </strong>
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
                                     <tr if.bind="isYes(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.isRetired)">
@@ -2083,7 +2131,12 @@
                                             Currently retired?
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${yesNoDontKnowMap[responses.personalHistory.father.isRetired].description}
+                                            <template if.bind="isDontKnow(responses.personalHistory.father.isRetired)">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                ${yesNoDontKnowMap[responses.personalHistory.father.isRetired].description}
+                                            </template>
                                         </td>
                                     </tr>
                                     <tr if.bind="isYes(responses.personalHistory.father.isAlive) && isAnswered(responses.personalHistory.father.isDisabled)">
@@ -2091,7 +2144,12 @@
                                             Currently disabled?
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${yesNoDontKnowMap[responses.personalHistory.father.isDisabled].description}
+                                            <template if.bind="isDontKnow(responses.personalHistory.father.isDisabled)">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                ${yesNoDontKnowMap[responses.personalHistory.father.isDisabled].description}
+                                            </template>
                                         </td>
                                     </tr>
                                 </template>
@@ -2106,50 +2164,85 @@
                                             
                                         </td>
                                     </tr>
-                                    <tr if.bind="isYes(responses.personalHistory.mother.isAlive)">
+                                    <tr if.bind="isYes(responses.personalHistory.mother.isAlive) && !responses.personalHistory.mother.age.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Age
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${responses.personalHistory.mother.age.value}
+                                            <template if.bind="responses.personalHistory.mother.age.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.mother.age.value)">
+                                                    ${responses.personalHistory.mother.age.value}
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isNo(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.age.value)">
+                                    <tr if.bind="isNo(responses.personalHistory.mother.isAlive) && !responses.personalHistory.mother.age.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Age at time of death
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${responses.personalHistory.mother.age.value}
+                                            <template if.bind="responses.personalHistory.mother.age.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.mother.age.value)">
+                                                    ${responses.personalHistory.mother.age.value}
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isNo(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.causeOfDeath.value)">
+                                    <tr if.bind="isNo(responses.personalHistory.mother.isAlive) && !responses.personalHistory.mother.causeOfDeath.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Cause of death
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            <strong>
-                                                ${responses.personalHistory.mother.causeOfDeath.value}
-                                            </strong>
+                                            <template if.bind="responses.personalHistory.mother.causeOfDeath.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.mother.causeOfDeath.value)">
+                                                    <strong>
+                                                        ${responses.personalHistory.mother.causeOfDeath.value}
+                                                    </strong>
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isAnswered(responses.personalHistory.mother.educationLevel.value)">
+                                    <tr if.bind="!responses.personalHistory.mother.educationLevel.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Educational background
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            <strong>
-                                                ${responses.personalHistory.mother.educationLevel.value}
-                                            </strong>
+                                            <template if.bind="responses.personalHistory.mother.educationLevel.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.mother.educationLevel.value)">
+                                                    <strong>
+                                                        ${responses.personalHistory.mother.educationLevel.value}
+                                                    </strong>
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
-                                    <tr if.bind="isAnswered(responses.personalHistory.mother.employmentAreas.value)">
+                                    <tr if.bind="!responses.personalHistory.mother.employmentAreas.skip">
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-right">
                                             Employment background
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            <strong>
-                                                ${responses.personalHistory.mother.employmentAreas.value}
-                                            </strong>
+                                            <template if.bind="responses.personalHistory.mother.employmentAreas.dontKnow">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                <template if.bind="isAnswered(responses.personalHistory.mother.employmentAreas.value)">
+                                                    <strong>
+                                                        ${responses.personalHistory.mother.employmentAreas.value}
+                                                    </strong>
+                                                </template>
+                                            </template>
                                         </td>
                                     </tr>
                                     <tr if.bind="isYes(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.isRetired)">
@@ -2157,7 +2250,12 @@
                                             Currently retired?
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${yesNoDontKnowMap[responses.personalHistory.mother.isRetired].description}
+                                            <template if.bind="isDontKnow(responses.personalHistory.mother.isRetired)">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                ${yesNoDontKnowMap[responses.personalHistory.mother.isRetired].description}
+                                            </template>
                                         </td>
                                     </tr>
                                     <tr if.bind="isYes(responses.personalHistory.mother.isAlive) && isAnswered(responses.personalHistory.mother.isDisabled)">
@@ -2165,7 +2263,12 @@
                                             Currently disabled?
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
-                                            ${yesNoDontKnowMap[responses.personalHistory.mother.isDisabled].description}
+                                            <template if.bind="isDontKnow(responses.personalHistory.mother.isDisabled)">
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                            </template>
+                                            <template else>
+                                                ${yesNoDontKnowMap[responses.personalHistory.mother.isDisabled].description}
+                                            </template>
                                         </td>
                                     </tr>
                                 </template>

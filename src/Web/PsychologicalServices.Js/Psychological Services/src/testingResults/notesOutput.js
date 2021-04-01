@@ -1995,19 +1995,6 @@ export class NotesOutput {
         return data.some(item => item);
     }
 
-    @computedFrom('responses.personalHistory.medical.beforeAccident.medicalConditions')
-    get preAccidentMedicalConditions() {
-        if (!this.responses || !this.responses.personalHistory.medical.beforeAccident.medicalConditions) { return []; }
-
-        let otherItem = { "description": "Other", "value": "other", "format": function(context) { return context.responses.personalHistory.medical.beforeAccident.medicalConditionOther; }, "isOther": true };
-
-        let data = this.responses.personalHistory.medical.beforeAccident.medicalConditions.map(item => {
-            return this.medicalConditionsMap[item].isOther ? otherItem : this.medicalConditionsMap[item];
-        });
-
-        return data;
-    }
-
     @computedFrom(
         'responses.personalHistory.medical.beforeAccident.surgeries.response',
         'responses.personalHistory.medical.beforeAccident.injuries.response',

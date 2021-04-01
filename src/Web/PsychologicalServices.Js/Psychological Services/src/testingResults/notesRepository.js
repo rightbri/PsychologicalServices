@@ -591,7 +591,7 @@ export class NotesRepository {
             "cholesterol": { "description": "Cholesterol", "value": "cholesterol", "format": function(context) { return `cholesterol`; } },
             "diabetes": { "description": "Diabetes", "value": "diabetes", "format": function(context) { return `diabetes`; } },
             "fibromyalgia": { "description": "Fibromyalgia", "value": "fibromyalgia", "format": function(context) { return `fibromyalgia`; } },
-            "heartDisease": { "description": "Heart Disease", "value": "heartDisease", "format": function(context) { return `heart Disease`; } },
+            "heartDisease": { "description": "Heart Disease", "value": "heartDisease", "format": function(context) { return `heart disease`; } },
             "hypertension": { "description": "Hypertension", "value": "hypertension", "format": function(context) { return `hypertension`; } },
             "stroke": { "description": "Stroke", "value": "stroke", "format": function(context) { return `stroke`; } },
             "thyroidDisorder": { "description": "Thyroid Disorder", "value": "thyroidDisorder", "format": function(context) { return `thyroid disorder`; } },
