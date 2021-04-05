@@ -1774,15 +1774,14 @@
                         <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.medicalConditionsDiagnosed)">
                             Regarding ${pronoun.possessiveAdjective} personal medical history, ${gender.title} ${claimant.lastName} shared that before the accident ${pronoun.subject} was diagnosed with 
                             
-
                             <template repeat.for="condition of responses.personalHistory.medical.beforeAccident.medicalConditions">
                                 <template if.bind="!$last && !$first">,</template>
                                 <template if.bind="$last && !$first">&nbsp;and</template>
-                                <template if.bind="medicalConditionsMap[condition.value].isOther">
+                                <template if.bind="medicalConditionsMap[condition].isOther">
                                     &nbsp;<strong>${responses.personalHistory.medical.beforeAccident.medicalConditionOther}</strong>
                                 </template>
                                 <template else>
-                                    &nbsp;${medicalConditionsMap[condition.value].format(self)}
+                                    &nbsp;${medicalConditionsMap[condition].format(self)}
                                 </template>
                             </template>
                             .
