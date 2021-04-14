@@ -7,6 +7,7 @@
     <require from="resources/value-converters/filter"></require>
 	<require from="claimants/search-claimant"></require>
     
+    <!-- Claimant Search -->
     <div class="uk-container">
 
         <form class="uk-form-stacked">
@@ -28,12 +29,14 @@
 
     </div>
 
+    <!-- Psychological -->
     <div class="uk-container" if.bind="results.claimant">
 
         <form class="uk-form-stacked">
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Psychological Tests</legend>
 
+                <!-- Pain -->
                 <div class="uk-section uk-section-xsmall">
                     <h5 class="uk-heading-line"><span>Visual Analogue Pain Scales</span></h5>
 
@@ -163,9 +166,8 @@
                     </table>
                 </div>
 
-                
                 <div class="uk-section uk-section-xsmall">
-                    <h5 class="uk-heading-line"><span>BBHI</span></h5>
+                    <h5 class="uk-heading-line"><span>BBHI-2 (Pain)</span></h5>
 
                     <table class="uk-table uk-table-small">
                         <tbody>
@@ -175,17 +177,17 @@
                                 </td>
                                 <td>
                                     <label repeat.for="response of yesNo">
-                                        <input type="radio" name="bbhiIsValid" class="uk-radio" checked.bind="results.painIssues.bbhi.isValid" model.bind="response.value" change.delegate="changed('bbhi-changed')" />&nbsp;${response.description}&nbsp;
+                                        <input type="radio" name="bbhiIsValid" class="uk-radio" checked.bind="results.painIssues.bbhi.isValid" model.bind="response.value" change.delegate="changed('pain-bbhi-changed')" />&nbsp;${response.description}&nbsp;
                                     </label>
                                 </td>
                             </tr>
-                            <template if.bind="results.painIssues.bbhi.isValid & signal:'bbhi-changed'">
+                            <template if.bind="results.painIssues.bbhi.isValid & signal:'pain-bbhi-changed'">
                                 <tr>
                                     <td>
                                         <label class="uk-form-label">Somatic</label>
                                     </td>
                                     <td>
-                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.painIssues.bbhi.somatic" change.delegate="changed('bbhi-changed')">
+                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.painIssues.bbhi.somatic" change.delegate="changed('pain-bbhi-changed')">
                                             <option></option>
                                             <option repeat.for="response of bbhiScaleRatings" model.bind="response.value">${response.description}</option>
                                         </select>
@@ -196,7 +198,7 @@
                                         <label class="uk-form-label">Pain</label>
                                     </td>
                                     <td>
-                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.painIssues.bbhi.pain" change.delegate="changed('bbhi-changed')">
+                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.painIssues.bbhi.pain" change.delegate="changed('pain-bbhi-changed')">
                                             <option></option>
                                             <option repeat.for="response of bbhiScaleRatings" model.bind="response.value">${response.description}</option>
                                         </select>
@@ -207,7 +209,7 @@
                                         <label class="uk-form-label">Functional</label>
                                     </td>
                                     <td>
-                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.painIssues.bbhi.functional" change.delegate="changed('bbhi-changed')">
+                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.painIssues.bbhi.functional" change.delegate="changed('pain-bbhi-changed')">
                                             <option></option>
                                             <option repeat.for="response of bbhiScaleRatings" model.bind="response.value">${response.description}</option>
                                         </select>
@@ -218,6 +220,225 @@
                     </table>
                 </div>
 
+                <!-- Depression -->
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>Depression</span></h5>
+
+                    <table class="uk-table uk-table-small">
+                        <tbody>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="bdi-ii">BDI-II</label>
+                                </td>
+                                <td>
+                                    <select id="bdi-ii" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.depression.beck">
+                                        <option></option>
+                                        <option repeat.for="response of beckDepressionInventoryRanges" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="hamiltonDepression">Hamilton - Depression</label>
+                                </td>
+                                <td>
+                                    <select id="hamiltonDepression" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.depression.hamilton">
+                                        <option></option>
+                                        <option repeat.for="response of hamiltonRatingScaleForDepressionRanges" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="depression-tsi2a">TSI-2-A</label>
+                                </td>
+                                <td>
+                                    <select id="depression-tsi2a" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.depression.tsi2a">
+                                        <option></option>
+                                        <option repeat.for="response of tsi2aDepressionResults" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="depression-mmpi">MMPI-2-R-F</label>
+                                </td>
+                                <td>
+                                    <select id="depression-mmpi" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.depression.mmpi2rf">
+                                        <option></option>
+                                        <option repeat.for="response of mmpi2rfDepressionProfiles" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>BBHI-2 (Depression)</span></h5>
+
+                    <table class="uk-table uk-table-small">
+                        <tbody>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="depression-bbhi-IsValid">Valid?</label>
+                                </td>
+                                <td>
+                                    <label repeat.for="response of yesNo">
+                                        <input type="radio" name="depression-bbhi-IsValid" class="uk-radio" checked.bind="results.depression.bbhi.isValid" model.bind="response.value" change.delegate="changed('depression-bbhi-changed')" />&nbsp;${response.description}&nbsp;
+                                    </label>
+                                </td>
+                            </tr>
+                            <template if.bind="results.depression.bbhi.isValid & signal:'depression-bbhi-changed'">
+                                <tr>
+                                    <td>
+                                        <label class="uk-form-label">Depression</label>
+                                    </td>
+                                    <td>
+                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.depression.bbhi.depression" change.delegate="changed('depression-bbhi-changed')">
+                                            <option></option>
+                                            <option repeat.for="response of bbhiScaleRatings" model.bind="response.value">${response.description}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Self Harm -->
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>Self Harm</span></h5>
+
+                    <table class="uk-table uk-table-small">
+                        <tbody>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="selfHarm-bssi">BSSI</label>
+                                </td>
+                                <td>
+                                    <select id="selfHarm-bssi" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.selfHarm.bssi" change.delegate="changed('selfHarm-changed')">
+                                        <option></option>
+                                        <option repeat.for="response of yesNo" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="selfHarm-bdi-ii">BDI-II</label>
+                                </td>
+                                <td>
+                                    <select id="selfHarm-bdi-ii" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.selfHarm.bdi2" change.delegate="changed('selfHarm-changed')">
+                                        <option></option>
+                                        <option repeat.for="response of yesNo" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <template if.bind="!tsi2aDepressionResultsMap[results.depression.tsi2a].isInvalid">
+                                <tr>
+                                    <td class="uk-width-medium">
+                                        <label class="uk-form-label" for="selfHarm-tsi2a">TSI-2-A</label>
+                                    </td>
+                                    <td>
+                                        <select id="selfHarm-tsi2a" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.selfHarm.tsi2a" change.delegate="changed('selfHarm-changed')">
+                                            <option></option>
+                                            <option repeat.for="response of yesNo" model.bind="response.value">${response.description}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </template>
+                            <template if.bind="!mmpi2rfDepressionProfilesMap[results.depression.mmpi2rf].isInvalid">
+                                <tr>
+                                    <td class="uk-width-medium">
+                                        <label class="uk-form-label" for="mmpi">MMPI-2-R-F</label>
+                                    </td>
+                                    <td>
+                                        <select id="mmpi" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.selfHarm.mmpi2rf" change.delegate="changed('selfHarm-changed')">
+                                            <option></option>
+                                            <option repeat.for="response of yesNo" model.bind="response.value">${response.description}</option>
+                                        </select>
+                                    </td>
+                                </tr>    
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Anxiety -->
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>Anxiety</span></h5>
+
+                    <table class="uk-table uk-table-small">
+                        <tbody>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="anxiety-bai">BAI</label>
+                                </td>
+                                <td>
+                                    <select id="anxiety-bai" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.anxiety.bai">
+                                        <option></option>
+                                        <option repeat.for="response of beckAnxietyInventoryRanges" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="anxiety-hamilton">Hamilton</label>
+                                </td>
+                                <td>
+                                    <select id="anxiety-hamilton" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.anxiety.hamilton">
+                                        <option></option>
+                                        <option repeat.for="response of hamiltonRatingScaleForAnxietyRanges" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="anxiety-tsi2a">TSI-2-A</label>
+                                </td>
+                                <td>
+                                    <select id="anxiety-tsi2a" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.anxiety.tsi2a">
+                                        <option></option>
+                                        <option repeat.for="response of tsi2aAnxietyResults" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="uk-section uk-section-xsmall">
+                    <h5 class="uk-heading-line"><span>BBHI-2 (Anxiety)</span></h5>
+
+                    <table class="uk-table uk-table-small">
+                        <tbody>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="anxiety-bbhi-IsValid">Valid?</label>
+                                </td>
+                                <td>
+                                    <label repeat.for="response of yesNo">
+                                        <input type="radio" name="anxiety-bbhi-IsValid" class="uk-radio" checked.bind="results.anxiety.bbhi.isValid" model.bind="response.value" change.delegate="changed('anxiety-bbhi-changed')" />&nbsp;${response.description}&nbsp;
+                                    </label>
+                                </td>
+                            </tr>
+                            <template if.bind="results.anxiety.bbhi.isValid & signal:'anxiety-bbhi-changed'">
+                                <tr>
+                                    <td>
+                                        <label class="uk-form-label">Anxiety</label>
+                                    </td>
+                                    <td>
+                                        <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.anxiety.bbhi.anxiety" change.delegate="changed('anxiety-bbhi-changed')">
+                                            <option></option>
+                                            <option repeat.for="response of bbhiScaleRatings" model.bind="response.value">${response.description}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
             </fieldset>
 
         </form>
@@ -225,6 +446,9 @@
 
     <div class="uk-container" if.bind="results.claimant" style="font-family: arial; font-size: 11pt; font-weight: normal;">
         <h5 class="uk-heading-line"><span>Psychological Assessment Summary</span></h5>
+
+        <!-- Pain -->
+        <h7 class="uk-heading-divider">Pain</h7>
 
         <p contenteditable="true">
             In this present evaluation, the results for pain severity, as measured by Visual Analogue Pain Scales (which does not have any validity measures), 
@@ -237,12 +461,12 @@
             ${results.gender.title} ${results.claimant.lastName}'s aggregate result for the Pain Disability Index (PDI) shows that ${results.pronoun.subject} rated in 
             ${disabilityRatingOverall.format(self)} range for level of self-perceived disability as a result of ${results.pronoun.possessiveAdjective} pain symptomatology, 
             with respect to chronic pain patient norms
-            <template if.bind="declinedToAnswerSexualBehaviors & signal:'psychological-assessment-dysfunction-rating-changed'">
+            <template if.bind="declinedToAnswerSexualBehaviors & signal:'pain-dysfunction-rating-changed'">
                 &nbsp;(noting that ${results.pronoun.subject} chose to not answer the question regarding sexual behaviours)
             </template>
             .
             &nbsp;In particular, ${results.pronoun.subject} 
-            <template repeat.for="group of disabilityRatingGroups & signal:'psychological-assessment-dysfunction-rating-changed'">
+            <template repeat.for="group of disabilityRatingGroups & signal:'pain-dysfunction-rating-changed'">
                 <template if.bind="!$first">;</template>
                 <template if.bind="!$first">&nbsp;and</template>
                 &nbsp;ascribed ${group.format(self)} degree of dysfunction 
@@ -296,18 +520,118 @@
                     </template>
                 </template>
             </template>
-            <template if.bind="!results.painIssues.catastrophizingScale.isValid & signal:'catastrophizing-scale-changed'">
+            <template if.bind="results.painIssues.catastrophizingScale.isValid === false & signal:'catastrophizing-scale-changed'">
                 Based on ${results.gender.title} ${results.claimant.lastName}'s responses, the obtained Pain Catastrophizing Scale (PCS) profile was invalid.
             </template>
         </p>
 
         <p contenteditable="true">
-            <template if.bind="results.painIssues.bbhi.isValid & signal:'bbhi-changed'">
+            <template if.bind="results.painIssues.bbhi.isValid & signal:'pain-bbhi-changed'">
                 The scales of the BBHI-2 sensitive to somatic complaints were in the ${bbhiScaleRatingsMap[results.painIssues.bbhi.somatic].format(self)} range.
-                &nbsp;The scales in relation to the pain complains were in the ${bbhiScaleRatingsMap[results.painIssues.bbhi.pain].format(self)} range, 
+                &nbsp;The scales in relation to the pain complaints were in the ${bbhiScaleRatingsMap[results.painIssues.bbhi.pain].format(self)} range, 
                 and the scales in relation to the functional complaints were in the ${bbhiScaleRatingsMap[results.painIssues.bbhi.functional].format(self)} range.
             </template>
-            <template if.bind="!results.painIssues.bbhi.isValid & signal:'bbhi-changed'">
+            <template if.bind="results.painIssues.bbhi.isValid === false & signal:'pain-bbhi-changed'">
+                Based on ${results.gender.title} ${results.claimant.lastName}’s responses the obtained BBHI-2 profile was invalid.
+            </template>
+        </p>
+
+        <!-- Depression -->
+        <h7 class="uk-heading-divider">Depression</h7>
+        <p contenteditable="true">
+            The results on the Beck Depression Inventory – 2nd Edition (noting this does not have any validity measures) placed ${results.gender.title} ${results.claimant.lastName} in a ${beckDepressionInventoryRangesMap[results.depression.beck].format(self)} range. 
+        </p>
+        <p contenteditable="true">
+            ${results.gender.title} ${results.claimant.lastName}’s results on the Hamilton Rating Scale for Depression (which does not include any validity measures) fell in a ${hamiltonRatingScaleForDepressionRangesMap[results.depression.hamilton].format(self)} range. 
+        </p>
+        <p contenteditable="true">
+            <template if.bind="tsi2aDepressionResultsMap[results.depression.tsi2a].isInvalid">
+                ${results.gender.title} ${results.claimant.lastName}’s TSI-2-A results were invalid. 
+            </template>
+            <template else>
+                The TSI-2-A results were ${tsi2aDepressionResultsMap[results.depression.tsi2a].format(self)} with respect to depressive issues. 
+            </template>
+        </p>
+        <p contenteditable="true">
+            <template if.bind="mmpi2rfDepressionProfilesMap[results.depression.mmpi2rf].isInvalid">
+                The obtained MMPI-2-RF profile was invalid. 
+            </template>
+            <template else>
+                The obtained MMPI-2-RF profile was ${mmpi2rfDepressionProfilesMap[results.depression.mmpi2rf].format(self)} with respect to depression. 
+            </template>
+        </p>
+        <p contenteditable="true">
+            <template if.bind="results.depression.bbhi.isValid & signal:'depression-bbhi-changed'">
+                The scales of the BBHI-2 sensitive to depression complaints were in the ${bbhiScaleRatingsMap[results.depression.bbhi.depression].format(self)} range. 
+            </template>
+            <template if.bind="results.depression.bbhi.isValid === false & signal:'depression-bbhi-changed'">
+                Based on ${results.gender.title} ${results.claimant.lastName}’s responses the obtained BBHI-2 profile was invalid.
+            </template>
+        </p>
+
+        <!-- Self Harm -->
+        <h7 class="uk-heading-divider">Self Harm</h7>
+        <p contenteditable="true">
+            <template if.bind="anySelfHarmYesResponses || anySelfHarmNoResponses">
+                <template if.bind="!anySelfHarmNoResponses">
+                    There were thoughts of self-harm noted on the 
+                    <template repeat.for="test of selfHarmYesResponses & signal:'selfHarm-changed'">
+                        <template if.bind="!$first && !$last">,</template>
+                        <template if.bind="$last && !$first">&nbsp;and</template>
+                        &nbsp;${test}
+                    </template>
+                    .
+                </template>
+                <template else>
+                    <template if.bind="!anySelfHarmYesResponses">
+                        There were not any thoughts self-harm noted on the 
+                        <template repeat.for="test of selfHarmNoResponses & signal:'selfHarm-changed'">
+                            <template if.bind="!$first && !$last">,</template>
+                            <template if.bind="$last && !$first">&nbsp;or</template>
+                            &nbsp;${test}
+                        </template>
+                        .
+                    </template>
+                    <template else>
+                        There were not any thoughts self-harm noted on the 
+                        <template repeat.for="test of selfHarmNoResponses & signal:'selfHarm-changed'">
+                            <template if.bind="!$first && !$last">,</template>
+                            <template if.bind="$last && !$first">&nbsp;or</template>
+                            &nbsp;${test}
+                        </template>
+                        &nbsp;but there were thoughts of self-harm noted on the 
+                        <template repeat.for="test of selfHarmYesResponses & signal:'selfHarm-changed'">
+                            <template if.bind="!$first && !$last">,</template>
+                            <template if.bind="$last && !$first">&nbsp;and</template>
+                            &nbsp;${test}
+                        </template>
+                        .
+                    </template>
+                </template>
+            </template>
+        </p>
+
+        <!-- Anxiety -->
+        <h7 class="uk-heading-divider">Anxiety</h7>
+        <p contenteditable="true">
+            The aggregate result for the Beck Anxiety Inventory placed within a ${beckAnxietyInventoryRangesMap[results.anxiety.bai].format(self)} range (noting that this test does not have any validity measures). 
+        </p>
+        <p contenteditable="true">
+            Hamilton Rating Scale for Anxiety fell in a ${hamiltonRatingScaleForAnxietyRangesMap[results.anxiety.hamilton].format(self)} range (noting that these tests do not have validity measures). 
+        </p>
+        <p contenteditable="true">
+            <template if.bind="tsi2aAnxietyResultsMap[results.anxiety.tsi2a].isInvalid">
+                ${results.gender.title} ${results.claimant.lastName}’s TSI-2-A results were invalid. 
+            </template>
+            <template else>
+                The TSI-2-A results were ${tsi2aAnxietyResultsMap[results.anxiety.tsi2a].format(self)} with respect to anxiety.
+            </template>
+        </p>
+        <p contenteditable="true">
+            <template if.bind="results.anxiety.bbhi.isValid & signal:'anxiety-bbhi-changed'">
+                The scales of the BBHI-2 sensitive to anxiety complaints were in the ${bbhiScaleRatingsMap[results.anxiety.bbhi.anxiety].format(self)} range. 
+            </template>
+            <template if.bind="results.anxiety.bbhi.isValid === false & signal:'anxiety-bbhi-changed'">
                 Based on ${results.gender.title} ${results.claimant.lastName}’s responses the obtained BBHI-2 profile was invalid.
             </template>
         </p>
@@ -317,6 +641,7 @@
         </p>
     </div>
 
+    <!-- Cognitive -->
     <div class="uk-container" if.bind="results.claimant">
         <h5 class="uk-heading-line"><span>Cognitive Assessment</span></h5>
 

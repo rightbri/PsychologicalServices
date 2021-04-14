@@ -46,6 +46,32 @@ export class Psychological {
                     functional: null
                 }
             },
+            depression: {
+                beck: null,
+                hamilton: null,
+                tsi2a: null,
+                mmpi2rf: null,
+                bbhi: {
+                    isValid: null,
+                    depression: null
+                }
+            },
+            selfHarm: {
+                bssi: null,
+                bdi2: null,
+                tsi2a: null,
+                mmpi2rf: null
+            },
+            anxiety: {
+                bai: null,
+                hamilton: null,
+                mmpi2rf: null,
+                tsi2a: null,
+                bbhi: {
+                    isValid: null,
+                    anxiety: null
+                }
+            },
             neurocognitiveTests: []
         };
 
@@ -68,6 +94,15 @@ export class Psychological {
 
         this.bbhiScaleRatings = [];
         
+        this.beckDepressionInventoryRanges = [];
+        this.hamiltonRatingScaleForDepressionRanges = [];
+        this.tsi2aDepressionResults = [];
+        this.mmpi2rfDepressionProfiles = [];
+
+        this.beckAnxietyInventoryRanges = [];
+        this.hamiltonRatingScaleForAnxietyRanges = [];
+        this.tsi2aAnxietyResults = [];
+
         this.cognitiveAssessment = {
             effortLevel: null,
             tests: []
@@ -124,6 +159,34 @@ export class Psychological {
                     this.getBbhiScaleRatings().then(data => {
                         this.bbhiScaleRatings = this.asArray(data);
                         this.bbhiScaleRatingsMap = data;
+                    }),
+                    this.getBeckDepressionInventoryRanges().then(data => {
+                        this.beckDepressionInventoryRanges = this.asArray(data);
+                        this.beckDepressionInventoryRangesMap = data;
+                    }),
+                    this.getHamiltonRatingScaleForDepressionRanges().then(data => {
+                        this.hamiltonRatingScaleForDepressionRanges = this.asArray(data);
+                        this.hamiltonRatingScaleForDepressionRangesMap = data;
+                    }),
+                    this.getTsi2aDepressionResults().then(data => {
+                        this.tsi2aDepressionResults = this.asArray(data);
+                        this.tsi2aDepressionResultsMap = data;
+                    }),
+                    this.getMmpi2rfDepressionProfiles().then(data => {
+                        this.mmpi2rfDepressionProfiles = this.asArray(data);
+                        this.mmpi2rfDepressionProfilesMap = data;
+                    }),
+                    this.getBeckAnxietyInventoryRanges().then(data => {
+                        this.beckAnxietyInventoryRanges = this.asArray(data);
+                        this.beckAnxietyInventoryRangesMap = data;
+                    }),
+                    this.getHamiltonRatingScaleForAnxietyRanges().then(data => {
+                        this.hamiltonRatingScaleForAnxietyRanges = this.asArray(data);
+                        this.hamiltonRatingScaleForAnxietyRangesMap = data;
+                    }),
+                    this.getTsi2aAnxietyResults().then(data => {
+                        this.tsi2aAnxietyResults = this.asArray(data);
+                        this.tsi2aAnxietyResultsMap = data;
                     }),
                     this.getCognitiveAssessmentEffortLevels().then(data => this.cognitiveAssessmentEffortLevels = data),
                     this.getCognitiveAssessmentTestResultRatings().then(data => this.cognitiveAssessmentTestResultRatings = data),
@@ -320,6 +383,84 @@ export class Psychological {
         return getPromise(data);
     }
 
+    getBeckDepressionInventoryRanges() {
+        let data = {
+            "normal": { "value": "normal", "description": "normal", "format": function(context) { return `normal`; } },
+            "mild": { "value": "mild", "description": "mild", "format": function(context) { return `mild`; } },
+            "moderate": { "value": "moderate", "description": "moderate", "format": function(context) { return `moderate`; } },
+            "severe": { "value": "severe", "description": "severe", "format": function(context) { return `severe`; } }
+        };
+
+        return getPromise(data);
+    }
+    
+    getHamiltonRatingScaleForDepressionRanges() {
+        let data = {
+            "normal": { "value": "normal", "description": "normal", "format": function(context) { return `normal`; } },
+            "mild": { "value": "mild", "description": "mild", "format": function(context) { return `mild`; } },
+            "moderate": { "value": "moderate", "description": "moderate", "format": function(context) { return `moderate`; } },
+            "severe": { "value": "severe", "description": "severe", "format": function(context) { return `severe`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getTsi2aDepressionResults() {
+        let data = {
+            "invalid": { "value": "invalid", "description": "INVALID", "format": function(context) { return `invalid`; }, "isInvalid": true },
+            "withinNormalLimits": { "value": "withinNormalLimits", "description": "within normal limits", "format": function(context) { return `within normal limits`; } },
+            "mildlyElevated": { "value": "mildlyElevated", "description": "mildly elevated", "format": function(context) { return `mildly elevated`; } },
+            "severelyElevated": { "value": "severelyElevated", "description": "severely elevated", "format": function(context) { return `severely elevated`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getMmpi2rfDepressionProfiles() {
+        let data = {
+            "invalid": { "value": "invalid", "description": "INVALID", "format": function(context) { return `invalid`; }, "isInvalid": true },
+            "notElevated": { "value": "notElevated", "description": "not elevated", "format": function(context) { return `not elevated`; } },
+            "clinicallyElevated": { "value": "clinicallyElevated", "description": "clinically elevated", "format": function(context) { return `clinically elevated`; } }
+        };
+
+        return getPromise(data);
+    }
+    
+    getBeckAnxietyInventoryRanges() {
+        let data = {
+            "normal": { "value": "normal", "description": "normal", "format": function(context) { return `normal`; } },
+            "mild": { "value": "mild", "description": "mild", "format": function(context) { return `mild`; } },
+            "moderate": { "value": "moderate", "description": "moderate", "format": function(context) { return `moderate`; } },
+            "severe": { "value": "severe", "description": "severe", "format": function(context) { return `severe`; } }
+        };
+
+        return getPromise(data);
+    }
+    
+    getHamiltonRatingScaleForAnxietyRanges() {
+        let data = {
+            "minimal": { "value": "minimal", "description": "minimal", "format": function(context) { return `minimal`; } },
+            "mild": { "value": "mild", "description": "mild", "format": function(context) { return `mild`; } },
+            "moderate": { "value": "moderate", "description": "moderate", "format": function(context) { return `moderate`; } },
+            "highModerate": { "value": "highModerate", "description": "high moderate", "format": function(context) { return `high moderate`; } },
+            "severe": { "value": "severe", "description": "severe", "format": function(context) { return `severe`; } },
+            "verySevere": { "value": "verySevere", "description": "very severe", "format": function(context) { return `very severe`; } }
+        };
+
+        return getPromise(data);
+    }
+
+    getTsi2aAnxietyResults() {
+        let data = {
+            "invalid": { "value": "invalid", "description": "INVALID", "format": function(context) { return `invalid`; }, "isInvalid": true },
+            "withinNormalLimits": { "value": "withinNormalLimits", "description": "within normal limits", "format": function(context) { return `within normal limits`; } },
+            "mildlyElevated": { "value": "mildlyElevated", "description": "mildly elevated", "format": function(context) { return `mildly elevated`; } },
+            "severelyElevated": { "value": "severelyElevated", "description": "severely elevated", "format": function(context) { return `severely elevated`; } }
+        };
+
+        return getPromise(data);
+    }
+
     cognitiveAssessmentTestResultRatingChange() {
         this.cognitiveAssessmentTestResultGroupings = this.getCognitiveAssessmentTestResultGroupings();
         this.signaler.signal('cognitive-assessment-test-result-rating-updated');
@@ -445,7 +586,7 @@ export class Psychological {
 
     dysfunctionRatingChanged() {
         this.dysfunctionRatingChangedCount += 1;
-        this.signaler.signal('psychological-assessment-dysfunction-rating-changed');
+        this.signaler.signal('pain-dysfunction-rating-changed');
     }
 
     @computedFrom('results.painIssues.disabilityIndex.dysfunctionRatings', 'dysfunctionRatingChangedCount')
@@ -522,6 +663,69 @@ export class Psychological {
         let results = groupings.filter(x => x.areasOfDysfunction.length > 0);
 
         return results;
+    }
+
+    getSelfHarmResponses() {
+        let responses = [
+            { "value": this.results.selfHarm.bssi, "description": "BSSI" },
+            { "value": this.results.selfHarm.bdi2, "description": "BDI-II" },
+            { "value": this.results.selfHarm.tsi2a, "description": "TSI-2-A" },
+            { "value": this.results.selfHarm.mmpi2rf, "description": "MMPI-2-R-F" }
+        ];
+
+        return responses;
+    }
+
+    @computedFrom(
+        'results.selfHarm.bssi',
+        'results.selfHarm.bdi2',
+        'results.selfHarm.tsi2a',
+        'results.selfHarm.mmpi2rf'
+    )
+    get selfHarmYesResponses() {
+        let responses = this.getSelfHarmResponses();
+
+        let yesResponses = responses.filter(x => x.value === true).map(x => x.description);
+
+        return yesResponses;
+    }
+
+    @computedFrom(
+        'results.selfHarm.bssi',
+        'results.selfHarm.bdi2',
+        'results.selfHarm.tsi2a',
+        'results.selfHarm.mmpi2rf'
+    )
+    get anySelfHarmYesResponses() {
+        let yesResponses = this.selfHarmYesResponses;
+
+        return yesResponses.some(x => x);
+    }
+
+    @computedFrom(
+        'results.selfHarm.bssi',
+        'results.selfHarm.bdi2',
+        'results.selfHarm.tsi2a',
+        'results.selfHarm.mmpi2rf'
+    )
+    get selfHarmNoResponses() {
+        let responses = this.getSelfHarmResponses();
+
+        let noResponses = responses.filter(x => x.value === false).map(x => x.description);
+
+        return noResponses;
+    }
+
+    @computedFrom(
+        'results.selfHarm.bssi',
+        'results.selfHarm.bdi2',
+        'results.selfHarm.tsi2a',
+        'results.selfHarm.mmpi2rf'
+    )
+    get anySelfHarmNoResponses() {
+        let noResponses = this.selfHarmNoResponses;
+
+        return noResponses.some(x => x);
     }
 
     @computedFrom(
