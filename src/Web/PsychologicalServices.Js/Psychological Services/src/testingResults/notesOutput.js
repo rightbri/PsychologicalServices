@@ -1860,7 +1860,14 @@ export class NotesOutput {
         if (!this.responses) { return ""; }
 
         let position = this.responses.personalHistory.birthPosition || 1;
-        let siblingCount = this.responses.personalHistory.brothers.ages.length + this.responses.personalHistory.sisters.ages.length + 1;
+        let siblingCount =
+            this.responses.personalHistory.brothers.ages.length +
+            this.responses.personalHistory.sisters.ages.length +
+            this.responses.personalHistory.halfBrothers.ages.length +
+            this.responses.personalHistory.halfSisters.ages.length +
+            this.responses.personalHistory.stepBrothers.ages.length +
+            this.responses.personalHistory.stepSisters.ages.length +
+            1;
         let siblingCountText = this.numberToWords.toWords(siblingCount);
         let positionOrdinal = this.numberToWords.toWordsOrdinal(position);
 
@@ -1871,8 +1878,8 @@ export class NotesOutput {
             return `${position === 1 ? "elder" : "younger"} of the ${siblingCountText} children`;
         }
         else if (siblingCount > 2) {
-            if (position === 1) { return `youngest of the ${siblingCountText} children`; }
-            else if (position === siblingCount) { return `oldest of the ${siblingCountText} children`; }
+            if (position === 1) { return `oldest of the ${siblingCountText} children`; }
+            else if (position === siblingCount) { return `youngest of the ${siblingCountText} children`; }
             else if (siblingCount === 3 && position === 2) { return `middle child`; }
             else {
                 return `${positionOrdinal} of ${siblingCountText} children`;
@@ -1892,11 +1899,6 @@ export class NotesOutput {
         if (!this.responses || !this.responses.personalHistory.medical.familyMedicalConditions) { return []; }
 
         let data = this.responses.personalHistory.medical.familyMedicalConditions;
-        /*.map(item => {
-            let familyMedicalCondition = !this.medicalConditionsMap[item].isOther ? this.medicalConditionsMap[item].format(this) : (this.responses.personalHistory.medical.familyMedicalConditionOther || "");
-
-            return familyMedicalCondition;
-        });*/
 
         return data;
     }
