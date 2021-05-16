@@ -670,7 +670,7 @@ export class Psychological {
             { "value": this.results.selfHarm.bssi, "description": "BSSI" },
             { "value": this.results.selfHarm.bdi2, "description": "BDI-II" },
             { "value": this.results.selfHarm.tsi2a, "description": "TSI-2-A" },
-            { "value": this.results.selfHarm.mmpi2rf, "description": "MMPI-2-R-F" }
+            { "value": this.results.selfHarm.mmpi2rf, "description": "MMPI-2-RF" }
         ];
 
         return responses;

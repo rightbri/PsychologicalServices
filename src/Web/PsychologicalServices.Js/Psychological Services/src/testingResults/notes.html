@@ -3256,7 +3256,7 @@
                     </template>
                     <template else>
                         <div class="uk-margin-remove uk-width-1-4">
-                            <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && (isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequency) || (!responses.neuropsychological.physical.headaches.headacheFrequencyBetween && isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyExact)) || (responses.neuropsychological.physical.headaches.headacheFrequencyBetween && (isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin) || isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax)))) ? 'unanswered' : '' & signal:'headaches-changed'">
+                            <span class.one-time="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && !responses.neuropsychological.physical.headaches.headacheFrequencyConstant && (isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequency) || (!responses.neuropsychological.physical.headaches.headacheFrequencyBetween && isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyExact)) || (responses.neuropsychological.physical.headaches.headacheFrequencyBetween && (isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMin) || isUnanswered(responses.neuropsychological.physical.headaches.headacheFrequencyBetweenMax)))) ? 'unanswered' : '' & signal:'headaches-changed'">
                                 How often do you experience headaches?
                             </span>
                         </div>

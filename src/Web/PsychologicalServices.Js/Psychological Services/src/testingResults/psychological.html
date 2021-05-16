@@ -261,7 +261,7 @@
                             </tr>
                             <tr>
                                 <td class="uk-width-medium">
-                                    <label class="uk-form-label" for="depression-mmpi">MMPI-2-R-F</label>
+                                    <label class="uk-form-label" for="depression-mmpi">MMPI-2-RF</label>
                                 </td>
                                 <td>
                                     <select id="depression-mmpi" class="uk-select uk-form-small uk-form-width-medium" value.bind="results.depression.mmpi2rf">
@@ -351,7 +351,7 @@
                             <template if.bind="!mmpi2rfDepressionProfilesMap[results.depression.mmpi2rf].isInvalid">
                                 <tr>
                                     <td class="uk-width-medium">
-                                        <label class="uk-form-label" for="mmpi">MMPI-2-R-F</label>
+                                        <label class="uk-form-label" for="mmpi">MMPI-2-RF</label>
                                     </td>
                                     <td>
                                         <select id="mmpi" class="uk-select uk-form-small uk-form-width-xsmall" value.bind="results.selfHarm.mmpi2rf" change.delegate="changed('selfHarm-changed')">
@@ -454,7 +454,9 @@
             In this present evaluation, the results for pain severity, as measured by Visual Analogue Pain Scales (which does not have any validity measures), 
             show a current pain rating to be in ${painRatings[results.painIssues.visualScale.currentNumber].format(self)} band (${results.painIssues.visualScale.currentNumber}/${painScaleMax}); 
             with respect to chronic pain patient norms, and that the pain can increase to a 
-            ${results.painIssues.visualScale.badDayNumber}/${painScaleMax} on a “bad” day, and only goes to a ${results.painIssues.visualScale.goodDayNumber}/${painScaleMax} on a “good” day. 
+            ${results.painIssues.visualScale.badDayNumber}/${painScaleMax} on a “bad” day, and 
+            <template if.bind="results.painIssues.visualScale.goodDayNumber > 0">&nbsp;only</template>
+            &nbsp;goes to a ${results.painIssues.visualScale.goodDayNumber}/${painScaleMax} on a “good” day. 
         </p>
 
         <p contenteditable="true">
@@ -584,7 +586,7 @@
                 </template>
                 <template else>
                     <template if.bind="!anySelfHarmYesResponses">
-                        There were not any thoughts self-harm noted on the 
+                        There were not any thoughts of self-harm noted on the 
                         <template repeat.for="test of selfHarmNoResponses & signal:'selfHarm-changed'">
                             <template if.bind="!$first && !$last">,</template>
                             <template if.bind="$last && !$first">&nbsp;or</template>
