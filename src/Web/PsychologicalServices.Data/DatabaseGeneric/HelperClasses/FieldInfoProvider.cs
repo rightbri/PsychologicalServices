@@ -184,6 +184,7 @@ namespace PsychologicalServices.Data.HelperClasses
 			this.AddElementFieldInfo("AppointmentEntity", "RoomRentalBillableAmount", typeof(Nullable<System.Int32>), false, false, false, true,  (int)AppointmentFieldIndex.RoomRentalBillableAmount, 0, 0, 10);
 			this.AddElementFieldInfo("AppointmentEntity", "PsychologistInvoiceLock", typeof(System.Boolean), false, false, false, false,  (int)AppointmentFieldIndex.PsychologistInvoiceLock, 0, 0, 0);
 			this.AddElementFieldInfo("AppointmentEntity", "CancellationDate", typeof(Nullable<System.DateTimeOffset>), false, false, false, true,  (int)AppointmentFieldIndex.CancellationDate, 0, 0, 0);
+			this.AddElementFieldInfo("AppointmentEntity", "CancellationReason", typeof(System.String), false, false, false, true,  (int)AppointmentFieldIndex.CancellationReason, 100, 0, 0);
 		}
 		/// <summary>Inits AppointmentAttributeEntity's FieldInfo objects</summary>
 		private void InitAppointmentAttributeEntityInfos()

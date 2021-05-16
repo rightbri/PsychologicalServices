@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Assessments] (
+CREATE TABLE [dbo].[Assessments] (
     [AssessmentId]                       INT                IDENTITY (1, 1) NOT NULL,
     [ReferralTypeId]                     INT                NOT NULL,
     [ReferralSourceId]                   INT                NOT NULL,
@@ -68,7 +68,25 @@
 
 
 
+
+
 GO
-CREATE NONCLUSTERED INDEX [IX_Assessments]
+CREATE NONCLUSTERED INDEX [IX_Assessments_ReferralSourceId]
+    ON [dbo].[Assessments]([ReferralSourceId] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Assessments_CompanyId]
+    ON [dbo].[Assessments]([CompanyId] ASC)
+    INCLUDE([ReferralSourceId]);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Assessments_ClaimantId_ReferralSourceId_AssessmentTypeId]
     ON [dbo].[Assessments]([ClaimantId] ASC, [ReferralSourceId] ASC, [AssessmentTypeId] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Assessments_ClaimantId]
+    ON [dbo].[Assessments]([ClaimantId] ASC);
 

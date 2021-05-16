@@ -17,3 +17,10 @@
 
 
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Claims_ClaimantId]
+    ON [dbo].[Claims]([ClaimantId] ASC);
+

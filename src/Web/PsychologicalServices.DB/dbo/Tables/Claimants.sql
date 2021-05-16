@@ -14,3 +14,20 @@
 
 
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Claimants_LastName]
+    ON [dbo].[Claimants]([LastName] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Claimants_FirstName]
+    ON [dbo].[Claimants]([FirstName] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Claimants_DateOfBirth]
+    ON [dbo].[Claimants]([DateOfBirth] DESC);
+

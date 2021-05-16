@@ -596,6 +596,15 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         appointmentEntity.CancellationDate = appointment.CancellationDate;
                     }
 
+                    if (string.IsNullOrWhiteSpace(appointment.CancellationReason))
+                    {
+                        appointmentEntity.SetNewFieldValue((int)AppointmentFieldIndex.CancellationReason, null);
+                    }
+                    else
+                    {
+                        appointmentEntity.CancellationReason = appointment.CancellationReason;
+                    }
+
                     var appointmentAttributesToAdd = appointment.Attributes.Where(attribute =>
                         !appointmentEntity.AppointmentAttributes.Any(appointmentAttribute =>
                             appointmentAttribute.AttributeId == attribute.Attribute.AttributeId
@@ -663,6 +672,7 @@ namespace PsychologicalServices.Infrastructure.Assessments
                         RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                         PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                         CancellationDate = appointment.CancellationDate,
+                        CancellationReason = appointment.CancellationReason,
                     };
 
                     appointmentEntity.AppointmentAttributes.AddRange(

@@ -1060,6 +1060,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateUser = appointment.UpdateUser.ToUser(),
                     RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                     CancellationDate = appointment.CancellationDate,
+                    CancellationReason = appointment.CancellationReason,
                     IsCompletion = appointment.IsCompletion(),
                     PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                 }
@@ -1085,6 +1086,7 @@ namespace PsychologicalServices.Infrastructure.Common.Repository
                     UpdateUser = appointment.UpdateUser.ToUser(),
                     RoomRentalBillableAmount = appointment.RoomRentalBillableAmount,
                     CancellationDate = appointment.CancellationDate,
+                    CancellationReason = appointment.CancellationReason,
                     IsCompletion = appointment.IsCompletion(),
                     PsychologistInvoiceLock = appointment.PsychologistInvoiceLock,
                 }

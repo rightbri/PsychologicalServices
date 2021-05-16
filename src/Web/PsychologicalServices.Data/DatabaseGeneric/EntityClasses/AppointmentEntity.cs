@@ -707,6 +707,8 @@ namespace PsychologicalServices.Data.EntityClasses
 			_fieldsCustomProperties.Add("PsychologistInvoiceLock", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("CancellationDate", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			_fieldsCustomProperties.Add("CancellationReason", fieldHashtable);
 		}
 		#endregion
 
@@ -1189,6 +1191,16 @@ namespace PsychologicalServices.Data.EntityClasses
 		{
 			get { return (Nullable<System.DateTimeOffset>)GetValue((int)AppointmentFieldIndex.CancellationDate, false); }
 			set	{ SetValue((int)AppointmentFieldIndex.CancellationDate, value); }
+		}
+
+		/// <summary> The CancellationReason property of the Entity Appointment<br/><br/></summary>
+		/// <remarks>Mapped on  table field: "Appointments"."CancellationReason"<br/>
+		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 100<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		public virtual System.String CancellationReason
+		{
+			get { return (System.String)GetValue((int)AppointmentFieldIndex.CancellationReason, true); }
+			set	{ SetValue((int)AppointmentFieldIndex.CancellationReason, value); }
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'AppointmentAttributeEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>

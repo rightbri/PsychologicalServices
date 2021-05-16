@@ -167,7 +167,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 		/// <summary>Inits AppointmentEntity's mappings</summary>
 		private void InitAppointmentEntityMappings()
 		{
-			this.AddElementMapping("AppointmentEntity", @"PsychologicalServices", @"dbo", "Appointments", 14, 0);
+			this.AddElementMapping("AppointmentEntity", @"PsychologicalServices", @"dbo", "Appointments", 15, 0);
 			this.AddElementFieldMapping("AppointmentEntity", "AppointmentId", "AppointmentId", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("AppointmentEntity", "LocationId", "LocationId", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
 			this.AddElementFieldMapping("AppointmentEntity", "AppointmentTime", "AppointmentTime", false, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 2);
@@ -182,6 +182,7 @@ namespace PsychologicalServices.Data.DatabaseSpecific
 			this.AddElementFieldMapping("AppointmentEntity", "RoomRentalBillableAmount", "RoomRentalBillableAmount", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 11);
 			this.AddElementFieldMapping("AppointmentEntity", "PsychologistInvoiceLock", "PsychologistInvoiceLock", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 12);
 			this.AddElementFieldMapping("AppointmentEntity", "CancellationDate", "CancellationDate", true, "DateTimeOffset", 0, 0, 0, false, "", null, typeof(System.DateTimeOffset), 13);
+			this.AddElementFieldMapping("AppointmentEntity", "CancellationReason", "CancellationReason", true, "VarChar", 100, 0, 0, false, "", null, typeof(System.String), 14);
 		}
 
 		/// <summary>Inits AppointmentAttributeEntity's mappings</summary>

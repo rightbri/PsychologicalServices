@@ -571,6 +571,15 @@ namespace PsychologicalServices.Infrastructure.Appointments
                     appointmentEntity.CancellationDate = appointment.CancellationDate;
                 }
 
+                if (string.IsNullOrWhiteSpace(appointment.CancellationReason))
+                {
+                    appointmentEntity.SetNewFieldValue((int)AppointmentFieldIndex.CancellationReason, null);
+                }
+                else
+                {
+                    appointmentEntity.CancellationReason = appointment.CancellationReason;
+                }
+
                 if (!isNew)
                 {
                     var attributesToRemove = appointmentEntity.AppointmentAttributes

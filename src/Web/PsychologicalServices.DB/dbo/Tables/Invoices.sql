@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Invoices] (
+CREATE TABLE [dbo].[Invoices] (
     [InvoiceId]          INT                IDENTITY (1, 1) NOT NULL,
     [Identifier]         NVARCHAR (20)      NOT NULL,
     [InvoiceDate]        DATETIMEOFFSET (7) NOT NULL,
@@ -15,6 +15,8 @@
     CONSTRAINT [FK_Invoices_InvoiceTypes] FOREIGN KEY ([InvoiceTypeId]) REFERENCES [dbo].[InvoiceTypes] ([InvoiceTypeId]),
     CONSTRAINT [FK_Invoices_Users] FOREIGN KEY ([PayableToId]) REFERENCES [dbo].[Users] ([UserId])
 );
+
+
 
 
 
@@ -77,6 +79,21 @@ BEGIN
 
 END
 GO
-CREATE NONCLUSTERED INDEX [IX_Invoices]
-    ON [dbo].[Invoices]([InvoiceId] ASC, [InvoiceDate] ASC, [InvoiceTypeId] ASC, [InvoiceStatusId] ASC, [PayableToId] ASC);
+CREATE NONCLUSTERED INDEX [IX_Invoices_PayableToId]
+    ON [dbo].[Invoices]([PayableToId] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Invoices_InvoiceStatusId]
+    ON [dbo].[Invoices]([InvoiceStatusId] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Invoices_InvoiceDate]
+    ON [dbo].[Invoices]([InvoiceDate] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Invoices_Identifier]
+    ON [dbo].[Invoices]([Identifier] ASC);
 

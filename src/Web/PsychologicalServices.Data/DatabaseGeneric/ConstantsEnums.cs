@@ -83,6 +83,8 @@ namespace PsychologicalServices.Data
 		PsychologistInvoiceLock,
 		///<summary>CancellationDate. </summary>
 		CancellationDate,
+		///<summary>CancellationReason. </summary>
+		CancellationReason,
 		/// <summary></summary>
 		AmountOfFields
 	}

@@ -57,6 +57,7 @@ export class EditAppointment {
 	appointmentStatusChanged() {
 		if (!this.isCanceled) {
 			this.model.appointment.cancellationDate = null;
+			//this.model.appointment.cancellationReason = null;
 		}
 	}
 

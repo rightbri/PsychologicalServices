@@ -9,3 +9,15 @@
     CONSTRAINT [PK_Log] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Log_Level]
+    ON [dbo].[Log]([Level] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Log_Date]
+    ON [dbo].[Log]([Date] ASC);
+
