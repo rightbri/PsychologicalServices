@@ -1171,7 +1171,7 @@
                         <template if.bind="isAnswered(responses.accidentDetails.examinations.npNc.completed)">
 
                             <template if.bind="isYes(responses.accidentDetails.examinations.npNc.completed)">
-                                &nbsp;When ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} had completed a prior neuropsychological or neurocognitive assessment, ${pronoun.subject} advised that ${pronoun.subject} did.
+                                When ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} had completed a prior neuropsychological or neurocognitive assessment, ${pronoun.subject} advised that ${pronoun.subject} did.
 
                                 <template if.bind="anyNpNcCompletions">
                                     &nbsp;${pronoun.subject | proper} then detailed that ${pronoun.subject} was seen
@@ -1195,7 +1195,7 @@
                     <p>
                         <template if.bind="isAnswered(responses.accidentDetails.examinations.psychiatric.completed)">
                             <template if.bind="isYes(responses.accidentDetails.examinations.psychiatric.completed)">
-                                &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has been seen by a psychiatrist.
+                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has been seen by a psychiatrist.
 
                                 <template if.bind="anyPsychiatricCompletions">
                                     &nbsp;${pronoun.subject | proper} then expressed that ${pronoun.subject} was seen
@@ -1308,11 +1308,11 @@
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.startedCounselling)">
-                                    &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has not been seen for counselling in the past.
+                                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has not been seen for counselling in the past.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.startedCounselling)">
-                                        &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} does not know if ${pronoun.subject} has been seen for any counselling past.
+                                        ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} does not know if ${pronoun.subject} has been seen for any counselling past.
                                     </template>
                                 </template>
                             </template>
