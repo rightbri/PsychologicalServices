@@ -439,6 +439,27 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Post Concussion -->
+                <div class="uk-section uk-section-small">
+                    <h5 class="uk-heading-line"><span>Post Concussion</span></h5>
+
+                    <table class="uk-table uk-table-small">
+                        <tbody>
+                            <tr>
+                                <td class="uk-width-medium">
+                                    <label class="uk-form-label" for="post-concussion-rivermead">Rivermead</label>
+                                </td>
+                                <td>
+                                    <select class="uk-select uk-form-small uk-form-width-medium" value.bind="results.postConcussion.rivermead" change.delegate="changed('post-concussion-rivermead-changed')">
+                                        <option></option>
+                                        <option repeat.for="response of rivermeadRanges" model.bind="response.value">${response.description}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </fieldset>
 
         </form>
@@ -636,6 +657,12 @@
             <template if.bind="results.anxiety.bbhi.isValid === false & signal:'anxiety-bbhi-changed'">
                 Based on ${results.gender.title} ${results.claimant.lastName}’s responses the obtained BBHI-2 profile was invalid.
             </template>
+        </p>
+
+        <!-- Post Concussion -->
+        <h7 class="uk-heading-divider">Post Concussion</h7>
+        <p contenteditable="true">
+            On the Rivermead Post-Concussion Symptoms Questionnaire the current aggregate result (based on the self-report alone) is currently in ${rivermeadRangesMap[results.postConcussion.rivermead].format(self)} band for level of self-perceived disability associated with post-concussive symptomatology with respect to individuals diagnosed with this syndrome.
         </p>
 
         <p contenteditable="true">

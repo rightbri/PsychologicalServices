@@ -72,6 +72,9 @@ export class Psychological {
                     anxiety: null
                 }
             },
+            postConcussion: {
+                rivermead: null
+            },
             neurocognitiveTests: []
         };
 
@@ -102,6 +105,7 @@ export class Psychological {
         this.beckAnxietyInventoryRanges = [];
         this.hamiltonRatingScaleForAnxietyRanges = [];
         this.tsi2aAnxietyResults = [];
+        this.rivermeadRanges = [];
 
         this.cognitiveAssessment = {
             effortLevel: null,
@@ -188,6 +192,10 @@ export class Psychological {
                         this.tsi2aAnxietyResults = this.asArray(data);
                         this.tsi2aAnxietyResultsMap = data;
                     }),
+                    this.getRivermeadRanges().then(data => {
+                        this.rivermeadRanges = this.asArray(data);
+                        this.rivermeadRangesMap = data;
+                    }),
                     this.getCognitiveAssessmentEffortLevels().then(data => this.cognitiveAssessmentEffortLevels = data),
                     this.getCognitiveAssessmentTestResultRatings().then(data => this.cognitiveAssessmentTestResultRatings = data),
                     this.getCognitiveAssessmentTestCategories().then(data => {
@@ -272,7 +280,8 @@ export class Psychological {
         let data = [
             { "abbreviation": "M", "description": "Male", "title": "Mr." },
             { "abbreviation": "F", "description": "Female", "title": "Ms." },
-            { "abbreviation": "U", "description": "Unkonwn", "title": "Mx." }
+            { "abbreviation": "N", "description": "Neutral", "title": "Mx." },
+            { "abbreviation": "U", "description": "Unknown", "title": "Mx." }
         ];
 
         return getPromise(data);
@@ -457,6 +466,16 @@ export class Psychological {
             "mildlyElevated": { "value": "mildlyElevated", "description": "mildly elevated", "format": function(context) { return `mildly elevated`; } },
             "severelyElevated": { "value": "severelyElevated", "description": "severely elevated", "format": function(context) { return `severely elevated`; } }
         };
+
+        return getPromise(data);
+    }
+
+    getRivermeadRanges() {
+        let data = {
+            "aboveAverage": { "value": "aboveAverage", "description": "Above average", "format": function(context) { return `an above average`; } },
+            "average": { "value": "average", "description": "Average", "format": function(context) { return `an average`; } },
+            "lowAverage": { "value": "lowAverage", "description": "Low average", "format": function(context) { return `a low average`; } }
+        }
 
         return getPromise(data);
     }
