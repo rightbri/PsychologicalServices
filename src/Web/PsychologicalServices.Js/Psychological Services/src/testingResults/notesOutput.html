@@ -1308,11 +1308,11 @@
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.startedCounselling)">
-                                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has not been seen for counselling in the past.
+                                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} not been seen for counselling in the past.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.startedCounselling)">
-                                        ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} does not know if ${pronoun.subject} has been seen for any counselling past.
+                                        ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} been seen for any counselling past.
                                     </template>
                                 </template>
                             </template>
@@ -1355,16 +1355,16 @@
 
                     <p>
                         <template if.bind="responses.personalHistory.diagnosis">
-                            ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} has been diagnosed with
+                            ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} ${verb(pronoun, "has|have")} been diagnosed with
                             <strong>${responses.personalHistory.diagnosis}</strong>.
                         </template>
 
                         <template if.bind="isAnswered(responses.personalHistory.psychological.prognosis)">
                             <template if.bind="isDontKnow(responses.personalHistory.psychological.prognosis)">
-                                &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know what ${pronoun.possessiveAdjective} prognosis is.
+                                &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know what ${pronoun.possessiveAdjective} prognosis is.
                             </template>
                             <template else>
-                                &nbsp;${pronoun.subject | proper} has been told that <strong>${prognosisMap[responses.personalHistory.psychological.prognosis].format(self)}</strong>.
+                                &nbsp;${pronoun.subject | proper} ${verb(pronoun, "has|have")} been told that <strong>${prognosisMap[responses.personalHistory.psychological.prognosis].format(self)}</strong>.
                             </template>
                         </template>
                     </p>
@@ -1384,9 +1384,9 @@
                     <p>
                         <template if.bind="isAnswered(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
                             <template if.bind="isYes(responses.neuropsychological.physical.pain.currentlyExperiencePain)">
-                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences ongoing pain.
+                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently ${verb(pronoun, "experiences|experience")} ongoing pain.
                                 
-                                When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently experiences pain
+                                When asked about any pain, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} currently ${verb(pronoun, "experiences|experience")} pain
                                 <template if.bind="responses.neuropsychological.physical.pain.currentPainAreas.length">
                                     &nbsp;in the following area
                                     <template if.bind="multipleCurrentPainAreas & signal:'current-pain-changed'">s</template>
@@ -1412,7 +1412,7 @@
 
                         <!-- Other Issues -->
                         <template if.bind="anyOtherPhysicalIssues">
-                            &nbsp;When asked about anything else that is bothering ${pronoun.object}, ${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} has experienced: ${responses.neuropsychological.physical.other.issues | arrayToString}.
+                            &nbsp;When asked about anything else that is bothering ${pronoun.object}, ${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "has|have")} experienced: ${responses.neuropsychological.physical.other.issues | arrayToString}.
                         </template>
                     </p>
 
@@ -1421,7 +1421,7 @@
                         <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
                             When asked about headaches, ${gender.title} ${claimant.lastName} 
                             <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesCurrent)">
-                                &nbsp;shared that currently ${pronoun.subject} experiences the same.
+                                &nbsp;shared that currently ${pronoun.subject} ${verb(pronoun, "experiences|experience")} the same.
 
                                 <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheDescription && responses.neuropsychological.physical.headaches.headacheDescription.length">
                                     &nbsp;${gender.title} ${claimant.lastName} went on to describe ${pronoun.possessiveAdjective} headaches as: ${selectedHeadacheDescriptions | arrayToString:{"format":getItemValueForCurrentContext}}.
@@ -1437,7 +1437,7 @@
                                 <template else>
                                     <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && (responses.neuropsychological.physical.headaches.headacheFrequencyConstant || isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency) || responses.neuropsychological.physical.headaches.headacheFrequencyBetween)">
                                         <template if.bind="responses.neuropsychological.physical.headaches.headacheFrequencyConstant">
-                                            &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} experiences constant headaches. 
+                                            &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "experiences|experience")} constant headaches. 
                                         </template>
                                         <template else>
                                             &nbsp;Upon inquiry, ${pronoun.subject} indicated the headaches occur 
@@ -1459,7 +1459,7 @@
                                 <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
                                     &nbsp;${gender.title} ${claimant.lastName} advised that 
                                     <templatet if.bind="isDontKnow(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
-                                        &nbsp;${pronoun.subject} does not know if ${pronoun.possessiveAdjective} headaches
+                                        &nbsp;${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.possessiveAdjective} headaches
                                     </templatet> 
                                     <template if.bind="isYes(responses.neuropsychological.physical.headaches.headachesFluctuateWithActivityLevel)">
                                         &nbsp;${pronoun.possessiveAdjective} headaches
@@ -1479,7 +1479,7 @@
                             <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceHeadachesPriorToAccident)">
                                 &nbsp;${pronoun.subject | proper} advised that prior to the accident ${pronoun.subject} experienced headaches
                                 <template if.bind="isYes(responses.neuropsychological.physical.headaches.changesInHeadachesSinceAccident)">
-                                    , and noted that since the accident ${pronoun.subject} has noticed a change in ${pronoun.possessiveAdjective} headaches
+                                    , and noted that since the accident ${pronoun.subject} ${verb(pronoun, "has|have")} noticed a change in ${pronoun.possessiveAdjective} headaches
                                 </template>
                                 <template else>
                                     , but denied any changes in ${pronoun.possessiveAdjective} headaches since the subject accident
@@ -1506,7 +1506,7 @@
                             <template if.bind="isAnswered(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
                                 &nbsp;${gender.title} ${claimant.lastName} 
                                 <template if.bind="isYes(responses.neuropsychological.physical.headaches.experienceMigrainesCurrent)">
-                                    &nbsp;also expressed that ${pronoun.subject} currently experiences migraines.
+                                    &nbsp;also expressed that ${pronoun.subject} currently ${verb(pronoun, "experiences|experience")} migraines.
                                 </template>
                                 <template else>
                                     &nbsp;denied experiencing migraines at the present time.

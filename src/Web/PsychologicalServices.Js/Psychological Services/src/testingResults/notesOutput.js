@@ -299,6 +299,14 @@ export class NotesOutput {
             });
     }
 
+    verb(pronoun, value) {
+        var values = value.split('|');
+        
+        var valuesIndex = ("MF".indexOf(pronoun.value) > -1) ? 0 : 1;
+
+        return values.length >= valuesIndex + 1 ? values[valuesIndex] : values[0];
+    }
+
     claimantSelected(e) {
         let gender = e.detail.claimant.gender;
 
