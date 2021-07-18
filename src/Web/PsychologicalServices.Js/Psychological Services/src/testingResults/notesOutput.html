@@ -164,24 +164,24 @@
                         </template>
                         
                         <template if.bind="isYes(responses.identification.assistance.wearsGlasses)">
-                            &nbsp;${pronoun.subject | proper} was observed to wear glasses during the interview.
+                            &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} observed to wear glasses during the interview.
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.identification.assistance.wearsGlasses)">
-                                &nbsp;${pronoun.subject | proper} was not observed to wear glasses during the interview.
+                                &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} not observed to wear glasses during the interview.
                             </template>
                         </template>
                         
                         <template if.bind="isYes(responses.identification.assistance.usesDevices)">
-                            &nbsp;${pronoun.subject | proper} was seen to be using the following assistive devices: <strong>${responses.identification.assistance.devices}</strong>.
+                            &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} seen to be using the following assistive devices: <strong>${responses.identification.assistance.devices}</strong>.
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.identification.assistance.usesDevices)">
                                 <template if.bind="isYes(responses.identification.assistance.wearsGlasses)">
-                                    &nbsp;${pronoun.subject | proper} was not seen using any other assistive devices.
+                                    &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} not seen using any other assistive devices.
                                 </template>
                                 <template else>
-                                    &nbsp;${pronoun.subject | proper} was not seen using any assistive devices.
+                                    &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} not seen using any assistive devices.
                                 </template>
                             </template>
                         </template>
@@ -201,7 +201,7 @@
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.dayOfAssessment.priorNightSleepWasGood)">
-                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} sleep the night before the assessment was good.
+                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.possessiveAdjective} sleep the night before the assessment was good.
                                 </template>
                             </template>
                         </template>
@@ -215,7 +215,7 @@
                                 </template>
                                 &nbsp;<strong>${medication.name}</strong>
                                 <template if.bind="isYes(medication.usedAtTimeOfAccident) || isNo(medication.usedAtTimeOfAccident)">
-                                    &nbsp;(which ${pronoun.subject} was
+                                    &nbsp;(which ${pronoun.subject} ${verb(pronoun, "was|were")}
                                     <template if.bind="isNo(medication.usedAtTimeOfAccident)">
                                         &nbsp;not
                                     </template>
@@ -227,19 +227,19 @@
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.dayOfAssessment.takenMedicationBeforeAssessment)">
-                                &nbsp;When asked about any medication or substances ${pronoun.subject} had taken in the last 48 hours ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not currently use anything.
+                                &nbsp;When asked about any medication or substances ${pronoun.subject} had taken in the last 48 hours ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not currently use anything.
                             </template>
                         </template>
                     </p>
 
                     <p>
                         ${gender.title} ${claimant.lastName} was clearly instructed to complete all testing in an accurate and honest manner both verbally and in writing. 
-                        ${pronoun.subject | proper} was also instructed that if ${pronoun.subject} had any questions, or did not understand a question or test item, ${pronoun.subject} should ask, and this assessor would take the time to provide an answer/clarification when and where applicable and appropriate.
+                        ${pronoun.subject | proper} ${verb(pronoun, "was|were")} also instructed that if ${pronoun.subject} had any questions, or did not understand a question or test item, ${pronoun.subject} should ask, and this assessor would take the time to provide an answer/clarification when and where applicable and appropriate.
                     </p>
 
                     <p>
                         ${gender.title} ${claimant.lastName} was advised that accommodations could be made during the assessment if ${pronoun.subject} needed the same. 
-                        For example, ${pronoun.subject} could take breaks as required, ${pronoun.subject} could ask for a translator or a reader (if required), ${pronoun.subject} could use the back supports that are available, or if ${pronoun.subject} is light sensitive then ${pronoun.subject} could request a table lamp (rather than overhead fluorescent lighting).
+                        For example, ${pronoun.subject} could take breaks as required, ${pronoun.subject} could ask for a translator or a reader (if required), ${pronoun.subject} could use the back supports that are available, or if ${pronoun.subject} ${verb(pronoun, "is|are")} light sensitive then ${pronoun.subject} could request a table lamp (rather than overhead fluorescent lighting).
                     </p>
 
                     <p>
@@ -254,7 +254,7 @@
                             </template>
                         </template>
 
-                        &nbsp;${pronoun.subject | proper} was also asked to contact this assessor if ${pronoun.subject} recalled any information that ${pronoun.subject} did not share with this assessor during the assessment, but as of the date of the writing of this report ${pronoun.subject} has not been in contact with this assessor.
+                        &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} also asked to contact this assessor if ${pronoun.subject} recalled any information that ${pronoun.subject} did not share with this assessor during the assessment, but as of the date of the writing of this report ${pronoun.subject} ${verb(pronoun, "has|have")} not been in contact with this assessor.
                     </p>
                     
                     <p>
@@ -273,14 +273,14 @@
                         </template>
                         
                         <template if.bind="isYes(observationResponse('claimantAppropriateClothing'))">
-                            &nbsp;${pronoun.subject | proper} was seen wearing clothing that was appropriate for ${pronoun.possessiveAdjective} age and the weather conditions of the day.
+                            &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} seen wearing clothing that was appropriate for ${pronoun.possessiveAdjective} age and the weather conditions of the day.
                         </template>
                         <template if.bind="isNo(observationResponse('claimantAppropriateClothing'))">
-                            &nbsp;The clothing that ${pronoun.subject} was wearing was not fully was appropriate for ${pronoun.possessiveAdjective} age/weather conditions of the day.
+                            &nbsp;The clothing that ${pronoun.subject} ${verb(pronoun, "was|were")} wearing was not fully was appropriate for ${pronoun.possessiveAdjective} age/weather conditions of the day.
                         </template>
                         
                         <template if.bind="isYes(observationResponse('claimantAbleToWrite'))">
-                            &nbsp;${pronoun.subject | proper} was observed using a writing utensil to complete the questionnaires and testing.
+                            &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} observed using a writing utensil to complete the questionnaires and testing.
                         </template>
                         <template if.bind="isNo(observationResponse('claimantAbleToWrite'))">
                             &nbsp;${pronoun.subject | proper} did not use a writing utensil to complete the questionnaires and testing.
@@ -319,10 +319,10 @@
                         </template>
                         
                         <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
-                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident and the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                            &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} observed to tear up when discussing the accident and the changes in ${pronoun.possessiveAdjective} life since the subject accident.
                         </template>
                         <template if.bind="isYes(observationResponse('claimantCriedWhenDiscussingIncident')) && isNo(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
-                            &nbsp;${pronoun.subject | proper} was observed to tear up when discussing the accident but did not tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
+                            &nbsp;${pronoun.subject | proper} ${verb(pronoun, "was|were")} observed to tear up when discussing the accident but did not tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
                         </template>
                         <template if.bind="isNo(observationResponse('claimantCriedWhenDiscussingIncident')) && isYes(observationResponse('claimantCriedWhenDiscussingLifeChanges'))">
                             &nbsp;${pronoun.subject | proper} did not tear up when discussing the accident but did tear up when discussing the changes in ${pronoun.possessiveAdjective} life since the subject accident.
@@ -369,8 +369,8 @@
                     </p>
 
                     <p>
-                        At the end of the assessment, ${pronoun.subject} was asked to complete a post-assessment questionnaire. 
-                        On the same, ${pronoun.subject} confirmed that ${pronoun.subject} shared all relevant information with this assessor during the interview, that ${pronoun.subject} was given the opportunity to ask any questions, and that this assessor and the psychometrist treated ${pronoun.object} in a courteous, professional and respectful manner. 
+                        At the end of the assessment, ${pronoun.subject} ${verb(pronoun, "was|were")} asked to complete a post-assessment questionnaire. 
+                        On the same, ${pronoun.subject} confirmed that ${pronoun.subject} shared all relevant information with this assessor during the interview, that ${pronoun.subject} ${verb(pronoun, "was|were")} given the opportunity to ask any questions, and that this assessor and the psychometrist treated ${pronoun.object} in a courteous, professional and respectful manner. 
                     </p>
 
                     <p>
@@ -402,11 +402,11 @@
                             ${gender.title} ${claimant.lastName} was asked to provide this assessor with information about ${pronoun.possessiveAdjective} accident. 
 
                             <template if.bind="responses.accidentDetails.timeOfAccident.dontKnow">
-                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know what time the accident happened.
+                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know what time the accident happened.
                             </template>
                             <template else>
                                 <template if.bind="timeOfAccidentIsSpecific">
-                                    &nbsp;${pronoun.subject | proper} reported that around ${timeOfAccidentSpecific} ${responses.accidentDetails.timeOfAccident.specificAmPm} on ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a 
+                                    &nbsp;${pronoun.subject | proper} reported that around ${timeOfAccidentSpecific} ${responses.accidentDetails.timeOfAccident.specificAmPm} on ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} ${verb(pronoun, "was|were")} involved in a 
                                     <template if.bind="isAnswered(responses.accidentDetails.category)">
                                         &nbsp;${accidentCategoriesMap[responses.accidentDetails.category].format(self)}.
                                     </template>
@@ -419,7 +419,7 @@
                                     <template if.bind="isAnswered(responses.accidentDetails.timeOfAccident.generalModifier)">
                                         &nbsp;${responses.accidentDetails.timeOfAccident.generalModifier}
                                     </template>
-                                    &nbsp;${responses.accidentDetails.timeOfAccident.generalValue} of ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} was involved in a
+                                    &nbsp;${responses.accidentDetails.timeOfAccident.generalValue} of ${dateOfAccident | dateFormat:config.longDateFormat}, ${pronoun.subject} ${verb(pronoun, "was|were")} involved in a
                                     <template if.bind="isAnswered(responses.accidentDetails.category)">
                                         &nbsp;${accidentCategoriesMap[responses.accidentDetails.category].format(self)}.
                                     </template>
@@ -431,19 +431,19 @@
                             
                             
                             <template if.bind="responses.accidentDetails.role === 'driver'">
-                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was the driver of the vehicle.
+                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} ${verb(pronoun, "was|were")} the driver of the vehicle.
                             </template>
                             <template if.bind="responses.accidentDetails.role === 'passenger'">
-                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was a passenger in the vehicle.
+                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} ${verb(pronoun, "was|were")} a passenger in the vehicle.
                             </template>
                             <template if.bind="responses.accidentDetails.role === 'pedestrian'">
-                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} was a pedestrian.
+                                &nbsp;${pronoun.subject | proper} detailed that at the time of the accident ${pronoun.subject} ${verb(pronoun, "was|were")} a pedestrian.
                             </template>
                             
 
                             <template if.bind="responses.accidentDetails.role !== 'pedestrian'">
                                 <template if.bind="isDontKnow(responses.accidentDetails.secondaryImpact)">
-                                    &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if a secondary collision occurred.
+                                    &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if a secondary collision occurred.
                                 </template>
                                 <template if.bind="isYes(responses.accidentDetails.secondaryImpact)">
                                     &nbsp;${pronoun.subject | proper} indicated that a secondary collision occurred.
@@ -454,18 +454,18 @@
                                 
     
                                 <template if.bind="isDontKnow(responses.accidentDetails.vehicleRolled)">
-                                    &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} does not know if the vehicle ${pronoun.subject} was in rolled.
+                                    &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if the vehicle ${pronoun.subject} ${verb(pronoun, "was|were")} in rolled.
                                 </template>
                                 <template if.bind="isYes(responses.accidentDetails.vehicleRolled)">
-                                    &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in rolled.
+                                    &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} ${verb(pronoun, "was|were")} in rolled.
                                 </template>
                                 <template if.bind="isNo(responses.accidentDetails.vehicleRolled)">
-                                    &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} was in did not roll.
+                                    &nbsp;${pronoun.subject | proper} then noted that the vehicle ${pronoun.subject} ${verb(pronoun, "was|were")} in did not roll.
                                 </template>
     
     
                                 <template if.bind="isDontKnow(responses.accidentDetails.airbagsDeployed)">
-                                    &nbsp;${gender.title} ${claimant.lastName} stated that ${pronoun.subject} does not know if the airbags deployed.
+                                    &nbsp;${gender.title} ${claimant.lastName} stated that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if the airbags deployed.
                                 </template>
                                 <template if.bind="isYes(responses.accidentDetails.airbagsDeployed)">
                                     &nbsp;${gender.title} ${claimant.lastName} stated that the airbags deployed.
@@ -476,13 +476,13 @@
     
     
                                 <template if.bind="isDontKnow(responses.accidentDetails.thrownInsideVehicle)">
-                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} does not know if ${pronoun.subject} was thrown around inside the vehicle upon impact.
+                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "was|were")} thrown around inside the vehicle upon impact.
                                 </template>
                                 <template if.bind="isYes(responses.accidentDetails.thrownInsideVehicle)">
-                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was thrown around inside the vehicle upon impact.
+                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} ${verb(pronoun, "was|were")} thrown around inside the vehicle upon impact.
                                 </template>
                                 <template if.bind="isNo(responses.accidentDetails.thrownInsideVehicle)">
-                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} was not thrown around inside the vehicle upon impact.
+                                    &nbsp;Upon inquiry ${pronoun.subject} advised that ${pronoun.subject} ${verb(pronoun, "was|were")} not thrown around inside the vehicle upon impact.
                                 </template>
                             </template>
 
@@ -496,7 +496,7 @@
 
                         <p>
                             <template if.bind="isDontKnow(responses.accidentDetails.hitHead)">
-                                ${pronoun.subject | proper} indicated that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} head hit anything.
+                                ${pronoun.subject | proper} indicated that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.possessiveAdjective} head hit anything.
                             </template>
                             <template if.bind="isYes(responses.accidentDetails.hitHead)">
                                 ${pronoun.subject | proper} then indicated that ${pronoun.subject} suffered a head impact, adding that ${pronoun.possessiveAdjective} head hit the 
@@ -537,7 +537,7 @@
                                 </template>
                                 <template else>
                                     <template if.bind="dontKnowLacerations">
-                                        &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} does not know if ${pronoun.subject} had any lacerations that required suturing.
+                                        &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} had any lacerations that required suturing.
                                     </template>
                                 </template>
                             </template>
@@ -554,7 +554,7 @@
                                 &nbsp;${unselectedInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
                             </template>
                             <template if.bind="anyDontKnowInjuriesAndSymptoms">
-                                &nbsp;When asked ${pronoun.subject} expressed that ${pronoun.subject} does not know if ${pronoun.subject} sustained any of the following:
+                                &nbsp;When asked ${pronoun.subject} expressed that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} sustained any of the following:
                                 ${dontKnowInjuriesAndSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; ","connector":"or"}}.
                             </template>                    
 
@@ -583,7 +583,7 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.feltCouldHaveDied)">
-                                        &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} does not know if at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
+                                        &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if at the time of the accident ${pronoun.subject} felt that ${pronoun.subject} could have died.
                                     </template>
                                 </template>
                             </template>
@@ -599,7 +599,7 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.wasDazed)">
-                                        ${gender.title} ${claimant.lastName} advised ${pronoun.subject} does not know if ${pronoun.subject} felt dazed after the accident.
+                                        ${gender.title} ${claimant.lastName} advised ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} felt dazed after the accident.
                                     </template>
                                 </template>
                             </template>
@@ -607,7 +607,7 @@
                             <template if.bind="isYes(responses.accidentDetails.lossOfConsciousness.experienced)">
                                 &nbsp;Upon inquiry, ${pronoun.subject} indicated that ${pronoun.subject} sustained a loss of consciousness
                                 <template if.bind="responses.accidentDetails.lossOfConsciousness.length.dontKnow">
-                                    , but noted that ${pronoun.subject} does not know the duration of the same.
+                                    , but noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not know the duration of the same.
                                 </template>
                                 <template else>
                                     &nbsp;that lasted for <strong>${lossOfConsciousnessLength | arrayToString}</strong>.
@@ -619,7 +619,7 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.lossOfConsciousness.experienced)">
-                                        &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know if ${pronoun.subject} lost consciousness.
+                                        &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} lost consciousness.
                                     </template>
                                 </template>
                             </template>
@@ -627,7 +627,7 @@
                             <template if.bind="isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)">
                                 &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} experienced Post-Traumatic Amnesia
                                 <template if.bind="responses.accidentDetails.postTraumaticAmnesia.length.dontKnow">
-                                    , but noted that ${pronoun.subject} does not know the duration of the same.
+                                    , but noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not know the duration of the same.
                                 </template>
                                 <template else>
                                     &nbsp;that lasted for <strong>${postTraumaticAmnesiaLength | arrayToString}</strong>.
@@ -639,17 +639,17 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.postTraumaticAmnesia.experienced)">
-                                        &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} does not know if ${pronoun.subject} experienced any Post-Traumatic Amnesia.
+                                        &nbsp;${pronoun.subject | proper} expressed that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} experienced any Post-Traumatic Amnesia.
                                     </template>
                                 </template>
                             </template>
                             
                             <template if.bind="isYes(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
-                                &nbsp;${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} has full and intact memory from before and after the accident.
+                                &nbsp;${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} ${verb(pronoun, "has|have")} full and intact memory from before and after the accident.
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.fullIntactMemoryBeforeAndAfter)">
-                                    &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not have full and intact memory from after the accident.
+                                    &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not have full and intact memory from after the accident.
                                     <template if.bind="isYes(responses.accidentDetails.lossOfConsciousness.experienced) || isYes(responses.accidentDetails.postTraumaticAmnesia.experienced)">
                                         <template if.bind="responses.accidentDetails.lastMemoryBeforeImpact">
                                             &nbsp;${pronoun.subject | proper} shared that ${pronoun.possessiveAdjective} last memory before the impact was of <strong>${responses.accidentDetails.lastMemoryBeforeImpact}</strong>
@@ -674,15 +674,15 @@
                     <!-- Details of Initial Treatment -->
                     <p>
                         <template if.bind="isYes(responses.accidentDetails.assessedByAmbulancePersonnel)">
-                            ${gender.title} ${claimant.lastName} advised that following the accident ${pronoun.subject} was assessed by Ambulance Personnel.
+                            ${gender.title} ${claimant.lastName} advised that following the accident ${pronoun.subject} ${verb(pronoun, "was|were")} assessed by Ambulance Personnel.
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.assessedByAmbulancePersonnel)">
-                                ${gender.title} ${claimant.lastName} advised that following the accident ${pronoun.subject} was not assessed by Ambulance Personnel.
+                                ${gender.title} ${claimant.lastName} advised that following the accident ${pronoun.subject} ${verb(pronoun, "was|were")} not assessed by Ambulance Personnel.
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.accidentDetails.assessedByAmbulancePersonnel)">
-                                    ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not know if ${pronoun.subject} was assessed by Ambulance Personnel following the accident.
+                                    ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "was|were")} assessed by Ambulance Personnel following the accident.
                                 </template>
                             </template>
                         </template>
@@ -691,36 +691,36 @@
                             &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} attended a hospital. 
 
                             <template if.bind="responses.accidentDetails.hospitalStayLength.dontKnow">
-                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} does not know how long ${pronoun.subject} was in the hospital for.
+                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} ${verb(pronoun, "does|do")} not know how long ${pronoun.subject} ${verb(pronoun, "was|were")} in the hospital for.
                             </template>
                             <template else>
-                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} was in the hospital for <strong>${hospitalStayLength | arrayToString}</strong>.
+                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} ${verb(pronoun, "was|were")} in the hospital for <strong>${hospitalStayLength | arrayToString}</strong>.
                             </template>
 
                             <template if.bind="isYes(responses.accidentDetails.diagnosedWithConcussion)">
-                                &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} was diagnosed with a concussion.
+                                &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} ${verb(pronoun, "was|were")} diagnosed with a concussion.
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.diagnosedWithConcussion)">
-                                    &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} was not diagnosed with a concussion.
+                                    &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} ${verb(pronoun, "was|were")} not diagnosed with a concussion.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.diagnosedWithConcussion)">
-                                        &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} does not know if ${pronoun.subject} was diagnosed with a concussion.
+                                        &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "was|were")} diagnosed with a concussion.
                                     </template>
                                 </template>
                             </template>
                             
                             <template if.bind="isYes(responses.accidentDetails.givenConcussionProtocol)">
-                                &nbsp;${pronoun.subject | proper} then confirmed ${pronoun.subject} was given concussion protocol instructions.
+                                &nbsp;${pronoun.subject | proper} then confirmed ${pronoun.subject} ${verb(pronoun, "was|were")} given concussion protocol instructions.
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.givenConcussionProtocol)">
-                                    &nbsp;${pronoun.subject | proper} then denied that ${pronoun.subject} was given concussion protocol instructions.
+                                    &nbsp;${pronoun.subject | proper} then denied that ${pronoun.subject} ${verb(pronoun, "was|were")} given concussion protocol instructions.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.givenConcussionProtocol)">
-                                        &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know if ${pronoun.subject} was given concussion protocol instructions.
+                                        &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "was|were")} given concussion protocol instructions.
                                     </template>
                                 </template>
                             </template>
@@ -732,7 +732,7 @@
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.accidentDetails.wentToHospital)">
-                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} does not know if ${pronoun.subject} attended a hospital.
+                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} attended a hospital.
                                 </template>
                             </template>
                         </template>
@@ -740,7 +740,7 @@
 
                     <p>
                         <template if.bind="isYes(responses.accidentDetails.haveFamilyDoctor)">
-                            ${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} has a family doctor
+                            ${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} ${verb(pronoun, "has|have")} a family doctor
                             <template if.bind="responses.accidentDetails.familyDoctorName">
                                 , who was identified as Dr. <strong>${responses.accidentDetails.familyDoctorName}</strong>
                             </template>
@@ -758,7 +758,7 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.sawFamilyDoctorSinceAccident)">
-                                        &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} does not know if ${pronoun.subject} saw ${pronoun.possessiveAdjective} family doctor after the accident.
+                                        &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} saw ${pronoun.possessiveAdjective} family doctor after the accident.
                                     </template>
                                 </template>
                             </template>
@@ -772,7 +772,7 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.psychologicalTreatmentRecommended)">
-                                        &nbsp;${pronoun.subject | proper} detailed that ${pronoun.subject} does not know if psychological treatment was recommended.
+                                        &nbsp;${pronoun.subject | proper} detailed that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if psychological treatment was recommended.
                                     </template>
                                 </template>
                             </template>
@@ -780,7 +780,7 @@
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.haveFamilyDoctor)">
-                                ${gender.title} ${claimant.lastName} advised that currently ${pronoun.subject} does not have a family doctor.
+                                ${gender.title} ${claimant.lastName} advised that currently ${pronoun.subject} ${verb(pronoun, "does|do")} not have a family doctor.
                             </template>
                         </template>
                     </p>
@@ -797,18 +797,18 @@
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.brainImagingInvestigationFindingsNormal)">
-                                        &nbsp;adding that ${pronoun.subject} does not know if the findings were normal.
+                                        &nbsp;adding that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if the findings were normal.
                                     </template>
                                 </template>
                             </template>
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.hadBrainImagingInvestigations)">
-                                When asked about additional treatments or investigations, ${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} has not had any brain imaging investigations.
+                                When asked about additional treatments or investigations, ${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} ${verb(pronoun, "has|have")} not had any brain imaging investigations.
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.accidentDetails.hadBrainImagingInvestigations)">
-                                    When asked about additional treatments or investigations, ${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} does not know if ${pronoun.subject} had any brain imaging investigations.
+                                    When asked about additional treatments or investigations, ${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} had any brain imaging investigations.
                                 </template>
                             </template>
                         </template>
@@ -817,23 +817,23 @@
 
                     <p>
                         <template if.bind="isYes(responses.accidentDetails.ocfCompleter.metWith)">
-                            When asked specifically about the OCF-18 Treatment and Assessment Plan in dispute, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has met with the person who completed the OCF-18.
+                            When asked specifically about the OCF-18 Treatment and Assessment Plan in dispute, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} ${verb(pronoun, "has|have")} met with the person who completed the OCF-18.
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.ocfCompleter.metWith)">
                                 <template if.bind="isYes(responses.accidentDetails.ocfCompleter.spokenWith)">
-                                    When asked specifically about the OCF-18 Treatment and Assessment Plan in dispute, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has not met, but has spoken with the person who completed the OCF-18.
+                                    When asked specifically about the OCF-18 Treatment and Assessment Plan in dispute, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} ${verb(pronoun, "has|have")} not met, but has spoken with the person who completed the OCF-18.
                                 </template>
                                 <template else>
                                     <template if.bind="isNo(responses.accidentDetails.ocfCompleter.spokenWith)">
-                                        When asked specifically about the OCF-18 Treatment and Assessment Plan in dispute, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has not met with or spoken with the person who completed the OCF-18.
+                                        When asked specifically about the OCF-18 Treatment and Assessment Plan in dispute, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} ${verb(pronoun, "has|have")} not met with or spoken with the person who completed the OCF-18.
                                     </template>
                                 </template>
                             </template>
                         </template>
 
                         <template if.bind="isYes(responses.accidentDetails.ocfCompleter.treatmentSessions.hadSessions)">
-                            &nbsp;${pronoun.subject | proper} then reported that ${pronoun.subject} has previously had treatment sessions with the author of the OCF-18
+                            &nbsp;${pronoun.subject | proper} then reported that ${pronoun.subject} ${verb(pronoun, "has|have")} previously had treatment sessions with the author of the OCF-18
                             <template if.bind="isAnswered(responses.accidentDetails.ocfCompleter.treatmentSessions.sessionFormat)">
                                 &nbsp;that were done 
                                 <template if.bind="treatmentSessionFormatIsOther">
@@ -851,7 +851,7 @@
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.accidentDetails.ocfCompleter.treatmentSessions.hadSessions)">
-                                &nbsp;${pronoun.subject | proper} then reported that ${pronoun.subject} has not previously had treatment sessions with the author of the OCF-18.
+                                &nbsp;${pronoun.subject | proper} then reported that ${pronoun.subject} ${verb(pronoun, "has|have")} not previously had treatment sessions with the author of the OCF-18.
                             </template>
                         </template>
                         
@@ -862,14 +862,14 @@
                             <template if.bind="anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram || selectedPainProgram || selectedDriversRehabProgram || anySelectedBeneficialTreatments || anyUnselectedBeneficialTreatments & signal:'treatment-initial-changed'">
                                 ${gender.title} ${claimant.lastName} 
                                 <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
-                                    &nbsp;shared that at the current time ${pronoun.subject} is receiving treatment provided by the following: 
+                                    &nbsp;shared that at the current time ${pronoun.subject} ${verb(pronoun, "is|are")} receiving treatment provided by the following: 
                                     ${selectedCurrentTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'treatment-initial-changed'}.        
                                 </template>
                                 <template if.bind="anySelectedPastTreatmentProviders & signal:'treatment-initial-changed'">
                                     <template if.bind="anySelectedCurrentTreatmentProviders & signal:'treatment-initial-changed'">
                                         &nbsp;${pronoun.subject | proper} 
                                     </template>
-                                    &nbsp;shared that in the past ${pronoun.subject} has been seen by a: 
+                                    &nbsp;shared that in the past ${pronoun.subject} ${verb(pronoun, "has|have")} been seen by a: 
                                     ${selectedPastTreatmentProviders | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'treatment-initial-changed'}.
                                 </template>
                                 <template if.bind="anyUnselectedPastTreatmentProviders & signal:'treatment-initial-changed'">
@@ -907,7 +907,7 @@
                                     <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders) & signal:'treatment-initial-changed'">
                                         &nbsp;${pronoun.subject | proper}
                                     </template>
-                                    &nbsp;further detailed that ${pronoun.subject} has
+                                    &nbsp;further detailed that ${pronoun.subject} ${verb(pronoun, "has|have")}
                                     <template if.bind="selectedPainProgram & signal:'treatment-initial-changed'">
                                         &nbsp;attended a pain program
                                     </template>
@@ -924,7 +924,7 @@
                                     <template if.bind="(anySelectedCurrentTreatmentProviders || anySelectedPastTreatmentProviders || anyUnselectedPastTreatmentProviders || unselectedPainProgram || unselectedDriversRehabProgram) & signal:'treatment-initial-changed'">
                                         &nbsp;${gender.title} ${claimant.lastName}
                                     </template>
-                                    &nbsp;shared that ${pronoun.subject} has found the following to be beneficial: 
+                                    &nbsp;shared that ${pronoun.subject} ${verb(pronoun, "has|have")} found the following to be beneficial: 
                                     ${selectedBeneficialTreatments | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'treatment-initial-changed'}.
                                 </template>
 
@@ -1146,20 +1146,20 @@
                         <template if.bind="isAnswered(responses.accidentDetails.examinations.psychological.completed)">
 
                             <template if.bind="isYes(responses.accidentDetails.examinations.psychological.completed)">
-                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has completed a prior psychological examination.
+                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} completed a prior psychological examination.
 
                                 <template if.bind="anyPsychologicalCompletions">
-                                    &nbsp;${pronoun.subject | proper} then shared that ${pronoun.subject} was seen
+                                    &nbsp;${pronoun.subject | proper} then shared that ${pronoun.subject} ${verb(pronoun, "was|were")} seen
                                     <strong>${psychologicalCompletions | arrayToString}</strong>.
                                 </template>
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.examinations.psychological.completed)">
-                                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has not completed a prior psychological examination.
+                                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} not completed a prior psychological examination.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.examinations.psychological.completed)">
-                                        ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} does not know if ${pronoun.subject} has completed a prior psychological examination.
+                                        ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} completed a prior psychological examination.
                                     </template>
                                 </template>
                             </template>
@@ -1174,7 +1174,7 @@
                                 When ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} had completed a prior neuropsychological or neurocognitive assessment, ${pronoun.subject} advised that ${pronoun.subject} did.
 
                                 <template if.bind="anyNpNcCompletions">
-                                    &nbsp;${pronoun.subject | proper} then detailed that ${pronoun.subject} was seen
+                                    &nbsp;${pronoun.subject | proper} then detailed that ${pronoun.subject} ${verb(pronoun, "was|were")} seen
                                     <strong>${npNcCompletions | arrayToString}</strong>.
                                 </template>
                             </template>
@@ -1195,20 +1195,20 @@
                     <p>
                         <template if.bind="isAnswered(responses.accidentDetails.examinations.psychiatric.completed)">
                             <template if.bind="isYes(responses.accidentDetails.examinations.psychiatric.completed)">
-                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has been seen by a psychiatrist.
+                                ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} been seen by a psychiatrist.
 
                                 <template if.bind="anyPsychiatricCompletions">
-                                    &nbsp;${pronoun.subject | proper} then expressed that ${pronoun.subject} was seen
+                                    &nbsp;${pronoun.subject | proper} then expressed that ${pronoun.subject} ${verb(pronoun, "was|were")} seen
                                     <strong>${psychiatricCompletions | arrayToString}</strong>.
                                 </template>
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.examinations.psychiatric.completed)">
-                                    &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has not been seen by a psychiatrist.
+                                    &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} not been seen by a psychiatrist.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.examinations.psychiatric.completed)">
-                                        &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} does not know if ${pronoun.subject} has been seen by a psychiatrist.
+                                        &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} been seen by a psychiatrist.
                                     </template>
                                 </template>
                             </template>
@@ -1218,18 +1218,18 @@
 
                     <p>
                         <template if.bind="isAnswered(responses.accidentDetails.attendedTbiAbiProgram)">
-                            ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} has attended any TBI or ABI programs.
+                            ${gender.title} ${claimant.lastName} was asked if ${pronoun.subject} ${verb(pronoun, "has|have")} attended any TBI or ABI programs.
                             
                             <template if.bind="isYes(responses.accidentDetails.attendedTbiAbiProgram)">
-                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} has attended the same.
+                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} attended the same.
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.accidentDetails.attendedTbiAbiProgram)">
-                                    &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} has not attended the same.
+                                    &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} not attended the same.
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.accidentDetails.attendedTbiAbiProgram)">
-                                        &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not know if ${pronoun.subject} has ever attended the same.
+                                        &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} ever attended the same.
                                     </template>
                                 </template>
                             </template>
@@ -1240,7 +1240,7 @@
                         <template if.bind="isAnswered(responses.accidentDetails.startedCounselling)">
                             <template if.bind="isYes(responses.accidentDetails.startedCounselling)">
                                 <template if.bind="responses.accidentDetails.startedCounsellingMonth || responses.accidentDetails.startedCounsellingYear">
-                                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has started counselling in
+                                    ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} started counselling in
                                     <strong>
                                         <template if.bind="responses.accidentDetails.startedCounsellingMonth">
                                             ${responses.accidentDetails.startedCounsellingMonth}
@@ -1257,15 +1257,15 @@
                                     </strong>
                                 </template>
                                 <template else>
-                                    ${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} has been seen for counselling in the past.
+                                    ${gender.title} ${claimant.lastName} confirmed that ${pronoun.subject} ${verb(pronoun, "has|have")} been seen for counselling in the past.
                                 </template>
 
                                 <template if.bind="isAnswered(responses.accidentDetails.stillAttendingCounselling)">
                                     <template if.bind="isYes(responses.accidentDetails.stillAttendingCounselling)">
-                                        &nbsp;${pronoun.subject | proper} then detailed that ${pronoun.subject} is still attending.
+                                        &nbsp;${pronoun.subject | proper} then detailed that ${pronoun.subject} ${verb(pronoun, "is|are")} still attending.
         
                                         <template if.bind="responses.accidentDetails.counsellingHowOften">
-                                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} is currently having counselling <strong>${responses.accidentDetails.counsellingHowOften}</strong>.
+                                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} ${verb(pronoun, "is|are")} currently having counselling <strong>${responses.accidentDetails.counsellingHowOften}</strong>.
                                         </template>
         
                                         <template if.bind="isAnswered(responses.accidentDetails.counsellingMethod)">
@@ -1283,7 +1283,7 @@
                                     </template>
                                     <template else>
                                         <template if.bind="isNo(responses.accidentDetails.stillAttendingCounselling)">
-                                            &nbsp;${pronoun.subject | proper} then detailed that ${pronoun.subject} is not still attending.
+                                            &nbsp;${pronoun.subject | proper} then detailed that ${pronoun.subject} ${verb(pronoun, "is|are")} not still attending.
                                         </template>
                                     </template>
                                 </template>
@@ -1291,15 +1291,15 @@
                                 <template if.bind="isAnswered(responses.accidentDetails.isTheCounsellingBeneficial)">
                                     &nbsp;When asked, ${pronoun.subject} expressed that ${pronoun.subject}
                                     <template if.bind="isYes(responses.accidentDetails.isTheCounsellingBeneficial)">
-                                        &nbsp;feels that the counselling has been beneficial.
+                                        &nbsp;${verb(pronoun, "feels|feel")} that the counselling has been beneficial.
                                     </template>
                                     <template else>
                                         <template if.bind="isNo(responses.accidentDetails.isTheCounsellingBeneficial)">
-                                            &nbsp;feels that the counselling has not been beneficial.
+                                            &nbsp;${verb(pronoun, "feels|feel")} that the counselling has not been beneficial.
                                         </template>
                                         <template else>
                                             <template if.bind="isDontKnow(responses.accidentDetails.isTheCounsellingBeneficial)">
-                                                &nbsp;does not know if ${pronoun.subject} feels that the counselling has been beneficial.
+                                                &nbsp;${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "feels|feel")} that the counselling has been beneficial.
                                             </template>
                                         </template>
                                     </template>
@@ -1427,7 +1427,7 @@
                                     &nbsp;${gender.title} ${claimant.lastName} went on to describe ${pronoun.possessiveAdjective} headaches as: ${selectedHeadacheDescriptions | arrayToString:{"format":getItemValueForCurrentContext}}.
                                 </template>
                                 <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheReliefActivities && responses.neuropsychological.physical.headaches.headacheReliefActivities.length">
-                                    &nbsp;When asked how ${pronoun.subject} tries to obtain relief, ${pronoun.subject} responded with: ${selectedHeadacheReliefActivities | arrayToString:{"format":getItemValueForCurrentContext}}.
+                                    &nbsp;When asked how ${pronoun.subject} ${verb(pronoun, "tries|try")} to obtain relief, ${pronoun.subject} responded with: ${selectedHeadacheReliefActivities | arrayToString:{"format":getItemValueForCurrentContext}}.
                                 </template>
                                 <template if.bind="responses.createdAtVersion < 35">
                                     <template if.bind="!responses.neuropsychological.physical.headaches.skipHeadacheFrequency && isAnswered(responses.neuropsychological.physical.headaches.headacheFrequency)">
@@ -1614,14 +1614,14 @@
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.neuropsychological.physical.sleep.betterSleepPriorToAccident)">
-                                    &nbsp;${pronoun.subject | proper} indicated that the quality of the sleep ${pronoun.subject} obtained prior to the accident was not better than the quality of sleep ${pronoun.subject} is currently obtaining.
+                                    &nbsp;${pronoun.subject | proper} indicated that the quality of the sleep ${pronoun.subject} obtained prior to the accident was not better than the quality of sleep ${pronoun.subject} ${verb(pronoun, "is|are")} currently obtaining.
                                 </template>
                             </template>
                         </template>
                         -->
                         <template if.bind="responses.neuropsychological.physical.sleep.skipAmountOfSleepBeforeAccident">
                             <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
-                                &nbsp;${pronoun.subject | proper} advised that currently ${pronoun.subject} is obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
+                                &nbsp;${pronoun.subject | proper} advised that currently ${pronoun.subject} ${verb(pronoun, "is|are")} obtaining ${responses.neuropsychological.physical.sleep.amountOfSleepCurrent} of 
                                 <template if.bind="isYes(responses.neuropsychological.physical.sleep.brokenSleep)">
                                     &nbsp;broken
                                 </template>
@@ -1630,10 +1630,10 @@
                         </template>
                         <template else>
                             <template if.bind="responses.neuropsychological.physical.sleep.dontKnowAmountOfSleepBeforeAccident">
-                                &nbsp;${pronoun.subject | proper} disclosed that ${pronoun.subject} did not know how much sleep ${pronoun.subject} was obtaining prior to the accident.
+                                &nbsp;${pronoun.subject | proper} disclosed that ${pronoun.subject} did not know how much sleep ${pronoun.subject} ${verb(pronoun, "was|were")} obtaining prior to the accident.
                             </template>
                             <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccident.value !== null">
-                                &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} was obtaining 
+                                &nbsp;${pronoun.subject | proper} disclosed that prior to the accident ${pronoun.subject} ${verb(pronoun, "was|were")} obtaining 
                                 <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetween">
                                     &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMin | numberTextIfLessThanTen} and ${responses.neuropsychological.physical.sleep.amountOfSleepBeforeAccidentBetweenMax | numberTextIfLessThanTen} 
                                 </template>
@@ -1643,7 +1643,7 @@
                                 &nbsp;hours of sleep
                                 <template if.bind="!responses.neuropsychological.physical.sleep.skipAmountOfSleepCurrent">
                                     <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrent !== null || responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween">
-                                        &nbsp;and advised that currently ${pronoun.subject} is obtaining 
+                                        &nbsp;and advised that currently ${pronoun.subject} ${verb(pronoun, "is|are")} obtaining 
                                         <template if.bind="responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetween">
                                             &nbsp;between ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMin | numberTextIfLessThanTen} and ${responses.neuropsychological.physical.sleep.amountOfSleepCurrentBetweenMax | numberTextIfLessThanTen}
                                         </template>
@@ -1662,7 +1662,7 @@
                         </template>
 
                         <template if.bind="allSelectedSleepIssues & signal:'sleep-issue-changed'">
-                            &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to attain sleep has been affected, and that ${pronoun.subject} has issues sustaining and regaining sleep.
+                            &nbsp;${pronoun.subject | proper} detailed that ${pronoun.possessiveAdjective} ability to attain sleep has been affected, and that ${pronoun.subject} ${verb(pronoun, "has|have")} issues sustaining and regaining sleep.
                         </template>
                         <template else>
                             <template if.bind="anySelectedSleepIssues & signal:'sleep-issue-changed'">
@@ -1690,17 +1690,17 @@
                         <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
                             &nbsp;${pronoun.subject | proper} then shared that when waking ${pronoun.subject} 
                             <template if.bind="isYes(responses.neuropsychological.physical.sleep.fatiguedWhenWaking)">
-                                &nbsp;does not feel well rested, rather still feels fatigued.
+                                &nbsp;${verb(pronoun, "does|do")} not feel well rested, rather still ${verb(pronoun, "feels|feel")} fatigued.
                             </template>
                             <template else>
-                                &nbsp;feels rested and is not still fatigued.
+                                &nbsp;${verb(pronoun, "feels|feel")} rested and is not still fatigued.
                             </template>
                         </template>
                         
                         <template if.bind="isAnswered(responses.neuropsychological.physical.sleep.takeNaps)">
                             &nbsp;${gender.title} ${claimant.lastName} 
                             <template if.bind="isYes(responses.neuropsychological.physical.sleep.takeNaps)">
-                                &nbsp;expressed that ${pronoun.subject} currently naps as needed.
+                                &nbsp;expressed that ${pronoun.subject} currently ${verb(pronoun, "naps|nap")} as needed.
                             </template>
                             <template else>
                                 &nbsp;denied napping.
@@ -1772,7 +1772,7 @@
                     <!-- Medical Conditions -->
                     <p>
                         <template if.bind="isYes(responses.personalHistory.medical.beforeAccident.medicalConditionsDiagnosed)">
-                            Regarding ${pronoun.possessiveAdjective} personal medical history, ${gender.title} ${claimant.lastName} shared that before the accident ${pronoun.subject} was diagnosed with 
+                            Regarding ${pronoun.possessiveAdjective} personal medical history, ${gender.title} ${claimant.lastName} shared that before the accident ${pronoun.subject} ${verb(pronoun, "was|were")} diagnosed with 
                             
                             <template repeat.for="condition of responses.personalHistory.medical.beforeAccident.medicalConditions">
                                 <template if.bind="!$last && !$first">,</template>
@@ -1876,7 +1876,7 @@
                         </template>
                         
                         <template if.bind="knownLanguages.length & signal:'languages-changed'">
-                            &nbsp;${pronoun.subject | proper} is a ${claimant.dateOfBirth | age}-year-old ${claimant.gender | gender | lower} who identified
+                            &nbsp;${pronoun.subject | proper} ${verb(pronoun, "is|are")} a ${claimant.dateOfBirth | age}-year-old ${claimant.gender | gender | lower} who identified
                             <template if.bind="knownLanguages.length === 1 & signal:'languages-changed'">
                                 &nbsp;${knownLanguages | arrayToString & signal:'languages-changed'} as ${pronoun.possessiveAdjective} first language.
                             </template>
@@ -1886,7 +1886,7 @@
                         </template>
 
                         <template if.bind="isAnswered(responses.personalHistory.relationship.status)">
-                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} is ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
+                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} ${verb(pronoun, "is|are")} ${relationshipStatusesMap[responses.personalHistory.relationship.status].format(self)}
                             <template if.bind="isMarriedOrCommonLaw & signal:'relationship-status-changed'">
                                 <template if.bind="responses.personalHistory.relationship.marriageLength.value && !responses.personalHistory.relationship.dontKnowMarriageLength">
                                     &nbsp;for ${getAgeTextForCurrentContext(responses.personalHistory.relationship.marriageLength) & signal:'marriage-length-changed'} now
@@ -1927,18 +1927,18 @@
                         <template if.bind="isAnswered(responses.personalHistory.relationship.isAbusive)">
                             &nbsp;${gender.title} ${claimant.lastName} 
                             <template if.bind="isYes(responses.personalHistory.relationship.isAbusive)">
-                                &nbsp;disclosed that ${pronoun.subject} is
+                                &nbsp;disclosed that ${pronoun.subject} ${verb(pronoun, "is|are")}
                             </template>
                             <template else>
-                                &nbsp;confirmed that ${pronoun.subject} is not
+                                &nbsp;confirmed that ${pronoun.subject} ${verb(pronoun, "is|are")} not
                             </template>
                             &nbsp;currently in an abusive relationship
                             <template if.bind="isAnswered(responses.personalHistory.relationship.previousRelationshipAbusive)">
                                 <template if.bind="isYes(responses.personalHistory.relationship.previousRelationshipAbusive)">
-                                    , but acknowledged that in the past ${pronoun.subject} was in an abusive relationship
+                                    , but acknowledged that in the past ${pronoun.subject} ${verb(pronoun, "was|were")} in an abusive relationship
                                 </template>
                                 <template else>
-                                    , nor has ${pronoun.subject} been in an abusive relationship in the past
+                                    , nor ${verb(pronoun, "has|have")} ${pronoun.subject} been in an abusive relationship in the past
                                 </template>
                             </template>
                             . 
@@ -1946,7 +1946,7 @@
 
                         <template if.bind="isAnswered(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
                             <template if.bind="isYes(responses.personalHistory.relationship.hadPriorSeriousRelationship)">
-                                &nbsp;When asked about any previous serious relationships, ${pronoun.subject} shared that ${pronoun.subject} was in a relationship
+                                &nbsp;When asked about any previous serious relationships, ${pronoun.subject} shared that ${pronoun.subject} ${verb(pronoun, "was|were")} in a relationship
                                 <template if.bind="isAnswered(responses.personalHistory.relationship.priorSeriousRelationshipLength.value)">
                                     &nbsp;for a period of ${getAgeTextForCurrentContext(responses.personalHistory.relationship.priorSeriousRelationshipLength) & signal:'prior-serious-relationship-length-changed'}
                                 </template>
@@ -1964,7 +1964,7 @@
                     <!-- Growing up -->
                     <p>
                         <template if.bind="responses.personalHistory.growingUp.socioeconomicClass">
-                            ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} was raised in ${getItemValueForCurrentContext(getMatch(socioeconomicStatuses, responses.personalHistory.growingUp.socioeconomicClass))}.
+                            ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} ${verb(pronoun, "was|were")} raised in ${getItemValueForCurrentContext(getMatch(socioeconomicStatuses, responses.personalHistory.growingUp.socioeconomicClass))}.
                         </template>
     
                         <template if.bind="isNo(responses.personalHistory.growingUp.abuse.any)">
@@ -1976,7 +1976,7 @@
                                     &nbsp;${gender.title} ${claimant.lastName} denied having any history of physical, mental or sexual abuse during ${pronoun.possessiveAdjective} childhood.
                                 </template>
                                 <template else>
-                                    &nbsp;When asked about any abuse when ${pronoun.subject} was growing up, 
+                                    &nbsp;When asked about any abuse when ${pronoun.subject} ${verb(pronoun, "was|were")} growing up, 
                                     <template if.bind="yesAbuseTypes.length">
                                         &nbsp;${pronoun.subject} acknowledged having a history of ${yesAbuseTypes | arrayToString:{"format":getItemValue} & signal:'growing-up-abuse-changed'} abuse.
                                     </template>
@@ -1994,7 +1994,7 @@
                         </template>
 
                         <template if.bind="isYes(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
-                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} believes that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
+                            &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "believes|believe")} that ${pronoun.subject} did not meet the development milestones (i.e. walking/talking/toilet training) at the appropriate ages.
                         </template>
                         <template if.bind="isNo(responses.personalHistory.growingUp.developmentalMilestoneIssues)">
                             &nbsp;To the best of ${pronoun.possessiveAdjective} knowledge, ${gender.title} ${claimant.lastName} believes that ${pronoun.subject} hit all developmental milestones (i.e. walking/talking/toilet training) as expected.
@@ -2009,7 +2009,7 @@
                                 &nbsp;in ${responses.personalHistory.arrivalInCanadaYear}
                             </template>
                             <template if.bind="responses.personalHistory.arrivalInCanadaType === 'age'">
-                                &nbsp;when ${pronoun.subject} was ${responses.personalHistory.arrivalInCanadaAge} years old
+                                &nbsp;when ${pronoun.subject} ${verb(pronoun, "was|were")} ${responses.personalHistory.arrivalInCanadaAge} years old
                             </template>
                             .
                         </template>
@@ -2020,7 +2020,7 @@
                         <template if.bind="isYes(responses.personalHistory.didParentsSeparateOrDivorce)">
                             ${gender.title} ${claimant.lastName} reported that ${pronoun.possessiveAdjective} parents separated/divorced. 
                             <template if.bind="!responses.personalHistory.skipAgeWhenParentsSeparated">
-                                &nbsp;${pronoun.subject | proper} added that this occurred when ${pronoun.subject} was around ${getAgeTextForCurrentContext(responses.personalHistory.ageWhenParentsSeparated)} old.
+                                &nbsp;${pronoun.subject | proper} added that this occurred when ${pronoun.subject} ${verb(pronoun, "was|were")} around ${getAgeTextForCurrentContext(responses.personalHistory.ageWhenParentsSeparated)} old.
                             </template>
                         </template>
                         <template else>
@@ -2052,7 +2052,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.father.age.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
@@ -2067,7 +2067,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.father.age.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
@@ -2082,7 +2082,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.father.causeOfDeath.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.father.causeOfDeath.value)">
@@ -2097,7 +2097,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.father.educationLevel.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.father.educationLevel.value)">
@@ -2114,7 +2114,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.father.employmentAreas.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.father.employmentAreas.value)">
@@ -2131,7 +2131,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="isDontKnow(responses.personalHistory.father.isRetired)">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 ${yesNoDontKnowMap[responses.personalHistory.father.isRetired].description}
@@ -2144,7 +2144,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="isDontKnow(responses.personalHistory.father.isDisabled)">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 ${yesNoDontKnowMap[responses.personalHistory.father.isDisabled].description}
@@ -2169,7 +2169,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.mother.age.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.mother.age.value)">
@@ -2184,7 +2184,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.mother.age.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.mother.age.value)">
@@ -2199,7 +2199,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.mother.causeOfDeath.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.mother.causeOfDeath.value)">
@@ -2216,7 +2216,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.mother.educationLevel.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.mother.educationLevel.value)">
@@ -2233,7 +2233,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="responses.personalHistory.mother.employmentAreas.dontKnow">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 <template if.bind="isAnswered(responses.personalHistory.mother.employmentAreas.value)">
@@ -2250,7 +2250,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="isDontKnow(responses.personalHistory.mother.isRetired)">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 ${yesNoDontKnowMap[responses.personalHistory.mother.isRetired].description}
@@ -2263,7 +2263,7 @@
                                         </td>
                                         <td class="uk-padding-remove-vertical uk-text-nowrap uk-text-center">
                                             <template if.bind="isDontKnow(responses.personalHistory.mother.isDisabled)">
-                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not know.
+                                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know.
                                             </template>
                                             <template else>
                                                 ${yesNoDontKnowMap[responses.personalHistory.mother.isDisabled].description}
@@ -2446,7 +2446,14 @@
                         </table>
 
                         <template if.bind="responses.personalHistory.children.howManyLiveWithYou && responses.personalHistory.children.howManyLiveWithYou > 0">
-                            ${gender.title} ${claimant.lastName} then shared that ${responses.personalHistory.children.howManyLiveWithYou | numberTextIfLessThanTen} of the children currently reside with ${pronoun.object}.
+                            ${gender.title} ${claimant.lastName} then shared that 
+                            <template if.bind="responses.personalHistory.children.howManyLiveWithYou === 1">
+                                &nbsp;${pronoun.possessiveAdjective} child currently resides
+                            </template>
+                            <template else>
+                                &nbsp;${responses.personalHistory.children.howManyLiveWithYou | numberTextIfLessThanTen} of the children currently reside 
+                            </template>
+                            &nbsp;with ${pronoun.object}.
                         </template>
 
                     </p>
@@ -2458,14 +2465,14 @@
                             <template if.bind="!isSkip(responses.personalHistory.father.isAlive)">
                                 ${gender.title} ${claimant.lastName} advised that 
                                 <template if.bind="isDontKnow(responses.personalHistory.father.isAlive)">
-                                    &nbsp;${pronoun.subject} does not know whether ${pronoun.possessiveAdjective} father is currently living.
+                                    &nbsp;${pronoun.subject} ${verb(pronoun, "does|do")} not know whether ${pronoun.possessiveAdjective} father is currently living.
                                 </template>
                                 <template if.bind="isYes(responses.personalHistory.father.isAlive)">
                                     &nbsp;${pronoun.possessiveAdjective} father is still alive
 
                                     <template if.bind="!responses.personalHistory.father.age.skip">
                                         <template if.bind="responses.personalHistory.father.age.dontKnow">
-                                            , however ${pronoun.subject} does not know ${pronoun.possessiveAdjective} current age
+                                            , however ${pronoun.subject} ${verb(pronoun, "does|do")} not know ${pronoun.possessiveAdjective} current age
                                         </template>
                                         <template else>
                                             <template if.bind="isAnswered(responses.personalHistory.father.age.value)">
@@ -2478,10 +2485,10 @@
                                     &nbsp;${pronoun.possessiveAdjective} father is no longer alive
                                     <template if.bind="!responses.personalHistory.father.yearOfDeath.skip">
                                         <template if.bind="responses.personalHistory.father.yearOfDeath.dontKnow">
-                                            , adding that ${pronoun.subject} does not know when ${pronoun.subject} died.
+                                            , adding that ${pronoun.subject} ${verb(pronoun, "does|do")} not know when he died.
                                         </template>
                                         <template else>
-                                            , adding that ${pronoun.subject} died
+                                            , adding that he died
                                             <template if.bind="responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'">
                                                 &nbsp;in ${responses.personalHistory.father.yearOfDeath.value & signal:'father-death-changed'}    
                                             </template>
@@ -2498,7 +2505,7 @@
 
                                             <template if.bind="!responses.personalHistory.father.causeOfDeath.skip">
                                                 <template if.bind="responses.personalHistory.father.causeOfDeath.dontKnow">
-                                                    &nbsp;but ${pronoun.subject} does not know the cause of ${pronoun.possessiveAdjective} death.
+                                                    &nbsp;but ${pronoun.subject} ${verb(pronoun, "does|do")} not know the cause of ${pronoun.possessiveAdjective} death.
                                                 </template>
                                                 <template else>
                                                     <template if.bind="responses.personalHistory.father.causeOfDeath.value & signal:'father-death-changed'">
@@ -2516,7 +2523,7 @@
                                 &nbsp;${gender.title} ${claimant.lastName}
                                 <template if.bind="!responses.personalHistory.father.educationLevel.skip">
                                     <template if.bind="responses.personalHistory.father.educationLevel.dontKnow">
-                                        &nbsp;indicated that ${pronoun.subject} does not know the level of education completed by ${pronoun.possessiveAdjective} father.
+                                        &nbsp;indicated that ${pronoun.subject} ${verb(pronoun, "does|do")} not know the level of education completed by ${pronoun.possessiveAdjective} father.
                                     </template>
                                     <template else>
                                         <template if.bind="responses.personalHistory.father.educationLevel.value & signal:'father-education-or-employment-changed'">
@@ -2597,12 +2604,12 @@
             
                         <template if.bind="!skipSiblings">
                             <template if.bind="siblingCount === 0 & signal:'sibling-count-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} is an only child.
+                                &nbsp;${gender.title} ${claimant.lastName} advised that ${pronoun.subject} ${verb(pronoun, "is|are")} an only child.
                             </template>
                 
                             <template if.bind="!responses.personalHistory.brothers.skip">
                                 <template if.bind="responses.personalHistory.brothers.howMany == 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has a brother
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} a brother
                                     <template if.bind="!responses.personalHistory.brothers.skipAges">
                                         &nbsp;who is currently 
                                         ${getAgeTextForCurrentContext(responses.personalHistory.brothers.ages[0]) & signal:'sibling-count-changed'} old
@@ -2610,7 +2617,7 @@
                                     .
                                 </template>
                                 <template if.bind="responses.personalHistory.brothers.howMany > 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has ${responses.personalHistory.brothers.howMany | numberText | lower} brothers
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} ${responses.personalHistory.brothers.howMany | numberText | lower} brothers
                                     <template if.bind="!responses.personalHistory.brothers.skipAges">
                                         &nbsp;who are currently 
                                         ${responses.personalHistory.brothers.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'sibling-count-changed'} old
@@ -2621,7 +2628,7 @@
                             
                             <template if.bind="!responses.personalHistory.sisters.skip">
                                 <template if.bind="responses.personalHistory.sisters.howMany == 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has a sister
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} ${verb(pronoun, "has|have")} a sister
                                     <template if.bind="!responses.personalHistory.sisters.skipAges">
                                         &nbsp;who is currently 
                                         ${getAgeTextForCurrentContext(responses.personalHistory.sisters.ages[0]) & signal:'sibling-count-changed'} old
@@ -2629,7 +2636,7 @@
                                     .
                                 </template>
                                 <template if.bind="responses.personalHistory.sisters.howMany > 1 & signal:'sibling-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has ${responses.personalHistory.sisters.howMany | numberText | lower} sisters
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} ${verb(pronoun, "has|have")} ${responses.personalHistory.sisters.howMany | numberText | lower} sisters
                                     <template if.bind="!responses.personalHistory.sisters.skipAges">
                                         &nbsp;who are currently 
                                         ${responses.personalHistory.sisters.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'sibling-count-changed'} old
@@ -2639,19 +2646,19 @@
                             </template>
                             
                             <template if.bind="siblingCount > 0">
-                                &nbsp;${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} is the ${birthPositionText & signal:'sibling-count-changed'}.
+                                &nbsp;${gender.title} ${claimant.lastName} disclosed that ${pronoun.subject} ${verb(pronoun, "is|are")} the ${birthPositionText & signal:'sibling-count-changed'}.
                             </template>
                         </template>
                     
                         
                         <template if.bind="!skipChildren">
                             <template if.bind="childCount === 0 & signal:'child-count-changed'">
-                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} has no children.
+                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "has|have")} no children.
                             </template>
                 
                             <template if.bind="!responses.personalHistory.children.sons.skip">
                                 <template if.bind="responses.personalHistory.children.sons.howMany == 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has a son
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} a son
                                     <template if.bind="!responses.personalHistory.children.sons.skipAges">
                                         &nbsp;who is currently 
                                         ${getAgeTextForCurrentContext(responses.personalHistory.children.sons.ages[0]) & signal:'child-count-changed'} old
@@ -2659,7 +2666,7 @@
                                     .
                                 </template>
                                 <template if.bind="responses.personalHistory.children.sons.howMany > 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has ${responses.personalHistory.children.sons.howMany | numberText | lower} sons
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} ${responses.personalHistory.children.sons.howMany | numberText | lower} sons
                                     <template if.bind="!responses.personalHistory.children.sons.skipAges">
                                         &nbsp;who are currently 
                                         ${responses.personalHistory.children.sons.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'child-count-changed'} old
@@ -2670,7 +2677,7 @@
                             
                             <template if.bind="!responses.personalHistory.children.daughters.skip">
                                 <template if.bind="responses.personalHistory.children.daughters.howMany == 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has a daughter
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} ${verb(pronoun, "has|have")} a daughter
                                     <template if.bind="!responses.personalHistory.children.daughters.skipAges">
                                         &nbsp;who is currently 
                                         ${getAgeTextForCurrentContext(responses.personalHistory.children.daughters.ages[0]) & signal:'child-count-changed'} old
@@ -2678,7 +2685,7 @@
                                     .
                                 </template>
                                 <template if.bind="responses.personalHistory.children.daughters.howMany > 1 & signal:'child-count-changed'">
-                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} has ${responses.personalHistory.children.daughters.howMany | numberText | lower} daughters
+                                    &nbsp;${gender.title} ${claimant.lastName} then shared that ${pronoun.subject} ${verb(pronoun, "has|have")} ${responses.personalHistory.children.daughters.howMany | numberText | lower} daughters
                                     <template if.bind="!responses.personalHistory.children.daughters.skipAges">
                                         &nbsp;who are currently 
                                         ${responses.personalHistory.children.daughters.ages | sortArray:[{"property": "unit", "direction": "asc"},{"property": "value", "direction": "asc"}]:true | arrayToString:{"format":getAgeTextForCurrentContext} & signal:'child-count-changed'} old
@@ -2692,7 +2699,7 @@
                             When ${gender.title} ${claimant.lastName} was asked about any personal or familial neurological or psychiatric history, 
                             
                             <template if.bind="anySelectedNeurologicalOrPsychiatricDiagnosis & signal:'neurological-psychiatric-disease-changed'">
-                                &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally has been diagnosed with 
+                                &nbsp;${pronoun.subject} shared that ${pronoun.subject} personally ${verb(pronoun, "has|have")} been diagnosed with 
                                 <template repeat.for="diagnosis of selectedNeurologicalOrPsychiatricDiagnosis">
                                     <template if.bind="!$last && !$first">,</template>
                                     <template if.bind="$last && !$first">&nbsp;and</template>
@@ -2783,7 +2790,7 @@
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.personalHistory.medical.familyMedicalHistory)">
-                                    ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} does not know if ${pronoun.subject} has any familial medical history.
+                                    ${gender.title} ${claimant.lastName} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} any familial medical history.
                                 </template>
                             </template>
                         </template>
@@ -2843,7 +2850,7 @@
                                     </template>
                                 </template>
                                 <template if.bind="isDontKnow(responses.personalHistory.education.completedHighSchool)">
-                                    &nbsp;does not know if ${pronoun.subject} completed high school.
+                                    &nbsp;${verb(pronoun, "does|do")} not know if ${pronoun.subject} completed high school.
                                 </template>
                             </template>
                         </template>
@@ -2854,10 +2861,10 @@
 
                         <template if.bind="isAnswered(responses.personalHistory.education.everHeldBack)">
                             <template if.bind="isYes(responses.personalHistory.education.everHeldBack)">
-                                &nbsp;${pronoun.subject | proper} acknowledged that ${pronoun.subject} was held back/repeated a grade.
+                                &nbsp;${pronoun.subject | proper} acknowledged that ${pronoun.subject} ${verb(pronoun, "was|were")} held back/repeated a grade.
                             </template>
                             <template if.bind="isNo(responses.personalHistory.education.everHeldBack)">
-                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} was ever held back or repeated a grade.
+                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} ${verb(pronoun, "was|were")} ever held back or repeated a grade.
                             </template>
                         </template>
 
@@ -2887,14 +2894,14 @@
                         </template>
 
                         <template if.bind="responses.personalHistory.occupation.jobTitle">
-                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} was <strong>${responses.personalHistory.occupation.jobTitle}</strong>.
+                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} ${verb(pronoun, "was|were")} <strong>${responses.personalHistory.occupation.jobTitle}</strong>.
                         </template>
                         
                         <template if.bind="isYes(responses.personalHistory.occupation.returnToWork.attempted)">
-                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} has attempted to return to work.
+                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} ${verb(pronoun, "has|have")} attempted to return to work.
                         </template>
                         <template if.bind="isNo(responses.personalHistory.occupation.returnToWork.attempted)">
-                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} has not attempted to return to work.
+                            Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} ${verb(pronoun, "has|have")} not attempted to return to work.
                         </template>
                     </p>
 
@@ -2903,15 +2910,15 @@
                         <template if.bind="isAnswered(responses.personalHistory.financial.experiencingFinancialStress)">
                             When asked about ${pronoun.possessiveAdjective} financial situation ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} 
                             <template if.bind="isYes(responses.personalHistory.financial.experiencingFinancialStress)">
-                                &nbsp;is
+                                &nbsp;${verb(pronoun, "is|are")}
                             </template>
                             <template else>
                                 <template if.bind="isNo(responses.personalHistory.financial.experiencingFinancialStress)">
-                                    &nbsp;is not
+                                    &nbsp;${verb(pronoun, "is|are")} not
                                 </template>
                                 <template else>
                                     <template if.bind="isDontKnow(responses.personalHistory.financial.experiencingFinancialStress)">
-                                        &nbsp;does not know if ${pronoun.subject} is
+                                        &nbsp;${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "is|are")}
                                     </template>
                                 </template>
                             </template>
@@ -2927,24 +2934,24 @@
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.personalHistory.financial.tightFinancially)">
-                                    &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} does not know if ${pronoun.possessiveAdjective} finances are tighter.
+                                    &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.possessiveAdjective} finances are tighter.
                                 </template>
                             </template>
                         </template>
                         
                         <template if.bind="isYes(responses.personalHistory.financial.haveDebt)">
-                            &nbsp;${gender.title} ${claimant.lastName} further noted that ${pronoun.subject} has debt.
+                            &nbsp;${gender.title} ${claimant.lastName} further noted that ${pronoun.subject} ${verb(pronoun, "has|have")} debt.
                             <template if.bind="responses.personalHistory.financial.amountOfDebt">
-                                &nbsp;When asked the amount of ${pronoun.possessiveAdjective} debt ${pronoun.subject} indicated that ${pronoun.subject} has <strong>${responses.personalHistory.financial.amountOfDebt}</strong> of debt.
+                                &nbsp;When asked the amount of ${pronoun.possessiveAdjective} debt ${pronoun.subject} indicated that ${pronoun.subject} ${verb(pronoun, "has|have")} <strong>${responses.personalHistory.financial.amountOfDebt}</strong> of debt.
                             </template>
                         </template>
                         <template else>
                             <template if.bind="isNo(responses.personalHistory.financial.haveDebt)">
-                                &nbsp;${gender.title} ${claimant.lastName} then noted that ${pronoun.subject} does not have any debt.
+                                &nbsp;${gender.title} ${claimant.lastName} then noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not have any debt.
                             </template>
                             <template else>
                                 <template if.bind="isDontKnow(responses.personalHistory.financial.haveDebt)">
-                                    &nbsp;${gender.title} ${claimant.lastName} further noted that ${pronoun.subject} does not know if ${pronoun.subject} has any debt.
+                                    &nbsp;${gender.title} ${claimant.lastName} further noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} any debt.
                                 </template>
                             </template>
                         </template>
@@ -2963,7 +2970,7 @@
                 <div class="report-text uk-card uk-card-body uk-card-default" contenteditable="true">
                     <p>
                         <template if.bind="isAnswered(responses.personalHistory.legal.everArrested.response)">
-                            When asked about any criminal history, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} has 
+                            When asked about any criminal history, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} 
                             <template if.bind="isYes(responses.personalHistory.legal.everArrested.response)">
                                 &nbsp;previously been arrested.
                             </template>
@@ -2975,20 +2982,20 @@
                         <template if.bind="isAnswered(responses.personalHistory.legal.everConvicted.response)">
                             
                             <template if.bind="isYes(responses.personalHistory.legal.everConvicted.response)">
-                                &nbsp;${pronoun.subject | proper} then confirmed that ${pronoun.subject} has been convicted
+                                &nbsp;${pronoun.subject | proper} then confirmed that ${pronoun.subject} ${verb(pronoun, "has|have")} been convicted
                                 <template if.bind="responses.personalHistory.legal.everConvicted.details">
                                     &nbsp;of <strong>${responses.personalHistory.legal.everConvicted.details}</strong>
                                 </template>
                                 .
                             </template>
                             <template if.bind="isNo(responses.personalHistory.legal.everConvicted.response)">
-                                &nbsp;${pronoun.subject | proper} then expressed that ${pronoun.subject} has never been convicted of any crime
+                                &nbsp;${pronoun.subject | proper} then expressed that ${pronoun.subject} ${verb(pronoun, "has|have")} never been convicted of any crime
                                 <template if.bind="isAnswered(responses.personalHistory.legal.bondableIssues.response)">
                                     <template if.bind="isYes(responses.personalHistory.legal.bondableIssues.response)">
-                                        , but noted that ${pronoun.subject} is not currently bondable
+                                        , but noted that ${pronoun.subject} ${verb(pronoun, "is|are")} not currently bondable
                                     </template>
                                     <template if.bind="isNo(responses.personalHistory.legal.bondableIssues.response)">
-                                        &nbsp;and confirmed that ${pronoun.subject} is bondable
+                                        &nbsp;and confirmed that ${pronoun.subject} ${verb(pronoun, "is|are")} bondable
                                     </template>
                                 </template>
                                 .
@@ -3012,7 +3019,7 @@
                     <p>
                         <template if.bind="anyEmotionalIssues & signal:'emotional-issues-changed'">
                             <template if.bind="anyYesEmotionalIssues & signal:'emotional-issues-changed'">
-                                When asked about ${pronoun.possessiveAdjective} emotional functioning, ${gender.title} ${claimant.lastName} stated that currently ${pronoun.subject} is experiencing: 
+                                When asked about ${pronoun.possessiveAdjective} emotional functioning, ${gender.title} ${claimant.lastName} stated that currently ${pronoun.subject} ${verb(pronoun, "is|are")} experiencing: 
                                 ${yesEmotionalIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'emotional-issues-changed'}.    
                             </template>
                             <template if.bind="anyNoEmotionalIssues & signal:'emotional-issues-changed'">
@@ -3020,17 +3027,17 @@
                                 ${noEmotionalIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'emotional-issues-changed'}.    
                             </template>
                             <template if.bind="anyDontKnowEmotionalIssues & signal:'emotional-issues-changed'">
-                                &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} does not know if ${pronoun.subject} has issues with:
+                                &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} issues with:
                                 ${dontKnowEmotionalIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'emotional-issues-changed'}.
                             </template>
                             <template if.bind="yesCriesEasily & signal:'emotional-issues-changed'">
-                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} cries easily.
+                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "cries|cry")} easily.
                             </template>
                             <template if.bind="noCriesEasily & signal:'emotional-issues-changed'">
-                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} easily cries.
+                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} easily ${verb(pronoun, "cries|cry")}.
                             </template>
                             <template if.bind="dontKnowCriesEasily & signal:'emotional-issues-changed'">
-                                &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} does not know if ${pronoun.subject} cries easily.
+                                &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "cries|cry")} easily.
                             </template>
                         </template>
                     </p>
@@ -3046,69 +3053,69 @@
                                 &nbsp;denied having any thoughts of self-harm in the past.
                             </template>
                             <template if.bind="isDontKnow(responses.psychological.selfHarm.pastThoughts.response)">
-                                &nbsp;reported that ${pronoun.subject} does not know if ${pronoun.subject} had any thoughts in the past.
+                                &nbsp;reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} had any thoughts in the past.
                             </template>
                         </template>
                 
                         <template if.bind="isAnswered(responses.psychological.selfHarm.currentThoughts.response)">
                             <template if.bind="isYes(responses.psychological.selfHarm.currentThoughts.response)">
                                 <strong>
-                                    &nbsp;${pronoun.subject | proper} related that ${pronoun.subject} currently experiences thoughts of self-harm.
+                                    &nbsp;${pronoun.subject | proper} related that ${pronoun.subject} currently ${verb(pronoun, "experiences|experience")} thoughts of self-harm.
                                 </strong>
                                 <template if.bind="isYes(responses.psychological.selfHarm.planToAct.response)">
                                     <strong>
-                                        &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} has a plan to act on these thoughts.
+                                        &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "has|have")} a plan to act on these thoughts.
                                     </strong>
                                 </template>
                                 <template if.bind="isNo(responses.psychological.selfHarm.planToAct.response)">
-                                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} does not have a plan to act on these thoughts.
+                                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "does|do")} not have a plan to act on these thoughts.
                                 </template>
                                 <template if.bind="isDontKnow(responses.psychological.selfHarm.planToAct.response)">
-                                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} does not know if ${pronoun.subject} would act on these thoughts. 
+                                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} would act on these thoughts. 
                                 </template>
                 
                                 <template if.bind="isYes(responses.psychological.selfHarm.toldDoctor.response)">
                                     <strong>
-                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} has told ${pronoun.possessiveAdjective} doctor about these thoughts.
+                                        &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} ${verb(pronoun, "has|have")} told ${pronoun.possessiveAdjective} doctor about these thoughts.
                                     </strong>
                                 </template>
                                 <template if.bind="isNo(responses.psychological.selfHarm.toldDoctor.response)">
-                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} has not told ${pronoun.possessiveAdjective} doctor about these thoughts.
+                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} ${verb(pronoun, "has|have")} not told ${pronoun.possessiveAdjective} doctor about these thoughts.
                                 </template>
                                 <template if.bind="isDontKnow(responses.psychological.selfHarm.toldDoctor.response)">
-                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} does not know if ${pronoun.subject} has told ${pronoun.possessiveAdjective} doctor about these thoughts. 
+                                    &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} told ${pronoun.possessiveAdjective} doctor about these thoughts. 
                                 </template>
                             </template>
                             <template if.bind="isNo(responses.psychological.selfHarm.currentThoughts.response)">
-                                &nbsp;${pronoun.subject | proper} confirmed that ${pronoun.subject} does not have any thoughts of self-harm at the present time.
+                                &nbsp;${pronoun.subject | proper} confirmed that ${pronoun.subject} ${verb(pronoun, "does|do")} not have any thoughts of self-harm at the present time.
                             </template>
                             <template if.bind="isDontKnow(responses.psychological.selfHarm.currentThoughts.response)">
-                                &nbsp;${pronoun.subject | proper} related that ${pronoun.subject} does not know if ${pronoun.subject} has any current thoughts of self-harm.
+                                &nbsp;${pronoun.subject | proper} related that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} any current thoughts of self-harm.
                             </template>
                         </template>
                 
                         <template if.bind="isAnswered(responses.psychological.selfHarm.hurtSelfOnPurpose.response)">
                             <template if.bind="isYes(responses.psychological.selfHarm.hurtSelfOnPurpose.response)">
                                 <strong>
-                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} has hurt ${pronoun.object}self on purpose.
+                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "has|have")} hurt ${pronoun.object}self on purpose.
                                 </strong>
                             </template>
                             <template if.bind="isNo(responses.psychological.selfHarm.hurtSelfOnPurpose.response)">
-                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} has never hurt ${pronoun.object}self on purpose.
+                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "has|have")} never hurt ${pronoun.object}self on purpose.
                             </template>
                             <template if.bind="isDontKnow(responses.psychological.selfHarm.hurtSelfOnPurpose.response)">
-                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} does not know if ${pronoun.subject} has ever hurt ${pronoun.object}self on purpose.
+                                &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "has|have")} ever hurt ${pronoun.object}self on purpose.
                             </template>
                         </template>
 
                         <template if.bind="isAnswered(responses.psychological.selfHarm.attemptedToEndLife.response)">
                             <template if.bind="isYes(responses.psychological.selfHarm.attemptedToEndLife.response)">
                                 <strong>
-                                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} has attempted to end ${pronoun.possessiveAdjective} own life.
+                                    &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "has|have")} attempted to end ${pronoun.possessiveAdjective} own life.
                                 </strong>
                             </template>
                             <template if.bind="isNo(responses.psychological.selfHarm.attemptedToEndLife.response)">
-                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} has never attempted to end ${pronoun.possessiveAdjective} own life.
+                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "has|have")} never attempted to end ${pronoun.possessiveAdjective} own life.
                             </template>
                         </template>
                 
@@ -3131,7 +3138,7 @@
                     <p>
                         <template if.bind="anyDepressionSymptoms & signal:'depression-symptom-changed'">
                             <template if.bind="anyYesDepressionSymptoms & signal:'depression-symptom-changed'">
-                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} is: 
+                                ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "is|are")}: 
                                 ${yesDepressionSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'depression-symptom-changed'}.        
                             </template>
                             <template if.bind="anyNoDepressionSymptoms & signal:'depression-symptom-changed'">
@@ -3141,7 +3148,7 @@
                                 <template else>
                                     &nbsp;${pronoun.subject | proper} stated 
                                 </template>
-                                &nbsp;that ${pronoun.subject} is not: 
+                                &nbsp;that ${pronoun.subject} ${verb(pronoun, "is|are")} not: 
                                 ${noDepressionSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or","delimiter":"; "} & signal:'depression-symptom-changed'}.
                             </template>
                             <template if.bind="anyDontKnowDepressionSymptoms & signal:'depression-symptom-changed'">
@@ -3151,7 +3158,7 @@
                                 <template else>
                                     &nbsp;${pronoun.subject | proper} indicated 
                                 </template>
-                                &nbsp;that ${pronoun.subject} does not know if ${pronoun.subject} is: 
+                                &nbsp;that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if ${pronoun.subject} ${verb(pronoun, "is|are")}: 
                                 ${dontKnowDepressionSymptoms | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or","delimiter":"; "} & signal:'depression-symptom-changed'}.
                             </template>
                         </template>
@@ -3173,7 +3180,7 @@
                                     &nbsp;${pronoun.subject | proper} described ${pronoun.object}self as being stressed, but denied experiencing anxiety at the present time.
                                 </template>
                                 <template if.bind="isNo(responses.psychological.neurosisSymptoms.stress)">
-                                    &nbsp;${pronoun.subject | proper} reported that at the present time ${pronoun.subject} is not anxious or stressed.
+                                    &nbsp;${pronoun.subject | proper} reported that at the present time ${pronoun.subject} ${verb(pronoun, "is|are")} not anxious or stressed.
                                 </template>
                                 <template if.bind="isSkip(responses.psychological.neurosisSymptoms.stress) || responses.psychological.neurosisSymptoms.stress === null">
                                     &nbsp;${pronoun.subject | proper} denied being anxious.
@@ -3192,44 +3199,44 @@
                         <template if.bind="isAnswered(responses.psychological.neurosisSymptoms.inabilityToRelax) || isAnswered(responses.psychological.neurosisSymptoms.fearOfWorst)">
                             <template if.bind="isYes(responses.psychological.neurosisSymptoms.inabilityToRelax)">
                                 <template if.bind="isYes(responses.psychological.neurosisSymptoms.fearOfWorst)">
-                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} is unable to relax and has a fear of the worst happening.
+                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "is|are")} unable to relax and has a fear of the worst happening.
                                 </template>
                                 <template if.bind="isNo(responses.psychological.neurosisSymptoms.fearOfWorst)">
-                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} is unable to relax but does not have a fear of the worst happening.
+                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "is|are")} unable to relax but does not have a fear of the worst happening.
                                 </template>
                                 <template if.bind="isSkip(responses.psychological.neurosisSymptoms.fearOfWorst) || responses.psychological.neurosisSymptoms.fearOfWorst === null">
-                                    &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} is unable to relax.
+                                    &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "is|are")} unable to relax.
                                 </template>
                             </template>
                             <template if.bind="isNo(responses.psychological.neurosisSymptoms.inabilityToRelax)">
                                 <template if.bind="isYes(responses.psychological.neurosisSymptoms.fearOfWorst)">
-                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} is able to relax but has a fear of the worst happening.
+                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "is|are")} able to relax but has a fear of the worst happening.
                                 </template>
                                 <template if.bind="isNo(responses.psychological.neurosisSymptoms.fearOfWorst)">
-                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} is able to relax and does not have a fear of the worst happening.
+                                    &nbsp;${gender.title} ${claimant.lastName} indicated that ${pronoun.subject} ${verb(pronoun, "is|are")} able to relax and does not have a fear of the worst happening.
                                 </template>
                                 <template if.bind="isSkip(responses.psychological.neurosisSymptoms.fearOfWorst) || responses.psychological.neurosisSymptoms.fearOfWorst === null">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not have any issues being unable to relax.
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not have any issues being unable to relax.
                                 </template>
                             </template>
                             <template if.bind="isSkip(responses.psychological.neurosisSymptoms.inabilityToRelax) || responses.psychological.neurosisSymptoms.inabilityToRelax === null">
                                 <template if.bind="isYes(responses.psychological.neurosisSymptoms.fearOfWorst)">
-                                    &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} has a fear of the worst happening.
+                                    &nbsp;${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} a fear of the worst happening.
                                 </template>
                                 <template if.bind="isNo(responses.psychological.neurosisSymptoms.fearOfWorst)">
-                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does not have a fear of the worst happening.
+                                    &nbsp;${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not have a fear of the worst happening.
                                 </template>
                             </template>
                         </template>
             
                         <template if.bind="anyWorries & signal:'worry-changed'">
                             <template if.bind="(anyYesWorries && anyNoWorries) & signal:'worry-changed'">
-                                &nbsp;Upon inquiry ${pronoun.subject} reported that at the present time ${pronoun.subject} worries about ${pronoun.possessiveAdjective}
+                                &nbsp;Upon inquiry ${pronoun.subject} reported that at the present time ${pronoun.subject} ${verb(pronoun, "worries|worry")} about ${pronoun.possessiveAdjective}
                                 ${yesWorries | arrayToString:{"format":getItemValueForCurrentContext} & signal:'worry-changed'}, but denied worrying about ${pronoun.possessiveAdjective} 
                                 ${noWorries | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'worry-changed'}.
                             </template>            
                             <template if.bind="(anyYesWorries && !anyNoWorries) & signal:'worry-changed'">
-                                &nbsp;${pronoun.subject | proper} also noted that ${pronoun.subject} worries about ${pronoun.possessiveAdjective} 
+                                &nbsp;${pronoun.subject | proper} also noted that ${pronoun.subject} ${verb(pronoun, "worries|worry")} about ${pronoun.possessiveAdjective} 
                                 ${yesWorries | arrayToString:{"format":getItemValueForCurrentContext} & signal:'worry-changed'}.
                             </template>
                             <template if.bind="(!anyYesWorries && anyNoWorries) & signal:'worry-changed'">
@@ -3239,7 +3246,7 @@
                         </template>
                 
                         <template if.bind="isAnswered(responses.psychological.panicAttacksCurrent)">
-                            &nbsp;${gender.title} ${claimant.lastName} reported that since the accident ${pronoun.subject} has 
+                            &nbsp;${gender.title} ${claimant.lastName} reported that since the accident ${pronoun.subject} ${verb(pronoun, "has|have")} 
                             <template if.bind="isNo(responses.psychological.panicAttacksCurrent)">
                                 &nbsp;not
                             </template>
@@ -3263,10 +3270,10 @@
                                 </template>
 
                                 <template if.bind="isYes(responses.psychological.panicAttackClearTrigger)">
-                                    &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} feels that there is a clear trigger to ${pronoun.possessiveAdjective} panic attacks.  
+                                    &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} ${verb(pronoun, "feels|feel")} that there is a clear trigger to ${pronoun.possessiveAdjective} panic attacks.  
 
                                     <template if.bind="isYes(responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident)">
-                                        &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} feels that discussing the accident is a trigger for ${pronoun.object}.
+                                        &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "feels|feel")} that discussing the accident is a trigger for ${pronoun.object}.
                                     </template>
                                     <template else>
                                         <template if.bind="isNo(responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident)">
@@ -3274,7 +3281,7 @@
                                         </template>
                                         <template else>
                                             <template if.bind="isDontKnow(responses.psychological.panicAttackTriggersIncludeDiscussingTheAccident)">
-                                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} does not know if dicussing the accident is a trigger for ${pronoun.object}.
+                                                &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if dicussing the accident is a trigger for ${pronoun.object}.
                                             </template>
                                         </template>
                                     </template>
@@ -3288,7 +3295,7 @@
                                         </template>
                                         <template else>
                                             <template if.bind="isDontKnow(responses.psychological.panicAttackTriggersIncludeBeingInOrAroundVehicles)">
-                                                &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} does not know if being in or around vehicles is a trigger for ${pronoun.possessiveAdjective} panic attacks.
+                                                &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if being in or around vehicles is a trigger for ${pronoun.possessiveAdjective} panic attacks.
                                             </template>
                                         </template>
                                     </template>
@@ -3300,7 +3307,7 @@
                                     </template>
                                     <template else>
                                         <template if.bind="isDontKnow(responses.psychological.panicAttackClearTrigger)">
-                                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} does not know if there is a clear trigger to ${pronoun.possessiveAdjective} panic attacks.
+                                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not know if there is a clear trigger to ${pronoun.possessiveAdjective} panic attacks.
                                         </template>
                                     </template>
                                 </template>
@@ -3322,10 +3329,10 @@
                         <template if.bind="isAnswered(responses.psychological.heightenedStartleResponse)">
                             &nbsp;${pronoun.subject | proper} further expressed that ${pronoun.subject} 
                             <template if.bind="isYes(responses.psychological.heightenedStartleResponse)">
-                                &nbsp;now has
+                                &nbsp;now ${verb(pronoun, "has|have")}
                             </template>
                             <template else>
-                                &nbsp;does not have
+                                &nbsp;${verb(pronoun, "does|do")} not have
                             </template>
                             &nbsp;a heightened startle response.
                         </template>
@@ -3342,10 +3349,10 @@
                 
                         <template if.bind="isAnswered(responses.psychological.flashbacksCurrent)">
                             <template if.bind="isYes(responses.psychological.flashbacksCurrent)">
-                                &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} continues to experience flashbacks.
+                                &nbsp;${pronoun.subject | proper} then noted that ${pronoun.subject} ${verb(pronoun, "continues|continue")} to experience flashbacks.
                             </template>
                             <template else>
-                                &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} does not experience flashbacks at the present time.
+                                &nbsp;${pronoun.subject | proper} noted that ${pronoun.subject} ${verb(pronoun, "does|do")} not experience flashbacks at the present time.
                             </template>
                         </template>
                 
@@ -3378,14 +3385,14 @@
                                 <template if.bind="isNo(responses.psychological.delusionalIdeation) & signal:'hallucinations-changed'">
                                     &nbsp;Upon inquiry, ${pronoun.subject} denied having any delusional ideation.
                                 </template>
-                                &nbsp;${pronoun.subject | proper} stated that ${pronoun.subject} experiences 
+                                &nbsp;${pronoun.subject | proper} stated that ${pronoun.subject} ${verb(pronoun, "experiences|experience")} 
                                 <template if.bind="anyHallucinationCharacteristics & signal:'hallucinations-changed'">
                                     &nbsp;${hallucinationCharacteristics | arrayToString:{"format":getItemValueForCurrentContext} & signal:'hallucinations-changed'} 
                                 </template>
                                 &nbsp;hallucinations.
                             </template>
                             <template if.bind="isNo(responses.psychological.hallucinations) && !isNo(responses.psychological.delusionalIdeation) & signal:'hallucinations-changed'">
-                                &nbsp;${pronoun.subject | proper} stated that ${pronoun.subject} does not experience hallucinations.
+                                &nbsp;${pronoun.subject | proper} stated that ${pronoun.subject} ${verb(pronoun, "does|do")} not experience hallucinations.
                             </template>
                             <template if.bind="isNo(responses.psychological.delusionalIdeation) && isNo(responses.psychological.hallucinations) & signal:'hallucinations-changed'">
                                 &nbsp;Upon inquiry, ${pronoun.subject} denied having any delusions or hallucinations.
@@ -3393,7 +3400,7 @@
                         </template>
             
                         <template if.bind="isYes(responses.psychological.feelSurveilled)">
-                            &nbsp;${pronoun.subject | proper} reported ${pronoun.subject} currently feels that ${pronoun.subject} is being watched or surveilled.
+                            &nbsp;${pronoun.subject | proper} reported ${pronoun.subject} currently ${verb(pronoun, "feels|feel")} that ${pronoun.subject} ${verb(pronoun, "is|are")} being watched or surveilled.
                         </template>
                         <template if.bind="isNo(responses.psychological.feelSurveilled)">
                             &nbsp;${pronoun.subject | proper} denied currently feeling watched or surveilled.
@@ -3403,7 +3410,7 @@
                     <!-- Driver's Licence -->
                     <p>
                         <template if.bind="isAnswered(responses.psychological.travel.driverLicense.haveLicense)">
-                            Upon inquiry, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} does 
+                            Upon inquiry, ${gender.title} ${claimant.lastName} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} 
                             <template if.bind="isNo(responses.psychological.travel.driverLicense.haveLicense)">
                                 &nbsp;not
                             </template>
@@ -3454,7 +3461,7 @@
                         </template>
                 
                         <template if.bind="responses.psychological.travel.nervousPassenger || responses.psychological.travel.anxiousPassenger">
-                            &nbsp;${pronoun.subject | proper} also stated that ${pronoun.subject} feels 
+                            &nbsp;${pronoun.subject | proper} also stated that ${pronoun.subject} ${verb(pronoun, "feels|feel")} 
                             <template if.bind="responses.psychological.travel.nervousPassenger && responses.psychological.travel.anxiousPassenger">
                                 &nbsp;both nervous and anxious
                             </template>
@@ -3464,11 +3471,11 @@
                             <template if.bind="!responses.psychological.travel.nervousPassenger && responses.psychological.travel.anxiousPassenger">
                                 &nbsp;anxious
                             </template>
-                            &nbsp;when ${pronoun.subject} is traveling as a passenger.
+                            &nbsp;when ${pronoun.subject} ${verb(pronoun, "is|are")} traveling as a passenger.
                         </template>
                 
                         <template if.bind="responses.psychological.travel.nervousPedestrian || responses.psychological.travel.anxiousPedestrian">
-                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} is 
+                            &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} ${verb(pronoun, "is|are")} 
                             <template if.bind="responses.psychological.travel.nervousPedestrian && responses.psychological.travel.anxiousPedestrian">
                                 &nbsp;a nervous and anxious
                             </template>
@@ -3487,13 +3494,13 @@
                                 &nbsp;will
                             </template>
                             <template else>
-                                &nbsp;does not
+                                &nbsp;${verb(pronoun, "does|do")} not
                             </template>
                             &nbsp;use a phantom brake.
                         </template>
                 
                         <template if.bind="isAnswered(responses.psychological.travel.vigilantWhenTravelling)">
-                            &nbsp;${pronoun.subject | proper} further expressed that ${pronoun.subject} is 
+                            &nbsp;${pronoun.subject | proper} further expressed that ${pronoun.subject} ${verb(pronoun, "is|are")} 
                             <template if.bind="isNo(responses.psychological.travel.vigilantWhenTravelling)">
                                 &nbsp;not any
                             </template>
@@ -3501,14 +3508,14 @@
                         </template>
                 
                         <template if.bind="isAnswered(responses.psychological.travel.travelPreference)">
-                            &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} prefers to be a ${travelPreferencesMap[responses.psychological.travel.travelPreference].format(self)}
+                            &nbsp;Upon inquiry, ${pronoun.subject} advised that ${pronoun.subject} ${verb(pronoun, "prefers|prefer")} to be a ${travelPreferencesMap[responses.psychological.travel.travelPreference].format(self)}
                             <template if.bind="isAnswered(responses.psychological.travel.avoidSceneOfAccident)">
                                 &nbsp;and shared that 
                                 <template if.bind="isYes(responses.psychological.travel.avoidSceneOfAccident)">
                                     &nbsp;if at all possible, ${pronoun.subject} will tend to avoid the scene of the accident.
                                 </template>
                                 <template else>
-                                    &nbsp;${pronoun.subject} does not tend to avoid the scene of the accident.
+                                    &nbsp;${pronoun.subject} ${verb(pronoun, "does|do")} not tend to avoid the scene of the accident.
                                 </template>
                             </template>
                             <template else>
@@ -3522,15 +3529,15 @@
                                 &nbsp;if at all possible, ${pronoun.subject} will tend to avoid the scene of the accident.
                             </template>
                             <template else>
-                                &nbsp;${pronoun.subject} does not tend to avoid the scene of the accident.
+                                &nbsp;${pronoun.subject} ${verb(pronoun, "does|do")} not tend to avoid the scene of the accident.
                             </template>
                         </template>
             
                         <template if.bind="isYes(responses.psychological.travel.ableToDrive)">
-                            &nbsp;${pronoun.subject | proper} confirmed that ${pronoun.subject} can drive when ${pronoun.subject} needs to.
+                            &nbsp;${pronoun.subject | proper} confirmed that ${pronoun.subject} can drive when ${pronoun.subject} ${verb(pronoun, "needs|need")} to.
                         </template>
                         <template if.bind="isNo(responses.psychological.travel.ableToDrive)">
-                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} cannot drive, even when ${pronoun.subject} needs to.
+                            &nbsp;${pronoun.subject | proper} advised that ${pronoun.subject} cannot drive, even when ${pronoun.subject} ${verb(pronoun, "needs|need")} to.
                         </template>
                     </p>
 
@@ -3540,7 +3547,7 @@
                             ${gender.title} ${claimant.lastName} was asked about any major stressors in ${pronoun.possessiveAdjective} life in the last five years (aside from the subject accident). 
                             
                             <template if.bind="anySelectedStressors & signal:'stressor-changed'">
-                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} has experienced ${selectedStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
+                                &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "has|have")} experienced ${selectedStressors | arrayToString:{"format":getItemValueForCurrentContext} & signal:'stressor-changed'}.
                             </template>
                             <template if.bind="anyUnselectedStressors & signal:'stressor-changed'">
                                 &nbsp;${pronoun.subject | proper} denied having experienced ${unselectedStressors | arrayToString:{"format":getItemValueForCurrentContext,"connector":"or"} & signal:'stressor-changed'}.
@@ -3559,13 +3566,13 @@
                         <template if.bind="isAnswered(responses.psychological.selfHarm.interestedInTreatment.response)">
                             Upon inquiry, ${gender.title} ${claimant.lastName} stated that ${pronoun.subject} 
                             <template if.bind="isYes(responses.psychological.selfHarm.interestedInTreatment.response)">
-                                &nbsp;is interested in psychological treatment. 
+                                &nbsp;${verb(pronoun, "is|are")} interested in psychological treatment. 
                             </template>
                             <template if.bind="isNo(responses.psychological.selfHarm.interestedInTreatment.response)">
-                                &nbsp;is not interested in psychological treatment.
+                                &nbsp;${verb(pronoun, "is|are")} not interested in psychological treatment.
                             </template>
                             <template if.bind="isDontKnow(responses.psychological.selfHarm.interestedInTreatment.response)">
-                                &nbsp;does not know if ${pronoun.subject} is interested in psychological treatment.
+                                &nbsp;does not know if ${pronoun.subject} ${verb(pronoun, "is|are")} interested in psychological treatment.
                             </template>
                         </template> 
                     </p>
@@ -3573,7 +3580,7 @@
                     <!-- Physical 6 -->
                     <p>
                         <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInMood)">
-                            When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} emotional state with the passage of time, ${gender.title} ${claimant.lastName} shared that 
+                            When asked if ${pronoun.subject} ${verb(pronoun, "has|have")} noticed any change with ${pronoun.possessiveAdjective} emotional state with the passage of time, ${gender.title} ${claimant.lastName} shared that 
                             ${moodChangeTypesMap[responses.neuropsychological.physical.changes.changeInMood].format(self)}.
                         </template>  
                     </p>
@@ -3609,7 +3616,7 @@
                                     Specific Task
                                 </th>
                                 <th class="uk-padding-remove-vertical">
-                                    Is ${pronoun.subject} able, partially able, or unable to do the same?
+                                    ${verb(pronoun, "Is|Are")} ${pronoun.subject} able, partially able, or unable to do the same?
                                 </th>
                                 <th class="uk-padding-remove-vertical">
                                     ${pronoun.possessiveAdjective | proper} ability to do said task is currently affected by ${pronoun.possessiveAdjective}: 
@@ -3652,7 +3659,7 @@
                     <p>
                         <template if.bind="anyPreAccidentRecreationalActivities">
                             <template if.bind="responses.version >= 27">
-                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} was involved with: ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString:{"format":getRecreationalActivityDescriptionForCurrentContext,"delimiter":"; "}}.
+                                In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} ${verb(pronoun, "was|were")} involved with: ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString:{"format":getRecreationalActivityDescriptionForCurrentContext,"delimiter":"; "}}.
                             </template>
                             <template else>
                                 In terms of ${pronoun.possessiveAdjective} pre-accident social and recreational activities, ${gender.title} ${claimant.lastName} shared that ${pronoun.subject} enjoyed ${responses.neuropsychological.currentState.preAccidentRecreationalActivities | arrayToString}.
@@ -3668,7 +3675,7 @@
                                 &nbsp;denied the same.
                             </template>
                             <template if.bind="isYes(responses.neuropsychological.currentState.travel.sinceAccident)">
-                                &nbsp;shared that ${pronoun.subject} has traveled to <strong>${responses.neuropsychological.currentState.travel.where} for ${responses.neuropsychological.currentState.travel.howLong.number | numberText | lower} ${responses.neuropsychological.currentState.travel.howLong.period}</strong>. 
+                                &nbsp;shared that ${pronoun.subject} ${verb(pronoun, "has|have")} traveled to <strong>${responses.neuropsychological.currentState.travel.where} for ${responses.neuropsychological.currentState.travel.howLong.number | numberText | lower} ${responses.neuropsychological.currentState.travel.howLong.period}</strong>. 
                             </template>
                         </p>
                     </template>
@@ -3690,14 +3697,14 @@
                         <template if.bind="isAnswered(responses.neuropsychological.problems.concentration)">
                             Regarding ${pronoun.possessiveAdjective} neurocognitive functioning, 
                             ${gender.title} ${claimant.lastName} stated that 
-                            <template if.bind="isYes(responses.neuropsychological.problems.concentration)">&nbsp;${pronoun.subject} has</template>
-                            <template else>&nbsp;at the current time ${pronoun.subject} does not have any</template>&nbsp;issues with concentration. 
+                            <template if.bind="isYes(responses.neuropsychological.problems.concentration)">&nbsp;${pronoun.subject} ${verb(pronoun, "has|have")}</template>
+                            <template else>&nbsp;at the current time ${pronoun.subject} ${verb(pronoun, "does|do")} not have any</template>&nbsp;issues with concentration. 
                         </template>
                         
                         <template if.bind="isAnswered(responses.neuropsychological.problems.memory)">
                             &nbsp;${pronoun.subject | proper} 
                             <template if.bind="isYes(responses.neuropsychological.problems.memory)">
-                                &nbsp;went on to report that ${pronoun.subject} has problems with ${pronoun.possessiveAdjective} memory
+                                &nbsp;went on to report that ${pronoun.subject} ${verb(pronoun, "has|have")} problems with ${pronoun.possessiveAdjective} memory
                                 <template if.bind="isYes(responses.neuropsychological.problems.shortTermMemory)">
                                     &nbsp;(including ${pronoun.possessiveAdjective} short-term memory)
                                 </template>.
@@ -3731,7 +3738,7 @@
                         <template if.bind="isAnswered(responses.neuropsychological.memory.aids.useAids)">
                             <template if.bind="isYes(responses.neuropsychological.memory.aids.useAids)">
                                 <template if.bind="anyNonFamilyMemoryAidsUsed & signal:'memory-aids-used-changed'">
-                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that currently ${pronoun.subject} uses the following as aids to ${pronoun.possessiveAdjective} memory: ${selectedMemoryAids | arrayToString:{"format":getItemValueForCurrentContext} & signal:'memory-aids-used-changed'}
+                                    &nbsp;Upon inquiry, ${gender.title} ${claimant.lastName} shared that currently ${pronoun.subject} ${verb(pronoun, "uses|use")} the following as aids to ${pronoun.possessiveAdjective} memory: ${selectedMemoryAids | arrayToString:{"format":getItemValueForCurrentContext} & signal:'memory-aids-used-changed'}
                                     <template if.bind="responses.neuropsychological.memory.aids.familyUsed">
                                         , adding that ${pronoun.possessiveAdjective} family also helps ${pronoun.object} to remember things
                                     </template>
@@ -3748,7 +3755,7 @@
                         
                         <template if.bind="isAnswered(responses.neuropsychological.memory.autobiographical.personalInfo)">
                             <template if.bind="isYes(responses.neuropsychological.memory.autobiographical.personalInfo)">
-                                &nbsp;When asked if ${pronoun.subject} had any issues recalling autobiographical information (such as ${pronoun.possessiveAdjective} address, date of birth, or phone number), ${pronoun.subject} shared that ${pronoun.subject} has experienced the same. 
+                                &nbsp;When asked if ${pronoun.subject} had any issues recalling autobiographical information (such as ${pronoun.possessiveAdjective} address, date of birth, or phone number), ${pronoun.subject} shared that ${pronoun.subject} ${verb(pronoun, "has|have")} experienced the same. 
                             </template>
                             <template else>
                                 &nbsp;${pronoun.subject | proper} denied having issues with ${pronoun.possessiveAdjective} ability to recall autobiographical information. 
@@ -3757,18 +3764,18 @@
                         
                         <template if.bind="isAnswered(responses.neuropsychological.memory.medication.errors)">
                             <template if.bind="isYes(responses.neuropsychological.memory.medication.errors)">
-                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} has made medication errors.
+                                &nbsp;${pronoun.subject | proper} indicated that ${pronoun.subject} ${verb(pronoun, "has|have")} made medication errors.
                             </template>
                             <template else>
-                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} has made any medication errors. 
+                                &nbsp;${pronoun.subject | proper} denied that ${pronoun.subject} ${verb(pronoun, "has|have")} made any medication errors. 
                             </template>
                         </template>
                         
                         <template if.bind="isYes(responses.neuropsychological.memory.medication.usesDosette)">
-                            &nbsp;${pronoun.subject | proper} then added that ${pronoun.subject} uses a Dosette.
+                            &nbsp;${pronoun.subject | proper} then added that ${pronoun.subject} ${verb(pronoun, "uses|use")} a Dosette.
                         </template>
                         <template if.bind="isNo(responses.neuropsychological.memory.medication.usesDosette)">
-                            &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} does not use a Dosette.
+                            &nbsp;${pronoun.subject | proper} reported that ${pronoun.subject} ${verb(pronoun, "does|do")} not use a Dosette.
                         </template>
                 
                         <template if.bind="isAnswered(responses.neuropsychological.memory.medication.usesBlisterPacks)">
@@ -3781,10 +3788,10 @@
                             </template>
                             &nbsp;that ${pronoun.subject} 
                             <template if.bind="isYes(responses.neuropsychological.memory.medication.usesBlisterPacks)">
-                                &nbsp;uses
+                                &nbsp;${verb(pronoun, "uses|use")}
                             </template>
                             <template if.bind="isNo(responses.neuropsychological.memory.medication.usesBlisterPacks)">
-                                &nbsp;does not use
+                                &nbsp;${verb(pronoun, "does|do")} not use
                             </template>
                             &nbsp;blister packs.
                         </template>
@@ -3806,7 +3813,7 @@
                                 <template if.bind="anySelectedSafetyConcerns || anyUnselectedSafetyConcerns">
                                     &nbsp;${pronoun.subject | proper} further 
                                 </template>
-                                &nbsp;reported that ${pronoun.subject} did not know if ${pronoun.subject} has ${dontKnowSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContextPast,"delimiter":", ","connector":"or"}}.
+                                &nbsp;reported that ${pronoun.subject} did not know if ${pronoun.subject} ${verb(pronoun, "has|have")} ${dontKnowSafetyConcerns | arrayToString:{"format":getItemValueForCurrentContextPast,"delimiter":", ","connector":"or"}}.
                             </template>
                         </template>
                     </p>
@@ -3816,7 +3823,7 @@
                         <template if.bind="anySelectedLanguageIssues || anyUnselectedLanguageIssues & signal:'language-issue-changed'">
                             When asked about ${pronoun.possessiveAdjective} linguistic functioning, ${gender.title} ${claimant.lastName} 
                             <template if.bind="anySelectedLanguageIssues & signal:'language-issue-changed'">
-                                &nbsp;reported that at the present time ${pronoun.subject} experiences:
+                                &nbsp;reported that at the present time ${pronoun.subject} ${verb(pronoun, "experiences|experience")}:
                                 &nbsp;${selectedLanguageIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'language-issue-changed'}.
                             </template>
                             <template if.bind="anyUnselectedLanguageIssues & signal:'language-issue-changed'">
@@ -3839,16 +3846,16 @@
                         <template if.bind="isAnswered(responses.neuropsychological.attention.abilityToSustainAttention)">
                             &nbsp;${pronoun.subject | proper} shared that ${pronoun.subject} 
                             <template if.bind="isYes(responses.neuropsychological.attention.abilityToSustainAttention)">
-                                &nbsp;has
+                                &nbsp;${verb(pronoun, "has|have")}
                             </template>
                             <template else>
-                                &nbsp;does not have
+                                &nbsp;${verb(pronoun, "does|do")} not have
                             </template>
                             &nbsp;a harder time sustaining attention.
                         </template>
                         
                         <template if.bind="isAnswered(responses.neuropsychological.attention.areMoreDistractible)">
-                            &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} is 
+                            &nbsp;${pronoun.subject | proper} added that ${pronoun.subject} ${verb(pronoun, "is|are")} 
                             <template if.bind="isNo(responses.neuropsychological.attention.areMoreDistractible)">
                                 &nbsp;not
                             </template>
@@ -3861,7 +3868,7 @@
                                 &nbsp;${pronoun.subject} may 
                             </template>
                             <template else>
-                                &nbsp;generally ${pronoun.subject} does not
+                                &nbsp;generally ${pronoun.subject} ${verb(pronoun, "does|do")} not
                             </template>
                             &nbsp;lose track when reading.
                         </template>
@@ -3883,10 +3890,10 @@
                         <template if.bind="isAnswered(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
                             &nbsp;${gender.title} ${claimant.lastName} 
                             <template if.bind="isYes(responses.neuropsychological.attention.loseTrackWhenWatchingTv)">
-                                &nbsp;also shared that ${pronoun.subject} finds it hard to watch television without losing track. 
+                                &nbsp;also shared that ${pronoun.subject} ${verb(pronoun, "finds|find")} it hard to watch television without losing track. 
                             </template>
                             <template else>
-                                &nbsp;advised that ${pronoun.subject} does not lose track when ${pronoun.subject} is watching television. 
+                                &nbsp;advised that ${pronoun.subject} ${verb(pronoun, "does|do")} not lose track when ${pronoun.subject} ${verb(pronoun, "is|are")} watching television. 
                             </template>
                         </template>
             
@@ -3898,10 +3905,10 @@
                             &nbsp;been affected
                             <template if.bind="isYes(responses.neuropsychological.attention.issuesUsingDevicesWithScreens) && isAnswered(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
                                 <template if.bind="isYes(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                                    , adding that ${pronoun.subject} has 
+                                    , adding that ${pronoun.subject} ${verb(pronoun, "has|have")} 
                                 </template>
                                 <template if.bind="isNo(responses.neuropsychological.attention.hadToReduceScreenBrightness)">
-                                    , but advised that ${pronoun.subject} has not
+                                    , but advised that ${pronoun.subject} ${verb(pronoun, "has|have")} not
                                 </template>
                                 &nbsp;had to reduce the brightness of the screen
                             </template>
@@ -3944,7 +3951,7 @@
                     <p>
                         <template if.bind="anySelectedVisualSpatialIssues || anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
                             <template if.bind="anySelectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
-                                When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} has experienced:
+                                When asked about ${pronoun.possessiveAdjective} current state, ${gender.title} ${claimant.lastName} expressed that ${pronoun.subject} ${verb(pronoun, "has|have")} experienced:
                                 ${selectedVisualSpatialIssues | arrayToString:{"format":getItemValueForCurrentContext,"delimiter":"; "} & signal:'visual-spatial-issue-changed'}. 
                                 <template if.bind="anyUnselectedVisualSpatialIssues & signal:'visual-spatial-issue-changed'">
                                     &nbsp;Upon inquiry, ${pronoun.subject} denied 
@@ -3975,7 +3982,7 @@
                     <!-- Change in Cognition -->
                     <p>
                         <template if.bind="isAnswered(responses.neuropsychological.physical.changes.changeInCognition)">
-                            When asked if ${pronoun.subject} has noticed any change with ${pronoun.possessiveAdjective} cognition with the passage of time, ${gender.title} ${claimant.lastName} shared that 
+                            When asked if ${pronoun.subject} ${verb(pronoun, "has|have")} noticed any change with ${pronoun.possessiveAdjective} cognition with the passage of time, ${gender.title} ${claimant.lastName} shared that 
                             ${cognitiveChangeTypesMap[responses.neuropsychological.physical.changes.changeInCognition].format(self)}.
                         </template> 
                     </p>

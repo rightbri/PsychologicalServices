@@ -340,10 +340,10 @@ export class NotesRepository {
         let data = {
             "lostInConversations": { "description": "Easily lost in conversations?", "format": function(context) { return `feeling lost in conversations`; } },
             "tipOfTongueIssues": { "description": "Tip of the Tongue issues?", "format": function(context) { return `having tip of the tongue issues`; } },
-            "repeatingYourself": { "description": "Repeating yourself?", "format": function(context) { return `times where ${context.pronoun.subject} repeats ${context.pronoun.object}self`; } },
-            "askingOthersToRepeat": { "description": "Asking others to repeat?", "format": function(context) { return `times when ${context.pronoun.subject} asks others to repeat what they have said`; } },
+            "repeatingYourself": { "description": "Repeating yourself?", "format": function(context) { return `times where ${context.pronoun.subject} ${context.verb(context.pronoun, "repeats|repeat")} ${context.pronoun.object}self`; } },
+            "askingOthersToRepeat": { "description": "Asking others to repeat?", "format": function(context) { return `times when ${context.pronoun.subject} ${context.verb(context.pronoun, "asks|ask")} others to repeat what they have said`; } },
             "filtering": { "description": "Filtering?", "format": function(context) { return `problems with filtering`; } },
-            "wordSubstitution": { "description": "Word substitution?", "format": function(context) { return `times where ${context.pronoun.subject} tends to substitute words`; } }
+            "wordSubstitution": { "description": "Word substitution?", "format": function(context) { return `times where ${context.pronoun.subject} ${context.verb(context.pronoun, "tends|tend")} to substitute words`; } }
         };
 
         return getPromise(data);
@@ -353,7 +353,7 @@ export class NotesRepository {
         let data = {
             "multiTasking": {
                 "description": "Multi-tasking",
-                "format": function(context) { return `multi-task${context.harderToMultiTask ? ` (which ${context.pronoun.subject} now finds harder)` : ``}`; }
+                "format": function(context) { return `multi-task${context.harderToMultiTask ? ` (which ${context.pronoun.subject} now ${context.verb(context.pronoun, "finds|find")} harder)` : ``}`; }
             },
             "harderToMultiTask": { "description": "    Do you find it harder to multitask since the accident?", "format": function(context) { return ``; }, "isHarderToMultiTask": true, "noOutput": true },
             "organization": { "description": "Organization", "format": function(context) { return `organize`; } },
@@ -387,7 +387,7 @@ export class NotesRepository {
 
     getWeightChangeTypes() {
         let data = {
-            "don't know": { "description": "Don't know", "value": "don't know", "format": function(context) { return `${context.pronoun.subject} does not know how much ${context.pronoun.possessiveAdjective} weight has changed`; } },
+            "don't know": { "description": "Don't know", "value": "don't know", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "does|do")} not know how much ${context.pronoun.possessiveAdjective} weight has changed`; } },
             "increased": { "description": "Increased", "value": "increased", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has changed, noting an increase of `; }, "isIncreaseOrDecrease": true },
             "decreased": { "description": "Decreased", "value": "decreased", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has changed, noting a decrease of `; }, "isIncreaseOrDecrease": true },
             "fluctuated": { "description": "Fluctuated", "value": "fluctuated", "format": function(context) { return `${context.pronoun.possessiveAdjective} weight has fluctuated`; } }
@@ -398,12 +398,12 @@ export class NotesRepository {
 
     getCognitiveChangeTypes() {
         let data = {
-            "worse": { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognition is worse`; } },
-            "little improvement": { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `overall ${context.pronoun.subject} has seen little improvement`; } },
-            "same": { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognition is the same`; } },
-            "better": { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognitive state is better`; } },
-            "resolved": { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} feels that any cognitive issues have resolved`; } },
-            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} cognitive recovery has reached a plateau`; } },
+            "worse": { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} cognition is worse`; } },
+            "little improvement": { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `overall ${context.pronoun.subject} ${context.verb(context.pronoun, "has|have")} seen little improvement`; } },
+            "same": { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} cognition is the same`; } },
+            "better": { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} cognitive state is better`; } },
+            "resolved": { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that any cognitive issues have resolved`; } },
+            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} cognitive recovery has reached a plateau`; } },
             "skip": { "description": "Skip", "value": "skip", "format": function(context) { return ``; }, "isSkip": true }
         };
 
@@ -412,12 +412,12 @@ export class NotesRepository {
 
     getMoodChangeTypes() {
         let data = {
-            "worse": { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is worse`; } },
-            "little improvement": { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `${context.pronoun.subject} has seen little improvement overall`; } },
-            "same": { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is the same`; } },
-            "better": { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} mood is better`; } },
-            "resolved": { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} feels that any mood issues have resolved`; } },
-            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} feels that ${context.pronoun.possessiveAdjective} emotional recovery has reached a plateau`; } },
+            "worse": { "description": "Worse", "value": "worse", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} mood is worse`; } },
+            "little improvement": { "description": "Little improvement", "value": "little improvement", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "has|have")} seen little improvement overall`; } },
+            "same": { "description": "Same", "value": "same", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} mood is the same`; } },
+            "better": { "description": "Better", "value": "better", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} mood is better`; } },
+            "resolved": { "description": "Resolved", "value": "resolved", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that any mood issues have resolved`; } },
+            "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "feels|feel")} that ${context.pronoun.possessiveAdjective} emotional recovery has reached a plateau`; } },
             "skip": { "description": "Skip", "value": "skip", "format": function(context) { return ``; }, "isSkip": true }
         };
 
@@ -627,9 +627,9 @@ export class NotesRepository {
 
     getPrognosis() {
         let data = {
-            "good": { "description": "Good", "value": "good", "format": function(context) { return `${context.pronoun.subject} has a good prognosis`; } },
-            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `${context.pronoun.subject} has a fair prognosis`; } },
-            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `${context.pronoun.subject} has a poor prognosis`; } },
+            "good": { "description": "Good", "value": "good", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "has|have")} a good prognosis`; } },
+            "fair": { "description": "Fair", "value": "fair", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "has|have")} a fair prognosis`; } },
+            "poor": { "description": "Poor", "value": "poor", "format": function(context) { return `${context.pronoun.subject} ${context.verb(context.pronoun, "has|have")} a poor prognosis`; } },
             "chronic": { "description": "Chronic", "value": "chronic", "format": function(context) { return `${context.pronoun.possessiveAdjective} condition is chronic`; } },
             "plateaued": { "description": "Plateaued", "value": "plateaued", "format": function(context) { return `${context.pronoun.possessiveAdjective} recovery has plateaued`; } },
             "dontKnow": { "description": "DK", "value": "dontKnow", "format": function(context) { return `Don't know`; } }

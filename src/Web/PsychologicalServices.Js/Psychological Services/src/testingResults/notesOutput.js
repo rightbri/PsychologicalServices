@@ -824,10 +824,10 @@ export class NotesOutput {
         if (!this.responses || !this.responses.personalHistory || !this.responses.personalHistory.psychological || !this.responses.personalHistory.psychological.takenMoodMedication) { return []; }
         
         let data = [
-            { "value": this.isYes(this.responses.personalHistory.psychological.takenMoodMedication) && this.isYes(this.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident), "description": function(context) { return `had used medication for ${context.pronoun.possessiveAdjective} mood (which ${context.pronoun.subject} was using at the time of the accident)`; } },
-            { "value": this.isYes(this.responses.personalHistory.psychological.takenMoodMedication) && this.isNo(this.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident), "description": function(context) { return `had used medication for ${context.pronoun.possessiveAdjective} mood (which ${context.pronoun.subject} was not using at the time of the accident)`; } },
+            { "value": this.isYes(this.responses.personalHistory.psychological.takenMoodMedication) && this.isYes(this.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident), "description": function(context) { return `had used medication for ${context.pronoun.possessiveAdjective} mood (which ${context.pronoun.subject} ${context.verb(context.pronoun, "was|were")} using at the time of the accident)`; } },
+            { "value": this.isYes(this.responses.personalHistory.psychological.takenMoodMedication) && this.isNo(this.responses.personalHistory.psychological.onMoodMedicationAtTimeOfAccident), "description": function(context) { return `had used medication for ${context.pronoun.possessiveAdjective} mood (which ${context.pronoun.subject} ${context.verb(context.pronoun, "was|were")} not using at the time of the accident)`; } },
             { "value": this.isYes(this.responses.personalHistory.psychological.hadMentalHealthTesting), "description": function(context) { return `completed a mental health assessment`; } },
-            { "value": this.isYes(this.responses.personalHistory.psychological.hadMentalHealthCounselling), "description": function(context) { return `was seen for counselling`; } },
+            { "value": this.isYes(this.responses.personalHistory.psychological.hadMentalHealthCounselling), "description": function(context) { return `${context.verb(context.pronoun, "was|were")} seen for counselling`; } },
             { "value": this.isYes(this.responses.personalHistory.psychological.hospitalizedDueToPsychologicalConcerns), "description": function(context) { return `had been hospitalized due to psychological concerns`; } }
         ];
         
